@@ -84,6 +84,10 @@ public final class TCItems {
         }
     }
 
+    /** A bancada arcana, para levar na mão. */
+    public static final Item ARCANE_WORKBENCH = register("arcane_workbench", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_WORKBENCH, properties));
+
     /** O crisol, para levar na mão. */
     public static final Item CRUCIBLE = register("crucible", properties ->
             new net.minecraft.world.item.BlockItem(net.thaumcraft.registry.TCBlocks.CRUCIBLE, properties));

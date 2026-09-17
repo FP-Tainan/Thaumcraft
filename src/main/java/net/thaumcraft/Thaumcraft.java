@@ -8,6 +8,7 @@ import net.thaumcraft.registry.TCBlockEntities;
 import net.thaumcraft.registry.TCBlocks;
 import net.thaumcraft.registry.TCComponents;
 import net.thaumcraft.registry.TCFeatures;
+import net.thaumcraft.registry.TCMenus;
 import net.thaumcraft.registry.TCItems;
 import net.thaumcraft.net.TCNetwork;
 import net.thaumcraft.research.Knowledges;
@@ -39,6 +40,7 @@ public class Thaumcraft implements ModInitializer {
         TCComponents.init();
         TCItems.init();
         TCFeatures.init();
+        TCMenus.init();
         TCNetwork.init();
         // as pesquisas que o original marca para vir abertas chegam com quem entra no mundo
         net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register(

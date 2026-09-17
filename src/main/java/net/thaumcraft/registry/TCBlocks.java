@@ -48,6 +48,13 @@ public final class TCBlocks {
         }
     }
 
+    /** A bancada arcana: a mesa que a varinha benzeu. */
+    public static final Block ARCANE_WORKBENCH = register("arcane_workbench", properties ->
+            new net.thaumcraft.block.ArcaneWorkbenchBlock(properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5f)
+                    .sound(SoundType.WOOD)));
+
     private TCBlocks() {
     }
 

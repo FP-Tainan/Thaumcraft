@@ -54,6 +54,13 @@ public final class WandTriggers {
             level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 0.7f, 0.8f);
             return InteractionResult.SUCCESS;
         }
+        // a bancada comum vira bancada arcana, como a mesa do original
+        if (state.is(Blocks.CRAFTING_TABLE)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            level.setBlockAndUpdate(pos, net.thaumcraft.registry.TCBlocks.ARCANE_WORKBENCH.defaultBlockState());
+            level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 0.7f, 1.1f);
+            return InteractionResult.SUCCESS;
+        }
         return InteractionResult.PASS;
     }
 }

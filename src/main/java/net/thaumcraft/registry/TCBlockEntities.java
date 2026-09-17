@@ -16,6 +16,11 @@ public final class TCBlockEntities {
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("crucible"),
             new BlockEntityType<>(net.thaumcraft.block.entity.CrucibleBlockEntity::new, java.util.Set.of(TCBlocks.CRUCIBLE)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.ArcaneWorkbenchBlockEntity> ARCANE_WORKBENCH =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_workbench"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.ArcaneWorkbenchBlockEntity::new,
+                            java.util.Set.of(TCBlocks.ARCANE_WORKBENCH)));
+
     private TCBlockEntities() {
     }
 

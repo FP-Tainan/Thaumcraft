@@ -104,6 +104,11 @@ Greatwood, Silverwood.
   montadas pelo `scratchpad/Infuso.java` a partir das duas do original (a pedra de fundo e a veia animada),
   tingindo a veia com a cor do aspecto, que é o que o mod faz na hora de desenhar. Nasce em veios pelo
   subsolo e larga o fragmento quando se quebra com picareta.
+- `block/ArcaneWorkbenchBlock`, `inventory/ArcaneWorkbenchMenu` e `client/gui/ArcaneWorkbenchScreen` —
+  a bancada arcana, com a folha e as medidas do original: resultado em (160, 64), varinha em (160, 24) e a
+  grade de três por três em (40, 40) com passo de vinte e quatro. Os seis círculos em volta acendem na cor
+  do aspecto que a receita cobra, e apagam quando a varinha não tem o bastante. Uma bancada comum vira
+  bancada arcana com um toque de varinha.
 - `crafting/ArcaneRecipe` e `crafting/ArcaneRecipes` — a receita de bancada arcana, que cobra vis da
   varinha. **Gerada** pelo `scratchpad/fatia6-arcanas.js`; por enquanto só uma fecha, porque as outras
   sessenta e sete usam blocos do mod que ainda não existem. A bancada em si chega junto com eles.

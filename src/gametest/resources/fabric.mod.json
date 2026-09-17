@@ -21,7 +21,8 @@
       "net.thaumcraft.test.client.NodeClientTest",
       "net.thaumcraft.test.client.WandClientTest",
       "net.thaumcraft.test.client.CrucibleClientTest",
-      "net.thaumcraft.test.client.GearClientTest"
+      "net.thaumcraft.test.client.GearClientTest",
+      "net.thaumcraft.test.client.WorkbenchClientTest"
     ]
   }
 }

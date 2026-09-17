@@ -17,6 +17,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("wand"), net.thaumcraft.client.render.WandRenderer.Unbaked.CODEC);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.CRUCIBLE, net.thaumcraft.client.render.CrucibleRenderer::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(
+                net.thaumcraft.registry.TCMenus.ARCANE_WORKBENCH,
+                net.thaumcraft.client.gui.ArcaneWorkbenchScreen::new);
         ThaumometerHud.init();
         WandHud.init();
         // o Thaumonomicon abre o mapa das pesquisas, e nada disso encosta no lado do servidor
