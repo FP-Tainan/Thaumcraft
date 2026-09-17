@@ -51,10 +51,13 @@ public class GearClientTest implements FabricClientGameTest {
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
             context.waitTicks(5);
 
-            // a aba do criativo, com tudo o que o mod tem
-            context.runOnClient(minecraft -> minecraft.setScreenAndShow(
-                    new net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen(
-                            minecraft.player, minecraft.player.connection.enabledFeatures(), true)));
+            // a aba do criativo do mod, para conferir se tudo tem desenho
+            context.runOnClient(minecraft -> {
+                var screen = new net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen(
+                        minecraft.player, minecraft.player.connection.enabledFeatures(), true);
+                minecraft.setScreenAndShow(screen);
+            });
+            context.waitTicks(20);
             context.waitTicks(20);
             context.takeScreenshot("criativo");
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
