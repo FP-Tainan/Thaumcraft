@@ -4,6 +4,7 @@ import net.minecraft.world.item.ItemStack;
 import net.thaumcraft.api.aspects.AspectList;
 import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.registry.TCItems;
+import net.thaumcraft.registry.TCResources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,10 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.AIR, 2).add(Aspects.FIRE, 2).add(Aspects.WATER, 2).add(Aspects.EARTH, 2).add(Aspects.ORDER, 2)));
         ALL.add(new CrucibleRecipe("CRUCIBLE", new ItemStack(TCItems.SHARD_BALANCED), TCItems.ALUMENTUM,
                 new AspectList().add(Aspects.ENERGY, 3).add(Aspects.FIRE, 3).add(Aspects.ENTROPY, 3)));
+        ALL.add(new CrucibleRecipe("THAUMIUM", new ItemStack(TCResources.get("thaumium_ingot")), net.minecraft.world.item.Items.IRON_INGOT,
+                new AspectList().add(Aspects.MAGIC, 4)));
+        ALL.add(new CrucibleRecipe("TALLOW", new ItemStack(TCResources.get("magic_tallow")), net.minecraft.world.item.Items.ROTTEN_FLESH,
+                new AspectList().add(Aspects.MAGIC, 2)));
         ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.GUNPOWDER), net.minecraft.world.item.Items.GUNPOWDER,
                 new AspectList().add(Aspects.FIRE, 4).add(Aspects.ENTROPY, 4)));
         ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.SLIME_BALL), net.minecraft.world.item.Items.SLIME_BALL,

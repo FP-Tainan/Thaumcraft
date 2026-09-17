@@ -30,6 +30,43 @@ public final class TCItems {
     public static final Item THAUMONOMICON = register("thaumonomicon", properties ->
             new ThaumonomiconItem(properties.stacksTo(1)));
 
+    static {
+        // a matéria-prima do mod, que só existe para entrar em receita
+        for (String name : TCResources.NAMES) {
+            TCResources.ALL.put(name, register(name, Item::new));
+        }
+    }
+
+    /** As ferramentas e armaduras de táumio e de metal do vazio. */
+    public static final java.util.Map<String, Item> GEAR = new java.util.LinkedHashMap<>();
+
+    static {
+        for (TCGear.Piece piece : TCGear.PIECES) {
+            var tool = piece.material().equals("thaumium")
+                    ? net.thaumcraft.item.TCMaterials.THAUMIUM
+                    : net.thaumcraft.item.TCMaterials.VOID;
+            var armor = piece.material().equals("thaumium")
+                    ? net.thaumcraft.item.TCMaterials.THAUMIUM_ARMOR
+                    : net.thaumcraft.item.TCMaterials.VOID_ARMOR;
+            GEAR.put(piece.name(), register(piece.name(), properties -> switch (piece.kind()) {
+                case "pickaxe" -> new Item(properties.pickaxe(tool, 1.0f, -2.8f));
+                case "axe" -> new Item(properties.axe(tool, 6.0f, -3.1f));
+                case "shovel" -> new Item(properties.shovel(tool, 1.5f, -3.0f));
+                case "hoe" -> new Item(properties.hoe(tool, -1.0f, -1.0f));
+                case "sword" -> new Item(properties.sword(tool, 3.0f, -2.4f));
+                case "helmet" -> new Item(properties.humanoidArmor(armor,
+                        net.minecraft.world.item.equipment.ArmorType.HELMET));
+                case "chestplate" -> new Item(properties.humanoidArmor(armor,
+                        net.minecraft.world.item.equipment.ArmorType.CHESTPLATE));
+                case "leggings" -> new Item(properties.humanoidArmor(armor,
+                        net.minecraft.world.item.equipment.ArmorType.LEGGINGS));
+                case "boots" -> new Item(properties.humanoidArmor(armor,
+                        net.minecraft.world.item.equipment.ArmorType.BOOTS));
+                default -> new Item(properties);
+            }));
+        }
+    }
+
     /** Os fragmentos de aspecto: um por primário, que é o que o original tira do minério infundido. */
     public static final java.util.Map<String, Item> SHARDS = new java.util.LinkedHashMap<>();
 

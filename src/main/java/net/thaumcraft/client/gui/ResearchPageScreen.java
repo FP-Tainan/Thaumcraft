@@ -111,7 +111,15 @@ public class ResearchPageScreen extends Screen {
             if (this.page == 0 && side == 0) {
                 // o nome da pesquisa entre os dois filetes, como na primeira folha do original
                 graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, x - 4, y - 2, 24, 184, 96, 4, 256, 256);
-                graphics.centeredText(this.font, this.research.name(), x + PAGE_WIDTH / 2, y + 4, TEXT_COLOR);
+                // nome comprido encolhe até caber entre os filetes, como no original
+                var title = this.research.name();
+                float squeeze = Math.max(0.7f, Math.min(1.0f, (PAGE_WIDTH - 4) / (float) Math.max(1, this.font.width(title))));
+                var pose = graphics.pose();
+                pose.pushMatrix();
+                pose.translate(x + PAGE_WIDTH / 2.0f, y + 4);
+                pose.scale(squeeze, squeeze);
+                graphics.centeredText(this.font, title, 0, 0, TEXT_COLOR);
+                pose.popMatrix();
                 graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, x - 4, y + 15, 24, 184, 96, 4, 256, 256);
                 y += 25;
             }

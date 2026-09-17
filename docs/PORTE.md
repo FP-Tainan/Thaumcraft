@@ -89,6 +89,21 @@ Greatwood, Silverwood.
   idioma do próprio mod e as marcas dele (`<BR>`, `<LINE>`).
 - `item/ThaumonomiconItem` — o livro.
 
+## Fatia 6 — matéria-prima, ferramentas e armaduras
+
+- `registry/TCResources` — **gerada** pelo `scratchpad/fatia6-recursos.js`: as treze matérias-primas do
+  mod que só existem para entrar em receita (táumio, mercúrio, sebo, âmbar, tecido encantado, salis mundus
+  e o resto). No original tudo isso é um item só com números diferentes; aqui cada um é um item, que é como
+  o jogo de hoje faz.
+- `item/TCMaterials` — de que são feitas as ferramentas, com os números do `ThaumcraftApi` original:
+  táumio com 400 de uso, 7 de velocidade e 22 de encantabilidade; metal do vazio cortando mais e durando
+  menos. As armaduras seguem os mesmos 2/5/6/2 e 3/6/7/3 do original.
+- `registry/TCGear` — **gerada** pelo `scratchpad/fatia6-ferramentas.js`: as dezoito peças de táumio e de
+  metal do vazio, com as texturas do mod e as receitas de bancada do `ConfigRecipesSpecialSlice`.
+- `crafting/ArcaneRecipe` e `crafting/ArcaneRecipes` — a receita de bancada arcana, que cobra vis da
+  varinha. **Gerada** pelo `scratchpad/fatia6-arcanas.js`; por enquanto só uma fecha, porque as outras
+  sessenta e sete usam blocos do mod que ainda não existem. A bancada em si chega junto com eles.
+
 ## Fatia 5 — alquimia
 
 - `block/CrucibleBlock` e `block/entity/CrucibleBlockEntity` — o crisol. As contas são as do original:

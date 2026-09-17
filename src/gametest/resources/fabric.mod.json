@@ -19,7 +19,8 @@
       "net.thaumcraft.test.client.BookClientTest",
       "net.thaumcraft.test.client.NodeClientTest",
       "net.thaumcraft.test.client.WandClientTest",
-      "net.thaumcraft.test.client.CrucibleClientTest"
+      "net.thaumcraft.test.client.CrucibleClientTest",
+      "net.thaumcraft.test.client.GearClientTest"
     ]
   }
 }
