@@ -76,6 +76,14 @@ public final class TCItems {
         }
     }
 
+    static {
+        // o minério infundido também vai para a aba do criativo
+        for (var entry : TCBlocks.INFUSED_STONE.entrySet()) {
+            register("infused_stone_" + entry.getKey(), properties ->
+                    new net.minecraft.world.item.BlockItem(entry.getValue(), properties));
+        }
+    }
+
     /** O crisol, para levar na mão. */
     public static final Item CRUCIBLE = register("crucible", properties ->
             new net.minecraft.world.item.BlockItem(net.thaumcraft.registry.TCBlocks.CRUCIBLE, properties));

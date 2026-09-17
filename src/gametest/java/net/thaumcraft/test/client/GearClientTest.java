@@ -14,6 +14,17 @@ public class GearClientTest implements FabricClientGameTest {
             singleplayer.getServer().runCommand("time set noon");
             singleplayer.getServer().runCommand("weather clear");
 
+            // as seis pedras infundidas lado a lado
+            singleplayer.getServer().runCommand("execute at @p run tp @s ~ ~ ~ 0 0");
+            int at = -2;
+            for (String tag : new String[]{"air", "fire", "water", "earth", "order", "entropy"}) {
+                singleplayer.getServer().runCommand(
+                        "execute at @p run setblock ~" + at + " ~1 ~3 thaumcraft:infused_stone_" + tag);
+                at++;
+            }
+            context.waitTicks(30);
+            context.takeScreenshot("minerio_infundido");
+
             // a armadura de táumio vestida, vista de fora
             singleplayer.getServer().runCommand("item replace entity @p armor.head with thaumcraft:thaumium_helmet");
             singleplayer.getServer().runCommand("item replace entity @p armor.chest with thaumcraft:thaumium_chestplate");

@@ -100,6 +100,10 @@ Greatwood, Silverwood.
   menos. As armaduras seguem os mesmos 2/5/6/2 e 3/6/7/3 do original.
 - `registry/TCGear` — **gerada** pelo `scratchpad/fatia6-ferramentas.js`: as dezoito peças de táumio e de
   metal do vazio, com as texturas do mod e as receitas de bancada do `ConfigRecipesSpecialSlice`.
+- **O minério infundido** — a pedra de onde os fragmentos saem, uma por aspecto primordial. As texturas são
+  montadas pelo `scratchpad/Infuso.java` a partir das duas do original (a pedra de fundo e a veia animada),
+  tingindo a veia com a cor do aspecto, que é o que o mod faz na hora de desenhar. Nasce em veios pelo
+  subsolo e larga o fragmento quando se quebra com picareta.
 - `crafting/ArcaneRecipe` e `crafting/ArcaneRecipes` — a receita de bancada arcana, que cobra vis da
   varinha. **Gerada** pelo `scratchpad/fatia6-arcanas.js`; por enquanto só uma fecha, porque as outras
   sessenta e sete usam blocos do mod que ainda não existem. A bancada em si chega junto com eles.

@@ -1,5 +1,11 @@
 {
   "block.thaumcraft.crucible": "Crucible",
+  "block.thaumcraft.infused_stone_air": "Air Infused Stone",
+  "block.thaumcraft.infused_stone_earth": "Earth Infused Stone",
+  "block.thaumcraft.infused_stone_entropy": "Entropy Infused Stone",
+  "block.thaumcraft.infused_stone_fire": "Fire Infused Stone",
+  "block.thaumcraft.infused_stone_order": "Order Infused Stone",
+  "block.thaumcraft.infused_stone_water": "Water Infused Stone",
   "block.thaumcraft.node": "Aura Node",
   "item.thaumcraft.alumentum": "Alumentum",
   "item.thaumcraft.amber": "Amber",

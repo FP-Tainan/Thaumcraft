@@ -12,7 +12,8 @@
       "net.thaumcraft.test.NodeGameTest",
       "net.thaumcraft.test.WandGameTest",
       "net.thaumcraft.test.RecipeGameTest",
-      "net.thaumcraft.test.CrucibleGameTest"
+      "net.thaumcraft.test.CrucibleGameTest",
+      "net.thaumcraft.test.OreGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",

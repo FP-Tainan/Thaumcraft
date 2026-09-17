@@ -34,6 +34,20 @@ public final class TCBlocks {
             .noOcclusion()
             .sound(SoundType.METAL)));
 
+    /** O minério infundido: a pedra de onde os fragmentos de aspecto saem. */
+    public static final java.util.Map<String, Block> INFUSED_STONE = new java.util.LinkedHashMap<>();
+
+    static {
+        for (String tag : new String[]{"air", "fire", "water", "earth", "order", "entropy"}) {
+            INFUSED_STONE.put(tag, register("infused_stone_" + tag, properties -> new Block(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0f, 5.0f)
+                    .requiresCorrectToolForDrops()
+                    .lightLevel(state -> 4)
+                    .sound(SoundType.STONE))));
+        }
+    }
+
     private TCBlocks() {
     }
 
