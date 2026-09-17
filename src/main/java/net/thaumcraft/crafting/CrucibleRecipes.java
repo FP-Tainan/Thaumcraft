@@ -4,6 +4,8 @@ import net.minecraft.world.item.ItemStack;
 import net.thaumcraft.api.aspects.AspectList;
 import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.registry.TCItems;
+import net.thaumcraft.registry.TCBlocks;
+import net.thaumcraft.api.wands.WandParts;
 import net.thaumcraft.registry.TCResources;
 
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.AIR, 2).add(Aspects.FIRE, 2).add(Aspects.WATER, 2).add(Aspects.EARTH, 2).add(Aspects.ORDER, 2)));
         ALL.add(new CrucibleRecipe("CRUCIBLE", new ItemStack(TCItems.SHARD_BALANCED), TCItems.ALUMENTUM,
                 new AspectList().add(Aspects.ENERGY, 3).add(Aspects.FIRE, 3).add(Aspects.ENTROPY, 3)));
+        ALL.add(new CrucibleRecipe("NITOR", new ItemStack(TCItems.NITOR), net.minecraft.world.item.Items.GLOWSTONE_DUST,
+                new AspectList().add(Aspects.ENERGY, 3).add(Aspects.FIRE, 3).add(Aspects.LIGHT, 3)));
         ALL.add(new CrucibleRecipe("THAUMIUM", new ItemStack(TCResources.get("thaumium_ingot")), net.minecraft.world.item.Items.IRON_INGOT,
                 new AspectList().add(Aspects.MAGIC, 4)));
         ALL.add(new CrucibleRecipe("TALLOW", new ItemStack(TCResources.get("magic_tallow")), net.minecraft.world.item.Items.ROTTEN_FLESH,
@@ -58,6 +62,8 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.WATER, 2).add(Aspects.LIFE, 2)));
         ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.CLAY_BALL), net.minecraft.world.item.Items.CLAY_BALL,
                 new AspectList().add(Aspects.WATER, 1).add(Aspects.EARTH, 2)));
+        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.GLOWSTONE_DUST), net.minecraft.world.item.Items.GLOWSTONE_DUST,
+                new AspectList().add(Aspects.LIGHT, 3).add(Aspects.SENSES, 1)));
         ALL.add(new CrucibleRecipe("ALCHEMICALMANUFACTURE", new ItemStack(net.minecraft.world.level.block.Blocks.COBWEB.asItem()), net.minecraft.world.item.Items.STRING,
                 new AspectList().add(Aspects.TRAP, 2).add(Aspects.CLOTH, 2)));
         ALL.add(new CrucibleRecipe("ALCHEMICALMANUFACTURE", new ItemStack(net.minecraft.world.level.block.Blocks.MOSSY_COBBLESTONE.asItem()), net.minecraft.world.level.block.Blocks.COBBLESTONE.asItem(),
@@ -70,5 +76,31 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.ENTROPY, 1)));
         ALL.add(new CrucibleRecipe("TRANSGOLD", new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET), net.minecraft.world.item.Items.GOLD_NUGGET,
                 new AspectList().add(Aspects.METAL, 2).add(Aspects.GREED, 1)));
+        ALL.add(new CrucibleRecipe("GOLEMSTRAW", new ItemStack(TCItems.GOLEM_PLACERS.get("straw")), net.minecraft.world.level.block.Blocks.HAY_BLOCK.asItem(),
+                new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
+        ALL.add(new CrucibleRecipe("GOLEMTALLOW", new ItemStack(TCItems.GOLEM_PLACERS.get("tallow")), TCBlocks.BUILDING.get("tallow_block").asItem(),
+                new AspectList().add(Aspects.MAN, 8).add(Aspects.MOTION, 8).add(Aspects.SOUL, 8)));
+        ALL.add(new CrucibleRecipe("GOLEMCLAY", new ItemStack(TCItems.GOLEM_PLACERS.get("clay")), net.minecraft.world.level.block.Blocks.CLAY.asItem(),
+                new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
+        ALL.add(new CrucibleRecipe("GOLEMSTONE", new ItemStack(TCItems.GOLEM_PLACERS.get("stone")), net.minecraft.world.level.block.Blocks.STONE_BRICKS.asItem(),
+                new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
+        ALL.add(new CrucibleRecipe("GOLEMIRON", new ItemStack(TCItems.GOLEM_PLACERS.get("iron")), net.minecraft.world.level.block.Blocks.IRON_BLOCK.asItem(),
+                new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
+        ALL.add(new CrucibleRecipe("GOLEMTHAUMIUM", new ItemStack(TCItems.GOLEM_PLACERS.get("thaumium")), TCBlocks.BUILDING.get("thaumium_block").asItem(),
+                new AspectList().add(Aspects.MAN, 8).add(Aspects.MOTION, 8).add(Aspects.SOUL, 8)));
+        ALL.add(new CrucibleRecipe("COREGATHER", new ItemStack(TCItems.GOLEM_CORES.get("gather")), TCItems.GOLEM_CORE_BLANK,
+                new AspectList().add(Aspects.GREED, 5).add(Aspects.EARTH, 5)));
+        ALL.add(new CrucibleRecipe("COREFILL", new ItemStack(TCItems.GOLEM_CORES.get("fill")), TCItems.GOLEM_CORE_BLANK,
+                new AspectList().add(Aspects.HUNGER, 5).add(Aspects.VOID, 5)));
+        ALL.add(new CrucibleRecipe("COREEMPTY", new ItemStack(TCItems.GOLEM_CORES.get("empty")), TCItems.GOLEM_CORE_BLANK,
+                new AspectList().add(Aspects.GREED, 5).add(Aspects.VOID, 5)));
+        ALL.add(new CrucibleRecipe("COREHARVEST", new ItemStack(TCItems.GOLEM_CORES.get("harvest")), TCItems.GOLEM_CORE_BLANK,
+                new AspectList().add(Aspects.HARVEST, 5).add(Aspects.CROP, 5)));
+        ALL.add(new CrucibleRecipe("COREGUARD", new ItemStack(TCItems.GOLEM_CORES.get("guard")), TCItems.GOLEM_CORE_BLANK,
+                new AspectList().add(Aspects.WEAPON, 5).add(Aspects.TRAP, 5)));
+        ALL.add(new CrucibleRecipe("COREBUTCHER", new ItemStack(TCItems.GOLEM_CORES.get("butcher")), TCItems.GOLEM_CORES.get("guard"),
+                new AspectList().add(Aspects.FLESH, 5).add(Aspects.BEAST, 5)));
+        ALL.add(new CrucibleRecipe("CORELIQUID", new ItemStack(TCItems.GOLEM_CORES.get("decanting")), TCItems.GOLEM_CORE_BLANK,
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.VOID, 5)));
     }
 }

@@ -41,6 +41,7 @@ public class Thaumcraft implements ModInitializer {
         TCBlockEntities.init();
         TCComponents.init();
         TCItems.init();
+        net.thaumcraft.api.golems.GolemTypes.init();
         TCEntities.init();
         TCSounds.init();
         TCFeatures.init();

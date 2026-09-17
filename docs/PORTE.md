@@ -22,7 +22,7 @@ modelo, tela virou `Screen`.
 | 4 | Varinhas, nós e vis | **prontos**, com quatro focos (fogo, escavação, gelo e raio); os outros seis a fazer |
 | 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **pronta** — crisol, frascos, forno alquímico, alambique, tubos e jarros |
 | 6 | Infusão: matriz, pedestais, instabilidade | **pronta** |
-| 7 | Golens | a fazer |
+| 7 | Golens | **os oito golens e os doze núcleos prontos**; dois núcleos já trabalham (juntar e colher) |
 | 8 | O resto: mácula, criaturas, eldritch, artifícios | a fazer |
 
 Fora das fatias, entraram no caminho as peças sem as quais nada disso se joga: o minério infundido (de
@@ -59,7 +59,14 @@ Hoje o mod já se joga do começo ao meio, nesta ordem:
     os ingredientes nos pedestais em volta, o toque seguinte começa a infusão. É assim que saem as hastes
     de varinha melhores — obsidiana, gelo, quartzo, junco, blaze e osso.
 
-O que ainda não tem caminho: os golens e o lado eldritch.
+13. **Fazer um golem** — um fardo de feno no crisol com *humanus*, *motus* e *spiritus* vira um golem de
+    palha; os outros sete saem do mesmo jeito, cada um da sua matéria. Na bancada arcana saem o sino e o
+    núcleo em branco, e no crisol o núcleo em branco vira o núcleo do serviço que se quiser.
+14. **Pôr o golem para trabalhar** — encaixa-se o núcleo nele com um toque, toca-se o sino num baú e
+    depois no golem, e ele passa a juntar o que estiver caído no chão (ou a colher o que estiver maduro)
+    e a levar tudo para aquele baú.
+
+O que ainda não tem caminho: o lado eldritch.
 
 ## Fatia 1 — aspectos
 
@@ -323,3 +330,38 @@ cobra também paciência — ela leva tempo, e pode dar errado no meio.
   próprio mod desenha no livro põe **pedra arcana** ali. Ficou a pedra arcana, que já existe e já se faz.
 - Falta da fatia: a infusão que encanta (o original também encanta itens na matriz), as melhorias rúnicas
   e as cinquenta e oito receitas que esperam peças das fatias seguintes.
+
+## Fatia 7 — golens
+
+O golem é o servo que faz o trabalho chato no lugar de quem o fez. De que ele é feito manda no corpo
+dele; o núcleo encaixado nele manda no serviço.
+
+- `api/golems/GolemTypes` — **gerada** pelo `scratchpad/fatia7-golens.js` a partir do
+  `EnumGolemType` do original: as oito matérias, com vida, carga, força, couro, passo, resistência ao
+  fogo, quantas melhorias cabem, de quanto em quanto ele se remenda e o vis que custa. A palha é o golem
+  de todo dia — dez de vida, carrega uma coisa só, e pega fogo; o táumio é o topo — quarenta de vida,
+  trinta e duas coisas na mão e duas melhorias. A argila, a pedra, o ferro e o táumio não queimam.
+- `entity/GolemEntity` — o bicho. A matéria escolhida vira atributo na hora: vida, passo, força e
+  couro saem da tabela, e ele se remenda sozinho no compasso da matéria de que é feito.
+- `entity/ai/GolemWorkGoal` — o vaivém de três tempos do original: procura serviço, pega, leva para
+  casa. O núcleo de **juntar** cata o que está caído no chão a doze blocos; o de **colher** quebra a
+  plantação madura e **replanta** uma semente, como o do original faz. Ele carrega uma pilha do tamanho
+  que a matéria dele aguenta e despeja tudo no baú que o sino marcou.
+- `client/render/GolemModel` — o corpo, refeito caixa por caixa do `ModelGolem` do original: cabeça de
+  oito por nove por oito, tronco de dezesseis por doze por onze, braços de quatro por vinte e cinco (é o
+  que dá ao golem aquele jeito de bracinho comprido), pernas de seis por dezesseis. As peles são as
+  oito do próprio mod.
+- `item/GolemPlacerItem`, `item/GolemCoreItem` e `item/GolemBellItem` — o golem guardado na mão, o
+  disco do serviço e o sino.
+- As receitas vieram todas do original, e foram as tabelas geradas que as trouxeram: os golens e os
+  núcleos são **receitas de crisol** (o gerador do crisol aprendeu a resolver as variáveis locais que o
+  original usa, como o `coreBlank` que aparece em seis receitas), e o sino e o núcleo em branco são
+  **receitas de bancada arcana**. Com isso as receitas de crisol pularam de dezoito para trinta e três.
+- **Diferença**: no original o sino marca as faces dos baús com marcas coloridas, e o golem lê essas
+  marcas — dá para mandar golens diferentes em baús diferentes pela cor. Aqui o sino guarda um baú de
+  cada vez: toca-se no baú e depois no golem. As marcas coloridas pedem uma camada de desenho e de rede
+  que ainda não existe por aqui.
+- **Diferença**: dos doze núcleos, dois já sabem trabalhar — juntar e colher. Os outros dez existem como
+  item, com os nomes e as receitas do original, mas ainda não têm serviço: o de proteger pede a briga
+  do original, o de alquimia pede a essência encanada ligada ao golem, o de pescar pede a bóia. Eles
+  chegam com as peças que faltam.

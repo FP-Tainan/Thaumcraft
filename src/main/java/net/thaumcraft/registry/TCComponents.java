@@ -30,6 +30,11 @@ public final class TCComponents {
     public static final DataComponentType<String> PHIAL_ASPECT = register("phial_aspect",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
+    /** A casa que o sino do golem está guardando: o baú para onde o golem vai levar o que juntar. */
+    public static final DataComponentType<net.minecraft.core.BlockPos> GOLEM_HOME = register("golem_home",
+            builder -> builder.persistent(net.minecraft.core.BlockPos.CODEC)
+                    .networkSynchronized(net.minecraft.core.BlockPos.STREAM_CODEC));
+
     private TCComponents() {
     }
 

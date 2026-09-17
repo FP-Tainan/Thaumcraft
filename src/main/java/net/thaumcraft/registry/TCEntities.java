@@ -18,6 +18,14 @@ public final class TCEntities {
                     .clientTrackingRange(4)
                     .updateInterval(10));
 
+    /** O golem: o servo que faz o trabalho chato. */
+    public static final EntityType<net.thaumcraft.entity.GolemEntity> GOLEM = register("golem",
+            EntityType.Builder.<net.thaumcraft.entity.GolemEntity>of(
+                            net.thaumcraft.entity.GolemEntity::new, MobCategory.MISC)
+                    .sized(0.4f, 0.95f)
+                    .eyeHeight(0.8f)
+                    .clientTrackingRange(8));
+
     private TCEntities() {
     }
 
@@ -29,5 +37,7 @@ public final class TCEntities {
 
     /** Chamado na abertura do mod só para as constantes acima saírem do papel. */
     public static void init() {
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(
+                GOLEM, net.thaumcraft.entity.GolemEntity.attributes());
     }
 }

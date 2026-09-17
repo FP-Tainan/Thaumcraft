@@ -136,6 +136,30 @@ public final class TCItems {
     /** A lasca de gelo: não é item de verdade, é só a cara do projétil do foco de gelo. */
     public static final Item FROST_SHARD = registerHidden("frost_shard", Item::new);
 
+    /** Os golens guardados na mão, um por matéria. */
+    public static final java.util.Map<String, Item> GOLEM_PLACERS = new java.util.LinkedHashMap<>();
+
+    /** Os núcleos de golem, um por serviço. */
+    public static final java.util.Map<String, Item> GOLEM_CORES = new java.util.LinkedHashMap<>();
+
+    static {
+        for (String material : net.thaumcraft.api.golems.GolemTypes.ALL.keySet()) {
+            GOLEM_PLACERS.put(material, register("golem_" + material, properties ->
+                    new net.thaumcraft.item.GolemPlacerItem(properties.stacksTo(16), material)));
+        }
+        for (String core : net.thaumcraft.api.golems.GolemTypes.CORES) {
+            GOLEM_CORES.put(core, register("golem_core_" + core, properties ->
+                    new net.thaumcraft.item.GolemCoreItem(properties, core)));
+        }
+    }
+
+    /** O núcleo em branco: o disco de barro sem serviço nenhum, de onde saem todos os outros. */
+    public static final Item GOLEM_CORE_BLANK = register("golem_core_blank", Item::new);
+
+    /** O sino do golem: com ele se diz ao golem para onde levar o que junta. */
+    public static final Item GOLEM_BELL = register("golem_bell", properties ->
+            new net.thaumcraft.item.GolemBellItem(properties.stacksTo(1)));
+
     /** O frasco de essência, que guarda um aspecto. */
     public static final Item PHIAL = register("phial", properties ->
             new net.thaumcraft.item.PhialItem(properties.stacksTo(16)));
@@ -264,6 +288,12 @@ public final class TCItems {
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
             "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "tube",
             "infusion_matrix", "pedestal",
+            "golem_bell",
+            "golem_straw", "golem_wood", "golem_tallow", "golem_clay",
+            "golem_flesh", "golem_stone", "golem_iron", "golem_thaumium",
+            "golem_core_fill", "golem_core_empty", "golem_core_gather", "golem_core_harvest",
+            "golem_core_guard", "golem_core_decanting", "golem_core_alchemy", "golem_core_chop",
+            "golem_core_use", "golem_core_butcher", "golem_core_sorting", "golem_core_fishing",
             "arcane_stone", "thaumium_block", "tallow_block",
             "paving_stone_travel", "paving_stone_warding",
             "infused_stone_air", "infused_stone_fire", "infused_stone_water",

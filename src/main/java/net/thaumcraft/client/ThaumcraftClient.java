@@ -16,6 +16,14 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.FROST_SHARD,
                 net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+
+        // o golem, com a pele da matéria de que ele é feito
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.GolemRenderer.LAYER,
+                net.thaumcraft.client.render.GolemModel::createBodyLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.GOLEM,
+                net.thaumcraft.client.render.GolemRenderer::new);
         // o nó de aura é uma nuvem de bolhas, e quem a pinta é este desenhista
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.NODE, net.thaumcraft.client.render.NodeRenderer::new);
