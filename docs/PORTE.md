@@ -18,12 +18,40 @@ modelo, tela virou `Screen`.
 |---|---|---|
 | 1 | Aspectos: a tabela dos 48, a lista com quantidade, os símbolos | **pronta** |
 | 2 | Tradução para português, do `pt_BR.lang` do próprio mod | **pronta** |
-| 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **escaneamento pronto**; caderno e tabuleiro a fazer |
-| 4 | Varinhas, nodes e vis | **nós, vis e varinhas prontos**; focos a fazer |
-| 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **crisol pronto**; frascos e alambique a fazer |
+| 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **thaumômetro e caderno prontos**; o tabuleiro da mesa de pesquisa a fazer |
+| 4 | Varinhas, nós e vis | **prontos**, com dois focos (fogo e escavação); os outros oito focos a fazer |
+| 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **crisol e frascos prontos**; jarros, tubos e alambique a fazer |
 | 6 | Infusão: matriz, pedestais, instabilidade | a fazer |
 | 7 | Golens | a fazer |
 | 8 | O resto: mácula, criaturas, eldritch, artifícios | a fazer |
+
+Fora das fatias, entraram no caminho as peças sem as quais nada disso se joga: o minério infundido (de
+onde saem os fragmentos), a matéria-prima do mod, as ferramentas e armaduras de táumio e de metal do
+vazio, os blocos de construção, a bancada arcana e os Óculos da Revelação.
+
+## O caminho de quem começa
+
+Hoje o mod já se joga do começo ao meio, nesta ordem:
+
+1. **Minerar pedra infundida** — ela nasce em veios no subsolo, uma cor por aspecto primordial, e larga
+   fragmentos quando quebrada com picareta.
+2. **Fazer o thaumômetro** — fragmento, ouro e vidro na bancada comum.
+3. **Examinar o mundo** — botão direito com o thaumômetro erguido; cada coisa nova rende pontos de
+   aspecto, e só se lê o que se tem cabeça para entender.
+4. **Fazer a varinha** — pepitas de ferro viram a ponta; ponta e graveto viram a varinha.
+5. **Bater numa estante de livros com a varinha** — ela vira o Thaumonomicon.
+6. **Pesquisar** — no livro, clicar numa pesquisa ao alcance cobra os aspectos que ela pede.
+7. **Achar um nó de aura** — só aparece com o thaumômetro na mão ou os óculos no rosto; segurar o botão
+   da varinha nele enche a varinha de vis.
+8. **Bater num caldeirão com a varinha** — ele vira crisol. Com água dentro e fogo por baixo, o que se
+   joga nele se desfaz em aspectos; com a mistura certa e o catalisador, sai coisa nova — inclusive
+   o táumio, de uma barra de ferro.
+9. **Fazer ferramentas e armadura de táumio** — na bancada comum.
+10. **Bater numa bancada comum com a varinha** — ela vira bancada arcana, que monta o que precisa de vis:
+    os Óculos da Revelação, a ponta de ouro, os focos de fogo e de escavação.
+
+O que ainda não tem caminho: tudo o que depende de essência encanada (jarros, tubos, alambique), da
+infusão, dos golens e do lado eldritch.
 
 ## Fatia 1 — aspectos
 
