@@ -14,7 +14,8 @@
       "net.thaumcraft.test.RecipeGameTest",
       "net.thaumcraft.test.CrucibleGameTest",
       "net.thaumcraft.test.OreGameTest",
-      "net.thaumcraft.test.ProgressionGameTest"
+      "net.thaumcraft.test.ProgressionGameTest",
+      "net.thaumcraft.test.TabGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",

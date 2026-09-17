@@ -176,11 +176,54 @@ public final class TCItems {
         return item;
     }
 
+    /**
+     * A ordem em que as coisas aparecem na aba do criativo.
+     *
+     * <p>A ordem de registro é acidental — segue a ordem em que as fatias foram entrando. Esta é a ordem
+     * que faz sentido para quem abre a aba: primeiro o que se usa para descobrir, depois a varinha e as
+     * peças dela, depois a matéria-prima, o equipamento e por fim os blocos.
+     */
+    private static final String[] SHELF = {
+            "thaumometer", "thaumonomicon", "goggles",
+            "wand", "staff", "focus_fire", "focus_excavation",
+            "wand_cap_iron", "wand_cap_gold", "wand_cap_thaumium", "wand_cap_void",
+            "wand_rod_greatwood", "wand_rod_obsidian", "wand_rod_silverwood", "wand_rod_ice",
+            "wand_rod_quartz", "wand_rod_reed", "wand_rod_blaze", "wand_rod_bone",
+            "shard_air", "shard_fire", "shard_water", "shard_earth", "shard_order", "shard_entropy",
+            "shard_balanced", "salis_mundus", "phial",
+            "thaumium_ingot", "void_ingot", "quicksilver", "magic_tallow", "amber", "enchanted_fabric",
+            "vis_filter", "knowledge_fragment", "mirrored_glass", "jar_label", "primal_charm", "gold_coin",
+            "alumentum", "nitor",
+            "thaumium_pickaxe", "thaumium_axe", "thaumium_shovel", "thaumium_hoe", "thaumium_sword",
+            "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
+            "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
+            "void_helmet", "void_chestplate", "void_leggings", "void_boots",
+            "crucible", "arcane_workbench",
+            "arcane_stone", "thaumium_block", "tallow_block",
+            "paving_stone_travel", "paving_stone_warding",
+            "infused_stone_air", "infused_stone_fire", "infused_stone_water",
+            "infused_stone_earth", "infused_stone_order", "infused_stone_entropy",
+    };
+
+    /**
+     * O que a aba mostra, na ordem: primeiro o que a prateleira nomeia, e depois o que tiver ficado de
+     * fora dela — assim nada some da aba quando uma fatia nova traz peças e alguém esquece de listá-las.
+     */
+    public static java.util.List<Item> displayOrder() {
+        java.util.Set<Item> shown = new java.util.LinkedHashSet<>();
+        for (String name : SHELF) {
+            Item found = BuiltInRegistries.ITEM.getValue(Thaumcraft.id(name));
+            if (found != null && found != net.minecraft.world.item.Items.AIR) shown.add(found);
+        }
+        shown.addAll(ORDER);
+        return java.util.List.copyOf(shown);
+    }
+
     public static void init() {
         CreativeModeTab tab = CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
                 .title(Component.translatable("itemGroup.thaumcraft"))
                 .icon(() -> new ItemStack(THAUMOMETER))
-                .displayItems((parameters, output) -> ORDER.forEach(output::accept))
+                .displayItems((parameters, output) -> displayOrder().forEach(output::accept))
                 .build();
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, TAB_KEY, tab);
     }
