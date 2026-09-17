@@ -101,6 +101,16 @@ public final class TCBlocks {
                     .lightLevel(state -> 6)
                     .sound(SoundType.STONE)));
 
+    /** O Nitor: a chama fria que não queima nada e não se apaga. */
+    public static final Block NITOR = register("nitor", properties ->
+            new net.thaumcraft.block.NitorBlock(properties
+                    .mapColor(MapColor.FIRE)
+                    .instabreak()
+                    .noCollision()
+                    .noOcclusion()
+                    .lightLevel(state -> 15)
+                    .sound(SoundType.WOOL)));
+
     /** A folha-cintilante: a flor branca de que se faz a Flor Etérea. */
     public static final Block SHIMMERLEAF = register("shimmerleaf", properties ->
             new net.thaumcraft.block.ShimmerleafBlock(properties

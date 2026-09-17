@@ -15,8 +15,16 @@ public class TaintGameTest {
     /** Um bloco de mácula sozinho no meio da terra acaba secando. */
     @GameTest(maxTicks = 400)
     public void loneTaintWithers(GameTestHelper helper) {
+        // emparedada em pedra de propósito: assim ela não tem ar em volta onde criar fibra, e a fibra
+        // deixaria de ser mácula sozinha — que é justamente o que esta prova quer medir
         BlockPos at = new BlockPos(3, 2, 3);
-        helper.setBlock(at.below(), Blocks.STONE);
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    helper.setBlock(at.offset(dx, dy, dz), Blocks.STONE);
+                }
+            }
+        }
         helper.setBlock(at, TCBlocks.TAINT_SOIL);
 
         helper.succeedWhen(() -> {

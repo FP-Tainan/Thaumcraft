@@ -336,6 +336,7 @@ public class AlchemicalFurnaceBlockEntity extends BlockEntity implements Contain
                     case 4 -> AlchemicalFurnaceBlockEntity.this.getBlockPos().getX();
                     case 5 -> AlchemicalFurnaceBlockEntity.this.getBlockPos().getY();
                     case 6 -> AlchemicalFurnaceBlockEntity.this.getBlockPos().getZ();
+                    case AlchemicalFurnaceMenu.DATA_VIS -> AlchemicalFurnaceBlockEntity.this.visSize();
                     default -> 0;
                 };
             }

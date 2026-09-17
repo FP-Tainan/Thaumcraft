@@ -13,12 +13,14 @@ import net.thaumcraft.registry.TCMenus;
 /**
  * As duas casas do forno alquímico, nos lugares do Thaumcraft 4.2.3.5.
  *
- * <p>O que vai virar essência entra em (56, 17) e o combustível em (56, 53), com a chama entre os dois —
- * os mesmos lugares do forno comum, que é de onde o original tirou a tela dele.
+ * <p>As medidas são as do {@code ContainerAlchemyFurnace} do original: o que vai virar essência entra
+ * em (80, 8) e o combustível em (80, 48), um em cima do outro, com a chama no meio. Não são os lugares do
+ * forno comum do Minecraft — a folha do Thaumcraft tem dois tubos de vidro nas laterais, e as casas ficam
+ * na coluna do meio, entre eles.
  */
 public class AlchemicalFurnaceMenu extends AbstractContainerMenu {
     /** Quantos números a tela precisa do forno: fogo, fogo total, cozimento, cozimento total e onde ele está. */
-    public static final int DATA_SIZE = 7;
+    public static final int DATA_SIZE = 8;
     public static final int DATA_BURN = 0;
     public static final int DATA_BURN_TOTAL = 1;
     public static final int DATA_COOK = 2;
@@ -26,6 +28,7 @@ public class AlchemicalFurnaceMenu extends AbstractContainerMenu {
     private static final int DATA_X = 4;
     private static final int DATA_Y = 5;
     private static final int DATA_Z = 6;
+    public static final int DATA_VIS = 7;
 
     private final Container furnace;
     private final net.minecraft.world.inventory.ContainerData data;
@@ -49,8 +52,8 @@ public class AlchemicalFurnaceMenu extends AbstractContainerMenu {
         this.addDataSlots(data);
         furnace.startOpen(inventory.player);
 
-        this.addSlot(new Slot(furnace, AlchemicalFurnaceBlockEntity.INPUT_SLOT, 56, 17));
-        this.addSlot(new Slot(furnace, AlchemicalFurnaceBlockEntity.FUEL_SLOT, 56, 53));
+        this.addSlot(new Slot(furnace, AlchemicalFurnaceBlockEntity.INPUT_SLOT, 80, 8));
+        this.addSlot(new Slot(furnace, AlchemicalFurnaceBlockEntity.FUEL_SLOT, 80, 48));
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
@@ -94,6 +97,12 @@ public class AlchemicalFurnaceMenu extends AbstractContainerMenu {
     public float cooked() {
         int total = this.data.get(DATA_SMELT);
         return total <= 0 ? 0.0f : Math.min(1.0f, this.data.get(DATA_COOK) / (float) total);
+    }
+
+    /** O quanto de essência o forno já tem guardado, de zero a um. */
+    public float filled() {
+        return Math.min(1.0f,
+                this.data.get(DATA_VIS) / (float) AlchemicalFurnaceBlockEntity.MAX_VIS);
     }
 
     @Override

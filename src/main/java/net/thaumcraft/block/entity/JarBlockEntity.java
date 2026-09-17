@@ -42,6 +42,8 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
 
     @Nullable
     private Aspect aspect;
+    /** Para que lado o rótulo está virado; o original guarda isto no próprio jarro. */
+    private Direction facing = Direction.NORTH;
     @Nullable
     private Aspect label;
     private int amount;
@@ -100,6 +102,16 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
     @Nullable
     public Aspect label() {
         return this.label;
+    }
+
+    /** Para que lado o rótulo do jarro está virado. */
+    public Direction facing() {
+        return this.facing;
+    }
+
+    public void setFacing(Direction facing) {
+        this.facing = facing.getAxis().isHorizontal() ? facing : Direction.NORTH;
+        this.sync();
     }
 
     /** Põe ou tira o rótulo. Um jarro com coisa dentro não aceita rótulo de outro aspecto. */
@@ -245,6 +257,7 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
         this.aspect = Aspect.of(input.getStringOr("aspect", ""));
         this.label = Aspect.of(input.getStringOr("label", ""));
         this.amount = input.getIntOr("amount", 0);
+        this.facing = Direction.from3DDataValue(input.getIntOr("facing", Direction.NORTH.get3DDataValue()));
     }
 
     @Override
@@ -253,6 +266,7 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
         if (this.aspect != null) output.putString("aspect", this.aspect.tag());
         if (this.label != null) output.putString("label", this.label.tag());
         output.putInt("amount", this.amount);
+        output.putInt("facing", this.facing.get3DDataValue());
     }
 
     @Override

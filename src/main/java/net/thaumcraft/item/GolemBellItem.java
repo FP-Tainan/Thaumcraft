@@ -37,11 +37,14 @@ public class GolemBellItem extends Item {
         if (player == null) return InteractionResult.PASS;
         if (!(level.getBlockEntity(at) instanceof Container)) return InteractionResult.PASS;
 
-        if (!level.isClientSide()) {
+        if (level instanceof net.minecraft.server.level.ServerLevel server) {
             context.getItemInHand().set(TCComponents.GOLEM_HOME, at);
             player.sendSystemMessage(Component.translatable("tc.golem.marked",
                     at.getX(), at.getY(), at.getZ()));
-            level.playSound(null, at, TCSounds.WAND.value(), SoundSource.PLAYERS, 0.7f, 1.6f);
+            server.playSound(null, at, TCSounds.WAND.value(), SoundSource.PLAYERS, 0.7f, 1.6f);
+            // a marca pega com faísca, para o clique não ser no escuro
+            server.sendParticles(net.minecraft.core.particles.ParticleTypes.ENCHANT,
+                    at.getX() + 0.5, at.getY() + 1.2, at.getZ() + 0.5, 24, 0.4, 0.3, 0.4, 0.4);
         }
         return InteractionResult.SUCCESS;
     }
@@ -58,12 +61,21 @@ public class GolemBellItem extends Item {
             }
             return InteractionResult.SUCCESS;
         }
-        if (!player.level().isClientSide()) {
+        if (player.level() instanceof net.minecraft.server.level.ServerLevel server) {
             golem.setHome(home);
             player.sendSystemMessage(Component.translatable("tc.golem.sent",
                     home.getX(), home.getY(), home.getZ()));
-            player.level().playSound(null, golem.blockPosition(), TCSounds.WAND.value(),
+            server.playSound(null, golem.blockPosition(), TCSounds.WAND.value(),
                     SoundSource.PLAYERS, 0.7f, 1.2f);
+            // um fio de faísca do golem até a casa dele, para se ver a ordem sendo dada
+            var de = golem.position().add(0.0, 0.6, 0.0);
+            var ate = net.minecraft.world.phys.Vec3.atCenterOf(home).add(0.0, 0.6, 0.0);
+            int passos = (int) Math.max(6, de.distanceTo(ate) * 3);
+            for (int passo = 0; passo <= passos; passo++) {
+                var em = de.lerp(ate, passo / (double) passos);
+                server.sendParticles(net.minecraft.core.particles.ParticleTypes.ENCHANT,
+                        em.x, em.y, em.z, 1, 0.05, 0.05, 0.05, 0.0);
+            }
         }
         return InteractionResult.SUCCESS;
     }

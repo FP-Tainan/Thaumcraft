@@ -16,32 +16,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A tela do forno alquímico, com a folha do Thaumcraft 4.2.3.5.
+ * A tela do forno alquímico, com a folha e as medidas do Thaumcraft 4.2.3.5.
  *
- * <p>Além da chama e da seta do forno comum, ela mostra o que o forno já tem guardado por dentro: os
- * símbolos dos aspectos em fila, cada um com o quanto há dele. Essa lista não vem pela tela — vem do
- * próprio bloco, que o servidor mantém acertado em quem está por perto.
+ * <p>Tudo aqui saiu do {@code GuiAlchemyFurnace} do original, chamada por chamada: a chama no meio, o
+ * tubo de vidro da esquerda mostrando quanta essência o forno já guardou, e o da direita mostrando o
+ * cozimento. Os dois enchem de baixo para cima.
+ *
+ * <p>O original não escreve rótulo nenhum nesta tela — não há um {@code drawString} na classe inteira —,
+ * e por isso aqui também não há. Quem quiser saber <em>qual</em> essência está lá dentro põe os Óculos da
+ * Revelação, que é como se lê isso no mod.
  */
 public class AlchemicalFurnaceScreen extends AbstractContainerScreen<AlchemicalFurnaceMenu> {
     private static final Identifier BACKGROUND = Thaumcraft.id("textures/gui/gui_alchemyfurnace.png");
-    /** Onde a chama fica na folha, e o tamanho dela. */
-    private static final int FLAME_X = 56;
-    private static final int FLAME_Y = 36;
-    private static final int FLAME_W = 14;
-    private static final int FLAME_H = 14;
-    /** Onde a seta do cozimento fica. */
-    private static final int ARROW_X = 79;
-    private static final int ARROW_Y = 34;
-    private static final int ARROW_W = 24;
-    private static final int ARROW_H = 17;
-    /** Onde a fila de aspectos começa. */
-    private static final int LIST_X = 116;
-    private static final int LIST_Y = 18;
-    private static final int LIST_STEP = 18;
-    private static final int SYMBOL = 16;
+
+    /** A chama, entre as duas casas. */
+    private static final int FLAME_X = 80;
+    private static final int FLAME_Y = 26;
+    private static final int FLAME_W = 16;
+    private static final int FLAME_H = 20;
+    private static final int FLAME_U = 176;
+
+    /** O tubo da esquerda: a essência que o forno já tem guardada. */
+    private static final int VIS_X = 61;
+    private static final int VIS_Y = 12;
+    private static final int VIS_W = 8;
+    private static final int VIS_H = 48;
+    private static final int VIS_U = 200;
+
+    /** O tubo da direita: o cozimento. */
+    private static final int COOK_X = 106;
+    private static final int COOK_Y = 13;
+    private static final int COOK_W = 9;
+    private static final int COOK_H = 46;
+    private static final int COOK_U = 216;
+
+    /** A moldura de vidro que vai por cima do tubo da esquerda. */
+    private static final int GLASS_X = 60;
+    private static final int GLASS_Y = 8;
+    private static final int GLASS_W = 10;
+    private static final int GLASS_H = 55;
+    private static final int GLASS_U = 232;
 
     public AlchemicalFurnaceScreen(AlchemicalFurnaceMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, 176, 166);
+        // o original não escreve rótulo nenhum: os dois saem da tela
+        this.titleLabelY = -1000;
+        this.inventoryLabelY = -1000;
     }
 
     @Override
@@ -51,19 +71,29 @@ public class AlchemicalFurnaceScreen extends AbstractContainerScreen<AlchemicalF
                 this.imageWidth, this.imageHeight, 256, 256);
 
         // a chama, que encolhe conforme o combustível acaba
-        float burnt = this.menu.burnt();
-        if (burnt > 0.0f) {
-            int lit = Math.max(1, Math.round(FLAME_H * burnt));
+        int lit = Math.round(FLAME_H * this.menu.burnt());
+        if (lit > 0) {
             graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND,
                     this.leftPos + FLAME_X, this.topPos + FLAME_Y + FLAME_H - lit,
-                    176, FLAME_H - lit, FLAME_W, lit, 256, 256);
+                    FLAME_U, FLAME_H - lit, FLAME_W, lit, 256, 256);
         }
-        // e a seta, que anda conforme o cozimento
-        float cooked = this.menu.cooked();
-        if (cooked > 0.0f) {
-            int done = Math.max(1, Math.round(ARROW_W * cooked));
+
+        // o tubo da esquerda enche com a essência guardada, e a moldura de vidro vai por cima
+        int held = Math.round(VIS_H * this.menu.filled());
+        if (held > 0) {
             graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND,
-                    this.leftPos + ARROW_X, this.topPos + ARROW_Y, 176, 14, done, ARROW_H, 256, 256);
+                    this.leftPos + VIS_X, this.topPos + VIS_Y + VIS_H - held,
+                    VIS_U, VIS_H - held, VIS_W, held, 256, 256);
+        }
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND,
+                this.leftPos + GLASS_X, this.topPos + GLASS_Y, GLASS_U, 0, GLASS_W, GLASS_H, 256, 256);
+
+        // e o tubo da direita anda com o cozimento
+        int done = Math.round(COOK_H * this.menu.cooked());
+        if (done > 0) {
+            graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND,
+                    this.leftPos + COOK_X, this.topPos + COOK_Y + COOK_H - done,
+                    COOK_U, COOK_H - done, COOK_W, done, 256, 256);
         }
     }
 
@@ -71,28 +101,19 @@ public class AlchemicalFurnaceScreen extends AbstractContainerScreen<AlchemicalF
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partial) {
         super.extractRenderState(graphics, mouseX, mouseY, partial);
 
+        // sob o cursor do tubo da esquerda, o que há lá dentro por extenso
+        if (!this.isHovering(GLASS_X, GLASS_Y, GLASS_W, GLASS_H, mouseX, mouseY)) return;
         AspectList held = this.held();
-        if (held == null || held.isEmpty()) return;
-
-        int row = 0;
-        for (Aspect aspect : held.getAspects()) {
-            if (row >= 8) break;
-            int amount = held.getAmount(aspect);
-            int x = this.leftPos + LIST_X;
-            int y = this.topPos + LIST_Y + row * LIST_STEP;
-            graphics.blit(RenderPipelines.GUI_TEXTURED, aspect.image(), x, y, 0, 0,
-                    SYMBOL, SYMBOL, SYMBOL, SYMBOL, 0xFF000000 | aspect.color());
-            graphics.text(this.font, String.valueOf(amount), x + SYMBOL + 2, y + 4, -1, true);
-
-            if (mouseX >= x && mouseX < x + SYMBOL && mouseY >= y && mouseY < y + SYMBOL) {
-                List<Component> lines = new ArrayList<>();
-                lines.add(aspect.name());
-                lines.add(Component.literal(amount + " / " + AlchemicalFurnaceBlockEntity.MAX_VIS)
-                        .withStyle(net.minecraft.ChatFormatting.GRAY));
-                graphics.setComponentTooltipForNextFrame(this.font, lines, mouseX, mouseY);
+        List<Component> lines = new ArrayList<>();
+        if (held == null || held.isEmpty()) {
+            lines.add(Component.translatable("tc.furnace.empty"));
+        } else {
+            for (Aspect aspect : held.getAspects()) {
+                lines.add(Component.translatable("tc.aspect.amount", aspect.name(), held.getAmount(aspect))
+                        .withStyle(style -> style.withColor(aspect.color())));
             }
-            row++;
         }
+        graphics.setComponentTooltipForNextFrame(this.font, lines, mouseX, mouseY);
     }
 
     /** O que o forno tem guardado, lido no próprio bloco. */

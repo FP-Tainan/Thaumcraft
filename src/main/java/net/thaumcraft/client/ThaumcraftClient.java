@@ -29,9 +29,16 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.NODE, net.thaumcraft.client.render.NodeRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("wand"), net.thaumcraft.client.render.WandRenderer.Unbaked.CODEC);
 
-        // o jarro mostra o que guarda: a névoa na cor do aspecto e o símbolo dele no vidro
+        // o jarro mostra o que guarda: a névoa na cor do aspecto e, com rótulo, o símbolo dele na frente
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.JAR, net.thaumcraft.client.render.JarRenderer::new);
+        // o tubo mostra a essência correndo por dentro dele
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.TUBE, net.thaumcraft.client.render.TubeRenderer::new);
+        // e o alambique, que é de metal fechado, só se lê com os Óculos da Revelação
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ALEMBIC,
+                net.thaumcraft.client.render.AlembicRenderer::new);
 
         // o pedestal mostra o que segura: pairando um dedo acima do prato e girando devagar
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
@@ -51,6 +58,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                 java.util.List.of(state -> 0xFF6D40C9),
                 net.thaumcraft.registry.TCBlocks.TAINT_SOIL,
                 net.thaumcraft.registry.TCBlocks.TAINT_FIBRES);
+        // as marcas do sino do golem, que só aparecem com o sino na mão
+        net.thaumcraft.client.render.MarkerOverlay.init();
         ThaumometerHud.init();
         AspectTooltip.init();
         WandHud.init();

@@ -92,6 +92,16 @@ public class JarBlock extends BaseEntityBlock {
     }
 
     @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
+                               @Nullable net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        // o rótulo fica virado para quem pôs o jarro, como no original
+        if (placer != null && level.getBlockEntity(pos) instanceof JarBlockEntity jar) {
+            jar.setFacing(placer.getDirection().getOpposite());
+        }
+    }
+
+    @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new JarBlockEntity(pos, state);
     }

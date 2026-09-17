@@ -64,7 +64,19 @@ public class GolemEntity extends PathfinderMob {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new net.thaumcraft.entity.ai.GolemWorkGoal(this));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.8));
+        // sem núcleo ele não tem serviço, e fica parado esperando — como no original. Um golem que
+        // perambula antes de alguém lhe dar o que fazer parece bicho solto, e não construto.
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.8) {
+            @Override
+            public boolean canUse() {
+                return GolemEntity.this.core() != null && super.canUse();
+            }
+
+            @Override
+            public boolean canContinueToUse() {
+                return GolemEntity.this.core() != null && super.canContinueToUse();
+            }
+        });
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0f));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }

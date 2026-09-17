@@ -35,7 +35,8 @@
       "net.thaumcraft.test.client.InfusionClientTest",
       "net.thaumcraft.test.client.GolemClientTest",
       "net.thaumcraft.test.client.TaintClientTest",
-      "net.thaumcraft.test.client.CommandClientTest"
+      "net.thaumcraft.test.client.CommandClientTest",
+      "net.thaumcraft.test.client.FidelityClientTest"
     ]
   }
 }

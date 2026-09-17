@@ -220,7 +220,8 @@ public final class TCItems {
     public static final Item ALUMENTUM = register("alumentum", Item::new);
 
     /** A chama fria que não queima nada. */
-    public static final Item NITOR = register("nitor", Item::new);
+    public static final Item NITOR = register("nitor", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.NITOR, properties));
 
     /** A varinha: a haste e as pontas vêm nos dados dela, como no original. */
     public static final Item WAND = register("wand", properties ->
