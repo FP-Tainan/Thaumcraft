@@ -81,6 +81,18 @@ public final class ResearchManager {
         return true;
     }
 
+    /**
+     * Este jogador pode usar uma receita que pede esta pesquisa?
+     *
+     * <p>É a regra do original: o que não se pesquisou não se fabrica. Receita sem pesquisa marcada, ou
+     * com uma que não existe na árvore, passa direto — são as que o mod deixa livres.
+     */
+    public static boolean knows(Player player, String research) {
+        if (player == null || research == null || research.isEmpty()) return true;
+        if (Researches.get(research) == null) return true;
+        return Knowledges.of(player).hasResearch(research);
+    }
+
     /** Já dá para pagar o que esta pesquisa cobra? */
     public static boolean canAfford(PlayerKnowledge knowledge, Research research) {
         for (net.thaumcraft.api.aspects.Aspect aspect : research.tags().getAspects()) {

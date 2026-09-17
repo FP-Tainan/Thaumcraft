@@ -60,6 +60,36 @@ public class CrucibleGameTest {
         helper.succeed();
     }
 
+    /** Quem não pesquisou não fabrica: a regra do original vale no crisol e na bancada. */
+    @GameTest
+    public void recipesNeedTheirResearch(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        // uma receita de crisol que pede pesquisa de verdade
+        CrucibleRecipe gated = null;
+        for (CrucibleRecipe recipe : CrucibleRecipes.ALL) {
+            if (net.thaumcraft.research.Researches.get(recipe.research()) != null) {
+                gated = recipe;
+                break;
+            }
+        }
+        if (gated == null) helper.fail("nenhuma receita de crisol pede pesquisa que exista");
+
+        if (net.thaumcraft.research.ResearchManager.knows(player, gated.research())) {
+            helper.fail("quem não pesquisou não devia poder usar " + gated.research());
+        }
+        var knowledge = net.thaumcraft.research.Knowledges.of(player);
+        knowledge.completeResearch(gated.research());
+        net.thaumcraft.research.Knowledges.save(player, knowledge);
+        if (!net.thaumcraft.research.ResearchManager.knows(player, gated.research())) {
+            helper.fail("depois de pesquisar devia poder");
+        }
+        // receita sem pesquisa marcada passa livre, como as que o mod deixa abertas
+        if (!net.thaumcraft.research.ResearchManager.knows(player, "")) {
+            helper.fail("receita sem pesquisa marcada devia passar livre");
+        }
+        helper.succeed();
+    }
+
     /** O frasco tira do crisol fervendo o aspecto mais abundante. */
     @GameTest
     public void aPhialTakesTheThickestAspect(GameTestHelper helper) {

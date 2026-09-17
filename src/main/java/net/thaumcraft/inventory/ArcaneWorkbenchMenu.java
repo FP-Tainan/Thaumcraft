@@ -75,6 +75,11 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
     /** Refaz o que a grade está pedindo, e se a varinha dá conta de pagar. */
     public void refresh() {
         ArcaneRecipe recipe = ArcaneRecipes.find(this.grid());
+        // sem a pesquisa, a bancada não monta: é a regra do original
+        if (recipe != null
+                && !net.thaumcraft.research.ResearchManager.knows(this.player, recipe.research())) {
+            recipe = null;
+        }
         if (recipe == null || !this.canAfford(recipe)) {
             this.result.setItem(0, ItemStack.EMPTY);
             return;
@@ -99,6 +104,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
     public void take() {
         ArcaneRecipe recipe = ArcaneRecipes.find(this.grid());
         if (recipe == null) return;
+        if (!net.thaumcraft.research.ResearchManager.knows(this.player, recipe.research())) return;
         ItemStack wand = this.bench.getItem(ArcaneWorkbenchBlockEntity.WAND_SLOT);
         if (!WandItem.consume(wand, recipe.cost(), true)) return;
         for (int slot = 0; slot < 9; slot++) this.bench.removeItem(slot, 1);

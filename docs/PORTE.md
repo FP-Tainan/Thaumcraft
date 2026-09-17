@@ -127,6 +127,9 @@ Greatwood, Silverwood.
 - `client/render/CrucibleRenderer` — a água na cor do que está dissolvido, subindo um dedo e tremendo
   quando ferve.
 - `item/WandTriggers` — o caldeirão vira crisol com um toque de varinha, como no original.
+- `research/ResearchManager.knows` — **quem não pesquisou não fabrica**, como no original: o crisol e a
+  bancada arcana conferem a pesquisa da receita antes de deixar a mistura fechar. É isto que dá sentido ao
+  livro. Receita sem pesquisa marcada passa livre, que são as que o mod deixa abertas.
 - `item/PhialItem` — o frasco de essência, que guarda oito pontos de um aspecto. **Diferença deliberada**:
   no mod ele se enche no alambique, que chega com o resto da alquimia; até lá ele se enche direto do crisol
   fervendo, tirando dele o aspecto mais abundante.

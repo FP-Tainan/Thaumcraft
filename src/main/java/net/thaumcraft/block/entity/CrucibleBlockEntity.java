@@ -89,6 +89,11 @@ public class CrucibleBlockEntity extends BlockEntity {
         if (stack.isEmpty()) return;
 
         CrucibleRecipe recipe = CrucibleRecipes.find(this.aspects, stack);
+        // sem a pesquisa, a mistura não fecha: o que cai dentro só se desfaz em aspectos
+        if (recipe != null && !net.thaumcraft.research.ResearchManager.knows(thrower(entity, level),
+                recipe.research())) {
+            recipe = null;
+        }
         if (recipe != null) {
             this.aspects = recipe.removeFrom(this.aspects);
             stack.shrink(1);
@@ -118,6 +123,12 @@ public class CrucibleBlockEntity extends BlockEntity {
         level.playSound(null, this.getBlockPos(), SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.3f,
                 1.0f + level.getRandom().nextFloat() * 0.4f);
         this.sync();
+    }
+
+    /** Quem jogou aquilo dentro, se ainda dá para saber. */
+    private static net.minecraft.world.entity.player.Player thrower(ItemEntity entity, Level level) {
+        var owner = entity.getOwner();
+        return owner instanceof net.minecraft.world.entity.player.Player player ? player : null;
     }
 
     public boolean boiling() {
