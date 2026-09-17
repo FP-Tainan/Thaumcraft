@@ -1,0 +1,214 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "thaumcraft:block/pedestal_side",
+    "lado": "thaumcraft:block/pedestal_side",
+    "topo": "thaumcraft:block/pedestal_top"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        0,
+        2
+      ],
+      "to": [
+        14,
+        2,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ],
+          "texture": "#lado"
+        },
+        "south": {
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ],
+          "texture": "#lado"
+        },
+        "west": {
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ],
+          "texture": "#lado"
+        },
+        "east": {
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ],
+          "texture": "#lado"
+        },
+        "up": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#lado"
+        },
+        "down": {
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ],
+          "texture": "#lado"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        2,
+        5
+      ],
+      "to": [
+        11,
+        11,
+        11
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            5,
+            11,
+            14
+          ],
+          "texture": "#lado"
+        },
+        "south": {
+          "uv": [
+            5,
+            5,
+            11,
+            14
+          ],
+          "texture": "#lado"
+        },
+        "west": {
+          "uv": [
+            5,
+            5,
+            11,
+            14
+          ],
+          "texture": "#lado"
+        },
+        "east": {
+          "uv": [
+            5,
+            5,
+            11,
+            14
+          ],
+          "texture": "#lado"
+        },
+        "up": {
+          "uv": [
+            5,
+            5,
+            11,
+            14
+          ],
+          "texture": "#lado"
+        },
+        "down": {
+          "uv": [
+            5,
+            5,
+            11,
+            14
+          ],
+          "texture": "#lado"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        11,
+        3
+      ],
+      "to": [
+        13,
+        13,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            3,
+            13,
+            5
+          ],
+          "texture": "#lado"
+        },
+        "south": {
+          "uv": [
+            3,
+            3,
+            13,
+            5
+          ],
+          "texture": "#lado"
+        },
+        "west": {
+          "uv": [
+            3,
+            3,
+            13,
+            5
+          ],
+          "texture": "#lado"
+        },
+        "east": {
+          "uv": [
+            3,
+            3,
+            13,
+            5
+          ],
+          "texture": "#lado"
+        },
+        "up": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#topo"
+        },
+        "down": {
+          "uv": [
+            3,
+            3,
+            13,
+            5
+          ],
+          "texture": "#lado"
+        }
+      }
+    }
+  ]
+}

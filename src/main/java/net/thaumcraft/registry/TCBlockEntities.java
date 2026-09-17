@@ -42,6 +42,17 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.AlchemicalFurnaceBlockEntity::new,
                             java.util.Set.of(TCBlocks.ALCHEMICAL_FURNACE)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.PedestalBlockEntity> PEDESTAL =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("pedestal"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.PedestalBlockEntity::new,
+                            java.util.Set.of(TCBlocks.PEDESTAL)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.InfusionMatrixBlockEntity>
+            INFUSION_MATRIX = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
+                    Thaumcraft.id("infusion_matrix"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.InfusionMatrixBlockEntity::new,
+                            java.util.Set.of(TCBlocks.INFUSION_MATRIX)));
+
     private TCBlockEntities() {
     }
 

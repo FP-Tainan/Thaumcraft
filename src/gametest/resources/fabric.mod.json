@@ -18,7 +18,8 @@
       "net.thaumcraft.test.TabGameTest",
       "net.thaumcraft.test.FocusGameTest",
       "net.thaumcraft.test.SoundGameTest",
-      "net.thaumcraft.test.EssentiaGameTest"
+      "net.thaumcraft.test.EssentiaGameTest",
+      "net.thaumcraft.test.InfusionGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",
@@ -28,7 +29,8 @@
       "net.thaumcraft.test.client.CrucibleClientTest",
       "net.thaumcraft.test.client.GearClientTest",
       "net.thaumcraft.test.client.WorkbenchClientTest",
-      "net.thaumcraft.test.client.EssentiaClientTest"
+      "net.thaumcraft.test.client.EssentiaClientTest",
+      "net.thaumcraft.test.client.InfusionClientTest"
     ]
   }
 }

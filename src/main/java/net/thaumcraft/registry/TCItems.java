@@ -156,6 +156,14 @@ public final class TCItems {
     public static final Item ALCHEMICAL_FURNACE = register("alchemical_furnace", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ALCHEMICAL_FURNACE, properties));
 
+    /** O pedestal arcano, para levar na mão. */
+    public static final Item PEDESTAL = register("pedestal", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.PEDESTAL, properties));
+
+    /** A matriz rúnica, para levar na mão. */
+    public static final Item INFUSION_MATRIX = register("infusion_matrix", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.INFUSION_MATRIX, properties));
+
     /** A bancada arcana, para levar na mão. */
     public static final Item ARCANE_WORKBENCH = register("arcane_workbench", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_WORKBENCH, properties));
@@ -255,6 +263,7 @@ public final class TCItems {
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
             "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "tube",
+            "infusion_matrix", "pedestal",
             "arcane_stone", "thaumium_block", "tallow_block",
             "paving_stone_travel", "paving_stone_warding",
             "infused_stone_air", "infused_stone_fire", "infused_stone_water",

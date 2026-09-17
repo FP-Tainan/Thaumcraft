@@ -21,7 +21,7 @@ modelo, tela virou `Screen`.
 | 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **thaumômetro e caderno prontos**; o tabuleiro da mesa de pesquisa a fazer |
 | 4 | Varinhas, nós e vis | **prontos**, com quatro focos (fogo, escavação, gelo e raio); os outros seis a fazer |
 | 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **pronta** — crisol, frascos, forno alquímico, alambique, tubos e jarros |
-| 6 | Infusão: matriz, pedestais, instabilidade | a fazer |
+| 6 | Infusão: matriz, pedestais, instabilidade | **pronta** |
 | 7 | Golens | a fazer |
 | 8 | O resto: mácula, criaturas, eldritch, artifícios | a fazer |
 
@@ -54,7 +54,12 @@ Hoje o mod já se joga do começo ao meio, nesta ordem:
     O forno desfaz o que se joga nele em essência; o alambique empilhado em cima recolhe; o tubo leva; o
     jarro guarda. É a segunda metade da alquimia, e a que abastece tudo o que vem depois.
 
-O que ainda não tem caminho: a infusão, os golens e o lado eldritch.
+12. **Erguer o altar de infusão** — pedestal arcano no chão, pedra arcana nos quatro cantos dele e a
+    matriz rúnica dois blocos acima. A varinha acorda a matriz; com a coisa certa no pedestal do meio e
+    os ingredientes nos pedestais em volta, o toque seguinte começa a infusão. É assim que saem as hastes
+    de varinha melhores — obsidiana, gelo, quartzo, junco, blaze e osso.
+
+O que ainda não tem caminho: os golens e o lado eldritch.
 
 ## Fatia 1 — aspectos
 
@@ -275,3 +280,46 @@ as melhorias de foco e as varinhas de bastão em si (a peça existe, a receita n
 Falta da fatia: o tabuleiro hexagonal da mesa de pesquisa; e, no livro, as páginas de receita e os
 ícones de item — 168 pesquisas apontam para itens que só chegam nas fatias seguintes, e até lá elas
 aparecem com o símbolo do aspecto de que mais precisam.
+
+## Fatia 6 — infusão
+
+A infusão é o terceiro jeito de fabricar do mod, e o mais perigoso. A bancada arcana cobra vis da
+varinha; o crisol cobra aspectos dissolvidos na água; a infusão cobra **essência guardada em jarros**, e
+cobra também paciência — ela leva tempo, e pode dar errado no meio.
+
+- `crafting/InfusionRecipe` — a receita: o que vai no pedestal do meio, o que vai nos de fora, a
+  essência que a matriz vai sugar e a instabilidade natural daquela receita. Diferente da bancada, a
+  forma não importa: os pedestais de fora podem estar em qualquer lugar ao alcance e em qualquer ordem.
+  O que importa é o conjunto.
+- `crafting/InfusionRecipes` — **gerada** pelo `scratchpad/fatia7-infusao.js` a partir das três fatias
+  de receita do original (`ConfigRecipesInfusionSlice`, `...DeviceSlice` e `...EquipmentSlice`). Seis
+  receitas fecham hoje, e são justamente as **hastes de varinha** — que até esta fatia não tinham como
+  ser feitas.
+- `block/entity/PedestalBlockEntity` e `block/PedestalBlock` — o pedestal arcano, do `TilePedestal`:
+  segura uma coisa só. Um toque põe, outro tira.
+- `block/entity/InfusionMatrixBlockEntity` — a matriz rúnica, e o coração da fatia. A construção é a do
+  diagrama do altar do próprio original (o `InfusionAltar` do `ConfigRecipes`): pedestal no chão, pedra
+  arcana nos quatro cantos dele, matriz dois blocos acima. De dez em dez tiques ela dá um passo — puxa um
+  ponto de essência de algum jarro a doze blocos, ou consome um ingrediente de um pedestal —, e no fim a
+  coisa nova toma o lugar da velha no pedestal do meio.
+- **A instabilidade e a simetria.** É o que faz a infusão do Thaumcraft ser o que é. Cada receita traz a
+  sua instabilidade, e a ela se soma a falta de simetria da construção: cada pedestal conta dois pontos,
+  e mais um se tiver coisa em cima; o pedestal espelhado do outro lado da matriz desconta o mesmo. Uma
+  sala perfeitamente simétrica zera a conta — e é por isso que as salas de infusão do mod são desenhadas
+  como mandalas. A cada passo, com um em quinhentos de chance por ponto de instabilidade, alguma coisa
+  dá errado.
+- `api/aspects/EssentiaSources` — o `EssentiaHandler` do original, reduzido ao que a infusão usa: a
+  matriz não tem cano nenhum ligado a ela, ela chama a essência dos jarros por perto e a essência vem
+  pelo ar, com um fio de luz na cor do aspecto. **Diferença**: o original guarda uma lista dos jarros
+  achados para não vasculhar o mundo toda vez; aqui a vasculhada é feita na hora, porque o alcance é
+  curto e ela só acontece a cada dez tiques.
+- `client/render/PedestalRenderer` — o que está no pedestal paira um dedo acima do prato e gira devagar,
+  como no original.
+- **Diferença**: o original sorteia entre vinte e um azares quando a infusão escapa; aqui são os quatro
+  que dá para fazer sem as peças das fatias seguintes — cuspir um ingrediente, um raio, um susto em quem
+  estiver perto e a explosão. Os outros (mácula, criaturas do vazio, distorção) chegam com a fatia oito.
+- **Diferença**: o `validLocation` da versão que serve de planta pede um bloco de "pilar de infusão" nos
+  quatro cantos. Esse bloco não tem receita em lugar nenhum das fontes, e o diagrama do altar que o
+  próprio mod desenha no livro põe **pedra arcana** ali. Ficou a pedra arcana, que já existe e já se faz.
+- Falta da fatia: a infusão que encanta (o original também encanta itens na matriz), as melhorias rúnicas
+  e as cinquenta e oito receitas que esperam peças das fatias seguintes.

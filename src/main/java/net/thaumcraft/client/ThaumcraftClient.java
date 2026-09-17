@@ -24,6 +24,11 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o jarro mostra o que guarda: a névoa na cor do aspecto e o símbolo dele no vidro
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.JAR, net.thaumcraft.client.render.JarRenderer::new);
+
+        // o pedestal mostra o que segura: pairando um dedo acima do prato e girando devagar
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.PEDESTAL,
+                net.thaumcraft.client.render.PedestalRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.CRUCIBLE, net.thaumcraft.client.render.CrucibleRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(

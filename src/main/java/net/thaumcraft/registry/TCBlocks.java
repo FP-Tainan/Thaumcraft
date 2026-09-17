@@ -82,6 +82,25 @@ public final class TCBlocks {
                             net.thaumcraft.block.AlchemicalFurnaceBlock.LIT) ? 13 : 0)
                     .sound(SoundType.STONE)));
 
+    /** O pedestal arcano: segura uma coisa só, à vista de todos. */
+    public static final Block PEDESTAL = register("pedestal", properties ->
+            new net.thaumcraft.block.PedestalBlock(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(2.0f)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+                    .sound(SoundType.STONE)));
+
+    /** A matriz rúnica: a pedra entalhada onde a infusão acontece. */
+    public static final Block INFUSION_MATRIX = register("infusion_matrix", properties ->
+            new net.thaumcraft.block.InfusionMatrixBlock(properties
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .strength(3.0f)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+                    .lightLevel(state -> 6)
+                    .sound(SoundType.STONE)));
+
     /** A bancada arcana: a mesa que a varinha benzeu. */
     public static final Block ARCANE_WORKBENCH = register("arcane_workbench", properties ->
             new net.thaumcraft.block.ArcaneWorkbenchBlock(properties

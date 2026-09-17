@@ -54,6 +54,11 @@ public final class WandTriggers {
             level.playSound(null, pos, net.thaumcraft.registry.TCSounds.WAND.value(), SoundSource.BLOCKS, 0.8f, 0.9f);
             return InteractionResult.SUCCESS;
         }
+        // a matriz rúnica acorda ao toque da varinha, e começa a infusão ao toque seguinte
+        if (level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.InfusionMatrixBlockEntity matrix) {
+            if (!level.isClientSide()) matrix.poke(level, pos, player);
+            return InteractionResult.SUCCESS;
+        }
         // a bancada comum vira bancada arcana, como a mesa do original
         if (state.is(Blocks.CRAFTING_TABLE)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
