@@ -40,6 +40,17 @@ public class GearClientTest implements FabricClientGameTest {
                     minecraft.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON));
             context.waitTicks(5);
 
+            // a dica de aspectos, que é um dos gestos mais conhecidos do mod
+            singleplayer.getServer().runCommand("give @p minecraft:iron_pickaxe");
+            context.runOnClient(minecraft -> {
+                minecraft.player.getInventory().setSelectedSlot(1);
+                minecraft.setScreenAndShow(new net.minecraft.client.gui.screens.inventory.InventoryScreen(minecraft.player));
+            });
+            context.waitTicks(20);
+            context.takeScreenshot("dica_aspectos");
+            context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
+            context.waitTicks(5);
+
             // a aba do criativo, com tudo o que o mod tem
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(
                     new net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen(

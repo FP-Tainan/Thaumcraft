@@ -917,5 +917,6 @@
   "tc.scan.learned": "You have learned something new about %s.",
   "tc.scan.missing": "You look at %s, but you must understand %s first.",
   "tc.scan.new": "%s studied. New aspects: %s",
-  "tc.scan.nothing": "There is nothing here worth studying."
+  "tc.scan.nothing": "There is nothing here worth studying.",
+  "tc.tooltip.unknown": "and %s unknown aspect(s)"
 }

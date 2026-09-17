@@ -21,6 +21,7 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCMenus.ARCANE_WORKBENCH,
                 net.thaumcraft.client.gui.ArcaneWorkbenchScreen::new);
         ThaumometerHud.init();
+        AspectTooltip.init();
         WandHud.init();
         // o Thaumonomicon abre o mapa das pesquisas, e nada disso encosta no lado do servidor
         net.fabricmc.fabric.api.event.player.UseItemCallback.EVENT.register((player, level, hand) -> {
