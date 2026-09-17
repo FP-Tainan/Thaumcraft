@@ -76,7 +76,7 @@ public final class ResearchManager {
         knowledge.completeResearch(key);
         Knowledges.save(player, knowledge);
         player.level().playSound(null, player.blockPosition(),
-                net.minecraft.sounds.SoundEvents.PLAYER_LEVELUP,
+                net.thaumcraft.registry.TCSounds.LEARN.value(),
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.5f, 1.4f);
         return true;
     }

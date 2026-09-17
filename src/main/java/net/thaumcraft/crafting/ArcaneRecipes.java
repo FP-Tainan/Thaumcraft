@@ -50,6 +50,14 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("FOCUSFIRE", new ItemStack(TCItems.FOCI.get("fire")),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("fire")), null, null, null),
                 new AspectList().add(Aspects.FIRE, 20).add(Aspects.ENTROPY, 10)));
+        // FocusFrost
+        ALL.add(new ArcaneRecipe("FOCUSFROST", new ItemStack(TCItems.FOCI.get("frost")),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("water")), null, null, null),
+                new AspectList().add(Aspects.WATER, 10).add(Aspects.ORDER, 10).add(Aspects.ENTROPY, 10)));
+        // FocusShock
+        ALL.add(new ArcaneRecipe("FOCUSSHOCK", new ItemStack(TCItems.FOCI.get("shock")),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("air")), null, null, null),
+                new AspectList().add(Aspects.AIR, 10).add(Aspects.ORDER, 10).add(Aspects.ENTROPY, 10)));
         // FocusExcavation
         ALL.add(new ArcaneRecipe("FOCUSEXCAVATION", new ItemStack(TCItems.FOCI.get("excavation")),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("earth")), null, null, null),

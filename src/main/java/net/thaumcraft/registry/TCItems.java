@@ -22,6 +22,14 @@ import java.util.List;
 public final class TCItems {
     private static final List<Item> ORDER = new ArrayList<>();
 
+    /**
+     * O que o mod registra mas não põe na aba do criativo.
+     *
+     * <p>É a peça de dentro do maquinário: a lasca de gelo, por exemplo, só existe para dar cara ao
+     * projétil do foco de gelo, e não é para ninguém carregar no inventário.
+     */
+    public static final java.util.Set<Item> HIDDEN = new java.util.LinkedHashSet<>();
+
     /** O primeiro aparelho de todo taumaturgo: com ele se examina o mundo. */
     public static final Item THAUMOMETER = register("thaumometer", properties ->
             new ThaumometerItem(properties.stacksTo(1)));
@@ -105,13 +113,28 @@ public final class TCItems {
         FOCI.put("fire", register("focus_fire", properties -> new net.thaumcraft.item.FocusItem(
                 properties.stacksTo(1), "fire",
                 new net.thaumcraft.api.aspects.AspectList()
-                        .add(net.thaumcraft.api.aspects.Aspects.FIRE, 10))));
+                        .add(net.thaumcraft.api.aspects.Aspects.FIRE, 10), true)));
         // o de escavação cobra quinze centésimos de terra por bloco quebrado
         FOCI.put("excavation", register("focus_excavation", properties -> new net.thaumcraft.item.FocusItem(
                 properties.stacksTo(1), "excavation",
                 new net.thaumcraft.api.aspects.AspectList()
-                        .add(net.thaumcraft.api.aspects.Aspects.EARTH, 15))));
+                        .add(net.thaumcraft.api.aspects.Aspects.EARTH, 15), true)));
+        // o de gelo é tiro único: aqua 5, ignis 2 e perditio 2 por lasca, como no original
+        FOCI.put("frost", register("focus_frost", properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1), "frost",
+                new net.thaumcraft.api.aspects.AspectList()
+                        .add(net.thaumcraft.api.aspects.Aspects.WATER, 5)
+                        .add(net.thaumcraft.api.aspects.Aspects.FIRE, 2)
+                        .add(net.thaumcraft.api.aspects.Aspects.ENTROPY, 2), false)));
+        // o do raio é jato contínuo e caro: aer 25 por tique, como no original
+        FOCI.put("shock", register("focus_shock", properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1), "shock",
+                new net.thaumcraft.api.aspects.AspectList()
+                        .add(net.thaumcraft.api.aspects.Aspects.AIR, 25), true)));
     }
+
+    /** A lasca de gelo: não é item de verdade, é só a cara do projétil do foco de gelo. */
+    public static final Item FROST_SHARD = registerHidden("frost_shard", Item::new);
 
     /** O frasco de essência, que guarda um aspecto. */
     public static final Item PHIAL = register("phial", properties ->
@@ -168,11 +191,28 @@ public final class TCItems {
     }
 
     private static Item register(String name, java.util.function.Function<Item.Properties, Item> factory) {
+        Item item = raw(name, factory);
+        ORDER.add(item);
+        return item;
+    }
+
+    /**
+     * Registra um item que não vai para a aba do criativo.
+     *
+     * <p>Serve para o que só existe para o jogo funcionar por dentro — a lasca de gelo, por exemplo, que
+     * nunca fica na mão de ninguém: ela é só a cara do projétil que o foco de gelo atira.
+     */
+    private static Item registerHidden(String name, java.util.function.Function<Item.Properties, Item> factory) {
+        Item item = raw(name, factory);
+        HIDDEN.add(item);
+        return item;
+    }
+
+    private static Item raw(String name, java.util.function.Function<Item.Properties, Item> factory) {
         Identifier id = Thaumcraft.id(name);
         Item item = factory.apply(new Item.Properties()
                 .setId(ResourceKey.create(Registries.ITEM, id)));
         Registry.register(BuiltInRegistries.ITEM, id, item);
-        ORDER.add(item);
         return item;
     }
 
@@ -185,7 +225,7 @@ public final class TCItems {
      */
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles",
-            "wand", "staff", "focus_fire", "focus_excavation",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock",
             "wand_cap_iron", "wand_cap_gold", "wand_cap_thaumium", "wand_cap_void",
             "wand_rod_greatwood", "wand_rod_obsidian", "wand_rod_silverwood", "wand_rod_ice",
             "wand_rod_quartz", "wand_rod_reed", "wand_rod_blaze", "wand_rod_bone",

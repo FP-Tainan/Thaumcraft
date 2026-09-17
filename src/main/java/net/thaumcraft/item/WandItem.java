@@ -159,7 +159,14 @@ public class WandItem extends Item {
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         // com foco preso, o botão aciona o foco; sem foco, a varinha bebe do nó na mira
-        if (net.thaumcraft.item.Focuses.on(stack) != null) {
+        FocusItem held = net.thaumcraft.item.Focuses.on(stack);
+        if (held != null) {
+            if (!held.isContinuous()) {
+                // tiro único: sai de uma vez, sem segurar
+                if (!level.isClientSide()) net.thaumcraft.item.Focuses.tick(level, player, stack, held);
+                player.swing(hand);
+                return InteractionResult.SUCCESS;
+            }
             player.startUsingItem(hand);
             return InteractionResult.CONSUME;
         }
@@ -220,7 +227,7 @@ public class WandItem extends Item {
         Aspect chosen = possible.get(level.getRandom().nextInt(possible.size()));
         if (!node.take(chosen, 1)) return;
         addVis(stack, chosen, 1);
-        level.playSound(null, node.getBlockPos(), net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_CHIME,
+        level.playSound(null, node.getBlockPos(), net.thaumcraft.registry.TCSounds.WAND.value(),
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.3f, 1.2f + level.getRandom().nextFloat() * 0.3f);
         drainTrail(level, node, chosen);
     }

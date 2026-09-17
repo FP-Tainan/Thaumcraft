@@ -24,11 +24,23 @@ import net.thaumcraft.registry.TCComponents;
 public class FocusItem extends Item {
     private final String type;
     private final AspectList cost;
+    private final boolean continuous;
 
-    public FocusItem(Properties properties, String type, AspectList cost) {
+    public FocusItem(Properties properties, String type, AspectList cost, boolean continuous) {
         super(properties);
         this.type = type;
         this.cost = cost;
+        this.continuous = continuous;
+    }
+
+    /**
+     * Este foco é jato contínuo ou tiro único?
+     *
+     * <p>O de fogo e o de escavação seguram o botão e vão cobrando por tique; o de gelo e o de raio saem
+     * de uma vez, como no original.
+     */
+    public boolean isContinuous() {
+        return this.continuous;
     }
 
     public String type() {

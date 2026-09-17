@@ -19,7 +19,7 @@ modelo, tela virou `Screen`.
 | 1 | Aspectos: a tabela dos 48, a lista com quantidade, os símbolos | **pronta** |
 | 2 | Tradução para português, do `pt_BR.lang` do próprio mod | **pronta** |
 | 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **thaumômetro e caderno prontos**; o tabuleiro da mesa de pesquisa a fazer |
-| 4 | Varinhas, nós e vis | **prontos**, com dois focos (fogo e escavação); os outros oito focos a fazer |
+| 4 | Varinhas, nós e vis | **prontos**, com quatro focos (fogo, escavação, gelo e raio); os outros seis a fazer |
 | 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **crisol e frascos prontos**; jarros, tubos e alambique a fazer |
 | 6 | Infusão: matriz, pedestais, instabilidade | a fazer |
 | 7 | Golens | a fazer |
@@ -48,7 +48,7 @@ Hoje o mod já se joga do começo ao meio, nesta ordem:
    o táumio, de uma barra de ferro.
 9. **Fazer ferramentas e armadura de táumio** — na bancada comum.
 10. **Bater numa bancada comum com a varinha** — ela vira bancada arcana, que monta o que precisa de vis:
-    os Óculos da Revelação, a ponta de ouro, os focos de fogo e de escavação.
+    os Óculos da Revelação, a ponta de ouro e os focos de fogo, escavação, gelo e raio.
 
 O que ainda não tem caminho: tudo o que depende de essência encanada (jarros, tubos, alambique), da
 infusão, dos golens e do lado eldritch.
@@ -190,13 +190,33 @@ Greatwood, Silverwood.
 - `client/render/WandRenderer` e `BoxMesh` — a varinha é peça de três dimensões, montada das mesmas três
   caixas do `ModelWand` original e com as texturas dele. O `BoxMesh` refaz o desenrolado de textura que o
   Minecraft antigo usava, sem o qual as texturas do mod sairiam embaralhadas.
-- `item/FocusItem` e `item/Focuses` — os focos de varinha, que é o que dá magia à varinha. Por ora são dois: o de fogo, que solta um jato de chamas por dez centésimos de
-  ignis por tique, e o de escavação, que quebra o bloco na mira a doze blocos por quinze centésimos de
-  terra por bloco. Os custos são os do original. **Diferença**: no mod o foco entra numa casa da própria varinha, alcançada por uma tecla; aqui
-  ele se encaixa com um clique, que procura a varinha no inventário.
+- `item/FocusItem` e `item/Focuses` — os focos de varinha, que é o que dá magia à varinha. Por ora são
+  quatro, com os custos lidos no `getVisCost` de cada classe do original, sem melhoria nenhuma:
+  - **fogo**, jato contínuo, ignis 10 por tique: um sopro de chamas que incendeia o que alcança;
+  - **escavação**, jato contínuo, terra 15 por bloco: quebra o bloco na mira a doze blocos;
+  - **gelo**, tiro único, aqua 5 + ignis 2 + perditio 2: atira uma lasca que tira três de vida, congela a
+    água em que bate e deixa neve onde cai;
+  - **raio**, jato contínuo e o mais caro de todos, aer 25 por tique: fulmina a criatura na mira a vinte
+    blocos, tirando quatro de vida por tique.
+
+  **Diferença**: no mod o foco entra numa casa da própria varinha, alcançada por uma tecla; aqui ele se
+  encaixa com um clique, que procura a varinha no inventário. **Diferença**: a lentidão que a lasca de
+  gelo deixa é acréscimo daqui — o original entrega esse efeito pela melhoria do gelo alquímico, e as
+  melhorias de foco ainda não existem neste porte. **Diferença**: o raio do original é uma linha traçada
+  à mão pelo mod; aqui é um rastro de faíscas do jogo.
+- `entity/FrostShardEntity` e `registry/TCEntities` — a primeira criatura do porte, e a base para as
+  das fatias seguintes. A lasca voa quase reta (o original lhe dá uma queda de leve), some sozinha em
+  cinco segundos e se desenha como o item dela, igual a uma bola de neve. O item `frost_shard` existe só
+  para dar cara ao projétil e fica fora da aba do criativo — é o primeiro item registrado assim, e o
+  teste da aba passou a saber a diferença.
+- `registry/TCSounds` — **gerado** pelo `scratchpad/sons.js` a partir dos `.ogg` do próprio mod:
+  dezesseis sons, trinta e dois arquivos. Com eles, a varinha, o thaumômetro, o crisol, o livro e a
+  pesquisa deixaram de tomar som emprestado do Minecraft e passaram a soar como o original soa. Os que
+  ainda não têm dono (jarro, cristal) entraram junto porque as fatias seguintes vão querê-los.
 - `client/WandHud` — os seis primários com as barrinhas no canto de baixo, como no original.
 
-Falta da fatia: os focos da varinha e as varinhas de bastão em si (a peça existe, a receita não).
+Falta da fatia: os seis focos restantes (buraco portátil, proteção, primordial, morcego, troca e pech),
+as melhorias de foco e as varinhas de bastão em si (a peça existe, a receita não).
 
 - `research/ResearchManager.unlock` — **onde os pontos do thaumômetro viram alguma coisa**: clicar numa
   pesquisa ao alcance, no livro, cobra os aspectos que ela pede e a destranca. Os preços são os do

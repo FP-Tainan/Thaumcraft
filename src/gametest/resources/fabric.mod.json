@@ -15,7 +15,9 @@
       "net.thaumcraft.test.CrucibleGameTest",
       "net.thaumcraft.test.OreGameTest",
       "net.thaumcraft.test.ProgressionGameTest",
-      "net.thaumcraft.test.TabGameTest"
+      "net.thaumcraft.test.TabGameTest",
+      "net.thaumcraft.test.FocusGameTest",
+      "net.thaumcraft.test.SoundGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",

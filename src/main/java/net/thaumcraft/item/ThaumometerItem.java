@@ -78,8 +78,8 @@ public class ThaumometerItem extends Item {
         }
         // o tique-taque do aparelho enquanto ele lê
         if (remaining % 2 == 0) {
-            level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME,
-                    net.minecraft.sounds.SoundSource.PLAYERS, 0.2f, 0.45f + level.getRandom().nextFloat() * 0.1f);
+            level.playSound(null, player.blockPosition(), net.thaumcraft.registry.TCSounds.CAMERA_TICKS.value(),
+                    net.minecraft.sounds.SoundSource.PLAYERS, 0.3f, 0.9f + level.getRandom().nextFloat() * 0.2f);
         }
         if (remaining > FINISH_AT) return;
 
@@ -112,8 +112,8 @@ public class ThaumometerItem extends Item {
             if (result.message() != null) player.sendOverlayMessage(result.message());
             return;
         }
-        player.level().playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP,
-                net.minecraft.sounds.SoundSource.PLAYERS, 0.4f, 1.4f);
+        player.level().playSound(null, player.blockPosition(), net.thaumcraft.registry.TCSounds.CAMERA_CLACK.value(),
+                net.minecraft.sounds.SoundSource.PLAYERS, 0.6f, 1.0f);
         if (!(player instanceof net.minecraft.server.level.ServerPlayer server)) return;
         if (result.aspects().isEmpty()) {
             player.sendOverlayMessage(result.message());

@@ -57,7 +57,7 @@ public class CrucibleBlockEntity extends BlockEntity {
             crucible.heat--;
         }
         if (before <= BOILING && crucible.heat > BOILING) {
-            level.playSound(null, pos, SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.4f, 1.2f);
+            level.playSound(null, pos, net.thaumcraft.registry.TCSounds.BUBBLE.value(), SoundSource.BLOCKS, 0.6f, 1.0f);
         }
         if (crucible.heat != before && (crucible.heat % 10 == 0 || crucible.boiling() != before > BOILING)) {
             crucible.sync();
@@ -103,7 +103,7 @@ public class CrucibleBlockEntity extends BlockEntity {
                     recipe.result().copy());
             result.setDeltaMovement(0.0, 0.25, 0.0);
             level.addFreshEntity(result);
-            level.playSound(null, this.getBlockPos(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.6f, 1.0f);
+            level.playSound(null, this.getBlockPos(), net.thaumcraft.registry.TCSounds.CRAFT_START.value(), SoundSource.BLOCKS, 0.7f, 1.0f);
             this.sync();
             return;
         }
@@ -113,14 +113,14 @@ public class CrucibleBlockEntity extends BlockEntity {
             // o que não é feito de nada o crisol cospe de volta
             entity.setDeltaMovement((level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.2,
                     0.35, (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.2);
-            level.playSound(null, this.getBlockPos(), SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.2f, 0.8f);
+            level.playSound(null, this.getBlockPos(), net.thaumcraft.registry.TCSounds.SPILL.value(), SoundSource.BLOCKS, 0.5f, 1.0f);
             return;
         }
         for (Aspect aspect : found.getAspects()) this.aspects.add(aspect, found.getAmount(aspect));
         stack.shrink(1);
         if (stack.isEmpty()) entity.discard();
         else entity.setItem(stack);
-        level.playSound(null, this.getBlockPos(), SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.3f,
+        level.playSound(null, this.getBlockPos(), net.thaumcraft.registry.TCSounds.BUBBLE.value(), SoundSource.BLOCKS, 0.5f,
                 1.0f + level.getRandom().nextFloat() * 0.4f);
         this.sync();
     }

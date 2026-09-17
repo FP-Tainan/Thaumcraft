@@ -39,7 +39,7 @@ public final class WandTriggers {
                     level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                     new ItemStack(TCItems.THAUMONOMICON));
             level.addFreshEntity(book);
-            level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 0.7f, 1.0f);
+            level.playSound(null, pos, net.thaumcraft.registry.TCSounds.WAND.value(), SoundSource.BLOCKS, 0.8f, 1.0f);
             net.thaumcraft.research.ResearchManager.grantStarters(player);
             return InteractionResult.SUCCESS;
         }
@@ -51,14 +51,14 @@ public final class WandTriggers {
             if (full && level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.CrucibleBlockEntity crucible) {
                 crucible.setWater(true);
             }
-            level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 0.7f, 0.8f);
+            level.playSound(null, pos, net.thaumcraft.registry.TCSounds.WAND.value(), SoundSource.BLOCKS, 0.8f, 0.9f);
             return InteractionResult.SUCCESS;
         }
         // a bancada comum vira bancada arcana, como a mesa do original
         if (state.is(Blocks.CRAFTING_TABLE)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
             level.setBlockAndUpdate(pos, net.thaumcraft.registry.TCBlocks.ARCANE_WORKBENCH.defaultBlockState());
-            level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 0.7f, 1.1f);
+            level.playSound(null, pos, net.thaumcraft.registry.TCSounds.WAND.value(), SoundSource.BLOCKS, 0.8f, 1.1f);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

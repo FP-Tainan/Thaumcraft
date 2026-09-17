@@ -1,0 +1,114 @@
+{
+  "bubble": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:bubble1",
+      "thaumcraft:bubble2",
+      "thaumcraft:bubble3",
+      "thaumcraft:bubble4"
+    ]
+  },
+  "camera_clack": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:cameraclack1",
+      "thaumcraft:cameraclack2",
+      "thaumcraft:cameraclack3"
+    ]
+  },
+  "camera_ticks": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:cameraticks"
+    ]
+  },
+  "craft_fail": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:craftfail"
+    ]
+  },
+  "craft_start": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:craftstart"
+    ]
+  },
+  "crystal": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:crystal"
+    ]
+  },
+  "ice": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:ice1",
+      "thaumcraft:ice2",
+      "thaumcraft:ice3"
+    ]
+  },
+  "jar": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:jar1",
+      "thaumcraft:jar2",
+      "thaumcraft:jar3",
+      "thaumcraft:jar4"
+    ]
+  },
+  "learn": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:learn"
+    ]
+  },
+  "page": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:page1",
+      "thaumcraft:page2"
+    ]
+  },
+  "shock": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:shock1",
+      "thaumcraft:shock2"
+    ]
+  },
+  "spill": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:spill"
+    ]
+  },
+  "wand": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:wand1",
+      "thaumcraft:wand2",
+      "thaumcraft:wand3"
+    ]
+  },
+  "wand_fail": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:wandfail"
+    ]
+  },
+  "write": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:write1",
+      "thaumcraft:write2"
+    ]
+  },
+  "zap": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:zap1",
+      "thaumcraft:zap2"
+    ]
+  }
+}

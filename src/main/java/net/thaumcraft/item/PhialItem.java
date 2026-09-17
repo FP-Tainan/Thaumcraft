@@ -68,7 +68,7 @@ public class PhialItem extends Item {
         filled.set(TCComponents.PHIAL_ASPECT, chosen.tag());
         stack.shrink(1);
         if (!player.getInventory().add(filled)) player.drop(filled, false);
-        level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.7f, 1.2f);
+        level.playSound(null, pos, net.thaumcraft.registry.TCSounds.JAR.value(), SoundSource.BLOCKS, 0.7f, 1.0f);
         crucible.setChanged();
         level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
         return InteractionResult.SUCCESS;
