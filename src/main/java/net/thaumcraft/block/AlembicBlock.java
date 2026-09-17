@@ -31,7 +31,7 @@ import net.thaumcraft.registry.TCSounds;
  */
 public class AlembicBlock extends BaseEntityBlock {
     public static final MapCodec<AlembicBlock> CODEC = simpleCodec(AlembicBlock::new);
-    private static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 14.0, 14.0);
+    private static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 
     public AlembicBlock(Properties properties) {
         super(properties);

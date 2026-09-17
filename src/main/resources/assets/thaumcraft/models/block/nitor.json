@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "minecraft:block/block",
   "textures": {
-    "cross": "thaumcraft:block/nitor"
+    "particle": "thaumcraft:block/nitor"
   }
 }

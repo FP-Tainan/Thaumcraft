@@ -58,6 +58,10 @@ public class ThaumcraftClient implements ClientModInitializer {
                 java.util.List.of(state -> 0xFF6D40C9),
                 net.thaumcraft.registry.TCBlocks.TAINT_SOIL,
                 net.thaumcraft.registry.TCBlocks.TAINT_FIBRES);
+        // o Nitor é um orbe de luz, e não um desenho chapado
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.NITOR,
+                net.thaumcraft.client.render.NitorRenderer::new);
         // as marcas do sino do golem, que só aparecem com o sino na mão
         net.thaumcraft.client.render.MarkerOverlay.init();
         ThaumometerHud.init();

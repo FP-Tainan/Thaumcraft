@@ -53,6 +53,11 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.InfusionMatrixBlockEntity::new,
                             java.util.Set.of(TCBlocks.INFUSION_MATRIX)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.NitorBlockEntity> NITOR =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("nitor"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.NitorBlockEntity::new,
+                            java.util.Set.of(TCBlocks.NITOR)));
+
     private TCBlockEntities() {
     }
 

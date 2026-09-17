@@ -28,6 +28,8 @@ public class FidelityClientTest implements FabricClientGameTest {
             // a destilaria: forno, alambique em cima, cano descendo até dois jarros rotulados
             server.runCommand("execute at @p run setblock ~1 ~ ~5 thaumcraft:alchemical_furnace[facing=north,lit=true]");
             server.runCommand("execute at @p run setblock ~1 ~1 ~5 thaumcraft:alembic");
+            server.runCommand("execute at @p run setblock ~1 ~2 ~5 thaumcraft:alembic");
+            server.runCommand("execute at @p run setblock ~1 ~3 ~5 thaumcraft:alembic");
             server.runCommand("execute at @p run setblock ~ ~1 ~5 thaumcraft:tube");
             server.runCommand("execute at @p run setblock ~-1 ~1 ~5 thaumcraft:tube");
             server.runCommand("execute at @p run setblock ~ ~ ~5 thaumcraft:jar");
@@ -38,6 +40,8 @@ public class FidelityClientTest implements FabricClientGameTest {
             server.runCommand("execute at @p run data merge block ~ ~ ~5 {aspect:\"ignis\",label:\"ignis\",amount:48,facing:3}");
             server.runCommand("execute at @p run data merge block ~-1 ~ ~5 {aspect:\"aqua\",label:\"aqua\",amount:20,facing:3}");
             server.runCommand("execute at @p run data merge block ~1 ~1 ~5 {aspect:\"terra\",amount:22}");
+            server.runCommand("execute at @p run data merge block ~1 ~2 ~5 {aspect:\"aer\",amount:14}");
+            server.runCommand("execute at @p run data merge block ~1 ~3 ~5 {aspect:\"ordo\",amount:7}");
             server.runCommand("execute at @p run data merge block ~ ~1 ~5 {type:\"ignis\",amount:1}");
             server.runCommand("execute at @p run data merge block ~-1 ~1 ~5 {type:\"aqua\",amount:1}");
             server.runCommand("execute at @p run data merge block ~1 ~ ~5 {aspects:{terra:16,ignis:9}}");
