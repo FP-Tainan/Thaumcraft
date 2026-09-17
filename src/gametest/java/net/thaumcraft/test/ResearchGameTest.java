@@ -1,0 +1,119 @@
+package net.thaumcraft.test;
+
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.thaumcraft.research.PlayerKnowledge;
+import net.thaumcraft.research.Research;
+import net.thaumcraft.research.ResearchCategories;
+import net.thaumcraft.research.ResearchManager;
+import net.thaumcraft.research.Researches;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * A árvore do Thaumonomicon tem de continuar sendo a do Thaumcraft 4.2.3.5.
+ *
+ * <p>Ela é gerada a partir do {@code ConfigResearch} do mod original, então estes testes são a cerca: se
+ * alguém mexer na tabela na mão e ela sair do lugar, a compilação quebra antes de virar jogo.
+ */
+public class ResearchGameTest {
+    /** Os números que o original tem: duzentas e uma pesquisas, seis abas, e a conta de cada aba. */
+    @GameTest
+    public void theTreeCameFromTheOriginal(GameTestHelper helper) {
+        if (Researches.ALL.size() != 201) {
+            helper.fail("a árvore tem " + Researches.ALL.size() + " pesquisas; o original tem 201");
+        }
+        Map<String, Integer> expected = new HashMap<>();
+        expected.put("BASICS", 19);
+        expected.put("THAUMATURGY", 42);
+        expected.put("ALCHEMY", 35);
+        expected.put("ARTIFICE", 50);
+        expected.put("GOLEMANCY", 39);
+        expected.put("ELDRITCH", 16);
+        for (Map.Entry<String, Integer> entry : expected.entrySet()) {
+            int found = Researches.of(entry.getKey()).size();
+            if (found != entry.getValue()) {
+                helper.fail(entry.getKey() + " tem " + found + " pesquisas, devia ter " + entry.getValue());
+            }
+        }
+        if (ResearchCategories.ALL.size() != 6) helper.fail("o original tem seis abas");
+        helper.succeed();
+    }
+
+    /** Toda ligação aponta para pesquisa que existe: mapa sem linha solta. */
+    @GameTest
+    public void everyLinkLeadsSomewhere(GameTestHelper helper) {
+        for (Research research : Researches.ALL.values()) {
+            for (String parent : research.parents()) {
+                if (Researches.get(parent) == null) helper.fail(research.key() + " nasce de " + parent + ", que não existe");
+            }
+            for (String parent : research.parentsHidden()) {
+                if (Researches.get(parent) == null) helper.fail(research.key() + " nasce de " + parent + ", que não existe");
+            }
+            for (String sibling : research.siblings()) {
+                if (Researches.get(sibling) == null) helper.fail(research.key() + " é irmã de " + sibling + ", que não existe");
+            }
+            if (ResearchCategories.get(research.category()) == null) {
+                helper.fail(research.key() + " mora na aba " + research.category() + ", que não existe");
+            }
+        }
+        helper.succeed();
+    }
+
+    /** Duas pesquisas conferidas na mão contra o ConfigResearch da 4.2.3.5. */
+    @GameTest
+    public void spotChecksAgainstTheOriginal(GameTestHelper helper) {
+        Research aspects = Researches.get("ASPECTS");
+        if (aspects == null) helper.fail("faltou ASPECTS");
+        if (aspects.column() != 0 || aspects.row() != 0) helper.fail("ASPECTS fica na casa zero, zero");
+        if (!aspects.is(Research.Mark.ROUND) || !aspects.is(Research.Mark.AUTO)) {
+            helper.fail("ASPECTS é redonda e vem sabida de berço");
+        }
+        if (aspects.pages().size() != 3) helper.fail("ASPECTS tem três páginas no original");
+
+        Research pech = Researches.get("PECH");
+        if (pech.column() != -4 || pech.row() != -4) helper.fail("PECH fica em menos quatro, menos quatro");
+        helper.succeed();
+    }
+
+    /** Quem entra no mundo já sabe o que o original dá de berço — e só isso. */
+    @GameTest
+    public void startersComeOpen(GameTestHelper helper) {
+        PlayerKnowledge knowledge = new PlayerKnowledge();
+        ResearchManager.grantStarters(knowledge);
+        int starters = 0;
+        for (Research research : Researches.ALL.values()) {
+            boolean auto = research.is(Research.Mark.AUTO);
+            if (auto) starters++;
+            if (auto != knowledge.hasResearch(research.key())) {
+                helper.fail(research.key() + (auto ? " devia vir aberta" : " não devia vir aberta"));
+            }
+        }
+        if (starters == 0) helper.fail("nenhuma pesquisa vem aberta; o original abre várias");
+        helper.succeed();
+    }
+
+    /** Sem os pais feitos, a pesquisa não abre. */
+    @GameTest
+    public void childrenWaitForTheirParents(GameTestHelper helper) {
+        PlayerKnowledge knowledge = new PlayerKnowledge();
+        Research withParents = null;
+        for (Research research : Researches.ALL.values()) {
+            if (!research.parents().isEmpty()) {
+                withParents = research;
+                break;
+            }
+        }
+        if (withParents == null) helper.fail("nenhuma pesquisa tem pai; a árvore está solta");
+        if (ResearchManager.canUnlock(knowledge, withParents)) {
+            helper.fail(withParents.key() + " abriu sem os pais feitos");
+        }
+        for (String parent : withParents.parents()) knowledge.completeResearch(parent);
+        for (String parent : withParents.parentsHidden()) knowledge.completeResearch(parent);
+        if (!ResearchManager.canUnlock(knowledge, withParents)) {
+            helper.fail(withParents.key() + " não abriu nem com os pais feitos");
+        }
+        helper.succeed();
+    }
+}

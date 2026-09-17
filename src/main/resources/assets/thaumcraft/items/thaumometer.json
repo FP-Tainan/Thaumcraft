@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "minecraft:using_item",
+    "on_false": {
+      "type": "minecraft:special",
+      "base": "thaumcraft:item/thaumometer_base",
+      "model": { "type": "thaumcraft:scanner" }
+    },
+    "on_true": {
+      "type": "minecraft:special",
+      "base": "thaumcraft:item/thaumometer_raised",
+      "model": { "type": "thaumcraft:scanner" }
+    }
+  }
+}

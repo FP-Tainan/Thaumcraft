@@ -1,0 +1,7 @@
+build/
+.gradle/
+run/
+*.class
+
+# o mod original, que serve de gabarito: fica só na máquina, não se redistribui
+Mod Base/

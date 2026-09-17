@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "thaumcraft",
+  "version": "${version}",
+  "name": "Thaumcraft",
+  "description": "Thaumcraft 4.2.3.5, de Azanor, trazido para o Minecraft de hoje.",
+  "authors": [
+    "Azanor",
+    "Tainan Fermino Peres"
+  ],
+  "license": "All rights reserved to Azanor",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.thaumcraft.Thaumcraft"
+    ],
+    "client": [
+      "net.thaumcraft.client.ThaumcraftClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  },
+  "mixins": [
+    "thaumcraft.mixins.json"
+  ]
+}
