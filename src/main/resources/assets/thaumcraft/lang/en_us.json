@@ -81,6 +81,8 @@
   "item.thaumcraft.wand_rod_reed": "Reed Rod",
   "item.thaumcraft.wand_rod_silverwood": "Silverwood Rod",
   "itemGroup.thaumcraft": "Thaumcraft",
+  "tag.item.c.ingots.thaumium": "Thaumium Ingots",
+  "tag.item.c.ingots.void": "Void Metal Ingots",
   "tc.aspect.aer": "Air",
   "tc.aspect.alienis": "Alien, Strange, The Eldritch",
   "tc.aspect.aqua": "Water",
