@@ -30,12 +30,12 @@ import org.jetbrains.annotations.Nullable;
  */
 public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRenderer.State> {
     /** O fundo do vão de dentro do jarro. */
-    private static final float FLOOR = 0.09f;
+    private static final float FLOOR = 0.07f;
     /** O teto do vão de dentro do jarro. */
-    private static final float CEILING = 0.68f;
+    private static final float CEILING = 0.73f;
     /** Onde as paredes de dentro ficam, um pouco para dentro do vidro. */
-    private static final float NEAR = 0.21f;
-    private static final float FAR = 0.79f;
+    private static final float NEAR = 0.19f;
+    private static final float FAR = 0.81f;
 
     /** A que distância do meio do bloco o rótulo fica, como no original. */
     private static final float LABEL_OUT = 0.315f;
@@ -109,7 +109,7 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
     private void submitMist(State state, PoseStack pose, SubmitNodeCollector collector) {
         float breath = 1.0f + (float) Math.sin(state.ticks / 12.0f) * 0.02f;
         float top = FLOOR + (CEILING - FLOOR) * Math.min(1.0f, state.fullness) * breath;
-        int color = 0xE0000000 | state.color;
+        int color = 0xF2000000 | state.color;
         int light = 0xF000F0;
 
         pose.pushPose();

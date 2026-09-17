@@ -4,6 +4,7 @@
     "particle": "thaumcraft:block/jar_side",
     "side": "thaumcraft:block/jar_side",
     "top": "thaumcraft:block/jar_top",
+    "tampa": "thaumcraft:block/jar_lid",
     "bottom": "thaumcraft:block/jar_bottom"
   },
   "elements": [
@@ -15,14 +16,14 @@
       ],
       "to": [
         13,
-        11,
+        12,
         13
       ],
       "faces": {
         "north": {
           "uv": [
             3,
-            5,
+            4,
             13,
             16
           ],
@@ -31,7 +32,7 @@
         "south": {
           "uv": [
             3,
-            5,
+            4,
             13,
             16
           ],
@@ -40,7 +41,7 @@
         "west": {
           "uv": [
             3,
-            5,
+            4,
             13,
             16
           ],
@@ -49,20 +50,11 @@
         "east": {
           "uv": [
             3,
-            5,
+            4,
             13,
             16
           ],
           "texture": "#side"
-        },
-        "up": {
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ],
-          "texture": "#top"
         },
         "down": {
           "uv": [
@@ -78,60 +70,69 @@
     },
     {
       "from": [
-        4,
-        11,
-        4
+        3.5,
+        12,
+        3.5
       ],
       "to": [
-        12,
-        13,
-        12
+        12.5,
+        15,
+        12.5
       ],
       "faces": {
         "north": {
           "uv": [
-            4,
+            3.5,
             1,
-            12,
-            3
+            12.5,
+            4
           ],
-          "texture": "#top"
+          "texture": "#tampa"
         },
         "south": {
           "uv": [
-            4,
+            3.5,
             1,
-            12,
-            3
+            12.5,
+            4
           ],
-          "texture": "#top"
+          "texture": "#tampa"
         },
         "west": {
           "uv": [
-            4,
+            3.5,
             1,
-            12,
-            3
+            12.5,
+            4
           ],
-          "texture": "#top"
+          "texture": "#tampa"
         },
         "east": {
           "uv": [
-            4,
+            3.5,
             1,
-            12,
-            3
+            12.5,
+            4
           ],
-          "texture": "#top"
+          "texture": "#tampa"
         },
         "up": {
           "uv": [
-            4,
-            4,
-            12,
-            12
+            3.5,
+            3.5,
+            12.5,
+            12.5
           ],
-          "texture": "#top"
+          "texture": "#tampa"
+        },
+        "down": {
+          "uv": [
+            3.5,
+            3.5,
+            12.5,
+            12.5
+          ],
+          "texture": "#tampa"
         }
       }
     }

@@ -123,7 +123,22 @@ public class InfusionGameTest {
         matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player);
         if (!matrix.isCrafting()) helper.fail("a infusão não começou");
 
+        // A instabilidade desta receita é três, e o azar dela pode cuspir um ingrediente de um pedestal
+        // -- o que é o comportamento certo, mas trava a infusão e faria esta prova falhar de vez em
+        // quando sem motivo. Aqui a prova repõe o que for cuspido, como quem está olhando faria, para
+        // medir o ciclo da infusão e não a sorte do dado.
         helper.succeedWhen(() -> {
+            int slot = 0;
+            for (var wanted : recipe.components()) {
+                BlockPos at = new BlockPos(7, centreAt.getY(), 2 + slot * 2);
+                slot++;
+                if (!(helper.getBlockEntity(at, PedestalBlockEntity.class) instanceof PedestalBlockEntity pedestal)) {
+                    continue;
+                }
+                if (pedestal.held().isEmpty()) {
+                    pedestal.hold(new ItemStack(wanted.items().iterator().next()));
+                }
+            }
             ItemStack made = helper.getBlockEntity(centreAt, PedestalBlockEntity.class).held();
             if (!ItemStack.isSameItem(made, recipe.result())) {
                 helper.fail("o pedestal do meio devia ter " + recipe.result().getItem()

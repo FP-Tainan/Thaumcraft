@@ -17,23 +17,32 @@ import net.thaumcraft.block.entity.NitorBlockEntity;
 /**
  * O Nitor: um bolo de luz parado no ar.
  *
- * <p>No original ele <strong>não</strong> é uma chama de tocha — é um orbe difuso, com um miolo branco de
- * tão quente e um halo alaranjado em volta que se espalha macio pelo chão, e uma faísca menor boiando
- * logo acima. É por isso que ele não pode ser um desenho chapado: são três discos de brilho, um dentro do
- * outro, sempre virados para quem olha, e o do meio pulsa.
+ * <p>No original ele é um orbe <strong>vermelho</strong> em forma de gota — mais alto que largo, com um
+ * bico no topo —, com um miolo amarelo-branco de tão quente e faíscas soltando em volta. Não é chama de
+ * tocha nem bola alaranjada: a cor puxa para o vermelho-rosado, e é isso que o faz parecer magia e não
+ * fogo.
  *
- * <p>A textura do brilho é a do próprio mod ({@code misc/p_large.png}), a mesma que ele usa nas faíscas.
+ * <p>Os discos vão pela porta do {@code eyes}, que é a que o jogo usa para olho de aranha e coisa que
+ * <em>emite</em> luz em vez de refletir: ela soma a cor ao que está atrás em vez de misturar. É o que
+ * separa um brilho de uma mancha — a primeira tentativa usou a porta comum e o Nitor saiu marrom na
+ * areia.
  */
 public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, NitorRenderer.State> {
     private static final Identifier GLOW = Thaumcraft.id("textures/misc/glow.png");
 
-    /** Os três discos: o halo largo e ralo, o corpo, e o miolo branco. */
-    private static final float[] SIZES = {0.95f, 0.52f, 0.22f};
-    private static final int[] COLOURS = {0x33FF7A18, 0xAAFFA53C, 0xFFFFF4D6};
-
-    /** O tamanho e a cor da faísca que boia acima. */
-    private static final float EMBER_SIZE = 0.16f;
-    private static final int EMBER_COLOUR = 0xAAFF8A2B;
+    /**
+     * Os discos, de fora para dentro: {@code largura, altura, subida, cor}.
+     *
+     * <p>A gota sai de os discos serem mais altos que largos e de o miolo ficar um pouco abaixo do meio,
+     * com um pingo por cima fazendo o bico.
+     */
+    private static final float[][] DISCS = {
+            {1.05f, 1.25f, 0.00f},
+            {0.60f, 0.76f, -0.02f},
+            {0.36f, 0.46f, -0.05f},
+            {0.15f, 0.17f, 0.30f},
+    };
+    private static final int[] COLOURS = {0x55FF2A44, 0x99FF3355, 0xFFFFE07A, 0xAAFF4466};
 
     /** O que o desenhista precisa saber do Nitor neste quadro. */
     public static class State extends BlockEntityRenderState {
@@ -59,40 +68,36 @@ public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, Nito
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
-        float pulse = 1.0f + (float) Math.sin(state.ticks * 0.08f) * 0.07f;
+        float pulse = 1.0f + (float) Math.sin(state.ticks * 0.09f) * 0.06f;
 
         pose.pushPose();
         pose.translate(0.5f, 0.5f, 0.5f);
         pose.mulPose(camera.orientation);
-        for (int disc = 0; disc < SIZES.length; disc++) {
+        for (int disc = 0; disc < DISCS.length; disc++) {
+            float[] shape = DISCS[disc];
             // o halo de fora respira mais do que o miolo, que é o que dá a impressão de calor
             float grow = disc == 0 ? pulse * pulse : pulse;
-            glow(pose, collector, SIZES[disc] * grow, COLOURS[disc], 0.0f);
+            glow(pose, collector, shape[0] * grow, shape[1] * grow, shape[2], COLOURS[disc]);
         }
-        pose.popPose();
-
-        // e a faísca que boia logo acima, subindo e descendo devagar
-        pose.pushPose();
-        pose.translate(0.5f, 0.85f + (float) Math.sin(state.ticks * 0.05f) * 0.09f, 0.5f);
-        pose.mulPose(camera.orientation);
-        glow(pose, collector, EMBER_SIZE, EMBER_COLOUR, 0.0f);
         pose.popPose();
     }
 
-    /** Um disco de brilho virado para quem olha. */
-    private static void glow(PoseStack pose, SubmitNodeCollector collector, float size, int colour, float z) {
-        float half = size / 2.0f;
-        collector.submitCustomGeometry(pose, RenderTypes.entityTranslucentEmissive(GLOW), (matrix, consumer) -> {
-            corner(matrix, consumer, -half, -half, z, 0.0f, 1.0f, colour);
-            corner(matrix, consumer, half, -half, z, 1.0f, 1.0f, colour);
-            corner(matrix, consumer, half, half, z, 1.0f, 0.0f, colour);
-            corner(matrix, consumer, -half, half, z, 0.0f, 0.0f, colour);
+    /** Um disco de brilho virado para quem olha, mais alto que largo. */
+    private static void glow(PoseStack pose, SubmitNodeCollector collector,
+                             float width, float height, float rise, int colour) {
+        float halfW = width / 2.0f;
+        float halfH = height / 2.0f;
+        collector.submitCustomGeometry(pose, RenderTypes.eyes(GLOW), (matrix, consumer) -> {
+            corner(matrix, consumer, -halfW, rise - halfH, 0.0f, 1.0f, colour);
+            corner(matrix, consumer, halfW, rise - halfH, 1.0f, 1.0f, colour);
+            corner(matrix, consumer, halfW, rise + halfH, 1.0f, 0.0f, colour);
+            corner(matrix, consumer, -halfW, rise + halfH, 0.0f, 0.0f, colour);
         });
     }
 
-    private static void corner(PoseStack.Pose matrix, VertexConsumer consumer, float x, float y, float z,
+    private static void corner(PoseStack.Pose matrix, VertexConsumer consumer, float x, float y,
                                float u, float v, int colour) {
-        consumer.addVertex(matrix, x, y, z)
+        consumer.addVertex(matrix, x, y, 0.0f)
                 .setColor(colour)
                 .setUv(u, v)
                 .setOverlay(OverlayTexture.NO_OVERLAY)
