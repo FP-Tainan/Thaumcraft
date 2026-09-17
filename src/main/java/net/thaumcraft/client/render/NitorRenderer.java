@@ -26,6 +26,10 @@ import net.thaumcraft.block.entity.NitorBlockEntity;
  * <em>emite</em> luz em vez de refletir: ela soma a cor ao que está atrás em vez de misturar. É o que
  * separa um brilho de uma mancha — a primeira tentativa usou a porta comum e o Nitor saiu marrom na
  * areia.
+ *
+ * <p>E ele <strong>não fica parado</strong>. Chama parada parece adesivo colado no ar; esta balança de
+ * um lado para o outro, sobe e desce e treme de brilho, cada camada no seu compasso — é o desencontro
+ * entre os compassos que faz a coisa parecer viva em vez de pulsar toda junta como um coração.
  */
 public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, NitorRenderer.State> {
     private static final Identifier GLOW = Thaumcraft.id("textures/misc/glow.png");
@@ -68,16 +72,23 @@ public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, Nito
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
-        float pulse = 1.0f + (float) Math.sin(state.ticks * 0.09f) * 0.06f;
+        float t = state.ticks;
+        // o bailado da chama: sobe e desce e balança, em compassos que não fecham entre si
+        float sobe = (float) Math.sin(t * 0.07f) * 0.055f + (float) Math.sin(t * 0.031f) * 0.03f;
+        float balanca = (float) Math.sin(t * 0.045f) * 0.045f + (float) Math.cos(t * 0.019f) * 0.025f;
 
         pose.pushPose();
-        pose.translate(0.5f, 0.5f, 0.5f);
+        pose.translate(0.5f + balanca, 0.5f + sobe, 0.5f);
         pose.mulPose(camera.orientation);
         for (int disc = 0; disc < DISCS.length; disc++) {
             float[] shape = DISCS[disc];
-            // o halo de fora respira mais do que o miolo, que é o que dá a impressão de calor
-            float grow = disc == 0 ? pulse * pulse : pulse;
-            glow(pose, collector, shape[0] * grow, shape[1] * grow, shape[2], COLOURS[disc]);
+            // cada camada treme no seu compasso; a de fora abre e fecha mais que o miolo
+            float ritmo = 0.09f + disc * 0.037f;
+            float tremor = (float) Math.sin(t * ritmo + disc * 1.7f);
+            float grow = 1.0f + tremor * (disc == 0 ? 0.11f : 0.06f);
+            // e a chama é mais alta do que larga quando estica, como fogo de verdade
+            float estica = 1.0f + tremor * 0.05f;
+            glow(pose, collector, shape[0] * grow, shape[1] * grow * estica, shape[2], COLOURS[disc]);
         }
         pose.popPose();
     }

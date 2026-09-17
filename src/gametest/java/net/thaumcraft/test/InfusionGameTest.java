@@ -128,10 +128,10 @@ public class InfusionGameTest {
         // quando sem motivo. Aqui a prova repõe o que for cuspido, como quem está olhando faria, para
         // medir o ciclo da infusão e não a sorte do dado.
         helper.succeedWhen(() -> {
-            int slot = 0;
+            int reposto = 0;
             for (var wanted : recipe.components()) {
-                BlockPos at = new BlockPos(7, centreAt.getY(), 2 + slot * 2);
-                slot++;
+                BlockPos at = new BlockPos(7, centreAt.getY(), 2 + reposto * 2);
+                reposto++;
                 if (!(helper.getBlockEntity(at, PedestalBlockEntity.class) instanceof PedestalBlockEntity pedestal)) {
                     continue;
                 }

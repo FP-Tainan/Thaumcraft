@@ -31,10 +31,45 @@ import net.thaumcraft.registry.TCSounds;
  */
 public class AlembicBlock extends BaseEntityBlock {
     public static final MapCodec<AlembicBlock> CODEC = simpleCodec(AlembicBlock::new);
-    private static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
+    /**
+     * Se ele está apoiado noutro alambique.
+     *
+     * <p>Apoiado, ele termina no colarinho de latão que encaixa no de baixo; no chão ou sobre o forno,
+     * abre quatro pés inclinados. É o que se vê na coluna do original: só o de baixo tem pés.
+     */
+    public static final net.minecraft.world.level.block.state.properties.BooleanProperty STACKED =
+            net.minecraft.world.level.block.state.properties.BooleanProperty.create("stacked");
+
+    private static final VoxelShape SHAPE = Block.box(0.5, 0.0, 0.5, 15.5, 16.0, 15.5);
 
     public AlembicBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(STACKED, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(
+            net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(STACKED);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(STACKED,
+                standsOnAlembic(context.getLevel(), context.getClickedPos()));
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState state, net.minecraft.world.level.LevelReader level,
+                                     net.minecraft.world.level.ScheduledTickAccess ticks, BlockPos pos,
+                                     net.minecraft.core.Direction dir, BlockPos neighbourPos,
+                                     BlockState neighbourState, net.minecraft.util.RandomSource random) {
+        if (dir != net.minecraft.core.Direction.DOWN) return state;
+        return state.setValue(STACKED, standsOnAlembic(level, pos));
+    }
+
+    private static boolean standsOnAlembic(net.minecraft.world.level.BlockGetter level, BlockPos pos) {
+        return level.getBlockState(pos.below()).getBlock() instanceof AlembicBlock;
     }
 
     @Override

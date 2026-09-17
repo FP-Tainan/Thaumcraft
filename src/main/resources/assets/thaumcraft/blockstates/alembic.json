@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "stacked=false": {
       "model": "thaumcraft:block/alembic"
+    },
+    "stacked=true": {
+      "model": "thaumcraft:block/alembic_stacked"
     }
   }
 }

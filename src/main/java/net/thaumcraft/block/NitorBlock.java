@@ -54,12 +54,16 @@ public class NitorBlock extends BaseEntityBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        // uma faísca de vez em quando, de leve: o brilho em si quem desenha é o NitorRenderer
-        if (random.nextInt(6) != 0) return;
-        level.addParticle(ParticleTypes.END_ROD,
-                pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.35,
-                pos.getY() + 0.5 + (random.nextDouble() - 0.5) * 0.35,
-                pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.35,
-                0.0, 0.012, 0.0);
+        // as faíscas brancas em volta, que no original saem sem parar; o brilho em si quem desenha é o
+        // NitorRenderer
+        for (int faisca = 0; faisca < 2; faisca++) {
+            level.addParticle(ParticleTypes.END_ROD,
+                    pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.55,
+                    pos.getY() + 0.45 + (random.nextDouble() - 0.5) * 0.55,
+                    pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.55,
+                    (random.nextDouble() - 0.5) * 0.012,
+                    0.006 + random.nextDouble() * 0.012,
+                    (random.nextDouble() - 0.5) * 0.012);
+        }
     }
 }
