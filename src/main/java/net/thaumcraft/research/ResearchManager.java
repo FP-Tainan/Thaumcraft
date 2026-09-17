@@ -48,6 +48,48 @@ public final class ResearchManager {
     }
 
     /**
+     * Destranca uma pesquisa, cobrando os aspectos que ela pede.
+     *
+     * <p>No mod original isto acontece na mesa de pesquisa, com papel, tinta e o tabuleiro de hexágonos.
+     * O tabuleiro é a última peça da fatia 3 e ainda não chegou; até lá, o que a pesquisa cobra é cobrado
+     * aqui, direto do que o thaumômetro já rendeu. Os preços são os do original.
+     *
+     * @return se a pesquisa foi destrancada agora
+     */
+    public static boolean unlock(Player player, String key) {
+        if (player == null || key == null) return false;
+        Research research = Researches.get(key);
+        if (research == null) return false;
+
+        PlayerKnowledge knowledge = Knowledges.of(player);
+        if (knowledge.hasResearch(key)) return false;
+        if (!canUnlock(knowledge, research)) return false;
+        if (!isVisible(knowledge, research)) return false;
+
+        // sem os pontos, nada feito
+        for (net.thaumcraft.api.aspects.Aspect aspect : research.tags().getAspects()) {
+            if (knowledge.points(aspect) < research.tags().getAmount(aspect)) return false;
+        }
+        for (net.thaumcraft.api.aspects.Aspect aspect : research.tags().getAspects()) {
+            knowledge.spend(aspect, research.tags().getAmount(aspect));
+        }
+        knowledge.completeResearch(key);
+        Knowledges.save(player, knowledge);
+        player.level().playSound(null, player.blockPosition(),
+                net.minecraft.sounds.SoundEvents.PLAYER_LEVELUP,
+                net.minecraft.sounds.SoundSource.PLAYERS, 0.5f, 1.4f);
+        return true;
+    }
+
+    /** Já dá para pagar o que esta pesquisa cobra? */
+    public static boolean canAfford(PlayerKnowledge knowledge, Research research) {
+        for (net.thaumcraft.api.aspects.Aspect aspect : research.tags().getAspects()) {
+            if (knowledge.points(aspect) < research.tags().getAmount(aspect)) return false;
+        }
+        return true;
+    }
+
+    /**
      * Esta pesquisa aparece no mapa?
      *
      * <p>As virtuais nunca aparecem: são só degrau. As perdidas somem depois de sabidas. As escondidas

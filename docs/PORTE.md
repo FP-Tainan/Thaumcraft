@@ -152,6 +152,12 @@ Greatwood, Silverwood.
 
 Falta da fatia: os focos da varinha e as varinhas de bastão em si (a peça existe, a receita não).
 
+- `research/ResearchManager.unlock` — **onde os pontos do thaumômetro viram alguma coisa**: clicar numa
+  pesquisa ao alcance, no livro, cobra os aspectos que ela pede e a destranca. Os preços são os do
+  original. **Diferença deliberada**: no mod isto acontece na mesa de pesquisa, com papel, tinta e o
+  tabuleiro de hexágonos; o tabuleiro é a última peça da fatia e ainda não chegou, e até lá seria pior
+  deixar os pontos sem serventia nenhuma. Quem decide é sempre o servidor — do livro só sai o pedido.
+
 Falta da fatia: o tabuleiro hexagonal da mesa de pesquisa; e, no livro, as páginas de receita e os
 ícones de item — 168 pesquisas apontam para itens que só chegam nas fatias seguintes, e até lá elas
 aparecem com o símbolo do aspecto de que mais precisam.

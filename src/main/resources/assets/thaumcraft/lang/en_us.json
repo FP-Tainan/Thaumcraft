@@ -176,6 +176,8 @@
   "tc.nodetype.pure": "Pure",
   "tc.nodetype.tainted": "Tainted",
   "tc.nodetype.unstable": "Unstable",
+  "tc.research.missing": "Not enough aspects yet",
+  "tc.research.unlock": "Click to research",
   "tc.research.warp": "Warp %s",
   "tc.research_category.ALCHEMY": "Alchemy",
   "tc.research_category.ARTIFICE": "Artifice",

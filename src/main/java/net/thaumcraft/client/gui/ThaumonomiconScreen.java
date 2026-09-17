@@ -125,6 +125,9 @@ public class ThaumonomiconScreen extends Screen {
         int top = this.top();
         int mapLeft = left + 16;
         int mapTop = top + 17;
+        if (this.minecraft != null && this.minecraft.player != null) {
+            this.knowledge = net.thaumcraft.research.Knowledges.of(this.minecraft.player);
+        }
         int scrollX = (int) this.mapX;
         int scrollY = (int) this.mapY;
         this.hovered = null;
@@ -285,12 +288,16 @@ public class ThaumonomiconScreen extends Screen {
                 ? this.hovered.name()
                 : this.hovered.name().copy().withStyle(GALACTIC));
         if (!done && open && !this.hovered.tags().isEmpty()) {
-            StringBuilder cost = new StringBuilder();
+            // o preço, com o que já se tem de cada aspecto em verde e o que falta em vermelho
             for (Aspect aspect : this.hovered.tags().getAspects()) {
-                if (!cost.isEmpty()) cost.append(", ");
-                cost.append(aspect.name().getString()).append(' ').append(this.hovered.tags().getAmount(aspect));
+                int wanted = this.hovered.tags().getAmount(aspect);
+                int have = this.knowledge.points(aspect);
+                lines.add(Component.literal(aspect.name().getString() + " " + have + "/" + wanted)
+                        .withStyle(have >= wanted ? ChatFormatting.GREEN : ChatFormatting.RED));
             }
-            lines.add(Component.literal(cost.toString()).withStyle(ChatFormatting.GRAY));
+            lines.add(ResearchManager.canAfford(this.knowledge, this.hovered)
+                    ? Component.translatable("tc.research.unlock").withStyle(ChatFormatting.YELLOW)
+                    : Component.translatable("tc.research.missing").withStyle(ChatFormatting.DARK_GRAY));
         }
         if (this.hovered.warp() > 0) {
             lines.add(Component.translatable("tc.research.warp", this.hovered.warp())
@@ -331,9 +338,17 @@ public class ThaumonomiconScreen extends Screen {
             index++;
         }
         if (this.hovered != null && this.minecraft != null) {
-            boolean readable = ResearchManager.isComplete(this.knowledge, this.hovered);
-            if (readable && !this.hovered.pages().isEmpty()) {
-                this.minecraft.setScreenAndShow(new ResearchPageScreen(this, this.hovered));
+            if (ResearchManager.isComplete(this.knowledge, this.hovered)) {
+                if (!this.hovered.pages().isEmpty()) {
+                    this.minecraft.setScreenAndShow(new ResearchPageScreen(this, this.hovered));
+                    return true;
+                }
+            } else if (ResearchManager.canUnlock(this.knowledge, this.hovered)
+                    && ResearchManager.canAfford(this.knowledge, this.hovered)) {
+                // quem decide é o servidor; daqui só sai o pedido
+                net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(
+                        new net.thaumcraft.net.ResearchRequest(this.hovered.key()));
+                this.knowledge = net.thaumcraft.research.Knowledges.of(this.minecraft.player);
                 return true;
             }
         }

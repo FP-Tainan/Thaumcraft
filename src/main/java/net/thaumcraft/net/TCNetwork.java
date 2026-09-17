@@ -46,6 +46,11 @@ public final class TCNetwork {
 
     public static void init() {
         PayloadTypeRegistry.clientboundPlay().register(ScanSummary.TYPE, ScanSummary.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
+        // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela
+        ServerPlayNetworking.registerGlobalReceiver(ResearchRequest.TYPE, (payload, context) ->
+                context.server().execute(() ->
+                        net.thaumcraft.research.ResearchManager.unlock(context.player(), payload.key())));
     }
 
     public static void send(ServerPlayer player, ScanSummary summary) {

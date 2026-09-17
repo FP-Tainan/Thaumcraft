@@ -94,6 +94,48 @@ public class ResearchGameTest {
         helper.succeed();
     }
 
+    /** Com os pais feitos e os pontos na mão, a pesquisa se destranca e cobra o que pede. */
+    @GameTest
+    public void researchCostsWhatItAsks(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        PlayerKnowledge knowledge = net.thaumcraft.research.Knowledges.of(player);
+        ResearchManager.grantStarters(knowledge);
+
+        // uma pesquisa que cobra alguma coisa e cujos pais já vêm abertos
+        Research paid = null;
+        for (Research research : Researches.ALL.values()) {
+            if (research.tags().isEmpty()) continue;
+            if (!ResearchManager.canUnlock(knowledge, research)) continue;
+            if (!ResearchManager.isVisible(knowledge, research)) continue;
+            paid = research;
+            break;
+        }
+        if (paid == null) helper.fail("nenhuma pesquisa paga está ao alcance de quem começa");
+
+        net.thaumcraft.research.Knowledges.save(player, knowledge);
+        if (ResearchManager.unlock(player, paid.key())) {
+            helper.fail(paid.key() + " se destrancou sem os pontos");
+        }
+
+        // agora com os pontos na mão
+        for (var aspect : paid.tags().getAspects()) {
+            knowledge.discover(aspect);
+            knowledge.award(aspect, paid.tags().getAmount(aspect) * 2);
+        }
+        net.thaumcraft.research.Knowledges.save(player, knowledge);
+        var first = paid.tags().getAspects().get(0);
+        int before = net.thaumcraft.research.Knowledges.of(player).points(first);
+        if (!ResearchManager.unlock(player, paid.key())) {
+            helper.fail(paid.key() + " devia ter se destrancado");
+        }
+        PlayerKnowledge depois = net.thaumcraft.research.Knowledges.of(player);
+        if (!depois.hasResearch(paid.key())) helper.fail("devia ficar sabida");
+        if (depois.points(first) >= before) helper.fail("os pontos deviam ter sido cobrados");
+        // e não se destranca duas vezes
+        if (ResearchManager.unlock(player, paid.key())) helper.fail("não devia destrancar de novo");
+        helper.succeed();
+    }
+
     /** Sem os pais feitos, a pesquisa não abre. */
     @GameTest
     public void childrenWaitForTheirParents(GameTestHelper helper) {

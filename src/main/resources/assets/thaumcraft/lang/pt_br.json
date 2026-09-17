@@ -178,6 +178,8 @@
   "tc.nodetype.pure": "Puro",
   "tc.nodetype.tainted": "Maculado",
   "tc.nodetype.unstable": "Instável",
+  "tc.research.missing": "Aspectos ainda insuficientes",
+  "tc.research.unlock": "Clique para pesquisar",
   "tc.research.warp": "Distorção %s",
   "tc.research_category.ALCHEMY": "Alquimia",
   "tc.research_category.ARTIFICE": "Artificío",
