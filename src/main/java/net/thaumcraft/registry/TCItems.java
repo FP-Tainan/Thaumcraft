@@ -92,6 +92,11 @@ public final class TCItems {
         }
     }
 
+    /** Os Óculos da Revelação: com eles no rosto, os nós de aura aparecem. */
+    public static final Item GOGGLES = register("goggles", properties ->
+            new Item(properties.humanoidArmor(net.thaumcraft.item.TCMaterials.GOGGLES,
+                    net.minecraft.world.item.equipment.ArmorType.HELMET)));
+
     /** O frasco de essência, que guarda um aspecto. */
     public static final Item PHIAL = register("phial", properties ->
             new net.thaumcraft.item.PhialItem(properties.stacksTo(16)));

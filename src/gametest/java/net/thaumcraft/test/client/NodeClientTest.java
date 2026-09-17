@@ -15,6 +15,11 @@ public class NodeClientTest implements FabricClientGameTest {
             singleplayer.getServer().runCommand("weather clear");
             singleplayer.getServer().runCommand("execute at @p run tp @s ~ ~ ~ 0 0");
             singleplayer.getServer().runCommand("execute at @p run setblock ~ ~1 ~4 thaumcraft:node");
+            // sem o thaumômetro na mão, o nó não se mostra
+            context.waitTicks(20);
+            context.takeScreenshot("no_escondido");
+            singleplayer.getServer().runCommand("give @p thaumcraft:thaumometer");
+            context.runOnClient(minecraft -> minecraft.player.getInventory().setSelectedSlot(0));
             context.waitTicks(40);
             context.takeScreenshot("no_de_aura");
 

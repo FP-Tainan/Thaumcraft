@@ -147,6 +147,9 @@ Greatwood, Silverwood.
   Uma coisa não teve como ser igual: o original usava o dicionário de biomas do Forge, com marcas como
   WET, HOT, DENSE e MAGICAL que o Minecraft de hoje não tem. Ficaram as doze que sobreviveram, com os
   números do original; terra sem marca vale cem, que é o que o original devolvia quando não reconhecia.
+- `item/Revealing` e os **Óculos da Revelação** — no original um nó de aura não fica à vista de qualquer
+  um: é preciso o thaumômetro na mão ou os óculos no rosto. Sem isso, um nó é só ar. É o que voltou a
+  valer aqui.
 - `client/render/NodeRenderer` — a nuvem de bolhas: uma por aspecto, na cor dele, saindo da folha de
   trinta e dois quadros do próprio mod (`misc/nodes.png`). Cada bolha respira num compasso próprio e
   cresce com o quanto o nó guarda; o esmaecido pisca como quem está para se apagar.

@@ -51,6 +51,8 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
             // no original o aspecto escuro é desenhado por cima em vez de somado à luz
             state.wisps.add(new NodeRenderState.Wisp(aspect.color(), amount, aspect.blend() != 1));
         }
+        // sem thaumômetro na mão nem óculos no rosto, um nó é só ar — como no original
+        if (!net.thaumcraft.item.Revealing.can(Minecraft.getInstance().player)) state.wisps.clear();
         state.type = node.type();
         state.modifier = node.modifier();
         state.seed = Math.abs(node.getBlockPos().hashCode()) % FRAMES;

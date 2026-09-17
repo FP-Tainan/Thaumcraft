@@ -31,6 +31,7 @@ public final class TCMaterials {
 
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> THAUMIUM_ARMOR_ASSET = assetKey("thaumium");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> VOID_ARMOR_ASSET = assetKey("void");
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> GOGGLES_ASSET = assetKey("goggles");
 
     /** Armadura de táumio: 2/5/6/2 de proteção e 25 de encantabilidade, os números do original. */
     public static final ArmorMaterial THAUMIUM_ARMOR = new ArmorMaterial(
@@ -47,6 +48,15 @@ public final class TCMaterials {
             10, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_NETHERITE, 0.0f, 0.0f,
             net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/void")),
             VOID_ARMOR_ASSET);
+
+    /** Os óculos protegem como a armadura de táumio e usam o desenho próprio deles. */
+    public static final ArmorMaterial GOGGLES = new ArmorMaterial(
+            25,
+            Map.of(ArmorType.HELMET, 2),
+            25, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f,
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/thaumium")),
+            GOGGLES_ASSET);
 
     private TCMaterials() {
     }

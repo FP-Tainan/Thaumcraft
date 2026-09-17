@@ -1,0 +1,26 @@
+package net.thaumcraft.item;
+
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.thaumcraft.registry.TCItems;
+
+/**
+ * Quem enxerga o que está por trás do mundo.
+ *
+ * <p>No Thaumcraft 4.2.3.5 os nós de aura não ficam à vista de qualquer um: é preciso estar com o
+ * thaumômetro na mão ou com os Óculos da Revelação no rosto. Sem isso, um nó é só ar.
+ */
+public final class Revealing {
+    private Revealing() {
+    }
+
+    /** Este jogador enxerga o que está por trás do mundo agora? */
+    public static boolean can(Player player) {
+        if (player == null) return false;
+        if (player.getMainHandItem().is(TCItems.THAUMOMETER)) return true;
+        if (player.getOffhandItem().is(TCItems.THAUMOMETER)) return true;
+        ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+        return head.is(TCItems.GOGGLES);
+    }
+}
