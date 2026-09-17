@@ -60,6 +60,44 @@ public class CrucibleGameTest {
         helper.succeed();
     }
 
+    /** O frasco tira do crisol fervendo o aspecto mais abundante. */
+    @GameTest
+    public void aPhialTakesTheThickestAspect(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(1, 2, 1);
+        helper.setBlock(pos.below(), Blocks.LAVA.defaultBlockState());
+        helper.setBlock(pos, TCBlocks.CRUCIBLE.defaultBlockState());
+        CrucibleBlockEntity crucible = helper.getBlockEntity(pos, CrucibleBlockEntity.class);
+        crucible.setWater(true);
+        for (int i = 0; i <= CrucibleBlockEntity.MAX_HEAT; i++) {
+            CrucibleBlockEntity.tick(helper.getLevel(), helper.absolutePos(pos),
+                    helper.getBlockState(pos), crucible);
+        }
+        crucible.aspects().add(Aspects.FIRE, 12);
+        crucible.aspects().add(Aspects.EARTH, 3);
+
+        var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack phial = new ItemStack(TCItems.PHIAL);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, phial);
+        var hit = new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(pos)),
+                net.minecraft.core.Direction.UP, helper.absolutePos(pos), false);
+        var context = new net.minecraft.world.item.context.UseOnContext(
+                helper.getLevel(), player, net.minecraft.world.InteractionHand.MAIN_HAND, phial, hit);
+        TCItems.PHIAL.useOn(context);
+
+        if (crucible.aspects().getAmount(Aspects.FIRE) != 4) {
+            helper.fail("o frasco devia ter levado oito de fogo, sobrou "
+                    + crucible.aspects().getAmount(Aspects.FIRE));
+        }
+        boolean found = false;
+        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
+            ItemStack in = player.getInventory().getItem(slot);
+            if (in.is(TCItems.PHIAL) && net.thaumcraft.item.PhialItem.aspectOf(in) == Aspects.FIRE) found = true;
+        }
+        if (!found) helper.fail("devia ter aparecido um frasco de fogo no inventário");
+        helper.succeed();
+    }
+
     /** O que se joga dentro, fervendo, se desfaz nos aspectos que tem. */
     @GameTest
     public void whatFallsInDissolves(GameTestHelper helper) {

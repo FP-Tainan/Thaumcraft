@@ -55,6 +55,19 @@ public final class TCBlocks {
                     .strength(2.5f)
                     .sound(SoundType.WOOD)));
 
+    /** Os blocos de construção do mod. */
+    public static final java.util.Map<String, Block> BUILDING = new java.util.LinkedHashMap<>();
+
+    static {
+        for (String name : TCBuilding.NAMES) {
+            BUILDING.put(name, register(name, properties -> new Block(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(2.0f, 6.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE))));
+        }
+    }
+
     private TCBlocks() {
     }
 

@@ -127,6 +127,9 @@ Greatwood, Silverwood.
 - `client/render/CrucibleRenderer` — a água na cor do que está dissolvido, subindo um dedo e tremendo
   quando ferve.
 - `item/WandTriggers` — o caldeirão vira crisol com um toque de varinha, como no original.
+- `item/PhialItem` — o frasco de essência, que guarda oito pontos de um aspecto. **Diferença deliberada**:
+  no mod ele se enche no alambique, que chega com o resto da alquimia; até lá ele se enche direto do crisol
+  fervendo, tirando dele o aspecto mais abundante.
 
 ## Fatia 4 — varinhas, nós e vis
 

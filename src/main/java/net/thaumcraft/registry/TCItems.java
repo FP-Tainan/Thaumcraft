@@ -84,6 +84,18 @@ public final class TCItems {
         }
     }
 
+    static {
+        // os blocos de construção também vão para a aba do criativo
+        for (var entry : TCBlocks.BUILDING.entrySet()) {
+            register(entry.getKey(), properties ->
+                    new net.minecraft.world.item.BlockItem(entry.getValue(), properties));
+        }
+    }
+
+    /** O frasco de essência, que guarda um aspecto. */
+    public static final Item PHIAL = register("phial", properties ->
+            new net.thaumcraft.item.PhialItem(properties.stacksTo(16)));
+
     /** A bancada arcana, para levar na mão. */
     public static final Item ARCANE_WORKBENCH = register("arcane_workbench", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_WORKBENCH, properties));

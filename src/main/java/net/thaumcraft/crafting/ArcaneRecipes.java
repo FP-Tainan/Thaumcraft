@@ -6,6 +6,7 @@ import net.thaumcraft.api.aspects.AspectList;
 import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.registry.TCItems;
 import net.thaumcraft.registry.TCResources;
+import net.thaumcraft.registry.TCBlocks;
 
 import java.util.ArrayList;
 import java.util.Arrays;
