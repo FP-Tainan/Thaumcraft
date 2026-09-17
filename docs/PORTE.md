@@ -19,7 +19,7 @@ modelo, tela virou `Screen`.
 | 1 | Aspectos: a tabela dos 48, a lista com quantidade, os símbolos | **pronta** |
 | 2 | Tradução para português, do `pt_BR.lang` do próprio mod | a fazer |
 | 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **escaneamento pronto**; caderno e tabuleiro a fazer |
-| 4 | Varinhas, nodes e vis | a fazer |
+| 4 | Varinhas, nodes e vis | **nós, vis e varinhas prontos**; focos a fazer |
 | 5 | Alquimia: crisol, essência, frascos, jarros, alambique | a fazer |
 | 6 | Infusão: matriz, pedestais, instabilidade | a fazer |
 | 7 | Golens | a fazer |
@@ -74,6 +74,35 @@ da 4.2.3.5, e a conta de somar e tirar. Se alguém mexer na tabela, o build para
 - `client/gui/ResearchPageScreen` — a folha aberta, de 256 por 181, com o texto vindo dos arquivos de
   idioma do próprio mod e as marcas dele (`<BR>`, `<LINE>`).
 - `item/ThaumonomiconItem` — o livro.
+
+## Fatia 4 — varinhas, nós e vis
+
+- `api/nodes/NodeType` e `NodeModifier` — os seis tipos e os três feitios do original.
+- `block/NodeBlock` e `block/entity/NodeBlockEntity` — o nó é uma bolha de magia parada no ar: sem face
+  para desenhar, sem segurar quem passa, com um miolo de meia casa só para a mira pegar. Ele devolve um
+  ponto a um aspecto faltante de tempos em tempos, e a pressa é o feitio dele — seiscentos tiques no
+  comum, quatrocentos no brilhante, novecentos no pálido, e o esmaecido não se refaz nunca mais.
+- `world/NodeFeature` — como um nó nasce: um em dezoito sai de tipo fora do comum, um em nove ganha
+  feitio, e o tamanho sai da aura da terra. Um nó a cada trinta e seis pedaços de mundo, como no original.
+- `world/BiomeAura` — **gerada** pelo `scratchpad/fatia4-aura.js` a partir da tabela do `Config` do mod.
+  Uma coisa não teve como ser igual: o original usava o dicionário de biomas do Forge, com marcas como
+  WET, HOT, DENSE e MAGICAL que o Minecraft de hoje não tem. Ficaram as doze que sobreviveram, com os
+  números do original; terra sem marca vale cem, que é o que o original devolvia quando não reconhecia.
+- `client/render/NodeRenderer` — a nuvem de bolhas: uma por aspecto, na cor dele, saindo da folha de
+  trinta e dois quadros do próprio mod (`misc/nodes.png`). Cada bolha respira num compasso próprio e
+  cresce com o quanto o nó guarda; o esmaecido pisca como quem está para se apagar.
+- `api/wands/WandParts` — **gerada** pelo `scratchpad/fatia4-varinhas.js` a partir do `Thaumcraft.java`
+  do mod: quatro pontas, nove hastes de varinha e nove de bastão, com capacidade, desconto e custo de
+  feitura de lá.
+- `item/WandItem` — o vis é contado em centésimos, como no original: haste de vinte e cinco guarda dois
+  mil e quinhentos. Aponta-se para um nó e segura-se o botão para beber dele, um ponto de cada vez. As
+  hastes primordiais recolhem sozinhas o aspecto delas, até um décimo do que cabem.
+- `client/render/WandRenderer` e `BoxMesh` — a varinha é peça de três dimensões, montada das mesmas três
+  caixas do `ModelWand` original e com as texturas dele. O `BoxMesh` refaz o desenrolado de textura que o
+  Minecraft antigo usava, sem o qual as texturas do mod sairiam embaralhadas.
+- `client/WandHud` — os seis primários com as barrinhas no canto de baixo, como no original.
+
+Falta da fatia: os focos da varinha e as varinhas de bastão em si (a peça existe, a receita não).
 
 Falta da fatia: o tabuleiro hexagonal da mesa de pesquisa; e, no livro, as páginas de receita e os
 ícones de item — 168 pesquisas apontam para itens que só chegam nas fatias seguintes, e até lá elas

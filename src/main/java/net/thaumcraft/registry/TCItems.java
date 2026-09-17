@@ -12,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.thaumcraft.Thaumcraft;
 import net.thaumcraft.item.ThaumometerItem;
 import net.thaumcraft.item.ThaumonomiconItem;
+import net.thaumcraft.item.WandItem;
+import net.thaumcraft.api.wands.WandParts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,33 @@ public final class TCItems {
     /** O livro em que a pesquisa fica anotada. */
     public static final Item THAUMONOMICON = register("thaumonomicon", properties ->
             new ThaumonomiconItem(properties.stacksTo(1)));
+
+    /** A varinha: a haste e as pontas vêm nos dados dela, como no original. */
+    public static final Item WAND = register("wand", properties ->
+            new WandItem(properties.stacksTo(1)
+                    .component(net.thaumcraft.registry.TCComponents.WAND_ROD, "wood")
+                    .component(net.thaumcraft.registry.TCComponents.WAND_CAP, "iron"), false));
+
+    /** O bastão: a mesma coisa, com haste maior e mais fôlego. */
+    public static final Item STAFF = register("staff", properties ->
+            new WandItem(properties.stacksTo(1)
+                    .component(net.thaumcraft.registry.TCComponents.WAND_ROD, "greatwood")
+                    .component(net.thaumcraft.registry.TCComponents.WAND_CAP, "iron"), true));
+
+    /** As peças soltas: cada haste e cada ponta do original é um item. */
+    public static final java.util.Map<String, Item> WAND_RODS = new java.util.LinkedHashMap<>();
+    public static final java.util.Map<String, Item> WAND_CAPS = new java.util.LinkedHashMap<>();
+
+    static {
+        for (String tag : WandParts.RODS.keySet()) {
+            // a haste de madeira é o graveto do próprio jogo, como no original
+            if (tag.equals("wood")) continue;
+            WAND_RODS.put(tag, register("wand_rod_" + tag, Item::new));
+        }
+        for (String tag : WandParts.CAPS.keySet()) {
+            WAND_CAPS.put(tag, register("wand_cap_" + tag, Item::new));
+        }
+    }
 
     public static final ResourceKey<CreativeModeTab> TAB_KEY =
             ResourceKey.create(Registries.CREATIVE_MODE_TAB, Thaumcraft.id("thaumcraft"));

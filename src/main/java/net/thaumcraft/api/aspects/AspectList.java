@@ -127,6 +127,30 @@ public final class AspectList {
         return this.aspects.entrySet();
     }
 
+    /**
+     * Como a lista fica guardada em disco: um número por nome em latim, que é como o original guardava.
+     *
+     * <p>Aspecto que o jogo de hoje não conheça é simplesmente deixado de lado, em vez de estourar a
+     * leitura do mundo inteiro.
+     */
+    public static final com.mojang.serialization.Codec<AspectList> CODEC =
+            com.mojang.serialization.Codec.unboundedMap(
+                            com.mojang.serialization.Codec.STRING, com.mojang.serialization.Codec.INT)
+                    .xmap(map -> {
+                        AspectList list = new AspectList();
+                        map.forEach((tag, amount) -> {
+                            Aspect aspect = Aspect.of(tag);
+                            if (aspect != null) list.add(aspect, amount);
+                        });
+                        return list;
+                    }, list -> {
+                        Map<String, Integer> map = new java.util.LinkedHashMap<>();
+                        for (Map.Entry<Aspect, Integer> entry : list.aspects.entrySet()) {
+                            map.put(entry.getKey().tag(), entry.getValue());
+                        }
+                        return map;
+                    });
+
     /** Como a lista viaja do servidor para o cliente. */
     public static final StreamCodec<RegistryFriendlyByteBuf, AspectList> STREAM_CODEC = StreamCodec.of(
             (buffer, list) -> {

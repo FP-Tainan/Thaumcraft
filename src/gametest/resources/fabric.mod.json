@@ -8,11 +8,15 @@
     "fabric-gametest": [
       "net.thaumcraft.test.AspectGameTest",
       "net.thaumcraft.test.ScanGameTest",
-      "net.thaumcraft.test.ResearchGameTest"
+      "net.thaumcraft.test.ResearchGameTest",
+      "net.thaumcraft.test.NodeGameTest",
+      "net.thaumcraft.test.WandGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",
-      "net.thaumcraft.test.client.BookClientTest"
+      "net.thaumcraft.test.client.BookClientTest",
+      "net.thaumcraft.test.client.NodeClientTest",
+      "net.thaumcraft.test.client.WandClientTest"
     ]
   }
 }

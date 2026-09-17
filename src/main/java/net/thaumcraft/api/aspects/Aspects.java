@@ -70,6 +70,11 @@ public final class Aspects {
         return Aspect.ASPECTS.values();
     }
 
+    /** Os seis primários, na ordem do original. */
+    public static java.util.List<Aspect> primals() {
+        return java.util.List.of(AIR, EARTH, FIRE, WATER, ORDER, ENTROPY);
+    }
+
     public static int count() {
         return Aspect.ASPECTS.size();
     }

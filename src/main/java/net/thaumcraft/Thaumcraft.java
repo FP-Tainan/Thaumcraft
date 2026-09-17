@@ -4,6 +4,10 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.resources.Identifier;
 import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.api.aspects.ObjectAspects;
+import net.thaumcraft.registry.TCBlockEntities;
+import net.thaumcraft.registry.TCBlocks;
+import net.thaumcraft.registry.TCComponents;
+import net.thaumcraft.registry.TCFeatures;
 import net.thaumcraft.registry.TCItems;
 import net.thaumcraft.net.TCNetwork;
 import net.thaumcraft.research.Knowledges;
@@ -30,7 +34,11 @@ public class Thaumcraft implements ModInitializer {
         Aspects.init();
         ObjectAspects.init();
         Knowledges.init();
+        TCBlocks.init();
+        TCBlockEntities.init();
+        TCComponents.init();
         TCItems.init();
+        TCFeatures.init();
         TCNetwork.init();
         // as pesquisas que o original marca para vir abertas chegam com quem entra no mundo
         net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register(
