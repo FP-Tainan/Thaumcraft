@@ -52,12 +52,28 @@ public final class EssentiaLabel {
      */
     public static void submit(PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera,
                               Font font, Aspect aspect, int amount, float height, int light) {
+        submit(pose, collector, camera, font, aspect, amount, height, 0.0f, light);
+    }
+
+    /**
+     * O mesmo, podendo trazer o rótulo para a frente da peça.
+     *
+     * <p>Peça que se empilha — o alambique — não tem ar livre por cima: o rótulo cairia dentro do corpo da
+     * de cima e sumiria. Então ele sai <em>na direção de quem olha</em>, e assim passa na frente do bloco
+     * de qualquer ângulo.
+     *
+     * @param forward o quanto o rótulo avança para fora, em blocos, rumo à câmera
+     */
+    public static void submit(PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera,
+                              Font font, Aspect aspect, int amount, float height, float forward, int light) {
         if (aspect == null) return;
+        org.joml.Vector3f toward = camera.orientation.transform(new org.joml.Vector3f(0.0f, 0.0f, 1.0f));
+        toward.mul(forward);
         Identifier symbol = Thaumcraft.id("textures/aspects/" + aspect.tag() + ".png");
         int color = 0xFF000000 | aspect.color();
 
         pose.pushPose();
-        pose.translate(0.5f, height, 0.5f);
+        pose.translate(0.5f + toward.x, height + toward.y, 0.5f + toward.z);
         pose.mulPose(camera.orientation);
         // o mesmo fator das plaquinhas de nome, e o eixo virado porque o texto desce na tela
         pose.scale(-PIXEL, -PIXEL, PIXEL);
@@ -81,7 +97,7 @@ public final class EssentiaLabel {
         // e o número, pela mesma porta que as plaquinhas de nome do jogo usam: ela já cuida de virar o
         // texto para quem olha e de pôr o fundo atrás, que é o que faz ele se ler contra o céu
         pose.pushPose();
-        pose.translate(0.5f, height, 0.5f);
+        pose.translate(0.5f + toward.x, height + toward.y, 0.5f + toward.z);
         collector.submitNameTag(pose, new net.minecraft.world.phys.Vec3(0.0, -0.62, 0.0), 0,
                 Component.literal(String.valueOf(amount)), false, light, camera);
         pose.popPose();

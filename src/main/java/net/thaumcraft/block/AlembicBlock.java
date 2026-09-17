@@ -77,9 +77,17 @@ public class AlembicBlock extends BaseEntityBlock {
         return CODEC;
     }
 
+    /**
+     * Quem desenha o alambique no mundo e o {@link net.thaumcraft.client.render.AlembicRenderer}, e nao um
+     * arquivo de modelo.
+     *
+     * <p>O motivo sao os pes: no original eles se abrem em diagonal, e uma peca de modelo do Minecraft so
+     * gira em torno de um eixo -- um pe de canto precisaria de dois. O modelo continua existindo, mas so
+     * para o item na mao e no inventario.
+     */
     @Override
     protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        return RenderShape.INVISIBLE;
     }
 
     @Override

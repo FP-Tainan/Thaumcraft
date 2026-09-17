@@ -2,8 +2,6 @@ package net.thaumcraft.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -20,6 +18,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * <p>No original ele é a luz de todo taumaturgo — posta-se no ar ou na parede e fica lá, acesa para
  * sempre, sem precisar de tocha nem de suporte. É o {@code blockAiry} do mod: um bloco que não segura
  * ninguém, não tem face para quebrar contra, e acende o lugar inteiro.
+ *
+ * <p>Ele não solta partícula nenhuma de propósito. É chama mágica, e não fogueira: as faíscas do jogo
+ * são bolotas brancas grandes demais, e chegavam a cobrir o próprio brilho. O que se vê dele é só o que
+ * o {@link net.thaumcraft.client.render.NitorRenderer} desenha.
  */
 public class NitorBlock extends BaseEntityBlock {
     public static final MapCodec<NitorBlock> CODEC = simpleCodec(NitorBlock::new);
@@ -52,18 +54,4 @@ public class NitorBlock extends BaseEntityBlock {
         return SHAPE;
     }
 
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        // as faíscas brancas em volta, que no original saem sem parar; o brilho em si quem desenha é o
-        // NitorRenderer
-        for (int faisca = 0; faisca < 2; faisca++) {
-            level.addParticle(ParticleTypes.END_ROD,
-                    pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.55,
-                    pos.getY() + 0.45 + (random.nextDouble() - 0.5) * 0.55,
-                    pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.55,
-                    (random.nextDouble() - 0.5) * 0.012,
-                    0.006 + random.nextDouble() * 0.012,
-                    (random.nextDouble() - 0.5) * 0.012);
-        }
-    }
 }
