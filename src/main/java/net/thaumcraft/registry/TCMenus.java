@@ -13,6 +13,11 @@ public final class TCMenus {
             BuiltInRegistries.MENU, Thaumcraft.id("arcane_workbench"),
             new MenuType<>(ArcaneWorkbenchMenu::new, FeatureFlags.VANILLA_SET));
 
+    public static final MenuType<net.thaumcraft.inventory.AlchemicalFurnaceMenu> ALCHEMICAL_FURNACE =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("alchemical_furnace"),
+                    new MenuType<>(net.thaumcraft.inventory.AlchemicalFurnaceMenu::new,
+                            FeatureFlags.VANILLA_SET));
+
     private TCMenus() {
     }
 

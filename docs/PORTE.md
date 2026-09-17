@@ -20,7 +20,7 @@ modelo, tela virou `Screen`.
 | 2 | Tradução para português, do `pt_BR.lang` do próprio mod | **pronta** |
 | 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **thaumômetro e caderno prontos**; o tabuleiro da mesa de pesquisa a fazer |
 | 4 | Varinhas, nós e vis | **prontos**, com quatro focos (fogo, escavação, gelo e raio); os outros seis a fazer |
-| 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **crisol e frascos prontos**; jarros, tubos e alambique a fazer |
+| 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **pronta** — crisol, frascos, forno alquímico, alambique, tubos e jarros |
 | 6 | Infusão: matriz, pedestais, instabilidade | a fazer |
 | 7 | Golens | a fazer |
 | 8 | O resto: mácula, criaturas, eldritch, artifícios | a fazer |
@@ -50,8 +50,11 @@ Hoje o mod já se joga do começo ao meio, nesta ordem:
 10. **Bater numa bancada comum com a varinha** — ela vira bancada arcana, que monta o que precisa de vis:
     os Óculos da Revelação, a ponta de ouro e os focos de fogo, escavação, gelo e raio.
 
-O que ainda não tem caminho: tudo o que depende de essência encanada (jarros, tubos, alambique), da
-infusão, dos golens e do lado eldritch.
+11. **Montar a destilaria** — na bancada arcana saem o forno alquímico, o alambique, o jarro e os tubos.
+    O forno desfaz o que se joga nele em essência; o alambique empilhado em cima recolhe; o tubo leva; o
+    jarro guarda. É a segunda metade da alquimia, e a que abastece tudo o que vem depois.
+
+O que ainda não tem caminho: a infusão, os golens e o lado eldritch.
 
 ## Fatia 1 — aspectos
 
@@ -161,6 +164,51 @@ Greatwood, Silverwood.
 - `item/PhialItem` — o frasco de essência, que guarda oito pontos de um aspecto. **Diferença deliberada**:
   no mod ele se enche no alambique, que chega com o resto da alquimia; até lá ele se enche direto do crisol
   fervendo, tirando dele o aspecto mais abundante.
+
+### A essência encanada
+
+Esta é a metade da alquimia que faz a essência sair do lugar. O crisol desfaz as coisas e a essência se
+perde na água; daqui em diante ela é recolhida, levada e guardada.
+
+- `api/aspects/EssentiaTransport` e `api/aspects/AspectContainer` — as duas interfaces do original
+  (`IEssentiaTransport` e `IAspectContainer`), com os mesmos nomes e a mesma ideia. A regra de ouro da
+  fatia está aqui: **a essência não é empurrada, é puxada**. Cada peça anuncia uma sucção — um aspecto
+  que quer e uma força com que quer — e a essência corre de onde a sucção é fraca para onde ela é forte,
+  uma unidade de cada vez.
+- `block/entity/AlchemicalFurnaceBlockEntity` — o forno, com os números do `TileAlchemyFurnace`:
+  cinquenta de essência guardada, dez tiques de fogo por ponto de aspecto e um empurrão para os
+  alambiques a cada quarenta tiques. O empurrão tem as duas passadas do original — primeiro completa
+  quem já começou um aspecto, depois dá um aspecto novo a quem estiver vazio —, que é o que faz uma
+  pilha de alambiques **separar** a essência em vez de todos brigarem pela mesma.
+- `block/entity/AlembicBlockEntity` — trinta e dois de um aspecto só, do `TileAlembic`. Ele só deixa
+  sair: a sucção dele é zero, porque quem o enche é o forno de baixo, empurrando. É essa diferença que
+  faz a tubulação andar num sentido só.
+- `block/entity/TubeBlockEntity` — o coração da fatia, e a tradução linha a linha do `TileTube`. De
+  dois em dois tiques ele refaz a conta da sucção: olha os vizinhos, acha o que puxa mais forte e passa
+  a puxar com **um a menos** do que ele. É assim que a fome do jarro lá no fim da linha viaja tubo a
+  tubo até a fonte, perdendo força a cada peça — e é por isso que a tubulação tem alcance, em vez de ser
+  infinita. De cinco em cinco tiques ele tira uma unidade do vizinho que puxa menos. E quando dois lados
+  puxam igual querendo aspectos diferentes, ele **vaza** por quarenta tiques e para tudo, que é o jeito
+  do original de avisar que a tubulação foi mal pensada.
+- `block/entity/JarBlockEntity` — sessenta e quatro de um aspecto, do `TileJarFillable`. Só se liga
+  pelo alto, e é a fome dele que faz tudo andar: puxa com trinta e dois sem rótulo e com sessenta e
+  quatro com rótulo — que é como o original faz um jarro rotulado ganhar de um sem rótulo na disputa
+  pela mesma essência.
+- `client/render/JarRenderer` — a névoa dentro do vidro, na cor do aspecto, subindo conforme o jarro
+  enche e respirando devagar; e o símbolo do aspecto desenhado nos quatro lados, para se ler o jarro de
+  qualquer ângulo. **Diferença**: no original a névoa gira dentro do pote; aqui ela sobe e respira, mas
+  não gira.
+- `client/gui/AlchemicalFurnaceScreen` — a tela do forno com a folha do original, mais a fila do que
+  ele já tem guardado por dentro. Essa lista não viaja pela tela: ela vem do próprio bloco, que o
+  servidor já mantém acertado em quem está por perto — assim ela pode ter os quarenta e oito aspectos
+  sem precisar de um número de tela para cada um.
+- As texturas são as do original: `pipe_1` e `pipe_2` no tubo, `metalbase` e `goldbase` no alambique,
+  `jar_side`/`jar_top`/`jar_bottom` no jarro e `al_furnace_*` no forno.
+- **Diferença**: a receita do tubo pede uma *gota de mercúrio* no original, que é o mercúrio miúdo que
+  sai dos minérios nativos. Os minérios nativos são de uma fatia que ainda não chegou, então aqui a
+  receita pede o próprio mercúrio.
+- Falta da fatia: as variações de tubo (válvula, filtro, estreito, de mão única, tampão), o jarro do
+  vazio, o fole que acelera o forno e o forno arcano.
 
 ## Fatia 4 — varinhas, nós e vis
 

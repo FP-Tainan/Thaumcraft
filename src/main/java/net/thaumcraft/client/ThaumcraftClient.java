@@ -20,11 +20,18 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.NODE, net.thaumcraft.client.render.NodeRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("wand"), net.thaumcraft.client.render.WandRenderer.Unbaked.CODEC);
+
+        // o jarro mostra o que guarda: a névoa na cor do aspecto e o símbolo dele no vidro
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.JAR, net.thaumcraft.client.render.JarRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.CRUCIBLE, net.thaumcraft.client.render.CrucibleRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(
                 net.thaumcraft.registry.TCMenus.ARCANE_WORKBENCH,
                 net.thaumcraft.client.gui.ArcaneWorkbenchScreen::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(
+                net.thaumcraft.registry.TCMenus.ALCHEMICAL_FURNACE,
+                net.thaumcraft.client.gui.AlchemicalFurnaceScreen::new);
         ThaumometerHud.init();
         AspectTooltip.init();
         WandHud.init();

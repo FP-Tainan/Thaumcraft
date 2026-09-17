@@ -48,6 +48,40 @@ public final class TCBlocks {
         }
     }
 
+    /** O jarro lacrado: um pote de vidro com tampa de chumbo, que guarda essência. */
+    public static final Block JAR = register("jar", properties ->
+            new net.thaumcraft.block.JarBlock(properties
+                    .mapColor(MapColor.NONE)
+                    .strength(0.3f)
+                    .noOcclusion()
+                    .sound(SoundType.GLASS)));
+
+    /** O tubo de essência: o cano de latão por onde a essência corre. */
+    public static final Block TUBE = register("tube", properties ->
+            new net.thaumcraft.block.TubeBlock(properties
+                    .mapColor(MapColor.METAL)
+                    .strength(0.5f)
+                    .noOcclusion()
+                    .sound(SoundType.METAL)));
+
+    /** O alambique arcano: o pote que se empilha sobre o forno e recolhe o que sai dele. */
+    public static final Block ALEMBIC = register("alembic", properties ->
+            new net.thaumcraft.block.AlembicBlock(properties
+                    .mapColor(MapColor.METAL)
+                    .strength(1.5f)
+                    .noOcclusion()
+                    .sound(SoundType.METAL)));
+
+    /** O forno alquímico: onde a coisa deixa de ser coisa e vira essência. */
+    public static final Block ALCHEMICAL_FURNACE = register("alchemical_furnace", properties ->
+            new net.thaumcraft.block.AlchemicalFurnaceBlock(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(3.5f)
+                    .requiresCorrectToolForDrops()
+                    .lightLevel(state -> state.getValue(
+                            net.thaumcraft.block.AlchemicalFurnaceBlock.LIT) ? 13 : 0)
+                    .sound(SoundType.STONE)));
+
     /** A bancada arcana: a mesa que a varinha benzeu. */
     public static final Block ARCANE_WORKBENCH = register("arcane_workbench", properties ->
             new net.thaumcraft.block.ArcaneWorkbenchBlock(properties
