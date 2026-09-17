@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "thaumcraft:item/nitor"
+    "cross": "thaumcraft:block/nitor"
   }
 }

@@ -66,10 +66,13 @@ public class FidelityClientTest implements FabricClientGameTest {
             // o Nitor posto no ar, e as marcas do sino sobre um baú
             server.runCommand("execute at @p run setblock ~3 ~1 ~5 thaumcraft:nitor");
             server.runCommand("execute at @p run setblock ~-3 ~ ~5 minecraft:chest");
-            server.runCommand("give @p thaumcraft:golem_bell");
-            server.runCommand("give @p thaumcraft:golem_straw");
+            server.runCommand("item replace entity @p hotbar.0 with thaumcraft:golem_bell");
+            server.runCommand("item replace entity @p hotbar.1 with thaumcraft:golem_straw");
             context.runOnClient(minecraft -> minecraft.player.getInventory().setSelectedSlot(0));
             context.waitTicks(20);
+            // agachado, que é como o sino fala antes de o baú abrir
+            context.runOnClient(minecraft -> minecraft.options.keyShift.setDown(true));
+            context.waitTicks(5);
             context.runOnClient(minecraft -> {
                 var pos = minecraft.player.blockPosition().offset(-3, 0, 5);
                 var hit = new net.minecraft.world.phys.BlockHitResult(
@@ -78,8 +81,24 @@ public class FidelityClientTest implements FabricClientGameTest {
                 minecraft.gameMode.useItemOn(minecraft.player,
                         net.minecraft.world.InteractionHand.MAIN_HAND, hit);
             });
-            context.waitTicks(30);
+            context.waitTicks(10);
+            context.runOnClient(minecraft -> minecraft.options.keyShift.setDown(false));
+            context.waitTicks(25);
             context.takeScreenshot("fid_nitor_e_marca");
+
+            // a varinha na mão, de perto
+            context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
+            context.waitTicks(10);
+            server.runCommand("execute at @p run tp @s ~ ~ ~ 0 0");
+            server.runCommand("clear @p");
+            server.runCommand("item replace entity @p hotbar.0 with thaumcraft:wand");
+            context.runOnClient(minecraft -> minecraft.player.getInventory().setSelectedSlot(0));
+            context.waitTicks(25);
+            context.takeScreenshot("fid_varinha_na_mao");
+            server.runCommand("item replace entity @p hotbar.1 with thaumcraft:staff");
+            context.runOnClient(minecraft -> minecraft.player.getInventory().setSelectedSlot(1));
+            context.waitTicks(20);
+            context.takeScreenshot("fid_bastao_na_mao");
 
             context.runOnClient(minecraft -> {
                 var pos = minecraft.player.blockPosition().offset(0, 0, 5);

@@ -20,9 +20,13 @@ import net.thaumcraft.registry.TCSounds;
  * O sino do golem: é com ele que se diz ao golem para onde levar o que junta.
  *
  * <p>No original o sino marca as faces dos baús com marcas coloridas, e o golem lê essas marcas. Aqui ele
- * é mais simples: toca-se no baú para guardá-lo no sino, e depois toca-se no golem para dizer que aquela
- * é a casa dele. **Diferença deliberada**, anotada em {@code docs/PORTE.md} — as marcas coloridas pedem
- * uma camada de desenho e de rede que ainda não existe por aqui.
+ * é mais simples: <strong>agachado</strong>, toca-se no baú para guardá-lo no sino, e depois toca-se no
+ * golem para dizer que aquela é a casa dele. O agachar não é capricho — um baú abre a tela dele antes de
+ * o jogo perguntar ao item o que fazer, e agachar é como o Minecraft deixa o item falar primeiro.
+ *
+ * <p>A marca fica à vista de quem está com o sino na mão, desenhada por
+ * {@link net.thaumcraft.client.render.MarkerOverlay}: uma runa girando sobre o baú marcado e sobre a casa
+ * de cada golem por perto.
  */
 public class GolemBellItem extends Item {
     public GolemBellItem(Properties properties) {

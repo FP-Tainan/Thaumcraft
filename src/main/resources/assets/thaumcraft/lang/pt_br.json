@@ -243,7 +243,7 @@
   "tc.cap.void": "Metal do Vazio",
   "tc.furnace.empty": "Vazio",
   "tc.golem.marked": "O sino guardou o baú em %s %s %s",
-  "tc.golem.nohome": "Toque o sino num baú primeiro",
+  "tc.golem.nohome": "Agachado, toque o sino num baú primeiro",
   "tc.golem.sent": "O golem vai levar o que juntar para %s %s %s",
   "tc.infusion.badplace": "A matriz precisa de um pedestal abaixo e pedra arcana nos quatro cantos dele",
   "tc.infusion.nocentre": "O pedestal do meio está vazio",

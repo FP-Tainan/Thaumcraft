@@ -36,7 +36,7 @@ public final class MarkerOverlay {
     /** Até onde se enxergam as casas dos golens em volta. */
     private static final double RANGE = 32.0;
     /** O lado da runa. */
-    private static final float SIZE = 0.75f;
+    private static final float SIZE = 1.0f;
     /** A cor da marca do sino na mão, e a das casas já entregues a um golem. */
     private static final int HELD_COLOUR = 0xFFFFE07A;
     private static final int BOUND_COLOUR = 0xFF7AC8FF;
