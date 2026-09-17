@@ -1,5 +1,11 @@
 {
   "block.thaumcraft.node": "Aura Node",
+  "item.thaumcraft.shard_air": "Air Shard",
+  "item.thaumcraft.shard_earth": "Earth Shard",
+  "item.thaumcraft.shard_entropy": "Entropy Shard",
+  "item.thaumcraft.shard_fire": "Fire Shard",
+  "item.thaumcraft.shard_order": "Order Shard",
+  "item.thaumcraft.shard_water": "Water Shard",
   "item.thaumcraft.staff.named": "%s Staff with %s Caps",
   "item.thaumcraft.thaumometer": "Thaumometer",
   "item.thaumcraft.thaumonomicon": "Thaumonomicon",

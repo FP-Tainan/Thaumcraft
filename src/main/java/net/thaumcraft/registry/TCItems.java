@@ -30,6 +30,15 @@ public final class TCItems {
     public static final Item THAUMONOMICON = register("thaumonomicon", properties ->
             new ThaumonomiconItem(properties.stacksTo(1)));
 
+    /** Os fragmentos de aspecto: um por primário, que é o que o original tira do minério infundido. */
+    public static final java.util.Map<String, Item> SHARDS = new java.util.LinkedHashMap<>();
+
+    static {
+        for (String tag : new String[]{"air", "fire", "water", "earth", "order", "entropy"}) {
+            SHARDS.put(tag, register("shard_" + tag, Item::new));
+        }
+    }
+
     /** A varinha: a haste e as pontas vêm nos dados dela, como no original. */
     public static final Item WAND = register("wand", properties ->
             new WandItem(properties.stacksTo(1)

@@ -10,7 +10,8 @@
       "net.thaumcraft.test.ScanGameTest",
       "net.thaumcraft.test.ResearchGameTest",
       "net.thaumcraft.test.NodeGameTest",
-      "net.thaumcraft.test.WandGameTest"
+      "net.thaumcraft.test.WandGameTest",
+      "net.thaumcraft.test.RecipeGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",

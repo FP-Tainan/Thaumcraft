@@ -1,5 +1,11 @@
 {
   "block.thaumcraft.node": "Nó de Aura",
+  "item.thaumcraft.shard_air": "Estilhaço de Ar",
+  "item.thaumcraft.shard_earth": "Estilhaço de Terra",
+  "item.thaumcraft.shard_entropy": "Estilhaço de Entropia",
+  "item.thaumcraft.shard_fire": "Estilhaço de Fogo",
+  "item.thaumcraft.shard_order": "Estilhaço de Ordem",
+  "item.thaumcraft.shard_water": "Estilhado de Água",
   "item.thaumcraft.staff.named": "Bastão de %s com pontas de %s",
   "item.thaumcraft.thaumometer": "Taumômetro",
   "item.thaumcraft.thaumonomicon": "Thaumonomicon",

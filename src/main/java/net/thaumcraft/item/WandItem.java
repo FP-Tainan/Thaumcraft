@@ -144,6 +144,13 @@ public class WandItem extends Item {
     }
 
     @Override
+    public InteractionResult useOn(net.minecraft.world.item.context.UseOnContext context) {
+        // o que a varinha faz batendo num bloco: é assim que o original entrega as primeiras peças
+        return WandTriggers.use(context.getLevel(), context.getPlayer(), context.getClickedPos(),
+                context.getItemInHand());
+    }
+
+    @Override
     public net.minecraft.world.item.ItemUseAnimation getUseAnimation(ItemStack stack) {
         // a varinha não se leva à boca nem se ergue: ela só aponta, como no original
         return net.minecraft.world.item.ItemUseAnimation.NONE;
