@@ -17,7 +17,7 @@ modelo, tela virou `Screen`.
 | # | fatia | estado |
 |---|---|---|
 | 1 | Aspectos: a tabela dos 48, a lista com quantidade, os símbolos | **pronta** |
-| 2 | Tradução para português, do `pt_BR.lang` do próprio mod | a fazer |
+| 2 | Tradução para português, do `pt_BR.lang` do próprio mod | **pronta** |
 | 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **escaneamento pronto**; caderno e tabuleiro a fazer |
 | 4 | Varinhas, nodes e vis | **nós, vis e varinhas prontos**; focos a fazer |
 | 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **crisol pronto**; frascos e alambique a fazer |
@@ -36,6 +36,20 @@ modelo, tela virou `Screen`.
 
 Os testes em `src/gametest` são a cerca: conferem a contagem, uma amostra de cores e pares contra a fonte
 da 4.2.3.5, e a conta de somar e tirar. Se alguém mexer na tabela, o build para.
+
+## Fatia 2 — a tradução
+
+O `pt_BR.lang` que vem no mod original cobre parte das coisas e para por aí — das 514 linhas de pesquisa,
+ele traduziu 321. O resto foi feito aqui: 79 nomes de pesquisa, 117 subtítulos e as 175 páginas de texto
+do Thaumonomicon.
+
+A escolha de palavra segue a que o próprio mod já tinha feito em português, para não haver duas línguas
+dentro do mesmo livro: **vis** fica vis, **taumaturgia**, **táumio**, **essência**, **mácula** para taint,
+**nó** para node, **distorção** para warp, **fluxo** para flux.
+
+O que continua em inglês é o que tem de continuar: os nomes em latim dos aspectos (Aer, Terra, Ignis...),
+que são iguais nos dois idiomas, e os nomes próprios do mod — Thaumcraft, Thaumonomicon, Alumentum, Nitor,
+Greatwood, Silverwood.
 
 ## Fatia 3 — thaumômetro e exame
 
