@@ -47,6 +47,11 @@ public class Thaumcraft implements ModInitializer {
         TCFeatures.init();
         TCMenus.init();
         TCNetwork.init();
+
+        // o comando de teste, para destrancar a pesquisa sem ter de jogar tudo de novo
+        net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register(
+                (dispatcher, registry, environment) ->
+                        net.thaumcraft.command.ThaumcraftCommand.register(dispatcher));
         // as pesquisas que o original marca para vir abertas chegam com quem entra no mundo
         net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register(
                 (handler, sender, server) -> ResearchManager.grantStarters(handler.getPlayer()));

@@ -33,6 +33,21 @@ public final class PlayerKnowledge {
     public PlayerKnowledge() {
     }
 
+    /**
+     * Uma cópia deste caderno.
+     *
+     * <p>Serve para o anexo do jogo enxergar que alguma coisa mudou: guardando de volta o mesmo objeto,
+     * ele não vê mudança nenhuma e não manda nada para a máquina de quem joga.
+     */
+    public PlayerKnowledge copy() {
+        PlayerKnowledge copia = new PlayerKnowledge();
+        copia.discovered.addAll(this.discovered);
+        copia.pool.add(this.pool);
+        copia.scanned.addAll(this.scanned);
+        copia.research.addAll(this.research);
+        return copia;
+    }
+
     private PlayerKnowledge(List<String> discovered, AspectList pool, List<String> scanned, List<String> research) {
         this.discovered.addAll(discovered);
         this.pool.add(pool);

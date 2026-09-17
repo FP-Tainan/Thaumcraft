@@ -29,6 +29,23 @@ Fora das fatias, entraram no caminho as peças sem as quais nada disso se joga: 
 onde saem os fragmentos), a matéria-prima do mod, as ferramentas e armaduras de táumio e de metal do
 vazio, os blocos de construção, a bancada arcana e os Óculos da Revelação.
 
+## Para testar sem jogar tudo de novo
+
+Em criativo os itens aparecem na aba, mas isso não basta: o crisol, a bancada arcana e a infusão
+conferem a pesquisa antes de deixar sair qualquer coisa. O comando `/thaumcraft` é o atalho:
+
+| comando | o que faz |
+|---|---|
+| `/thaumcraft tudo` | descobre os 48 aspectos, enche o bolso de pontos e destranca as 201 pesquisas |
+| `/thaumcraft pesquisa tudo` | só as pesquisas |
+| `/thaumcraft pesquisa dar <chave>` | uma pesquisa só, com a lista completando o nome |
+| `/thaumcraft pesquisa limpar` | apaga o caderno, para começar do zero |
+| `/thaumcraft pontos [quanto] [aspecto]` | pontos de aspecto; sem dizer nada, 64 de cada um |
+| `/thaumcraft varinha` | enche de vis a varinha que estiver na mão |
+
+Todos aceitam um alvo no fim (`/thaumcraft tudo @a`), e pedem nível dois de permissão — em mundo de um
+jogador só basta ter os truques ligados.
+
 ## O caminho de quem começa
 
 Hoje o mod já se joga do começo ao meio, nesta ordem:

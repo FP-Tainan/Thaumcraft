@@ -32,7 +32,15 @@ public final class Knowledges {
         return player.getAttachedOrCreate(KNOWLEDGE);
     }
 
+    /**
+     * Guarda o caderno de volta no jogador, e manda a mudança para a máquina dele.
+     *
+     * <p>Guarda uma <strong>cópia</strong> de propósito. O anexo do jogo só sincroniza quando o valor
+     * guardado muda; como {@link #of(Player)} devolve o próprio objeto de dentro, guardar esse mesmo
+     * objeto de volta não é mudança nenhuma aos olhos dele, e nada saía do servidor — quem joga ficava
+     * com o caderno velho na tela mesmo depois de aprender alguma coisa.
+     */
     public static void save(Player player, PlayerKnowledge knowledge) {
-        player.setAttached(KNOWLEDGE, knowledge);
+        player.setAttached(KNOWLEDGE, knowledge.copy());
     }
 }
