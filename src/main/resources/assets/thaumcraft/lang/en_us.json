@@ -1,6 +1,10 @@
 {
+  "block.thaumcraft.crucible": "Crucible",
   "block.thaumcraft.node": "Aura Node",
+  "item.thaumcraft.alumentum": "Alumentum",
+  "item.thaumcraft.nitor": "Nitor",
   "item.thaumcraft.shard_air": "Air Shard",
+  "item.thaumcraft.shard_balanced": "Balanced Shard",
   "item.thaumcraft.shard_earth": "Earth Shard",
   "item.thaumcraft.shard_entropy": "Entropy Shard",
   "item.thaumcraft.shard_fire": "Fire Shard",

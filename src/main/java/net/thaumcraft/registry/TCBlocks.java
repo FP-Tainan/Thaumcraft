@@ -26,6 +26,14 @@ public final class TCBlocks {
             .sound(SoundType.AMETHYST)
             .pushReaction(PushReaction.BLOCK)));
 
+    /** O crisol: um caldeirão que a varinha benzeu. */
+    public static final Block CRUCIBLE = register("crucible", properties -> new net.thaumcraft.block.CrucibleBlock(properties
+            .mapColor(MapColor.METAL)
+            .strength(2.0f)
+            .requiresCorrectToolForDrops()
+            .noOcclusion()
+            .sound(SoundType.METAL)));
+
     private TCBlocks() {
     }
 

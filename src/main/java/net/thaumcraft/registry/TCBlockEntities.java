@@ -12,6 +12,10 @@ public final class TCBlockEntities {
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("node"),
             new BlockEntityType<>(NodeBlockEntity::new, java.util.Set.of(TCBlocks.NODE)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.CrucibleBlockEntity> CRUCIBLE = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("crucible"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.CrucibleBlockEntity::new, java.util.Set.of(TCBlocks.CRUCIBLE)));
+
     private TCBlockEntities() {
     }
 

@@ -1,6 +1,10 @@
 {
+  "block.thaumcraft.crucible": "Crisol",
   "block.thaumcraft.node": "Nó de Aura",
+  "item.thaumcraft.alumentum": "Alumentum",
+  "item.thaumcraft.nitor": "Nitor",
   "item.thaumcraft.shard_air": "Estilhaço de Ar",
+  "item.thaumcraft.shard_balanced": "Balanced Shard",
   "item.thaumcraft.shard_earth": "Estilhaço de Terra",
   "item.thaumcraft.shard_entropy": "Estilhaço de Entropia",
   "item.thaumcraft.shard_fire": "Estilhaço de Fogo",

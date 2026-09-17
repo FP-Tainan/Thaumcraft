@@ -20,7 +20,7 @@ modelo, tela virou `Screen`.
 | 2 | Tradução para português, do `pt_BR.lang` do próprio mod | a fazer |
 | 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **escaneamento pronto**; caderno e tabuleiro a fazer |
 | 4 | Varinhas, nodes e vis | **nós, vis e varinhas prontos**; focos a fazer |
-| 5 | Alquimia: crisol, essência, frascos, jarros, alambique | a fazer |
+| 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **crisol pronto**; frascos e alambique a fazer |
 | 6 | Infusão: matriz, pedestais, instabilidade | a fazer |
 | 7 | Golens | a fazer |
 | 8 | O resto: mácula, criaturas, eldritch, artifícios | a fazer |
@@ -74,6 +74,21 @@ da 4.2.3.5, e a conta de somar e tirar. Se alguém mexer na tabela, o build para
 - `client/gui/ResearchPageScreen` — a folha aberta, de 256 por 181, com o texto vindo dos arquivos de
   idioma do próprio mod e as marcas dele (`<BR>`, `<LINE>`).
 - `item/ThaumonomiconItem` — o livro.
+
+## Fatia 5 — alquimia
+
+- `block/CrucibleBlock` e `block/entity/CrucibleBlockEntity` — o crisol. As contas são as do original:
+  esquenta um grau por tique enquanto houver fogo por baixo, até duzentos, e só ferve passando de cento e
+  cinquenta. Fervendo, o que cai dentro se desfaz nos aspectos que tem; o que não é feito de nada ele
+  cospe de volta.
+- `crafting/CrucibleRecipe` e `crafting/CrucibleRecipes` — **gerada** pelo
+  `scratchpad/fatia5-crisol.js` a partir do `ConfigRecipesCrucibleSlice` do mod. Dezesseis receitas por
+  enquanto: as que fecham com coisas que já existem por aqui. As outras estão anotadas na saída do gerador
+  e entram conforme as fatias trouxerem as peças. Uma não tem como voltar: a duplicação de corante, porque
+  o corante genérico de 2014 virou dezesseis itens.
+- `client/render/CrucibleRenderer` — a água na cor do que está dissolvido, subindo um dedo e tremendo
+  quando ferve.
+- `item/WandTriggers` — o caldeirão vira crisol com um toque de varinha, como no original.
 
 ## Fatia 4 — varinhas, nós e vis
 

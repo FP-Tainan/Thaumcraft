@@ -43,6 +43,17 @@ public final class WandTriggers {
             net.thaumcraft.research.ResearchManager.grantStarters(player);
             return InteractionResult.SUCCESS;
         }
+        // o caldeirão comum vira crisol, como no original
+        if (state.is(Blocks.CAULDRON) || state.is(Blocks.WATER_CAULDRON)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            boolean full = state.is(Blocks.WATER_CAULDRON);
+            level.setBlockAndUpdate(pos, net.thaumcraft.registry.TCBlocks.CRUCIBLE.defaultBlockState());
+            if (full && level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.CrucibleBlockEntity crucible) {
+                crucible.setWater(true);
+            }
+            level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 0.7f, 0.8f);
+            return InteractionResult.SUCCESS;
+        }
         return InteractionResult.PASS;
     }
 }

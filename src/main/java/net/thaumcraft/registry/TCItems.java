@@ -39,6 +39,19 @@ public final class TCItems {
         }
     }
 
+    /** O crisol, para levar na mão. */
+    public static final Item CRUCIBLE = register("crucible", properties ->
+            new net.minecraft.world.item.BlockItem(net.thaumcraft.registry.TCBlocks.CRUCIBLE, properties));
+
+    /** O fragmento equilibrado: o que o crisol faz de seis primários. */
+    public static final Item SHARD_BALANCED = register("shard_balanced", Item::new);
+
+    /** O carvão da alquimia, que queima muito mais que o comum. */
+    public static final Item ALUMENTUM = register("alumentum", Item::new);
+
+    /** A chama fria que não queima nada. */
+    public static final Item NITOR = register("nitor", Item::new);
+
     /** A varinha: a haste e as pontas vêm nos dados dela, como no original. */
     public static final Item WAND = register("wand", properties ->
             new WandItem(properties.stacksTo(1)
