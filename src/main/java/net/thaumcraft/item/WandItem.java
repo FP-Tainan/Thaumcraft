@@ -191,6 +191,21 @@ public class WandItem extends Item {
         addVis(stack, chosen, 1);
         level.playSound(null, node.getBlockPos(), net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_CHIME,
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.3f, 1.2f + level.getRandom().nextFloat() * 0.3f);
+        drainTrail(level, node, chosen);
+    }
+
+    /**
+     * O rastro de quem está bebendo de um nó.
+     *
+     * <p>No original o nó drenado solta faíscas na cor do aspecto que está saindo, e elas se veem mesmo
+     * sem os óculos — é o que denuncia um nó que alguém está secando.
+     */
+    private static void drainTrail(Level level, NodeBlockEntity node, Aspect aspect) {
+        if (!(level instanceof net.minecraft.server.level.ServerLevel server)) return;
+        var pos = node.getBlockPos();
+        server.sendParticles(new net.minecraft.core.particles.DustParticleOptions(
+                        0xFF000000 | aspect.color(), 1.2f),
+                pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 6, 0.3, 0.3, 0.3, 0.02);
     }
 
     /** O nó na mira de quem segura a varinha. */
