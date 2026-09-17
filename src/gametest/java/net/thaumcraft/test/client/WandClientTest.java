@@ -43,6 +43,35 @@ public class WandClientTest implements FabricClientGameTest {
             });
             context.waitTicks(10);
             context.takeScreenshot("varinha_cheia");
+
+            // e com o foco de fogo preso e vis de ignis na varinha, ela cospe chamas
+            singleplayer.getServer().runCommand(
+                    "item replace entity @p hotbar.0 with thaumcraft:wand[thaumcraft:wand_vis={ignis:2500}]");
+            singleplayer.getServer().runCommand("give @p thaumcraft:focus_fire");
+            context.runOnClient(minecraft -> minecraft.player.getInventory().setSelectedSlot(1));
+            context.waitTicks(10);
+            context.runOnClient(minecraft -> {
+                minecraft.options.keyUse.setDown(true);
+                net.minecraft.client.KeyMapping.click(minecraft.options.keyUse.getDefaultKey());
+            });
+            context.waitTicks(10);
+            context.runOnClient(minecraft -> {
+                minecraft.options.keyUse.setDown(false);
+                minecraft.player.getInventory().setSelectedSlot(0);
+            });
+            context.waitTicks(10);
+            context.takeScreenshot("varinha_com_foco");
+            context.runOnClient(minecraft -> {
+                minecraft.options.keyUse.setDown(true);
+                net.minecraft.client.KeyMapping.click(minecraft.options.keyUse.getDefaultKey());
+            });
+            context.waitTicks(20);
+            context.takeScreenshot("foco_de_fogo");
+            context.runOnClient(minecraft -> {
+                minecraft.options.keyUse.setDown(false);
+                minecraft.player.stopUsingItem();
+            });
+            context.waitTicks(5);
         }
     }
 }

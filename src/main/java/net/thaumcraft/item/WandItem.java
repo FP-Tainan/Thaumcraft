@@ -101,6 +101,27 @@ public class WandItem extends Item {
         return amount - given / VIS_UNIT;
     }
 
+    /**
+     * Gasta vis contado em centésimos, sem a conta de pontos inteiros.
+     *
+     * <p>É o que os focos usam: no original o custo deles já vem nessa moeda miúda, porque eles cobram a
+     * cada tique e um ponto inteiro por tique seria um estouro.
+     */
+    public static boolean consumeRaw(ItemStack stack, AspectList cost, boolean reallyDoIt) {
+        AspectList list = vis(stack);
+        float discount = cap(stack).discount();
+        AspectList real = new AspectList();
+        for (Aspect aspect : cost.getAspects()) {
+            int needed = Math.max(1, (int) (cost.getAmount(aspect) * discount));
+            if (list.getAmount(aspect) < needed) return false;
+            real.add(aspect, needed);
+        }
+        if (!reallyDoIt) return true;
+        for (Aspect aspect : real.getAspects()) list.reduce(aspect, real.getAmount(aspect));
+        setVis(stack, list);
+        return true;
+    }
+
     /** Os aspectos primários em que ainda cabe alguma coisa. */
     public static List<Aspect> aspectsWithRoom(ItemStack stack) {
         List<Aspect> room = new ArrayList<>();
@@ -137,6 +158,11 @@ public class WandItem extends Item {
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        // com foco preso, o botão aciona o foco; sem foco, a varinha bebe do nó na mira
+        if (net.thaumcraft.item.Focuses.on(stack) != null) {
+            player.startUsingItem(hand);
+            return InteractionResult.CONSUME;
+        }
         NodeBlockEntity node = nodeInSight(level, player);
         if (node == null) return InteractionResult.PASS;
         player.startUsingItem(hand);
@@ -164,6 +190,11 @@ public class WandItem extends Item {
     @Override
     public void onUseTick(Level level, net.minecraft.world.entity.LivingEntity entity, ItemStack stack, int remaining) {
         if (level.isClientSide() || !(entity instanceof Player player)) return;
+        FocusItem focus = net.thaumcraft.item.Focuses.on(stack);
+        if (focus != null) {
+            if (!net.thaumcraft.item.Focuses.tick(level, player, stack, focus)) player.stopUsingItem();
+            return;
+        }
         // a cada cinco tiques a varinha dá mais um gole no nó, como no original
         if (remaining % 5 != 0) return;
         NodeBlockEntity node = nodeInSight(level, player);
@@ -244,9 +275,14 @@ public class WandItem extends Item {
     @Override
     public Component getName(ItemStack stack) {
         // "Varinha de X com pontas de Y", que é como o original monta o nome
-        return Component.translatable(this.staff ? "item.thaumcraft.staff.named" : "item.thaumcraft.wand.named",
+        Component name = Component.translatable(
+                this.staff ? "item.thaumcraft.staff.named" : "item.thaumcraft.wand.named",
                 Component.translatable("tc.rod." + rodTag(stack)),
                 Component.translatable("tc.cap." + capTag(stack)));
+        String focus = stack.get(TCComponents.WAND_FOCUS);
+        if (focus == null) return name;
+        return Component.translatable("item.thaumcraft.wand.focused", name,
+                Component.translatable("item.thaumcraft.focus." + focus));
     }
 
     public boolean isStaff() {

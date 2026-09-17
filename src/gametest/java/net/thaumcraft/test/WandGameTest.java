@@ -47,6 +47,31 @@ public class WandGameTest {
         helper.succeed();
     }
 
+    /** O foco cobra vis em centésimos, e sem vis ele não age. */
+    @GameTest
+    public void aFocusCostsHundredths(GameTestHelper helper) {
+        ItemStack wand = new ItemStack(TCItems.WAND);
+        wand.set(TCComponents.WAND_ROD, "greatwood");
+        wand.set(TCComponents.WAND_CAP, "gold");
+        wand.set(TCComponents.WAND_FOCUS, "fire");
+
+        var focus = net.thaumcraft.item.Focuses.on(wand);
+        if (focus == null) helper.fail("o foco de fogo devia estar preso na varinha");
+        if (focus.cost().getAmount(Aspects.FIRE) != 10) {
+            helper.fail("o de fogo cobra dez centésimos por tique, como no original");
+        }
+        // varinha vazia não acende nada
+        if (WandItem.consumeRaw(wand, focus.cost(), true)) helper.fail("varinha vazia não paga");
+
+        WandItem.addVis(wand, Aspects.FIRE, 1);
+        int before = WandItem.vis(wand, Aspects.FIRE);
+        if (!WandItem.consumeRaw(wand, focus.cost(), true)) helper.fail("com um ponto devia dar");
+        if (WandItem.vis(wand, Aspects.FIRE) != before - 10) {
+            helper.fail("devia ter saído dez centésimos, saiu " + (before - WandItem.vis(wand, Aspects.FIRE)));
+        }
+        helper.succeed();
+    }
+
     /** A ponta manda no custo: a de ferro cobra mais, a de vazio cobra menos. */
     @GameTest
     public void capsChangeWhatEachUseCosts(GameTestHelper helper) {

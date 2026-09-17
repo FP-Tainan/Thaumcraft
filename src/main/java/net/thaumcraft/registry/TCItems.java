@@ -97,6 +97,17 @@ public final class TCItems {
             new Item(properties.humanoidArmor(net.thaumcraft.item.TCMaterials.GOGGLES,
                     net.minecraft.world.item.equipment.ArmorType.HELMET)));
 
+    /** Os focos de varinha, pelo nome que o original dá a cada um. */
+    public static final java.util.Map<String, Item> FOCI = new java.util.LinkedHashMap<>();
+
+    static {
+        // o de fogo cobra dez centésimos de ignis por tique, como no original
+        FOCI.put("fire", register("focus_fire", properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1), "fire",
+                new net.thaumcraft.api.aspects.AspectList()
+                        .add(net.thaumcraft.api.aspects.Aspects.FIRE, 10))));
+    }
+
     /** O frasco de essência, que guarda um aspecto. */
     public static final Item PHIAL = register("phial", properties ->
             new net.thaumcraft.item.PhialItem(properties.stacksTo(16)));

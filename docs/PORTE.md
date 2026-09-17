@@ -162,6 +162,10 @@ Greatwood, Silverwood.
 - `client/render/WandRenderer` e `BoxMesh` — a varinha é peça de três dimensões, montada das mesmas três
   caixas do `ModelWand` original e com as texturas dele. O `BoxMesh` refaz o desenrolado de textura que o
   Minecraft antigo usava, sem o qual as texturas do mod sairiam embaralhadas.
+- `item/FocusItem` e `item/Focuses` — os focos de varinha, que é o que dá magia à varinha. Por ora só o de
+  fogo: segurando o botão, ela cospe um jato de chamas e cobra dez centésimos de ignis por tique, como no
+  original. **Diferença**: no mod o foco entra numa casa da própria varinha, alcançada por uma tecla; aqui
+  ele se encaixa com um clique, que procura a varinha no inventário.
 - `client/WandHud` — os seis primários com as barrinhas no canto de baixo, como no original.
 
 Falta da fatia: os focos da varinha e as varinhas de bastão em si (a peça existe, a receita não).
