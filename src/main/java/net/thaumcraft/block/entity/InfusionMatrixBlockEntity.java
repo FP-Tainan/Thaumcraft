@@ -259,21 +259,70 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
     /**
      * Alguma coisa deu errado.
      *
-     * <p>O original sorteia entre vinte e um azares; aqui são os quatro que dá para fazer sem as peças das
-     * fatias seguintes: cuspir um ingrediente, um raio, um susto em quem estiver perto, e a explosão. Os
-     * outros — mácula, criaturas do vazio, distorção — chegam com a fatia oito.
+     * <p>O original sorteia entre vinte e um azares; aqui são cinco: cuspir um ingrediente, um raio, um
+     * susto em quem estiver perto, a explosão, e a mácula brotando no chão em volta. Os que faltam —
+     * criaturas do vazio, distorção da mente — chegam com as peças que faltam.
      */
     private void misfire(Level level, BlockPos pos) {
         if (!(level instanceof ServerLevel server)) return;
-        switch (level.getRandom().nextInt(8)) {
+        switch (level.getRandom().nextInt(10)) {
             case 0, 1, 2 -> this.spit(server, pos);
             case 3, 4 -> this.zap(server, pos);
             case 5, 6 -> this.scare(server, pos);
+            case 7, 8 -> this.taint(server, pos);
             default -> {
                 server.explode(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                         1.5f + level.getRandom().nextFloat(), Level.ExplosionInteraction.NONE);
             }
         }
+    }
+
+    /**
+     * A mácula brota no chão em volta.
+     *
+     * <p>É o azar mais feio da infusão no original, e o mais demorado de consertar: a magia que escapa
+     * apodrece a terra, e dali ela se alastra sozinha. Só a Flor Etérea desfaz.
+     */
+    private void taint(ServerLevel level, BlockPos pos) {
+        // longe o bastante para não comer o próprio altar, e perto o bastante para dar trabalho
+        BlockPos seed = null;
+        for (int tries = 0; tries < 16 && seed == null; tries++) {
+            int away = 6 + level.getRandom().nextInt(5);
+            double angle = level.getRandom().nextDouble() * Math.PI * 2.0;
+            BlockPos at = pos.offset(
+                    (int) Math.round(Math.cos(angle) * away),
+                    -2 - level.getRandom().nextInt(3),
+                    (int) Math.round(Math.sin(angle) * away));
+            if (canRot(level, at)) seed = at;
+        }
+        if (seed == null) return;
+
+        // a mácula chega em punhado, e não em bloco solto: sozinha ela nunca pegaria, porque a regra do
+        // original pede vizinhos já maculados para ela avançar
+        int planted = 0;
+        for (int tries = 0; tries < 24 && planted < 5; tries++) {
+            BlockPos at = seed.offset(
+                    level.getRandom().nextInt(5) - 2, level.getRandom().nextInt(3) - 1,
+                    level.getRandom().nextInt(5) - 2);
+            if (!canRot(level, at)) continue;
+            level.setBlockAndUpdate(at, TCBlocks.TAINT_SOIL.defaultBlockState());
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.SCULK_SOUL,
+                    at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 8, 0.4, 0.2, 0.4, 0.02);
+            planted++;
+        }
+        if (planted > 0) {
+            level.playSound(null, seed, TCSounds.SPILL.value(), SoundSource.BLOCKS, 1.0f, 0.6f);
+        }
+    }
+
+    /** Aquele chão dá para apodrecer? Tem de ser bloco firme, com céu por cima, e fora do altar. */
+    private boolean canRot(ServerLevel level, BlockPos at) {
+        var there = level.getBlockState(at);
+        if (there.isAir() || !there.isSolidRender()) return false;
+        if (!level.getBlockState(at.above()).isAir()) return false;
+        // nada do altar vira mácula: a construção não pode se desmanchar sozinha
+        BlockPos matrix = this.getBlockPos();
+        return Math.abs(at.getX() - matrix.getX()) > 2 || Math.abs(at.getZ() - matrix.getZ()) > 2;
     }
 
     /** Um pedestal perde o que tinha: a coisa sai voando. */

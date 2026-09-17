@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/taint_fibres",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": 7160009
+      }
+    ]
+  }
+}

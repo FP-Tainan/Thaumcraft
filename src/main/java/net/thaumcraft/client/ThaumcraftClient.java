@@ -45,6 +45,12 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.gui.screens.MenuScreens.register(
                 net.thaumcraft.registry.TCMenus.ALCHEMICAL_FURNACE,
                 net.thaumcraft.client.gui.AlchemicalFurnaceScreen::new);
+        // a mácula vem cinza na textura, como no original; quem a pinta é o jogo, com a cor do capim
+        // do bioma maculado do mod — 7160201, que é 0x6D40C9
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(state -> 0xFF6D40C9),
+                net.thaumcraft.registry.TCBlocks.TAINT_SOIL,
+                net.thaumcraft.registry.TCBlocks.TAINT_FIBRES);
         ThaumometerHud.init();
         AspectTooltip.init();
         WandHud.init();

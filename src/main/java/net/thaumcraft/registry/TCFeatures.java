@@ -22,6 +22,10 @@ public final class TCFeatures {
     private TCFeatures() {
     }
 
+    /** A folha-cintilante, rara pelas florestas. */
+    public static final ResourceKey<PlacedFeature> SHIMMERLEAF_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("shimmerleaf"));
+
     public static final ResourceKey<PlacedFeature> INFUSED_STONE_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("infused_stone"));
 
@@ -36,5 +40,10 @@ public final class TCFeatures {
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.TOP_LAYER_MODIFICATION,
                 NODE_PLACED);
+        // a folha-cintilante, de que se faz a Flor Etérea
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION,
+                SHIMMERLEAF_PLACED);
     }
 }

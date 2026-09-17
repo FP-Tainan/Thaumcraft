@@ -188,6 +188,23 @@ public final class TCItems {
     public static final Item INFUSION_MATRIX = register("infusion_matrix", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.INFUSION_MATRIX, properties));
 
+    /** A folha-cintilante, para levar na mão. */
+    public static final Item SHIMMERLEAF = register("shimmerleaf", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.SHIMMERLEAF, properties));
+
+    /** A mácula e a flor que a desfaz, para levar na mão. */
+    public static final Item TAINT_CRUST = register("taint_crust", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.TAINT_CRUST, properties));
+
+    public static final Item TAINT_SOIL = register("taint_soil", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.TAINT_SOIL, properties));
+
+    public static final Item TAINT_FIBRES = register("taint_fibres", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.TAINT_FIBRES, properties));
+
+    public static final Item ETHEREAL_BLOOM = register("ethereal_bloom", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ETHEREAL_BLOOM, properties));
+
     /** A bancada arcana, para levar na mão. */
     public static final Item ARCANE_WORKBENCH = register("arcane_workbench", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_WORKBENCH, properties));
@@ -288,6 +305,7 @@ public final class TCItems {
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
             "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "tube",
             "infusion_matrix", "pedestal",
+            "shimmerleaf", "ethereal_bloom", "taint_crust", "taint_soil", "taint_fibres",
             "golem_bell",
             "golem_straw", "golem_wood", "golem_tallow", "golem_clay",
             "golem_flesh", "golem_stone", "golem_iron", "golem_thaumium",

@@ -76,6 +76,8 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.ENTROPY, 1)));
         ALL.add(new CrucibleRecipe("TRANSGOLD", new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET), net.minecraft.world.item.Items.GOLD_NUGGET,
                 new AspectList().add(Aspects.METAL, 2).add(Aspects.GREED, 1)));
+        ALL.add(new CrucibleRecipe("ETHEREALBLOOM", new ItemStack(TCBlocks.ETHEREAL_BLOOM.asItem()), TCBlocks.SHIMMERLEAF.asItem(),
+                new AspectList().add(Aspects.MAGIC, 16).add(Aspects.PLANT, 16).add(Aspects.HEAL, 16).add(Aspects.TAINT, 8)));
         ALL.add(new CrucibleRecipe("GOLEMSTRAW", new ItemStack(TCItems.GOLEM_PLACERS.get("straw")), net.minecraft.world.level.block.Blocks.HAY_BLOCK.asItem(),
                 new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
         ALL.add(new CrucibleRecipe("GOLEMTALLOW", new ItemStack(TCItems.GOLEM_PLACERS.get("tallow")), TCBlocks.BUILDING.get("tallow_block").asItem(),

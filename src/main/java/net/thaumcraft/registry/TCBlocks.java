@@ -101,6 +101,52 @@ public final class TCBlocks {
                     .lightLevel(state -> 6)
                     .sound(SoundType.STONE)));
 
+    /** A folha-cintilante: a flor branca de que se faz a Flor Etérea. */
+    public static final Block SHIMMERLEAF = register("shimmerleaf", properties ->
+            new net.thaumcraft.block.ShimmerleafBlock(properties
+                    .mapColor(MapColor.SNOW)
+                    .instabreak()
+                    .noCollision()
+                    .noOcclusion()
+                    .lightLevel(state -> 4)
+                    .sound(SoundType.GRASS)));
+
+    /** A crosta da mácula: o que sobra de um tronco ou de uma folha que ela tomou. */
+    public static final Block TAINT_CRUST = register("taint_crust", properties ->
+            new net.thaumcraft.block.TaintBlock(properties
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .strength(0.6f)
+                    .randomTicks()
+                    .sound(SoundType.SLIME_BLOCK)));
+
+    /** O solo maculado: a terra que ela tomou. */
+    public static final Block TAINT_SOIL = register("taint_soil", properties ->
+            new net.thaumcraft.block.TaintBlock(properties
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .strength(0.6f)
+                    .randomTicks()
+                    .sound(SoundType.SLIME_BLOCK)));
+
+    /** As fibras da mácula: o mato roxo que nasce por cima do que ela tomou. */
+    public static final Block TAINT_FIBRES = register("taint_fibres", properties ->
+            new net.thaumcraft.block.TaintFibreBlock(properties
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .instabreak()
+                    .noCollision()
+                    .noOcclusion()
+                    .sound(SoundType.GRASS)));
+
+    /** A Flor Etérea: a única coisa que faz a mácula recuar. */
+    public static final Block ETHEREAL_BLOOM = register("ethereal_bloom", properties ->
+            new net.thaumcraft.block.EtherealBloomBlock(properties
+                    .mapColor(MapColor.COLOR_LIGHT_BLUE)
+                    .instabreak()
+                    .noCollision()
+                    .noOcclusion()
+                    .randomTicks()
+                    .lightLevel(state -> 7)
+                    .sound(SoundType.GRASS)));
+
     /** A bancada arcana: a mesa que a varinha benzeu. */
     public static final Block ARCANE_WORKBENCH = register("arcane_workbench", properties ->
             new net.thaumcraft.block.ArcaneWorkbenchBlock(properties

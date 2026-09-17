@@ -20,7 +20,8 @@
       "net.thaumcraft.test.SoundGameTest",
       "net.thaumcraft.test.EssentiaGameTest",
       "net.thaumcraft.test.InfusionGameTest",
-      "net.thaumcraft.test.GolemGameTest"
+      "net.thaumcraft.test.GolemGameTest",
+      "net.thaumcraft.test.TaintGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",
@@ -32,7 +33,8 @@
       "net.thaumcraft.test.client.WorkbenchClientTest",
       "net.thaumcraft.test.client.EssentiaClientTest",
       "net.thaumcraft.test.client.InfusionClientTest",
-      "net.thaumcraft.test.client.GolemClientTest"
+      "net.thaumcraft.test.client.GolemClientTest",
+      "net.thaumcraft.test.client.TaintClientTest"
     ]
   }
 }

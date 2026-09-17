@@ -23,7 +23,7 @@ modelo, tela virou `Screen`.
 | 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **pronta** — crisol, frascos, forno alquímico, alambique, tubos e jarros |
 | 6 | Infusão: matriz, pedestais, instabilidade | **pronta** |
 | 7 | Golens | **os oito golens e os doze núcleos prontos**; dois núcleos já trabalham (juntar e colher) |
-| 8 | O resto: mácula, criaturas, eldritch, artifícios | a fazer |
+| 8 | O resto: mácula, criaturas, eldritch, artifícios | **a mácula pronta**; criaturas, eldritch e artifícios a fazer |
 
 Fora das fatias, entraram no caminho as peças sem as quais nada disso se joga: o minério infundido (de
 onde saem os fragmentos), a matéria-prima do mod, as ferramentas e armaduras de táumio e de metal do
@@ -66,7 +66,11 @@ Hoje o mod já se joga do começo ao meio, nesta ordem:
     depois no golem, e ele passa a juntar o que estiver caído no chão (ou a colher o que estiver maduro)
     e a levar tudo para aquele baú.
 
-O que ainda não tem caminho: o lado eldritch.
+15. **Errar uma infusão** — quando a magia escapa, a mácula brota no chão em volta e começa a comer o
+    terreno. A Flor Etérea, feita no crisol a partir da folha-cintilante, é a única coisa que a faz
+    recuar.
+
+O que ainda não tem caminho: as criaturas, o lado eldritch e os artifícios de vestir.
 
 ## Fatia 1 — aspectos
 
@@ -365,3 +369,36 @@ dele; o núcleo encaixado nele manda no serviço.
   item, com os nomes e as receitas do original, mas ainda não têm serviço: o de proteger pede a briga
   do original, o de alquimia pede a essência encanada ligada ao golem, o de pescar pede a bóia. Eles
   chegam com as peças que faltam.
+
+## Fatia 8 — a mácula
+
+A mácula é a conta que o Thaumcraft cobra de quem foi apressado. Ela não nasce sozinha no porte: ela
+chega quando uma infusão dá errado, e daí em diante come a terra por conta própria.
+
+- `block/TaintBlock` — a crosta e o solo maculado, do `BlockTaint` do original, com as regras dele:
+  madeira e folha caem com **dois** vizinhos maculados, terra e pedra com **três**. Sozinha ela seca e a
+  terra volta ao que era.
+- `block/TaintFibreBlock` — as fibras que crescem por cima, do `BlockTaintFibres`: nascem no ar colado
+  a coisa firme, e não nascem se só houver mácula em volta.
+- `block/EtherealBloomBlock` — a Flor Etérea, a resposta do original: plantada, ela desfaz a mácula num
+  raio de oito blocos, um pedaço de cada vez. A crosta volta a ser terra, o solo volta a ser grama, e as
+  fibras somem.
+- `block/ShimmerleafBlock` — a folha-cintilante, que é o que a Flor Etérea pede no crisol.
+- A mácula é **cinza na textura**, como no original; quem a pinta é o jogo, com a cor do capim do bioma
+  maculado do próprio mod — 7160201, que é 0x6D40C9.
+- **A infusão e a mácula se encontram.** O azar da infusão ganhou um quinto caso: a magia que escapa
+  apodrece um punhado de terra a seis ou dez blocos do altar. Nunca num bloco do altar — a construção não
+  pode se desmanchar sozinha — e nunca um bloco solto, porque a regra do original pede vizinhos já
+  maculados para a mácula avançar. É assim que ela chega no original também: em quantidade.
+
+### As diferenças desta fatia
+
+- **O bioma maculado não existe.** No original a mácula pinta o bioma, e é o bioma que decide se ela
+  continua ou míngua. O Minecraft de hoje guarda bioma de quatro em quatro blocos e não deixa um mod
+  repintá-lo bloco a bloco. Sem essa camada, quem segura a mácula aqui é a companhia: uma mancha viva se
+  mantém e avança, um bloco solto se apaga.
+- **A folha-cintilante nasce sozinha.** No original ela cresce debaixo dos pinheiros-de-prata, que são de
+  uma parte da geração de mundo que ainda não chegou. Aqui ela nasce rara pelas florestas, para que a
+  Flor Etérea tenha de onde sair.
+- Falta da fatia: as criaturas da mácula (a aranha, o tentáculo, o enxame de esporos), o fluxo — a gosma
+  e o gás que a mácula vira —, o lado eldritch inteiro e os artifícios de vestir.
