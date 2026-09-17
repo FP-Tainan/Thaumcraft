@@ -1,10 +1,16 @@
 {
   "variants": {
-    "stacked=false": {
+    "facing=north": {
       "model": "thaumcraft:block/alembic"
     },
-    "stacked=true": {
-      "model": "thaumcraft:block/alembic_stacked"
+    "facing=south": {
+      "model": "thaumcraft:block/alembic"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/alembic"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/alembic"
     }
   }
 }

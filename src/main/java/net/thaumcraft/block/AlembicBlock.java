@@ -32,44 +32,37 @@ import net.thaumcraft.registry.TCSounds;
 public class AlembicBlock extends BaseEntityBlock {
     public static final MapCodec<AlembicBlock> CODEC = simpleCodec(AlembicBlock::new);
     /**
-     * Se ele está apoiado noutro alambique.
+     * Para que lado ele está virado.
      *
-     * <p>Apoiado, ele termina no colarinho de latão que encaixa no de baixo; no chão ou sobre o forno,
-     * abre quatro pés inclinados. É o que se vê na coluna do original: só o de baixo tem pés.
+     * <p>É o painel do corpo que aponta para cá — o quadradinho onde vai o rótulo de aspecto. O original
+     * tira isto do ângulo de quem põe o bloco, como um forno comum, e por isso uma fileira de alambiques
+     * fica toda virada para quem a construiu em vez de toda para o oeste.
+     *
+     * <p>Se ele tem pés, encaixe ou bico não é estado de bloco: quem decide é o
+     * {@link net.thaumcraft.client.render.AlembicRenderer}, olhando o que está embaixo na hora de
+     * desenhar — igual ao original.
      */
-    public static final net.minecraft.world.level.block.state.properties.BooleanProperty STACKED =
-            net.minecraft.world.level.block.state.properties.BooleanProperty.create("stacked");
+    public static final net.minecraft.world.level.block.state.properties.EnumProperty<net.minecraft.core.Direction> FACING =
+            net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
     private static final VoxelShape SHAPE = Block.box(0.5, 0.0, 0.5, 15.5, 16.0, 15.5);
 
     public AlembicBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(STACKED, false));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, net.minecraft.core.Direction.NORTH));
     }
 
     @Override
     protected void createBlockStateDefinition(
             net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(STACKED);
+        builder.add(FACING);
     }
 
     @Override
     public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(STACKED,
-                standsOnAlembic(context.getLevel(), context.getClickedPos()));
-    }
-
-    @Override
-    protected BlockState updateShape(BlockState state, net.minecraft.world.level.LevelReader level,
-                                     net.minecraft.world.level.ScheduledTickAccess ticks, BlockPos pos,
-                                     net.minecraft.core.Direction dir, BlockPos neighbourPos,
-                                     BlockState neighbourState, net.minecraft.util.RandomSource random) {
-        if (dir != net.minecraft.core.Direction.DOWN) return state;
-        return state.setValue(STACKED, standsOnAlembic(level, pos));
-    }
-
-    private static boolean standsOnAlembic(net.minecraft.world.level.BlockGetter level, BlockPos pos) {
-        return level.getBlockState(pos.below()).getBlock() instanceof AlembicBlock;
+        return this.defaultBlockState().setValue(FACING,
+                context.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -88,6 +81,16 @@ public class AlembicBlock extends BaseEntityBlock {
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.INVISIBLE;
+    }
+
+    @Override
+    protected BlockState rotate(BlockState state, net.minecraft.world.level.block.Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    protected BlockState mirror(BlockState state, net.minecraft.world.level.block.Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override

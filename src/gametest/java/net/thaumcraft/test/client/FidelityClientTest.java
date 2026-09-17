@@ -91,6 +91,12 @@ public class FidelityClientTest implements FabricClientGameTest {
             context.waitTicks(25);
             context.takeScreenshot("fid_nitor_e_marca");
 
+            // e o Nitor de bem perto: de longe qualquer borrão vermelho passa por chama, é de perto que
+            // se vê se ele tem miolo quente ou se é um adesivo
+            server.runCommand("execute at @p run setblock ~2 ~1 ~2 thaumcraft:nitor");
+            context.waitTicks(20);
+            context.takeScreenshot("fid_nitor_de_perto");
+
             // a varinha na mão, de perto
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
             context.waitTicks(10);
