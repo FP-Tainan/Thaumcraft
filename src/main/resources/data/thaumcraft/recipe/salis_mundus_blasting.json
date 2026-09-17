@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": "thaumcraft:shard_balanced",
+  "result": { "id": "thaumcraft:salis_mundus" },
+  "experience": 1.0,
+  "cookingtime": 100
+}

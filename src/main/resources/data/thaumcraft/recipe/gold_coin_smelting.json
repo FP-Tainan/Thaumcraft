@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": "thaumcraft:gold_coin",
+  "result": { "id": "minecraft:gold_nugget" },
+  "experience": 0.0,
+  "cookingtime": 200
+}
