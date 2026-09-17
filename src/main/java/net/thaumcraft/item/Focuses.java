@@ -17,12 +17,16 @@ import net.thaumcraft.registry.TCItems;
 /**
  * O que cada foco faz quando a varinha aponta.
  *
- * <p>Por ora só o de fogo, que no original é um jato de chamas contínuo: enquanto o botão está apertado,
- * a varinha cobra dez centésimos de ignis por tique e cospe fogo pela frente, incendiando o que alcança.
+ * <p>Por ora são dois. O de fogo é um jato de chamas contínuo: enquanto o botão está apertado, a varinha
+ * cobra dez centésimos de ignis por tique e cospe fogo pela frente, incendiando o que alcança. O de
+ * escavação quebra o bloco na mira a doze blocos de distância, cobrando quinze centésimos de terra por
+ * bloco. Os dois custos são os do original.
  */
 public final class Focuses {
     /** Até onde o jato de fogo chega. */
     private static final double FIRE_REACH = 6.0;
+    /** Até onde a escavação alcança, bem além do braço. */
+    private static final double DIG_REACH = 12.0;
 
     private Focuses() {
     }
@@ -51,7 +55,35 @@ public final class Focuses {
             breatheFire(level, player);
             return true;
         }
+        if (focus.type().equals("excavation")) {
+            return excavate(level, player);
+        }
         return false;
+    }
+
+    /**
+     * A escavação: quebra o bloco na mira, mais longe do que o braço alcança.
+     *
+     * <p>No original o foco vai roendo o bloco como se fosse uma picareta, e quebra quando termina; aqui
+     * ele quebra de uma vez, a cada meio segundo, cobrando o mesmo que o original cobra por bloco.
+     */
+    private static boolean excavate(Level level, Player player) {
+        if (level.getGameTime() % 10 != 0) return true;
+        var hit = player.pick(DIG_REACH, 1.0f, false);
+        if (!(hit instanceof net.minecraft.world.phys.BlockHitResult block)) return true;
+        var pos = block.getBlockPos();
+        var state = level.getBlockState(pos);
+        if (state.isAir()) return true;
+        // o que não se quebra na mão também não se quebra daqui
+        if (state.getDestroySpeed(level, pos) < 0.0f) return true;
+
+        if (level instanceof ServerLevel server) {
+            server.destroyBlock(pos, true, player);
+            server.sendParticles(ParticleTypes.ENCHANT,
+                    pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 12, 0.4, 0.4, 0.4, 0.4);
+        }
+        level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 0.5f, 1.4f);
+        return true;
     }
 
     /** O jato de chamas: o que estiver na frente pega fogo. */

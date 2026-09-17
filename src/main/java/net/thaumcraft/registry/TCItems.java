@@ -106,6 +106,11 @@ public final class TCItems {
                 properties.stacksTo(1), "fire",
                 new net.thaumcraft.api.aspects.AspectList()
                         .add(net.thaumcraft.api.aspects.Aspects.FIRE, 10))));
+        // o de escavação cobra quinze centésimos de terra por bloco quebrado
+        FOCI.put("excavation", register("focus_excavation", properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1), "excavation",
+                new net.thaumcraft.api.aspects.AspectList()
+                        .add(net.thaumcraft.api.aspects.Aspects.EARTH, 15))));
     }
 
     /** O frasco de essência, que guarda um aspecto. */

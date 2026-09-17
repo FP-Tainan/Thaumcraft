@@ -50,6 +50,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("FOCUSFIRE", new ItemStack(TCItems.FOCI.get("fire")),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("fire")), null, null, null),
                 new AspectList().add(Aspects.FIRE, 20).add(Aspects.ENTROPY, 10)));
+        // FocusExcavation
+        ALL.add(new ArcaneRecipe("FOCUSEXCAVATION", new ItemStack(TCItems.FOCI.get("excavation")),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("earth")), null, null, null),
+                new AspectList().add(Aspects.EARTH, 20).add(Aspects.ENTROPY, 5).add(Aspects.ORDER, 5)));
         // Goggles
         ALL.add(new ArcaneRecipe("GOGGLES", new ItemStack(TCItems.GOGGLES),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.LEATHER), null, Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.THAUMOMETER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.THAUMOMETER)),
