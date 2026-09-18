@@ -56,6 +56,14 @@ public final class TCBlocks {
                     .noOcclusion()
                     .sound(SoundType.GLASS)));
 
+    /** O jarro do vazio: o jarro de obsidiana que nunca enche — o que passa do limite some. */
+    public static final Block JAR_VOID = register("jar_void", properties ->
+            new net.thaumcraft.block.JarBlock(properties
+                    .mapColor(MapColor.NONE)
+                    .strength(0.3f)
+                    .noOcclusion()
+                    .sound(SoundType.GLASS)));
+
     /** O tubo de essência: o cano de latão por onde a essência corre. */
     public static final Block TUBE = register("tube", properties ->
             new net.thaumcraft.block.TubeBlock(properties

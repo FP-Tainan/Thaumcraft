@@ -29,7 +29,7 @@ public final class TCBlockEntities {
     public static final BlockEntityType<net.thaumcraft.block.entity.JarBlockEntity> JAR =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("jar"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.JarBlockEntity::new,
-                            java.util.Set.of(TCBlocks.JAR)));
+                            java.util.Set.of(TCBlocks.JAR, TCBlocks.JAR_VOID)));
 
     public static final BlockEntityType<net.thaumcraft.block.entity.TubeBlockEntity> TUBE =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube"),

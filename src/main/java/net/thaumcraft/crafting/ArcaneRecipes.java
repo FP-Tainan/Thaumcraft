@@ -58,6 +58,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("DISTILESSENTIA", new ItemStack(TCBlocks.JAR.asItem()),
                 Arrays.asList(Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem()), null, Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem())),
                 new AspectList().add(Aspects.WATER, 1)));
+        // JarVoid
+        ALL.add(new ArcaneRecipe("JARVOID", new ItemStack(TCBlocks.JAR_VOID.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.level.block.Blocks.OBSIDIAN.asItem()), null, null, Ingredient.of(TCBlocks.JAR.asItem()), null, null, Ingredient.of(net.minecraft.world.item.Items.BLAZE_POWDER), null, null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ENTROPY, 15)));
         // WandCapGold
         ALL.add(new ArcaneRecipe("CAP_gold", new ItemStack(TCItems.WAND_CAPS.get("gold")),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null, Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null, null, null),

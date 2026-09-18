@@ -37,6 +37,8 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
     private static final int SUCTION = 32;
     /** A força com que um jarro com rótulo puxa: o dobro, para ganhar a disputa. */
     private static final int LABELLED_SUCTION = 64;
+    /** O jarro do vazio com rótulo puxa menos que o comum com rótulo: perde a disputa para ele. */
+    private static final int VOID_LABELLED_SUCTION = 48;
     /** De quantos em quantos tiques ele bebe do que está acima. */
     private static final int DRINK_EVERY = 5;
 
@@ -56,7 +58,8 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
     public static void tick(Level level, BlockPos pos, BlockState state, JarBlockEntity jar) {
         if (level.isClientSide()) return;
         if (++jar.count % DRINK_EVERY != 0) return;
-        if (jar.amount >= CAPACITY) return;
+        // o jarro do vazio bebe mesmo cheio: o que passa do limite some
+        if (jar.amount >= CAPACITY && !jar.isVoid()) return;
         jar.drinkFromAbove(level, pos);
     }
 
@@ -141,9 +144,27 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
         return this.label == null || this.label == wanted;
     }
 
+    /**
+     * O jarro do vazio, o {@code TileJarFillableVoid} do original: aceita sempre o aspecto que já tem, e o
+     * que não cabe some. Ele não confere o rótulo ao receber — só na hora de escolher o que beber.
+     */
+    public boolean isVoid() {
+        return this.getBlockState().is(net.thaumcraft.registry.TCBlocks.JAR_VOID);
+    }
+
     @Override
     public int addToContainer(Aspect wanted, int requested) {
         if (requested == 0) return 0;
+        if (this.isVoid()) {
+            if (wanted == this.aspect || this.amount == 0) {
+                boolean up = this.amount < CAPACITY;
+                this.aspect = wanted;
+                this.amount = Math.min(CAPACITY, this.amount + requested);
+                requested = 0;
+                if (up) this.sync();
+            }
+            return requested;
+        }
         if (!this.doesContainerAccept(wanted)) return requested;
         if ((this.amount < CAPACITY && wanted == this.aspect) || this.amount == 0) {
             this.aspect = wanted;
@@ -207,6 +228,7 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
 
     @Override
     public int getSuctionAmount(@Nullable Direction face) {
+        if (this.isVoid()) return this.label != null && this.amount < CAPACITY ? VOID_LABELLED_SUCTION : SUCTION;
         if (this.amount >= CAPACITY) return 0;
         return this.label != null ? LABELLED_SUCTION : SUCTION;
     }
@@ -234,6 +256,7 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
 
     @Override
     public int getMinimumSuction() {
+        if (this.isVoid()) return this.label != null ? VOID_LABELLED_SUCTION : SUCTION;
         return this.label != null ? LABELLED_SUCTION : SUCTION;
     }
 
