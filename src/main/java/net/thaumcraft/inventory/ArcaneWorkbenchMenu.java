@@ -74,17 +74,24 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
 
     /** Refaz o que a grade está pedindo, e se a varinha dá conta de pagar. */
     public void refresh() {
-        ArcaneRecipe recipe = ArcaneRecipes.find(this.grid());
-        // sem a pesquisa, a bancada não monta: é a regra do original
-        if (recipe != null
-                && !net.thaumcraft.research.ResearchManager.knows(this.player, recipe.research())) {
-            recipe = null;
-        }
+        ArcaneRecipe recipe = this.resolve();
         if (recipe == null || !this.canAfford(recipe)) {
             this.result.setItem(0, ItemStack.EMPTY);
             return;
         }
         this.result.setItem(0, recipe.result().copy());
+    }
+
+    /**
+     * A receita que a grade fecha para quem está na bancada: as de tabela e, se nenhuma, a montagem de
+     * varinha. Sem a pesquisa, a bancada não monta nem mostra o custo — é a regra do original.
+     */
+    private ArcaneRecipe resolve() {
+        ArcaneRecipe recipe = ArcaneRecipes.find(this.grid());
+        if (recipe != null) {
+            return net.thaumcraft.research.ResearchManager.knows(this.player, recipe.research()) ? recipe : null;
+        }
+        return net.thaumcraft.crafting.ArcaneWandRecipe.find(this.grid(), this.player);
     }
 
     private List<ItemStack> grid() {
@@ -102,9 +109,8 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
 
     /** Cobra o vis da varinha e gasta o que estava na grade. */
     public void take() {
-        ArcaneRecipe recipe = ArcaneRecipes.find(this.grid());
+        ArcaneRecipe recipe = this.resolve();
         if (recipe == null) return;
-        if (!net.thaumcraft.research.ResearchManager.knows(this.player, recipe.research())) return;
         ItemStack wand = this.bench.getItem(ArcaneWorkbenchBlockEntity.WAND_SLOT);
         if (!WandItem.consume(wand, recipe.cost(), true)) return;
         for (int slot = 0; slot < 9; slot++) this.bench.removeItem(slot, 1);
@@ -148,6 +154,11 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
 
     /** O que a grade daria, se a varinha desse conta. */
     public ArcaneRecipe pending() {
-        return ArcaneRecipes.find(this.grid());
+        return this.resolve();
+    }
+
+    /** A varinha posta na bancada, ou vazio. */
+    public ItemStack wand() {
+        return this.bench.getItem(ArcaneWorkbenchBlockEntity.WAND_SLOT);
     }
 }

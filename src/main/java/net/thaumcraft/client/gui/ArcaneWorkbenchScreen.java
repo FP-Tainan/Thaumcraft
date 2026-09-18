@@ -5,35 +5,49 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.thaumcraft.Thaumcraft;
 import net.thaumcraft.api.aspects.Aspect;
+import net.thaumcraft.api.aspects.AspectList;
+import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.crafting.ArcaneRecipe;
 import net.thaumcraft.inventory.ArcaneWorkbenchMenu;
+import net.thaumcraft.item.WandItem;
+import org.joml.Matrix3x2fStack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DecimalFormat;
 
 /**
- * A tela da bancada arcana, com a folha e as medidas do Thaumcraft 4.2.3.5.
+ * A tela da bancada arcana: o {@code GuiArcaneWorkbench} da 4.2.3.5, descompilado.
  *
- * <p>Os seis círculos em volta da grade são os aspectos primordiais: eles acendem na cor do aspecto quando
- * a receita da vez cobra aquele vis, e ficam apagados quando a varinha não tem o bastante.
+ * <p>Os seis círculos em volta da grade não são casas: são onde aparece o vis que a receita da vez cobra,
+ * cada um sempre do mesmo primário — ar no alto, depois terra, fogo, água, ordem e entropia, dando a volta
+ * no sentido anti-horário. O número já vem com o desconto das pontas da varinha. Enquanto a varinha não tem
+ * aquele tanto, o símbolo pulsa meio apagado; quando tem, acende de vez.
+ *
+ * <p>Se a varinha não pagar a receita inteira, o resultado aparece escurecido na casa de saída, e em cima
+ * dela um aviso miúdo em vermelho.
  */
 public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkbenchMenu> {
     private static final Identifier BACKGROUND = Thaumcraft.id("textures/gui/gui_arcaneworkbench.png");
-    /** Onde ficam os seis círculos na folha, na ordem dos primários do original. */
-    private static final int[][] CIRCLES = {
-            {88, 16}, {136, 40}, {136, 88}, {88, 112}, {40, 88}, {40, 40},
+    /** O centro de cada círculo, na ordem dos primários do original. */
+    private static final int[][] ASPECT_LOCS = {
+            {72, 21}, {24, 43}, {24, 102}, {72, 124}, {120, 102}, {120, 43},
     };
+    private static final DecimalFormat FORMAT = new DecimalFormat("#######.##");
+    /** O 15625838 do original. */
+    private static final int INSUFFICIENT = 0xFFEE6E6E;
+    private static final int[][] OUTLINE = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public ArcaneWorkbenchScreen(ArcaneWorkbenchMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, 190, 234);
-        // os rótulos encostados nos dois painéis da folha, que são separados
-        this.titleLabelX = 8;
-        this.titleLabelY = -10;
-        this.inventoryLabelX = 16;
-        this.inventoryLabelY = 140;
+    }
+
+    /** O original não escreve nada por cima da folha: nem o nome da bancada, nem o do inventário. */
+    @Override
+    protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
     }
 
     @Override
@@ -41,30 +55,66 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
         super.extractBackground(graphics, mouseX, mouseY, partial);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, this.leftPos, this.topPos, 0, 0,
                 this.imageWidth, this.imageHeight, 256, 256);
-    }
 
-    @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partial) {
-        super.extractRenderState(graphics, mouseX, mouseY, partial);
-        // o que a receita da vez está cobrando, escrito nos círculos
         ArcaneRecipe recipe = this.menu.pending();
         if (recipe == null) return;
-        boolean enough = this.menu.canAfford(recipe);
-        List<Component> lines = new ArrayList<>();
-        int index = 0;
-        for (Aspect aspect : recipe.cost().getAspects()) {
-            int amount = recipe.cost().getAmount(aspect);
-            lines.add(Component.literal(aspect.name().getString() + " " + amount)
-                    .withStyle(enough ? net.minecraft.ChatFormatting.GREEN : net.minecraft.ChatFormatting.RED));
-            int[] where = CIRCLES[index % CIRCLES.length];
-            graphics.blit(RenderPipelines.GUI_TEXTURED, aspect.image(),
-                    this.leftPos + where[0] - 6, this.topPos + where[1] - 6, 0, 0, 12, 12, 12, 12,
-                    (enough ? 0xFF000000 : 0x60000000) | aspect.color());
-            index++;
+        ItemStack wand = this.menu.wand();
+        boolean hasWand = wand.getItem() instanceof WandItem;
+        AspectList cost = recipe.cost();
+        int ticks = this.minecraft.player == null ? 0 : this.minecraft.player.tickCount;
+
+        int count = 0;
+        for (Aspect primal : Aspects.primals()) {
+            float amount = cost.getAmount(primal);
+            if (amount > 0) {
+                float alpha = 0.5f + (Mth.sin((ticks + count * 10) / 2.0f) * 0.2f - 0.2f);
+                if (hasWand) {
+                    amount *= WandItem.cap(wand).discount(primal);
+                    if (amount * WandItem.VIS_UNIT <= WandItem.vis(wand, primal)) alpha = 1.0f;
+                }
+                tag(graphics, this.leftPos + ASPECT_LOCS[count][0] - 8, this.topPos + ASPECT_LOCS[count][1] - 8,
+                        primal, amount, alpha);
+            }
+            if (++count > 5) break;
         }
-        // e, sob o cursor do resultado, a conta por extenso
-        if (this.isHovering(160, 64, 16, 16, mouseX, mouseY)) {
-            graphics.setComponentTooltipForNextFrame(this.font, lines, mouseX, mouseY);
+
+        if (hasWand && !WandItem.consume(wand, cost, false)) {
+            // o resultado escurecido: o original pinta o item com um terço da cor e dois terços de opacidade
+            int x = this.leftPos + 160, y = this.topPos + 64;
+            graphics.item(recipe.result(), x, y);
+            graphics.itemDecorations(this.font, recipe.result(), x, y);
+            graphics.fill(x, y, x + 16, y + 16, 0xA81C1C1C);
+
+            Matrix3x2fStack pose = graphics.pose();
+            pose.pushMatrix();
+            pose.translate(this.leftPos + 168, this.topPos + 46);
+            pose.scale(0.5f, 0.5f);
+            String text = Component.translatable("tc.workbench.insufficient").getString();
+            graphics.text(this.font, text, -this.font.width(text) / 2, 0, INSUFFICIENT, false);
+            pose.popMatrix();
         }
+    }
+
+    /**
+     * O {@code UtilsFX.drawTag} do original: o símbolo do aspecto, dezesseis por dezesseis na cor dele, e o
+     * número em letra de metade do tamanho encostado no canto de baixo à direita, com contorno preto.
+     */
+    static void tag(GuiGraphicsExtractor graphics, int x, int y, Aspect aspect, float amount, float alpha) {
+        int a = Mth.clamp((int) (alpha * 255.0f), 0, 255) << 24;
+        graphics.blit(RenderPipelines.GUI_TEXTURED, aspect.image(), x, y, 0, 0, 16, 16, 16, 16, 16, 16,
+                a | aspect.color());
+        if (amount <= 0) return;
+        var font = net.minecraft.client.Minecraft.getInstance().font;
+        String text = FORMAT.format(amount);
+        int width = font.width(text);
+        Matrix3x2fStack pose = graphics.pose();
+        pose.pushMatrix();
+        pose.scale(0.5f, 0.5f);
+        int tx = 32 - width + x * 2, ty = 32 - font.lineHeight + y * 2;
+        for (int[] d : OUTLINE) {
+            graphics.text(font, text, tx + d[0], ty + d[1], 0xFF000000, false);
+        }
+        graphics.text(font, text, tx, ty, 0xFFFFFFFF, false);
+        pose.popMatrix();
     }
 }

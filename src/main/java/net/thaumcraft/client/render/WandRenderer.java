@@ -63,15 +63,25 @@ public class WandRenderer implements SpecialModelRenderer<WandRenderer.Parts> {
 
     /** Como a varinha está sendo segurada: na primeira pessoa, na terceira, ou parada. */
     public enum Pose {
-        FIRST, THIRD, STILL;
+        FIRST, FIRST_LEFT, THIRD, THIRD_LEFT, STILL;
 
         static final Codec<Pose> CODEC = Codec.STRING.xmap(
                 name -> switch (name) {
                     case "first" -> FIRST;
+                    case "first_left" -> FIRST_LEFT;
                     case "third" -> THIRD;
+                    case "third_left" -> THIRD_LEFT;
                     default -> STILL;
                 },
                 pose -> pose.name().toLowerCase(java.util.Locale.ROOT));
+
+        boolean firstPerson() {
+            return this == FIRST || this == FIRST_LEFT;
+        }
+
+        boolean left() {
+            return this == FIRST_LEFT || this == THIRD_LEFT;
+        }
     }
 
     /** Os três jeitos de a varinha se mexer no uso, o {@code WandFocusAnimation} do original. */
@@ -101,25 +111,106 @@ public class WandRenderer implements SpecialModelRenderer<WandRenderer.Parts> {
         boolean staff = parts.staff();
 
         pose.pushPose();
+        // desfaz o meio bloco que o jogo desconta de todo item
         pose.translate(0.5, 0.5, 0.5);
-        // o original desenha a varinha de ponta-cabeça: a ponta de cima fica na origem e o resto desce
+        if (this.pose == Pose.STILL) {
+            // o original desenha a varinha de ponta-cabeça: a ponta de cima fica na origem e o resto desce
+            pose.mulPose(Axis.XP.rotationDegrees(180.0f));
+            // e aqui ela vem centrada, que é o que o inventário e o chão esperam de um item
+            pose.translate(0.0f, staff ? -1.37f : -0.625f, 0.0f);
+            this.submitModel(pose, collector, parts, light, overlay);
+            pose.popPose();
+            return;
+        }
+
+        // na mão, a conta é a do 1.7.10 inteira: o que o jogo novo já fez até aqui é trocado pelo que o
+        // antigo fazia, e daí em diante vem o ItemWandRenderer tal e qual. A mão esquerda, que o original
+        // não tinha, é o espelho da direita.
+        boolean first = this.pose.firstPerson();
+        if (this.pose.left()) pose.scale(-1.0f, 1.0f, 1.0f);
+        pose.mulPose(first ? firstPersonCorrection(parts.using()) : THIRD_PERSON_CORRECTION);
+        // o translate(-0.5) do render helper do Forge, o do bastão, e o translate(0.5, 1.5, 0.5) do renderer
+        pose.translate(0.0f, staff ? 1.5f : 1.0f, 0.0f);
+        if (first) pose.scale(1.0f, 1.1f, 1.0f);
         pose.mulPose(Axis.XP.rotationDegrees(180.0f));
-        // e aqui ela vem centrada, que é o que a mão e o inventário esperam de um item
-        float centre = staff ? 1.37f : 0.625f;
-        pose.translate(0.0f, -centre, 0.0f);
-        if (parts.using() >= 0.0f && this.pose != Pose.STILL) this.swing(pose, parts, centre);
+        if (parts.using() >= 0.0f) this.swing(pose, parts, first);
+        if (this.pose.left()) pose.scale(-1.0f, 1.0f, 1.0f);
 
         this.submitModel(pose, collector, parts, light, overlay);
         pose.popPose();
     }
 
+    /**
+     * Da mão da terceira pessoa do jogo novo para a do 1.7.10.
+     *
+     * <p>O novo, depois do braço, faz {@code XP(-90) YP(180) translate(1/16, 2/16, -10/16)}. O antigo, no
+     * {@code RenderPlayer} para item de pé ({@code isFull3D}), fazia {@code translate(-1/16, 7/16, 1/16)},
+     * {@code translate(0, 3/16, 0)}, {@code scale(0.625, -0.625, 0.625)}, {@code XP(-100)} e {@code YP(45)}.
+     */
+    private static final org.joml.Matrix4f THIRD_PERSON_CORRECTION = new org.joml.Matrix4f()
+            .rotateX((float) Math.toRadians(-90.0)).rotateY((float) Math.toRadians(180.0))
+            .translate(1.0f / 16.0f, 2.0f / 16.0f, -10.0f / 16.0f)
+            .invert()
+            .translate(-1.0f / 16.0f, 7.0f / 16.0f, 1.0f / 16.0f)
+            .translate(0.0f, 3.0f / 16.0f, 0.0f)
+            .scale(0.625f, -0.625f, 0.625f)
+            .rotateX((float) Math.toRadians(-100.0))
+            .rotateY((float) Math.toRadians(45.0));
+
+    /**
+     * Da mão da primeira pessoa do jogo novo para a do 1.7.10.
+     *
+     * <p>Os dois começam no mesmo {@code translate(0.56, -0.52, -0.72)} do braço. Parada, o antigo girava
+     * quarenta e cinco graus em Y e encolhia para 0,4 — o novo desfaz esse giro no fim do balanço, então
+     * basta repô-lo. Em uso, os dois aplicam a pose do arco, cada um com os seus números: o novo é
+     * desfeito e o do 1.7.10 ({@code ItemRenderer.renderItemInFirstPerson}, {@code EnumAction.bow}) entra
+     * no lugar.
+     */
+    private static org.joml.Matrix4f firstPersonCorrection(float using) {
+        org.joml.Matrix4f m = new org.joml.Matrix4f();
+        if (using < 0.0f) {
+            return m.rotateY((float) Math.toRadians(45.0)).scale(0.4f);
+        }
+        float held = Math.max(0.0f, using - 1.0f);
+        float power = held / 20.0f;
+        power = Math.min(1.0f, (power * power + power * 2.0f) / 3.0f);
+        float shake = power > 0.1f ? (float) Math.sin((held - 0.1f) * 1.3f) * (power - 0.1f) : 0.0f;
+
+        // o arco do jogo novo, para desfazer
+        org.joml.Matrix4f modern = new org.joml.Matrix4f()
+                .translate(-0.2785682f, 0.18344387f, 0.15731531f)
+                .rotateX((float) Math.toRadians(-13.935))
+                .rotateY((float) Math.toRadians(35.3))
+                .rotateZ((float) Math.toRadians(-9.785))
+                .translate(0.0f, shake * 0.004f, 0.0f)
+                .translate(0.0f, 0.0f, power * 0.04f)
+                .scale(1.0f, 1.0f, 1.0f + power * 0.2f)
+                .rotateY((float) Math.toRadians(-45.0));
+        m.set(modern).invert();
+        // e o do 1.7.10
+        m.rotateY((float) Math.toRadians(45.0)).scale(0.4f)
+                .rotateZ((float) Math.toRadians(-18.0))
+                .rotateY((float) Math.toRadians(-12.0))
+                .rotateX((float) Math.toRadians(-8.0))
+                .translate(-0.9f, 0.2f, 0.0f)
+                .translate(0.0f, shake * 0.01f, 0.0f)
+                .translate(0.0f, 0.0f, power * 0.1f)
+                .rotateZ((float) Math.toRadians(-335.0))
+                .rotateY((float) Math.toRadians(-50.0))
+                .translate(0.0f, 0.5f, 0.0f)
+                .scale(1.0f, 1.0f, 1.0f + power * 0.2f)
+                .translate(0.0f, -0.5f, 0.0f)
+                .rotateY((float) Math.toRadians(50.0))
+                .rotateZ((float) Math.toRadians(335.0));
+        return m;
+    }
+
     /** O movimento do uso, o trecho com {@code getItemInUseDuration} do {@code ItemWandRenderer}. */
-    private void swing(PoseStack pose, Parts parts, float centre) {
+    private void swing(PoseStack pose, Parts parts, boolean first) {
         float t = Math.min(3.0f, parts.using());
-        // o pivô do original fica a um bloco da ponta de cima, na altura da mão; aqui a varinha já veio
-        // centrada, então a conta desconta o que o centro andou
-        pose.translate(0.0f, 1.0f - centre, 0.0f);
-        if (this.pose == Pose.FIRST) {
+        // o pivô do original fica a um bloco da ponta de cima, na altura da mão
+        pose.translate(0.0f, 1.0f, 0.0f);
+        if (first) {
             pose.mulPose(Axis.XP.rotationDegrees(10.0f));
             pose.mulPose(Axis.ZP.rotationDegrees(10.0f));
         } else {
@@ -134,7 +225,7 @@ public class WandRenderer implements SpecialModelRenderer<WandRenderer.Parts> {
             pose.mulPose(Axis.ZP.rotationDegrees((float) Math.sin(parts.using() / 0.8f)));
             pose.mulPose(Axis.XP.rotationDegrees((float) Math.sin(parts.using() / 0.7f)));
         }
-        pose.translate(0.0f, -(1.0f - centre), 0.0f);
+        pose.translate(0.0f, -1.0f, 0.0f);
     }
 
     /** O {@code ModelWand.render}, operação por operação. */

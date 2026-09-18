@@ -1015,5 +1015,6 @@
   "tc.scan.missing": "Você olha para %s, mas falta entender %s primeiro.",
   "tc.scan.new": "%s estudado. Aspectos novos: %s",
   "tc.scan.nothing": "Não há nada aqui que valha estudar.",
-  "tc.tooltip.unknown": "e mais %s aspecto(s) que você ainda não conhece"
+  "tc.tooltip.unknown": "e mais %s aspecto(s) que você ainda não conhece",
+  "tc.workbench.insufficient": "Vis insuficiente"
 }

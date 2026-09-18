@@ -201,8 +201,9 @@ public class WandItem extends Item {
 
     @Override
     public net.minecraft.world.item.ItemUseAnimation getUseAnimation(ItemStack stack) {
-        // a varinha não se leva à boca nem se ergue: ela só aponta, como no original
-        return net.minecraft.world.item.ItemUseAnimation.NONE;
+        // o original usa a pose do arco (EnumAction.bow): em primeira pessoa a varinha vem para o meio da
+        // tela, e de fora os dois braços se erguem apontando para a frente
+        return net.minecraft.world.item.ItemUseAnimation.BOW;
     }
 
     @Override

@@ -4,10 +4,7 @@
     "property": "minecraft:display_context",
     "cases": [
       {
-        "when": [
-          "firstperson_righthand",
-          "firstperson_lefthand"
-        ],
+        "when": "firstperson_righthand",
         "model": {
           "type": "minecraft:special",
           "base": "thaumcraft:item/staff",
@@ -18,16 +15,35 @@
         }
       },
       {
-        "when": [
-          "thirdperson_righthand",
-          "thirdperson_lefthand"
-        ],
+        "when": "firstperson_lefthand",
+        "model": {
+          "type": "minecraft:special",
+          "base": "thaumcraft:item/staff",
+          "model": {
+            "type": "thaumcraft:wand",
+            "pose": "first_left"
+          }
+        }
+      },
+      {
+        "when": "thirdperson_righthand",
         "model": {
           "type": "minecraft:special",
           "base": "thaumcraft:item/staff",
           "model": {
             "type": "thaumcraft:wand",
             "pose": "third"
+          }
+        }
+      },
+      {
+        "when": "thirdperson_lefthand",
+        "model": {
+          "type": "minecraft:special",
+          "base": "thaumcraft:item/staff",
+          "model": {
+            "type": "thaumcraft:wand",
+            "pose": "third_left"
           }
         }
       }

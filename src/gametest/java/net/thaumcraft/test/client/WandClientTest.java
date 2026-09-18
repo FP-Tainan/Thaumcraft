@@ -37,6 +37,14 @@ public class WandClientTest implements FabricClientGameTest {
             });
             context.waitTicks(60);
             context.takeScreenshot("varinha_bebendo");
+            // e de fora, com os braços erguidos como no arco
+            context.runOnClient(minecraft ->
+                    minecraft.options.setCameraType(net.minecraft.client.CameraType.THIRD_PERSON_BACK));
+            context.waitTicks(10);
+            context.takeScreenshot("varinha_bebendo_fora");
+            context.runOnClient(minecraft ->
+                    minecraft.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON));
+            context.waitTicks(5);
             context.runOnClient(minecraft -> {
                 minecraft.options.keyUse.setDown(false);
                 minecraft.player.stopUsingItem();
