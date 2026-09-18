@@ -52,8 +52,9 @@ public class AlchemicalFurnaceBlockEntity extends BlockEntity implements Contain
     public static final int MAX_VIS = 50;
     /** Quantos tiques de fogo cada ponto de aspecto custa. */
     private static final int TICKS_PER_POINT = 10;
-    /** De quantos em quantos tiques ele empurra para os alambiques. */
+    /** De quantos em quantos tiques ele empurra para os alambiques; queimando alumentum, o dobro de vezes. */
     private static final int PUSH_EVERY = 40;
+    private static final int PUSH_EVERY_BOOSTED = 20;
     /** Até quantos alambiques empilhados ele alcança. */
     private static final int STACK_REACH = 4;
 
@@ -64,6 +65,8 @@ public class AlchemicalFurnaceBlockEntity extends BlockEntity implements Contain
     private int cookTime;
     private int smeltTime = 100;
     private int count;
+    /** O {@code speedBoost} do original: o fogo de agora veio de alumentum. */
+    private boolean speedBoost;
 
     public AlchemicalFurnaceBlockEntity(BlockPos pos, BlockState state) {
         super(TCBlockEntities.ALCHEMICAL_FURNACE, pos, state);
@@ -87,6 +90,7 @@ public class AlchemicalFurnaceBlockEntity extends BlockEntity implements Contain
                 furnace.burnTime = burn;
                 furnace.burnTimeTotal = burn;
                 dirty = true;
+                furnace.speedBoost = fuel.is(net.thaumcraft.registry.TCItems.ALUMENTUM);
                 fuel.shrink(1);
             }
         }
@@ -119,7 +123,7 @@ public class AlchemicalFurnaceBlockEntity extends BlockEntity implements Contain
      * tudo no de baixo.
      */
     private void pushToAlembics(Level level, BlockPos pos) {
-        if (this.aspects.isEmpty() || this.count % PUSH_EVERY != 0) return;
+        if (this.aspects.isEmpty() || this.count % (this.speedBoost ? PUSH_EVERY_BOOSTED : PUSH_EVERY) != 0) return;
 
         AspectList served = new AspectList();
         for (int up = 1; up <= STACK_REACH; up++) {
@@ -374,6 +378,7 @@ public class AlchemicalFurnaceBlockEntity extends BlockEntity implements Contain
         this.burnTimeTotal = input.getIntOr("burn_total", 0);
         this.cookTime = input.getIntOr("cook", 0);
         this.smeltTime = input.getIntOr("smelt", 100);
+        this.speedBoost = input.getBooleanOr("speedBoost", false);
     }
 
     @Override
@@ -385,6 +390,7 @@ public class AlchemicalFurnaceBlockEntity extends BlockEntity implements Contain
         output.putInt("burn_total", this.burnTimeTotal);
         output.putInt("cook", this.cookTime);
         output.putInt("smelt", this.smeltTime);
+        output.putBoolean("speedBoost", this.speedBoost);
     }
 
     @Override
