@@ -464,3 +464,23 @@ A grande-madeira e o pinheiro-de-prata, com toras, folhas, mudas, tábuas, escad
   parecer estranha, a conferência é sempre contra o jar em `Mod Base/`.
 - Os aspectos das coisas do próprio mod (fragmentos, pedra infundida, plantas, toras, recursos, peças de
   táumio) entraram na tabela, gerados do `ConfigAspects` (`scratchpad/aspectos-mod.js`).
+
+## Os aspectos das coisas, refeitos do jar
+
+A auditoria contra o jar mostrou que a tabela de aspectos das coisas do jogo tinha vindo de uma parte da fonte
+do GitHub que **não existe no jar** — números inventados pelo re-porte para o 1.12. Foi refeita:
+
+- `api/aspects/ConfigAspectsTable` — gerado pelo `scratchpad/aspectos-jar.js` direto do `ConfigAspects` do jar
+  descompilado. Os nomes ofuscados (`Blocks.field_150348_b`) viram nomes de registro pelo mapa SRG montado com o
+  `deobfuscation_data` do Forge 1.7.10 e o `Blocks`/`Items` do jar do 1.7.10 que estão na máquina
+  (`scratchpad/srg/`). O dicionário de minérios virou as marcas de convenção (`c:ores/iron`, `c:dyes`…).
+- `api/aspects/ObjectAspects` — o `generateTags` do `ThaumcraftCraftingManager`: o que não tem anotação é
+  deduzido das receitas (crisol, bancada arcana, infusão e mesa, nessa ordem): três quartos da soma dos
+  ingredientes pelo que a receita rende, mais a raiz do custo mágico, teto 64. O servidor monta a tabela ao
+  abrir e ao recarregar os dados, e a manda para quem entra.
+- `api/aspects/ObjectBonus` — o `getBonusTags`: armadura, arma, ferramenta (pelo nível do material),
+  encantamentos, poções, a varinha e a essência que a coisa carrega; o `cullTags` deixa no máximo seis.
+- **Diferença**: as receitas de hoje não são as de 2014, então o que é deduzido pode sair diferente do que se
+  via no jogo antigo — a conta é a mesma, as receitas é que mudaram. O original também guardava o resultado
+  da primeira receita achada; a ordem das receitas de hoje é outra.
+- O `fatia3-tabela.js` (a tabela antiga) ficou obsoleto.

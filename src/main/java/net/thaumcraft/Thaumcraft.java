@@ -35,13 +35,11 @@ public class Thaumcraft implements ModInitializer {
     @Override
     public void onInitialize() {
         Aspects.init();
-        ObjectAspects.init();
         Knowledges.init();
         TCBlocks.init();
         TCBlockEntities.init();
         TCComponents.init();
         TCItems.init();
-        ObjectAspects.initMod();
         net.thaumcraft.api.golems.GolemTypes.init();
         TCEntities.init();
         TCSounds.init();
@@ -60,6 +58,14 @@ public class Thaumcraft implements ModInitializer {
         // as pesquisas que o original marca para vir abertas chegam com quem entra no mundo
         net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register(
                 (handler, sender, server) -> ResearchManager.grantStarters(handler.getPlayer()));
-        LOGGER.info("{} aspectos e {} coisas anotadas", Aspects.count(), ObjectAspects.size());
+        // de que cada coisa é feita: a tabela se monta com as receitas do servidor, e vai para quem entra
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(ObjectAspects::rebuild);
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, resources, success) -> {
+            ObjectAspects.rebuild(server);
+            for (var player : server.getPlayerList().getPlayers()) TCNetwork.syncAspects(player);
+        });
+        net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register(
+                (handler, sender, server) -> TCNetwork.syncAspects(handler.getPlayer()));
+        LOGGER.info("{} aspectos", Aspects.count());
     }
 }

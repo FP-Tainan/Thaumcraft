@@ -75,6 +75,13 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o buraco do Buraco Portátil: as paredes de estrelas e as faíscas das quinas
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.HOLE, net.thaumcraft.client.render.HoleRenderer::new);
+        // a tabela de aspectos que o servidor montou; no jogo de um jogador só, o servidor é esta mesma máquina
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.ObjectAspectsSync.TYPE, (payload, context) -> context.client().execute(() -> {
+                    if (!context.client().hasSingleplayerServer()) {
+                        net.thaumcraft.api.aspects.ObjectAspects.accept(payload.table());
+                    }
+                }));
         // o bloco protegido, com o bloco guardado e as runas do foco de Proteção; e o escudo que acende na batida
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.WARDED, net.thaumcraft.client.render.WardedRenderer::new);

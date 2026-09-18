@@ -41,6 +41,28 @@ public final class TCNetwork {
         }
     }
 
+    /** Do servidor para quem entra: a tabela de aspectos das coisas, que o servidor monta com as receitas. */
+    public record ObjectAspectsSync(java.util.Map<net.minecraft.world.item.Item, net.thaumcraft.api.aspects.AspectList> table)
+            implements CustomPacketPayload {
+        public static final Type<ObjectAspectsSync> TYPE = new Type<>(Thaumcraft.id("object_aspects"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, ObjectAspectsSync> CODEC = StreamCodec.composite(
+                ByteBufCodecs.map(java.util.HashMap::new,
+                        ByteBufCodecs.registry(net.minecraft.core.registries.Registries.ITEM),
+                        net.thaumcraft.api.aspects.AspectList.STREAM_CODEC),
+                ObjectAspectsSync::table,
+                ObjectAspectsSync::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    /** Manda a tabela de aspectos a um jogador. */
+    public static void syncAspects(ServerPlayer player) {
+        ServerPlayNetworking.send(player, new ObjectAspectsSync(net.thaumcraft.api.aspects.ObjectAspects.snapshot()));
+    }
+
     /** Do servidor para quem está perto: estrelinhas em volta de um bloco, o {@code PacketFXBlockSparkle}. */
     public record BlockSparkle(net.minecraft.core.BlockPos pos, int colour) implements CustomPacketPayload {
         public static final Type<BlockSparkle> TYPE = new Type<>(Thaumcraft.id("block_sparkle"));
@@ -69,6 +91,7 @@ public final class TCNetwork {
         ResearchTablePayloads.init();
         PayloadTypeRegistry.clientboundPlay().register(ScanSummary.TYPE, ScanSummary.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockSparkle.TYPE, BlockSparkle.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(ObjectAspectsSync.TYPE, ObjectAspectsSync.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela
         ServerPlayNetworking.registerGlobalReceiver(ResearchRequest.TYPE, (payload, context) ->

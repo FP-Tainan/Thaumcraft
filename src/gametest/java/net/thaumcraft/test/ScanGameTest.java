@@ -27,12 +27,29 @@ public class ScanGameTest {
         if (!ObjectAspects.missing().isEmpty()) {
             helper.fail("o jogo de hoje não tem: " + String.join(", ", ObjectAspects.missing()));
         }
-        // duas conferidas na mão contra o ConfigAspects da 4.2.3.5
+        // conferidas na mão contra o ConfigAspects do jar da 4.2.3.5 (não o da fonte do GitHub, que inventava)
         AspectList stone = ObjectAspects.of(new ItemStack(Blocks.STONE));
         if (stone.getAmount(Aspects.EARTH) != 2) helper.fail("pedra devia ter terra 2");
         AspectList ironOre = ObjectAspects.of(new ItemStack(Blocks.IRON_ORE));
-        if (ironOre.getAmount(Aspects.METAL) != 3 || ironOre.getAmount(Aspects.EARTH) != 2) {
-            helper.fail("minério de ferro devia ter terra 2 e metal 3");
+        if (ironOre.getAmount(Aspects.METAL) != 3 || ironOre.getAmount(Aspects.EARTH) != 1) {
+            helper.fail("minério de ferro devia ter terra 1 e metal 3, tem " + ironOre);
+        }
+        AspectList cobble = ObjectAspects.of(new ItemStack(Blocks.COBBLESTONE));
+        if (cobble.getAmount(Aspects.EARTH) != 1 || cobble.getAmount(Aspects.ENTROPY) != 1) {
+            helper.fail("pedregulho devia ter terra 1 e perditio 1, tem " + cobble);
+        }
+        helper.succeed();
+    }
+
+    /**
+     * O que não tem anotação sai das receitas, como no {@code generateTags}: a picareta de ferro são três
+     * lingotes (metal 4 cada) e dois gravetos (arbor 1 cada), três quartos disso, e o bônus de picareta de ferro.
+     */
+    @GameTest
+    public void unlistedThingsComeFromTheirRecipes(GameTestHelper helper) {
+        AspectList pick = ObjectAspects.of(new ItemStack(net.minecraft.world.item.Items.IRON_PICKAXE));
+        if (pick.getAmount(Aspects.METAL) != 9 || pick.getAmount(Aspects.TREE) != 1 || pick.getAmount(Aspects.MINE) != 3) {
+            helper.fail("picareta de ferro devia ter metal 9, arbor 1 e perfodio 3, tem " + pick);
         }
         helper.succeed();
     }
