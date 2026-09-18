@@ -17,23 +17,26 @@ import net.thaumcraft.block.TubeValveBlock;
 import net.thaumcraft.block.entity.TubeValveBlockEntity;
 
 /**
- * O manípulo da válvula.
+ * A roda de registro da válvula. É o {@code TileTubeValveRenderer} da 4.2.3.5, descompilado.
  *
- * <p>É a única peça dela que não cabe num arquivo de modelo: ele <strong>gira</strong> ao abrir e fechar,
- * e ao mesmo tempo rosqueia para dentro, como manípulo de registro de verdade. São as duas coisas juntas
- * que dizem, de longe, se aquela válvula está aberta — no original é assim que se lê uma tubulação sem
- * ter de bater em cada peça.
+ * <p>Ela tem duas peças. A haste é a única caixa do {@code ModelTubeValve}: dois por dois por dois,
+ * saindo do meio do cano. E a roda é a própria textura {@code pipe_valve} — as pegas de latão em volta
+ * de um cubo escuro — desenhada como o jogo desenha um item na mão: a figura chata com um ponto de
+ * espessura, deitada por cima da haste, com meio bloco de largura.
  *
- * <p>A caixa é a do {@code ModelTubeValve}: dois por dois por dois, saindo do canto {@code (0, 10)} de
- * uma folha de sessenta e quatro por trinta e dois, que é o {@code models/valve.png} do próprio mod.
+ * <p>Fechando, a roda dá uma volta e meia e afunda doze centésimos de bloco, como registro de verdade
+ * rosqueando. São as duas coisas juntas que dizem de longe se aquela válvula está aberta.
  */
 public class TubeValveRenderer implements BlockEntityRenderer<TubeValveBlockEntity, TubeValveRenderer.State> {
-    private static final Identifier TEXTURE = Thaumcraft.id("textures/models/valve.png");
+    private static final Identifier ROD_TEXTURE = Thaumcraft.id("textures/models/valve.png");
+    private static final Identifier WHEEL_TEXTURE = Thaumcraft.id("textures/block/pipe_valve.png");
 
-    /** O manípulo, nas medidas do modelo original. */
-    private static final float[] KNOB = BoxMesh.box(-1.0f, 2.0f, -1.0f, 2.0f, 2.0f, 2.0f, 0.0f, 10.0f, 64.0f, 32.0f);
+    /** A haste, nas medidas do modelo original. */
+    private static final float[] ROD = BoxMesh.box(-1.0f, 2.0f, -1.0f, 2.0f, 2.0f, 2.0f, 0.0f, 10.0f, 64.0f, 32.0f);
     /** Do tamanho do modelo para o do bloco. */
     private static final float UNIT = 1.0f / 16.0f;
+    /** Quantos pontos a figura da roda tem de lado. */
+    private static final int WHEEL_PIXELS = 16;
 
     /** O que o desenhista precisa saber da válvula neste quadro. */
     public static class State extends BlockEntityRenderState {
@@ -61,20 +64,33 @@ public class TubeValveRenderer implements BlockEntityRenderer<TubeValveBlockEnti
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
-        float closed = state.rotation / TubeValveBlockEntity.TURN;
+        int light = state.lightCoords;
 
         pose.pushPose();
         pose.translate(0.5f, 0.5f, 0.5f);
-        // o manípulo é desenhado apontando para cima; daqui ele vai para o lado do bloco
+        // a roda é desenhada apontando para cima; daqui ela vai para o lado do manípulo
         pose.mulPose(upTowards(state.facing));
-        // fechando, ele rosqueia para dentro enquanto gira
-        pose.translate(0.0f, -closed * TubeValveBlockEntity.SCREW, 0.0f);
-        pose.mulPose(Axis.YP.rotationDegrees(state.rotation));
-        pose.scale(UNIT, UNIT, UNIT);
+        // fechando, uma volta e meia e doze centésimos para dentro
+        pose.mulPose(Axis.YP.rotationDegrees(-state.rotation * 1.5f));
+        pose.translate(0.0f, -(state.rotation / TubeValveBlockEntity.CLOSED) * 0.12f, 0.0f);
 
-        int light = state.lightCoords;
-        collector.submitCustomGeometry(pose, RenderTypes.entityCutout(TEXTURE), (matrix, consumer) ->
-                MeshDrawer.draw(KNOB, matrix, consumer, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF));
+        // a haste
+        pose.pushPose();
+        pose.scale(UNIT, UNIT, UNIT);
+        collector.submitCustomGeometry(pose, RenderTypes.entityCutout(ROD_TEXTURE), (matrix, consumer) ->
+                MeshDrawer.draw(ROD, matrix, consumer, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF));
+        pose.popPose();
+
+        // e a roda: a figura deitada, meio bloco de largura, por cima da haste
+        pose.pushPose();
+        pose.mulPose(Axis.XP.rotationDegrees(90.0f));
+        pose.translate(-0.25f, -0.25f, -0.25f);
+        pose.scale(0.5f, 0.5f, 0.5f);
+        collector.submitCustomGeometry(pose, RenderTypes.entityCutout(WHEEL_TEXTURE), (matrix, consumer) ->
+                ExtrudedSprite.draw(matrix, consumer, WHEEL_PIXELS, 0.1f, light, OverlayTexture.NO_OVERLAY,
+                        0xFFFFFFFF));
+        pose.popPose();
+
         pose.popPose();
     }
 

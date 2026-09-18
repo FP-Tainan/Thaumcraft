@@ -83,6 +83,13 @@
       "thaumcraft:spill"
     ]
   },
+  "squeek": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:squeek1",
+      "thaumcraft:squeek2"
+    ]
+  },
   "tool": {
     "category": "player",
     "sounds": [

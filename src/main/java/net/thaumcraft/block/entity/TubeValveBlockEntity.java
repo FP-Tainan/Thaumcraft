@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.thaumcraft.api.aspects.Aspect;
+import net.thaumcraft.api.aspects.EssentiaTransport;
 import net.thaumcraft.api.wands.Wandable;
 import net.thaumcraft.block.TubeValveBlock;
 import net.thaumcraft.registry.TCBlockEntities;
@@ -17,31 +18,29 @@ import net.thaumcraft.registry.TCSounds;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * A válvula: o tubo que se fecha.
+ * A válvula: o tubo que se fecha. É o {@code TileTubeValve} da 4.2.3.5, descompilado.
  *
- * <p>É um tubo comum com um manípulo de lado. Bater nele com a varinha abre ou fecha a passagem, e um
- * sinal de redstone faz o mesmo — o original vira a chave a cada vez que o sinal <em>liga</em>, não
- * enquanto ele está ligado, de modo que um botão serve de interruptor.
+ * <p>Ela se abre e se fecha <strong>com a mão</strong> — clicando nela com qualquer coisa que não seja
+ * varinha nem cano — e com redstone: o sinal ligando fecha, o sinal desligando abre. Ou seja, uma
+ * alavanca do lado manda nela diretamente. As duas coisas guincham ({@code squeek}).
  *
- * <p>Fechada, ela não tem sucção nenhuma e não deixa passar nada. E é aí que a tubulação começa a
- * reclamar: a essência que estava a caminho fica sem para onde ir e o tubo atrás dela sangra, cuspindo
- * fumaça na cor do aspecto. Isso não é defeito, é o aviso do original de que a instalação foi mal
- * pensada.
+ * <p>A varinha faz outra coisa: gira o manípulo para o próximo lado livre, sem cano encostado. É assim que
+ * se ajeita a válvula depois de posta.
  *
- * <p>O lado onde o manípulo fica nunca conecta — é o {@code facing} do original, e é por isso que a
- * válvula se põe apontando para fora do encanamento.
+ * <p>Fechada, ela continua encaixada nos canos, mas não tem sucção nenhuma e não deixa passar nada. E é aí que a tubulação reclama: a
+ * essência que vinha a caminho fica sem para onde ir e o tubo atrás sangra, cuspindo vapor na cor do
+ * aspecto. O lado do manípulo nunca conecta.
  */
 public class TubeValveBlockEntity extends TubeBlockEntity implements Wandable {
-    /** Quantos graus o manípulo gira entre aberto e fechado. */
-    public static final float TURN = 270.0f;
-    /** O quanto ele rosqueia para dentro ao fechar, em blocos. */
-    public static final float SCREW = 0.12f;
-    /** O quanto do giro ele vence por tique. */
-    private static final float TURN_SPEED = 22.5f;
+    /** Até onde o manípulo vai: fechado ele está em trezentos e sessenta. */
+    public static final float CLOSED = 360.0f;
+    /** Quanto ele anda por tique, no original. */
+    private static final float TURN_SPEED = 20.0f;
 
     private boolean allowFlow = true;
     private boolean wasPowered;
-    /** Onde o manípulo está agora, entre zero e {@link #TURN}. Só serve para desenhar. */
+    private int count;
+    /** Onde o manípulo está agora, de zero a {@link #CLOSED}. Só o lado de quem desenha anda isto. */
     private float rotation;
 
     public TubeValveBlockEntity(BlockPos pos, BlockState state) {
@@ -49,17 +48,17 @@ public class TubeValveBlockEntity extends TubeBlockEntity implements Wandable {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, TubeValveBlockEntity valve) {
-        // o manípulo caminha até onde devia estar, em vez de saltar
-        float wanted = valve.allowFlow ? 0.0f : TURN;
-        if (valve.rotation != wanted) {
-            float step = Math.signum(wanted - valve.rotation) * TURN_SPEED;
-            valve.rotation = Math.abs(wanted - valve.rotation) <= TURN_SPEED ? wanted : valve.rotation + step;
-        }
-        if (!level.isClientSide()) {
-            // a chave vira quando o sinal liga, não enquanto ele fica ligado: assim um botão serve
+        if (!level.isClientSide() && valve.count++ % 5 == 0) {
+            // a redstone manda pelo nível: ligou, fecha; desligou, abre
             boolean powered = level.hasNeighborSignal(pos);
-            if (powered && !valve.wasPowered) valve.setFlow(level, pos, !valve.allowFlow);
+            if (valve.wasPowered && !powered && !valve.allowFlow) valve.setFlow(level, pos, true);
+            if (!valve.wasPowered && powered && valve.allowFlow) valve.setFlow(level, pos, false);
             valve.wasPowered = powered;
+        }
+        if (level.isClientSide()) {
+            // o manípulo vai girando até onde devia estar, vinte graus por tique
+            if (!valve.allowFlow && valve.rotation < CLOSED) valve.rotation += TURN_SPEED;
+            else if (valve.allowFlow && valve.rotation > 0.0f) valve.rotation -= TURN_SPEED;
         }
         TubeBlockEntity.tick(level, pos, state, valve);
     }
@@ -81,11 +80,30 @@ public class TubeValveBlockEntity extends TubeBlockEntity implements Wandable {
         return this.rotation;
     }
 
+    /** O clique com a mão: abre ou fecha. */
+    public void toggleByHand(Level level, BlockPos pos) {
+        this.setFlow(level, pos, !this.allowFlow);
+    }
+
+    /**
+     * A varinha gira o manípulo para o próximo lado livre.
+     *
+     * <p>O original anda os seis lados a partir do atual, na ordem de baixo, cima, norte, sul, oeste e
+     * leste, e para no primeiro que não tem nada de encanar encostado.
+     */
     @Override
     public boolean onWand(Level level, ItemStack wand, Player player, BlockPos pos, Direction face) {
         if (level.isClientSide()) return true;
-        this.setFlow(level, pos, !this.allowFlow);
-        player.swing(player.getUsedItemHand());
+        Direction current = this.facing();
+        for (int step = 1; step <= 6; step++) {
+            Direction next = Direction.from3DDataValue((current.get3DDataValue() + step) % 6);
+            if (level.getBlockEntity(pos.relative(next)) instanceof EssentiaTransport) continue;
+            level.setBlock(pos, this.getBlockState().setValue(TubeValveBlock.FACING, next), 3);
+            level.playSound(null, pos, TCSounds.TOOL.value(), SoundSource.BLOCKS,
+                    0.5f, 0.9f + level.getRandom().nextFloat() * 0.2f);
+            player.swing(player.getUsedItemHand());
+            break;
+        }
         return true;
     }
 
@@ -94,15 +112,26 @@ public class TubeValveBlockEntity extends TubeBlockEntity implements Wandable {
         this.allowFlow = allow;
         // fechada, ela solta o que estava puxando; senão o resto do encanamento continuaria a lhe mandar
         if (!allow) this.setSuction(null, 0);
-        level.playSound(null, pos, TCSounds.TOOL.value(), SoundSource.BLOCKS,
-                0.5f, 0.9f + level.getRandom().nextFloat() * 0.2f);
+        level.playSound(null, pos, TCSounds.SQUEEK.value(), SoundSource.BLOCKS,
+                0.7f, 0.9f + level.getRandom().nextFloat() * 0.2f);
         this.sync();
     }
 
     @Override
     public boolean isConnectable(Direction face) {
-        // o lado do manípulo nunca conecta, e fechada ela não conecta com ninguém
-        return this.allowFlow && face != this.facing() && super.isConnectable(face);
+        // o lado do manípulo nunca conecta. Fechada ela continua encaixada nos canos -- o original não
+        // solta os braços, só para a passagem
+        return face != this.facing() && super.isConnectable(face);
+    }
+
+    @Override
+    public int takeEssentia(Aspect wanted, int requested, Direction face) {
+        return this.allowFlow ? super.takeEssentia(wanted, requested, face) : 0;
+    }
+
+    @Override
+    public int addEssentia(Aspect wanted, int requested, Direction face) {
+        return this.allowFlow ? super.addEssentia(wanted, requested, face) : 0;
     }
 
     @Override
@@ -114,7 +143,9 @@ public class TubeValveBlockEntity extends TubeBlockEntity implements Wandable {
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         this.allowFlow = input.getBooleanOr("flow", true);
-        this.rotation = this.allowFlow ? 0.0f : TURN;
+        // quando o bloco chega do disco o manípulo já nasce no lugar; quando é só um aviso de mudança,
+        // ele fica onde está e o tique o leva até lá girando
+        if (this.level == null) this.rotation = this.allowFlow ? 0.0f : CLOSED;
     }
 
     @Override

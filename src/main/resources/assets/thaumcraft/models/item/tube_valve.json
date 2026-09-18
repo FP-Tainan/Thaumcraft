@@ -3,7 +3,7 @@
   "textures": {
     "particle": "thaumcraft:block/pipe_1",
     "corpo": "thaumcraft:block/pipe_1",
-    "junta": "thaumcraft:block/pipe_valve",
+    "junta": "thaumcraft:block/pipe_2",
     "meio": "thaumcraft:block/pipe_3"
   },
   "elements": [
