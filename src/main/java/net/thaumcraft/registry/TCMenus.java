@@ -13,6 +13,10 @@ public final class TCMenus {
             BuiltInRegistries.MENU, Thaumcraft.id("arcane_workbench"),
             new MenuType<>(ArcaneWorkbenchMenu::new, FeatureFlags.VANILLA_SET));
 
+    public static final MenuType<net.thaumcraft.inventory.FocusPouchMenu> FOCUS_POUCH =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("focus_pouch"),
+                    new MenuType<>(net.thaumcraft.inventory.FocusPouchMenu::new, FeatureFlags.VANILLA_SET));
+
     public static final MenuType<net.thaumcraft.inventory.DeconstructionTableMenu> DECONSTRUCTION_TABLE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("deconstruction_table"),
                     new MenuType<>(net.thaumcraft.inventory.DeconstructionTableMenu::new, FeatureFlags.VANILLA_SET));

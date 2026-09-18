@@ -117,7 +117,7 @@ public final class WandHud {
                 pose.rotate((float) Math.toRadians(-90.0f));
                 graphics.text(minecraft.font, Integer.toString(amount / WandItem.VIS_UNIT), -32, -4, 0xFFFFFFFF);
                 if (focus != null && focus.cost().getAmount(aspect) > 0) {
-                    float each = focus.cost().getAmount(aspect) * cap.discount(aspect) / 100.0f;
+                    float each = focus.cost().getAmount(aspect) * WandItem.modifier(stack, player, aspect) / 100.0f;
                     graphics.text(minecraft.font, new java.text.DecimalFormat("#######.##").format(each),
                             8, -4, 0xFFFFFFFF);
                 }

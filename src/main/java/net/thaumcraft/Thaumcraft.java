@@ -51,6 +51,7 @@ public class Thaumcraft implements ModInitializer {
         // a fila de trocas do foco de Troca Equivalente, e o golpe da varinha que troca um bloco só
         net.thaumcraft.item.Swapper.init();
         net.thaumcraft.event.FortressMasks.init();
+        net.thaumcraft.item.FocusSwap.init();
         net.fabricmc.fabric.api.event.player.AttackBlockCallback.EVENT.register(net.thaumcraft.item.Focuses::tradeSwing);
 
         // o comando de teste, para destrancar a pesquisa sem ter de jogar tudo de novo

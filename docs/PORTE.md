@@ -643,3 +643,20 @@ A mesma auditoria achou, nas receitas geradas:
   metadado e os corantes de cor pela coleção `Items.DYE` do 26.2.
 - "Elmo/Couraça/Coxotes de Fortaleza de Táumio" e os nomes das máscaras foram traduzidos aqui; o pt_BR do original
   não os tinha.
+
+## Equipamentos, parte 3: tecla de trocar foco, menu radial e bolsa de focos (2026-09-18)
+
+- **Mudança de comportamento:** o foco não se encaixa mais clicando com ele na mão (isso tinha sido inventado).
+  Agora é como no original: a tecla F (`key.thaumcraft.focus`) com a varinha na mão abre o **menu radial**; agachado,
+  F tira o foco preso. `client/FocusRadial` é o `KeyHandler` + `REHWandHandler.handleFociRadial`: as duas rodas
+  (`radial.png`/`radial2.png`) girando em sentidos opostos com meia opacidade, o foco preso no centro, os outros em
+  círculo pela chave de ordenação (`FocusItem.sortKey`, as letras do `getSortingHelper` de cada foco), o que o mouse
+  toca crescendo até 1,3; soltar a tecla ou clicar escolhe.
+- **Diferença:** no 1.7 o menu só soltava o mouse; no 26.2 um clique com o mouse solto e sem tela o prende de novo,
+  então o menu vive numa tela transparente enquanto F está apertada (o encolher final continua pelo mostrador).
+- `item/FocusSwap` — o `WandManager.changeFocus` + `PacketFocusChangeToServer`: junta os focos do inventário e das
+  bolsas, pega o pedido (ou o próximo, ou o primeiro), devolve o antigo para a primeira bolsa com espaço ou para o
+  inventário, com o som `camera_ticks`. Já tem o gancho para as bolsas vestidas (`extraPouches`).
+- `FocusPouchItem` + `FocusPouchMenu` + `FocusPouchScreen` — 18 casas só de foco (6 por fileira), a casa da bolsa
+  travada, o conteúdo salvo ao fechar, a tela `gui_focuspouch.png` sem rótulos.
+- O mostrador da varinha agora mostra o custo do foco com o desconto dos equipamentos.

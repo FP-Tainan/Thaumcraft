@@ -128,6 +128,10 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.ESSENTIA_CRYSTALIZER, net.thaumcraft.client.render.EssentiaCrystalizerRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essentia_crystalizer"), net.thaumcraft.client.render.EssentiaCrystalizerRenderer.Unbaked.CODEC);
         net.thaumcraft.client.render.AspectTint.register();
+        // a tecla de trocar foco, com o menu radial, e a tela da bolsa de focos
+        net.thaumcraft.client.FocusRadial.init();
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.FOCUS_POUCH,
+                net.thaumcraft.client.gui.FocusPouchScreen::new);
         // as botas do viajante: o empurrão de quem anda é do lado de quem joga
         net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.END_CLIENT_TICK.register(client -> {
             var player = client.player;

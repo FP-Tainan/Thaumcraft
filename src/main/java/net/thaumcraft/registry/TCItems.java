@@ -106,6 +106,10 @@ public final class TCItems {
             new net.thaumcraft.item.GogglesItem(properties.humanoidArmor(net.thaumcraft.item.TCMaterials.GOGGLES,
                     net.minecraft.world.item.equipment.ArmorType.HELMET).rarity(net.minecraft.world.item.Rarity.RARE)));
 
+    /** A bolsa de focos: dezoito focos, e a tecla de trocar foco procura dentro dela. */
+    public static final Item FOCUS_POUCH = register("focus_pouch", properties ->
+            new net.thaumcraft.item.FocusPouchItem(properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
+
     /** Os mantos do taumaturgo: pouca proteção, tingíveis, e um pouco de desconto de vis. */
     public static final Item ROBE_CHESTPLATE = robe("robe_chestplate", net.minecraft.world.item.equipment.ArmorType.CHESTPLATE);
     public static final Item ROBE_LEGGINGS = robe("robe_leggings", net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
@@ -470,7 +474,7 @@ public final class TCItems {
      */
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "traveller_boots", "fortress_helmet", "fortress_chestplate", "fortress_leggings",
-            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal", "focus_pouch",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
             "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",

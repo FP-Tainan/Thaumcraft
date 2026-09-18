@@ -15,9 +15,8 @@ import net.thaumcraft.registry.TCComponents;
 /**
  * Um foco de varinha: a peça que diz o que a varinha faz quando se aperta o botão.
  *
- * <p>No original o foco entra numa casa da própria varinha, alcançada por uma tecla. Aqui ele se encaixa
- * com um clique: com o foco na mão, um toque procura a varinha no inventário e prende o foco nela;
- * agachado, solta o que estiver preso.
+ * <p>Como no original, o foco entra e sai da varinha pela tecla de trocar foco (F): segurando, abre o menu
+ * radial com os focos do inventário e das bolsas; agachado, a tecla tira o foco preso.
  *
  * @param type o que este foco faz, pelo nome que o original dá a ele
  */
@@ -52,32 +51,24 @@ public class FocusItem extends Item {
         return this.cost.copy();
     }
 
-    @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        ItemStack focus = player.getItemInHand(hand);
-        // agachado, solta o foco que estiver preso na varinha
-        if (player.isShiftKeyDown()) return InteractionResult.PASS;
-
-        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
-            ItemStack found = player.getInventory().getItem(slot);
-            if (!(found.getItem() instanceof WandItem)) continue;
-            if (level.isClientSide()) return InteractionResult.SUCCESS;
-
-            // o que já estava preso volta para a mão de quem trocou
-            String had = found.get(TCComponents.WAND_FOCUS);
-            found.set(TCComponents.WAND_FOCUS, this.type);
-            focus.shrink(1);
-            if (had != null) {
-                Item old = Focuses.byType(had);
-                if (old != null && !player.getInventory().add(new ItemStack(old))) {
-                    player.drop(new ItemStack(old), false);
-                }
-            }
-            level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_PLACE,
-                    SoundSource.PLAYERS, 0.6f, 1.4f);
-            return InteractionResult.SUCCESS;
-        }
-        return InteractionResult.PASS;
+    /**
+     * O {@code getSortingHelper} do original: a ordem em que o foco aparece no menu radial e em que a tecla passa
+     * de um para outro. Cada foco tem as suas letras; as melhorias, quando existirem, entram depois delas.
+     */
+    public String sortKey() {
+        return switch (this.type) {
+            case "fire" -> "AF";
+            case "excavation" -> "BE";
+            case "frost" -> "BF";
+            case "shock" -> "BL";
+            case "portable_hole" -> "BPH";
+            case "trade" -> "BT";
+            case "warding" -> "BWA";
+            case "primal" -> "FP";
+            case "hellbat" -> "HH";
+            case "pech" -> "PP";
+            default -> this.type;
+        };
     }
 
     @Override

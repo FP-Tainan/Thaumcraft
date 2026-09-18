@@ -46,4 +46,32 @@ public class EquipmentGameTest {
         if (Math.abs(taken - 2.0f) > 0.01f) helper.fail("a fortaleza completa deixa passar 2 de 10; passou " + taken);
         helper.succeed();
     }
+
+    @GameTest
+    public void theFocusKeySwapsThroughInventoryAndPouch(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        ItemStack wand = new ItemStack(TCItems.WAND);
+        player.getInventory().setItem(0, wand);
+        player.getInventory().setSelectedSlot(0);
+        player.getInventory().setItem(5, new ItemStack(TCItems.FOCI.get("fire")));
+        ItemStack pouch = new ItemStack(TCItems.FOCUS_POUCH);
+        var inside = net.minecraft.core.NonNullList.withSize(18, ItemStack.EMPTY);
+        inside.set(0, new ItemStack(TCItems.FOCI.get("frost")));
+        net.thaumcraft.item.FocusPouchItem.setContents(pouch, inside);
+        player.getInventory().setItem(6, pouch);
+
+        // pedir qualquer coisa antes de "AF" pega o primeiro: o fogo, do inventário
+        net.thaumcraft.item.FocusSwap.change(wand, player, "");
+        if (!"fire".equals(wand.get(net.thaumcraft.registry.TCComponents.WAND_FOCUS))) helper.fail("o primeiro foco é o de fogo");
+        if (!player.getInventory().getItem(5).isEmpty()) helper.fail("o foco de fogo sai do inventário");
+        // pedir o de gelo tira da bolsa, e o de fogo vai para a casa vazia da bolsa
+        net.thaumcraft.item.FocusSwap.change(wand, player, "BF");
+        if (!"frost".equals(wand.get(net.thaumcraft.registry.TCComponents.WAND_FOCUS))) helper.fail("agora o de gelo");
+        var after = net.thaumcraft.item.FocusPouchItem.contents(player.getInventory().getItem(6));
+        if (!after.get(0).is(TCItems.FOCI.get("fire"))) helper.fail("o de fogo volta para a bolsa");
+        // agachado: tira o foco
+        net.thaumcraft.item.FocusSwap.change(wand, player, net.thaumcraft.item.FocusSwap.REMOVE);
+        if (wand.has(net.thaumcraft.registry.TCComponents.WAND_FOCUS)) helper.fail("REMOVE tira o foco");
+        helper.succeed();
+    }
 }
