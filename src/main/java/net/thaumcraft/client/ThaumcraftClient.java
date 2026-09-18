@@ -111,6 +111,10 @@ public class ThaumcraftClient implements ClientModInitializer {
         });
         // o resumo do exame chega do servidor e vai para o canto da tela
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.BlockSparkle.TYPE, (payload, context) -> context.client().execute(() ->
+                        net.thaumcraft.client.fx.GenericFx.blockSparkle(payload.pos().getX(), payload.pos().getY(),
+                                payload.pos().getZ(), payload.colour(), 1)));
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 net.thaumcraft.net.TCNetwork.ScanSummary.TYPE, (payload, context) -> context.client().execute(() -> {
                     java.util.List<net.minecraft.network.chat.Component> linhas = new java.util.ArrayList<>();
                     for (int index = 0; index < payload.tags().size(); index++) {

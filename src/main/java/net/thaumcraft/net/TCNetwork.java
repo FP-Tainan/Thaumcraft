@@ -41,12 +41,34 @@ public final class TCNetwork {
         }
     }
 
+    /** Do servidor para quem está perto: estrelinhas em volta de um bloco, o {@code PacketFXBlockSparkle}. */
+    public record BlockSparkle(net.minecraft.core.BlockPos pos, int colour) implements CustomPacketPayload {
+        public static final Type<BlockSparkle> TYPE = new Type<>(Thaumcraft.id("block_sparkle"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, BlockSparkle> CODEC = StreamCodec.composite(
+                net.minecraft.core.BlockPos.STREAM_CODEC, BlockSparkle::pos,
+                ByteBufCodecs.INT, BlockSparkle::colour,
+                BlockSparkle::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    /** Manda o brilho do bloco a quem estiver a até trinta e dois blocos, como o original. */
+    public static void blockSparkle(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos pos, int colour) {
+        for (ServerPlayer player : level.players()) {
+            if (player.blockPosition().closerThan(pos, 32.0)) ServerPlayNetworking.send(player, new BlockSparkle(pos, colour));
+        }
+    }
+
     private TCNetwork() {
     }
 
     public static void init() {
         ResearchTablePayloads.init();
         PayloadTypeRegistry.clientboundPlay().register(ScanSummary.TYPE, ScanSummary.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(BlockSparkle.TYPE, BlockSparkle.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela
         ServerPlayNetworking.registerGlobalReceiver(ResearchRequest.TYPE, (payload, context) ->

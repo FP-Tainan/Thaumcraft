@@ -137,6 +137,13 @@ public final class TCItems {
                 new net.thaumcraft.api.aspects.AspectList()
                         .add(net.thaumcraft.api.aspects.Aspects.ENTROPY, 10)
                         .add(net.thaumcraft.api.aspects.Aspects.AIR, 10), false)));
+        // o da troca equivalente: perditio, terra e ordo 5 por bloco trocado
+        FOCI.put("trade", register("focus_trade", properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1), "trade",
+                new net.thaumcraft.api.aspects.AspectList()
+                        .add(net.thaumcraft.api.aspects.Aspects.ENTROPY, 5)
+                        .add(net.thaumcraft.api.aspects.Aspects.EARTH, 5)
+                        .add(net.thaumcraft.api.aspects.Aspects.ORDER, 5), false)));
     }
 
     /** A lasca de gelo: não é item de verdade, é só a cara do projétil do foco de gelo. */
@@ -338,7 +345,7 @@ public final class TCItems {
      */
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles",
-            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
             "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",

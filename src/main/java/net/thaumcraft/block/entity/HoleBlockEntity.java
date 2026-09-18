@@ -78,6 +78,8 @@ public class HoleBlockEntity extends BlockEntity {
             hole.setChanged();
             level.sendBlockUpdated(pos, state, hole.getBlockState(), 3);
         }
+        // o brilho roxo do blockSparkle do original, 4194368
+        if (level instanceof net.minecraft.server.level.ServerLevel server) net.thaumcraft.net.TCNetwork.blockSparkle(server, pos, 0x400040);
         return true;
     }
 

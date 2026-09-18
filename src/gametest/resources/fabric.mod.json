@@ -9,6 +9,7 @@
       "net.thaumcraft.test.AlembicModelGameTest",
       "net.thaumcraft.test.AspectGameTest",
       "net.thaumcraft.test.CrucibleGameTest",
+      "net.thaumcraft.test.EqualTradeGameTest",
       "net.thaumcraft.test.EssentiaGameTest",
       "net.thaumcraft.test.FocusGameTest",
       "net.thaumcraft.test.GolemGameTest",

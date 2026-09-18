@@ -99,6 +99,7 @@ public final class Focuses {
             case "frost" -> shootFrost(level, player, wand, focus);
             case "shock" -> shock(level, player, wand, focus);
             case "portable_hole" -> portableHole(level, player, wand, focus);
+            case "trade" -> trade(level, player, wand, focus);
             default -> false;
         };
     }
@@ -206,6 +207,56 @@ public final class Focuses {
         }
         level.playSound(null, start, net.minecraft.sounds.SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0f, 1.0f);
         return true;
+    }
+
+    // ----------------------------------------------------------------- troca equivalente
+
+    /**
+     * O {@code ItemFocusTrade}: agachado, a varinha guarda o bloco da mira; de pé, troca o bloco da mira pelo
+     * guardado, e a troca se espalha por três vizinhos iguais à mostra.
+     */
+    private static boolean trade(Level level, Player player, ItemStack wand, FocusItem focus) {
+        HitResult hit = player.pick(player.blockInteractionRange(), 1.0f, false);
+        if (!(hit instanceof BlockHitResult block) || hit.getType() != HitResult.Type.BLOCK) return true;
+        BlockPos pos = block.getBlockPos();
+        BlockState state = level.getBlockState(pos);
+        if (player.isShiftKeyDown()) {
+            if (level.getBlockEntity(pos) == null && state.getBlock().asItem() != net.minecraft.world.item.Items.AIR) {
+                wand.set(TCComponents.WAND_PICKED,
+                        net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(state.getBlock().asItem()).toString());
+            }
+            return true;
+        }
+        Item picked = picked(wand);
+        if (picked != null && level.getBlockEntity(pos) == null && level instanceof ServerLevel server) {
+            Swapper.add(server, pos, state, picked, 3, player, player.getInventory().getSelectedSlot());
+        }
+        return true;
+    }
+
+    /** O bloco guardado na varinha, se houver. */
+    public static Item picked(ItemStack wand) {
+        String id = wand.get(TCComponents.WAND_PICKED);
+        if (id == null) return null;
+        var found = net.minecraft.core.registries.BuiltInRegistries.ITEM.getOptional(net.minecraft.resources.Identifier.parse(id));
+        return found.orElse(null);
+    }
+
+    /**
+     * O golpe com a varinha de troca, o {@code onEntitySwing} do original: troca só o bloco batido, sem se
+     * espalhar — e a varinha com esse foco não quebra bloco nenhum.
+     */
+    public static net.minecraft.world.InteractionResult tradeSwing(Player player, Level level,
+            net.minecraft.world.InteractionHand hand, BlockPos pos, Direction direction) {
+        ItemStack wand = player.getItemInHand(hand);
+        if (!(wand.getItem() instanceof WandItem)) return net.minecraft.world.InteractionResult.PASS;
+        FocusItem focus = on(wand);
+        if (focus == null || !focus.type().equals("trade")) return net.minecraft.world.InteractionResult.PASS;
+        Item picked = picked(wand);
+        if (picked != null && level instanceof ServerLevel server && level.getBlockEntity(pos) == null) {
+            Swapper.add(server, pos, level.getBlockState(pos), picked, 0, player, player.getInventory().getSelectedSlot());
+        }
+        return net.minecraft.world.InteractionResult.SUCCESS;
     }
 
     // ----------------------------------------------------------------- escavação
