@@ -198,7 +198,7 @@ public final class TCBlocks {
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
                     .noOcclusion()
-                    .lightLevel(state -> 6)
+                    .lightLevel(state -> 10)
                     .sound(SoundType.STONE)));
 
     /** O Nitor: a chama fria que não queima nada e não se apaga. */
@@ -265,7 +265,7 @@ public final class TCBlocks {
                     .noCollision()
                     .noOcclusion()
                     .randomTicks()
-                    .lightLevel(state -> 7)
+                    .lightLevel(state -> 15)
                     .sound(SoundType.GRASS)));
 
     /** A bancada arcana: a mesa que a varinha benzeu. */

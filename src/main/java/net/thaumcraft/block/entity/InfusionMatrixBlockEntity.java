@@ -73,6 +73,9 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
     private final List<ItemStack> owedItems = new ArrayList<>();
     private ItemStack result = ItemStack.EMPTY;
     private ItemStack middle = ItemStack.EMPTY;
+    /** Só de quem vê: quanto a matriz já se ergueu e girou (de 0 a 1), e há quantos tiques a infusão corre. */
+    public float startUp;
+    public int craftCount;
 
     public InfusionMatrixBlockEntity(BlockPos pos, BlockState state) {
         super(TCBlockEntities.INFUSION_MATRIX, pos, state);
@@ -81,7 +84,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
     public static void tick(Level level, BlockPos pos, BlockState state, InfusionMatrixBlockEntity matrix) {
         matrix.count++;
         if (level.isClientSide()) {
-            if (matrix.crafting) matrix.sparkle(level, pos);
+            matrix.doEffects(level, pos);
             return;
         }
         // de tempos em tempos ela confere se a construção continua de pé
@@ -433,14 +436,33 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
     }
 
     /** As faíscas que a matriz solta enquanto trabalha. */
-    private void sparkle(Level level, BlockPos pos) {
+    /**
+     * O {@code doEffects} do original, do lado de quem vê: os sons da infusão, as runas subindo do pedestal e o
+     * {@code startUp}, que sobe devagar quando a matriz liga e desce quando ela desliga.
+     */
+    private void doEffects(Level level, BlockPos pos) {
         var random = level.getRandom();
-        for (int i = 0; i < 2; i++) {
-            level.addParticle(ParticleTypes.ENCHANT,
-                    pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 2.0,
-                    pos.getY() + 1.0 + random.nextDouble(),
-                    pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 2.0,
-                    0.0, -0.4, 0.0);
+        if (this.crafting) {
+            if (this.craftCount == 0) {
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), TCSounds.INFUSER_START.value(),
+                        net.minecraft.sounds.SoundSource.BLOCKS, 0.5f, 1.0f, false);
+            } else if (this.craftCount % 65 == 0) {
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), TCSounds.INFUSER.value(),
+                        net.minecraft.sounds.SoundSource.BLOCKS, 0.5f, 1.0f, false);
+            }
+            this.craftCount++;
+            net.thaumcraft.block.PavingStoneBlock.clientEffects.runes(pos.below(2), pos.getY() - 2,
+                    0.5f + random.nextFloat() * 0.2f, 0.1f, 0.7f + random.nextFloat() * 0.3f, 25, -0.03f);
+        } else if (this.craftCount > 0) {
+            this.craftCount = Math.clamp(this.craftCount - 2, 0, 50);
+        }
+        if (this.active && this.startUp != 1.0f) {
+            if (this.startUp < 1.0f) this.startUp += Math.max(this.startUp / 10.0f, 0.001f);
+            if (this.startUp > 0.999) this.startUp = 1.0f;
+        }
+        if (!this.active && this.startUp > 0.0f) {
+            this.startUp -= this.startUp / 10.0f;
+            if (this.startUp < 0.001) this.startUp = 0.0f;
         }
     }
 

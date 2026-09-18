@@ -526,3 +526,19 @@ A mesma auditoria achou, nas receitas geradas:
   com o rótulo). O **rótulo de jarro** ganhou a receita do original (corante preto, limo e quatro papéis) e a
   marcação: rótulo + frasco cheio na mesa dá o rótulo marcado (o frasco volta vazio), e o marcado sozinho volta
   a ser em branco — as `JarLabel0..47` e `JarLabelNull` do jar, feitas como uma receita especial.
+
+## Correções da primeira rodada de validação (2026-09-18)
+
+- **Ícones dos focos Primordial e do Buraco Portátil:** no inventário o original desenha só o `getIcon`; a
+  textura de profundidade (`getFocusDepthLayerIcon`) é do foco montado na varinha. Ela saiu das camadas do
+  modelo (`scratchpad/focos-novos.js`).
+- **Flor Etérea:** o bloco não tem desenho (o original devolve `blank` para a face da cruz); quem desenha é o
+  `EtherealBloomRenderer`, porte do `TileEtherealBloomRenderer`: caule, folhas de baixo, folhas de cima e o
+  cristal crescendo com o `growthCounter`, e o brilho azul da sexta fileira da folha dos nós. Luz 15, som
+  `roots` ao brotar, pega em qualquer chão firme (planta de caverna do Forge). O item usa a `purifier_seed`.
+- **Matriz rúnica:** os oito cubos do `TileRunicMatrixRenderer`, com o `startUp` (se ergue, inclina e gira ao
+  ligar), o tremor da instabilidade, o brilho roxo somado e o halo de raios durante a infusão; sons
+  `infuserstart` e `infuser` e as runas subindo do pedestal (`doEffects`). Bloco cheio, luz 10.
+- **Alumentum:** o clique direito arremessa o `EntityAlumentum` (invisível, rastro de fogos-fátuos e faíscas,
+  explosão de 1,66). O Nitor, como no original, só vira luz colocada.
+- **Fragmento de Conhecimento:** usado, dá um ou dois de cada primário ao estoque de pesquisa.

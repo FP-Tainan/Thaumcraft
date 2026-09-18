@@ -19,6 +19,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCEntities.EMBER, net.thaumcraft.client.render.EmberRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.PRIMAL_ORB, net.thaumcraft.client.render.PrimalOrbRenderer::new);
+        // o Alumentum voando: o RenderAlumentum não desenha nada, só o rastro aparece
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.ALUMENTUM, net.minecraft.client.renderer.entity.NoopRenderer::new);
         // os raios, fachos e faíscas dos focos
         net.thaumcraft.client.fx.ThaumFx.init();
         net.thaumcraft.client.fx.FocusEffects.init();
@@ -102,12 +105,17 @@ public class ThaumcraftClient implements ClientModInitializer {
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("workbench"), net.thaumcraft.client.render.WorkbenchModel.Unbaked.CODEC);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.DECONSTRUCTION_TABLE, net.thaumcraft.client.render.DeconstructionTableRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ETHEREAL_BLOOM, net.thaumcraft.client.render.EtherealBloomRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.DECONSTRUCTION_TABLE,
                 net.thaumcraft.client.gui.DeconstructionTableScreen::new);
         // o fole, com o modelo do original, no chão e na mão
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.BELLOWS, net.thaumcraft.client.render.BellowsRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("bellows"), net.thaumcraft.client.render.BellowsRenderer.Unbaked.CODEC);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.INFUSION_MATRIX, net.thaumcraft.client.render.InfusionMatrixRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("infusion_matrix"), net.thaumcraft.client.render.InfusionMatrixRenderer.Unbaked.CODEC);
         // os pilares do altar de infusão, com o modelo do original
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.INFUSION_PILLAR, net.thaumcraft.client.render.InfusionPillarRenderer::new);

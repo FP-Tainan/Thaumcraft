@@ -24,6 +24,7 @@
       "net.thaumcraft.test.PavingStoneGameTest",
       "net.thaumcraft.test.PortableHoleGameTest",
       "net.thaumcraft.test.PrimalFocusGameTest",
+      "net.thaumcraft.test.ResourceUseGameTest",
       "net.thaumcraft.test.ProgressionGameTest",
       "net.thaumcraft.test.RecipeGameTest",
       "net.thaumcraft.test.ResearchTableGameTest",

@@ -72,6 +72,18 @@
       "thaumcraft:ice3"
     ]
   },
+  "infuser": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:infuser"
+    ]
+  },
+  "infuser_start": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:infuserstart"
+    ]
+  },
   "jar": {
     "category": "player",
     "sounds": [
@@ -98,6 +110,14 @@
     "sounds": [
       "thaumcraft:page1",
       "thaumcraft:page2"
+    ]
+  },
+  "roots": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:roots1",
+      "thaumcraft:roots2",
+      "thaumcraft:roots3"
     ]
   },
   "rumble": {

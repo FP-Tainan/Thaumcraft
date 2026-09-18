@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "thaumcraft:block/ethereal_bloom"
+    "layer0": "thaumcraft:block/purifier_seed"
   }
 }

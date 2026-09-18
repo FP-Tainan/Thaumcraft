@@ -41,7 +41,8 @@ public final class TCItems {
     static {
         // a matéria-prima do mod, que só existe para entrar em receita
         for (String name : TCResources.NAMES) {
-            TCResources.ALL.put(name, register(name, Item::new));
+            TCResources.ALL.put(name, register(name, name.equals("knowledge_fragment")
+                    ? net.thaumcraft.item.KnowledgeFragmentItem::new : Item::new));
         }
     }
 
@@ -304,8 +305,8 @@ public final class TCItems {
     /** O fragmento equilibrado: o que o crisol faz de seis primários. */
     public static final Item SHARD_BALANCED = register("shard_balanced", Item::new);
 
-    /** O carvão da alquimia, que queima muito mais que o comum. */
-    public static final Item ALUMENTUM = register("alumentum", Item::new);
+    /** O carvão da alquimia, que queima muito mais que o comum e, arremessado, explode. */
+    public static final Item ALUMENTUM = register("alumentum", net.thaumcraft.item.AlumentumItem::new);
 
     /** A chama fria que não queima nada. */
     public static final Item NITOR = register("nitor", properties ->

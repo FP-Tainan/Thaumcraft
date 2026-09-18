@@ -1,6 +1,5 @@
 {
-  "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "thaumcraft:block/ethereal_bloom"
+    "particle": "thaumcraft:block/purifier_seed"
   }
 }

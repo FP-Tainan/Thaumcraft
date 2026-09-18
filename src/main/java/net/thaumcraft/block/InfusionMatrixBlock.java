@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class InfusionMatrixBlock extends BaseEntityBlock {
     public static final MapCodec<InfusionMatrixBlock> CODEC = simpleCodec(InfusionMatrixBlock::new);
-    private static final VoxelShape SHAPE = Block.box(1.0, 3.0, 1.0, 15.0, 13.0, 15.0);
+    private static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0);
 
     public InfusionMatrixBlock(Properties properties) {
         super(properties);
@@ -38,7 +38,7 @@ public class InfusionMatrixBlock extends BaseEntityBlock {
 
     @Override
     protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        return RenderShape.INVISIBLE;
     }
 
     @Override

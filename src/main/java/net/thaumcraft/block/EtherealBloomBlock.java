@@ -9,6 +9,15 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.VegetationBlock;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.thaumcraft.block.entity.EtherealBloomBlockEntity;
+import net.thaumcraft.registry.TCBlockEntities;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -20,10 +29,14 @@ import net.thaumcraft.registry.TCBlocks;
  * <p>É a flor do original, e a resposta dele para quem deixou a mácula crescer demais. Plantada, ela
  * limpa o que está maculado à volta dela, um pedaço de cada vez — a crosta volta a ser terra, o solo
  * maculado volta a ser grama, e as fibras somem.
+ *
+ * <p>No mundo o bloco não tem desenho — o original devolve {@code blank} para a face de onde a cruz tira a
+ * textura —, e quem desenha a flor é o {@link net.thaumcraft.client.render.EtherealBloomRenderer}. Como
+ * planta de caverna do Forge, pega em qualquer chão firme.
  */
-public class EtherealBloomBlock extends VegetationBlock {
+public class EtherealBloomBlock extends VegetationBlock implements EntityBlock {
     public static final MapCodec<EtherealBloomBlock> CODEC = simpleCodec(EtherealBloomBlock::new);
-    private static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 14.0, 12.0);
+    private static final VoxelShape SHAPE = Block.box(1.6, 0.0, 1.6, 14.4, 12.8, 14.4);
     /** Até onde ela limpa. */
     private static final int REACH = 8;
 
@@ -72,13 +85,24 @@ public class EtherealBloomBlock extends VegetationBlock {
     }
 
     @Override
-    public void animateTick(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-                            RandomSource random) {
-        if (random.nextInt(4) != 0) return;
-        level.addParticle(ParticleTypes.END_ROD,
-                pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.4,
-                pos.getY() + 0.7 + random.nextDouble() * 0.3,
-                pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.4,
-                0.0, 0.01, 0.0);
+    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.isFaceSturdy(level, pos, Direction.UP);
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.INVISIBLE;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new EtherealBloomBlockEntity(pos, state);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(net.minecraft.world.level.Level level,
+                                                                            BlockState state, BlockEntityType<T> type) {
+        return type == TCBlockEntities.ETHEREAL_BLOOM ? (BlockEntityTicker<T>) (BlockEntityTicker<EtherealBloomBlockEntity>) EtherealBloomBlockEntity::tick : null;
     }
 }

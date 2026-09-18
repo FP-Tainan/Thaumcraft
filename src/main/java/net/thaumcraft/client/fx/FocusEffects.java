@@ -31,6 +31,7 @@ public final class FocusEffects {
 
     public static void init() {
         Focuses.clientEffects = FocusEffects::tick;
+        net.thaumcraft.entity.AlumentumEntity.clientTick = FocusEffects::alumentumTick;
         net.thaumcraft.entity.PrimalOrbEntity.clientEffects = new net.thaumcraft.entity.PrimalOrbEntity.ClientEffects() {
             @Override
             public void tick(net.thaumcraft.entity.PrimalOrbEntity orb) {
@@ -58,6 +59,22 @@ public final class FocusEffects {
         }
         Wisp.fx2(orb.getX() + (r.nextFloat() - r.nextFloat()) * 0.2f, orb.getY() + (r.nextFloat() - r.nextFloat()) * 0.2f,
                 orb.getZ() + (r.nextFloat() - r.nextFloat()) * 0.2f, 0.1f, r.nextInt(6), true, 0.0f);
+    }
+
+    /** O rastro do Alumentum: fogos-fátuos negros em volta dele e no meio do caminho, e uma faísca. */
+    private static void alumentumTick(net.thaumcraft.entity.AlumentumEntity alumentum) {
+        net.minecraft.util.RandomSource r = alumentum.level().getRandom();
+        for (int a = 0; a < 3; a++) {
+            Wisp.fx2(alumentum.getX() + (r.nextFloat() - r.nextFloat()) * 0.3f,
+                    alumentum.getY() + (r.nextFloat() - r.nextFloat()) * 0.3f,
+                    alumentum.getZ() + (r.nextFloat() - r.nextFloat()) * 0.3f, 0.3f, 5, true, 0.02f);
+            Wisp.fx2((alumentum.getX() + alumentum.xo) / 2.0 + (r.nextFloat() - r.nextFloat()) * 0.3f,
+                    (alumentum.getY() + alumentum.yo) / 2.0 + (r.nextFloat() - r.nextFloat()) * 0.3f,
+                    (alumentum.getZ() + alumentum.zo) / 2.0 + (r.nextFloat() - r.nextFloat()) * 0.3f, 0.3f, 5, true, 0.02f);
+            Sparkle.spawn(r, alumentum.getX() + (r.nextFloat() - r.nextFloat()) * 0.1f,
+                    alumentum.getY() + (r.nextFloat() - r.nextFloat()) * 0.1f,
+                    alumentum.getZ() + (r.nextFloat() - r.nextFloat()) * 0.1f, 1.5f, 6, 0.0f);
+        }
     }
 
     /** O estouro: trinta e seis fogos-fátuos das seis cores voando para fora. */

@@ -62,6 +62,12 @@ public final class TCSounds {
     public static final Holder<SoundEvent> ERASE = register("erase");
     /** A pagina de aspectos virando na mesa de pesquisa. */
     public static final Holder<SoundEvent> KEY = register("key");
+    /** A flor eterea brotando. */
+    public static final Holder<SoundEvent> ROOTS = register("roots");
+    /** A matriz runica comecando a infusao. */
+    public static final Holder<SoundEvent> INFUSER_START = register("infuser_start");
+    /** A matriz runica em plena infusao. */
+    public static final Holder<SoundEvent> INFUSER = register("infuser");
 
     private TCSounds() {
     }

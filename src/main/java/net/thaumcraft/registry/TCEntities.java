@@ -32,6 +32,13 @@ public final class TCEntities {
                     .clientTrackingRange(8)
                     .updateInterval(1));
 
+    /** O Alumentum arremessado, que explode onde cai. */
+    public static final EntityType<net.thaumcraft.entity.AlumentumEntity> ALUMENTUM = register("alumentum",
+            EntityType.Builder.<net.thaumcraft.entity.AlumentumEntity>of(net.thaumcraft.entity.AlumentumEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .clientTrackingRange(4)
+                    .updateInterval(10));
+
     /** O golem: o servo que faz o trabalho chato. */
     public static final EntityType<net.thaumcraft.entity.GolemEntity> GOLEM = register("golem",
             EntityType.Builder.<net.thaumcraft.entity.GolemEntity>of(

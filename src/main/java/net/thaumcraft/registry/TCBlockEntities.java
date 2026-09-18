@@ -112,6 +112,11 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.NitorBlockEntity::new,
                             java.util.Set.of(TCBlocks.NITOR)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.EtherealBloomBlockEntity> ETHEREAL_BLOOM =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("ethereal_bloom"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.EtherealBloomBlockEntity::new,
+                            java.util.Set.of(TCBlocks.ETHEREAL_BLOOM)));
+
     private TCBlockEntities() {
     }
 
