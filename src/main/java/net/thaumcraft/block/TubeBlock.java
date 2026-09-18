@@ -35,21 +35,35 @@ import org.jetbrains.annotations.Nullable;
 public class TubeBlock extends BaseEntityBlock {
     public static final MapCodec<TubeBlock> CODEC = simpleCodec(TubeBlock::new);
 
-    /** O miolo do tubo, do qual saem os braços. */
-    private static final VoxelShape CORE = Block.box(5.0, 5.0, 5.0, 11.0, 11.0, 11.0);
+    /**
+     * Se ele mostra a junta de latão.
+     *
+     * <p>O original só a põe quando o cano encosta num <em>aparelho</em> — jarro, alambique, forno — ou
+     * quando não encosta em nada. Entre um cano e outro ele põe um cubinho quase invisível. É por isso
+     * que uma corrida de cano do original é preta e lisa, com latão só nas descidas: a junta marca onde
+     * a essência entra ou sai da tubulação, não cada bloco dela.
+     */
+    public static final BooleanProperty FITTING = BooleanProperty.create("fitting");
+
+    /**
+     * O miolo do tubo, do qual saem os braços.
+     *
+     * <p>Quatro de largura, que é a medida da junta do original. O cano em si é de dois.
+     */
+    private static final VoxelShape CORE = Block.box(6.0, 6.0, 6.0, 10.0, 10.0, 10.0);
     /** Um braço por lado, guardado na ordem de {@link Direction#get3DDataValue()}. */
     private static final VoxelShape[] ARMS = {
-            Block.box(6.5, 0.0, 6.5, 9.5, 5.0, 9.5),   // baixo
-            Block.box(6.5, 11.0, 6.5, 9.5, 16.0, 9.5), // cima
-            Block.box(6.5, 6.5, 0.0, 9.5, 9.5, 5.0),   // norte
-            Block.box(6.5, 6.5, 11.0, 9.5, 9.5, 16.0), // sul
-            Block.box(0.0, 6.5, 6.5, 5.0, 9.5, 9.5),   // oeste
-            Block.box(11.0, 6.5, 6.5, 16.0, 9.5, 9.5), // leste
+            Block.box(7.0, 0.0, 7.0, 9.0, 6.0, 9.0),   // baixo
+            Block.box(7.0, 10.0, 7.0, 9.0, 16.0, 9.0), // cima
+            Block.box(7.0, 7.0, 0.0, 9.0, 9.0, 6.0),   // norte
+            Block.box(7.0, 7.0, 10.0, 9.0, 9.0, 16.0), // sul
+            Block.box(0.0, 7.0, 7.0, 6.0, 9.0, 9.0),   // oeste
+            Block.box(10.0, 7.0, 7.0, 16.0, 9.0, 9.0), // leste
     };
 
     public TubeBlock(Properties properties) {
         super(properties);
-        BlockState state = this.stateDefinition.any();
+        BlockState state = this.stateDefinition.any().setValue(FITTING, true);
         for (BooleanProperty side : PipeBlock.PROPERTY_BY_DIRECTION.values()) {
             state = state.setValue(side, false);
         }
@@ -64,6 +78,7 @@ public class TubeBlock extends BaseEntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         PipeBlock.PROPERTY_BY_DIRECTION.values().forEach(builder::add);
+        builder.add(FITTING);
     }
 
     @Override
@@ -104,13 +119,21 @@ public class TubeBlock extends BaseEntityBlock {
      */
     public static BlockState connect(BlockState state, BlockGetter level, BlockPos pos) {
         TubeBlockEntity tube = level.getBlockEntity(pos) instanceof TubeBlockEntity found ? found : null;
+        int joined = 0;
+        boolean device = false;
         for (Direction dir : Direction.values()) {
             boolean open = tube == null || tube.isOpen(dir);
-            boolean fits = open && level.getBlockEntity(pos.relative(dir)) instanceof EssentiaTransport side
+            var beside = level.getBlockEntity(pos.relative(dir));
+            boolean fits = open && beside instanceof EssentiaTransport side
                     && side.isConnectable(dir.getOpposite());
+            if (fits) {
+                joined++;
+                // encostar noutro cano não pede junta; encostar num aparelho pede
+                if (!(beside instanceof TubeBlockEntity)) device = true;
+            }
             state = state.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(dir), fits);
         }
-        return state;
+        return state.setValue(FITTING, joined == 0 || device);
     }
 
     @Override

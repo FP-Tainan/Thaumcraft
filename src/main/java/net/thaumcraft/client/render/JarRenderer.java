@@ -29,13 +29,19 @@ import org.jetbrains.annotations.Nullable;
  * Óculos da Revelação, que é como se lê isso no mod.
  */
 public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRenderer.State> {
-    /** O fundo do vão de dentro do jarro. */
-    private static final float FLOOR = 0.07f;
-    /** O teto do vão de dentro do jarro. */
-    private static final float CEILING = 0.73f;
-    /** Onde as paredes de dentro ficam, um pouco para dentro do vidro. */
-    private static final float NEAR = 0.19f;
-    private static final float FAR = 0.81f;
+    /**
+     * O vão de dentro do jarro, nas medidas do {@code ModelJar} original.
+     *
+     * <p>Lá o vidro é uma caixa de dez por doze e a salmoura é uma de oito por dez, <strong>encolhida uma
+     * unidade para dentro em cada lado</strong>. Essa unidade é o que faz o jarro cheio continuar
+     * parecendo um pote de vidro em vez de um tijolo colorido: sobra vidro à vista em volta do líquido,
+     * com o brilho e a borda dele. Eu tinha dado ao líquido o tamanho exato do vidro, e um jarro cheio
+     * ficava sólido de canto a canto.
+     */
+    private static final float FLOOR = 1.0f / 16.0f;
+    private static final float CEILING = 11.0f / 16.0f;
+    private static final float NEAR = 4.0f / 16.0f;
+    private static final float FAR = 12.0f / 16.0f;
 
     /** A que distância do meio do bloco o rótulo fica, como no original. */
     private static final float LABEL_OUT = 0.315f;

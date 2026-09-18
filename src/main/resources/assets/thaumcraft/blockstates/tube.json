@@ -1,8 +1,19 @@
 {
   "multipart": [
     {
+      "when": {
+        "fitting": true
+      },
       "apply": {
-        "model": "thaumcraft:block/tube_core"
+        "model": "thaumcraft:block/tube_fitting"
+      }
+    },
+    {
+      "when": {
+        "fitting": false
+      },
+      "apply": {
+        "model": "thaumcraft:block/tube_joint"
       }
     },
     {

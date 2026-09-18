@@ -2,10 +2,19 @@
   "parent": "minecraft:block/block",
   "textures": {
     "particle": "thaumcraft:block/jar_side",
-    "side": "thaumcraft:block/jar_side",
-    "top": "thaumcraft:block/jar_top",
+    "side": {
+      "force_translucent": true,
+      "sprite": "thaumcraft:block/jar_side"
+    },
+    "top": {
+      "force_translucent": true,
+      "sprite": "thaumcraft:block/jar_top"
+    },
     "tampa": "thaumcraft:block/jar_lid",
-    "bottom": "thaumcraft:block/jar_bottom"
+    "bottom": {
+      "force_translucent": true,
+      "sprite": "thaumcraft:block/jar_bottom"
+    }
   },
   "elements": [
     {

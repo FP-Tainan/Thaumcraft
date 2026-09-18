@@ -1,58 +1,59 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "thaumcraft:block/pipe_2",
+    "particle": "thaumcraft:block/pipe_1",
     "corpo": "thaumcraft:block/pipe_1",
-    "boca": "thaumcraft:block/pipe_2"
+    "junta": "thaumcraft:block/pipe_2",
+    "meio": "thaumcraft:block/pipe_3"
   },
   "elements": [
     {
       "from": [
-        6.5,
-        0,
-        6.5
+        6,
+        6,
+        6
       ],
       "to": [
-        9.5,
-        16,
-        9.5
+        10,
+        10,
+        10
       ],
       "faces": {
         "north": {
           "uv": [
-            6.5,
-            0,
-            9.5,
-            16
+            6,
+            6,
+            10,
+            10
           ],
-          "texture": "#corpo"
+          "texture": "#junta"
         },
         "south": {
           "uv": [
-            6.5,
-            0,
-            9.5,
-            16
+            6,
+            6,
+            10,
+            10
           ],
-          "texture": "#corpo"
+          "texture": "#junta"
         },
         "west": {
           "uv": [
-            6.5,
-            0,
-            9.5,
-            16
+            6,
+            6,
+            10,
+            10
           ],
-          "texture": "#corpo"
+          "texture": "#junta"
         },
         "east": {
           "uv": [
-            6.5,
-            0,
-            9.5,
-            16
+            6,
+            6,
+            10,
+            10
           ],
-          "texture": "#corpo"
+          "texture": "#junta"
         },
         "up": {
           "uv": [
@@ -61,7 +62,7 @@
             10,
             10
           ],
-          "texture": "#boca"
+          "texture": "#junta"
         },
         "down": {
           "uv": [
@@ -70,45 +71,59 @@
             10,
             10
           ],
-          "texture": "#boca"
+          "texture": "#junta"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        0,
+        7
+      ],
+      "to": [
+        9,
+        16,
+        9
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "south": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "west": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "east": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
         }
       }
     }
-  ],
-  "display": {
-    "gui": {
-      "rotation": [
-        30,
-        45,
-        0
-      ],
-      "translation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ]
-    },
-    "fixed": {
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "translation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        0.6,
-        0.6,
-        0.6
-      ]
-    }
-  }
+  ]
 }
