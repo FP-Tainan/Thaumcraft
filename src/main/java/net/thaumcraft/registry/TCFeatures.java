@@ -25,6 +25,12 @@ public final class TCFeatures {
     public static final Feature<NoneFeatureConfiguration> SILVERWOOD = Registry.register(BuiltInRegistries.FEATURE,
             Thaumcraft.id("silverwood"), new net.thaumcraft.world.MagicalTreeFeature(NoneFeatureConfiguration.CODEC, true));
 
+    /** As pérolas de cinzas do deserto. */
+    public static final Feature<NoneFeatureConfiguration> CINDERPEARL = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("cinderpearl"), new net.thaumcraft.world.CinderpearlFeature(NoneFeatureConfiguration.CODEC));
+    public static final ResourceKey<PlacedFeature> CINDERPEARL_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("cinderpearl"));
+
     public static final ResourceKey<PlacedFeature> GREATWOOD_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("greatwood"));
     public static final ResourceKey<PlacedFeature> SILVERWOOD_PLACED =
@@ -56,5 +62,9 @@ public final class TCFeatures {
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION,
                 GREATWOOD_PLACED);
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION,
+                CINDERPEARL_PLACED);
     }
 }

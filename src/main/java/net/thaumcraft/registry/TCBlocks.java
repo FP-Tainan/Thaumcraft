@@ -164,6 +164,17 @@ public final class TCBlocks {
                     .lightLevel(state -> 8)
                     .sound(SoundType.GRASS)));
 
+    /** A pérola de cinzas: a flor do deserto, com luz oito. */
+    public static final Block CINDERPEARL = register("cinderpearl", properties ->
+            new net.thaumcraft.block.CinderpearlBlock(properties
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .instabreak()
+                    .noCollision()
+                    .noOcclusion()
+                    .lightLevel(state -> 8)
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY)));
+
     /** A crosta da mácula: o que sobra de um tronco ou de uma folha que ela tomou. */
     public static final Block TAINT_CRUST = register("taint_crust", properties ->
             new net.thaumcraft.block.TaintBlock(properties

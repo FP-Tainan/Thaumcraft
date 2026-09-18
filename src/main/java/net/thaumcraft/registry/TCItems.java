@@ -248,6 +248,10 @@ public final class TCItems {
     public static final Item SILVERWOOD_SLAB = register("silverwood_slab", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.SILVERWOOD_SLAB, properties.useBlockDescriptionPrefix()));
 
+    /** A pérola de cinzas, para levar na mão. */
+    public static final Item CINDERPEARL = register("cinderpearl", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.CINDERPEARL, properties.useBlockDescriptionPrefix()));
+
     /** A folha-cintilante, para levar na mão. */
     public static final Item SHIMMERLEAF = register("shimmerleaf", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.SHIMMERLEAF, properties));
@@ -398,7 +402,7 @@ public final class TCItems {
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",
             "greatwood_sapling", "silverwood_sapling",
-            "shimmerleaf", "ethereal_bloom", "taint_crust", "taint_soil", "taint_fibres",
+            "shimmerleaf", "cinderpearl", "ethereal_bloom", "taint_crust", "taint_soil", "taint_fibres",
             "golem_bell",
             "golem_straw", "golem_wood", "golem_tallow", "golem_clay",
             "golem_flesh", "golem_stone", "golem_iron", "golem_thaumium",

@@ -457,3 +457,10 @@ A grande-madeira e o pinheiro-de-prata, com toras, folhas, mudas, tábuas, escad
 - O foco Primordial (`EntityPrimalOrb`, `RenderPrimalOrb`, `FXWisp`): custo sorteado de 50 a 250 de cada
   primário, meio segundo entre tiros; uma em cem explosões deixa mácula ou um nó de aura.
 
+- A pérola de cinzas: a flor do deserto (luz oito, fumaça e chaminha), uma chance em trinta por pedaço de
+  mundo nos desertos e terras áridas. Na mesa, a folha-cintilante vira mercúrio e a pérola vira pó de blaze.
+- **Cuidado com a fonte legível.** A versão do GitHub que serve de planta diz que a pérola de cinzas vira
+  *açúcar* na mesa; o jar original descompilado diz *pó de blaze*. Vale o jar. Quando uma conta ou receita
+  parecer estranha, a conferência é sempre contra o jar em `Mod Base/`.
+- Os aspectos das coisas do próprio mod (fragmentos, pedra infundida, plantas, toras, recursos, peças de
+  táumio) entraram na tabela, gerados do `ConfigAspects` (`scratchpad/aspectos-mod.js`).

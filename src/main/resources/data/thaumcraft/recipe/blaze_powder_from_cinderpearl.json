@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": "thaumcraft:cinderpearl"
+  },
+  "result": {
+    "id": "minecraft:blaze_powder"
+  }
+}

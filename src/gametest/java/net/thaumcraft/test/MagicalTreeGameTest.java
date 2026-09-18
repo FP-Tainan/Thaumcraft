@@ -70,4 +70,18 @@ public class MagicalTreeGameTest {
             if (node.type() != NodeType.PURE) throw helper.assertionException("o nó do pinheiro é sempre puro");
         });
     }
+
+    @GameTest
+    public void theCinderpearlLivesOnSand(GameTestHelper helper) {
+        BlockPos sand = new BlockPos(1, 1, 1);
+        helper.setBlock(sand, Blocks.SAND.defaultBlockState());
+        if (!TCBlocks.CINDERPEARL.defaultBlockState().canSurvive(helper.getLevel(), helper.absolutePos(sand.above()))) {
+            helper.fail("a pérola de cinzas é planta de deserto e pega na areia");
+        }
+        helper.setBlock(sand, Blocks.STONE.defaultBlockState());
+        if (TCBlocks.CINDERPEARL.defaultBlockState().canSurvive(helper.getLevel(), helper.absolutePos(sand.above()))) {
+            helper.fail("na pedra ela não pega");
+        }
+        helper.succeed();
+    }
 }
