@@ -31,6 +31,7 @@
       "net.thaumcraft.test.TaintGameTest",
       "net.thaumcraft.test.TubeValveGameTest",
       "net.thaumcraft.test.TubeVariantGameTest",
+      "net.thaumcraft.test.WardingFocusGameTest",
       "net.thaumcraft.test.WandAssemblyGameTest",
       "net.thaumcraft.test.WandGameTest"
     ],

@@ -40,6 +40,10 @@ public final class TCBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("hole"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.HoleBlockEntity::new, java.util.Set.of(TCBlocks.HOLE)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.WardedBlockEntity> WARDED = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("warded"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.WardedBlockEntity::new, java.util.Set.of(TCBlocks.WARDED)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.TubeRestrictBlockEntity> TUBE_RESTRICT =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube_restrict"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.TubeRestrictBlockEntity::new,

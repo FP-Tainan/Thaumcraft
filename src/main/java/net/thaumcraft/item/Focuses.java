@@ -14,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -101,6 +102,7 @@ public final class Focuses {
             case "portable_hole" -> portableHole(level, player, wand, focus);
             case "trade" -> trade(level, player, wand, focus);
             case "primal" -> primal(level, player, wand);
+            case "warding" -> warding(level, player, wand, focus);
             default -> false;
         };
     }
@@ -212,6 +214,56 @@ public final class Focuses {
         level.playSound(null, orb, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.3f,
                 0.8f + level.getRandom().nextFloat() * 0.1f);
         return true;
+    }
+
+    // ----------------------------------------------------------------- proteção
+
+    /** O {@code delay} do original: meio segundo por bloco, para um clique não proteger e desfazer de uma vez. */
+    private static final Map<String, Long> WARD_DELAY = new HashMap<>();
+
+    /** O dono de uma proteção, como o original conta: o número do nome do jogador. */
+    public static int wardOwner(Player player) {
+        return player.getName().getString().hashCode();
+    }
+
+    /**
+     * O {@code ItemFocusWarding}: num bloco maciço sem miolo, protege; num bloco já protegido pelo mesmo
+     * jogador, desfaz. Sem as melhorias de arquiteto, é um bloco por vez.
+     */
+    private static boolean warding(Level level, Player player, ItemStack wand, FocusItem focus) {
+        HitResult hit = player.pick(player.blockInteractionRange(), 1.0f, false);
+        if (!(hit instanceof BlockHitResult block) || hit.getType() != HitResult.Type.BLOCK) return false;
+        BlockPos pos = block.getBlockPos();
+        String key = pos.getX() + ":" + pos.getY() + ":" + pos.getZ() + ":" + level.dimension();
+        long now = System.currentTimeMillis();
+        if (WARD_DELAY.getOrDefault(key, 0L) > now) return false;
+        WARD_DELAY.put(key, now + 500L);
+
+        BlockState state = level.getBlockState(pos);
+        net.minecraft.world.level.block.entity.BlockEntity tile = level.getBlockEntity(pos);
+        int owner = wardOwner(player);
+        boolean changed = false;
+        if (tile == null && state.isSolidRender()) {
+            if (WandItem.consumeRaw(wand, focus.cost(), true)) {
+                int light = state.getLightEmission();
+                level.setBlock(pos, net.thaumcraft.registry.TCBlocks.WARDED.defaultBlockState()
+                        .setValue(net.thaumcraft.block.WardedBlock.LIGHT, light), Block.UPDATE_ALL);
+                if (level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.WardedBlockEntity warded) {
+                    warded.ward(state, owner);
+                    level.sendBlockUpdated(pos, state, level.getBlockState(pos), Block.UPDATE_ALL);
+                }
+                if (level instanceof ServerLevel server) net.thaumcraft.net.TCNetwork.blockSparkle(server, pos, 0xFCA000);
+                changed = true;
+            }
+        } else if (tile instanceof net.thaumcraft.block.entity.WardedBlockEntity warded && warded.owner() == owner) {
+            level.setBlock(pos, warded.stored(), Block.UPDATE_ALL);
+            if (level instanceof ServerLevel server) net.thaumcraft.net.TCNetwork.blockSparkle(server, pos, 0xFCA000);
+            changed = true;
+        }
+        if (changed) {
+            level.playSound(null, pos, TCSounds.ZAP.value(), SoundSource.PLAYERS, 0.25f, 1.0f);
+        }
+        return changed;
     }
 
     // ----------------------------------------------------------------- buraco portátil

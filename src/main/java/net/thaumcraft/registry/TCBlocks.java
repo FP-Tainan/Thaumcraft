@@ -57,6 +57,18 @@ public final class TCBlocks {
                     .sound(SoundType.GLASS)));
 
     /** O buraco do Buraco Portátil: some sozinho, devolvendo o bloco que estava ali. */
+    /** O bloco protegido: inquebrável, com a cara e a luz do que estava ali. */
+    public static final Block WARDED = register("warded", properties ->
+            new net.thaumcraft.block.WardedBlock(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(-1.0f, 3600000.0f)
+                    .noLootTable()
+                    .noOcclusion()
+                    .isValidSpawn((state, level, pos, type) -> false)
+                    .lightLevel(state -> state.getValue(net.thaumcraft.block.WardedBlock.LIGHT))
+                    .pushReaction(PushReaction.BLOCK)
+                    .sound(SoundType.STONE)));
+
     public static final Block HOLE = register("hole", properties ->
             new net.thaumcraft.block.HoleBlock(properties
                     .mapColor(MapColor.NONE)

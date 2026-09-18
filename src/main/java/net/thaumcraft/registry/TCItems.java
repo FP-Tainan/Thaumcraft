@@ -144,6 +144,13 @@ public final class TCItems {
                         .add(net.thaumcraft.api.aspects.Aspects.ENTROPY, 5)
                         .add(net.thaumcraft.api.aspects.Aspects.EARTH, 5)
                         .add(net.thaumcraft.api.aspects.Aspects.ORDER, 5), false)));
+        // o de proteção: terra 25, ordo 25 e aqua 10 por bloco protegido
+        FOCI.put("warding", register("focus_warding", properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1), "warding",
+                new net.thaumcraft.api.aspects.AspectList()
+                        .add(net.thaumcraft.api.aspects.Aspects.EARTH, 25)
+                        .add(net.thaumcraft.api.aspects.Aspects.ORDER, 25)
+                        .add(net.thaumcraft.api.aspects.Aspects.WATER, 10), false)));
         // o primordial: o custo de verdade é sorteado a cada disparo, de 50 a 250 de cada primário; aqui fica
         // o piso, que é o que se confere antes de atirar
         FOCI.put("primal", register("focus_primal", properties -> new net.thaumcraft.item.FocusItem(
@@ -380,7 +387,7 @@ public final class TCItems {
      */
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles",
-            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_primal",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
             "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",
