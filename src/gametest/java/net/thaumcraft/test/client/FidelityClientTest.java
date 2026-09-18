@@ -39,8 +39,8 @@ public class FidelityClientTest implements FabricClientGameTest {
             context.waitTicks(30);
 
             // com essência dentro de tudo, e rótulo nos jarros
-            server.runCommand("execute at @p run data merge block ~ ~ ~5 {aspect:\"ignis\",label:\"ignis\",amount:48,facing:3}");
-            server.runCommand("execute at @p run data merge block ~-1 ~ ~5 {aspect:\"aqua\",label:\"aqua\",amount:20,facing:3}");
+            server.runCommand("execute at @p run data merge block ~ ~ ~5 {aspect:\"ignis\",label:\"ignis\",amount:48,facing:2}");
+            server.runCommand("execute at @p run data merge block ~-1 ~ ~5 {aspect:\"aqua\",label:\"aqua\",amount:20,facing:2}");
             server.runCommand("execute at @p run data merge block ~1 ~1 ~5 {aspect:\"terra\",amount:22}");
             server.runCommand("execute at @p run data merge block ~1 ~2 ~5 {aspect:\"aer\",amount:14}");
             server.runCommand("execute at @p run data merge block ~1 ~3 ~5 {aspect:\"ordo\",amount:7}");
@@ -48,6 +48,11 @@ public class FidelityClientTest implements FabricClientGameTest {
             server.runCommand("execute at @p run data merge block ~-1 ~1 ~5 {type:\"aqua\",amount:1}");
             server.runCommand("execute at @p run data merge block ~1 ~ ~5 {aspects:{terra:16,ignis:9}}");
             context.waitTicks(30);
+            // e o cano, a válvula e o jarro na barra, para conferir os ícones
+            server.runCommand("item replace entity @p hotbar.1 with thaumcraft:tube");
+            server.runCommand("item replace entity @p hotbar.2 with thaumcraft:tube_valve");
+            server.runCommand("item replace entity @p hotbar.3 with thaumcraft:jar");
+            context.waitTicks(5);
             context.takeScreenshot("fid_destilaria_sem_oculos");
 
             // agora com os Óculos da Revelação no rosto: cada peça diz o que guarda

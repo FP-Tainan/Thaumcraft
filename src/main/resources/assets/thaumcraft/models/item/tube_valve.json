@@ -9,6 +9,74 @@
   "elements": [
     {
       "from": [
+        7,
+        0,
+        7
+      ],
+      "to": [
+        9,
+        16,
+        9
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "south": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "west": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "east": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "up": {
+          "uv": [
+            7,
+            7,
+            9,
+            9
+          ],
+          "texture": "#corpo"
+        },
+        "down": {
+          "uv": [
+            7,
+            7,
+            9,
+            9
+          ],
+          "texture": "#corpo"
+        }
+      }
+    },
+    {
+      "from": [
         6,
         6,
         6
@@ -72,56 +140,6 @@
             10
           ],
           "texture": "#junta"
-        }
-      }
-    },
-    {
-      "from": [
-        7,
-        0,
-        7
-      ],
-      "to": [
-        9,
-        16,
-        9
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            7,
-            0,
-            9,
-            16
-          ],
-          "texture": "#corpo"
-        },
-        "south": {
-          "uv": [
-            7,
-            0,
-            9,
-            16
-          ],
-          "texture": "#corpo"
-        },
-        "west": {
-          "uv": [
-            7,
-            0,
-            9,
-            16
-          ],
-          "texture": "#corpo"
-        },
-        "east": {
-          "uv": [
-            7,
-            0,
-            9,
-            16
-          ],
-          "texture": "#corpo"
         }
       }
     }

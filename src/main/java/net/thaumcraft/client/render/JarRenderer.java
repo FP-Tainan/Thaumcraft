@@ -140,7 +140,10 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
 
         pose.pushPose();
         pose.translate(0.5f, 0.0f, 0.5f);
-        pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-state.facing.toYRot()));
+        // o papel é desenhado na face norte; este giro o leva até a face para onde o jarro olha. Eu usava
+        // -toYRot, que manda o norte para o sul: o rótulo saía sempre do lado oposto, virado para longe de
+        // quem pôs o jarro
+        pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(180.0f - state.facing.toYRot()));
         pose.translate(-0.5f, 0.0f, -0.5f);
         // torto em volta do próprio meio, no plano da face
         pose.translate(0.5f, LABEL_MID, 0.0f);

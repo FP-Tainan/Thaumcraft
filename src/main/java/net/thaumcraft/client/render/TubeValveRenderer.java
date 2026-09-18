@@ -68,20 +68,30 @@ public class TubeValveRenderer implements BlockEntityRenderer<TubeValveBlockEnti
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
         int light = state.lightCoords;
         TubeRenderer.submitPlugs(state.plugged, pose, collector, light);
+        submitWheel(pose, collector, state.facing, state.rotation, light, OverlayTexture.NO_OVERLAY);
+    }
 
+    /**
+     * A haste e a roda, com a pose na origem do bloco.
+     *
+     * <p>Serve ao bloco e ao item: no inventário o original desenha a válvula por este mesmo renderizador,
+     * com a roda virada para o leste.
+     */
+    public static void submitWheel(PoseStack pose, SubmitNodeCollector collector, Direction facing,
+                                   float rotation, int light, int overlay) {
         pose.pushPose();
         pose.translate(0.5f, 0.5f, 0.5f);
         // a roda é desenhada apontando para cima; daqui ela vai para o lado do manípulo
-        pose.mulPose(upTowards(state.facing));
+        pose.mulPose(upTowards(facing));
         // fechando, uma volta e meia e doze centésimos para dentro
-        pose.mulPose(Axis.YP.rotationDegrees(-state.rotation * 1.5f));
-        pose.translate(0.0f, -(state.rotation / TubeValveBlockEntity.CLOSED) * 0.12f, 0.0f);
+        pose.mulPose(Axis.YP.rotationDegrees(-rotation * 1.5f));
+        pose.translate(0.0f, -(rotation / TubeValveBlockEntity.CLOSED) * 0.12f, 0.0f);
 
         // a haste
         pose.pushPose();
         pose.scale(UNIT, UNIT, UNIT);
         collector.submitCustomGeometry(pose, RenderTypes.entityCutout(ROD_TEXTURE), (matrix, consumer) ->
-                MeshDrawer.draw(ROD, matrix, consumer, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF));
+                MeshDrawer.draw(ROD, matrix, consumer, light, overlay, 0xFFFFFFFF));
         pose.popPose();
 
         // e a roda: a figura deitada, meio bloco de largura, por cima da haste
@@ -90,7 +100,7 @@ public class TubeValveRenderer implements BlockEntityRenderer<TubeValveBlockEnti
         pose.translate(-0.25f, -0.25f, -0.25f);
         pose.scale(0.5f, 0.5f, 0.5f);
         collector.submitCustomGeometry(pose, RenderTypes.entityCutout(WHEEL_TEXTURE), (matrix, consumer) ->
-                ExtrudedSprite.draw(matrix, consumer, WHEEL_PIXELS, 0.1f, light, OverlayTexture.NO_OVERLAY,
+                ExtrudedSprite.draw(matrix, consumer, WHEEL_PIXELS, 0.1f, light, overlay,
                         0xFFFFFFFF));
         pose.popPose();
 

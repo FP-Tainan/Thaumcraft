@@ -1,6 +1,18 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "thaumcraft:item/tube_valve"
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "thaumcraft:item/tube_valve"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "thaumcraft:item/tube_valve",
+        "model": {
+          "type": "thaumcraft:tube_valve"
+        }
+      }
+    ]
   }
 }

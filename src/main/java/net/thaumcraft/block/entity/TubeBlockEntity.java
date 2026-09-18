@@ -50,6 +50,16 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
     private Aspect suctionType;
     private int suction;
     private int venting;
+    /**
+     * Há quantos tiques a essência passou por aqui, contando para baixo.
+     *
+     * <p>Só sangra o cano por onde a essência está <em>correndo</em>. Quando o jarro da ponta enche, a
+     * essência para no cano e fica encalhada ali — e encalhada não é correndo: não sai vapor. O cano troca
+     * de essência pelo menos a cada cinco tiques enquanto a linha trabalha, então dez tiques de memória
+     * bastam para separar uma coisa da outra.
+     */
+    private int flowing;
+    private static final int FLOW_MEMORY = 10;
     private int count;
 
     public TubeBlockEntity(BlockPos pos, BlockState state) {
@@ -63,6 +73,7 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
 
     public static void tick(Level level, BlockPos pos, BlockState state, TubeBlockEntity tube) {
         if (tube.venting > 0) tube.venting--;
+        if (tube.flowing > 0) tube.flowing--;
         if (level.isClientSide()) {
             if (tube.venting > 0) tube.puff(level, pos);
             return;
@@ -126,9 +137,9 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
 
     /** Dois lados puxando igual e querendo coisas diferentes: o tubo desiste e vaza. */
     protected void checkVenting(Level level, BlockPos pos) {
-        // só sangra o cano que está carregando essência: cano vazio numa linha com jarros de aspectos
-        // diferentes não tem o que soltar, e ficava soltando vapor o tempo todo só por estar ligado a eles
-        if (this.amount <= 0) return;
+        // só sangra o cano por onde a essência está correndo agora: cano vazio não tem o que soltar, e cano
+        // com a essência encalhada — o jarro da ponta encheu — também não
+        if (this.amount <= 0 || this.flowing <= 0) return;
         for (Direction dir : Direction.values()) {
             if (!this.isConnectable(dir)) continue;
             EssentiaTransport neighbour = neighbour(level, pos, dir);
@@ -289,6 +300,7 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
         }
         // o tubo entrega de uma em uma, sempre, como no original
         this.amount--;
+        this.flowing = FLOW_MEMORY;
         if (this.amount <= 0) this.essentia = null;
         this.sync();
         return 1;
@@ -299,6 +311,7 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
         if (!this.canInputFrom(face) || this.amount != 0 || requested <= 0) return 0;
         this.essentia = wanted;
         this.amount = 1;
+        this.flowing = FLOW_MEMORY;
         this.sync();
         return 1;
     }
