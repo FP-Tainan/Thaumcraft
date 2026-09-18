@@ -55,6 +55,29 @@ public class JarBlock extends BaseEntityBlock {
         return SHAPE;
     }
 
+    /**
+     * No criativo o jarro cheio também cai.
+     *
+     * <p>O original solta o jarro no {@code onBlockHarvested}, que roda mesmo no modo criativo — e é
+     * assim que se leva essência de um lugar a outro testando. Jarro vazio e sem rótulo não cai, como
+     * qualquer bloco no criativo.
+     */
+    @Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide() && player.isCreative()
+                && level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.JarBlockEntity jar) {
+            ItemStack drop = new ItemStack(this);
+            drop.applyComponents(jar.collectComponents());
+            if (drop.has(net.thaumcraft.registry.TCComponents.JAR_CONTENTS)) {
+                net.minecraft.world.entity.item.ItemEntity item = new net.minecraft.world.entity.item.ItemEntity(
+                        level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
+                item.setDefaultPickUpDelay();
+                level.addFreshEntity(item);
+            }
+        }
+        return super.playerWillDestroy(level, pos, state, player);
+    }
+
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                           Player player, InteractionHand hand, BlockHitResult hit) {

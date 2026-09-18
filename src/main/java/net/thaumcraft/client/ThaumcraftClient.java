@@ -30,6 +30,12 @@ public class ThaumcraftClient implements ClientModInitializer {
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("wand"), net.thaumcraft.client.render.WandRenderer.Unbaked.CODEC);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("alembic"), net.thaumcraft.client.render.AlembicItemRenderer.Unbaked.CODEC);
 
+        // o que os Óculos da Revelação mostram no recipiente na mira
+        net.thaumcraft.client.render.GogglesOverlay.init();
+        // o vapor do cano que sangra, com os tufos de fumaça do próprio mod
+        net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(
+                net.thaumcraft.registry.TCParticles.VENT, net.thaumcraft.client.particle.VentParticle.Provider::new);
+
         // o jarro mostra o que guarda: a névoa na cor do aspecto e, com rótulo, o símbolo dele na frente
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.JAR, net.thaumcraft.client.render.JarRenderer::new);

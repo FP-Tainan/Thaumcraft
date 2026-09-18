@@ -52,8 +52,23 @@ public class FidelityClientTest implements FabricClientGameTest {
 
             // agora com os Óculos da Revelação no rosto: cada peça diz o que guarda
             server.runCommand("item replace entity @p armor.head with thaumcraft:goggles");
+            // e com tudo descoberto, para os óculos mostrarem os símbolos e não o desconhecido
+            server.runCommand("thaumcraft tudo @p");
             context.waitTicks(30);
             context.takeScreenshot("fid_destilaria_com_oculos");
+
+            // e mirando o jarro de ignis: com o cano em cima dele, o original estampa o aspecto no vidro
+            // chega ao alcance da mão: o original só mostra o que está na mira, e a mira só pega o que se
+            // alcança
+            server.runCommand("execute as @p at @s run tp @s ~ ~ ~2");
+            context.waitTicks(10);
+            context.runOnClient(minecraft -> minecraft.player.setXRot(20.0f));
+            context.waitTicks(30);
+            context.takeScreenshot("fid_oculos_mirando_jarro");
+            server.runCommand("execute as @p at @s run tp @s ~ ~ ~-2");
+            context.waitTicks(10);
+            context.runOnClient(minecraft -> minecraft.player.setXRot(8.0f));
+            context.waitTicks(5);
 
             // a tela do forno
             context.runOnClient(minecraft -> {

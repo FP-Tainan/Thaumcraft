@@ -13,6 +13,7 @@
       "net.thaumcraft.test.FocusGameTest",
       "net.thaumcraft.test.GolemGameTest",
       "net.thaumcraft.test.InfusionGameTest",
+      "net.thaumcraft.test.JarDropGameTest",
       "net.thaumcraft.test.NodeGameTest",
       "net.thaumcraft.test.OreGameTest",
       "net.thaumcraft.test.ProgressionGameTest",

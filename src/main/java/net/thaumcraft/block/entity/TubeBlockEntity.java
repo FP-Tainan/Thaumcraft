@@ -136,8 +136,12 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
             if (theirs != this.suction && theirs != this.suction - 1) continue;
             if (this.suctionType == neighbour.getSuctionType(dir.getOpposite())) continue;
 
+            // o chiado baixinho do original, o random.fizz
+            if (this.venting <= 0) {
+                level.playSound(null, pos, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
+                        0.1f, 1.0f + level.getRandom().nextFloat() * 0.1f);
+            }
             this.venting = VENT_TIME;
-            level.playSound(null, pos, TCSounds.SPILL.value(), SoundSource.BLOCKS, 0.4f, 1.0f);
             this.sync();
             return;
         }
@@ -175,33 +179,27 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
     }
 
     /**
-     * O vapor de quem está sangrando, na cor do aspecto que ele queria.
+     * O vapor de quem está sangrando, na cor do aspecto que ele queria. É o que o {@code TileTube} do
+     * original faz a cada tique enquanto sangra.
      *
-     * <p>Não é fumacinha boiando: o tubo está sob pressão e <strong>atira</strong>. O original sorteia uma
-     * direção qualquer da esfera, põe o baforada meio bloco para lá do centro e a manda embora naquele
-     * rumo. Dá o jato entrecortado de registro arrebentado, que é o ponto — é para dar na vista de longe
-     * que aquele cano está errado.
+     * <p>O rumo do jato <strong>não</strong> é sorteado a cada baforada: o original tira os dois ângulos de
+     * um sorteador semeado com o próprio cano, então cada cano sangra sempre para o mesmo lado, num jorro
+     * contínuo. O desenho é o {@link net.thaumcraft.client.particle.VentParticle}, o {@code FXVent} do mod.
+     *
+     * <p>A última componente do rumo repete a primeira ({@code fx / 5} duas vezes): é assim no original, e
+     * é o que dá ao jato o ângulo que ele tem.
      */
     private void puff(Level level, BlockPos pos) {
-        int colour = this.suctionType != null ? this.suctionType.color()
-                : this.essentia != null ? this.essentia.color() : 0x888888;
-        var random = level.getRandom();
-        // um jato por tique, como no original: dois enchem a tela de bolha
-        {
-            // uma direção qualquer da esfera, tirada por sorteio como no original
-            double up = random.nextDouble() * 2.0 - 1.0;
-            double around = random.nextDouble() * Math.PI * 2.0;
-            double ring = Math.sqrt(1.0 - up * up);
-            double dx = Math.cos(around) * ring;
-            double dz = Math.sin(around) * ring;
-            double speed = 0.12 + random.nextDouble() * 0.1;
-            level.addParticle(net.minecraft.core.particles.ColorParticleOption.create(
-                            net.minecraft.core.particles.ParticleTypes.ENTITY_EFFECT, 0x66000000 | colour),
-                    pos.getX() + 0.5 + dx * 0.4,
-                    pos.getY() + 0.5 + up * 0.4,
-                    pos.getZ() + 0.5 + dz * 0.4,
-                    dx * speed, up * speed, dz * speed);
-        }
+        int colour = this.suctionType != null ? this.suctionType.color() : 0xAAAAAA;
+        java.util.Random fixed = new java.util.Random(pos.hashCode() * 4L);
+        double pitch = Math.toRadians(fixed.nextFloat() * 360.0f);
+        double yaw = Math.toRadians(fixed.nextFloat() * 360.0f);
+        double fx = -Math.sin(yaw) * Math.cos(pitch);
+        double fy = -Math.sin(pitch);
+        level.addParticle(net.minecraft.core.particles.ColorParticleOption.create(
+                        net.thaumcraft.registry.TCParticles.VENT, 0xFF000000 | colour),
+                pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                fx / 5.0, fy / 5.0, fx / 5.0);
     }
 
     /** O vizinho daquele lado, se for coisa de encanar e se aceitar este lado. */

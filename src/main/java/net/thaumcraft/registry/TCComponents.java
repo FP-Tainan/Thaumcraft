@@ -35,6 +35,11 @@ public final class TCComponents {
             builder -> builder.persistent(net.minecraft.core.BlockPos.CODEC)
                     .networkSynchronized(net.minecraft.core.BlockPos.STREAM_CODEC));
 
+    /** O que um jarro quebrado leva dentro: a essência, quanto dela e o rótulo. */
+    public static final DataComponentType<net.thaumcraft.item.JarContents> JAR_CONTENTS = register("jar_contents",
+            builder -> builder.persistent(net.thaumcraft.item.JarContents.CODEC)
+                    .networkSynchronized(net.thaumcraft.item.JarContents.STREAM_CODEC));
+
     private TCComponents() {
     }
 

@@ -68,13 +68,10 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
         @Nullable
         public Aspect held;
         public int amount;
-        public boolean revealed;
     }
 
-    private final net.minecraft.client.gui.Font font;
 
     public JarRenderer(BlockEntityRendererProvider.Context context) {
-        this.font = context.font();
     }
 
     @Override
@@ -97,18 +94,13 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
         state.ticks = jar.getLevel() == null ? 0.0f : jar.getLevel().getGameTime() + partial;
         state.held = aspect;
         state.amount = jar.amount();
-        state.revealed = EssentiaLabel.visible(jar);
     }
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
         if (state.fullness > 0.0f) this.submitMist(state, pose, collector);
         if (state.symbol != null) this.submitLabel(state, pose, collector);
-        // e, com os Óculos da Revelação, o símbolo pairando por cima, como em toda peça de essência
-        if (state.revealed && state.held != null && state.amount > 0) {
-            EssentiaLabel.submit(pose, collector, camera, this.font,
-                    state.held, state.amount, 1.05f, state.lightCoords);
-        }
+        // o que os Óculos da Revelação mostram quem desenha é o GogglesOverlay, para todas as peças
     }
 
     /** A névoa lá dentro: sobe com o que o jarro guarda e respira devagar. */

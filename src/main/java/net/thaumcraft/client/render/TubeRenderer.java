@@ -1,7 +1,6 @@
 package net.thaumcraft.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -38,14 +37,11 @@ public class TubeRenderer implements BlockEntityRenderer<TubeBlockEntity, TubeRe
         public Aspect aspect;
         public int amount;
         public boolean venting;
-        public boolean labelled;
         public float ticks;
     }
 
-    private final Font font;
 
     public TubeRenderer(BlockEntityRendererProvider.Context context) {
-        this.font = context.font();
     }
 
     @Override
@@ -60,7 +56,6 @@ public class TubeRenderer implements BlockEntityRenderer<TubeBlockEntity, TubeRe
         state.aspect = tube.getEssentiaType(null);
         state.amount = tube.getEssentiaAmount(null);
         state.venting = tube.venting() > 0;
-        state.labelled = EssentiaLabel.visible(tube);
         state.ticks = tube.getLevel() == null ? 0.0f : tube.getLevel().getGameTime() + partial;
     }
 
@@ -88,9 +83,5 @@ public class TubeRenderer implements BlockEntityRenderer<TubeBlockEntity, TubeRe
         });
         pose.popPose();
 
-        if (state.labelled) {
-            EssentiaLabel.submit(pose, collector, camera, this.font,
-                    state.aspect, state.amount, 1.1f, state.lightCoords);
-        }
     }
 }

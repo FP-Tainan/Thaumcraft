@@ -24,6 +24,26 @@ public final class AspectTooltip {
     }
 
     public static void init() {
+        // o jarro cheio diz o que leva, sempre, como o ItemJarFilled do original: "Nome x quantidade", e o
+        // rótulo em roxo. Aspecto que o jogador não descobriu aparece como desconhecido
+        ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> {
+            net.thaumcraft.item.JarContents jar = stack.get(net.thaumcraft.registry.TCComponents.JAR_CONTENTS);
+            Minecraft minecraft = Minecraft.getInstance();
+            if (jar == null || minecraft.player == null) return;
+            PlayerKnowledge knowledge = Knowledges.of(minecraft.player);
+            Aspect held = jar.heldAspect();
+            if (held != null) {
+                lines.add(knowledge.hasDiscovered(held)
+                        ? held.name().copy().append(" x " + jar.amount())
+                        : Component.translatable("tc.aspect.unknown"));
+            }
+            Aspect label = jar.labelAspect();
+            if (label != null) {
+                lines.add((knowledge.hasDiscovered(label) ? label.name().copy()
+                        : Component.translatable("tc.aspect.unknown")).withStyle(ChatFormatting.DARK_PURPLE));
+            }
+        });
+
         ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> {
             Minecraft minecraft = Minecraft.getInstance();
             if (minecraft.player == null) return;

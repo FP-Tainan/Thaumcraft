@@ -269,6 +269,41 @@ public class JarBlockEntity extends BlockEntity implements AspectContainer, Esse
         output.putInt("facing", this.facing.get3DDataValue());
     }
 
+    /**
+     * O que o jarro leva para o item quando é quebrado.
+     *
+     * <p>Jarro vazio e sem rótulo sai como jarro comum, que empilha. Com essência ou com rótulo ele sai
+     * cheio, e o cheio não empilha — é o {@code ItemJarFilled} do original, de pilha um.
+     */
+    @Override
+    protected void collectImplicitComponents(net.minecraft.core.component.DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        net.thaumcraft.item.JarContents contents =
+                net.thaumcraft.item.JarContents.of(this.aspect, this.amount, this.label);
+        if (!contents.worthKeeping()) return;
+        components.set(net.thaumcraft.registry.TCComponents.JAR_CONTENTS, contents);
+        components.set(net.minecraft.core.component.DataComponents.MAX_STACK_SIZE, 1);
+    }
+
+    /** E o que ele recebe de volta quando o jarro cheio é posto. */
+    @Override
+    protected void applyImplicitComponents(net.minecraft.core.component.DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+        net.thaumcraft.item.JarContents contents = components.get(net.thaumcraft.registry.TCComponents.JAR_CONTENTS);
+        if (contents == null) return;
+        this.aspect = contents.heldAspect();
+        this.amount = this.aspect == null ? 0 : Math.min(CAPACITY, contents.amount());
+        this.label = contents.labelAspect();
+    }
+
+    @Override
+    public void removeComponentsFromTag(ValueOutput output) {
+        super.removeComponentsFromTag(output);
+        output.discard("aspect");
+        output.discard("amount");
+        output.discard("label");
+    }
+
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return this.saveWithoutMetadata(registries);

@@ -3,7 +3,6 @@ package net.thaumcraft.client.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -44,16 +43,13 @@ public class AlembicRenderer implements BlockEntityRenderer<AlembicBlockEntity, 
         @Nullable
         public Aspect aspect;
         public int amount;
-        public boolean labelled;
         public boolean aboveFurnace;
         public boolean aboveAlembic;
         public float turn;
     }
 
-    private final Font font;
 
     public AlembicRenderer(BlockEntityRendererProvider.Context context) {
-        this.font = context.font();
     }
 
     @Override
@@ -67,7 +63,6 @@ public class AlembicRenderer implements BlockEntityRenderer<AlembicBlockEntity, 
         BlockEntityRenderState.extractBase(alembic, state, crumbling);
         state.aspect = alembic.aspect();
         state.amount = alembic.amount();
-        state.labelled = EssentiaLabel.visible(alembic);
 
         state.turn = turnFor(alembic.getBlockState());
 
@@ -100,11 +95,6 @@ public class AlembicRenderer implements BlockEntityRenderer<AlembicBlockEntity, 
         });
         pose.popPose();
 
-        if (state.labelled && state.aspect != null && state.amount > 0) {
-            // na altura da barriga e para a frente: numa coluna de alambiques nao ha ar livre em cima
-            EssentiaLabel.submit(pose, collector, camera, this.font,
-                    state.aspect, state.amount, 0.6f, 0.62f, light);
-        }
     }
 
     /**
