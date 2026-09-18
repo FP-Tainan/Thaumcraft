@@ -95,4 +95,72 @@ public class EquipmentGameTest {
         if (!"shock".equals(wand.get(net.thaumcraft.registry.TCComponents.WAND_FOCUS))) helper.fail("o foco de raio sai da bolsa do cinto");
         helper.succeed();
     }
+
+    @GameTest
+    public void theRunicShieldChargesFromTheWandAndTakesTheHit(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(GameType.SURVIVAL);
+        net.thaumcraft.baubles.Baubles.container(player).setItem(net.thaumcraft.baubles.Baubles.RING_1, new ItemStack(TCItems.RUNIC_RING_LESSER));
+        ItemStack wand = new ItemStack(TCItems.WAND);
+        WandItem.setVis(wand, new net.thaumcraft.api.aspects.AspectList().add(Aspects.AIR, 1000).add(Aspects.EARTH, 1000));
+        player.getInventory().setItem(20, wand);
+        net.thaumcraft.event.RunicShield.tick(player);
+        if (net.thaumcraft.event.RunicShield.charge(player) != 1) helper.fail("o anel menor carrega uma runa; deu " + net.thaumcraft.event.RunicShield.charge(player));
+        int paid = (int) (50 * WandItem.modifier(wand, player, Aspects.AIR));
+        if (WandItem.vis(wand, Aspects.AIR) != 1000 - paid || WandItem.vis(wand, Aspects.EARTH) != 1000 - paid) {
+            helper.fail("cada runa custa meio de ar e meio de terra da varinha, com o fator da ponteira");
+        }
+        float left = net.thaumcraft.event.RunicShield.absorb(player, player.damageSources().generic(), 3.0f);
+        if (Math.abs(left - 2.0f) > 0.001f) helper.fail("uma runa segura um ponto de dano; sobrou " + left);
+        if (net.thaumcraft.event.RunicShield.charge(player) != 0) helper.fail("e se gasta");
+        float drown = net.thaumcraft.event.RunicShield.absorb(player, player.damageSources().drown(), 3.0f);
+        if (drown != 3.0f) helper.fail("afogamento passa direto");
+        helper.succeed();
+    }
+
+    @GameTest
+    public void runicAugmentationHardensAndGrowsDearer(GameTestHelper helper) {
+        if (net.thaumcraft.crafting.RunicAugmentRecipe.forCentral(new ItemStack(net.minecraft.world.item.Items.DIAMOND_HELMET)) != null) {
+            helper.fail("só peças que aceitam escudo rúnico");
+        }
+        ItemStack goggles = new ItemStack(TCItems.GOGGLES);
+        var first = net.thaumcraft.crafting.RunicAugmentRecipe.forCentral(goggles);
+        if (first == null || first.components().size() != 2 || first.essentia().getAmount(Aspects.ENERGY) != 32 || first.instability() != 5) {
+            helper.fail("sem carga: diamante e sal, 32 de Potentia");
+        }
+        ItemStack hardened = first.resultFor(goggles);
+        if (net.thaumcraft.event.RunicShield.finalCharge(hardened) != 1) helper.fail("sai com uma carga");
+        var second = net.thaumcraft.crafting.RunicAugmentRecipe.forCentral(hardened);
+        if (second.components().size() != 3 || second.essentia().getAmount(Aspects.ENERGY) != 64) helper.fail("com uma carga: mais um sal, o dobro da essência");
+        if (net.thaumcraft.event.RunicShield.finalCharge(new ItemStack(TCItems.RUNIC_GIRDLE)) != 10) helper.fail("o cinturão tem dez cargas");
+        helper.succeed();
+    }
+
+    @GameTest
+    public void theKineticGirdleWantsStrongHarmingSplash(GameTestHelper helper) {
+        var recipe = net.thaumcraft.crafting.InfusionRecipes.ALL.stream()
+                .filter(r -> r.result().is(TCItems.RUNIC_GIRDLE_KINETIC)).toList();
+        if (recipe.size() != 1) helper.fail("uma receita do cinturão cinético (as duas do jar viram a mesma aqui); achou " + recipe.size());
+        ItemStack strong = net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.SPLASH_POTION,
+                net.minecraft.world.item.alchemy.Potions.STRONG_HARMING);
+        ItemStack weak = net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.SPLASH_POTION,
+                net.minecraft.world.item.alchemy.Potions.HARMING);
+        boolean takesStrong = recipe.get(0).components().stream().anyMatch(i -> i.test(strong));
+        boolean takesWeak = recipe.get(0).components().stream().anyMatch(i -> i.test(weak));
+        if (!takesStrong || takesWeak) helper.fail("só a de dano II de arremesso");
+        helper.succeed();
+    }
+
+    @GameTest
+    public void theVisStoneTopsUpTheWandInHand(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        ItemStack stone = new ItemStack(TCItems.VIS_STONE);
+        stone.set(net.thaumcraft.registry.TCComponents.WAND_VIS, new net.thaumcraft.api.aspects.AspectList().add(Aspects.FIRE, 12));
+        ItemStack wand = new ItemStack(TCItems.WAND);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, wand);
+        ((net.thaumcraft.item.VisAmuletItem) TCItems.VIS_STONE).onWornTick(stone, player);
+        if (WandItem.vis(player.getMainHandItem(), Aspects.FIRE) != 5) helper.fail("passa cinco centésimos por vez");
+        if (net.thaumcraft.item.VisAmuletItem.vis(stone).getAmount(Aspects.FIRE) != 7) helper.fail("e a pedra perde o mesmo");
+        helper.succeed();
+    }
 }

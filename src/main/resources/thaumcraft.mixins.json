@@ -3,7 +3,8 @@
   "package": "net.thaumcraft.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "LivingEntityArmorMixin"
+    "LivingEntityArmorMixin",
+    "PlayerRunicMixin"
   ],
   "client": [
     "ItemInHandRendererMixin"

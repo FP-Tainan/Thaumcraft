@@ -134,6 +134,18 @@
       "thaumcraft:rumble"
     ]
   },
+  "runic_shield_charge": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:runicshieldcharge"
+    ]
+  },
+  "runic_shield_effect": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:runicshieldeffect"
+    ]
+  },
   "shock": {
     "category": "player",
     "sounds": [

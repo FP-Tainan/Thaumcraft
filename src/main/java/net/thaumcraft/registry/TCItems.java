@@ -131,6 +131,27 @@ public final class TCItems {
                 .rarity(aspect == null ? net.minecraft.world.item.Rarity.COMMON : net.minecraft.world.item.Rarity.UNCOMMON)));
     }
 
+    /** As peças do escudo rúnico: amuleto, anéis e cinto, com as cargas do original. */
+    public static final Item RUNIC_AMULET = runic("runic_amulet", net.thaumcraft.api.baubles.BaubleType.AMULET, net.thaumcraft.item.RunicBaubleItem.Kind.PLAIN, 8, net.minecraft.world.item.Rarity.RARE);
+    public static final Item RUNIC_AMULET_EMERGENCY = runic("runic_amulet_emergency", net.thaumcraft.api.baubles.BaubleType.AMULET, net.thaumcraft.item.RunicBaubleItem.Kind.EMERGENCY, 7, net.minecraft.world.item.Rarity.RARE);
+    public static final Item RUNIC_RING_LESSER = runic("runic_ring_lesser", net.thaumcraft.api.baubles.BaubleType.RING, net.thaumcraft.item.RunicBaubleItem.Kind.PLAIN, 1, net.minecraft.world.item.Rarity.UNCOMMON);
+    public static final Item RUNIC_RING = runic("runic_ring", net.thaumcraft.api.baubles.BaubleType.RING, net.thaumcraft.item.RunicBaubleItem.Kind.PLAIN, 5, net.minecraft.world.item.Rarity.RARE);
+    public static final Item RUNIC_RING_CHARGED = runic("runic_ring_charged", net.thaumcraft.api.baubles.BaubleType.RING, net.thaumcraft.item.RunicBaubleItem.Kind.CHARGED, 4, net.minecraft.world.item.Rarity.RARE);
+    public static final Item RUNIC_RING_REGEN = runic("runic_ring_regen", net.thaumcraft.api.baubles.BaubleType.RING, net.thaumcraft.item.RunicBaubleItem.Kind.HEALING, 4, net.minecraft.world.item.Rarity.RARE);
+    public static final Item RUNIC_GIRDLE = runic("runic_girdle", net.thaumcraft.api.baubles.BaubleType.BELT, net.thaumcraft.item.RunicBaubleItem.Kind.PLAIN, 10, net.minecraft.world.item.Rarity.RARE);
+    public static final Item RUNIC_GIRDLE_KINETIC = runic("runic_girdle_kinetic", net.thaumcraft.api.baubles.BaubleType.BELT, net.thaumcraft.item.RunicBaubleItem.Kind.KINETIC, 9, net.minecraft.world.item.Rarity.RARE);
+
+    /** A pedra de vis e o amuleto de vis: guardam vis e passam para a varinha na mão. */
+    public static final Item VIS_STONE = register("vis_stone", properties ->
+            new net.thaumcraft.item.VisAmuletItem(false, properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item VIS_AMULET = register("vis_amulet", properties ->
+            new net.thaumcraft.item.VisAmuletItem(true, properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
+
+    private static Item runic(String name, net.thaumcraft.api.baubles.BaubleType type, net.thaumcraft.item.RunicBaubleItem.Kind kind,
+                              int charge, net.minecraft.world.item.Rarity rarity) {
+        return register(name, properties -> new net.thaumcraft.item.RunicBaubleItem(type, kind, charge, properties.stacksTo(1).rarity(rarity)));
+    }
+
     /** Os mantos do taumaturgo: pouca proteção, tingíveis, e um pouco de desconto de vis. */
     public static final Item ROBE_CHESTPLATE = robe("robe_chestplate", net.minecraft.world.item.equipment.ArmorType.CHESTPLATE);
     public static final Item ROBE_LEGGINGS = robe("robe_leggings", net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
@@ -495,7 +516,7 @@ public final class TCItems {
      */
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "traveller_boots", "fortress_helmet", "fortress_chestplate", "fortress_leggings",
-            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal", "focus_pouch", "mundane_amulet", "mundane_ring", "mundane_belt", "apprentice_ring_air", "apprentice_ring_earth", "apprentice_ring_fire", "apprentice_ring_water", "apprentice_ring_order", "apprentice_ring_entropy",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal", "focus_pouch", "mundane_amulet", "mundane_ring", "mundane_belt", "apprentice_ring_air", "apprentice_ring_earth", "apprentice_ring_fire", "apprentice_ring_water", "apprentice_ring_order", "apprentice_ring_entropy", "vis_stone", "vis_amulet", "runic_amulet", "runic_amulet_emergency", "runic_ring_lesser", "runic_ring", "runic_ring_charged", "runic_ring_regen", "runic_girdle", "runic_girdle_kinetic",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
             "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",

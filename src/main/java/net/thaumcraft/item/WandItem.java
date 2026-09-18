@@ -82,7 +82,7 @@ public class WandItem extends Item {
         return vis(stack).getAmount(aspect);
     }
 
-    private static void setVis(ItemStack stack, AspectList list) {
+    public static void setVis(ItemStack stack, AspectList list) {
         stack.set(TCComponents.WAND_VIS, list);
     }
 

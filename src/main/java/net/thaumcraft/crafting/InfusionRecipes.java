@@ -36,7 +36,9 @@ public final class InfusionRecipes {
         for (InfusionRecipe recipe : ALL) {
             if (recipe.matches(middle, around)) return recipe;
         }
-        return null;
+        // o InfusionRunicAugmentRecipe, que o original põe depois de todas: monta-se para a peça do meio
+        InfusionRecipe augment = RunicAugmentRecipe.forCentral(middle);
+        return augment != null && augment.matches(middle, around) ? augment : null;
     }
 
     static {
@@ -130,6 +132,41 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.BEAST, 16).add(Aspects.LIFE, 16).add(Aspects.LIGHT, 8),
                 Ingredient.of(TCBlocks.ARCANE_LAMP.asItem()),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.WHEAT), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.CARROT), Ingredient.of(TCItems.SHARDS.get("fire")))));
+        // RunicAmulet
+        ALL.add(new InfusionRecipe("RUNICARMOR", new ItemStack(TCItems.RUNIC_AMULET), 4,
+                new AspectList().add(Aspects.ARMOR, 20).add(Aspects.MAGIC, 35).add(Aspects.ENERGY, 35),
+                Ingredient.of(TCItems.MUNDANE_AMULET),
+                Arrays.asList(Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCResources.get("amber")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCItems.NITOR), Ingredient.of(TCItems.NITOR), Ingredient.of(TCItems.SCRIBING_TOOLS))));
+        // RunicAmuletEmergency
+        ALL.add(new InfusionRecipe("RUNICEMERGENCY", new ItemStack(TCItems.RUNIC_AMULET_EMERGENCY), 7,
+                new AspectList().add(Aspects.ARMOR, 20).add(Aspects.MAGIC, 35).add(Aspects.EARTH, 32).add(Aspects.VOID, 32),
+                Ingredient.of(TCItems.RUNIC_AMULET),
+                Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("earth")), net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients.components(net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.POTION, net.minecraft.world.item.alchemy.Potions.STRONG_STRENGTH)), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("earth")))));
+        // RunicRing
+        ALL.add(new InfusionRecipe("RUNICARMOR", new ItemStack(TCItems.RUNIC_RING), 3,
+                new AspectList().add(Aspects.ARMOR, 10).add(Aspects.MAGIC, 25).add(Aspects.ENERGY, 25),
+                Ingredient.of(TCItems.MUNDANE_RING),
+                Arrays.asList(Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCResources.get("amber")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCItems.NITOR), Ingredient.of(TCItems.SCRIBING_TOOLS))));
+        // RunicRingCharged
+        ALL.add(new InfusionRecipe("RUNICCHARGED", new ItemStack(TCItems.RUNIC_RING_CHARGED), 6,
+                new AspectList().add(Aspects.ARMOR, 16).add(Aspects.MAGIC, 16).add(Aspects.ENERGY, 64),
+                Ingredient.of(TCItems.RUNIC_RING),
+                Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("fire")), net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients.components(net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.POTION, net.minecraft.world.item.alchemy.Potions.STRONG_SWIFTNESS)), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("fire")))));
+        // RunicRingHealing
+        ALL.add(new InfusionRecipe("RUNICHEALING", new ItemStack(TCItems.RUNIC_RING_REGEN), 6,
+                new AspectList().add(Aspects.ARMOR, 16).add(Aspects.MAGIC, 16).add(Aspects.WATER, 32).add(Aspects.HEAL, 32),
+                Ingredient.of(TCItems.RUNIC_RING),
+                Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(TCItems.SHARDS.get("water")), net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients.components(net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.POTION, net.minecraft.world.item.alchemy.Potions.LONG_REGENERATION)), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(TCItems.SHARDS.get("water")))));
+        // RunicGirdle
+        ALL.add(new InfusionRecipe("RUNICARMOR", new ItemStack(TCItems.RUNIC_GIRDLE), 4,
+                new AspectList().add(Aspects.ARMOR, 30).add(Aspects.MAGIC, 50).add(Aspects.ENERGY, 50),
+                Ingredient.of(TCItems.MUNDANE_BELT),
+                Arrays.asList(Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCResources.get("amber")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCItems.NITOR), Ingredient.of(TCItems.NITOR), Ingredient.of(TCItems.NITOR), Ingredient.of(TCItems.SCRIBING_TOOLS))));
+        // RunicGirdleKinetic
+        ALL.add(new InfusionRecipe("RUNICKINETIC", new ItemStack(TCItems.RUNIC_GIRDLE_KINETIC), 7,
+                new AspectList().add(Aspects.ARMOR, 33).add(Aspects.MAGIC, 55).add(Aspects.AIR, 64),
+                Ingredient.of(TCItems.RUNIC_GIRDLE),
+                Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")), net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients.components(net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.SPLASH_POTION, net.minecraft.world.item.alchemy.Potions.STRONG_HARMING)), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")))));
         // BootsTraveller
         ALL.add(new InfusionRecipe("BOOTSTRAVELLER", new ItemStack(TCItems.TRAVELLER_BOOTS), 1,
                 new AspectList().add(Aspects.FLIGHT, 25).add(Aspects.TRAVEL, 25),

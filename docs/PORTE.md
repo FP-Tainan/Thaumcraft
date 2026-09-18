@@ -677,3 +677,30 @@ A mesma auditoria achou, nas receitas geradas:
 - `BaubleBlankItem` — amuleto, anel e cinto comuns (receitas de bancada do original) e os anéis de aprendiz dos seis
   primários (1% de desconto no aspecto deles; no original vêm de baús de masmorra, que ainda não foram portados).
 - Os nomes das peças comuns e a palavra "desconto" foram traduzidos aqui; o pt_BR do original não os tinha.
+
+## Equipamentos, parte 5: escudo rúnico, pedra e amuleto de vis (2026-09-18)
+
+- `event/RunicShield` — o `EventHandlerRunic` da 4.2.3.5. A cada 40 tiques (ou quando as peças mudam) soma as
+  cargas da armadura e das peças vestidas; recarrega uma runa a cada 2 s (menos 0,5 s por anel carregado) gastando
+  50 centésimos de ar e de terra, primeiro do amuleto de vis vestido e depois das varinhas do inventário (com o
+  fator da ponteira, como o `consumeAllVisCrafting`). Cada runa segura um ponto de dano, antes da armadura
+  (`mixin/PlayerRunicMixin`); afogamento, Wither, vazio e fome passam direto. Ao zerar: o cinturão cinético explode
+  (20 s de espera), o anel revigorante dá Regeneração (20 s) e o amuleto de emergência devolve até 8 runas (60 s).
+- **Diferença:** a espera para voltar a carregar depois de zerar era um campo só, de todos os jogadores, no
+  original; aqui cada jogador tem a sua.
+- `item/RunicBaubleItem` — amuleto (8) e amuleto de emergência (7), anel menor (1), anel (5), carregado (4) e
+  revigorante (4), cinturão (10) e cinético (9). `client/RunicHud` desenha a barra dourada sobre os corações (onde o
+  original a punha), o clarão `client/fx/ShieldRunesFx` (o `hemis.obj` com os 15 quadros, somando luz e sem descartar
+  as faces de trás) e a linha "Escudo rúnico +N" nas dicas.
+- **Reforço rúnico** (`crafting/RunicAugmentRecipe`, o `InfusionRunicAugmentRecipe`): qualquer peça que aceite
+  escudo vai no meio, diamante + sal mundus + um sal por carga em volta; sai com uma carga a mais. Essência
+  32 × 2^cargas, instabilidade 5 + cargas/2. As peças que aceitam são a etiqueta `thaumcraft:runic_armor`, gerada
+  por `scratchpad/runico-tag.js` a partir das classes do jar que implementam `IRunicArmor` (faltam as dos cultistas,
+  do cinto e do arreio de voo e do manto do vazio, que ainda não foram portados).
+- `item/VisAmuletItem` — pedra de vis (25) e amuleto de vis (250, só se veste com a pesquisa): vestidos, passam
+  até 5 centésimos por aspecto a cada 5 tiques para a varinha na mão. **Pendente:** encher o amuleto pelos relés de
+  vis chega com a rede de vis; a receita da pedra, com os baús de masmorra; a do amuleto espera os cristais de vis.
+- Receitas de infusão: as poções do jar (metas 8233, 8226, 8257, 16428, 24620) viram ingredientes pelo componente
+  da poção (`DefaultCustomIngredients.components`), então só a poção certa serve. As duas receitas do cinturão
+  cinético do jar diferem só na meta da poção de arremesso, que aqui é a mesma: fica uma.
+- Os nomes das peças rúnicas e de vis foram traduzidos aqui; o pt_BR do original não os tinha.

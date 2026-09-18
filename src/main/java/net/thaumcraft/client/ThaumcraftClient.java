@@ -132,6 +132,7 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.client.FocusRadial.init();
         // as casas de amuleto, anel e cinto do Baubles
         net.thaumcraft.client.BaublesClient.init();
+        net.thaumcraft.client.RunicHud.init();
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.BAUBLES,
                 net.thaumcraft.client.gui.BaublesScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.FOCUS_POUCH,
