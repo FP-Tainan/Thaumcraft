@@ -6,6 +6,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.VegetationBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -17,10 +20,13 @@ import net.thaumcraft.world.SilverwoodTree;
  * As mudas das árvores mágicas: os dois primeiros tipos do {@code BlockCustomPlant} da 4.2.3.5.
  *
  * <p>Com luz nove ou mais em cima, a muda de grande-madeira vira árvore uma vez em vinte e cinco tiques ao
- * acaso, e a de pinheiro-de-prata uma vez em cinquenta. Farinha de osso não adianta: o original não deixava.
+ * acaso, e a de pinheiro-de-prata uma vez em cinquenta.
+ *
+ * <p><b>Diferença do original, pedida:</b> o {@code BlockCustomPlant} não aceitava farinha de osso. Aqui ela vale
+ * como numa muda comum: 45% de chance de tentar a árvore a cada uso.
  * Se a árvore não couber, a muda volta para o lugar.
  */
-public class MagicalSaplingBlock extends VegetationBlock {
+public class MagicalSaplingBlock extends VegetationBlock implements BonemealableBlock {
     public static final MapCodec<MagicalSaplingBlock> CODEC = simpleCodec(properties -> new MagicalSaplingBlock(false, properties));
     public static final MapCodec<MagicalSaplingBlock> SILVER_CODEC = simpleCodec(properties -> new MagicalSaplingBlock(true, properties));
     /** A caixa do {@code BlockCustomPlant}: quatro décimos para cada lado do meio, oito décimos de altura. */
@@ -58,5 +64,20 @@ public class MagicalSaplingBlock extends VegetationBlock {
                 : GreatwoodTree.generate(level, random, pos, false, false);
         if (!grew) level.setBlock(pos, state, Block.UPDATE_NONE);
         return grew;
+    }
+
+    @Override
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        return true;
+    }
+
+    @Override
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+        return random.nextFloat() < 0.45f;
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        this.grow(level, pos, state, random);
     }
 }

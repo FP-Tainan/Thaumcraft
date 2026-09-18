@@ -542,3 +542,5 @@ A mesma auditoria achou, nas receitas geradas:
 - **Alumentum:** o clique direito arremessa o `EntityAlumentum` (invisível, rastro de fogos-fátuos e faíscas,
   explosão de 1,66). O Nitor, como no original, só vira luz colocada.
 - **Fragmento de Conhecimento:** usado, dá um ou dois de cada primário ao estoque de pesquisa.
+- **Farinha de osso nas mudas mágicas (diferença pedida):** o original não aceitava; aqui vale como numa muda
+  comum, 45% de chance de tentar a árvore a cada uso.

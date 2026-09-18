@@ -84,4 +84,15 @@ public class MagicalTreeGameTest {
         }
         helper.succeed();
     }
+
+    @GameTest(maxTicks = 20)
+    public void boneMealWorksOnTheSaplings(GameTestHelper helper) {
+        for (var sapling : java.util.List.of(TCBlocks.GREATWOOD_SAPLING, TCBlocks.SILVERWOOD_SAPLING)) {
+            if (!(sapling instanceof net.minecraft.world.level.block.BonemealableBlock bonemealable)
+                    || !bonemealable.isValidBonemealTarget(helper.getLevel(), BlockPos.ZERO, sapling.defaultBlockState())) {
+                helper.fail("a farinha de osso tem de valer nas mudas mágicas");
+            }
+        }
+        helper.succeed();
+    }
 }
