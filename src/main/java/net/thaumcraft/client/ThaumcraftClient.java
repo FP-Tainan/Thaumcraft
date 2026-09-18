@@ -124,6 +124,14 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.HUNGRY_CHEST, net.thaumcraft.client.render.HungryChestRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("hungry_chest"), net.thaumcraft.client.render.HungryChestRenderer.Unbaked.CODEC);
+        // o levitador: o brilho de dentro, verde da terra em cima e roxo dos lados, e a faísca que sobe dele
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(net.minecraft.client.color.block.BlockTintSources.constant(0xFF00A000),
+                        net.minecraft.client.color.block.BlockTintSources.constant(0xFFDD11FF)),
+                net.thaumcraft.registry.TCBlocks.LEVITATOR);
+        net.thaumcraft.block.LevitatorBlock.clientEffects = (x, y, z, random) ->
+                net.thaumcraft.client.fx.Sparkle.spawn(random, x, y, z, 1.0f, 3, -0.3f);
+        net.thaumcraft.block.entity.LevitatorBlockEntity.sneaking = player -> player.isShiftKeyDown();
         // as lâmpadas: o corpo é bloco comum, e o bocal que as prende vem do desenhista
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.ARCANE_LAMP, net.thaumcraft.client.render.ArcaneLampRenderer::new);

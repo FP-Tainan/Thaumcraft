@@ -92,4 +92,25 @@ public class LampsGameTest {
             if (!chest.getItem(0).is(net.minecraft.world.item.Items.DIAMOND)) helper.fail("o baú tem de engolir o diamante");
         });
     }
+
+    @GameTest(maxTicks = 60)
+    public void theLevitatorLiftsAnItem(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 1, 1), TCBlocks.LEVITATOR.defaultBlockState());
+        var item = helper.spawnItem(net.minecraft.world.item.Items.DIAMOND, 1.5f, 2.2f, 1.5f);
+        double start = item.getY();
+        helper.succeedWhen(() -> {
+            if (item.getY() < start + 1.5) helper.fail("o diamante tem de subir");
+        });
+    }
+
+    @GameTest(maxTicks = 60)
+    public void aPoweredLevitatorLetsItFall(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 1, 1), TCBlocks.LEVITATOR.defaultBlockState());
+        helper.setBlock(new BlockPos(2, 1, 1), net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.defaultBlockState());
+        var item = helper.spawnItem(net.minecraft.world.item.Items.DIAMOND, 1.5f, 3.5f, 1.5f);
+        helper.runAfterDelay(40, () -> {
+            if (item.getY() > helper.absoluteVec(new net.minecraft.world.phys.Vec3(0, 2.2, 0)).y) helper.fail("ligado na redstone, ele solta");
+            helper.succeed();
+        });
+    }
 }

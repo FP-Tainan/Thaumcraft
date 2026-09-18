@@ -193,6 +193,11 @@ public final class TCBlocks {
             new net.thaumcraft.block.HungryChestBlock(properties.mapColor(MapColor.WOOD).strength(2.5f)
                     .sound(SoundType.WOOD).noOcclusion().ignitedByLava()));
 
+    /** O levitador arcano: empurra para cima o que está sobre ele. */
+    public static final Block LEVITATOR = register("levitator", properties ->
+            new net.thaumcraft.block.LevitatorBlock(properties.mapColor(MapColor.WOOD).strength(2.5f, 9.0f)
+                    .sound(SoundType.WOOD).noOcclusion().ignitedByLava()));
+
     /** A lâmpada arcana: ilumina forte e espalha luz invisível pelos cantos escuros em volta. */
     public static final Block ARCANE_LAMP = register("arcane_lamp", properties ->
             new net.thaumcraft.block.ArcaneLampBlock(net.thaumcraft.block.ArcaneLampBlock.Kind.ARCANE, lampProperties(properties).lightLevel(state -> 15)));

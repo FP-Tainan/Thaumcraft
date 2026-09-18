@@ -58,6 +58,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("PAVEWARD", new ItemStack(TCBlocks.BUILDING.get("paving_stone_warding").asItem(), 4),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), null, null, null),
                 new AspectList().add(Aspects.FIRE, 10).add(Aspects.ORDER, 10)));
+        // Levitator
+        ALL.add(new ArcaneRecipe("LEVITATOR", new ItemStack(TCBlocks.LEVITATOR.asItem()),
+                Arrays.asList(Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem())),
+                new AspectList().add(Aspects.AIR, 10).add(Aspects.EARTH, 5)));
         // InfusionMatrix
         ALL.add(new ArcaneRecipe("INFUSION", new ItemStack(TCBlocks.INFUSION_MATRIX.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem())),

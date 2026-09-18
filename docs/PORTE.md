@@ -595,3 +595,15 @@ A mesma auditoria achou, nas receitas geradas:
   (`BlockPistonBase.determineOrientation`), mas o desenhista só girava para os quatro lados; aqui ele sempre fica
   de pé, virado para quem o pôs.
 - O mapeador traduz o alçapão de 2014 como o alçapão de carvalho.
+
+## Alquimia, parte D: levitador arcano (2026-09-18)
+
+- `block/LevitatorBlock` + `entity/LevitatorBlockEntity` — o `BlockLifter`/`TileLifter`: empurra para cima itens,
+  o que pode ser empurrado e cavalos até 10 blocos (+10 por levitador ligado empilhado embaixo), parando no
+  primeiro bloco cheio; zera a queda; agachado, o jogador desce devagar. Redstone nele ou no bloco de cima desliga.
+  Roda dos dois lados como o original: o servidor move itens e bichos, o cliente move o próprio jogador.
+- O desenho é o do `BlockLifterRenderer`: o cubo com frestas e, um centésimo para dentro, o `animatedglow` tingido
+  (0x00A000 em cima, 0xDD11FF dos lados) — no modelo de bloco, com `light_emission` 11 quando ligado (o brilho 180
+  do original). No inventário os lados vão com 0xEECCFF, como o `renderInventoryBlock`.
+- A redstone no bloco de cima não avisa o levitador; ele confere a cada 100 tiques, junto com a conta do alcance
+  (o original perguntava a cada tique).

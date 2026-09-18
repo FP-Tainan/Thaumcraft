@@ -35,6 +35,13 @@ public class LampsClientTest implements FabricClientGameTest {
             server.runCommand("execute at @p run setblock ~2 ~ ~-2 thaumcraft:hungry_chest[facing=east]");
             context.waitTicks(30);
             context.takeScreenshot("bau_faminto");
+            server.runCommand("time set midnight");
+            server.runCommand("execute at @p run setblock ~-1 ~ ~-3 thaumcraft:levitator");
+            server.runCommand("execute at @p run setblock ~-3 ~ ~-3 thaumcraft:levitator");
+            server.runCommand("execute at @p run setblock ~-4 ~ ~-3 minecraft:redstone_block");
+            server.runCommand("give @p thaumcraft:levitator");
+            context.waitTicks(40);
+            context.takeScreenshot("levitador");
         }
     }
 }

@@ -143,6 +143,10 @@ public final class TCBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("hungry_chest"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.HungryChestBlockEntity::new, java.util.Set.of(TCBlocks.HUNGRY_CHEST)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.LevitatorBlockEntity> LEVITATOR =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("levitator"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.LevitatorBlockEntity::new, java.util.Set.of(TCBlocks.LEVITATOR)));
+
     private TCBlockEntities() {
     }
 

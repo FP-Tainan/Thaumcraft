@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:block/levitator",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -16736256
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1127169
+      }
+    ]
+  }
+}
