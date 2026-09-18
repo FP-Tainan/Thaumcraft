@@ -583,3 +583,15 @@ A mesma auditoria achou, nas receitas geradas:
   opacidade de luz 3, e as quatro receitas de bancada comum do original (`scratchpad/ambar.js`).
 - O mapeador agora traduz os 16 metadados do corante de 2014 (o 15 é a farinha de osso da Lâmpada do Crescimento).
 - "Lâmpada da Fertilidade" foi traduzida aqui; o pt_BR do original não a tinha.
+
+## Alquimia, parte C: baú faminto (2026-09-18)
+
+- `block/HungryChestBlock` + `entity/HungryChestBlockEntity` — o `BlockChestHungry`/`TileChestHungry`: 27 casas, a
+  frente para quem coloca, sem baú duplo. O item que encosta é engolido (som de comer e a tampa dá uma mordida de
+  dois décimos); o que não couber fica por cima. Comparador lê o conteúdo.
+- `HungryChestRenderer` desenha o `ModelChest` **do 1.7.10** (conferido no jar do jogo: tampa 14×5×14, fecho 2×4×1,
+  base 14×10×14, UV 0,0 e 0,19 em 64×64), porque o baú do jogo de hoje mudou de modelo e de folha de textura.
+- **Diferença:** o original deixava o baú olhar para cima ou para baixo quando o jogador mirava muito inclinado
+  (`BlockPistonBase.determineOrientation`), mas o desenhista só girava para os quatro lados; aqui ele sempre fica
+  de pé, virado para quem o pôs.
+- O mapeador traduz o alçapão de 2014 como o alçapão de carvalho.

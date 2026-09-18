@@ -162,6 +162,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("GOGGLES", new ItemStack(TCItems.GOGGLES),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.LEATHER), null, Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.THAUMOMETER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.THAUMOMETER)),
                 new AspectList().add(Aspects.AIR, 5).add(Aspects.FIRE, 5).add(Aspects.WATER, 5).add(Aspects.EARTH, 5).add(Aspects.ENTROPY, 3).add(Aspects.ORDER, 3)));
+        // HungryChest
+        ALL.add(new ArcaneRecipe("HUNGRYCHEST", new ItemStack(TCBlocks.HUNGRY_CHEST.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), Ingredient.of(net.minecraft.world.level.block.Blocks.OAK_TRAPDOOR.asItem()), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), null, Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS)),
+                new AspectList().add(Aspects.AIR, 5).add(Aspects.ORDER, 3).add(Aspects.ENTROPY, 3)));
         // GolemBell
         ALL.add(new ArcaneRecipe("GOLEMBELL", new ItemStack(TCItems.GOLEM_BELL),
                 Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), null, Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.STICK), null, null),

@@ -188,6 +188,11 @@ public final class TCBlocks {
             new net.thaumcraft.block.AmberBlock(properties.mapColor(MapColor.COLOR_ORANGE).strength(1.5f, 3.0f)
                     .sound(SoundType.STONE).noOcclusion()));
 
+    /** O baú faminto: engole o que cai nele. */
+    public static final Block HUNGRY_CHEST = register("hungry_chest", properties ->
+            new net.thaumcraft.block.HungryChestBlock(properties.mapColor(MapColor.WOOD).strength(2.5f)
+                    .sound(SoundType.WOOD).noOcclusion().ignitedByLava()));
+
     /** A lâmpada arcana: ilumina forte e espalha luz invisível pelos cantos escuros em volta. */
     public static final Block ARCANE_LAMP = register("arcane_lamp", properties ->
             new net.thaumcraft.block.ArcaneLampBlock(net.thaumcraft.block.ArcaneLampBlock.Kind.ARCANE, lampProperties(properties).lightLevel(state -> 15)));

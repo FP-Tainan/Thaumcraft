@@ -121,6 +121,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.ESSENTIA_CRYSTALIZER, net.thaumcraft.client.render.EssentiaCrystalizerRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essentia_crystalizer"), net.thaumcraft.client.render.EssentiaCrystalizerRenderer.Unbaked.CODEC);
         net.thaumcraft.client.render.AspectTint.register();
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.HUNGRY_CHEST, net.thaumcraft.client.render.HungryChestRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("hungry_chest"), net.thaumcraft.client.render.HungryChestRenderer.Unbaked.CODEC);
         // as lâmpadas: o corpo é bloco comum, e o bocal que as prende vem do desenhista
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.ARCANE_LAMP, net.thaumcraft.client.render.ArcaneLampRenderer::new);

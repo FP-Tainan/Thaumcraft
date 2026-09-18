@@ -81,4 +81,15 @@ public class LampsGameTest {
             if (!first.isInLove() || !second.isInLove()) helper.fail("as duas vacas entram no cio");
         });
     }
+
+    @GameTest(maxTicks = 60)
+    public void theHungryChestEatsWhatFallsOnIt(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(1, 1, 1);
+        helper.setBlock(pos, TCBlocks.HUNGRY_CHEST.defaultBlockState());
+        helper.spawnItem(net.minecraft.world.item.Items.DIAMOND, 1.5f, 2.5f, 1.5f);
+        helper.succeedWhen(() -> {
+            var chest = helper.getBlockEntity(pos, net.thaumcraft.block.entity.HungryChestBlockEntity.class);
+            if (!chest.getItem(0).is(net.minecraft.world.item.Items.DIAMOND)) helper.fail("o baú tem de engolir o diamante");
+        });
+    }
 }

@@ -139,6 +139,10 @@ public final class TCBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("fertility_lamp"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.FertilityLampBlockEntity::new, java.util.Set.of(TCBlocks.FERTILITY_LAMP)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.HungryChestBlockEntity> HUNGRY_CHEST =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("hungry_chest"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.HungryChestBlockEntity::new, java.util.Set.of(TCBlocks.HUNGRY_CHEST)));
+
     private TCBlockEntities() {
     }
 
