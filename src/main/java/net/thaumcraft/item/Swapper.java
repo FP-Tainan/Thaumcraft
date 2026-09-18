@@ -68,7 +68,7 @@ public final class Swapper {
         ItemStack wand = player.getInventory().getItem(task.slot);
         FocusItem focus = wand.getItem() instanceof WandItem ? Focuses.on(wand) : null;
         if (focus == null || !level.mayInteract(player, task.pos) || here.getBlock().asItem() == task.target) return false;
-        if (!WandItem.consumeRaw(wand, focus.cost(), false)) return false;
+        if (!WandItem.consumeRaw(wand, focus.cost(), false, player)) return false;
         if (!(task.target instanceof BlockItem blockItem)) return false;
         int slot = -1;
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
@@ -87,7 +87,7 @@ public final class Swapper {
             for (ItemStack drop : drops) {
                 if (!player.getInventory().add(drop)) Block.popResource(level, task.pos, drop);
             }
-            WandItem.consumeRaw(wand, focus.cost(), true);
+            WandItem.consumeRaw(wand, focus.cost(), true, player);
         }
         level.setBlock(task.pos, blockItem.getBlock().defaultBlockState(), Block.UPDATE_ALL);
         TCNetwork.blockSparkle(level, task.pos, SPARKLE);

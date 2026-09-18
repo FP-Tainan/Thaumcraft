@@ -132,6 +132,9 @@
   "item.thaumcraft.primal_charm": "Primal Charm",
   "item.thaumcraft.quicksilver": "Quicksilver",
   "item.thaumcraft.research_notes": "Research Notes",
+  "item.thaumcraft.robe_boots": "Thaumaturge's Boots",
+  "item.thaumcraft.robe_chestplate": "Thaumaturge's Robe",
+  "item.thaumcraft.robe_leggings": "Thaumaturge's Leggings",
   "item.thaumcraft.salis_mundus": "Salis Mundus",
   "item.thaumcraft.scribing_tools": "Scribing Tools",
   "item.thaumcraft.shard_air": "Air Shard",
@@ -170,6 +173,7 @@
   "item.thaumcraft.thaumium_sword": "Thaumium Sword",
   "item.thaumcraft.thaumometer": "Thaumometer",
   "item.thaumcraft.thaumonomicon": "Thaumonomicon",
+  "item.thaumcraft.traveller_boots": "Boots of the Traveler",
   "item.thaumcraft.tube": "Essentia Tube",
   "item.thaumcraft.tube_buffer": "Essentia Buffer",
   "item.thaumcraft.tube_filter": "Filtered Essentia Tube",
@@ -1082,5 +1086,6 @@
   "tc.scan.new": "%s studied. New aspects: %s",
   "tc.scan.nothing": "There is nothing here worth studying.",
   "tc.tooltip.unknown": "and %s unknown aspect(s)",
+  "tc.visdiscount": "Vis discount",
   "tc.workbench.insufficient": "Insufficient vis"
 }

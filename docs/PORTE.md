@@ -607,3 +607,17 @@ A mesma auditoria achou, nas receitas geradas:
   do original). No inventário os lados vão com 0xEECCFF, como o `renderInventoryBlock`.
 - A redstone no bloco de cima não avisa o levitador; ele confere a cada 100 tiques, junto com a conta do alcance
   (o original perguntava a cada tique).
+
+## Equipamentos, parte 1: desconto de vis, mantos e botas do viajante (2026-09-18)
+
+- `api/wands/VisDiscountGear` + `WandItem.modifier/totalVisDiscount` — o `IVisDiscountGear` e o
+  `getConsumptionModifier` do original: o multiplicador da ponteira menos a soma dos descontos do que se veste,
+  com piso de 0,1. Vale para focos, bancada arcana (inclusive o custo mostrado) e o altar. Os óculos dão 5%.
+- O material `armorMatSpecial` (1/3/2/1, durabilidade 25) agora é o de óculos, mantos e botas — os óculos estavam
+  com 2 de proteção por engano.
+- `RobeItem` — peito e calça 2%, botas 1%; tingíveis como o couro (receita `crafting_dye`, lavam no caldeirão pela
+  tag `cauldron_can_remove_dye`), cor sem tinta 0x6A3880, com a camada "over" sem cor; consertam com tecido
+  encantado. Desenho `robes_1`/`robes_2` do original como `equipment/robes`.
+- `TravellerBootsItem` — empurrão de 0,055 no chão (um quarto na água), 0,05 de controle no ar, −0,25 de queda por
+  tique, 350 de durabilidade. **Diferença:** o degrau de um bloco é um atributo do item (sempre ativo com a bota
+  no pé); o original só o ligava andando para a frente e sem agachar.

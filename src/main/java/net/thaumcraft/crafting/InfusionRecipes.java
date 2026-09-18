@@ -130,5 +130,10 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.BEAST, 16).add(Aspects.LIFE, 16).add(Aspects.LIGHT, 8),
                 Ingredient.of(TCBlocks.ARCANE_LAMP.asItem()),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.WHEAT), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.CARROT), Ingredient.of(TCItems.SHARDS.get("fire")))));
+        // BootsTraveller
+        ALL.add(new InfusionRecipe("BOOTSTRAVELLER", new ItemStack(TCItems.TRAVELLER_BOOTS), 1,
+                new AspectList().add(Aspects.FLIGHT, 25).add(Aspects.TRAVEL, 25),
+                Ingredient.of(net.minecraft.world.item.Items.LEATHER_BOOTS),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(net.minecraft.world.item.Items.FEATHER), Ingredient.of(net.minecraft.world.item.Items.COD))));
     }
 }

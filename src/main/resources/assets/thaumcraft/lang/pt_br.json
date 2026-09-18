@@ -132,6 +132,9 @@
   "item.thaumcraft.primal_charm": "Primal Charm",
   "item.thaumcraft.quicksilver": "Mercúrio",
   "item.thaumcraft.research_notes": "Notas de Pesquisa",
+  "item.thaumcraft.robe_boots": "Botas do Taumaturgo",
+  "item.thaumcraft.robe_chestplate": "Robe do Taumaturgo",
+  "item.thaumcraft.robe_leggings": "Calça do Taumaturgo",
   "item.thaumcraft.salis_mundus": "Salis Mundus",
   "item.thaumcraft.scribing_tools": "Ferramenta de Escrita",
   "item.thaumcraft.shard_air": "Estilhaço de Ar",
@@ -170,6 +173,7 @@
   "item.thaumcraft.thaumium_sword": "Espada Táumica",
   "item.thaumcraft.thaumometer": "Taumômetro",
   "item.thaumcraft.thaumonomicon": "Thaumonomicon",
+  "item.thaumcraft.traveller_boots": "Botas do Viajante",
   "item.thaumcraft.tube": "Tubo de Essência",
   "item.thaumcraft.tube_buffer": "Tampão de Essência",
   "item.thaumcraft.tube_filter": "Tubo de Essência Filtrada",
@@ -1086,5 +1090,6 @@
   "tc.scan.new": "%s estudado. Aspectos novos: %s",
   "tc.scan.nothing": "Não há nada aqui que valha estudar.",
   "tc.tooltip.unknown": "e mais %s aspecto(s) que você ainda não conhece",
+  "tc.visdiscount": "Desconto em vis",
   "tc.workbench.insufficient": "Vis insuficiente"
 }

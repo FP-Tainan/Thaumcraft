@@ -103,8 +103,30 @@ public final class TCItems {
 
     /** Os Óculos da Revelação: com eles no rosto, os nós de aura aparecem. */
     public static final Item GOGGLES = register("goggles", properties ->
-            new Item(properties.humanoidArmor(net.thaumcraft.item.TCMaterials.GOGGLES,
-                    net.minecraft.world.item.equipment.ArmorType.HELMET)));
+            new net.thaumcraft.item.GogglesItem(properties.humanoidArmor(net.thaumcraft.item.TCMaterials.GOGGLES,
+                    net.minecraft.world.item.equipment.ArmorType.HELMET).rarity(net.minecraft.world.item.Rarity.RARE)));
+
+    /** Os mantos do taumaturgo: pouca proteção, tingíveis, e um pouco de desconto de vis. */
+    public static final Item ROBE_CHESTPLATE = robe("robe_chestplate", net.minecraft.world.item.equipment.ArmorType.CHESTPLATE);
+    public static final Item ROBE_LEGGINGS = robe("robe_leggings", net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
+    public static final Item ROBE_BOOTS = robe("robe_boots", net.minecraft.world.item.equipment.ArmorType.BOOTS);
+
+    /** As botas do viajante: correm mais, sobem um bloco e amortecem a queda. */
+    public static final Item TRAVELLER_BOOTS = register("traveller_boots", properties ->
+            new net.thaumcraft.item.TravellerBootsItem(properties
+                    .humanoidArmor(net.thaumcraft.item.TCMaterials.TRAVELLER, net.minecraft.world.item.equipment.ArmorType.BOOTS)
+                    .durability(350).rarity(net.minecraft.world.item.Rarity.RARE)
+                    .component(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,
+                            net.thaumcraft.item.TCMaterials.TRAVELLER.createAttributes(net.minecraft.world.item.equipment.ArmorType.BOOTS)
+                                    .withModifierAdded(net.minecraft.world.entity.ai.attributes.Attributes.STEP_HEIGHT,
+                                            new net.minecraft.world.entity.ai.attributes.AttributeModifier(Thaumcraft.id("traveller_step"), 0.4,
+                                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),
+                                            net.minecraft.world.entity.EquipmentSlotGroup.FEET))));
+
+    private static Item robe(String name, net.minecraft.world.item.equipment.ArmorType type) {
+        return register(name, properties -> new net.thaumcraft.item.RobeItem(type, properties
+                .humanoidArmor(net.thaumcraft.item.TCMaterials.ROBES, type).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    }
 
     /** Os focos de varinha, pelo nome que o original dá a cada um. */
     public static final java.util.Map<String, Item> FOCI = new java.util.LinkedHashMap<>();
@@ -437,7 +459,7 @@ public final class TCItems {
      * peças dela, depois a matéria-prima, o equipamento e por fim os blocos.
      */
     private static final String[] SHELF = {
-            "thaumometer", "thaumonomicon", "goggles",
+            "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "traveller_boots",
             "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",

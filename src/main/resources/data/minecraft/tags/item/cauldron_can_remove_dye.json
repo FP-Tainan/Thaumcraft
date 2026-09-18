@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "thaumcraft:robe_chestplate",
+    "thaumcraft:robe_leggings",
+    "thaumcraft:robe_boots"
+  ]
+}

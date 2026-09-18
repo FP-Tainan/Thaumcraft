@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_dye",
+  "dye": "#minecraft:dyes",
+  "group": "dyed_robes",
+  "result": {
+    "id": "thaumcraft:robe_chestplate"
+  },
+  "target": "thaumcraft:robe_chestplate"
+}

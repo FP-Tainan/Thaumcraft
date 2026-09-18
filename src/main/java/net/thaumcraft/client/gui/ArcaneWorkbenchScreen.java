@@ -69,7 +69,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
             if (amount > 0) {
                 float alpha = 0.5f + (Mth.sin((ticks + count * 10) / 2.0f) * 0.2f - 0.2f);
                 if (hasWand) {
-                    amount *= WandItem.cap(wand).discount(primal);
+                    amount *= WandItem.modifier(wand, this.minecraft.player, primal);
                     if (amount * WandItem.VIS_UNIT <= WandItem.vis(wand, primal)) alpha = 1.0f;
                 }
                 tag(graphics, this.leftPos + ASPECT_LOCS[count][0] - 8, this.topPos + ASPECT_LOCS[count][1] - 8,
@@ -78,7 +78,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
             if (++count > 5) break;
         }
 
-        if (hasWand && !WandItem.consume(wand, cost, false)) {
+        if (hasWand && !WandItem.consume(wand, cost, false, this.minecraft.player)) {
             // o resultado escurecido: o original pinta o item com um terço da cor e dois terços de opacidade
             int x = this.leftPos + 160, y = this.topPos + 64;
             graphics.item(recipe.result(), x, y);

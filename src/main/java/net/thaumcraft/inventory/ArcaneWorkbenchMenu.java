@@ -104,7 +104,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
     public boolean canAfford(ArcaneRecipe recipe) {
         ItemStack wand = this.bench.getItem(ArcaneWorkbenchBlockEntity.WAND_SLOT);
         if (!(wand.getItem() instanceof WandItem)) return false;
-        return WandItem.consume(wand, recipe.cost(), false);
+        return WandItem.consume(wand, recipe.cost(), false, this.player);
     }
 
     /** Cobra o vis da varinha e gasta o que estava na grade. */
@@ -112,7 +112,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
         ArcaneRecipe recipe = this.resolve();
         if (recipe == null) return;
         ItemStack wand = this.bench.getItem(ArcaneWorkbenchBlockEntity.WAND_SLOT);
-        if (!WandItem.consume(wand, recipe.cost(), true)) return;
+        if (!WandItem.consume(wand, recipe.cost(), true, this.player)) return;
         for (int slot = 0; slot < 9; slot++) this.bench.removeItem(slot, 1);
         this.refresh();
     }

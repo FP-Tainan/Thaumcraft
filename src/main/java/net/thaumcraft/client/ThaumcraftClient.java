@@ -121,6 +121,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.ESSENTIA_CRYSTALIZER, net.thaumcraft.client.render.EssentiaCrystalizerRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essentia_crystalizer"), net.thaumcraft.client.render.EssentiaCrystalizerRenderer.Unbaked.CODEC);
         net.thaumcraft.client.render.AspectTint.register();
+        // as botas do viajante: o empurrão de quem anda é do lado de quem joga
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            var player = client.player;
+            if (player != null && !client.isPaused()
+                    && player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET).getItem() instanceof net.thaumcraft.item.TravellerBootsItem) {
+                net.thaumcraft.item.TravellerBootsItem.tickWorn(player);
+            }
+        });
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.HUNGRY_CHEST, net.thaumcraft.client.render.HungryChestRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("hungry_chest"), net.thaumcraft.client.render.HungryChestRenderer.Unbaked.CODEC);

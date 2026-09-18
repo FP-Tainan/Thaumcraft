@@ -89,7 +89,7 @@ public final class Focuses {
      */
     public static boolean tick(Level level, Player player, ItemStack wand, FocusItem focus) {
         // o original sempre confere antes, sem gastar; quem gasta é cada foco, na hora dele
-        if (!WandItem.consumeRaw(wand, focus.cost(), false)) return false;
+        if (!WandItem.consumeRaw(wand, focus.cost(), false, player)) return false;
         if (level.isClientSide()) {
             clientEffects.tick(level, player, wand, focus);
             return true;
@@ -143,7 +143,7 @@ public final class Focuses {
             level.playSound(null, player, TCSounds.FIRELOOP.value(), SoundSource.PLAYERS, 0.33f, 2.0f);
             FIRE_SOUND.put(player.getUUID(), now + 500L);
         }
-        if (!WandItem.consumeRaw(wand, focus.cost(), true)) return false;
+        if (!WandItem.consumeRaw(wand, focus.cost(), true, player)) return false;
         for (int a = 0; a < 2; a++) {
             EmberEntity ember = new EmberEntity(level, player, 15.0f);
             ember.setPos(ember.position().add(ember.getDeltaMovement()));
@@ -155,7 +155,7 @@ public final class Focuses {
     // ----------------------------------------------------------------- gelo
 
     private static boolean shootFrost(Level level, Player player, ItemStack wand, FocusItem focus) {
-        if (!WandItem.consumeRaw(wand, focus.cost(), true)) return false;
+        if (!WandItem.consumeRaw(wand, focus.cost(), true, player)) return false;
         FrostShardEntity shard = new FrostShardEntity(level, player, 1.0f);
         shard.setDamage(3.0f);
         level.addFreshEntity(shard);
@@ -167,7 +167,7 @@ public final class Focuses {
     // ----------------------------------------------------------------- raio
 
     private static boolean shock(Level level, Player player, ItemStack wand, FocusItem focus) {
-        if (!WandItem.consumeRaw(wand, focus.cost(), true)) return false;
+        if (!WandItem.consumeRaw(wand, focus.cost(), true, player)) return false;
         level.playSound(null, player.getX(), player.getY(), player.getZ(), TCSounds.SHOCK.value(),
                 SoundSource.PLAYERS, 0.25f, 1.0f);
         Entity pointed = pointedEntity(level, player, 20.0);
@@ -207,7 +207,7 @@ public final class Focuses {
     private static boolean primal(Level level, Player player, ItemStack wand) {
         long now = System.currentTimeMillis();
         if (PRIMAL_COOLDOWN.getOrDefault(player.getUUID(), 0L) > now) return false;
-        if (!WandItem.consumeRaw(wand, primalCost(now), true)) return false;
+        if (!WandItem.consumeRaw(wand, primalCost(now), true, player)) return false;
         PRIMAL_COOLDOWN.put(player.getUUID(), now + 500L);
         net.thaumcraft.entity.PrimalOrbEntity orb = new net.thaumcraft.entity.PrimalOrbEntity(level, player);
         level.addFreshEntity(orb);
@@ -244,7 +244,7 @@ public final class Focuses {
         int owner = wardOwner(player);
         boolean changed = false;
         if (tile == null && state.isSolidRender()) {
-            if (WandItem.consumeRaw(wand, focus.cost(), true)) {
+            if (WandItem.consumeRaw(wand, focus.cost(), true, player)) {
                 int light = state.getLightEmission();
                 level.setBlock(pos, net.thaumcraft.registry.TCBlocks.WARDED.defaultBlockState()
                         .setValue(net.thaumcraft.block.WardedBlock.LIGHT, light), Block.UPDATE_ALL);
@@ -292,7 +292,7 @@ public final class Focuses {
         for (net.thaumcraft.api.aspects.Aspect aspect : cost.getAspects()) {
             cost.merge(aspect, cost.getAmount(aspect) * distance);
         }
-        if (WandItem.consumeRaw(wand, cost, true)) {
+        if (WandItem.consumeRaw(wand, cost, true, player)) {
             net.thaumcraft.block.entity.HoleBlockEntity.createHole(level, start, face.get3DDataValue(), distance + 1,
                     net.thaumcraft.block.entity.HoleBlockEntity.DURATION);
         }
@@ -369,7 +369,7 @@ public final class Focuses {
                 && level.mayInteract(player, b.getBlockPos()) ? b : null;
         Dig dig = DIGS.computeIfAbsent(player.getUUID(), id -> new Dig());
         Dig.Step step = dig.advance(level, block, false);
-        if (step.breakNow() && WandItem.consumeRaw(wand, focus.cost(), true)) {
+        if (step.breakNow() && WandItem.consumeRaw(wand, focus.cost(), true, player)) {
             breakBlock((ServerLevel) level, player, step.pos());
             dig.reset();
         }

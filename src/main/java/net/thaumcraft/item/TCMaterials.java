@@ -32,6 +32,8 @@ public final class TCMaterials {
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> THAUMIUM_ARMOR_ASSET = assetKey("thaumium");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> VOID_ARMOR_ASSET = assetKey("void");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> GOGGLES_ASSET = assetKey("goggles");
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> ROBES_ASSET = assetKey("robes");
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> TRAVELLER_ASSET = assetKey("traveller");
 
     /** Armadura de táumio: 2/5/6/2 de proteção e 25 de encantabilidade, os números do original. */
     public static final ArmorMaterial THAUMIUM_ARMOR = new ArmorMaterial(
@@ -49,14 +51,20 @@ public final class TCMaterials {
             net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/void")),
             VOID_ARMOR_ASSET);
 
-    /** Os óculos protegem como a armadura de táumio e usam o desenho próprio deles. */
-    public static final ArmorMaterial GOGGLES = new ArmorMaterial(
-            25,
-            Map.of(ArmorType.HELMET, 2),
-            25, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f,
-            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
-                    net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/thaumium")),
-            GOGGLES_ASSET);
+    /**
+     * O {@code armorMatSpecial} do original: 1/3/2/1 de proteção, 25 de durabilidade e de encantabilidade. É o
+     * material dos óculos, dos mantos do taumaturgo e das botas do viajante; cada um com o seu desenho.
+     */
+    public static final ArmorMaterial GOGGLES = special(GOGGLES_ASSET, "repairs_special");
+    public static final ArmorMaterial ROBES = special(ROBES_ASSET, "repairs_robes");
+    public static final ArmorMaterial TRAVELLER = special(TRAVELLER_ASSET, "repairs_special");
+
+    private static ArmorMaterial special(ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> asset, String repair) {
+        return new ArmorMaterial(25,
+                Map.of(ArmorType.BOOTS, 1, ArmorType.LEGGINGS, 2, ArmorType.CHESTPLATE, 3, ArmorType.HELMET, 1),
+                25, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f,
+                net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, Thaumcraft.id(repair)), asset);
+    }
 
     private TCMaterials() {
     }

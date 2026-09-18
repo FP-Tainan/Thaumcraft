@@ -108,12 +108,16 @@ public class WandItem extends Item {
      * cada tique e um ponto inteiro por tique seria um estouro.
      */
     public static boolean consumeRaw(ItemStack stack, AspectList cost, boolean reallyDoIt) {
+        return consumeRaw(stack, cost, reallyDoIt, null);
+    }
+
+    public static boolean consumeRaw(ItemStack stack, AspectList cost, boolean reallyDoIt, @org.jetbrains.annotations.Nullable Player player) {
         AspectList list = vis(stack);
         WandParts.Cap cap = cap(stack);
         AspectList real = new AspectList();
         for (Aspect aspect : cost.getAspects()) {
             // cada ponteira cobra o seu tanto, e as de cobre e prata cobram menos de uns aspectos
-            int needed = Math.max(1, (int) (cost.getAmount(aspect) * cap.discount(aspect)));
+            int needed = Math.max(1, (int) (cost.getAmount(aspect) * modifier(stack, player, aspect)));
             if (list.getAmount(aspect) < needed) return false;
             real.add(aspect, needed);
         }
@@ -121,6 +125,31 @@ public class WandItem extends Item {
         for (Aspect aspect : real.getAspects()) list.reduce(aspect, real.getAmount(aspect));
         setVis(stack, list);
         return true;
+    }
+
+    /**
+     * O {@code getConsumptionModifier} do original: o multiplicador da ponteira menos o desconto do que o jogador
+     * veste, nunca abaixo de um décimo.
+     */
+    public static float modifier(ItemStack stack, @org.jetbrains.annotations.Nullable Player player, Aspect aspect) {
+        float modifier = cap(stack).discount(aspect);
+        if (player != null) modifier -= totalVisDiscount(player, aspect);
+        return Math.max(modifier, 0.1f);
+    }
+
+    /**
+     * O {@code WandManager.getTotalVisDiscount}: a soma dos descontos das peças vestidas, em pontos percentuais.
+     * (Os amuletos, anéis e cintos entram aqui quando existirem.)
+     */
+    public static float totalVisDiscount(Player player, @org.jetbrains.annotations.Nullable Aspect aspect) {
+        int total = 0;
+        for (net.minecraft.world.entity.EquipmentSlot slot : new net.minecraft.world.entity.EquipmentSlot[]{
+                net.minecraft.world.entity.EquipmentSlot.HEAD, net.minecraft.world.entity.EquipmentSlot.CHEST,
+                net.minecraft.world.entity.EquipmentSlot.LEGS, net.minecraft.world.entity.EquipmentSlot.FEET}) {
+            ItemStack worn = player.getItemBySlot(slot);
+            if (worn.getItem() instanceof net.thaumcraft.api.wands.VisDiscountGear gear) total += gear.visDiscount(worn, player, aspect);
+        }
+        return total / 100.0f;
     }
 
     /** Os aspectos primários em que ainda cabe alguma coisa. */
@@ -140,11 +169,15 @@ public class WandItem extends Item {
      * por cento a menos. O custo vem em pontos inteiros e vira centésimos na conta.
      */
     public static boolean consume(ItemStack stack, AspectList cost, boolean reallyDoIt) {
+        return consume(stack, cost, reallyDoIt, null);
+    }
+
+    public static boolean consume(ItemStack stack, AspectList cost, boolean reallyDoIt, @org.jetbrains.annotations.Nullable Player player) {
         AspectList list = vis(stack);
         WandParts.Cap cap = cap(stack);
         AspectList real = new AspectList();
         for (Aspect aspect : cost.getAspects()) {
-            int needed = (int) (cost.getAmount(aspect) * VIS_UNIT * cap.discount(aspect));
+            int needed = (int) (cost.getAmount(aspect) * VIS_UNIT * modifier(stack, player, aspect));
             if (list.getAmount(aspect) < needed) return false;
             real.add(aspect, needed);
         }
