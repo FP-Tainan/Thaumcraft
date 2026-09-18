@@ -229,6 +229,12 @@ public final class TCItems {
     public static final Item INFUSION_MATRIX = register("infusion_matrix", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.INFUSION_MATRIX, properties));
 
+    // as escadas e a laje de pedra arcana
+    public static final Item ARCANE_STONE_STAIRS = register("arcane_stone_stairs", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_STONE_STAIRS, properties.useBlockDescriptionPrefix()));
+    public static final Item ARCANE_STONE_SLAB = register("arcane_stone_slab", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_STONE_SLAB, properties.useBlockDescriptionPrefix()));
+
     // as árvores mágicas: toras, folhas, mudas, tábuas, escadas e lajes
     public static final Item GREATWOOD_LOG = register("greatwood_log", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.GREATWOOD_LOG, properties.useBlockDescriptionPrefix()));
@@ -416,7 +422,7 @@ public final class TCItems {
             "golem_core_fill", "golem_core_empty", "golem_core_gather", "golem_core_harvest",
             "golem_core_guard", "golem_core_decanting", "golem_core_alchemy", "golem_core_chop",
             "golem_core_use", "golem_core_butcher", "golem_core_sorting", "golem_core_fishing",
-            "arcane_stone", "thaumium_block", "tallow_block",
+            "arcane_stone", "arcane_stone_bricks", "arcane_stone_stairs", "arcane_stone_slab", "thaumium_block", "tallow_block",
             "paving_stone_travel", "paving_stone_warding",
             "infused_stone_air", "infused_stone_fire", "infused_stone_water",
             "infused_stone_earth", "infused_stone_order", "infused_stone_entropy",

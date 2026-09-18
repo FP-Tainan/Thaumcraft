@@ -15,6 +15,12 @@
     "thaumcraft:infused_stone_water",
     "thaumcraft:infused_stone_earth",
     "thaumcraft:infused_stone_order",
-    "thaumcraft:infused_stone_entropy"
+    "thaumcraft:infused_stone_entropy",
+    "thaumcraft:tallow_block",
+    "thaumcraft:arcane_stone_bricks",
+    "thaumcraft:arcane_stone_stairs",
+    "thaumcraft:arcane_stone_slab",
+    "thaumcraft:infusion_pillar",
+    "thaumcraft:infusion_pillar_top"
   ]
 }

@@ -61,9 +61,9 @@ public final class WandTriggers {
             level.playSound(null, pos, net.thaumcraft.registry.TCSounds.WAND.value(), SoundSource.BLOCKS, 0.8f, 0.9f);
             return InteractionResult.SUCCESS;
         }
-        // a matriz rúnica acorda ao toque da varinha, e começa a infusão ao toque seguinte
+        // a matriz rúnica: o primeiro toque ergue o altar (os cantos viram pilares), o seguinte começa a infusão
         if (level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.InfusionMatrixBlockEntity matrix) {
-            if (!level.isClientSide()) matrix.poke(level, pos, player);
+            if (!level.isClientSide()) matrix.poke(level, pos, player, wand);
             return InteractionResult.SUCCESS;
         }
         // a mesa do mod vira bancada arcana, e a varinha fica nela, pronta para pagar: o onWandRightClick do BlockTable

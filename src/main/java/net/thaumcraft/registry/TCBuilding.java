@@ -12,6 +12,7 @@ public final class TCBuilding {
             "thaumium_block",
             "tallow_block",
             "arcane_stone",
+            "arcane_stone_bricks",
     };
 
     private TCBuilding() {

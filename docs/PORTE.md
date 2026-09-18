@@ -71,8 +71,9 @@ Hoje o mod já se joga do começo ao meio, nesta ordem:
     O forno desfaz o que se joga nele em essência; o alambique empilhado em cima recolhe; o tubo leva; o
     jarro guarda. É a segunda metade da alquimia, e a que abastece tudo o que vem depois.
 
-12. **Erguer o altar de infusão** — pedestal arcano no chão, pedra arcana nos quatro cantos dele e a
-    matriz rúnica dois blocos acima. A varinha acorda a matriz; com a coisa certa no pedestal do meio e
+12. **Erguer o altar de infusão** — pedestal arcano no chão, tijolos de pedra arcana nos quatro cantos dele,
+    pedra arcana em cima dos tijolos e a matriz rúnica dois blocos acima do pedestal. A varinha (vinte e cinco
+    de cada primário) transforma os cantos em pilares de infusão e acorda a matriz; com a coisa certa no pedestal do meio e
     os ingredientes nos pedestais em volta, o toque seguinte começa a infusão. É assim que saem as hastes
     de varinha melhores — obsidiana, gelo, quartzo, junco, blaze e osso.
 
@@ -346,9 +347,14 @@ cobra também paciência — ela leva tempo, e pode dar errado no meio.
 - **Diferença**: o original sorteia entre vinte e um azares quando a infusão escapa; aqui são os quatro
   que dá para fazer sem as peças das fatias seguintes — cuspir um ingrediente, um raio, um susto em quem
   estiver perto e a explosão. Os outros (mácula, criaturas do vazio, distorção) chegam com a fatia oito.
-- **Diferença**: o `validLocation` da versão que serve de planta pede um bloco de "pilar de infusão" nos
-  quatro cantos. Esse bloco não tem receita em lugar nenhum das fontes, e o diagrama do altar que o
-  próprio mod desenha no livro põe **pedra arcana** ali. Ficou a pedra arcana, que já existe e já se faz.
+- ~~A pedra arcana no lugar do pilar.~~ Resolvido com o jar: o pilar de infusão não tem receita porque é a
+  **varinha** que o faz. O `createInfusionAltar` do `WandManager` confere o esqueleto (tijolos de pedra
+  arcana nos cantos, pedra arcana em cima deles), cobra vinte e cinco de cada primário e troca os cantos pelos
+  pilares (`InfusionPillarBlock`, desenhados com o `pillar.obj` do mod); tirando uma metade de um pilar, a
+  outra cai, e cada uma devolve o que era. Os tijolos (4 pedras arcanas numa grade 2×2), as escadas e a laje de
+  pedra arcana chegaram junto.
+- **Correção de textura**: no original o *bloco* de pedra arcana usa a textura `pedestal_top` e os *tijolos*
+  é que usam a `arcane_stone`; o porte tinha trocado. O bloco de sebo ganhou o topo próprio.
 - Falta da fatia: a infusão que encanta (o original também encanta itens na matriz), as melhorias rúnicas
   e as cinquenta e oito receitas que esperam peças das fatias seguintes.
 

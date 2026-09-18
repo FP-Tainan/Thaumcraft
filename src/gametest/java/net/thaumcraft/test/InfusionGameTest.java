@@ -22,30 +22,53 @@ import java.util.List;
  * ordem dos pedestais) e o caminho inteiro, do toque da varinha à coisa nova no pedestal do meio.
  */
 public class InfusionGameTest {
-    /** Sem a construção certa, a matriz não liga. */
-    @GameTest
-    public void theMatrixNeedsItsAltar(GameTestHelper helper) {
+    /**
+     * O altar do original: sem os pilares a matriz não vale; a varinha, com pedestal, tijolos de pedra arcana nos
+     * cantos e pedra arcana em cima, cobra vinte e cinco de cada primário e ergue os pilares; tirando a metade de
+     * um pilar, a outra cai e o altar deixa de valer.
+     */
+    @GameTest(maxTicks = 40)
+    public void theWandRaisesTheAltar(GameTestHelper helper) {
         BlockPos matrixAt = new BlockPos(3, 3, 3);
         helper.setBlock(matrixAt, TCBlocks.INFUSION_MATRIX);
-        if (InfusionMatrixBlockEntity.validLocation(helper.getLevel(), helper.absolutePos(matrixAt))) {
-            helper.fail("matriz sozinha no ar não devia valer");
-        }
-
-        // o pedestal no lugar, mas ainda sem os cantos de pedra arcana
         helper.setBlock(matrixAt.below(2), TCBlocks.PEDESTAL);
         if (InfusionMatrixBlockEntity.validLocation(helper.getLevel(), helper.absolutePos(matrixAt))) {
-            helper.fail("faltam os quatro cantos de pedra arcana");
+            helper.fail("sem pilares o altar não devia valer");
         }
-
         for (int dx = -1; dx <= 1; dx += 2) {
             for (int dz = -1; dz <= 1; dz += 2) {
-                helper.setBlock(matrixAt.offset(dx, -2, dz), TCBlocks.BUILDING.get("arcane_stone"));
+                helper.setBlock(matrixAt.offset(dx, -2, dz), TCBlocks.BUILDING.get("arcane_stone_bricks"));
+                helper.setBlock(matrixAt.offset(dx, -1, dz), TCBlocks.BUILDING.get("arcane_stone"));
+            }
+        }
+        var player = helper.makeMockServerPlayerInLevel();
+        ItemStack wand = new ItemStack(net.thaumcraft.registry.TCItems.WAND);
+        net.thaumcraft.api.aspects.AspectList vis = new net.thaumcraft.api.aspects.AspectList();
+        for (var primal : net.thaumcraft.api.aspects.Aspects.primals()) vis.add(primal, 5000);
+        wand.set(net.thaumcraft.registry.TCComponents.WAND_VIS, vis);
+        var matrix = helper.getBlockEntity(matrixAt, InfusionMatrixBlockEntity.class);
+        if (!matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player, wand)) helper.fail("a varinha devia erguer o altar");
+        for (int dx = -1; dx <= 1; dx += 2) {
+            for (int dz = -1; dz <= 1; dz += 2) {
+                helper.assertBlockPresent(TCBlocks.INFUSION_PILLAR, matrixAt.offset(dx, -2, dz));
+                helper.assertBlockPresent(TCBlocks.INFUSION_PILLAR_TOP, matrixAt.offset(dx, -1, dz));
             }
         }
         if (!InfusionMatrixBlockEntity.validLocation(helper.getLevel(), helper.absolutePos(matrixAt))) {
-            helper.fail("com pedestal e os quatro cantos, o altar devia valer");
+            helper.fail("com os pilares, o altar devia valer");
         }
-        helper.succeed();
+        if (wand.get(net.thaumcraft.registry.TCComponents.WAND_VIS).getAmount(net.thaumcraft.api.aspects.Aspects.FIRE) >= 5000) {
+            helper.fail("erguer o altar custa vis");
+        }
+        // tirando o topo de um pilar, a base cai junto
+        helper.setBlock(matrixAt.offset(1, -1, 1), net.minecraft.world.level.block.Blocks.AIR);
+        helper.runAfterDelay(5, () -> {
+            helper.assertBlockNotPresent(TCBlocks.INFUSION_PILLAR, matrixAt.offset(1, -2, 1));
+            if (InfusionMatrixBlockEntity.validLocation(helper.getLevel(), helper.absolutePos(matrixAt))) {
+                helper.fail("sem um dos pilares o altar não devia valer");
+            }
+            helper.succeed();
+        });
     }
 
     /** A receita casa com o conjunto, não com a ordem — os pedestais podem estar em qualquer lugar. */
@@ -82,9 +105,11 @@ public class InfusionGameTest {
         BlockPos centreAt = matrixAt.below(2);
         helper.setBlock(matrixAt, TCBlocks.INFUSION_MATRIX);
         helper.setBlock(centreAt, TCBlocks.PEDESTAL);
+        // os pilares já de pé, como a varinha os deixa
         for (int dx = -1; dx <= 1; dx += 2) {
             for (int dz = -1; dz <= 1; dz += 2) {
-                helper.setBlock(matrixAt.offset(dx, -2, dz), TCBlocks.BUILDING.get("arcane_stone"));
+                helper.setBlock(matrixAt.offset(dx, -1, dz), TCBlocks.INFUSION_PILLAR_TOP);
+                helper.setBlock(matrixAt.offset(dx, -2, dz), TCBlocks.INFUSION_PILLAR);
             }
         }
 
@@ -119,8 +144,8 @@ public class InfusionGameTest {
         var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.CREATIVE);
         net.thaumcraft.research.Knowledges.of(player).completeResearch(recipe.research());
         InfusionMatrixBlockEntity matrix = helper.getBlockEntity(matrixAt, InfusionMatrixBlockEntity.class);
-        matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player);
-        matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player);
+        matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player, ItemStack.EMPTY);
+        matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player, ItemStack.EMPTY);
         if (!matrix.isCrafting()) helper.fail("a infusão não começou");
 
         // A instabilidade desta receita é três, e o azar dela pode cuspir um ingrediente de um pedestal

@@ -19,13 +19,28 @@ public class InfusionClientTest implements FabricClientGameTest {
             server.runCommand("execute at @p run fill ~-6 ~-1 ~2 ~6 ~-1 ~11 minecraft:smooth_stone");
             server.runCommand("execute at @p run tp @s ~ ~ ~ 0 12");
 
-            // o altar: pedestal no meio, pedra arcana nos quatro cantos, matriz dois acima
+            // o esqueleto do altar do original: pedestal no meio, tijolos de pedra arcana nos cantos, pedra arcana
+            // em cima deles, matriz dois acima do pedestal
             server.runCommand("execute at @p run setblock ~ ~ ~7 thaumcraft:pedestal");
-            server.runCommand("execute at @p run setblock ~-1 ~ ~6 thaumcraft:arcane_stone");
-            server.runCommand("execute at @p run setblock ~1 ~ ~6 thaumcraft:arcane_stone");
-            server.runCommand("execute at @p run setblock ~-1 ~ ~8 thaumcraft:arcane_stone");
-            server.runCommand("execute at @p run setblock ~1 ~ ~8 thaumcraft:arcane_stone");
+            for (String corner : new String[]{"~-1 %s ~6", "~1 %s ~6", "~-1 %s ~8", "~1 %s ~8"}) {
+                server.runCommand("execute at @p run setblock " + corner.formatted("~") + " thaumcraft:arcane_stone_bricks");
+                server.runCommand("execute at @p run setblock " + corner.formatted("~1") + " thaumcraft:arcane_stone");
+            }
             server.runCommand("execute at @p run setblock ~ ~2 ~7 thaumcraft:infusion_matrix");
+            context.waitTicks(10);
+            context.takeScreenshot("infusao_esqueleto");
+            // a varinha acorda a matriz: os cantos viram pilares
+            server.runOnServer(s -> {
+                var player = s.getPlayerList().getPlayers().get(0);
+                var at = player.blockPosition().offset(0, 2, 7);
+                var wand = new net.minecraft.world.item.ItemStack(net.thaumcraft.registry.TCItems.WAND);
+                var vis = new net.thaumcraft.api.aspects.AspectList();
+                for (var primal : net.thaumcraft.api.aspects.Aspects.primals()) vis.add(primal, 5000);
+                wand.set(net.thaumcraft.registry.TCComponents.WAND_VIS, vis);
+                if (player.level().getBlockEntity(at) instanceof net.thaumcraft.block.entity.InfusionMatrixBlockEntity matrix) {
+                    matrix.poke(player.level(), at, player, wand);
+                }
+            });
 
             // pedestais em volta, e jarros de essência ao lado
             server.runCommand("execute at @p run setblock ~-3 ~ ~7 thaumcraft:pedestal");

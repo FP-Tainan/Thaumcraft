@@ -82,6 +82,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                         net.thaumcraft.api.aspects.ObjectAspects.accept(payload.table());
                     }
                 }));
+        // os pilares do altar de infusão, com o modelo do original
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.INFUSION_PILLAR, net.thaumcraft.client.render.InfusionPillarRenderer::new);
         // o bloco protegido, com o bloco guardado e as runas do foco de Proteção; e o escudo que acende na batida
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.WARDED, net.thaumcraft.client.render.WardedRenderer::new);

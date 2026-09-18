@@ -95,36 +95,88 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
     }
 
     /**
-     * A construção está de pé?
-     *
-     * <p>Pedestal dois blocos abaixo e pedra arcana nos quatro cantos dele, que é o que o diagrama do
-     * altar do original desenha.
+     * O {@code validLocation} do original: pedestal dois blocos abaixo e um pilar de infusão em cada canto dele.
      */
     public static boolean validLocation(Level level, BlockPos pos) {
         if (!(level.getBlockEntity(pos.below(2)) instanceof PedestalBlockEntity)) return false;
         for (int dx = -1; dx <= 1; dx += 2) {
             for (int dz = -1; dz <= 1; dz += 2) {
-                if (!level.getBlockState(pos.offset(dx, -2, dz)).is(TCBlocks.BUILDING.get("arcane_stone"))) return false;
+                if (!(level.getBlockEntity(pos.offset(dx, -2, dz)) instanceof InfusionPillarBlockEntity)) return false;
             }
         }
         return true;
     }
 
-    /** O toque da varinha: liga a matriz, ou começa a infusão se ela já estiver ligada. */
-    public boolean poke(Level level, BlockPos pos, Player player) {
+    /**
+     * O toque da varinha: o {@code onWandRightClick} da {@code TileInfusionMatrix} e, se ela não quiser, o gatilho
+     * três da varinha, o {@code createInfusionAltar}. Ligada e parada, começa a infusão; desligada com os pilares
+     * de pé, liga; desligada sem eles, tenta erguer o altar.
+     */
+    public boolean poke(Level level, BlockPos pos, Player player, ItemStack wand) {
         if (level.isClientSide()) return true;
-        if (!validLocation(level, pos)) {
-            player.sendOverlayMessage(Component.translatable("tc.infusion.badplace"));
-            this.stop();
-            return false;
-        }
-        if (!this.active) {
+        if (this.active && !this.crafting) return this.start(level, pos, player);
+        if (!this.active && validLocation(level, pos)) {
             this.active = true;
-            level.playSound(null, pos, TCSounds.WAND.value(), SoundSource.BLOCKS, 0.6f, 1.2f);
             this.sync();
             return true;
         }
-        if (!this.crafting) return this.start(level, pos, player);
+        if (this.active) return true;
+        if (raiseAltar(level, pos, wand)) return true;
+        player.sendOverlayMessage(Component.translatable("tc.infusion.badplace"));
+        return false;
+    }
+
+    /**
+     * O {@code fitInfusionAltar} e o {@code replaceInfusionAltar} do {@code WandManager}: com o pedestal no
+     * chão, tijolos de pedra arcana nos quatro cantos dele, pedra arcana em cima dos tijolos e o resto vazio, a
+     * varinha paga vinte e cinco de cada primário e os cantos viram pilares.
+     */
+    private boolean raiseAltar(Level level, BlockPos pos, ItemStack wand) {
+        BlockPos floor = pos.below(2);
+        if (!(level.getBlockEntity(floor) instanceof PedestalBlockEntity)) return false;
+        net.minecraft.world.level.block.Block stone = TCBlocks.BUILDING.get("arcane_stone");
+        net.minecraft.world.level.block.Block bricks = TCBlocks.BUILDING.get("arcane_stone_bricks");
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                boolean corner = dx != 0 && dz != 0;
+                // no andar do pedestal: tijolos nos cantos, pedestal no meio, o resto vazio
+                BlockPos low = floor.offset(dx, 0, dz);
+                if (corner ? !level.getBlockState(low).is(bricks) : (dx != 0 || dz != 0) && !level.isEmptyBlock(low)) return false;
+                // no andar do meio: pedra arcana nos cantos, o resto vazio
+                BlockPos mid = floor.offset(dx, 1, dz);
+                if (corner ? !level.getBlockState(mid).is(stone) : !level.isEmptyBlock(mid)) return false;
+                // no andar da matriz: só ela
+                BlockPos high = pos.offset(dx, 0, dz);
+                if ((dx != 0 || dz != 0) && !level.isEmptyBlock(high)) return false;
+            }
+        }
+        net.thaumcraft.api.aspects.AspectList cost = new net.thaumcraft.api.aspects.AspectList();
+        for (net.thaumcraft.api.aspects.Aspect primal : net.thaumcraft.api.aspects.Aspects.primals()) cost.add(primal, 25);
+        if (!(wand.getItem() instanceof net.thaumcraft.item.WandItem) || !net.thaumcraft.item.WandItem.consume(wand, cost, true)) {
+            return false;
+        }
+        // a orientação de cada pilar, pelo canto: a do original
+        int[][] corners = {{-1, -1, 2}, {-1, 1, 3}, {1, -1, 4}, {1, 1, 5}};
+        for (int[] corner : corners) {
+            BlockPos base = floor.offset(corner[0], 0, corner[1]);
+            level.setBlock(base.above(), TCBlocks.INFUSION_PILLAR_TOP.defaultBlockState(), net.minecraft.world.level.block.Block.UPDATE_ALL);
+            level.setBlock(base, TCBlocks.INFUSION_PILLAR.defaultBlockState(), net.minecraft.world.level.block.Block.UPDATE_ALL);
+            if (level.getBlockEntity(base) instanceof InfusionPillarBlockEntity pillar) {
+                pillar.setOrientation((byte) corner[2]);
+                level.sendBlockUpdated(base, pillar.getBlockState(), pillar.getBlockState(), 3);
+            }
+            // o evento de bloco um do original: brilho roxo e o pó dos tijolos, nas duas metades
+            if (level instanceof net.minecraft.server.level.ServerLevel server) {
+                for (BlockPos at : new BlockPos[]{base, base.above()}) {
+                    net.thaumcraft.net.TCNetwork.blockSparkle(server, at, 0xB680FF);
+                    server.levelEvent(2001, at, net.minecraft.world.level.block.Block.getId(
+                            net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState()));
+                }
+            }
+        }
+        this.active = true;
+        this.sync();
+        level.playSound(null, pos, TCSounds.WAND.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
         return true;
     }
 

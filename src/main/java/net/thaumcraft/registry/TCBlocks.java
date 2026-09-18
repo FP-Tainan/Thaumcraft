@@ -69,6 +69,26 @@ public final class TCBlocks {
                     .pushReaction(PushReaction.BLOCK)
                     .sound(SoundType.STONE)));
 
+    /** As escadas e a laje de pedra arcana, com a cara dos tijolos, como o {@code BlockCosmeticStairs} do original. */
+    public static final Block ARCANE_STONE_STAIRS = register("arcane_stone_stairs", properties ->
+            new net.minecraft.world.level.block.StairBlock(net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState(),
+                    properties.mapColor(MapColor.STONE).strength(2.0f, 6.0f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
+    public static final Block ARCANE_STONE_SLAB = register("arcane_stone_slab", properties ->
+            new net.minecraft.world.level.block.SlabBlock(
+                    properties.mapColor(MapColor.STONE).strength(2.0f, 6.0f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
+
+    /** O pilar do altar de infusão: a base (com o modelo) e o topo, que a varinha faz dos cantos do altar. */
+    public static final Block INFUSION_PILLAR = register("infusion_pillar", properties ->
+            new net.thaumcraft.block.InfusionPillarBlock(false, pillarProperties(properties)));
+    public static final Block INFUSION_PILLAR_TOP = register("infusion_pillar_top", properties ->
+            new net.thaumcraft.block.InfusionPillarBlock(true, pillarProperties(properties)));
+
+    /** O {@code BlockStoneDevice}: dureza três, resistência vinte e cinco. */
+    private static BlockBehaviour.Properties pillarProperties(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.STONE).strength(3.0f, 15.0f).requiresCorrectToolForDrops()
+                .noOcclusion().sound(SoundType.STONE);
+    }
+
     public static final Block HOLE = register("hole", properties ->
             new net.thaumcraft.block.HoleBlock(properties
                     .mapColor(MapColor.NONE)
