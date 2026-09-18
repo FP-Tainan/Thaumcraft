@@ -110,6 +110,27 @@ public final class TCItems {
     public static final Item FOCUS_POUCH = register("focus_pouch", properties ->
             new net.thaumcraft.item.FocusPouchItem(properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
 
+    /** As peças sem magia do ItemBaubleBlanks: amuleto, anel e cinto comuns. */
+    public static final Item MUNDANE_AMULET = blank("mundane_amulet", net.thaumcraft.api.baubles.BaubleType.AMULET, null);
+    public static final Item MUNDANE_RING = blank("mundane_ring", net.thaumcraft.api.baubles.BaubleType.RING, null);
+    public static final Item MUNDANE_BELT = blank("mundane_belt", net.thaumcraft.api.baubles.BaubleType.BELT, null);
+
+    /** Os anéis de aprendiz, um por primário: um por cento de desconto naquele aspecto. */
+    public static final java.util.Map<String, Item> APPRENTICE_RINGS = new java.util.LinkedHashMap<>();
+
+    static {
+        String[] names = {"air", "earth", "fire", "water", "order", "entropy"};
+        var primals = net.thaumcraft.api.aspects.Aspects.primals();
+        for (int i = 0; i < names.length; i++) {
+            APPRENTICE_RINGS.put(names[i], blank("apprentice_ring_" + names[i], net.thaumcraft.api.baubles.BaubleType.RING, primals.get(i)));
+        }
+    }
+
+    private static Item blank(String name, net.thaumcraft.api.baubles.BaubleType type, net.thaumcraft.api.aspects.Aspect aspect) {
+        return register(name, properties -> new net.thaumcraft.item.BaubleBlankItem(type, aspect, properties.stacksTo(1)
+                .rarity(aspect == null ? net.minecraft.world.item.Rarity.COMMON : net.minecraft.world.item.Rarity.UNCOMMON)));
+    }
+
     /** Os mantos do taumaturgo: pouca proteção, tingíveis, e um pouco de desconto de vis. */
     public static final Item ROBE_CHESTPLATE = robe("robe_chestplate", net.minecraft.world.item.equipment.ArmorType.CHESTPLATE);
     public static final Item ROBE_LEGGINGS = robe("robe_leggings", net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
@@ -474,7 +495,7 @@ public final class TCItems {
      */
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "traveller_boots", "fortress_helmet", "fortress_chestplate", "fortress_leggings",
-            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal", "focus_pouch",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal", "focus_pouch", "mundane_amulet", "mundane_ring", "mundane_belt", "apprentice_ring_air", "apprentice_ring_earth", "apprentice_ring_fire", "apprentice_ring_water", "apprentice_ring_order", "apprentice_ring_entropy",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
             "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",

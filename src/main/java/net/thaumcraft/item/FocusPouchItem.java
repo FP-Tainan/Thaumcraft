@@ -15,9 +15,10 @@ import net.thaumcraft.inventory.FocusPouchMenu;
 
 /**
  * A bolsa de focos: o {@code ItemFocusPouch} da 4.2.3.5. Guarda dezoito focos; aberta com o clique direito, e a
- * tecla de trocar foco também procura foco dentro dela.
+ * tecla de trocar foco também procura foco dentro dela. Como o {@code ItemFocusPouchBauble}, também se veste na
+ * casa do cinto, e continua valendo para a tecla lá.
  */
-public class FocusPouchItem extends Item {
+public class FocusPouchItem extends Item implements net.thaumcraft.api.baubles.BaubleItem {
     public static final int SIZE = 18;
 
     public FocusPouchItem(Properties properties) {
@@ -31,6 +32,11 @@ public class FocusPouchItem extends Item {
                     Component.translatable("item.thaumcraft.focus_pouch")));
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public net.thaumcraft.api.baubles.BaubleType baubleType(ItemStack stack) {
+        return net.thaumcraft.api.baubles.BaubleType.BELT;
     }
 
     /** O {@code getInventory}: as dezoito casas da bolsa. */

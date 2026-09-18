@@ -154,6 +154,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("FOCUSPRIMAL", new ItemStack(TCItems.FOCI.get("primal")),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.DIAMOND)),
                 new AspectList().add(Aspects.EARTH, 25).add(Aspects.ENTROPY, 25).add(Aspects.ORDER, 25).add(Aspects.AIR, 25).add(Aspects.FIRE, 25).add(Aspects.WATER, 25)));
+        // FocusPouch
+        ALL.add(new ArcaneRecipe("FOCUSPOUCH", new ItemStack(TCItems.FOCUS_POUCH),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.MUNDANE_BELT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.LEATHER)),
+                new AspectList().add(Aspects.EARTH, 10).add(Aspects.ORDER, 10).add(Aspects.ENTROPY, 10)));
         // Deconstructor
         ALL.add(new ArcaneRecipe("DECONSTRUCTOR", new ItemStack(TCBlocks.DECONSTRUCTION_TABLE.asItem()),
                 Arrays.asList(null, Ingredient.of(TCItems.THAUMOMETER), null, Ingredient.of(net.minecraft.world.item.Items.GOLDEN_AXE), Ingredient.of(TCBlocks.TABLE.asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLDEN_PICKAXE), null, null, null),

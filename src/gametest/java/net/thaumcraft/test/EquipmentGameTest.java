@@ -74,4 +74,25 @@ public class EquipmentGameTest {
         if (wand.has(net.thaumcraft.registry.TCComponents.WAND_FOCUS)) helper.fail("REMOVE tira o foco");
         helper.succeed();
     }
+
+    @GameTest
+    public void wornBaublesCount(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        ItemStack wand = new ItemStack(TCItems.WAND);
+        float fire = WandItem.modifier(wand, player, Aspects.FIRE), water = WandItem.modifier(wand, player, Aspects.WATER);
+        var worn = net.thaumcraft.baubles.Baubles.container(player);
+        worn.setItem(net.thaumcraft.baubles.Baubles.RING_1, new ItemStack(TCItems.APPRENTICE_RINGS.get("fire")));
+        if (Math.abs(fire - WandItem.modifier(wand, player, Aspects.FIRE) - 0.01f) > 0.001f) helper.fail("o anel de aprendiz de fogo dá 1% no fogo");
+        if (Math.abs(water - WandItem.modifier(wand, player, Aspects.WATER)) > 0.001f) helper.fail("e nada na água");
+
+        // a bolsa vestida no cinto também vale para a tecla de trocar foco
+        ItemStack pouch = new ItemStack(TCItems.FOCUS_POUCH);
+        var inside = net.minecraft.core.NonNullList.withSize(18, ItemStack.EMPTY);
+        inside.set(3, new ItemStack(TCItems.FOCI.get("shock")));
+        net.thaumcraft.item.FocusPouchItem.setContents(pouch, inside);
+        worn.setItem(net.thaumcraft.baubles.Baubles.BELT, pouch);
+        net.thaumcraft.item.FocusSwap.change(wand, player, "BL");
+        if (!"shock".equals(wand.get(net.thaumcraft.registry.TCComponents.WAND_FOCUS))) helper.fail("o foco de raio sai da bolsa do cinto");
+        helper.succeed();
+    }
 }

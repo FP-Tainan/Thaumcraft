@@ -660,3 +660,20 @@ A mesma auditoria achou, nas receitas geradas:
 - `FocusPouchItem` + `FocusPouchMenu` + `FocusPouchScreen` — 18 casas só de foco (6 por fileira), a casa da bolsa
   travada, o conteúdo salvo ao fechar, a tela `gui_focuspouch.png` sem rótulos.
 - O mostrador da varinha agora mostra o custo do foco com o desconto dos equipamentos.
+
+## Equipamentos, parte 4: as casas do Baubles e as peças comuns (2026-09-18)
+
+- O Thaumcraft 4.2.3.5 dependia do **Baubles 1.0.1.10**, que não existe no Fabric 26.2. As casas dele vieram para
+  dentro do porte, do mesmo jeito (fonte em `Mod Base/Baubles-1.7.10-1.0.1.10`):
+  - `api/baubles/BaubleItem` + `BaubleType` — o `IBauble` (vestir, tirar, tique vestido, pode vestir/tirar).
+  - `baubles/Baubles` — as 4 casas (amuleto, anel, anel, cinto) num anexo do jogador, salvas com ele e mandadas
+    para a máquina de quem joga; o tique das peças dos dois lados; a queda na morte sem `keepInventory`.
+  - `inventory/BaublesMenu` + `client/gui/BaublesScreen` — o `ContainerPlayerExpanded`/`GuiPlayerExpanded` com o
+    fundo `expanded_inventory.png` do Baubles: armadura à esquerda, o jogador olhando o mouse, as 4 casas, craft 2×2.
+  - `client/BaublesClient` — a tecla B e o botãozinho no inventário de sempre (o `GuiBaublesButton`), que troca
+    entre os dois inventários.
+- O desconto de vis soma as peças vestidas antes da armadura, como o `getTotalVisDiscount` do original.
+- A **bolsa de focos** também se veste no cinto (`ItemFocusPouchBauble`) e a tecla de trocar foco procura nela.
+- `BaubleBlankItem` — amuleto, anel e cinto comuns (receitas de bancada do original) e os anéis de aprendiz dos seis
+  primários (1% de desconto no aspecto deles; no original vêm de baús de masmorra, que ainda não foram portados).
+- Os nomes das peças comuns e a palavra "desconto" foram traduzidos aqui; o pt_BR do original não os tinha.

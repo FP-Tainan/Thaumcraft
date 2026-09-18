@@ -130,6 +130,10 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.client.render.AspectTint.register();
         // a tecla de trocar foco, com o menu radial, e a tela da bolsa de focos
         net.thaumcraft.client.FocusRadial.init();
+        // as casas de amuleto, anel e cinto do Baubles
+        net.thaumcraft.client.BaublesClient.init();
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.BAUBLES,
+                net.thaumcraft.client.gui.BaublesScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.FOCUS_POUCH,
                 net.thaumcraft.client.gui.FocusPouchScreen::new);
         // as botas do viajante: o empurrão de quem anda é do lado de quem joga

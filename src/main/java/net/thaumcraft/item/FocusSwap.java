@@ -42,8 +42,14 @@ public final class FocusSwap {
         }
     }
 
-    /** Onde procurar bolsas além do inventário (os amuletos e cintos, quando existirem). */
-    public static java.util.function.Function<Player, List<ItemStack>> extraPouches = player -> List.of();
+    /** As bolsas vestidas: o cinto do Baubles (o original procura nas quatro casas). */
+    public static java.util.function.Function<Player, List<ItemStack>> extraPouches = player -> {
+        List<ItemStack> out = new ArrayList<>();
+        for (ItemStack worn : net.thaumcraft.baubles.Baubles.of(player).items()) {
+            if (worn.getItem() instanceof FocusPouchItem) out.add(worn);
+        }
+        return out;
+    };
 
     private FocusSwap() {
     }
@@ -134,6 +140,7 @@ public final class FocusSwap {
             player.level().playSound(null, player.blockPosition(), TCSounds.CAMERA_TICKS.value(), SoundSource.PLAYERS, 0.3f, 0.9f);
         }
         player.getInventory().setChanged();
+        net.thaumcraft.baubles.Baubles.touch(player);
     }
 
     /** O foco que estava preso volta para a primeira bolsa com espaço ou para o inventário. */

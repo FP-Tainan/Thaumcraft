@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/apprentice_ring_air",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -130
+      }
+    ]
+  }
+}

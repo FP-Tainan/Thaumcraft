@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/apprentice_ring_order",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -2763540
+      }
+    ]
+  }
+}

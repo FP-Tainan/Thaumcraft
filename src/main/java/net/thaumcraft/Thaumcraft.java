@@ -52,6 +52,7 @@ public class Thaumcraft implements ModInitializer {
         net.thaumcraft.item.Swapper.init();
         net.thaumcraft.event.FortressMasks.init();
         net.thaumcraft.item.FocusSwap.init();
+        net.thaumcraft.baubles.BaublesNetwork.init();
         net.fabricmc.fabric.api.event.player.AttackBlockCallback.EVENT.register(net.thaumcraft.item.Focuses::tradeSwing);
 
         // o comando de teste, para destrancar a pesquisa sem ter de jogar tudo de novo

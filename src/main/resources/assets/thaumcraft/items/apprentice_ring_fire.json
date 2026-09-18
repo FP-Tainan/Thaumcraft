@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/apprentice_ring_fire",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -42495
+      }
+    ]
+  }
+}

@@ -139,10 +139,13 @@ public class WandItem extends Item {
 
     /**
      * O {@code WandManager.getTotalVisDiscount}: a soma dos descontos das peças vestidas, em pontos percentuais.
-     * (Os amuletos, anéis e cintos entram aqui quando existirem.)
+     * Primeiro os amuletos, anéis e cinto vestidos, depois a armadura, como no original.
      */
     public static float totalVisDiscount(Player player, @org.jetbrains.annotations.Nullable Aspect aspect) {
         int total = 0;
+        for (ItemStack worn : net.thaumcraft.baubles.Baubles.of(player).items()) {
+            if (worn.getItem() instanceof net.thaumcraft.api.wands.VisDiscountGear gear) total += gear.visDiscount(worn, player, aspect);
+        }
         for (net.minecraft.world.entity.EquipmentSlot slot : new net.minecraft.world.entity.EquipmentSlot[]{
                 net.minecraft.world.entity.EquipmentSlot.HEAD, net.minecraft.world.entity.EquipmentSlot.CHEST,
                 net.minecraft.world.entity.EquipmentSlot.LEGS, net.minecraft.world.entity.EquipmentSlot.FEET}) {
