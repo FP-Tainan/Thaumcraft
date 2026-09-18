@@ -563,3 +563,23 @@ A mesma auditoria achou, nas receitas geradas:
 - O construto alquímico é o metadado 9 do `BlockMetalDevice`: um cubo com `alchemyblock`.
 - Os nomes em pt_BR que o original não traduziu (construto, cristalizador, essência cristalizada) foram traduzidos
   aqui (`scratchpad/alquimia.js`).
+
+## Alquimia, parte B: lâmpadas e âmbar (2026-09-18)
+
+- `block/ArcaneLampBlock` (três tipos) com `FACING` (o lado de apoio, ao contrário do clicado, como o
+  `BlockMetalDeviceItem`) e `LIT`; cai quando o apoio vira ar. O corpo é modelo de bloco (a caixa W4..W12 × W2..W14
+  do `BlockMetalDeviceRenderer`, texturas animadas do original); o `ArcaneLampRenderer` desenha o bocal
+  (`renderNozzle` do `ModelBoreBase`, textura `bore.png`).
+- `entity/ArcaneLampBlockEntity` — o `TileArcaneLamp`: a cada tique sorteia um ponto a ±15 (no máximo 4 acima do
+  chão) e, se for ar com luz < 9, põe ali uma `LampLightBlock` (o `blockAiry` 3: invisível, luz 15). Quebrada, apaga
+  as luzes num cubo de 31. A lâmpada do túnel da perfuratriz arcana fica para quando a perfuratriz existir.
+- `entity/GrowthLampBlockEntity` — o `TileArcaneLampGrowth`: 1 Herba = 100 cargas, com 1 de reserva; a cada tique
+  desce uma coluna sorteada do quadrado de 13 e empurra a primeira planta não madura a < 6 blocos, com faísca verde
+  no que cresceu. O `scheduleBlockUpdate` do 1.7 vira `randomTick` (é o tique de crescimento de hoje); o
+  `Material` de planta vira as classes de bloco equivalentes; o `CropUtils.isGrownCrop` foi traduzido regra a regra.
+- `entity/FertilityLampBlockEntity` — o `TileArcaneLampFertility`: até 4 cargas de Victus (sucção 128 − 10×cargas);
+  com 2+, a cada 300 tiques põe no cio um par adulto da mesma espécie a até 7 blocos (se não houver mais de 7).
+- `block/AmberBlock` — bloco e tijolos de âmbar (`BlockCosmeticOpaque` 0 e 1): translúcidos (alfa 232 da textura),
+  opacidade de luz 3, e as quatro receitas de bancada comum do original (`scratchpad/ambar.js`).
+- O mapeador agora traduz os 16 metadados do corante de 2014 (o 15 é a farinha de osso da Lâmpada do Crescimento).
+- "Lâmpada da Fertilidade" foi traduzida aqui; o pt_BR do original não a tinha.

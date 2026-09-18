@@ -178,6 +178,33 @@ public final class TCBlocks {
     public static final Block ALCHEMICAL_CONSTRUCT = register("alchemical_construct", properties ->
             new Block(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f).sound(SoundType.METAL)));
 
+    /** O bloco de âmbar: o BlockCosmeticOpaque 0, translúcido. */
+    public static final Block AMBER_BLOCK = register("amber_block", properties ->
+            new net.thaumcraft.block.AmberBlock(properties.mapColor(MapColor.COLOR_ORANGE).strength(1.5f, 3.0f)
+                    .sound(SoundType.STONE).noOcclusion()));
+
+    /** Os tijolos de âmbar: o BlockCosmeticOpaque 1. */
+    public static final Block AMBER_BRICKS = register("amber_bricks", properties ->
+            new net.thaumcraft.block.AmberBlock(properties.mapColor(MapColor.COLOR_ORANGE).strength(1.5f, 3.0f)
+                    .sound(SoundType.STONE).noOcclusion()));
+
+    /** A lâmpada arcana: ilumina forte e espalha luz invisível pelos cantos escuros em volta. */
+    public static final Block ARCANE_LAMP = register("arcane_lamp", properties ->
+            new net.thaumcraft.block.ArcaneLampBlock(net.thaumcraft.block.ArcaneLampBlock.Kind.ARCANE, lampProperties(properties).lightLevel(state -> 15)));
+
+    /** A lâmpada do crescimento: com Herba, faz as plantas em volta crescerem depressa. */
+    public static final Block GROWTH_LAMP = register("growth_lamp", properties ->
+            new net.thaumcraft.block.ArcaneLampBlock(net.thaumcraft.block.ArcaneLampBlock.Kind.GROWTH, lampProperties(properties).lightLevel(net.thaumcraft.block.ArcaneLampBlock::lightOf)));
+
+    /** A lâmpada da fertilidade: com Victus, põe os bichos em volta no cio. */
+    public static final Block FERTILITY_LAMP = register("fertility_lamp", properties ->
+            new net.thaumcraft.block.ArcaneLampBlock(net.thaumcraft.block.ArcaneLampBlock.Kind.FERTILITY, lampProperties(properties).lightLevel(net.thaumcraft.block.ArcaneLampBlock::lightOf)));
+
+    /** A luz invisível da lâmpada arcana (o blockAiry 3 do original). */
+    public static final Block LAMP_LIGHT = register("lamp_light", properties ->
+            new net.thaumcraft.block.LampLightBlock(properties.replaceable().noCollision().noLootTable().air()
+                    .lightLevel(state -> 15).pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+
     /** O alambique arcano: o pote que se empilha sobre o forno e recolhe o que sai dele. */
     public static final Block ALEMBIC = register("alembic", properties ->
             new net.thaumcraft.block.AlembicBlock(properties
@@ -394,6 +421,11 @@ public final class TCBlocks {
                 .isValidSpawn(net.minecraft.world.level.block.Blocks::ocelotOrParrot).isSuffocating((s, l, p) -> false)
                 .isViewBlocking((s, l, p) -> false).ignitedByLava().pushReaction(PushReaction.DESTROY)
                 .isRedstoneConductor((s, l, p) -> false);
+    }
+
+    /** O BlockMetalDevice das lâmpadas: metal e dureza três; a luz vai em cada uma. */
+    private static BlockBehaviour.Properties lampProperties(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f).sound(SoundType.METAL).noOcclusion();
     }
 
     private static BlockBehaviour.Properties saplingProperties(BlockBehaviour.Properties properties) {

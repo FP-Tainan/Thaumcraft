@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:amber_block"
+  ],
+  "result": {
+    "id": "thaumcraft:amber",
+    "count": 4
+  }
+}

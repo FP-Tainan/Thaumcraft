@@ -223,6 +223,21 @@ public final class TCItems {
     public static final Item ESSENTIA_CRYSTALIZER = register("essentia_crystalizer", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ESSENTIA_CRYSTALIZER, properties.useBlockDescriptionPrefix()));
 
+    public static final Item AMBER_BLOCK = register("amber_block", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.AMBER_BLOCK, properties.useBlockDescriptionPrefix()));
+
+    public static final Item AMBER_BRICKS = register("amber_bricks", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.AMBER_BRICKS, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ARCANE_LAMP = register("arcane_lamp", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_LAMP, properties.useBlockDescriptionPrefix()));
+
+    public static final Item GROWTH_LAMP = register("growth_lamp", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GROWTH_LAMP, properties.useBlockDescriptionPrefix()));
+
+    public static final Item FERTILITY_LAMP = register("fertility_lamp", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.FERTILITY_LAMP, properties.useBlockDescriptionPrefix()));
+
     public static final Item ALCHEMICAL_CONSTRUCT = register("alchemical_construct", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ALCHEMICAL_CONSTRUCT, properties.useBlockDescriptionPrefix()));
 
@@ -434,7 +449,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "arcane_lamp", "growth_lamp", "fertility_lamp", "alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer",
             "infusion_matrix", "pedestal",
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",
@@ -447,6 +462,7 @@ public final class TCItems {
             "golem_core_guard", "golem_core_decanting", "golem_core_alchemy", "golem_core_chop",
             "golem_core_use", "golem_core_butcher", "golem_core_sorting", "golem_core_fishing",
             "arcane_stone", "arcane_stone_bricks", "arcane_stone_stairs", "arcane_stone_slab", "thaumium_block", "tallow_block",
+            "amber_block", "amber_bricks",
             "paving_stone_travel", "paving_stone_warding",
             "infused_stone_air", "infused_stone_fire", "infused_stone_water",
             "infused_stone_earth", "infused_stone_order", "infused_stone_entropy",

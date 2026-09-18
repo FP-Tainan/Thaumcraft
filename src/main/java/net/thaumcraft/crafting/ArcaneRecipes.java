@@ -50,6 +50,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("PAVETRAVEL", new ItemStack(TCBlocks.BUILDING.get("paving_stone_travel").asItem(), 4),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), null, null, null),
                 new AspectList().add(Aspects.EARTH, 10).add(Aspects.AIR, 10)));
+        // ArcaneLamp
+        ALL.add(new ArcaneRecipe("ARCANELAMP", new ItemStack(TCBlocks.ARCANE_LAMP.asItem()),
+                Arrays.asList(null, Ingredient.of(net.minecraft.world.level.block.Blocks.DAYLIGHT_DETECTOR.asItem()), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.AMBER_BLOCK.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(TCItems.NITOR), null),
+                new AspectList().add(Aspects.FIRE, 8).add(Aspects.AIR, 8).add(Aspects.WATER, 4).add(Aspects.ENTROPY, 4)));
         // PaveWard
         ALL.add(new ArcaneRecipe("PAVEWARD", new ItemStack(TCBlocks.BUILDING.get("paving_stone_warding").asItem(), 4),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), null, null, null),

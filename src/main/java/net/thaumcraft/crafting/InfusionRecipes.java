@@ -120,5 +120,15 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.TOOL, 20).add(Aspects.MECHANISM, 20).add(Aspects.MAN, 20),
                 Ingredient.of(TCItems.GOLEM_CORES.get("empty")),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.COMPARATOR), Ingredient.of(net.minecraft.world.item.Items.FLINT_AND_STEEL), Ingredient.of(net.minecraft.world.item.Items.SHEARS), Ingredient.of(net.minecraft.world.level.block.Blocks.LEVER.asItem()))));
+        // LampGrowth
+        ALL.add(new InfusionRecipe("LAMPGROWTH", new ItemStack(TCBlocks.GROWTH_LAMP.asItem()), 4,
+                new AspectList().add(Aspects.PLANT, 16).add(Aspects.LIGHT, 8).add(Aspects.LIFE, 16),
+                Ingredient.of(TCBlocks.ARCANE_LAMP.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.BONE_MEAL), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.BONE_MEAL), Ingredient.of(TCItems.SHARDS.get("earth")))));
+        // LampFertility
+        ALL.add(new InfusionRecipe("LAMPFERTILITY", new ItemStack(TCBlocks.FERTILITY_LAMP.asItem()), 4,
+                new AspectList().add(Aspects.BEAST, 16).add(Aspects.LIFE, 16).add(Aspects.LIGHT, 8),
+                Ingredient.of(TCBlocks.ARCANE_LAMP.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.WHEAT), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.CARROT), Ingredient.of(TCItems.SHARDS.get("fire")))));
     }
 }

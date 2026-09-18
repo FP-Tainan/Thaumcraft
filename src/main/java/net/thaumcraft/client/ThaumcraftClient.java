@@ -121,6 +121,13 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.ESSENTIA_CRYSTALIZER, net.thaumcraft.client.render.EssentiaCrystalizerRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essentia_crystalizer"), net.thaumcraft.client.render.EssentiaCrystalizerRenderer.Unbaked.CODEC);
         net.thaumcraft.client.render.AspectTint.register();
+        // as lâmpadas: o corpo é bloco comum, e o bocal que as prende vem do desenhista
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ARCANE_LAMP, net.thaumcraft.client.render.ArcaneLampRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.GROWTH_LAMP, net.thaumcraft.client.render.ArcaneLampRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.FERTILITY_LAMP, net.thaumcraft.client.render.ArcaneLampRenderer::new);
         net.thaumcraft.item.CrystalEssenceItem.known = aspect -> {
             var player = net.minecraft.client.Minecraft.getInstance().player;
             return player == null || net.thaumcraft.research.Knowledges.of(player).hasDiscovered(aspect);

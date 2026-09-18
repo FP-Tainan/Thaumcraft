@@ -127,6 +127,18 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.EssentiaCrystalizerBlockEntity::new,
                             java.util.Set.of(TCBlocks.ESSENTIA_CRYSTALIZER)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.ArcaneLampBlockEntity> ARCANE_LAMP =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_lamp"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.ArcaneLampBlockEntity::new, java.util.Set.of(TCBlocks.ARCANE_LAMP)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.GrowthLampBlockEntity> GROWTH_LAMP =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("growth_lamp"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.GrowthLampBlockEntity::new, java.util.Set.of(TCBlocks.GROWTH_LAMP)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.FertilityLampBlockEntity> FERTILITY_LAMP =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("fertility_lamp"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.FertilityLampBlockEntity::new, java.util.Set.of(TCBlocks.FERTILITY_LAMP)));
+
     private TCBlockEntities() {
     }
 

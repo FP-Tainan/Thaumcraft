@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "facing=down,lit=true": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=down,lit=false": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=up,lit=true": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=up,lit=false": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=north,lit=true": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=north,lit=false": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=south,lit=true": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=south,lit=false": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=west,lit=true": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=west,lit=false": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=east,lit=true": {
+      "model": "thaumcraft:block/arcane_lamp"
+    },
+    "facing=east,lit=false": {
+      "model": "thaumcraft:block/arcane_lamp"
+    }
+  }
+}
