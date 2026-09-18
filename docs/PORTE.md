@@ -621,3 +621,24 @@ A mesma auditoria achou, nas receitas geradas:
 - `TravellerBootsItem` — empurrão de 0,055 no chão (um quarto na água), 0,05 de controle no ar, −0,25 de queda por
   tique, 350 de durabilidade. **Diferença:** o degrau de um bloco é um atributo do item (sempre ativo com a bota
   no pé); o original só o ligava andando para a frente e sem agachar.
+
+## Equipamentos, parte 2: armadura de fortaleza de táumio (2026-09-18)
+
+- `client/render/model/FortressArmorModel` é **gerado** (`scratchpad/fortaleza-modelo.js`) do `ModelFortressArmor`
+  descompilado: 66 caixas presas às partes do corpo, sem as caixas do `ModelBiped` (o original as apaga).
+- `FortressArmorRenderer` (pelo `ArmorRenderer` do Fabric): cada peça mostra a sua parte; a couraça leva o cinto
+  largo, o peitoral e as costas, a calça o cinto estreito; os enfeites crescem com o conjunto (duas ou três peças),
+  como no `render` do original; o elmo mostra a máscara e os óculos e é 1% maior.
+- `FortressArmorItem` + componentes `fortress_mask` e `fortress_goggles`: o elmo com óculos revela como os óculos
+  (sem o desconto de vis, como diz o próprio livro).
+- `InfusionRecipe.onCentral`: a saída `Object[]{"etiqueta", valor}` do original (grava a marca no item do meio) —
+  óculos (HELMGOGGLES) e máscaras (MASKANGRYGHOST, MASKSIPPINGFIEND; a MASKGRINNINGDEVIL espera o cérebro de zumbi).
+- `event/FortressMasks`: o demônio que bebe cura 1 com chance dano/12, o fantasma irado dá 4 s de Wither com chance
+  dano/10. O diabo sorridente atenua a Distorção, que ainda não existe.
+- **Diferença pendente:** o `ISpecialArmor` do original (proteção de dano/25, fogo e explosão /20, magia /35,
+  multiplicada por 0,875 + 0,125 por peça do conjunto e +0,05 por máscara) ainda não foi portado; a fortaleza usa a
+  conta de armadura do jogo de hoje com os valores 3/7/6.
+- O gerador de infusão agora separa argumentos respeitando chaves, e o mapeador traduz a caveira de 2014 pelo
+  metadado e os corantes de cor pela coleção `Items.DYE` do 26.2.
+- "Elmo/Couraça/Coxotes de Fortaleza de Táumio" e os nomes das máscaras foram traduzidos aqui; o pt_BR do original
+  não os tinha.

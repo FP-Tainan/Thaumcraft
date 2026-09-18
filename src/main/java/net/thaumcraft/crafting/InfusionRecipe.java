@@ -25,9 +25,28 @@ import java.util.List;
  * @param essentia    a essência que a matriz vai sugar dos jarros em volta
  * @param central     o que vai no pedestal do meio
  * @param components  o que vai nos pedestais de fora, um por pedestal
+ * @param onCentral   quando a receita não faz uma coisa nova e sim grava uma marca na do meio (o {@code Object[]}
+ *                    de saída do original, como os óculos e as máscaras do elmo de fortaleza): o que gravar
  */
 public record InfusionRecipe(String research, ItemStack result, int instability, AspectList essentia,
-                             Ingredient central, List<Ingredient> components) {
+                             Ingredient central, List<Ingredient> components,
+                             java.util.function.@org.jetbrains.annotations.Nullable UnaryOperator<ItemStack> onCentral) {
+
+    public InfusionRecipe(String research, ItemStack result, int instability, AspectList essentia,
+                          Ingredient central, List<Ingredient> components) {
+        this(research, result, instability, essentia, central, components, null);
+    }
+
+    /** Uma receita que grava uma marca na coisa do meio em vez de fazer outra. */
+    public static InfusionRecipe onCentral(String research, int instability, AspectList essentia, Ingredient central,
+                                           List<Ingredient> components, java.util.function.UnaryOperator<ItemStack> mark) {
+        return new InfusionRecipe(research, ItemStack.EMPTY, instability, essentia, central, components, mark);
+    }
+
+    /** O que sai desta receita com aquela coisa no meio. */
+    public ItemStack resultFor(ItemStack middle) {
+        return this.onCentral == null ? this.result.copy() : this.onCentral.apply(middle.copyWithCount(1));
+    }
 
     /**
      * Este arranjo fecha esta receita?

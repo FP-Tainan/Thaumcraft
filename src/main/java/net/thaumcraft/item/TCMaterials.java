@@ -34,6 +34,7 @@ public final class TCMaterials {
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> GOGGLES_ASSET = assetKey("goggles");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> ROBES_ASSET = assetKey("robes");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> TRAVELLER_ASSET = assetKey("traveller");
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> FORTRESS_ASSET = assetKey("fortress");
 
     /** Armadura de táumio: 2/5/6/2 de proteção e 25 de encantabilidade, os números do original. */
     public static final ArmorMaterial THAUMIUM_ARMOR = new ArmorMaterial(
@@ -58,6 +59,13 @@ public final class TCMaterials {
     public static final ArmorMaterial GOGGLES = special(GOGGLES_ASSET, "repairs_special");
     public static final ArmorMaterial ROBES = special(ROBES_ASSET, "repairs_robes");
     public static final ArmorMaterial TRAVELLER = special(TRAVELLER_ASSET, "repairs_special");
+
+    /** O {@code armorMatThaumiumFortress}: 3/7/6/3, durabilidade 40, encantabilidade 25; conserta com táumio. */
+    public static final ArmorMaterial FORTRESS = new ArmorMaterial(40,
+            Map.of(ArmorType.BOOTS, 3, ArmorType.LEGGINGS, 6, ArmorType.CHESTPLATE, 7, ArmorType.HELMET, 3),
+            25, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f,
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/thaumium")), FORTRESS_ASSET);
 
     private static ArmorMaterial special(ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> asset, String repair) {
         return new ArmorMaterial(25,

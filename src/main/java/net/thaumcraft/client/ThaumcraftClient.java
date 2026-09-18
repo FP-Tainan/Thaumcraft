@@ -26,6 +26,13 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.client.fx.ThaumFx.init();
         net.thaumcraft.client.fx.FocusEffects.init();
 
+        // a armadura de fortaleza, com o modelo do ModelFortressArmor
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.FortressArmorRenderer.LAYER,
+                net.thaumcraft.client.render.model.FortressArmorModel::createLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(net.thaumcraft.client.render.FortressArmorRenderer::new,
+                net.thaumcraft.registry.TCItems.FORTRESS_HELMET, net.thaumcraft.registry.TCItems.FORTRESS_CHESTPLATE,
+                net.thaumcraft.registry.TCItems.FORTRESS_LEGGINGS);
         // o golem, com a pele da matéria de que ele é feito
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.client.render.GolemRenderer.LAYER,

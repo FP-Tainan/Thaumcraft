@@ -123,6 +123,16 @@ public final class TCItems {
                                                     net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),
                                             net.minecraft.world.entity.EquipmentSlotGroup.FEET))));
 
+    /** A armadura de fortaleza de táumio: o elmo, a couraça e as grevas. */
+    public static final Item FORTRESS_HELMET = fortress("fortress_helmet", net.minecraft.world.item.equipment.ArmorType.HELMET);
+    public static final Item FORTRESS_CHESTPLATE = fortress("fortress_chestplate", net.minecraft.world.item.equipment.ArmorType.CHESTPLATE);
+    public static final Item FORTRESS_LEGGINGS = fortress("fortress_leggings", net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
+
+    private static Item fortress(String name, net.minecraft.world.item.equipment.ArmorType type) {
+        return register(name, properties -> new net.thaumcraft.item.FortressArmorItem(properties
+                .humanoidArmor(net.thaumcraft.item.TCMaterials.FORTRESS, type).rarity(net.minecraft.world.item.Rarity.RARE)));
+    }
+
     private static Item robe(String name, net.minecraft.world.item.equipment.ArmorType type) {
         return register(name, properties -> new net.thaumcraft.item.RobeItem(type, properties
                 .humanoidArmor(net.thaumcraft.item.TCMaterials.ROBES, type).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
@@ -459,7 +469,7 @@ public final class TCItems {
      * peças dela, depois a matéria-prima, o equipamento e por fim os blocos.
      */
     private static final String[] SHELF = {
-            "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "traveller_boots",
+            "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "traveller_boots", "fortress_helmet", "fortress_chestplate", "fortress_leggings",
             "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",

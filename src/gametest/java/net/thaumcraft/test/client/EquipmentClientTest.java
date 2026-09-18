@@ -23,6 +23,12 @@ public class EquipmentClientTest implements FabricClientGameTest {
             server.runCommand("give @p thaumcraft:traveller_boots");
             context.waitTicks(40);
             context.takeScreenshot("mantos_e_botas");
+            server.runCommand("kill @e[type=armor_stand]");
+            server.runCommand("execute at @p run summon armor_stand ~-1.2 ~ ~2.5 {Rotation:[160f,0f],equipment:{head:{id:\"thaumcraft:fortress_helmet\",components:{\"thaumcraft:fortress_mask\":1,\"thaumcraft:fortress_goggles\":true}},chest:{id:\"thaumcraft:fortress_chestplate\"},legs:{id:\"thaumcraft:fortress_leggings\"}}}");
+            server.runCommand("execute at @p run summon armor_stand ~1.2 ~ ~2.5 {Rotation:[200f,0f],equipment:{chest:{id:\"thaumcraft:fortress_chestplate\"}}}");
+            server.runCommand("give @p thaumcraft:fortress_helmet");
+            context.waitTicks(40);
+            context.takeScreenshot("fortaleza");
         }
     }
 }

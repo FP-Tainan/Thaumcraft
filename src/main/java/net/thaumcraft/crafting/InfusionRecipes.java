@@ -135,5 +135,38 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.FLIGHT, 25).add(Aspects.TRAVEL, 25),
                 Ingredient.of(net.minecraft.world.item.Items.LEATHER_BOOTS),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(net.minecraft.world.item.Items.FEATHER), Ingredient.of(net.minecraft.world.item.Items.COD))));
+        // ThaumiumFortressHelm
+        ALL.add(new InfusionRecipe("ARMORFORTRESS", new ItemStack(TCItems.FORTRESS_HELMET), 3,
+                new AspectList().add(Aspects.METAL, 24).add(Aspects.ARMOR, 16).add(Aspects.MAGIC, 16),
+                Ingredient.of(TCItems.GEAR.get("thaumium_helmet")),
+                Arrays.asList(Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.EMERALD))));
+        // ThaumiumFortressChest
+        ALL.add(new InfusionRecipe("ARMORFORTRESS", new ItemStack(TCItems.FORTRESS_CHESTPLATE), 3,
+                new AspectList().add(Aspects.METAL, 24).add(Aspects.ARMOR, 24).add(Aspects.MAGIC, 16),
+                Ingredient.of(TCItems.GEAR.get("thaumium_chestplate")),
+                Arrays.asList(Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER))));
+        // ThaumiumFortressLegs
+        ALL.add(new InfusionRecipe("ARMORFORTRESS", new ItemStack(TCItems.FORTRESS_LEGGINGS), 3,
+                new AspectList().add(Aspects.METAL, 24).add(Aspects.ARMOR, 20).add(Aspects.MAGIC, 16),
+                Ingredient.of(TCItems.GEAR.get("thaumium_leggings")),
+                Arrays.asList(Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER))));
+        // HelmGoggles
+        ALL.add(InfusionRecipe.onCentral("HELMGOGGLES", 5,
+                new AspectList().add(Aspects.SENSES, 32).add(Aspects.AURA, 16).add(Aspects.ARMOR, 16),
+                Ingredient.of(TCItems.FORTRESS_HELMET),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.SLIME_BALL), Ingredient.of(TCItems.GOGGLES)),
+                stack -> { stack.set(net.thaumcraft.registry.TCComponents.FORTRESS_GOGGLES, true); return stack; }));
+        // MaskAngryGhost
+        ALL.add(InfusionRecipe.onCentral("MASKANGRYGHOST", 8,
+                new AspectList().add(Aspects.ENTROPY, 64).add(Aspects.DEATH, 64).add(Aspects.ARMOR, 16),
+                Ingredient.of(TCItems.FORTRESS_HELMET),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.BONE_MEAL), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.POISONOUS_POTATO), Ingredient.of(net.minecraft.world.item.Items.WITHER_SKELETON_SKULL), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT)),
+                stack -> { stack.set(net.thaumcraft.registry.TCComponents.FORTRESS_MASK, 1); return stack; }));
+        // MaskSippingFiend
+        ALL.add(InfusionRecipe.onCentral("MASKSIPPINGFIEND", 8,
+                new AspectList().add(Aspects.UNDEAD, 64).add(Aspects.LIFE, 64).add(Aspects.ARMOR, 16),
+                Ingredient.of(TCItems.FORTRESS_HELMET),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.DYE.red()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.GHAST_TEAR), Ingredient.of(net.minecraft.world.item.Items.MILK_BUCKET), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT)),
+                stack -> { stack.set(net.thaumcraft.registry.TCComponents.FORTRESS_MASK, 2); return stack; }));
     }
 }

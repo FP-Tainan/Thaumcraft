@@ -226,7 +226,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         }
 
         this.middle = centre.held().copy();
-        this.result = recipe.result().copy();
+        this.result = recipe.resultFor(this.middle);
         this.recipeInstability = recipe.instability();
         this.instability = Math.max(0, this.symmetry) + this.recipeInstability;
         this.owed = recipe.essentia().copy();

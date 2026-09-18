@@ -38,6 +38,14 @@ public final class TCComponents {
     public static final DataComponentType<String> CRYSTAL_ASPECT = register("crystal_aspect",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
+    /** A máscara presa num elmo de fortaleza: 0 o diabo sorridente, 1 o fantasma irado, 2 o demônio que bebe. */
+    public static final DataComponentType<Integer> FORTRESS_MASK = register("fortress_mask",
+            builder -> builder.persistent(Codec.intRange(0, 2)).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** Os óculos da revelação embutidos num elmo de fortaleza. */
+    public static final DataComponentType<Boolean> FORTRESS_GOGGLES = register("fortress_goggles",
+            builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
     /** O aspecto marcado num rótulo de jarro: o rótulo marcado, que o tubo filtro aceita. */
     public static final DataComponentType<String> LABEL_ASPECT = register("label_aspect",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
