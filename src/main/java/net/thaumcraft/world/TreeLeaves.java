@@ -18,7 +18,8 @@ import java.util.Set;
  *
  * <p>No jogo antigo a folha media essa distância na hora de apodrecer; no de hoje ela a guarda no próprio
  * bloco, e uma folha posta sem essa conta acharia que está solta e cairia. Então, ao fim de cada árvore,
- * a distância é medida a partir das toras, pelo caminho das folhas, como o próprio jogo faz com as dele.
+ * a distância é medida a partir das toras, pelo caminho das folhas, como o próprio jogo faz com as dele. A
+ * folha que ficar longe demais fica para sempre, como ficaria no original.
  */
 final class TreeLeaves {
     private final Set<BlockPos> placed = new LinkedHashSet<>();
@@ -60,7 +61,11 @@ final class TreeLeaves {
             BlockState state = level.getBlockState(pos);
             if (!(state.getBlock() instanceof LeavesBlock)) continue;
             int d = distance.getOrDefault(pos, LeavesBlock.DECAY_DISTANCE);
-            if (state.getValue(LeavesBlock.DISTANCE) != d) level.setBlock(pos, state.setValue(LeavesBlock.DISTANCE, d), flags);
+            BlockState settled = state.setValue(LeavesBlock.DISTANCE, d);
+            // longe demais do tronco para as contas de hoje: no original a folha nascida da árvore só apodrecia
+            // quando algo mudava a quatro blocos dela, e estas ficariam; aqui ficam também
+            if (d >= LeavesBlock.DECAY_DISTANCE) settled = settled.setValue(LeavesBlock.PERSISTENT, true);
+            if (settled != state) level.setBlock(pos, settled, flags);
         }
     }
 

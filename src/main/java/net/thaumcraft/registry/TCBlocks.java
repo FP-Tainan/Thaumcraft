@@ -77,6 +77,17 @@ public final class TCBlocks {
             new net.minecraft.world.level.block.SlabBlock(
                     properties.mapColor(MapColor.STONE).strength(2.0f, 6.0f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
 
+    /** A barreira que a pedra de proteção levanta: parede para bicho, ar para gente. */
+    public static final Block WARDING_BARRIER = register("warding_barrier", properties ->
+            new net.thaumcraft.block.WardingBarrierBlock(properties
+                    .mapColor(MapColor.NONE)
+                    .strength(-1.0f, 3600000.0f)
+                    .noLootTable()
+                    .noOcclusion()
+                    .replaceable()
+
+                    .pushReaction(PushReaction.DESTROY)));
+
     /** O pilar do altar de infusão: a base (com o modelo) e o topo, que a varinha faz dos cantos do altar. */
     public static final Block INFUSION_PILLAR = register("infusion_pillar", properties ->
             new net.thaumcraft.block.InfusionPillarBlock(false, pillarProperties(properties)));
@@ -271,11 +282,13 @@ public final class TCBlocks {
 
     static {
         for (String name : TCBuilding.NAMES) {
-            BUILDING.put(name, register(name, properties -> new Block(properties
-                    .mapColor(MapColor.STONE)
-                    .strength(2.0f, 6.0f)
-                    .requiresCorrectToolForDrops()
-                    .sound(SoundType.STONE))));
+            BUILDING.put(name, register(name, properties -> {
+                properties.mapColor(MapColor.STONE).strength(2.0f, 6.0f).requiresCorrectToolForDrops().sound(SoundType.STONE);
+                // as pedras de pavimento fazem coisas; as outras são só pedra
+                if (name.equals("paving_stone_travel")) return new net.thaumcraft.block.PavingStoneBlock(false, properties);
+                if (name.equals("paving_stone_warding")) return new net.thaumcraft.block.PavingStoneBlock(true, properties);
+                return new Block(properties);
+            }));
         }
     }
 

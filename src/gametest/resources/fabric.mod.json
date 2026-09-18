@@ -19,6 +19,7 @@
       "net.thaumcraft.test.ModAspectsGameTest",
       "net.thaumcraft.test.NodeGameTest",
       "net.thaumcraft.test.OreGameTest",
+      "net.thaumcraft.test.PavingStoneGameTest",
       "net.thaumcraft.test.PortableHoleGameTest",
       "net.thaumcraft.test.PrimalFocusGameTest",
       "net.thaumcraft.test.ProgressionGameTest",

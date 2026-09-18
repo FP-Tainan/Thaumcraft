@@ -82,6 +82,18 @@ public class ThaumcraftClient implements ClientModInitializer {
                         net.thaumcraft.api.aspects.ObjectAspects.accept(payload.table());
                     }
                 }));
+        // as pedras de pavimento: a faísca verde da de Viagem e as runas da de Proteção
+        net.thaumcraft.block.PavingStoneBlock.clientEffects = new net.thaumcraft.block.PavingStoneBlock.ClientEffects() {
+            @Override
+            public void sparkle(net.minecraft.core.BlockPos pos, int colour, int count) {
+                net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX(), pos.getY(), pos.getZ(), colour, count);
+            }
+
+            @Override
+            public void runes(net.minecraft.core.BlockPos pos, double y, float r, float g, float b, int duration, float gravity) {
+                net.thaumcraft.client.fx.BlockRunes.spawn(pos.getX(), y, pos.getZ(), r, g, b, duration, gravity);
+            }
+        };
         // os pilares do altar de infusão, com o modelo do original
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.INFUSION_PILLAR, net.thaumcraft.client.render.InfusionPillarRenderer::new);

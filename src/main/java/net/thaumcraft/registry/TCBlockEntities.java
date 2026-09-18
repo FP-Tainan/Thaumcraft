@@ -44,6 +44,11 @@ public final class TCBlockEntities {
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("infusion_pillar"),
             new BlockEntityType<>(net.thaumcraft.block.entity.InfusionPillarBlockEntity::new, java.util.Set.of(TCBlocks.INFUSION_PILLAR)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.WardingStoneBlockEntity> WARDING_STONE = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("warding_stone"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.WardingStoneBlockEntity::new,
+                    java.util.Set.of(TCBlocks.BUILDING.get("paving_stone_warding"))));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.WardedBlockEntity> WARDED = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("warded"),
             new BlockEntityType<>(net.thaumcraft.block.entity.WardedBlockEntity::new, java.util.Set.of(TCBlocks.WARDED)));

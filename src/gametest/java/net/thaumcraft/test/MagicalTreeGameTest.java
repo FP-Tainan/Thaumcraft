@@ -47,13 +47,13 @@ public class MagicalTreeGameTest {
             if (state.is(log) || state.is(TCBlocks.SILVERWOOD_KNOT)) logs++;
             if (state.is(leaf)) {
                 leaves++;
-                if (state.getValue(LeavesBlock.DISTANCE) >= LeavesBlock.DECAY_DISTANCE) loose++;
+                if (state.getValue(LeavesBlock.DISTANCE) >= LeavesBlock.DECAY_DISTANCE && !state.getValue(LeavesBlock.PERSISTENT)) loose++;
             }
         }
         if (logs < minLogs) helper.fail("tronco pequeno demais: " + logs + " toras");
         if (leaves < 40) helper.fail("copa rala demais: " + leaves + " folhas");
-        // a folha tem de saber que está presa ao tronco, senão apodrece no primeiro tique
-        if (loose * 10 > leaves) helper.fail(loose + " de " + leaves + " folhas acham que estão soltas");
+        // nenhuma folha da árvore pode apodrecer sozinha no primeiro tique
+        if (loose > 0) helper.fail(loose + " de " + leaves + " folhas acham que estão soltas");
         if (!level.getBlockState(base.below()).is(BlockTags.SUPPORTS_VEGETATION)) helper.fail("o pé da árvore fica na terra");
         helper.succeed();
     }

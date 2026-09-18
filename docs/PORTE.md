@@ -504,3 +504,11 @@ A mesma auditoria achou, nas receitas geradas:
   leva bacalhau, baiacu e salmão. Quando chegarem, o *Liquid Death* pede **balde** e a *Void Seed* pede
   **sementes de trigo**.
 - As 199 pesquisas bateram todas com o jar.
+- As pedras de pavimento fazem o que faziam: a de **Viagem** dá dois segundos de velocidade II e de salto a
+  quem pisa (faísca verde); a de **Proteção**, sem redstone, levanta uma barreira invisível de dois blocos que é
+  parede para bicho e ar para gente, empurra o bicho que estiver no ar sobre ela, e mostra as runas do
+  `FXBlockRunes` (azuis com redstone, vermelhas com a barreira tapada, lilases com bicho perto).
+  **Diferença**: o caminho dos bichos sempre conta a barreira como parede; o original a abria também para o
+  caminho quando havia redstone.
+- As folhas da grande-madeira longe demais do tronco para as contas de hoje ficam permanentes: no original a
+  folha nascida da árvore só apodrecia quando algo mudava perto dela.
