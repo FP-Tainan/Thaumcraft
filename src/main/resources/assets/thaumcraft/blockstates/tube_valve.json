@@ -1,9 +1,6 @@
 {
   "multipart": [
     {
-      "when": {
-        "fitting": true
-      },
       "apply": {
         "model": "thaumcraft:block/tube_valve_core"
       }
