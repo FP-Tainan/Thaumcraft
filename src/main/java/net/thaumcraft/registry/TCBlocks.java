@@ -77,6 +77,15 @@ public final class TCBlocks {
             new net.minecraft.world.level.block.SlabBlock(
                     properties.mapColor(MapColor.STONE).strength(2.0f, 6.0f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
 
+    /** O fole, que sopra no forno. */
+    public static final Block BELLOWS = register("bellows", properties ->
+            new net.thaumcraft.block.BellowsBlock(properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5f, 6.0f)
+                    .noOcclusion()
+                    .ignitedByLava()
+                    .sound(SoundType.WOOD)));
+
     /** A barreira que a pedra de proteção levanta: parede para bicho, ar para gente. */
     public static final Block WARDING_BARRIER = register("warding_barrier", properties ->
             new net.thaumcraft.block.WardingBarrierBlock(properties

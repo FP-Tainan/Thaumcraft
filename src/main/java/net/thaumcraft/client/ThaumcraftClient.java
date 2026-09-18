@@ -94,6 +94,10 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.fx.BlockRunes.spawn(pos.getX(), y, pos.getZ(), r, g, b, duration, gravity);
             }
         };
+        // o fole, com o modelo do original, no chão e na mão
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.BELLOWS, net.thaumcraft.client.render.BellowsRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("bellows"), net.thaumcraft.client.render.BellowsRenderer.Unbaked.CODEC);
         // os pilares do altar de infusão, com o modelo do original
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.INFUSION_PILLAR, net.thaumcraft.client.render.InfusionPillarRenderer::new);

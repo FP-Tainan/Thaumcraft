@@ -181,7 +181,9 @@ public class AlchemicalFurnaceBlockEntity extends BlockEntity implements Contain
         int size = found.visSize();
         if (size > MAX_VIS - this.aspects.visSize()) return false;
 
-        this.smeltTime = Math.max(1, size * TICKS_PER_POINT);
+        // cada fole soprando no forno corta um oitavo do tempo, como no original
+        int bellows = this.level == null ? 0 : net.thaumcraft.block.BellowsBlock.blowingInto(this.level, this.worldPosition);
+        this.smeltTime = Math.max(1, (int) (size * TICKS_PER_POINT * (1.0f - 0.125f * bellows)));
         return true;
     }
 

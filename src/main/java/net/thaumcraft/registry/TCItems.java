@@ -229,6 +229,10 @@ public final class TCItems {
     public static final Item INFUSION_MATRIX = register("infusion_matrix", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.INFUSION_MATRIX, properties));
 
+    /** O fole. */
+    public static final Item BELLOWS = register("bellows", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.BELLOWS, properties.useBlockDescriptionPrefix()));
+
     // as escadas e a laje de pedra arcana
     public static final Item ARCANE_STONE_STAIRS = register("arcane_stone_stairs", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_STONE_STAIRS, properties.useBlockDescriptionPrefix()));
@@ -410,7 +414,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "scribing_tools", "table", "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_oneway", "tube_buffer",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "alchemical_furnace", "bellows", "alembic", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_oneway", "tube_buffer",
             "infusion_matrix", "pedestal",
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",

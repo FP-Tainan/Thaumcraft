@@ -174,6 +174,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("DISTILESSENTIA", new ItemStack(TCBlocks.ALEMBIC.asItem()),
                 Arrays.asList(Ingredient.of(TCResources.get("vis_filter")), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.BUCKET), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT)),
                 new AspectList().add(Aspects.AIR, 5).add(Aspects.WATER, 5)));
+        // Bellows
+        ALL.add(new ArcaneRecipe("BELLOWS", new ItemStack(TCBlocks.BELLOWS.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), null, Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), null),
+                new AspectList().add(Aspects.AIR, 10).add(Aspects.ORDER, 5)));
         // Tube
         ALL.add(new ArcaneRecipe("TUBES", new ItemStack(TCBlocks.TUBE.asItem(), 8),
                 Arrays.asList(null, Ingredient.of(TCResources.get("quicksilver")), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null),
