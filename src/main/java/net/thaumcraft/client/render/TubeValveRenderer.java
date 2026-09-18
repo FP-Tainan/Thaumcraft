@@ -42,6 +42,7 @@ public class TubeValveRenderer implements BlockEntityRenderer<TubeValveBlockEnti
     public static class State extends BlockEntityRenderState {
         public Direction facing = Direction.UP;
         public float rotation;
+        public final boolean[] plugged = new boolean[6];
     }
 
     public TubeValveRenderer(BlockEntityRendererProvider.Context context) {
@@ -60,11 +61,13 @@ public class TubeValveRenderer implements BlockEntityRenderer<TubeValveBlockEnti
         state.facing = block.hasProperty(TubeValveBlock.FACING)
                 ? block.getValue(TubeValveBlock.FACING) : Direction.UP;
         state.rotation = valve.rotation();
+        TubeRenderer.plugs(valve, state.plugged);
     }
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
         int light = state.lightCoords;
+        TubeRenderer.submitPlugs(state.plugged, pose, collector, light);
 
         pose.pushPose();
         pose.translate(0.5f, 0.5f, 0.5f);

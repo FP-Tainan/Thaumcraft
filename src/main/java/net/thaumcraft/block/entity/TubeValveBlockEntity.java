@@ -114,7 +114,8 @@ public class TubeValveBlockEntity extends TubeBlockEntity implements Wandable {
         if (!allow) this.setSuction(null, 0);
         level.playSound(null, pos, TCSounds.SQUEEK.value(), SoundSource.BLOCKS,
                 0.7f, 0.9f + level.getRandom().nextFloat() * 0.2f);
-        this.sync();
+        // e a válvula que se mexe solta um sopro de vapor, aberta ou fechada
+        this.vent(level, pos);
     }
 
     @Override

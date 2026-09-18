@@ -47,10 +47,13 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
     private static final float LABEL_OUT = 0.315f;
     /** A altura do meio do rótulo. */
     private static final float LABEL_MID = 0.42f;
-    /** O tamanho do rótulo: meia escala, como no original. */
-    private static final float LABEL_SIZE = 0.26f;
-    /** O símbolo do aspecto, menor que o papel, e um fio à frente dele. */
-    private static final float SYMBOL_SIZE = 0.17f;
+    /**
+     * O tamanho do papel: meio bloco, o {@code renderQuadCenteredFromTexture(..., 0.5F, ...)} do
+     * {@code TileJarRenderer}. Eu tinha posto a metade disso.
+     */
+    private static final float LABEL_SIZE = 0.5f;
+    /** O símbolo do aspecto: dezesseis pontos a 0,021 cada, como o {@code drawTag} do original. */
+    private static final float SYMBOL_SIZE = 16.0f * 0.021f;
     private static final float SYMBOL_OUT = LABEL_OUT + 0.002f;
 
     private static final Identifier MIST = Thaumcraft.id("textures/misc/essentia.png");
@@ -63,6 +66,8 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
         @Nullable
         public Identifier symbol;
         public int symbolColor;
+        /** O quanto o papel está torto, em graus. */
+        public float tilt;
         public Direction facing = Direction.NORTH;
         public float ticks;
         @Nullable
@@ -91,6 +96,10 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
         state.symbol = label == null ? null : Thaumcraft.id("textures/aspects/" + label.tag() + ".png");
         state.symbolColor = label == null ? -1 : 0xFF000000 | label.color();
         state.facing = jar.facing();
+        // o papel colado meio torto, como no original com "crooked" ligado, que é o padrão: o ângulo sai do
+        // aspecto, da coluna do jarro e do lado para onde ele olha, com a mesma conta, e fica sempre igual
+        state.tilt = label == null ? 0.0f
+                : (label.tag().hashCode() + jar.getBlockPos().getX() + jar.facing().get3DDataValue()) % 4 - 2;
         state.ticks = jar.getLevel() == null ? 0.0f : jar.getLevel().getGameTime() + partial;
         state.held = aspect;
         state.amount = jar.amount();
@@ -133,6 +142,10 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
         pose.translate(0.5f, 0.0f, 0.5f);
         pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-state.facing.toYRot()));
         pose.translate(-0.5f, 0.0f, -0.5f);
+        // torto em volta do próprio meio, no plano da face
+        pose.translate(0.5f, LABEL_MID, 0.0f);
+        pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(state.tilt));
+        pose.translate(-0.5f, -LABEL_MID, 0.0f);
 
         collector.submitCustomGeometry(pose, RenderTypes.entityCutout(LABEL), (matrix, consumer) ->
                 flat(matrix, consumer, LABEL_SIZE, LABEL_OUT, -1, light));

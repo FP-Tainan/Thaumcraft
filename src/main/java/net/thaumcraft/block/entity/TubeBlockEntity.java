@@ -126,6 +126,9 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
 
     /** Dois lados puxando igual e querendo coisas diferentes: o tubo desiste e vaza. */
     protected void checkVenting(Level level, BlockPos pos) {
+        // só sangra o cano que está carregando essência: cano vazio numa linha com jarros de aspectos
+        // diferentes não tem o que soltar, e ficava soltando vapor o tempo todo só por estar ligado a eles
+        if (this.amount <= 0) return;
         for (Direction dir : Direction.values()) {
             if (!this.isConnectable(dir)) continue;
             EssentiaTransport neighbour = neighbour(level, pos, dir);
@@ -136,15 +139,19 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
             if (theirs != this.suction && theirs != this.suction - 1) continue;
             if (this.suctionType == neighbour.getSuctionType(dir.getOpposite())) continue;
 
-            // o chiado baixinho do original, o random.fizz
-            if (this.venting <= 0) {
-                level.playSound(null, pos, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
-                        0.1f, 1.0f + level.getRandom().nextFloat() * 0.1f);
-            }
-            this.venting = VENT_TIME;
-            this.sync();
+            this.vent(level, pos);
             return;
         }
+    }
+
+    /** Solta o vapor por um tempo, com o chiado baixinho do original, o {@code random.fizz}. */
+    protected void vent(Level level, BlockPos pos) {
+        if (this.venting <= 0) {
+            level.playSound(null, pos, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
+                    0.1f, 1.0f + level.getRandom().nextFloat() * 0.1f);
+        }
+        this.venting = VENT_TIME;
+        this.sync();
     }
 
     /** O gole do vizinho: uma unidade, do que puxa menos para o que puxa mais. */
@@ -190,7 +197,8 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
      * é o que dá ao jato o ângulo que ele tem.
      */
     private void puff(Level level, BlockPos pos) {
-        int colour = this.suctionType != null ? this.suctionType.color() : 0xAAAAAA;
+        int colour = this.suctionType != null ? this.suctionType.color()
+                : this.essentia != null ? this.essentia.color() : 0xAAAAAA;
         java.util.Random fixed = new java.util.Random(pos.hashCode() * 4L);
         double pitch = Math.toRadians(fixed.nextFloat() * 360.0f);
         double yaw = Math.toRadians(fixed.nextFloat() * 360.0f);
