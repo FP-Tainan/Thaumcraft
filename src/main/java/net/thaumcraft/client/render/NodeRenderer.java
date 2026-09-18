@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.thaumcraft.Thaumcraft;
 import net.thaumcraft.api.aspects.Aspect;
@@ -81,6 +82,12 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
             }
             NodeBlockEntity seen = net.thaumcraft.item.WandItem.nodeInSight(minecraft.level, player);
             if (seen == null || !seen.getBlockPos().equals(node.getBlockPos())) continue;
+            // sem nada que ainda caiba na varinha, o original esquece o drainEntity e o feixe some
+            ItemStack wand = player.getUseItem();
+            if (net.thaumcraft.item.WandItem.drainable(wand, node,
+                    net.thaumcraft.item.WandItem.preserves(wand, player), minecraft.level.getRandom()) == null) {
+                continue;
+            }
 
             float using = player.getTicksUsingItem() + partial;
             float sway = (float) Math.sin(using / 10.0f) * 10.0f;

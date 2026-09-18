@@ -313,6 +313,7 @@
   "tc.golem.nohome": "Agachado, toque o sino num baú primeiro",
   "tc.golem.sent": "O golem vai levar o que juntar para %s %s %s",
   "tc.infusion.badplace": "A matriz precisa de um pedestal dois blocos abaixo, com tijolos de pedra arcana nos quatro cantos dele e pedra arcana em cima dos tijolos",
+  "tc.infusion.novis": "A varinha precisa de 25 de vis de cada um dos seis primários para erguer o altar",
   "tc.infusion.nocentre": "O pedestal do meio está vazio",
   "tc.infusion.norecipe": "Nada que você saiba se faz com isso",
   "tc.infusion.unknown": "Você ainda não sabe fazer isso",

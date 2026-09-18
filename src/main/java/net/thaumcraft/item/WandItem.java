@@ -222,7 +222,7 @@ public class WandItem extends Item {
         if (node != null) {
             if (level.isClientSide()) return;
             // a cada cinco tiques a varinha dá mais um gole no nó, como no original
-            if (remaining % 5 == 0) drain(stack, node, level);
+            if (remaining % 5 == 0) drain(stack, node, level, player);
             return;
         }
         FocusItem focus = net.thaumcraft.item.Focuses.on(stack);
@@ -243,23 +243,52 @@ public class WandItem extends Item {
     }
 
     /**
-     * Um gole no nó: um ponto de um aspecto que ainda caiba na varinha.
+     * Um gole no nó: o {@code onUsingWandTick} da {@code TileNode} da 4.2.3.5.
      *
-     * <p>No original o aspecto é sorteado entre os que têm lugar, e não o mais cheio nem o mais vazio.
+     * <p>Um aspecto sorteado entre os que o nó tem e que ainda cabem na varinha; o gole é de um ponto, mais um
+     * com cada pesquisa de Sangria de Nós. Com a Preservação de Nós, e fora das varinhas de madeira ou de ponta
+     * de ferro, a varinha nunca leva o último ponto de um aspecto — a não ser agachado.
      */
-    private static void drain(ItemStack stack, NodeBlockEntity node, Level level) {
-        List<Aspect> room = aspectsWithRoom(stack);
-        List<Aspect> possible = new ArrayList<>();
-        for (Aspect aspect : room) {
-            if (node.aspects().getAmount(aspect) > 0) possible.add(aspect);
-        }
-        if (possible.isEmpty()) return;
-        Aspect chosen = possible.get(level.getRandom().nextInt(possible.size()));
-        if (!node.take(chosen, 1)) return;
-        addVis(stack, chosen, 1);
+    private static void drain(ItemStack stack, NodeBlockEntity node, Level level, Player player) {
+        var knowledge = net.thaumcraft.research.Knowledges.of(player);
+        int tap = 1;
+        if (knowledge.hasResearch("NODETAPPER1")) tap++;
+        if (knowledge.hasResearch("NODETAPPER2")) tap++;
+        boolean preserve = preserves(stack, player);
+        Aspect chosen = drainable(stack, node, preserve, level.getRandom());
+        if (chosen == null) return;
+        int amount = node.aspects().getAmount(chosen);
+        if (tap > amount) tap = amount;
+        if (preserve && tap == amount) tap--;
+        if (tap <= 0) return;
+        int left = addVis(stack, chosen, tap);
+        if (left >= tap) return;
+        node.take(chosen, tap - left);
         level.playSound(null, node.getBlockPos(), net.thaumcraft.registry.TCSounds.WAND.value(),
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.3f, 1.2f + level.getRandom().nextFloat() * 0.3f);
         node.drained(chosen);
+    }
+
+    /** Se a varinha deixa o último ponto de cada aspecto no nó: a Preservação de Nós, fora da madeira e do ferro. */
+    public static boolean preserves(ItemStack stack, Player player) {
+        return !player.isShiftKeyDown() && net.thaumcraft.research.Knowledges.of(player).hasResearch("NODEPRESERVE")
+                && !rod(stack).tag().equals("wood") && !cap(stack).tag().equals("iron");
+    }
+
+    /**
+     * O {@code chooseRandomFilteredFromSource} do nó: um aspecto dele, sorteado, que ainda caiba na varinha.
+     * Nenhum, e a varinha para de beber — e o feixe some, como no original.
+     */
+    @org.jetbrains.annotations.Nullable
+    public static Aspect drainable(ItemStack stack, NodeBlockEntity node, boolean preserve,
+                                   net.minecraft.util.RandomSource random) {
+        int min = preserve ? 1 : 0;
+        List<Aspect> room = aspectsWithRoom(stack);
+        List<Aspect> possible = new ArrayList<>();
+        for (Aspect aspect : node.aspects().getAspects()) {
+            if (room.contains(aspect) && node.aspects().getAmount(aspect) > min) possible.add(aspect);
+        }
+        return possible.isEmpty() ? null : possible.get(random.nextInt(possible.size()));
     }
 
     /**

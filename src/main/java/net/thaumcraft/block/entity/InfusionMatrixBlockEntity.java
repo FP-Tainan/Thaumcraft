@@ -124,8 +124,14 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
             return true;
         }
         if (this.active) return true;
+        if (!fitsAltar(level, pos)) {
+            player.sendOverlayMessage(Component.translatable("tc.infusion.badplace"));
+            return false;
+        }
         if (raiseAltar(level, pos, wand)) return true;
-        player.sendOverlayMessage(Component.translatable("tc.infusion.badplace"));
+        // a construção está certa; o que falta é vis na varinha
+        player.sendOverlayMessage(Component.translatable("tc.infusion.novis"));
+        level.playSound(null, pos, TCSounds.WAND_FAIL.value(), net.minecraft.sounds.SoundSource.PLAYERS, 0.5f, 1.0f);
         return false;
     }
 
@@ -134,7 +140,8 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
      * chão, tijolos de pedra arcana nos quatro cantos dele, pedra arcana em cima dos tijolos e o resto vazio, a
      * varinha paga vinte e cinco de cada primário e os cantos viram pilares.
      */
-    private boolean raiseAltar(Level level, BlockPos pos, ItemStack wand) {
+    /** O {@code fitInfusionAltar}: a construção de pedra, antes de virar altar. */
+    public static boolean fitsAltar(Level level, BlockPos pos) {
         BlockPos floor = pos.below(2);
         if (!(level.getBlockEntity(floor) instanceof PedestalBlockEntity)) return false;
         net.minecraft.world.level.block.Block stone = TCBlocks.BUILDING.get("arcane_stone");
@@ -153,6 +160,12 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
                 if ((dx != 0 || dz != 0) && !level.isEmptyBlock(high)) return false;
             }
         }
+        return true;
+    }
+
+    private boolean raiseAltar(Level level, BlockPos pos, ItemStack wand) {
+        if (!fitsAltar(level, pos)) return false;
+        BlockPos floor = pos.below(2);
         net.thaumcraft.api.aspects.AspectList cost = new net.thaumcraft.api.aspects.AspectList();
         for (net.thaumcraft.api.aspects.Aspect primal : net.thaumcraft.api.aspects.Aspects.primals()) cost.add(primal, 25);
         if (!(wand.getItem() instanceof net.thaumcraft.item.WandItem) || !net.thaumcraft.item.WandItem.consume(wand, cost, true)) {

@@ -78,6 +78,24 @@ public class NodeGameTest {
         helper.succeed();
     }
 
+    @GameTest
+    public void theWandDrinksOrderAndStopsWhenFull(GameTestHelper helper) {
+        NodeBlockEntity node = place(helper, new AspectList().add(Aspects.ORDER, 10).add(Aspects.MAGIC, 10), NodeType.NORMAL, null);
+        net.minecraft.world.item.ItemStack wand = new net.minecraft.world.item.ItemStack(net.thaumcraft.registry.TCItems.WAND);
+        RandomSource random = helper.getLevel().getRandom();
+        for (int i = 0; i < 20; i++) {
+            // o composto não cabe na varinha: só a ordem sai
+            if (net.thaumcraft.item.WandItem.drainable(wand, node, false, random) != Aspects.ORDER) {
+                helper.fail("a varinha vazia tem de beber a ordem do nó");
+            }
+        }
+        net.thaumcraft.item.WandItem.addVis(wand, Aspects.ORDER, net.thaumcraft.item.WandItem.maxVis(wand));
+        if (net.thaumcraft.item.WandItem.drainable(wand, node, false, random) != null) {
+            helper.fail("com a ordem cheia não há mais o que beber, e o feixe some");
+        }
+        helper.succeed();
+    }
+
     private static NodeBlockEntity place(GameTestHelper helper, AspectList aspects, NodeType type, NodeModifier mod) {
         BlockPos pos = new BlockPos(1, 2, 1);
         helper.setBlock(pos, TCBlocks.NODE.defaultBlockState());

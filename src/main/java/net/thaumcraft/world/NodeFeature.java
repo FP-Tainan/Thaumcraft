@@ -145,6 +145,23 @@ public class NodeFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
 
+        // o que há em volta, onze blocos de lado: muita água, lava, pedra ou folhagem também entram no nó
+        int water = 0, lava = 0, stone = 0, foliage = 0;
+        for (BlockPos at : BlockPos.betweenClosed(pos.offset(-5, -5, -5), pos.offset(5, 5, 5))) {
+            net.minecraft.world.level.block.state.BlockState there = level.getBlockState(at);
+            if (there.getFluidState().is(net.minecraft.tags.FluidTags.WATER)) water++;
+            else if (there.getFluidState().is(net.minecraft.tags.FluidTags.LAVA)) lava++;
+            else if (there.is(net.minecraft.world.level.block.Blocks.STONE)) stone++;
+            if (there.is(net.minecraft.tags.BlockTags.LEAVES) || there.is(net.minecraft.world.level.block.Blocks.VINE)) foliage++;
+        }
+        if (water > 100) list.merge(Aspects.WATER, 1);
+        if (lava > 100) {
+            list.merge(Aspects.FIRE, 1);
+            list.merge(Aspects.EARTH, 1);
+        }
+        if (stone > 500) list.merge(Aspects.EARTH, 1);
+        if (foliage > 100) list.merge(Aspects.PLANT, 1);
+
         return share(list, value, random);
     }
 
@@ -162,14 +179,11 @@ public class NodeFeature extends Feature<NoneFeatureConfiguration> {
             weights[i] = list.getAmount(aspects.get(i)) == 2 ? 50 + random.nextInt(25) : 25 + random.nextInt(50);
             total += weights[i];
         }
-        AspectList shared = new AspectList();
+        // o merge do original: cada aspecto fica com o maior entre a fatia e o um ou dois com que entrou
         for (int i = 0; i < weights.length; i++) {
-            int amount = (int) (weights[i] / total * value);
-            if (amount > 0) shared.add(aspects.get(i), amount);
+            list.merge(aspects.get(i), (int) (weights[i] / total * value));
         }
-        // um nó sem nada dentro não é nó: garante ao menos um ponto do primeiro aspecto
-        if (shared.isEmpty() && !aspects.isEmpty()) shared.add(aspects.get(0), 1);
-        return shared;
+        return list;
     }
 
     private static Aspect anyPrimal(RandomSource random) {

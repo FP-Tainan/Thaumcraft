@@ -211,8 +211,10 @@ public final class GogglesOverlay {
         target = null;
     }
 
-    /** O que o recipiente guarda: a lista de um jarro ou alambique, ou o que corre dentro de um tubo. */
+    /** O que o recipiente guarda: a lista de um nó, jarro ou alambique, ou o que corre dentro de um tubo. */
     private static AspectList contents(BlockEntity block) {
+        // o nó de aura é um recipiente como os outros no original: os óculos mostram o que ele guarda
+        if (block instanceof net.thaumcraft.block.entity.NodeBlockEntity node) return node.aspects();
         if (block instanceof AspectContainer container) return container.getAspects();
         if (block instanceof EssentiaTransport transport && transport.getEssentiaAmount(null) > 0
                 && transport.getEssentiaType(null) != null) {

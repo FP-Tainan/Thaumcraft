@@ -311,6 +311,7 @@
   "tc.golem.nohome": "Sneak and ring the bell on a container first",
   "tc.golem.sent": "The golem will carry what it finds to %s %s %s",
   "tc.infusion.badplace": "The matrix needs a pedestal two blocks below it, with arcane stone bricks on its four corners and arcane stone on top of the bricks",
+  "tc.infusion.novis": "The wand needs 25 vis of each of the six primals to raise the altar",
   "tc.infusion.nocentre": "The central pedestal is empty",
   "tc.infusion.norecipe": "Nothing you know is made of these",
   "tc.infusion.unknown": "You do not know how to make that yet",
