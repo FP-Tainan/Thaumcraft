@@ -113,6 +113,18 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.BELLOWS, net.thaumcraft.client.render.BellowsRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("bellows"), net.thaumcraft.client.render.BellowsRenderer.Unbaked.CODEC);
+        // a alquimia: a centrífuga, o cristalizador e a cor da essência cristalizada
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.CENTRIFUGE, net.thaumcraft.client.render.CentrifugeRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("centrifuge"), net.thaumcraft.client.render.CentrifugeRenderer.Unbaked.CODEC);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ESSENTIA_CRYSTALIZER, net.thaumcraft.client.render.EssentiaCrystalizerRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essentia_crystalizer"), net.thaumcraft.client.render.EssentiaCrystalizerRenderer.Unbaked.CODEC);
+        net.thaumcraft.client.render.AspectTint.register();
+        net.thaumcraft.item.CrystalEssenceItem.known = aspect -> {
+            var player = net.minecraft.client.Minecraft.getInstance().player;
+            return player == null || net.thaumcraft.research.Knowledges.of(player).hasDiscovered(aspect);
+        };
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.INFUSION_MATRIX, net.thaumcraft.client.render.InfusionMatrixRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("infusion_matrix"), net.thaumcraft.client.render.InfusionMatrixRenderer.Unbaked.CODEC);

@@ -112,6 +112,14 @@
       "thaumcraft:page2"
     ]
   },
+  "pump": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:pump1",
+      "thaumcraft:pump2",
+      "thaumcraft:pump3"
+    ]
+  },
   "roots": {
     "category": "player",
     "sounds": [

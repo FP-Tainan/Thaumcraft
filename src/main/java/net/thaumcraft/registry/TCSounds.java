@@ -68,6 +68,8 @@ public final class TCSounds {
     public static final Holder<SoundEvent> INFUSER_START = register("infuser_start");
     /** A matriz runica em plena infusao. */
     public static final Holder<SoundEvent> INFUSER = register("infuser");
+    /** A centrifuga alquimica girando. */
+    public static final Holder<SoundEvent> PUMP = register("pump");
 
     private TCSounds() {
     }

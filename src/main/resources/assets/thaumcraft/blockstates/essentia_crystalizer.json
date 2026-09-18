@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "thaumcraft:block/essentia_crystalizer"
+    },
+    "facing=up": {
+      "model": "thaumcraft:block/essentia_crystalizer"
+    },
+    "facing=north": {
+      "model": "thaumcraft:block/essentia_crystalizer"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/essentia_crystalizer"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/essentia_crystalizer"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/essentia_crystalizer"
+    }
+  }
+}

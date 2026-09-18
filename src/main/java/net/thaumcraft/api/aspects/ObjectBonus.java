@@ -108,9 +108,11 @@ final class ObjectBonus {
     /** O {@code getBonusTags}: a essência que a coisa carrega, a serventia dela e os encantamentos. */
     static AspectList apply(ItemStack stack, AspectList source) {
         AspectList tmp = new AspectList();
-        // o que a coisa carrega: o frasco cheio e o jarro com essência
+        // o que a coisa carrega: o frasco cheio, a essência cristalizada e o jarro com essência
         Aspect phial = PhialItem.aspectOf(stack);
         if (phial != null) tmp.add(phial, PhialItem.PORTION);
+        Aspect crystal = net.thaumcraft.item.CrystalEssenceItem.aspectOf(stack);
+        if (crystal != null) tmp.add(crystal, 1);
         JarContents jar = stack.get(TCComponents.JAR_CONTENTS);
         if (jar != null && jar.heldAspect() != null && jar.amount() > 0) tmp.add(jar.heldAspect(), jar.amount());
         if (source != null) tmp.add(source);

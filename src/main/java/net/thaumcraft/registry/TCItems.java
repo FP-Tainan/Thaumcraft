@@ -217,6 +217,15 @@ public final class TCItems {
     public static final Item TUBE_BUFFER = register("tube_buffer", properties ->
             new net.thaumcraft.item.TubeItem(TCBlocks.TUBE_BUFFER, properties));
 
+    public static final Item CENTRIFUGE = register("centrifuge", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.CENTRIFUGE, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ESSENTIA_CRYSTALIZER = register("essentia_crystalizer", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ESSENTIA_CRYSTALIZER, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ALCHEMICAL_CONSTRUCT = register("alchemical_construct", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ALCHEMICAL_CONSTRUCT, properties.useBlockDescriptionPrefix()));
+
     /** O alambique, para levar na mão. */
     public static final Item ALEMBIC = register("alembic", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ALEMBIC, properties));
@@ -307,6 +316,9 @@ public final class TCItems {
 
     /** O carvão da alquimia, que queima muito mais que o comum e, arremessado, explode. */
     public static final Item ALUMENTUM = register("alumentum", net.thaumcraft.item.AlumentumItem::new);
+
+    /** Um ponto de essência preso num cristal: o que sai do cristalizador. */
+    public static final Item CRYSTAL_ESSENCE = register("crystal_essence", net.thaumcraft.item.CrystalEssenceItem::new);
 
     /** A chama fria que não queima nada. */
     public static final Item NITOR = register("nitor", properties ->
@@ -414,7 +426,7 @@ public final class TCItems {
             "staff_rod_greatwood", "staff_rod_obsidian", "staff_rod_silverwood", "staff_rod_ice",
             "staff_rod_quartz", "staff_rod_reed", "staff_rod_blaze", "staff_rod_bone", "staff_rod_primal",
             "shard_air", "shard_fire", "shard_water", "shard_earth", "shard_order", "shard_entropy",
-            "shard_balanced", "salis_mundus", "phial",
+            "shard_balanced", "salis_mundus", "phial", "crystal_essence",
             "thaumium_ingot", "thaumium_nugget", "void_ingot", "void_nugget", "quicksilver", "magic_tallow", "amber", "enchanted_fabric",
             "vis_filter", "knowledge_fragment", "mirrored_glass", "jar_label", "primal_charm", "gold_coin",
             "alumentum", "nitor",
@@ -422,7 +434,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer",
             "infusion_matrix", "pedestal",
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",

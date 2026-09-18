@@ -190,6 +190,18 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("CENTRIFUGE", new ItemStack(TCBlocks.TUBE_BUFFER.asItem()),
                 Arrays.asList(Ingredient.of(TCItems.PHIAL), Ingredient.of(TCBlocks.TUBE_VALVE.asItem()), Ingredient.of(TCItems.PHIAL), Ingredient.of(TCBlocks.TUBE.asItem()), null, Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCItems.PHIAL), Ingredient.of(TCBlocks.TUBE_RESTRICT.asItem()), Ingredient.of(TCItems.PHIAL)),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // AlchemicalConstruct
+        ALL.add(new ArcaneRecipe("DISTILESSENTIA", new ItemStack(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()),
+                Arrays.asList(Ingredient.of(TCBlocks.TUBE_VALVE.asItem()), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCResources.get("vis_filter")), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCResources.get("vis_filter")), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCBlocks.TUBE_VALVE.asItem())),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // Centrifuge
+        ALL.add(new ArcaneRecipe("CENTRIFUGE", new ItemStack(TCBlocks.CENTRIFUGE.asItem()),
+                Arrays.asList(null, Ingredient.of(TCBlocks.TUBE.asItem()), null, Ingredient.of(TCBlocks.ALEMBIC.asItem()), Ingredient.of(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.PISTON.asItem()), null, Ingredient.of(TCBlocks.TUBE.asItem()), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5).add(Aspects.ENTROPY, 5)));
+        // EssentiaCrystalizer
+        ALL.add(new ArcaneRecipe("ESSENTIACRYSTAL", new ItemStack(TCBlocks.ESSENTIA_CRYSTALIZER.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.DISPENSER.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS)),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 15).add(Aspects.ORDER, 5)));
         // MirrorGlass
         ALL.add(ArcaneRecipe.loose("BASICARTIFACE", new ItemStack(TCResources.get("mirrored_glass")),
                 Arrays.asList(Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem())),

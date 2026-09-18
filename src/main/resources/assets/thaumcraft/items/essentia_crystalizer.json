@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/essentia_crystalizer",
+    "model": {
+      "type": "thaumcraft:essentia_crystalizer"
+    }
+  }
+}

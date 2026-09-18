@@ -117,6 +117,16 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.EtherealBloomBlockEntity::new,
                             java.util.Set.of(TCBlocks.ETHEREAL_BLOOM)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.CentrifugeBlockEntity> CENTRIFUGE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("centrifuge"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.CentrifugeBlockEntity::new,
+                            java.util.Set.of(TCBlocks.CENTRIFUGE)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.EssentiaCrystalizerBlockEntity> ESSENTIA_CRYSTALIZER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("essentia_crystalizer"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.EssentiaCrystalizerBlockEntity::new,
+                            java.util.Set.of(TCBlocks.ESSENTIA_CRYSTALIZER)));
+
     private TCBlockEntities() {
     }
 

@@ -164,6 +164,20 @@ public final class TCBlocks {
             new net.thaumcraft.block.TubeBufferBlock(properties
                     .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
 
+    /** A centrífuga alquímica: parte a essência composta nos dois aspectos de que ela é feita. */
+    public static final Block CENTRIFUGE = register("centrifuge", properties ->
+            new net.thaumcraft.block.CentrifugeBlock(properties
+                    .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
+
+    /** O cristalizador de essência: prende um ponto de essência num cristal. */
+    public static final Block ESSENTIA_CRYSTALIZER = register("essentia_crystalizer", properties ->
+            new net.thaumcraft.block.EssentiaCrystalizerBlock(properties
+                    .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
+
+    /** O construto alquímico: o metadado nove do BlockMetalDevice, peça da centrífuga e do cristalizador. */
+    public static final Block ALCHEMICAL_CONSTRUCT = register("alchemical_construct", properties ->
+            new Block(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f).sound(SoundType.METAL)));
+
     /** O alambique arcano: o pote que se empilha sobre o forno e recolhe o que sai dele. */
     public static final Block ALEMBIC = register("alembic", properties ->
             new net.thaumcraft.block.AlembicBlock(properties

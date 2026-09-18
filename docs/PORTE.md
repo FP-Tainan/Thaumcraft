@@ -544,3 +544,22 @@ A mesma auditoria achou, nas receitas geradas:
 - **Fragmento de Conhecimento:** usado, dá um ou dois de cada primário ao estoque de pesquisa.
 - **Farinha de osso nas mudas mágicas (diferença pedida):** o original não aceitava; aqui vale como numa muda
   comum, 45% de chance de tentar a árvore a cada uso.
+
+## Alquimia, parte A: centrífuga, cristalizador e construto (2026-09-18)
+
+- `block/CentrifugeBlock` + `entity/CentrifugeBlockEntity` — o `TileCentrifuge`: puxa por baixo um ponto composto
+  (sucção 128 vazia, 64 ocupada), gira 39 tiques e solta por cima um dos dois componentes, sorteado; redstone
+  para. `client/render/CentrifugeRenderer` é o `ModelCentrifuge` (tampas paradas, eixo e pesos girando), com o
+  estalo `pump` a cada meia volta.
+- `block/EssentiaCrystalizerBlock` + `entity/EssentiaCrystalizerBlockEntity` — o `TileEssentiaCrystalizer`: a
+  boca fica para o bloco em que ele foi encostado; 200 passos de 5 tiques e sai uma `CrystalEssenceItem` pelo lado
+  de trás (num baú, se houver) com chiado e vapor. `EssentiaCrystalizerRenderer` desenha o `crystalizer.obj` e os
+  quatro cristais do `vis_relay.obj`, que giram e tomam a cor do aspecto.
+- **Diferença:** a rede de vis (relés) ainda não existe; o original somaria terra drenada da rede para acelerar o
+  cristalizador. Aqui ele anda sempre no passo de base, como o original sem relé por perto.
+- `ObjModel` lê os `.obj` do original (copiados sem mudança para `models/obj`) em tempo de execução, por grupo.
+- `AspectTint` é a tinta de item `thaumcraft:aspect` (o `getColorFromItemStack` do cristal), posta na lista do
+  jogo por reflexão, porque o Fabric não a abre.
+- O construto alquímico é o metadado 9 do `BlockMetalDevice`: um cubo com `alchemyblock`.
+- Os nomes em pt_BR que o original não traduziu (construto, cristalizador, essência cristalizada) foram traduzidos
+  aqui (`scratchpad/alquimia.js`).

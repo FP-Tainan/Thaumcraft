@@ -34,6 +34,10 @@ public final class TCComponents {
     public static final DataComponentType<String> PHIAL_ASPECT = register("phial_aspect",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
+    /** O aspecto de uma essência cristalizada. */
+    public static final DataComponentType<String> CRYSTAL_ASPECT = register("crystal_aspect",
+            builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+
     /** O aspecto marcado num rótulo de jarro: o rótulo marcado, que o tubo filtro aceita. */
     public static final DataComponentType<String> LABEL_ASPECT = register("label_aspect",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
