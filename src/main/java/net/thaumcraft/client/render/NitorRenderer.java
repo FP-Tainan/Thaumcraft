@@ -39,18 +39,27 @@ import net.thaumcraft.block.entity.NitorBlockEntity;
 public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, NitorRenderer.State> {
     private static final Identifier GLOW = Thaumcraft.id("textures/misc/glow.png");
 
-    /** Quanto tempo um facho dura, em tiques. No original é sorteado entre vinte e cinco e trinta e seis. */
-    private static final float LIFE = 32.0f;
+    /** Quanto tempo um facho dura, em tiques. O original sorteia entre vinte e cinco e trinta e seis. */
+    private static final float SHORTEST_LIFE = 25.0f;
+    private static final float LONGEST_LIFE = 36.0f;
     /**
-     * Quantos fachos de cada cor ficam vivos ao mesmo tempo.
+     * De quanto em quanto tempo cada lugar da nuvem torna a acender.
      *
-     * <p>O original sorteia a emissão, então de vez em quando nascem três juntos e o miolo acende. Aqui
-     * eles nascem espaçados por conta da matemática, e espaçado demais vira um colar de contas em vez de
-     * uma chama — por isso são mais do que a média do original, para o amontoado no centro existir
-     * sempre e não só por sorte.
+     * <p>É maior do que a vida de um facho de propósito: a sobra é o silêncio entre um e outro. O facho
+     * nasce num instante sorteado dentro da volta, vive a vida dele e some, e o lugar fica vazio até a
+     * volta seguinte.
      */
-    private static final int RED = 7;
-    private static final int YELLOW = 6;
+    private static final float PERIOD = 46.0f;
+    /**
+     * Quantos lugares a nuvem tem. Nem todos estão acesos ao mesmo tempo.
+     *
+     * <p>No original a emissão é <strong>sorteada</strong>, um dado por tique: às vezes nascem três
+     * fachos quase juntos e o miolo dá um estalo, às vezes abre um buraco e a chama afina. Esse
+     * desencontro é o que faz o Nitor parecer vivo. Eu tinha feito os fachos nascerem em intervalos
+     * exatos, e intervalo exato dá bola parada, por mais que cada um se mexa.
+     */
+    private static final int RED = 9;
+    private static final int YELLOW = 7;
     /** A escala de cada facho; dela sai a largura, que é metade dela para cada lado. */
     private static final float RED_SCALE = 0.5f;
     private static final float YELLOW_SCALE = 0.25f;
@@ -113,23 +122,29 @@ public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, Nito
     /**
      * Uma leva de fachos da mesma cor.
      *
-     * <p>Em vez de guardar uma lista viva, cada facho é uma conta: o de índice {@code i} nasce sempre um
-     * tanto depois do anterior, e a idade dele sai do resto da divisão do relógio pela vida. Assim há
-     * sempre a mesma quantidade no ar, sem nada para guardar entre um quadro e outro.
+     * <p>Em vez de guardar uma lista viva, cada facho é uma conta. O lugar de índice {@code i} tem a sua
+     * volta, e a cada volta ele sorteia quando acende e por quanto tempo — tudo a partir do número da
+     * volta, que sai do relógio do mundo. Assim o desencontro é sempre o mesmo para o mesmo Nitor no
+     * mesmo instante, e não há nada para guardar entre um quadro e outro.
      */
     private static void cloud(State state, PoseStack pose, SubmitNodeCollector collector,
                               CameraRenderState camera, int count, float scale, float rise,
                               float spread, int alpha, int hue) {
         for (int mote = 0; mote < count; mote++) {
-            float cycle = state.ticks / LIFE + mote / (float) count;
-            int born = (int) Math.floor(cycle);
-            float age = (cycle - born) * LIFE;
+            float turn = state.ticks / PERIOD + mote / (float) count;
+            int round = (int) Math.floor(turn);
+            float clock = (turn - round) * PERIOD;
 
-            int seed = state.seed * 31 + born * 7919 + mote * 104729 + hue * 65537;
+            int seed = state.seed * 31 + round * 7919 + mote * 104729 + hue * 65537;
+            // cada volta este lugar acende noutro instante e por outro tanto de tempo
+            float life = SHORTEST_LIFE + noise(seed + 4) * (LONGEST_LIFE - SHORTEST_LIFE);
+            float age = clock - noise(seed + 5) * (PERIOD - life);
+            if (age < 0.0f || age >= life) continue;
+
             // para onde este facho vai: um ponto sorteado perto do centro, como no original
             float goX = (noise(seed) - 0.5f) * 2.0f * spread;
             float goZ = (noise(seed + 1) - 0.5f) * 2.0f * spread;
-            float walk = age / LIFE;
+            float walk = age / life;
 
             // o facho começa do tamanho cheio e encolhe até sumir, que é o que o original faz com shrink
             // o encolhimento e mais rapido que o do original de proposito: la a emissao e sorteada, aqui
