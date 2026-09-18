@@ -31,6 +31,47 @@ public final class FocusEffects {
 
     public static void init() {
         Focuses.clientEffects = FocusEffects::tick;
+        net.thaumcraft.entity.PrimalOrbEntity.clientEffects = new net.thaumcraft.entity.PrimalOrbEntity.ClientEffects() {
+            @Override
+            public void tick(net.thaumcraft.entity.PrimalOrbEntity orb) {
+                primalTick(orb);
+            }
+
+            @Override
+            public void burst(net.thaumcraft.entity.PrimalOrbEntity orb) {
+                primalBurst(orb);
+            }
+        };
+    }
+
+    /**
+     * O rastro da esfera primordial: seis fogos-fátuos puxados para ela e um que fica para trás.
+     *
+     * <p>O original passa ao {@code wispFX4} só o desvio, sem somar a posição da esfera, e os seis nascem perto
+     * da origem do mundo — longe de quem vê, somem no ato. Fica igual.
+     */
+    private static void primalTick(net.thaumcraft.entity.PrimalOrbEntity orb) {
+        net.minecraft.util.RandomSource r = orb.level().getRandom();
+        for (int a = 0; a < 6; a++) {
+            Wisp.fx4((r.nextFloat() - r.nextFloat()) * 0.2f, (r.nextFloat() - r.nextFloat()) * 0.2f,
+                    (r.nextFloat() - r.nextFloat()) * 0.2f, orb, a, true, 0.0f);
+        }
+        Wisp.fx2(orb.getX() + (r.nextFloat() - r.nextFloat()) * 0.2f, orb.getY() + (r.nextFloat() - r.nextFloat()) * 0.2f,
+                orb.getZ() + (r.nextFloat() - r.nextFloat()) * 0.2f, 0.1f, r.nextInt(6), true, 0.0f);
+    }
+
+    /** O estouro: trinta e seis fogos-fátuos das seis cores voando para fora. */
+    private static void primalBurst(net.thaumcraft.entity.PrimalOrbEntity orb) {
+        net.minecraft.util.RandomSource r = orb.level().getRandom();
+        for (int a = 0; a < 6; a++) {
+            for (int b = 0; b < 6; b++) {
+                float fx = (r.nextFloat() - r.nextFloat()) * 0.5f;
+                float fy = (r.nextFloat() - r.nextFloat()) * 0.5f;
+                float fz = (r.nextFloat() - r.nextFloat()) * 0.5f;
+                Wisp.fx3(orb.getX() + fx, orb.getY() + fy, orb.getZ() + fz, orb.getX() + fx * 10.0f,
+                        orb.getY() + fy * 10.0f, orb.getZ() + fz * 10.0f, 0.4f, b, true, 0.05f);
+            }
+        }
     }
 
     private static void tick(Level level, Player player, ItemStack wand, FocusItem focus) {

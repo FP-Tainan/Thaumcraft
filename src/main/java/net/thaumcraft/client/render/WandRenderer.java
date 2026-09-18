@@ -372,6 +372,7 @@ public class WandRenderer implements SpecialModelRenderer<WandRenderer.Parts> {
             case "excavation" -> 0x064006;
             case "portable_hole" -> 0x091429;
             case "trade" -> 0x857B93;
+            case "primal" -> 0xA5A2C1;
             default -> 0xFFFFFF;
         };
     }

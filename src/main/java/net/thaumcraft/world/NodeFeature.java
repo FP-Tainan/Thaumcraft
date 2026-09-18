@@ -52,6 +52,21 @@ public class NodeFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
+    /**
+     * O {@code createRandomNodeAt} da 4.2.3.5 fora da geração do mundo: faz nascer um nó sorteado aqui, se
+     * a casa estiver livre. É o que a esfera do foco Primordial deixa de herança, uma vez em cem.
+     */
+    public static boolean createRandomNodeAt(net.minecraft.world.level.Level level, BlockPos pos, RandomSource random) {
+        if (!level.getBlockState(pos).isAir()) return false;
+        NodeType type = rollType(random);
+        NodeModifier modifier = rollModifier(random);
+        AspectList aspects = rollAspects(level, pos, random, type);
+        level.setBlock(pos, TCBlocks.NODE.defaultBlockState(), 3);
+        if (!(level.getBlockEntity(pos) instanceof NodeBlockEntity node)) return false;
+        node.setup(aspects, type, modifier);
+        return true;
+    }
+
     /** O tipo: quase sempre comum, e de vez em quando um dos outros. */
     public static NodeType rollType(RandomSource random) {
         if (random.nextInt(SPECIAL_RARITY) != 0) return NodeType.NORMAL;

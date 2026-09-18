@@ -25,6 +25,13 @@ public final class TCEntities {
                     .clientTrackingRange(4)
                     .updateInterval(10));
 
+    /** A esfera do foco Primordial. */
+    public static final EntityType<net.thaumcraft.entity.PrimalOrbEntity> PRIMAL_ORB = register("primal_orb",
+            EntityType.Builder.<net.thaumcraft.entity.PrimalOrbEntity>of(net.thaumcraft.entity.PrimalOrbEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .clientTrackingRange(8)
+                    .updateInterval(1));
+
     /** O golem: o servo que faz o trabalho chato. */
     public static final EntityType<net.thaumcraft.entity.GolemEntity> GOLEM = register("golem",
             EntityType.Builder.<net.thaumcraft.entity.GolemEntity>of(

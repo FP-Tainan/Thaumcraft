@@ -100,6 +100,7 @@ public final class Focuses {
             case "shock" -> shock(level, player, wand, focus);
             case "portable_hole" -> portableHole(level, player, wand, focus);
             case "trade" -> trade(level, player, wand, focus);
+            case "primal" -> primal(level, player, wand);
             default -> false;
         };
     }
@@ -172,6 +173,44 @@ public final class Focuses {
         if (pointed instanceof LivingEntity && pvp) {
             pointed.hurt(level.damageSources().playerAttack(player), SHOCK_DAMAGE);
         }
+        return true;
+    }
+
+    // ----------------------------------------------------------------- primordial
+
+    private static final Map<UUID, Long> PRIMAL_COOLDOWN = new HashMap<>();
+
+    /**
+     * O {@code getVisCost} do {@code ItemFocusPrimal}: de 50 a 250 centésimos de cada primário, sorteados por
+     * um {@code Random} semeado com o relógio em fatias de 200 milissegundos.
+     */
+    public static net.thaumcraft.api.aspects.AspectList primalCost(long millis) {
+        java.util.Random rand = new java.util.Random(millis / 200L);
+        net.thaumcraft.api.aspects.AspectList cost = new net.thaumcraft.api.aspects.AspectList()
+                .add(net.thaumcraft.api.aspects.Aspects.WATER, 50 + rand.nextInt(5) * 50)
+                .add(net.thaumcraft.api.aspects.Aspects.AIR, 50 + rand.nextInt(5) * 50)
+                .add(net.thaumcraft.api.aspects.Aspects.EARTH, 50 + rand.nextInt(5) * 50)
+                .add(net.thaumcraft.api.aspects.Aspects.FIRE, 50 + rand.nextInt(5) * 50)
+                .add(net.thaumcraft.api.aspects.Aspects.ORDER, 50 + rand.nextInt(5) * 50)
+                .add(net.thaumcraft.api.aspects.Aspects.ENTROPY, 50 + rand.nextInt(5) * 50);
+        // no relógio zero (o piso do registro) todos saem 50
+        if (millis == 0L) {
+            cost = new net.thaumcraft.api.aspects.AspectList();
+            for (net.thaumcraft.api.aspects.Aspect aspect : net.thaumcraft.api.aspects.Aspects.primals()) cost.add(aspect, 50);
+        }
+        return cost;
+    }
+
+    /** O {@code ItemFocusPrimal}: meio segundo de espera entre tiros, e a esfera sai com o som do gelo. */
+    private static boolean primal(Level level, Player player, ItemStack wand) {
+        long now = System.currentTimeMillis();
+        if (PRIMAL_COOLDOWN.getOrDefault(player.getUUID(), 0L) > now) return false;
+        if (!WandItem.consumeRaw(wand, primalCost(now), true)) return false;
+        PRIMAL_COOLDOWN.put(player.getUUID(), now + 500L);
+        net.thaumcraft.entity.PrimalOrbEntity orb = new net.thaumcraft.entity.PrimalOrbEntity(level, player);
+        level.addFreshEntity(orb);
+        level.playSound(null, orb, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.3f,
+                0.8f + level.getRandom().nextFloat() * 0.1f);
         return true;
     }
 

@@ -18,6 +18,25 @@ final class Throw {
     }
 
     static void from(Projectile projectile, LivingEntity thrower, float velocity, float inaccuracy) {
+        // o construtor do EntityThrowable já mira com espalhamento um, e o da brasa mira de novo por cima
+        aim(projectile, thrower);
+        Vec3 first = projectile.getDeltaMovement();
+        projectile.setDeltaMovement(heading(projectile.getRandom(), first.x, first.y, first.z, velocity, inaccuracy));
+    }
+
+    /**
+     * Só o arremesso do construtor, com a velocidade que o projétil declara ({@code func_70182_d}) e
+     * espalhamento um — é assim que a esfera primordial sai, sem a segunda mira das brasas.
+     */
+    static void once(Projectile projectile, LivingEntity thrower, float velocity) {
+        aim(projectile, thrower, velocity);
+    }
+
+    private static void aim(Projectile projectile, LivingEntity thrower) {
+        aim(projectile, thrower, 1.5f);
+    }
+
+    private static void aim(Projectile projectile, LivingEntity thrower, float velocity) {
         float yaw = thrower.getYRot(), pitch = thrower.getXRot();
         double x = thrower.getX() - Mth.cos(yaw / 180.0f * (float) Math.PI) * 0.16f;
         double y = thrower.getEyeY() - 0.1;
@@ -28,9 +47,7 @@ final class Throw {
         double mx = -Mth.sin(yaw / 180.0f * (float) Math.PI) * Mth.cos(pitch / 180.0f * (float) Math.PI) * f;
         double mz = Mth.cos(yaw / 180.0f * (float) Math.PI) * Mth.cos(pitch / 180.0f * (float) Math.PI) * f;
         double my = -Mth.sin(pitch / 180.0f * (float) Math.PI) * f;
-        // o construtor do EntityThrowable já mira com espalhamento um, e o da brasa mira de novo por cima
-        Vec3 first = heading(projectile.getRandom(), mx, my, mz, 1.5f, 1.0f);
-        projectile.setDeltaMovement(heading(projectile.getRandom(), first.x, first.y, first.z, velocity, inaccuracy));
+        projectile.setDeltaMovement(heading(projectile.getRandom(), mx, my, mz, velocity, 1.0f));
     }
 
     /** O {@code setThrowableHeading} do 1.7.10. */

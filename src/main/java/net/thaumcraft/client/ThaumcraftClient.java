@@ -17,6 +17,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCEntities.FROST_SHARD, net.thaumcraft.client.render.FrostShardRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.EMBER, net.thaumcraft.client.render.EmberRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.PRIMAL_ORB, net.thaumcraft.client.render.PrimalOrbRenderer::new);
         // os raios, fachos e faíscas dos focos
         net.thaumcraft.client.fx.ThaumFx.init();
         net.thaumcraft.client.fx.FocusEffects.init();
