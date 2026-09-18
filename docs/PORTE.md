@@ -635,9 +635,10 @@ A mesma auditoria achou, nas receitas geradas:
   óculos (HELMGOGGLES) e máscaras (MASKANGRYGHOST, MASKSIPPINGFIEND; a MASKGRINNINGDEVIL espera o cérebro de zumbi).
 - `event/FortressMasks`: o demônio que bebe cura 1 com chance dano/12, o fantasma irado dá 4 s de Wither com chance
   dano/10. O diabo sorridente atenua a Distorção, que ainda não existe.
-- **Diferença pendente:** o `ISpecialArmor` do original (proteção de dano/25, fogo e explosão /20, magia /35,
-  multiplicada por 0,875 + 0,125 por peça do conjunto e +0,05 por máscara) ainda não foi portado; a fortaleza usa a
-  conta de armadura do jogo de hoje com os valores 3/7/6.
+- `mixin/LivingEntityArmorMixin` — o `ISpecialArmor` com o `ArmorProperties.ApplyArmor` do Forge, só para jogadores com
+  alguma peça de fortaleza: magia dano/35 e fogo/explosão dano/20 com prioridade (valem mesmo no dano que atravessa
+  armadura, como no 1.7.10), o resto dano/25, tudo vezes 0,875 + 0,125 por peça + 0,05 por máscara; as outras peças
+  vestidas entram com armadura/25. Conjunto completo sem máscara: 80% de um golpe comum.
 - O gerador de infusão agora separa argumentos respeitando chaves, e o mapeador traduz a caveira de 2014 pelo
   metadado e os corantes de cor pela coleção `Items.DYE` do 26.2.
 - "Elmo/Couraça/Coxotes de Fortaleza de Táumio" e os nomes das máscaras foram traduzidos aqui; o pt_BR do original
