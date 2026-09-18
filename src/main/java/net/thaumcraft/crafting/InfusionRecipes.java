@@ -63,7 +63,7 @@ public final class InfusionRecipes {
         // WandRodIce
         ALL.add(new InfusionRecipe("ROD_ice", new ItemStack(TCItems.WAND_RODS.get("ice")), 3,
                 new AspectList().add(Aspects.WATER, WandParts.rod("ice").craftCost()*2).add(Aspects.MAGIC, WandParts.rod("ice").craftCost()).add(Aspects.COLD, WandParts.rod("blaze").craftCost()),
-                Ingredient.of(net.minecraft.world.level.block.Blocks.PACKED_ICE.asItem()),
+                Ingredient.of(net.minecraft.world.level.block.Blocks.ICE.asItem()),
                 Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("water")))));
         // WandRodQuartz
         ALL.add(new InfusionRecipe("ROD_quartz", new ItemStack(TCItems.WAND_RODS.get("quartz")), 3,
@@ -100,6 +100,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.TRAVEL, 25).add(Aspects.ELDRITCH, 10).add(Aspects.EXCHANGE, 10).add(Aspects.ENTROPY, 25),
                 Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("entropy")))));
+        // FocusWarding
+        ALL.add(new InfusionRecipe("FOCUSWARDING", new ItemStack(TCItems.FOCI.get("warding")), 4,
+                new AspectList().add(Aspects.EARTH, 25).add(Aspects.ARMOR, 25).add(Aspects.ORDER, 25).add(Aspects.MIND, 10),
+                Ingredient.of(net.minecraft.world.item.Items.NETHER_STAR),
+                Arrays.asList(Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("order")))));
         // CoreAlchemy
         ALL.add(new InfusionRecipe("COREALCHEMY", new ItemStack(TCItems.GOLEM_CORES.get("alchemy")), 2,
                 new AspectList().add(Aspects.MAGIC, 15).add(Aspects.WATER, 15).add(Aspects.MOTION, 15),
@@ -109,7 +114,7 @@ public final class InfusionRecipes {
         ALL.add(new InfusionRecipe("COREFISHING", new ItemStack(TCItems.GOLEM_CORES.get("fishing")), 3,
                 new AspectList().add(Aspects.WATER, 16).add(Aspects.HARVEST, 16).add(Aspects.BEAST, 16),
                 Ingredient.of(TCItems.GOLEM_CORES.get("harvest")),
-                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.FISHING_ROD), Ingredient.of(net.minecraft.world.item.Items.COD), Ingredient.of(net.minecraft.world.item.Items.COD), Ingredient.of(net.minecraft.world.item.Items.COD))));
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.FISHING_ROD), Ingredient.of(net.minecraft.world.item.Items.COD), Ingredient.of(net.minecraft.world.item.Items.PUFFERFISH), Ingredient.of(net.minecraft.world.item.Items.SALMON))));
         // CoreUse
         ALL.add(new InfusionRecipe("COREUSE", new ItemStack(TCItems.GOLEM_CORES.get("use")), 3,
                 new AspectList().add(Aspects.TOOL, 20).add(Aspects.MECHANISM, 20).add(Aspects.MAN, 20),

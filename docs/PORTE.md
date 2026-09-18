@@ -484,3 +484,17 @@ do GitHub que **não existe no jar** — números inventados pelo re-porte para 
   via no jogo antigo — a conta é a mesma, as receitas é que mudaram. O original também guardava o resultado
   da primeira receita achada; a ordem das receitas de hoje é outra.
 - O `fatia3-tabela.js` (a tabela antiga) ficou obsoleto.
+
+### As receitas conferidas contra o jar
+
+A mesma auditoria achou, nas receitas geradas:
+
+- **Alumentum**: o gerador do crisol atravessava o laço dos fragmentos equilibrados e fazia "fragmento
+  equilibrado a partir de alumentum". Voltou a ser o do jar: pesquisa ALUMENTUM, carvão no crisol.
+- As quantidades que o gerador descartava: pólvora, limo, argila e pó de pedra-luminosa saem dois; o pó de osso
+  sai quatro; a transmutação do ouro sai três pepitas.
+- **Erratas da fonte do GitHub** (o jar manda): o gelo alquímico pede **bloco de neve** (não gelo compactado); o
+  golem de argila pede **tijolos** (não argila); a haste de gelo nasce do **gelo comum**; o núcleo de pesca
+  leva bacalhau, baiacu e salmão. Quando chegarem, o *Liquid Death* pede **balde** e a *Void Seed* pede
+  **sementes de trigo**.
+- As 199 pesquisas bateram todas com o jar.

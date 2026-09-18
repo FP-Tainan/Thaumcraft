@@ -48,7 +48,7 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.AIR, 2).add(Aspects.FIRE, 2).add(Aspects.WATER, 2).add(Aspects.EARTH, 2).add(Aspects.ENTROPY, 2)));
         ALL.add(new CrucibleRecipe("CRUCIBLE", new ItemStack(TCItems.SHARD_BALANCED), TCItems.SHARDS.get("entropy"),
                 new AspectList().add(Aspects.AIR, 2).add(Aspects.FIRE, 2).add(Aspects.WATER, 2).add(Aspects.EARTH, 2).add(Aspects.ORDER, 2)));
-        ALL.add(new CrucibleRecipe("CRUCIBLE", new ItemStack(TCItems.SHARD_BALANCED), TCItems.ALUMENTUM,
+        ALL.add(new CrucibleRecipe("ALUMENTUM", new ItemStack(TCItems.ALUMENTUM), net.minecraft.world.item.Items.COAL,
                 new AspectList().add(Aspects.ENERGY, 3).add(Aspects.FIRE, 3).add(Aspects.ENTROPY, 3)));
         ALL.add(new CrucibleRecipe("NITOR", new ItemStack(TCItems.NITOR), net.minecraft.world.item.Items.GLOWSTONE_DUST,
                 new AspectList().add(Aspects.ENERGY, 3).add(Aspects.FIRE, 3).add(Aspects.LIGHT, 3)));
@@ -56,25 +56,25 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.MAGIC, 4)));
         ALL.add(new CrucibleRecipe("TALLOW", new ItemStack(TCResources.get("magic_tallow")), net.minecraft.world.item.Items.ROTTEN_FLESH,
                 new AspectList().add(Aspects.MAGIC, 2)));
-        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.GUNPOWDER), net.minecraft.world.item.Items.GUNPOWDER,
+        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.GUNPOWDER, 2), net.minecraft.world.item.Items.GUNPOWDER,
                 new AspectList().add(Aspects.FIRE, 4).add(Aspects.ENTROPY, 4)));
-        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.SLIME_BALL), net.minecraft.world.item.Items.SLIME_BALL,
+        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.SLIME_BALL, 2), net.minecraft.world.item.Items.SLIME_BALL,
                 new AspectList().add(Aspects.WATER, 2).add(Aspects.LIFE, 2)));
-        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.CLAY_BALL), net.minecraft.world.item.Items.CLAY_BALL,
+        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.CLAY_BALL, 2), net.minecraft.world.item.Items.CLAY_BALL,
                 new AspectList().add(Aspects.WATER, 1).add(Aspects.EARTH, 2)));
-        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.GLOWSTONE_DUST), net.minecraft.world.item.Items.GLOWSTONE_DUST,
+        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.GLOWSTONE_DUST, 2), net.minecraft.world.item.Items.GLOWSTONE_DUST,
                 new AspectList().add(Aspects.LIGHT, 3).add(Aspects.SENSES, 1)));
         ALL.add(new CrucibleRecipe("ALCHEMICALMANUFACTURE", new ItemStack(net.minecraft.world.level.block.Blocks.COBWEB.asItem()), net.minecraft.world.item.Items.STRING,
                 new AspectList().add(Aspects.TRAP, 2).add(Aspects.CLOTH, 2)));
         ALL.add(new CrucibleRecipe("ALCHEMICALMANUFACTURE", new ItemStack(net.minecraft.world.level.block.Blocks.MOSSY_COBBLESTONE.asItem()), net.minecraft.world.level.block.Blocks.COBBLESTONE.asItem(),
                 new AspectList().add(Aspects.PLANT, 2).add(Aspects.MAGIC, 1)));
-        ALL.add(new CrucibleRecipe("ALCHEMICALMANUFACTURE", new ItemStack(net.minecraft.world.level.block.Blocks.ICE.asItem()), net.minecraft.world.level.block.Blocks.PACKED_ICE.asItem(),
+        ALL.add(new CrucibleRecipe("ALCHEMICALMANUFACTURE", new ItemStack(net.minecraft.world.level.block.Blocks.ICE.asItem()), net.minecraft.world.level.block.Blocks.SNOW_BLOCK.asItem(),
                 new AspectList().add(Aspects.ORDER, 1).add(Aspects.COLD, 1)));
         ALL.add(new CrucibleRecipe("ENTROPICPROCESSING", new ItemStack(net.minecraft.world.level.block.Blocks.CRACKED_STONE_BRICKS.asItem()), net.minecraft.world.level.block.Blocks.STONE_BRICKS.asItem(),
                 new AspectList().add(Aspects.ENTROPY, 2)));
-        ALL.add(new CrucibleRecipe("ENTROPICPROCESSING", new ItemStack(net.minecraft.world.item.Items.BONE_MEAL), net.minecraft.world.item.Items.BONE,
+        ALL.add(new CrucibleRecipe("ENTROPICPROCESSING", new ItemStack(net.minecraft.world.item.Items.BONE_MEAL, 4), net.minecraft.world.item.Items.BONE,
                 new AspectList().add(Aspects.ENTROPY, 1)));
-        ALL.add(new CrucibleRecipe("TRANSGOLD", new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET), net.minecraft.world.item.Items.GOLD_NUGGET,
+        ALL.add(new CrucibleRecipe("TRANSGOLD", new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET, 3), net.minecraft.world.item.Items.GOLD_NUGGET,
                 new AspectList().add(Aspects.METAL, 2).add(Aspects.GREED, 1)));
         ALL.add(new CrucibleRecipe("ETHEREALBLOOM", new ItemStack(TCBlocks.ETHEREAL_BLOOM.asItem()), TCBlocks.SHIMMERLEAF.asItem(),
                 new AspectList().add(Aspects.MAGIC, 16).add(Aspects.PLANT, 16).add(Aspects.HEAL, 16).add(Aspects.TAINT, 8)));
@@ -84,7 +84,7 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
         ALL.add(new CrucibleRecipe("GOLEMTALLOW", new ItemStack(TCItems.GOLEM_PLACERS.get("tallow")), TCBlocks.BUILDING.get("tallow_block").asItem(),
                 new AspectList().add(Aspects.MAN, 8).add(Aspects.MOTION, 8).add(Aspects.SOUL, 8)));
-        ALL.add(new CrucibleRecipe("GOLEMCLAY", new ItemStack(TCItems.GOLEM_PLACERS.get("clay")), net.minecraft.world.level.block.Blocks.CLAY.asItem(),
+        ALL.add(new CrucibleRecipe("GOLEMCLAY", new ItemStack(TCItems.GOLEM_PLACERS.get("clay")), net.minecraft.world.level.block.Blocks.BRICKS.asItem(),
                 new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
         ALL.add(new CrucibleRecipe("GOLEMSTONE", new ItemStack(TCItems.GOLEM_PLACERS.get("stone")), net.minecraft.world.level.block.Blocks.STONE_BRICKS.asItem(),
                 new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
