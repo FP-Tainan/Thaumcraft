@@ -227,6 +227,18 @@ public final class TCItems {
     public static final Item NITOR = register("nitor", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.NITOR, properties));
 
+    /** A mesa de madeira do mod. */
+    public static final Item TABLE = register("table", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.TABLE, properties.useBlockDescriptionPrefix()));
+
+    /** As ferramentas de escrita: pena e tinteiro, com tinta para cem riscos. */
+    public static final Item SCRIBING_TOOLS = register("scribing_tools", properties ->
+            new net.thaumcraft.item.ScribingToolsItem(properties.durability(100)));
+
+    /** As notas de pesquisa, e a descoberta em que elas viram. Não ficam na aba: saem do livro. */
+    public static final Item RESEARCH_NOTES = registerHidden("research_notes", properties ->
+            new net.thaumcraft.item.ResearchNotesItem(properties.stacksTo(64)));
+
     /** A varinha: a haste e as pontas vêm nos dados dela, como no original. */
     public static final Item WAND = register("wand", properties ->
             new WandItem(properties.stacksTo(1)
@@ -325,7 +337,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "tube", "tube_valve",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "tube", "tube_valve",
             "infusion_matrix", "pedestal",
             "shimmerleaf", "ethereal_bloom", "taint_crust", "taint_soil", "taint_fibres",
             "golem_bell",

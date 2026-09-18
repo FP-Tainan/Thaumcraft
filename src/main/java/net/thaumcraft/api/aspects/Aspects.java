@@ -75,6 +75,16 @@ public final class Aspects {
         return java.util.List.of(AIR, EARTH, FIRE, WATER, ORDER, ENTROPY);
     }
 
+    /** O {@code getCombinationResult}: o aspecto feito destes dois, em qualquer ordem, ou nulo. */
+    public static Aspect combination(Aspect first, Aspect second) {
+        for (Aspect aspect : Aspect.ASPECTS.values()) {
+            Aspect[] parts = aspect.components();
+            if (parts == null) continue;
+            if (parts[0] == first && parts[1] == second || parts[0] == second && parts[1] == first) return aspect;
+        }
+        return null;
+    }
+
     public static int count() {
         return Aspect.ASPECTS.size();
     }

@@ -1,0 +1,285 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "table": "thaumcraft:block/table",
+    "particle": "thaumcraft:block/woodplain"
+  },
+  "elements": [
+    {
+      "name": "Top",
+      "from": [
+        0,
+        12,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "west": {
+          "texture": "#table",
+          "uv": [
+            12,
+            8,
+            8,
+            10
+          ]
+        },
+        "east": {
+          "texture": "#table",
+          "uv": [
+            4,
+            8,
+            0,
+            10
+          ]
+        },
+        "up": {
+          "texture": "#table",
+          "uv": [
+            8,
+            0,
+            4,
+            8
+          ]
+        },
+        "down": {
+          "texture": "#table",
+          "uv": [
+            12,
+            8,
+            8,
+            0
+          ]
+        },
+        "south": {
+          "texture": "#table",
+          "uv": [
+            8,
+            8,
+            4,
+            10
+          ]
+        },
+        "north": {
+          "texture": "#table",
+          "uv": [
+            16,
+            8,
+            12,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "name": "Leg1",
+      "from": [
+        10,
+        4,
+        6
+      ],
+      "to": [
+        14,
+        12,
+        10
+      ],
+      "faces": {
+        "west": {
+          "texture": "#table",
+          "uv": [
+            3,
+            12,
+            2,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#table",
+          "uv": [
+            1,
+            12,
+            0,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#table",
+          "uv": [
+            2,
+            10,
+            1,
+            12
+          ]
+        },
+        "down": {
+          "texture": "#table",
+          "uv": [
+            3,
+            12,
+            2,
+            10
+          ]
+        },
+        "south": {
+          "texture": "#table",
+          "uv": [
+            2,
+            12,
+            1,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#table",
+          "uv": [
+            4,
+            12,
+            3,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "Leg2",
+      "from": [
+        2,
+        4,
+        6
+      ],
+      "to": [
+        6,
+        12,
+        10
+      ],
+      "faces": {
+        "west": {
+          "texture": "#table",
+          "uv": [
+            3,
+            12,
+            2,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#table",
+          "uv": [
+            1,
+            12,
+            0,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#table",
+          "uv": [
+            2,
+            10,
+            1,
+            12
+          ]
+        },
+        "down": {
+          "texture": "#table",
+          "uv": [
+            3,
+            12,
+            2,
+            10
+          ]
+        },
+        "south": {
+          "texture": "#table",
+          "uv": [
+            2,
+            12,
+            1,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#table",
+          "uv": [
+            4,
+            12,
+            3,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "Crossbar",
+      "from": [
+        0,
+        0,
+        4
+      ],
+      "to": [
+        16,
+        4,
+        12
+      ],
+      "faces": {
+        "west": {
+          "texture": "#table",
+          "uv": [
+            12,
+            14,
+            10,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#table",
+          "uv": [
+            6,
+            14,
+            4,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#table",
+          "uv": [
+            10,
+            10,
+            6,
+            14
+          ]
+        },
+        "down": {
+          "texture": "#table",
+          "uv": [
+            14,
+            14,
+            10,
+            10
+          ]
+        },
+        "south": {
+          "texture": "#table",
+          "uv": [
+            10,
+            14,
+            6,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#table",
+          "uv": [
+            16,
+            14,
+            12,
+            16
+          ]
+        }
+      }
+    }
+  ]
+}

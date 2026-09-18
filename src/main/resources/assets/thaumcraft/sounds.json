@@ -40,10 +40,28 @@
       "thaumcraft:crystal"
     ]
   },
+  "erase": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:erase"
+    ]
+  },
   "fireloop": {
     "category": "player",
     "sounds": [
       "thaumcraft:fireloop"
+    ]
+  },
+  "hhoff": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:hhoff"
+    ]
+  },
+  "hhon": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:hhon"
     ]
   },
   "ice": {
@@ -61,6 +79,12 @@
       "thaumcraft:jar2",
       "thaumcraft:jar3",
       "thaumcraft:jar4"
+    ]
+  },
+  "key": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:key"
     ]
   },
   "learn": {

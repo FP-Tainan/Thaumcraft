@@ -54,6 +54,14 @@ public final class TCSounds {
     public static final Holder<SoundEvent> FIRELOOP = register("fireloop");
     /** O feixe da escavacao roendo a pedra. */
     public static final Holder<SoundEvent> RUMBLE = register("rumble");
+    /** O aspecto encaixando na mesa de pesquisa. */
+    public static final Holder<SoundEvent> HHON = register("hhon");
+    /** O aspecto saindo do lugar na mesa de pesquisa. */
+    public static final Holder<SoundEvent> HHOFF = register("hhoff");
+    /** O aspecto apagado da nota de pesquisa. */
+    public static final Holder<SoundEvent> ERASE = register("erase");
+    /** A pagina de aspectos virando na mesa de pesquisa. */
+    public static final Holder<SoundEvent> KEY = register("key");
 
     private TCSounds() {
     }

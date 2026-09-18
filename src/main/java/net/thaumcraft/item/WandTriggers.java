@@ -66,7 +66,19 @@ public final class WandTriggers {
             if (!level.isClientSide()) matrix.poke(level, pos, player);
             return InteractionResult.SUCCESS;
         }
-        // a bancada comum vira bancada arcana, como a mesa do original
+        // a mesa do mod vira bancada arcana, e a varinha fica nela, pronta para pagar: o onWandRightClick do BlockTable
+        if (state.is(net.thaumcraft.registry.TCBlocks.TABLE)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            level.setBlockAndUpdate(pos, net.thaumcraft.registry.TCBlocks.ARCANE_WORKBENCH.defaultBlockState());
+            if (level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.ArcaneWorkbenchBlockEntity bench
+                    && wand.getItem() instanceof WandItem held && !held.isStaff()) {
+                bench.setItem(net.thaumcraft.block.entity.ArcaneWorkbenchBlockEntity.WAND_SLOT, wand.copy());
+                wand.setCount(0);
+            }
+            level.playSound(null, pos, net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.BLOCKS, 0.15f, 0.5f);
+            return InteractionResult.SUCCESS;
+        }
+        // a bancada comum também vira bancada arcana: atalho deste porte, anotado em docs/PORTE.md
         if (state.is(Blocks.CRAFTING_TABLE)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
             level.setBlockAndUpdate(pos, net.thaumcraft.registry.TCBlocks.ARCANE_WORKBENCH.defaultBlockState());

@@ -53,6 +53,36 @@ public final class BoxMesh {
 
     /** Junta várias caixas numa malha só. */
     public static float[] join(float[]... parts) {
+        return joinAll(parts);
+    }
+
+    /**
+     * A caixa espelhada, o {@code mirror} do {@code ModelRenderer} antigo: as faces de oeste e de leste trocam
+     * de desenho, e cada face mostra o seu desenho de trás para a frente.
+     */
+    public static float[] mirror(float[] box) {
+        float[] out = box.clone();
+        // oeste e leste trocam de textura, cada canto com o seu par
+        for (int corner = 0; corner < 4; corner++) {
+            int west = 4 * 20 + corner * 5, east = 5 * 20 + corner * 5;
+            out[west + 3] = box[east + 3];
+            out[west + 4] = box[east + 4];
+            out[east + 3] = box[west + 3];
+            out[east + 4] = box[west + 4];
+        }
+        // e cada face vira no sentido do comprimento
+        for (int face = 0; face < 6; face++) {
+            int at = face * 20;
+            float u0 = out[at + 3], u1 = out[at + 5 + 3];
+            for (int corner = 0; corner < 4; corner++) {
+                int u = at + corner * 5 + 3;
+                out[u] = u0 + u1 - out[u];
+            }
+        }
+        return out;
+    }
+
+    private static float[] joinAll(float[]... parts) {
         int size = 0;
         for (float[] part : parts) size += part.length;
         float[] all = new float[size];

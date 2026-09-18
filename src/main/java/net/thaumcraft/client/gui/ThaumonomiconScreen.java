@@ -143,6 +143,7 @@ public class ThaumonomiconScreen extends Screen {
         // o nome da aba vem depois da moldura, senão fica escondido atrás dela
         this.drawTabName(graphics, left, top, mouseX, mouseY);
 
+        this.drawPopup(graphics);
         if (this.hovered != null) this.drawTooltip(graphics, mouseX, mouseY);
     }
 
@@ -279,6 +280,26 @@ public class ThaumonomiconScreen extends Screen {
     }
 
     /** O nome da pesquisa sob o cursor, e o que ela custa. */
+    /** O aviso que aparece no meio do livro por três segundos, como o popupmessage do original. */
+    private long popupTime;
+    private Component popupMessage = Component.empty();
+
+    /** De lado: se compra com pontos, direto do livro. */
+    private static boolean secondary(Research research) {
+        return research.is(Research.Mark.SECONDARY);
+    }
+
+    private void drawPopup(GuiGraphicsExtractor graphics) {
+        if (this.popupTime <= System.currentTimeMillis()) return;
+        int xq = this.width / 2, yq = this.height / 2;
+        var lines = this.font.split(this.popupMessage, 150);
+        int half = lines.size() * this.font.lineHeight / 2;
+        graphics.fill(xq - 78, yq - half - 3, xq + 78, yq + half + 3, 0xC0000000);
+        for (int i = 0; i < lines.size(); i++) {
+            graphics.text(this.font, lines.get(i), xq - 75, yq - half + i * this.font.lineHeight, -7302913, false);
+        }
+    }
+
     private void drawTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         boolean done = ResearchManager.isComplete(this.knowledge, this.hovered);
         boolean open = ResearchManager.canUnlock(this.knowledge, this.hovered);
@@ -287,7 +308,17 @@ public class ThaumonomiconScreen extends Screen {
         lines.add(done || open
                 ? this.hovered.name()
                 : this.hovered.name().copy().withStyle(GALACTIC));
-        if (!done && open && !this.hovered.tags().isEmpty()) {
+        if (!done && open && !this.hovered.tags().isEmpty() && !secondary(this.hovered)) {
+            // as pesquisas de verdade saem de uma nota: os três avisos do original
+            var player = this.minecraft.player;
+            if (net.thaumcraft.research.ResearchNotes.slotOf(player, this.hovered.key()) >= 0) {
+                lines.add(Component.translatable("tc.research.hasnote").withColor(16753920));
+            } else if (net.thaumcraft.research.ResearchNotes.hasScribeStuff(player)) {
+                lines.add(Component.translatable("tc.research.getprim").withColor(8900331));
+            } else {
+                lines.add(Component.translatable("tc.research.shortprim").withColor(14423100));
+            }
+        } else if (!done && open && !this.hovered.tags().isEmpty()) {
             // o preço, com o que já se tem de cada aspecto em verde e o que falta em vermelho
             for (Aspect aspect : this.hovered.tags().getAspects()) {
                 int wanted = this.hovered.tags().getAmount(aspect);
@@ -343,6 +374,18 @@ public class ThaumonomiconScreen extends Screen {
                     this.minecraft.setScreenAndShow(new ResearchPageScreen(this, this.hovered));
                     return true;
                 }
+            } else if (ResearchManager.canUnlock(this.knowledge, this.hovered) && !this.hovered.tags().isEmpty()
+                    && !secondary(this.hovered)) {
+                // a pesquisa de verdade: com papel e tinta, o clique escreve a nota
+                var player = this.minecraft.player;
+                if (net.thaumcraft.research.ResearchNotes.hasScribeStuff(player)
+                        && net.thaumcraft.research.ResearchNotes.slotOf(player, this.hovered.key()) < 0) {
+                    net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(
+                            new net.thaumcraft.net.ResearchRequest(this.hovered.key()));
+                    this.popupTime = System.currentTimeMillis() + 3000L;
+                    this.popupMessage = Component.translatable("tc.research.popup", this.hovered.name());
+                }
+                return true;
             } else if (ResearchManager.canUnlock(this.knowledge, this.hovered)
                     && ResearchManager.canAfford(this.knowledge, this.hovered)) {
                 // quem decide é o servidor; daqui só sai o pedido

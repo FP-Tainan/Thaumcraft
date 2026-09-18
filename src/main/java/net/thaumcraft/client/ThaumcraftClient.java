@@ -62,6 +62,11 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.render.PedestalRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.CRUCIBLE, net.thaumcraft.client.render.CrucibleRenderer::new);
+        // a mesa de pesquisa: o desenhista da mesa inteira e a tela do tabuleiro
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.RESEARCH_TABLE, net.thaumcraft.client.render.ResearchTableRenderer::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(
+                net.thaumcraft.registry.TCMenus.RESEARCH_TABLE, net.thaumcraft.client.gui.ResearchTableScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(
                 net.thaumcraft.registry.TCMenus.ARCANE_WORKBENCH,
                 net.thaumcraft.client.gui.ArcaneWorkbenchScreen::new);

@@ -73,12 +73,44 @@ public final class ResearchManager {
         for (net.thaumcraft.api.aspects.Aspect aspect : research.tags().getAspects()) {
             knowledge.spend(aspect, research.tags().getAmount(aspect));
         }
-        knowledge.completeResearch(key);
+        completeWithSiblings(knowledge, research);
         Knowledges.save(player, knowledge);
         player.level().playSound(null, player.blockPosition(),
                 net.thaumcraft.registry.TCSounds.LEARN.value(),
-                net.minecraft.sounds.SoundSource.PLAYERS, 0.5f, 1.4f);
+                net.minecraft.sounds.SoundSource.PLAYERS, 0.75f, 1.0f);
         return true;
+    }
+
+    /**
+     * O clique numa pesquisa do livro: o {@code PacketPlayerCompleteToServer} do original.
+     *
+     * <p>As pesquisas de lado ({@code setSecondary}) se compram direto com os pontos de aspecto. As outras
+     * não: com papel e tinta no inventário, o clique escreve uma nota de pesquisa, que se resolve na mesa.
+     */
+    public static boolean request(net.minecraft.server.level.ServerPlayer player, String key) {
+        Research research = Researches.get(key);
+        if (research == null) return false;
+        PlayerKnowledge knowledge = Knowledges.of(player);
+        if (knowledge.hasResearch(key) || !canUnlock(knowledge, research)) return false;
+        if (research.tags().size() == 0) return false;
+        if (research.is(Research.Mark.SECONDARY)) return unlock(player, key);
+        boolean given = ResearchNotes.giveNote(player, key);
+        if (given) {
+            player.level().playSound(null, player.blockPosition(), net.thaumcraft.registry.TCSounds.WRITE.value(),
+                    net.minecraft.sounds.SoundSource.PLAYERS, 0.75f, 1.0f);
+        }
+        return given;
+    }
+
+    /** Marca a pesquisa como sabida, e com ela as irmãs que já dá para abrir, como o original faz. */
+    public static void completeWithSiblings(PlayerKnowledge knowledge, Research research) {
+        knowledge.completeResearch(research.key());
+        for (String sibling : research.siblings()) {
+            Research other = Researches.get(sibling);
+            if (other != null && !knowledge.hasResearch(sibling) && canUnlock(knowledge, other)) {
+                knowledge.completeResearch(sibling);
+            }
+        }
     }
 
     /**

@@ -172,6 +172,22 @@ public final class TCBlocks {
                     .strength(2.5f)
                     .sound(SoundType.WOOD)));
 
+    /** A mesa de madeira do mod: vira bancada arcana com a varinha e mesa de pesquisa com a pena. */
+    public static final Block TABLE = register("table", properties ->
+            new net.thaumcraft.block.TableBlock(properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5f)
+                    .noOcclusion()
+                    .sound(SoundType.WOOD)));
+
+    /** A mesa de pesquisa: duas mesas juntadas pelas ferramentas de escrita. */
+    public static final Block RESEARCH_TABLE = register("research_table", properties ->
+            new net.thaumcraft.block.ResearchTableBlock(properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5f)
+                    .noOcclusion()
+                    .sound(SoundType.WOOD)));
+
     /** Os blocos de construção do mod. */
     public static final java.util.Map<String, Block> BUILDING = new java.util.LinkedHashMap<>();
 

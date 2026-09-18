@@ -40,6 +40,11 @@ public final class TCComponents {
             builder -> builder.persistent(net.thaumcraft.item.JarContents.CODEC)
                     .networkSynchronized(net.thaumcraft.item.JarContents.STREAM_CODEC));
 
+    /** O que está escrito numa nota de pesquisa: a pesquisa e o tabuleiro de hexágonos. */
+    public static final DataComponentType<net.thaumcraft.research.ResearchNote> RESEARCH_NOTE = register("research_note",
+            builder -> builder.persistent(net.thaumcraft.research.ResearchNote.CODEC)
+                    .networkSynchronized(net.thaumcraft.research.ResearchNote.STREAM_CODEC));
+
     private TCComponents() {
     }
 

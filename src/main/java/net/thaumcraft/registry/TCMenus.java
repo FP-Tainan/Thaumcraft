@@ -18,6 +18,12 @@ public final class TCMenus {
                     new MenuType<>(net.thaumcraft.inventory.AlchemicalFurnaceMenu::new,
                             FeatureFlags.VANILLA_SET));
 
+    /** A mesa de pesquisa: a tela abre sabendo de qual mesa é, para ler a nota e o bônus dela. */
+    public static final MenuType<net.thaumcraft.inventory.ResearchTableMenu> RESEARCH_TABLE = Registry.register(
+            BuiltInRegistries.MENU, Thaumcraft.id("research_table"),
+            new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.ResearchTableMenu::new,
+                    net.minecraft.core.BlockPos.STREAM_CODEC));
+
     private TCMenus() {
     }
 

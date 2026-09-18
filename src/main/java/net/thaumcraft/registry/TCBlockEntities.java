@@ -21,6 +21,11 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.ArcaneWorkbenchBlockEntity::new,
                             java.util.Set.of(TCBlocks.ARCANE_WORKBENCH)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.ResearchTableBlockEntity> RESEARCH_TABLE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, net.thaumcraft.Thaumcraft.id("research_table"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.ResearchTableBlockEntity::new,
+                            java.util.Set.of(TCBlocks.RESEARCH_TABLE)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.JarBlockEntity> JAR =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("jar"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.JarBlockEntity::new,
