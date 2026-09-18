@@ -18,8 +18,8 @@ modelo, tela virou `Screen`.
 |---|---|---|
 | 1 | Aspectos: a tabela dos 48, a lista com quantidade, os símbolos | **pronta** |
 | 2 | Tradução para português, do `pt_BR.lang` do próprio mod | **pronta** |
-| 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **thaumômetro e caderno prontos**; o tabuleiro da mesa de pesquisa a fazer |
-| 4 | Varinhas, nós e vis | **prontos**, com quatro focos (fogo, escavação, gelo e raio); os outros seis a fazer |
+| 3 | Thaumômetro e pesquisa: escanear, pontos, o caderno, o tabuleiro | **pronta** — com a mesa de pesquisa e o tabuleiro de hexágonos |
+| 4 | Varinhas, nós e vis | **prontos**, com sete focos (fogo, escavação, gelo, raio, buraco portátil, troca e primordial); proteção, morcego e pech a fazer |
 | 5 | Alquimia: crisol, essência, frascos, jarros, alambique | **pronta** — crisol, frascos, forno alquímico, alambique, tubos e jarros |
 | 6 | Infusão: matriz, pedestais, instabilidade | **pronta** |
 | 7 | Golens | **os oito golens e os doze núcleos prontos**; dois núcleos já trabalham (juntar e colher) |
@@ -414,8 +414,46 @@ chega quando uma infusão dá errado, e daí em diante come a terra por conta pr
   continua ou míngua. O Minecraft de hoje guarda bioma de quatro em quatro blocos e não deixa um mod
   repintá-lo bloco a bloco. Sem essa camada, quem segura a mácula aqui é a companhia: uma mancha viva se
   mantém e avança, um bloco solto se apaga.
-- **A folha-cintilante nasce sozinha.** No original ela cresce debaixo dos pinheiros-de-prata, que são de
-  uma parte da geração de mundo que ainda não chegou. Aqui ela nasce rara pelas florestas, para que a
-  Flor Etérea tenha de onde sair.
+- ~~A folha-cintilante nasce sozinha.~~ Resolvido com as árvores mágicas: ela agora nasce só em volta do pé
+  dos pinheiros-de-prata, como no original.
 - Falta da fatia: as criaturas da mácula (a aranha, o tentáculo, o enxame de esporos), o fluxo — a gosma
   e o gás que a mácula vira —, o lado eldritch inteiro e os artifícios de vestir.
+
+## As árvores mágicas
+
+A grande-madeira e o pinheiro-de-prata, com toras, folhas, mudas, tábuas, escadas e lajes.
+
+- `world/GreatwoodTree` e `world/SilverwoodTree` — o `WorldGenGreatwoodTrees` e o
+  `WorldGenSilverwoodTrees` traduzidos conta por conta, inclusive a toca de aranhas-das-cavernas de uma em
+  oito grandes-madeiras e o nó de aura puro que nasce dentro do tronco do pinheiro (`SilverwoodKnotBlock`,
+  com um quarto da aura da terra).
+- `world/MagicalTreeFeature` — uma chance em vinte e cinco por pedaço de mundo para a grande-madeira e uma
+  em sessenta para o pinheiro, na altura do que estiver mais alto ali, como no original.
+- `block/MagicalSaplingBlock` — com luz nove, a muda cresce uma vez em 25 (grande-madeira) ou 50 (pinheiro)
+  tiques ao acaso. Farinha de osso não adianta, como no original.
+- As folhas soltam a muda uma vez em 200 (grande-madeira) ou 250 (pinheiro); as do pinheiro brilham com luz
+  sete e soltam faísca, e são pintadas do cinza-azulado 8952234 do original.
+- A folha-cintilante: luz oito, a caixa do `BlockCustomPlant` e o fogo-fátuo ciano do original.
+- Com as peças, quatro receitas do original destravaram sozinhas nos geradores: a haste de Greatwood, o
+  filtro, o golem de madeira e a haste de Silverwood.
+
+### As diferenças desta parte
+
+- **O dicionário de biomas.** A chance da grande-madeira vem das marcas de convenção do Fabric, que copiam
+  o dicionário do Forge: certa nas florestas, uma em cinco em taigas, pântanos, savanas e planícies, meio a
+  meio em terras viçosas. O pinheiro nascia nos "morros de floresta" e "morros de bétula", que o jogo de hoje
+  fundiu na floresta e na floresta de bétulas — é lá que ele nasce agora, além de terra mágica.
+- **A distância das folhas.** No original a folha apodrecia a mais de quatro passos do tronco; no jogo de
+  hoje ela guarda a distância no próprio bloco e o limite é sete. Os geradores medem essa distância ao fim de
+  cada árvore, para a copa não apodrecer no primeiro tique.
+- **O carvão.** A tora vira carvão vegetal pela receita do próprio jogo (experiência 0,15); a do original dava
+  0,5.
+- **O nó do tronco** ainda não solta a essência de fogo-fátuo ao ser quebrado: o item não existe por aqui.
+
+## Correções desta rodada
+
+- O gerador das receitas arcanas não lia linhas da grade com `#` (`"Q#Q"`): os focos de fogo, gelo, raio,
+  troca e escavação saíam com a grade errada. Agora saem como no original, e o foco primordial também.
+- O foco Primordial (`EntityPrimalOrb`, `RenderPrimalOrb`, `FXWisp`): custo sorteado de 50 a 250 de cada
+  primário, meio segundo entre tiros; uma em cem explosões deixa mácula ou um nó de aura.
+

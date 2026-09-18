@@ -58,10 +58,21 @@ public class NodeFeature extends Feature<NoneFeatureConfiguration> {
      */
     public static boolean createRandomNodeAt(net.minecraft.world.level.Level level, BlockPos pos, RandomSource random) {
         if (!level.getBlockState(pos).isAir()) return false;
-        NodeType type = rollType(random);
-        NodeModifier modifier = rollModifier(random);
-        AspectList aspects = rollAspects(level, pos, random, type);
         level.setBlock(pos, TCBlocks.NODE.defaultBlockState(), 3);
+        return setupNode(level, pos, random, false);
+    }
+
+    /**
+     * O miolo do {@code createRandomNodeAt}: sorteia o nó e o põe no bloco que já está ali — o nó de aura
+     * solto ou o nó do pinheiro-de-prata.
+     *
+     * @param silverwood o do pinheiro: sempre puro, e com um quarto da aura da terra
+     */
+    public static boolean setupNode(net.minecraft.world.level.LevelAccessor level, BlockPos pos, RandomSource random,
+                                    boolean silverwood) {
+        NodeType type = silverwood ? NodeType.PURE : rollType(random);
+        NodeModifier modifier = rollModifier(random);
+        AspectList aspects = rollAspects(level, pos, random, type, silverwood);
         if (!(level.getBlockEntity(pos) instanceof NodeBlockEntity node)) return false;
         node.setup(aspects, type, modifier);
         return true;
@@ -91,7 +102,14 @@ public class NodeFeature extends Feature<NoneFeatureConfiguration> {
     /** De que o nó é feito e quanto ele guarda. */
     public static AspectList rollAspects(net.minecraft.world.level.LevelAccessor level, BlockPos pos,
                                          RandomSource random, NodeType type) {
+        return rollAspects(level, pos, random, type, false);
+    }
+
+    /** @param quarter o nó do pinheiro-de-prata fica com um quarto da aura da terra */
+    public static AspectList rollAspects(net.minecraft.world.level.LevelAccessor level, BlockPos pos,
+                                         RandomSource random, NodeType type, boolean quarter) {
         int aura = BiomeAura.auraOf(level.getBiome(pos));
+        if (quarter) aura /= 4;
         int value = random.nextInt(Math.max(1, aura / 2)) + aura / 2;
 
         AspectList list = new AspectList();

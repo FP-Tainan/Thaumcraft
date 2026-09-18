@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "wooden_slab",
+  "pattern": [
+    "KKK"
+  ],
+  "key": {
+    "K": "thaumcraft:greatwood_planks"
+  },
+  "result": {
+    "id": "thaumcraft:greatwood_slab",
+    "count": 6
+  }
+}

@@ -59,9 +59,9 @@ public class NodeBlockEntity extends BlockEntity {
         if (level.isClientSide()) return;
         if (node.base.isEmpty()) {
             // nó posto na mão não vem com nada dentro: aqui ele ganha o que teria se tivesse nascido sozinho
-            net.thaumcraft.api.nodes.NodeType type = net.thaumcraft.world.NodeFeature.rollType(level.getRandom());
-            node.setup(net.thaumcraft.world.NodeFeature.rollAspects(level, pos, level.getRandom(), type), type,
-                    net.thaumcraft.world.NodeFeature.rollModifier(level.getRandom()));
+            // (o do tronco do pinheiro-de-prata, como os que nascem nele)
+            net.thaumcraft.world.NodeFeature.setupNode(level, pos, level.getRandom(),
+                    state.is(net.thaumcraft.registry.TCBlocks.SILVERWOOD_KNOT));
             return;
         }
         int interval = node.regenerationInterval();

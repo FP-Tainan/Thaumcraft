@@ -10,7 +10,7 @@ import net.thaumcraft.block.entity.NodeBlockEntity;
 public final class TCBlockEntities {
     public static final BlockEntityType<NodeBlockEntity> NODE = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("node"),
-            new BlockEntityType<>(NodeBlockEntity::new, java.util.Set.of(TCBlocks.NODE)));
+            new BlockEntityType<>(NodeBlockEntity::new, java.util.Set.of(TCBlocks.NODE, TCBlocks.SILVERWOOD_KNOT)));
 
     public static final BlockEntityType<net.thaumcraft.block.entity.CrucibleBlockEntity> CRUCIBLE = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("crucible"),

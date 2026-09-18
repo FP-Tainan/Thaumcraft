@@ -19,12 +19,19 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> NODE_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("node"));
 
+    /** A grande-madeira e o pinheiro-de-prata. */
+    public static final Feature<NoneFeatureConfiguration> GREATWOOD = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("greatwood"), new net.thaumcraft.world.MagicalTreeFeature(NoneFeatureConfiguration.CODEC, false));
+    public static final Feature<NoneFeatureConfiguration> SILVERWOOD = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("silverwood"), new net.thaumcraft.world.MagicalTreeFeature(NoneFeatureConfiguration.CODEC, true));
+
+    public static final ResourceKey<PlacedFeature> GREATWOOD_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("greatwood"));
+    public static final ResourceKey<PlacedFeature> SILVERWOOD_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("silverwood"));
+
     private TCFeatures() {
     }
-
-    /** A folha-cintilante, rara pelas florestas. */
-    public static final ResourceKey<PlacedFeature> SHIMMERLEAF_PLACED =
-            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("shimmerleaf"));
 
     public static final ResourceKey<PlacedFeature> INFUSED_STONE_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("infused_stone"));
@@ -40,10 +47,14 @@ public final class TCFeatures {
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.TOP_LAYER_MODIFICATION,
                 NODE_PLACED);
-        // a folha-cintilante, de que se faz a Flor Etérea
+        // as árvores mágicas; a folha-cintilante nasce em volta do pé do pinheiro-de-prata
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION,
-                SHIMMERLEAF_PLACED);
+                SILVERWOOD_PLACED);
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION,
+                GREATWOOD_PLACED);
     }
 }

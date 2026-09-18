@@ -91,6 +91,16 @@ public final class Wisp implements ThaumFx.Effect {
         return Minecraft.getInstance().level.getRandom();
     }
 
+    /** O {@code FXWisp} com a cor dada, como as plantas do mod o soltam (sem tilintar). */
+    public static void colored(double x, double y, double z, float size, float red, float green, float blue) {
+        Wisp wisp = new Wisp(random(), x, y, z, size, -1);
+        // o original troca vermelho zero por um
+        wisp.red = red == 0.0f ? 1.0f : red;
+        wisp.green = green;
+        wisp.blue = blue;
+        ThaumFx.add(wisp);
+    }
+
     /** O {@code wispFX2}: parado, com gravidade. */
     public static void fx2(double x, double y, double z, float size, int type, boolean shrink, float gravity) {
         Wisp wisp = new Wisp(random(), x, y, z, size, type);

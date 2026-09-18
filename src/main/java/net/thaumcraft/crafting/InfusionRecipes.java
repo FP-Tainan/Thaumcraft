@@ -85,6 +85,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.ENTROPY, WandParts.rod("bone").craftCost()*2).add(Aspects.MAGIC, WandParts.rod("bone").craftCost()).add(Aspects.UNDEAD, WandParts.rod("blaze").craftCost()),
                 Ingredient.of(net.minecraft.world.item.Items.BONE),
                 Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("entropy")))));
+        // WandRodSilverwood
+        ALL.add(new InfusionRecipe("ROD_silverwood", new ItemStack(TCItems.WAND_RODS.get("silverwood")), 5,
+                new AspectList().add(Aspects.AIR, WandParts.rod("silverwood").craftCost()).add(Aspects.FIRE, WandParts.rod("silverwood").craftCost()).add(Aspects.WATER, WandParts.rod("silverwood").craftCost()).add(Aspects.EARTH, WandParts.rod("silverwood").craftCost()).add(Aspects.ORDER, WandParts.rod("silverwood").craftCost()).add(Aspects.ENTROPY, WandParts.rod("silverwood").craftCost()).add(Aspects.MAGIC, WandParts.rod("silverwood").craftCost()),
+                Ingredient.of(TCBlocks.SILVERWOOD_LOG.asItem()),
+                Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARDS.get("entropy")))));
         // WandRodPrimalStaff
         ALL.add(new InfusionRecipe("ROD_primal_staff", new ItemStack(TCItems.STAFF_RODS.get("primal")), 8,
                 new AspectList().add(Aspects.AIR, WandParts.rod("primal_staff").craftCost()).add(Aspects.FIRE, WandParts.rod("primal_staff").craftCost()).add(Aspects.WATER, WandParts.rod("primal_staff").craftCost()).add(Aspects.EARTH, WandParts.rod("primal_staff").craftCost()).add(Aspects.ORDER, WandParts.rod("primal_staff").craftCost()).add(Aspects.ENTROPY, WandParts.rod("primal_staff").craftCost()).add(Aspects.MAGIC, WandParts.rod("primal_staff").craftCost()*2),

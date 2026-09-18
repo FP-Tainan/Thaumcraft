@@ -78,6 +78,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("CAP_void", new ItemStack(TCItems.INERT_CAPS.get("void")),
                 Arrays.asList(Ingredient.of(TCResources.get("void_nugget")), Ingredient.of(TCResources.get("void_nugget")), Ingredient.of(TCResources.get("void_nugget")), Ingredient.of(TCResources.get("void_nugget")), null, Ingredient.of(TCResources.get("void_nugget")), null, null, null),
                 new AspectList().add(Aspects.ENTROPY, WandParts.cap("void").craftCost() * 3).add(Aspects.ORDER, WandParts.cap("void").craftCost() * 3).add(Aspects.FIRE, WandParts.cap("void").craftCost() * 2).add(Aspects.AIR, WandParts.cap("void").craftCost() * 2)));
+        // WandRodGreatwood
+        ALL.add(new ArcaneRecipe("ROD_greatwood", new ItemStack(TCItems.WAND_RODS.get("greatwood")),
+                Arrays.asList(null, Ingredient.of(TCBlocks.GREATWOOD_LOG.asItem()), null, Ingredient.of(TCBlocks.GREATWOOD_LOG.asItem()), null, null, null, null, null),
+                new AspectList().add(Aspects.ENTROPY, WandParts.rod("greatwood").craftCost())));
         // WandRodGreatwoodStaff
         ALL.add(new ArcaneRecipe("ROD_greatwood_staff", new ItemStack(TCItems.STAFF_RODS.get("greatwood")),
                 Arrays.asList(null, null, Ingredient.of(TCResources.get("primal_charm")), null, Ingredient.of(TCItems.WAND_RODS.get("greatwood")), null, Ingredient.of(TCItems.WAND_RODS.get("greatwood")), null, null),
@@ -146,6 +150,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("COREGATHER", new ItemStack(TCItems.GOLEM_CORE_BLANK),
                 Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.BRICK), null, Ingredient.of(net.minecraft.world.item.Items.BRICK), Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.item.Items.BRICK), null, Ingredient.of(net.minecraft.world.item.Items.BRICK), null),
                 new AspectList().add(Aspects.ORDER, 5).add(Aspects.FIRE, 5)));
+        // Filter
+        ALL.add(new ArcaneRecipe("DISTILESSENTIA", new ItemStack(TCResources.get("vis_filter"), 2),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCBlocks.SILVERWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), null, null, null, null, null, null),
+                new AspectList().add(Aspects.ORDER, 5).add(Aspects.WATER, 5)));
         // AlchemyFurnace
         ALL.add(new ArcaneRecipe("DISTILESSENTIA", new ItemStack(TCBlocks.ALCHEMICAL_FURNACE.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCBlocks.CRUCIBLE.asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.FURNACE.asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem())),

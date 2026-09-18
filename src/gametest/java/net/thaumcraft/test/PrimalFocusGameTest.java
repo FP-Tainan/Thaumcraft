@@ -61,7 +61,7 @@ public class PrimalFocusGameTest {
             // a ponteira de ferro cobra dez por cento a mais
             if (spent < 55 || spent > 275) helper.fail("gasto de " + primal.tag() + " fora da tabela: " + spent);
         }
-        var orbs = helper.getLevel().getEntities(TCEntities.PRIMAL_ORB, e -> true);
+        var orbs = helper.getLevel().getEntities(TCEntities.PRIMAL_ORB, player.getBoundingBox().inflate(3.0), e -> true);
         if (orbs.size() != 1) helper.fail("sai uma esfera; saíram " + orbs.size());
         if (orbs.get(0).distanceTo(player) > 2.0) helper.fail("a esfera nasce no olho de quem atira: " + orbs.get(0).position() + " / " + player.position());
         helper.succeed();

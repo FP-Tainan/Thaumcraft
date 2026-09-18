@@ -222,6 +222,32 @@ public final class TCItems {
     public static final Item INFUSION_MATRIX = register("infusion_matrix", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.INFUSION_MATRIX, properties));
 
+    // as árvores mágicas: toras, folhas, mudas, tábuas, escadas e lajes
+    public static final Item GREATWOOD_LOG = register("greatwood_log", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GREATWOOD_LOG, properties.useBlockDescriptionPrefix()));
+    public static final Item SILVERWOOD_LOG = register("silverwood_log", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.SILVERWOOD_LOG, properties.useBlockDescriptionPrefix()));
+    public static final Item GREATWOOD_LEAVES = register("greatwood_leaves", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GREATWOOD_LEAVES, properties.useBlockDescriptionPrefix()));
+    public static final Item SILVERWOOD_LEAVES = register("silverwood_leaves", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.SILVERWOOD_LEAVES, properties.useBlockDescriptionPrefix()));
+    public static final Item GREATWOOD_SAPLING = register("greatwood_sapling", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GREATWOOD_SAPLING, properties.useBlockDescriptionPrefix()));
+    public static final Item SILVERWOOD_SAPLING = register("silverwood_sapling", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.SILVERWOOD_SAPLING, properties.useBlockDescriptionPrefix()));
+    public static final Item GREATWOOD_PLANKS = register("greatwood_planks", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GREATWOOD_PLANKS, properties.useBlockDescriptionPrefix()));
+    public static final Item SILVERWOOD_PLANKS = register("silverwood_planks", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.SILVERWOOD_PLANKS, properties.useBlockDescriptionPrefix()));
+    public static final Item GREATWOOD_STAIRS = register("greatwood_stairs", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GREATWOOD_STAIRS, properties.useBlockDescriptionPrefix()));
+    public static final Item SILVERWOOD_STAIRS = register("silverwood_stairs", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.SILVERWOOD_STAIRS, properties.useBlockDescriptionPrefix()));
+    public static final Item GREATWOOD_SLAB = register("greatwood_slab", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GREATWOOD_SLAB, properties.useBlockDescriptionPrefix()));
+    public static final Item SILVERWOOD_SLAB = register("silverwood_slab", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.SILVERWOOD_SLAB, properties.useBlockDescriptionPrefix()));
+
     /** A folha-cintilante, para levar na mão. */
     public static final Item SHIMMERLEAF = register("shimmerleaf", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.SHIMMERLEAF, properties));
@@ -369,6 +395,9 @@ public final class TCItems {
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
             "scribing_tools", "table", "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_oneway", "tube_buffer",
             "infusion_matrix", "pedestal",
+            "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
+            "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",
+            "greatwood_sapling", "silverwood_sapling",
             "shimmerleaf", "ethereal_bloom", "taint_crust", "taint_soil", "taint_fibres",
             "golem_bell",
             "golem_straw", "golem_wood", "golem_tallow", "golem_clay",

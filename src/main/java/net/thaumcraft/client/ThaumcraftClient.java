@@ -93,6 +93,22 @@ public class ThaumcraftClient implements ClientModInitializer {
                 java.util.List.of(state -> 0xFF6D40C9),
                 net.thaumcraft.registry.TCBlocks.TAINT_SOIL,
                 net.thaumcraft.registry.TCBlocks.TAINT_FIBRES);
+        // as folhas das árvores mágicas: a da grande-madeira pega o verde da folhagem do lugar, a do
+        // pinheiro-de-prata tem o cinza-azulado fixo do original, 8952234
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(net.minecraft.client.color.block.BlockTintSources.foliage()),
+                net.thaumcraft.registry.TCBlocks.GREATWOOD_LEAVES);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(net.minecraft.client.color.block.BlockTintSources.constant(
+                        0xFF000000 | net.thaumcraft.block.MagicalLeavesBlock.SILVERWOOD_COLOR)),
+                net.thaumcraft.registry.TCBlocks.SILVERWOOD_LEAVES);
+        // e a faísca que as do pinheiro soltam de vez em quando: o sparkle de tamanho dois e cor sete
+        net.thaumcraft.block.MagicalLeavesBlock.clientEffects = (level, pos, random) ->
+                net.thaumcraft.client.fx.Sparkle.spawn(random,
+                        pos.getX() + 0.5f + random.nextFloat() - random.nextFloat(),
+                        pos.getY() + 0.5f + random.nextFloat() - random.nextFloat(),
+                        pos.getZ() + 0.5f + random.nextFloat() - random.nextFloat(), 2.0f, 7, 0.0f);
+        net.thaumcraft.block.ShimmerleafBlock.clientEffects = net.thaumcraft.client.fx.Wisp::colored;
         // o Nitor é um orbe de luz, e não um desenho chapado
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.NITOR,

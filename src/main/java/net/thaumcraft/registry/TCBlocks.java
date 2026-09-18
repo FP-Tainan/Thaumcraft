@@ -161,7 +161,7 @@ public final class TCBlocks {
                     .instabreak()
                     .noCollision()
                     .noOcclusion()
-                    .lightLevel(state -> 4)
+                    .lightLevel(state -> 8)
                     .sound(SoundType.GRASS)));
 
     /** A crosta da mácula: o que sobra de um tronco ou de uma folha que ela tomou. */
@@ -237,6 +237,80 @@ public final class TCBlocks {
     }
 
     private TCBlocks() {
+    }
+
+// ----------------------------------------------------------------- as árvores mágicas
+
+    /** A tora de grande-madeira: dureza dois e meio, como no {@code BlockMagicalLog}. */
+    public static final Block GREATWOOD_LOG = register("greatwood_log", properties ->
+            new net.minecraft.world.level.block.RotatedPillarBlock(logProperties(properties, MapColor.COLOR_BROWN)));
+
+    /** A tora de pinheiro-de-prata. */
+    public static final Block SILVERWOOD_LOG = register("silverwood_log", properties ->
+            new net.minecraft.world.level.block.RotatedPillarBlock(logProperties(properties, MapColor.QUARTZ)));
+
+    /** O nó do pinheiro-de-prata: um tronco com um nó de aura puro dentro, que brilha com luz sete. */
+    public static final Block SILVERWOOD_KNOT = register("silverwood_knot", properties ->
+            new net.thaumcraft.block.SilverwoodKnotBlock(logProperties(properties, MapColor.QUARTZ)
+                    .lightLevel(state -> 7)));
+
+    /** As folhas da grande-madeira, verdes da folhagem do lugar. */
+    public static final Block GREATWOOD_LEAVES = register("greatwood_leaves", properties ->
+            new net.thaumcraft.block.MagicalLeavesBlock(false, leafProperties(properties)));
+
+    /** As folhas do pinheiro-de-prata, cinza-azuladas e com luz sete. */
+    public static final Block SILVERWOOD_LEAVES = register("silverwood_leaves", properties ->
+            new net.thaumcraft.block.MagicalLeavesBlock(true, leafProperties(properties).lightLevel(state -> 7)));
+
+    /** A muda de grande-madeira. */
+    public static final Block GREATWOOD_SAPLING = register("greatwood_sapling", properties ->
+            new net.thaumcraft.block.MagicalSaplingBlock(false, saplingProperties(properties)));
+
+    /** A muda de pinheiro-de-prata, que já brilha com luz oito. */
+    public static final Block SILVERWOOD_SAPLING = register("silverwood_sapling", properties ->
+            new net.thaumcraft.block.MagicalSaplingBlock(true, saplingProperties(properties).lightLevel(state -> 8)));
+
+    /** As tábuas: as metas seis e sete do {@code BlockWoodenDevice}, dureza dois e meio. */
+    public static final Block GREATWOOD_PLANKS = register("greatwood_planks", properties ->
+            new Block(plankProperties(properties, MapColor.COLOR_BROWN)));
+
+    public static final Block SILVERWOOD_PLANKS = register("silverwood_planks", properties ->
+            new Block(plankProperties(properties, MapColor.QUARTZ)));
+
+    public static final Block GREATWOOD_STAIRS = register("greatwood_stairs", properties ->
+            new net.minecraft.world.level.block.StairBlock(GREATWOOD_PLANKS.defaultBlockState(),
+                    plankProperties(properties, MapColor.COLOR_BROWN)));
+
+    public static final Block SILVERWOOD_STAIRS = register("silverwood_stairs", properties ->
+            new net.minecraft.world.level.block.StairBlock(SILVERWOOD_PLANKS.defaultBlockState(),
+                    plankProperties(properties, MapColor.QUARTZ)));
+
+    public static final Block GREATWOOD_SLAB = register("greatwood_slab", properties ->
+            new net.minecraft.world.level.block.SlabBlock(plankProperties(properties, MapColor.COLOR_BROWN)));
+
+    public static final Block SILVERWOOD_SLAB = register("silverwood_slab", properties ->
+            new net.minecraft.world.level.block.SlabBlock(plankProperties(properties, MapColor.QUARTZ)));
+
+    private static BlockBehaviour.Properties logProperties(BlockBehaviour.Properties properties, MapColor color) {
+        return properties.mapColor(color).instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument.BASS)
+                .strength(2.5f).sound(SoundType.WOOD).ignitedByLava();
+    }
+
+    private static BlockBehaviour.Properties leafProperties(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.PLANT).strength(0.2f).randomTicks().sound(SoundType.GRASS).noOcclusion()
+                .isValidSpawn(net.minecraft.world.level.block.Blocks::ocelotOrParrot).isSuffocating((s, l, p) -> false)
+                .isViewBlocking((s, l, p) -> false).ignitedByLava().pushReaction(PushReaction.DESTROY)
+                .isRedstoneConductor((s, l, p) -> false);
+    }
+
+    private static BlockBehaviour.Properties saplingProperties(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.PLANT).noCollision().randomTicks().instabreak().sound(SoundType.GRASS)
+                .pushReaction(PushReaction.DESTROY);
+    }
+
+    private static BlockBehaviour.Properties plankProperties(BlockBehaviour.Properties properties, MapColor color) {
+        return properties.mapColor(color).instrument(net.minecraft.world.level.block.state.properties.NoteBlockInstrument.BASS)
+                .strength(2.5f, 6.0f).sound(SoundType.WOOD).ignitedByLava();
     }
 
     private static Block register(String name, java.util.function.Function<BlockBehaviour.Properties, Block> factory) {
