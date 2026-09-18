@@ -37,6 +37,7 @@
       "net.thaumcraft.test.client.GearClientTest",
       "net.thaumcraft.test.client.WorkbenchClientTest",
       "net.thaumcraft.test.client.ResearchTableClientTest",
+      "net.thaumcraft.test.client.TubeVariantsClientTest",
       "net.thaumcraft.test.client.EssentiaClientTest",
       "net.thaumcraft.test.client.InfusionClientTest",
       "net.thaumcraft.test.client.GolemClientTest",

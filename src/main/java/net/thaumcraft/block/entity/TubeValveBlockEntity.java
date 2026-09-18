@@ -65,7 +65,7 @@ public class TubeValveBlockEntity extends TubeBlockEntity implements Wandable {
 
     /** O lado para onde o manípulo aponta. Nele não se encaixa cano nenhum. */
     @Override
-    protected Direction facing() {
+    public Direction facing() {
         BlockState state = this.getBlockState();
         return state.hasProperty(TubeValveBlock.FACING)
                 ? state.getValue(TubeValveBlock.FACING) : Direction.UP;

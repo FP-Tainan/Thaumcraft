@@ -181,6 +181,9 @@ public class WandItem extends Item {
 
     @Override
     public InteractionResult useOn(net.minecraft.world.item.context.UseOnContext context) {
+        // nos tubos, a varinha abre e fecha lados e gira o que tem sentido
+        InteractionResult tube = TubeWand.use(context);
+        if (tube != null) return tube;
         // o que a varinha faz batendo num bloco: é assim que o original entrega as primeiras peças
         return WandTriggers.use(context.getLevel(), context.getPlayer(), context.getClickedPos(),
                 context.getItemInHand());

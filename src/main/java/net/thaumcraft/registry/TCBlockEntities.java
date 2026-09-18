@@ -36,6 +36,21 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.TubeBlockEntity::new,
                             java.util.Set.of(TCBlocks.TUBE)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.TubeRestrictBlockEntity> TUBE_RESTRICT =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube_restrict"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.TubeRestrictBlockEntity::new,
+                            java.util.Set.of(TCBlocks.TUBE_RESTRICT)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.TubeOnewayBlockEntity> TUBE_ONEWAY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube_oneway"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.TubeOnewayBlockEntity::new,
+                            java.util.Set.of(TCBlocks.TUBE_ONEWAY)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.TubeBufferBlockEntity> TUBE_BUFFER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube_buffer"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.TubeBufferBlockEntity::new,
+                            java.util.Set.of(TCBlocks.TUBE_BUFFER)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.TubeValveBlockEntity> TUBE_VALVE =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube_valve"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.TubeValveBlockEntity::new,

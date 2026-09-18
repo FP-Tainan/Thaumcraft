@@ -1,0 +1,215 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "thaumcraft:block/pipe_1",
+    "corpo": "thaumcraft:block/pipe_1",
+    "seta": "thaumcraft:block/pipe_oneway",
+    "meio": "thaumcraft:block/pipe_3"
+  },
+  "elements": [
+    {
+      "from": [
+        7,
+        0,
+        7
+      ],
+      "to": [
+        9,
+        16,
+        9
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "south": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "west": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "east": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "up": {
+          "uv": [
+            7,
+            7,
+            9,
+            9
+          ],
+          "texture": "#corpo"
+        },
+        "down": {
+          "uv": [
+            7,
+            7,
+            9,
+            9
+          ],
+          "texture": "#corpo"
+        }
+      }
+    },
+    {
+      "from": [
+        6.984,
+        1.6,
+        6.984
+      ],
+      "to": [
+        9.016,
+        14.4,
+        9.016
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6.984,
+            1.6,
+            9.016,
+            14.4
+          ],
+          "texture": "#seta"
+        },
+        "south": {
+          "uv": [
+            6.984,
+            1.6,
+            9.016,
+            14.4
+          ],
+          "texture": "#seta"
+        },
+        "west": {
+          "uv": [
+            6.984,
+            1.6,
+            9.016,
+            14.4
+          ],
+          "texture": "#seta"
+        },
+        "east": {
+          "uv": [
+            6.984,
+            1.6,
+            9.016,
+            14.4
+          ],
+          "texture": "#seta"
+        },
+        "up": {
+          "uv": [
+            6.984,
+            6.984,
+            9.016,
+            9.016
+          ],
+          "texture": "#seta"
+        },
+        "down": {
+          "uv": [
+            6.984,
+            6.984,
+            9.016,
+            9.016
+          ],
+          "texture": "#seta"
+        }
+      }
+    },
+    {
+      "from": [
+        6.5,
+        6.5,
+        6.5
+      ],
+      "to": [
+        9.5,
+        9.5,
+        9.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6.5,
+            6.5,
+            9.5,
+            9.5
+          ],
+          "texture": "#meio"
+        },
+        "south": {
+          "uv": [
+            6.5,
+            6.5,
+            9.5,
+            9.5
+          ],
+          "texture": "#meio"
+        },
+        "west": {
+          "uv": [
+            6.5,
+            6.5,
+            9.5,
+            9.5
+          ],
+          "texture": "#meio"
+        },
+        "east": {
+          "uv": [
+            6.5,
+            6.5,
+            9.5,
+            9.5
+          ],
+          "texture": "#meio"
+        },
+        "up": {
+          "uv": [
+            6.5,
+            6.5,
+            9.5,
+            9.5
+          ],
+          "texture": "#meio"
+        },
+        "down": {
+          "uv": [
+            6.5,
+            6.5,
+            9.5,
+            9.5
+          ],
+          "texture": "#meio"
+        }
+      }
+    }
+  ]
+}

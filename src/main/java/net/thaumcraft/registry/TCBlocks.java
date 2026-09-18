@@ -72,6 +72,21 @@ public final class TCBlocks {
                     .noOcclusion()
                     .sound(SoundType.METAL)));
 
+    /** O tubo estreito: passa adiante só metade da fome. */
+    public static final Block TUBE_RESTRICT = register("tube_restrict", properties ->
+            new net.thaumcraft.block.TubeRestrictBlock(properties
+                    .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
+
+    /** O tubo de mão única: a essência só anda para onde ele aponta. */
+    public static final Block TUBE_ONEWAY = register("tube_oneway", properties ->
+            new net.thaumcraft.block.TubeOnewayBlock(properties
+                    .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
+
+    /** O tampão de essência: uma caixinha que segura até oito no meio da tubulação. */
+    public static final Block TUBE_BUFFER = register("tube_buffer", properties ->
+            new net.thaumcraft.block.TubeBufferBlock(properties
+                    .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
+
     /** O alambique arcano: o pote que se empilha sobre o forno e recolhe o que sai dele. */
     public static final Block ALEMBIC = register("alembic", properties ->
             new net.thaumcraft.block.AlembicBlock(properties

@@ -176,6 +176,15 @@ public final class TCItems {
     public static final Item TUBE_VALVE = register("tube_valve", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.TUBE_VALVE, properties));
 
+    public static final Item TUBE_RESTRICT = register("tube_restrict", properties ->
+            new net.thaumcraft.item.TubeItem(TCBlocks.TUBE_RESTRICT, properties));
+
+    public static final Item TUBE_ONEWAY = register("tube_oneway", properties ->
+            new net.thaumcraft.item.TubeItem(TCBlocks.TUBE_ONEWAY, properties));
+
+    public static final Item TUBE_BUFFER = register("tube_buffer", properties ->
+            new net.thaumcraft.item.TubeItem(TCBlocks.TUBE_BUFFER, properties));
+
     /** O alambique, para levar na mão. */
     public static final Item ALEMBIC = register("alembic", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ALEMBIC, properties));
@@ -337,7 +346,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "scribing_tools", "table", "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "tube", "tube_valve",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "tube", "tube_valve", "tube_restrict", "tube_oneway", "tube_buffer",
             "infusion_matrix", "pedestal",
             "shimmerleaf", "ethereal_bloom", "taint_crust", "taint_soil", "taint_fibres",
             "golem_bell",

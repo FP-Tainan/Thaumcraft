@@ -42,6 +42,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("BASICARTIFACE", new ItemStack(TCResources.get("primal_charm")),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARDS.get("entropy"))),
                 new AspectList().add(Aspects.EARTH, 25).add(Aspects.FIRE, 25).add(Aspects.AIR, 25).add(Aspects.WATER, 25).add(Aspects.ORDER, 25).add(Aspects.ENTROPY, 25)));
+        // ArcaneStone1
+        ALL.add(new ArcaneRecipe("ARCANESTONE", new ItemStack(TCBlocks.BUILDING.get("arcane_stone").asItem(), 9),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE)),
+                new AspectList().add(Aspects.EARTH, 1).add(Aspects.FIRE, 1)));
         // InfusionMatrix
         ALL.add(new ArcaneRecipe("INFUSION", new ItemStack(TCBlocks.INFUSION_MATRIX.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem())),
@@ -142,5 +146,25 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("TUBES", new ItemStack(TCBlocks.TUBE.asItem(), 8),
                 Arrays.asList(null, Ingredient.of(TCResources.get("quicksilver")), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // TubeBuffer
+        ALL.add(new ArcaneRecipe("CENTRIFUGE", new ItemStack(TCBlocks.TUBE_BUFFER.asItem()),
+                Arrays.asList(Ingredient.of(TCItems.PHIAL), Ingredient.of(TCBlocks.TUBE_VALVE.asItem()), Ingredient.of(TCItems.PHIAL), Ingredient.of(TCBlocks.TUBE.asItem()), null, Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCItems.PHIAL), Ingredient.of(TCBlocks.TUBE_RESTRICT.asItem()), Ingredient.of(TCItems.PHIAL)),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // MirrorGlass
+        ALL.add(ArcaneRecipe.loose("BASICARTIFACE", new ItemStack(TCResources.get("mirrored_glass")),
+                Arrays.asList(Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem())),
+                new AspectList().add(Aspects.FIRE, 10).add(Aspects.EARTH, 10)));
+        // TubeValve
+        ALL.add(ArcaneRecipe.loose("TUBES", new ItemStack(TCBlocks.TUBE_VALVE.asItem()),
+                Arrays.asList(Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.LEVER.asItem())),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // TubeRestrict
+        ALL.add(ArcaneRecipe.loose("TUBEFILTER", new ItemStack(TCBlocks.TUBE_RESTRICT.asItem()),
+                Arrays.asList(Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(net.minecraft.world.item.Items.STONE)),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 16)));
+        // TubeOneway
+        ALL.add(ArcaneRecipe.loose("TUBEFILTER", new ItemStack(TCBlocks.TUBE_ONEWAY.asItem()),
+                Arrays.asList(Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(net.minecraft.world.item.Items.DYE.blue())),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 8).add(Aspects.ENTROPY, 8)));
     }
 }

@@ -86,12 +86,29 @@ public class TubeBlock extends BaseEntityBlock {
         return RenderShape.MODEL;
     }
 
+    /**
+     * Os braços finos dos lados fechados, os {@code addTraceableCuboids} do original: sem eles não haveria
+     * onde a varinha bater para reabrir um lado que ela mesma fechou.
+     */
+    private static final VoxelShape[] PLUGS = {
+            Block.box(6.72, 0.0, 6.72, 9.28, 8.0, 9.28),
+            Block.box(6.72, 8.0, 6.72, 9.28, 16.0, 9.28),
+            Block.box(6.72, 6.72, 0.0, 9.28, 9.28, 8.0),
+            Block.box(6.72, 6.72, 8.0, 9.28, 9.28, 16.0),
+            Block.box(0.0, 6.72, 6.72, 8.0, 9.28, 9.28),
+            Block.box(8.0, 6.72, 6.72, 16.0, 9.28, 9.28),
+    };
+
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         VoxelShape shape = CORE;
+        TubeBlockEntity tube = level.getBlockEntity(pos) instanceof TubeBlockEntity found ? found : null;
         for (Direction dir : Direction.values()) {
             if (state.getValue(PipeBlock.PROPERTY_BY_DIRECTION.get(dir))) {
                 shape = Shapes.or(shape, ARMS[dir.get3DDataValue()]);
+            } else if (tube != null && !tube.isOpen(dir)
+                    && level.getBlockEntity(pos.relative(dir)) instanceof EssentiaTransport) {
+                shape = Shapes.or(shape, PLUGS[dir.get3DDataValue()]);
             }
         }
         return shape;
@@ -118,11 +135,11 @@ public class TubeBlock extends BaseEntityBlock {
      * varinha abre ou fecha um lado dele.
      */
     public static BlockState connect(BlockState state, BlockGetter level, BlockPos pos) {
-        TubeBlockEntity tube = level.getBlockEntity(pos) instanceof TubeBlockEntity found ? found : null;
+        EssentiaTransport tube = level.getBlockEntity(pos) instanceof EssentiaTransport found ? found : null;
         int joined = 0;
         boolean device = false;
         for (Direction dir : Direction.values()) {
-            boolean open = tube == null || tube.isOpen(dir);
+            boolean open = tube == null || tube.isConnectable(dir);
             var beside = level.getBlockEntity(pos.relative(dir));
             boolean fits = open && beside instanceof EssentiaTransport side
                     && side.isConnectable(dir.getOpposite());

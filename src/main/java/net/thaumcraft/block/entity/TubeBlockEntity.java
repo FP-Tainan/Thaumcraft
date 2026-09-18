@@ -61,6 +61,8 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
     private int flowing;
     private static final int FLOW_MEMORY = 10;
     private int count;
+    /** Para onde o tubo aponta: o lado em que ele foi posto, e que a varinha gira no miolo. */
+    private Direction facing = Direction.NORTH;
 
     public TubeBlockEntity(BlockPos pos, BlockState state) {
         super(TCBlockEntities.TUBE, pos, state);
@@ -229,8 +231,31 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
     }
 
     /** Para onde o tubo aponta — só os tubos com lado certo usam isto. */
-    protected Direction facing() {
-        return Direction.NORTH;
+    public Direction facing() {
+        return this.facing;
+    }
+
+    public void setFacing(Direction facing) {
+        this.facing = facing;
+        this.sync();
+    }
+
+    /**
+     * A varinha no miolo: o tubo aponta para o próximo lado que tenha, do lado oposto, alguém de encanar e
+     * aberto. É o giro do {@code onWandRightClick} do original, que só muda alguma coisa nos tubos com lado.
+     */
+    public void rotate() {
+        if (this.level == null) return;
+        int a = this.facing.get3DDataValue();
+        while (++a < 20) {
+            Direction candidate = Direction.from3DDataValue(a % 6);
+            Direction back = candidate.getOpposite();
+            if (this.level.getBlockEntity(this.getBlockPos().relative(back)) instanceof EssentiaTransport
+                    && this.isConnectable(back)) {
+                this.setFacing(candidate);
+                return;
+            }
+        }
     }
 
     /** Este lado do tubo está aberto? */
@@ -343,6 +368,7 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
         this.suctionType = Aspect.of(input.getStringOr("stype", ""));
         this.suction = input.getIntOr("samount", 0);
         this.venting = input.getIntOr("venting", 0);
+        this.facing = Direction.from3DDataValue(input.getIntOr("side", Direction.NORTH.get3DDataValue()));
         int packed = input.getIntOr("open", 0b111111);
         for (int side = 0; side < 6; side++) this.open[side] = (packed & 1 << side) != 0;
     }
@@ -355,6 +381,7 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
         output.putInt("amount", this.amount);
         output.putInt("samount", this.suction);
         output.putInt("venting", this.venting);
+        output.putInt("side", this.facing.get3DDataValue());
         int packed = 0;
         for (int side = 0; side < 6; side++) if (this.open[side]) packed |= 1 << side;
         output.putInt("open", packed);
