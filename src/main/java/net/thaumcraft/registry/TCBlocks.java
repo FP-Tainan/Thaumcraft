@@ -56,6 +56,18 @@ public final class TCBlocks {
                     .noOcclusion()
                     .sound(SoundType.GLASS)));
 
+    /** O buraco do Buraco Portátil: some sozinho, devolvendo o bloco que estava ali. */
+    public static final Block HOLE = register("hole", properties ->
+            new net.thaumcraft.block.HoleBlock(properties
+                    .mapColor(MapColor.NONE)
+                    .strength(-1.0f, 6000000.0f)
+                    .noLootTable()
+                    .noOcclusion()
+                    .noCollision()
+                    .lightLevel(state -> 10)
+                    .pushReaction(PushReaction.BLOCK)
+                    .sound(SoundType.WOOL)));
+
     /** O jarro do vazio: o jarro de obsidiana que nunca enche — o que passa do limite some. */
     public static final Block JAR_VOID = register("jar_void", properties ->
             new net.thaumcraft.block.JarBlock(properties

@@ -114,6 +114,20 @@ public class WandClientTest implements FabricClientGameTest {
             hold(context, 20);
             context.takeScreenshot("foco_escavacao");
             release(context);
+
+            // o buraco portátil numa parede grossa
+            singleplayer.getServer().runCommand("execute at @p run fill ~-2 ~ ~5 ~2 ~3 ~8 stone");
+            singleplayer.getServer().runCommand("item replace entity @p hotbar.0 with thaumcraft:wand[" + full
+                    + ",thaumcraft:wand_focus=\"portable_hole\"]");
+            singleplayer.getServer().runCommand("execute as @p at @s run tp @s ~ ~ ~1");
+            context.runOnClient(minecraft -> minecraft.player.setXRot(10.0f));
+            hold(context, 3);
+            release(context);
+            context.waitTicks(15);
+            context.takeScreenshot("foco_buraco");
+            singleplayer.getServer().runCommand("execute as @p at @s run tp @s ~ ~ ~4.5");
+            context.waitTicks(5);
+            context.takeScreenshot("foco_buraco_dentro");
         }
     }
 

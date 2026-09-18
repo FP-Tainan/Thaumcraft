@@ -36,6 +36,10 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.TubeBlockEntity::new,
                             java.util.Set.of(TCBlocks.TUBE)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.HoleBlockEntity> HOLE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("hole"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.HoleBlockEntity::new, java.util.Set.of(TCBlocks.HOLE)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.TubeRestrictBlockEntity> TUBE_RESTRICT =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube_restrict"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.TubeRestrictBlockEntity::new,

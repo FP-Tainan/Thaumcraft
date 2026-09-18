@@ -70,6 +70,10 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.TUBE_ONEWAY, net.thaumcraft.client.render.TubeVariantRenderers.Oneway::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.TUBE_BUFFER, net.thaumcraft.client.render.TubeVariantRenderers.Buffer::new);
+        // o buraco do Buraco Portátil: as paredes de estrelas e as faíscas das quinas
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.HOLE, net.thaumcraft.client.render.HoleRenderer::new);
+        net.thaumcraft.block.entity.HoleBlockEntity.clientEffects = net.thaumcraft.client.render.HoleRenderer::sparkles;
         // a mesa de pesquisa: o desenhista da mesa inteira e a tela do tabuleiro
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.RESEARCH_TABLE, net.thaumcraft.client.render.ResearchTableRenderer::new);

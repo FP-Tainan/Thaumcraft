@@ -131,6 +131,12 @@ public final class TCItems {
                 properties.stacksTo(1), "shock",
                 new net.thaumcraft.api.aspects.AspectList()
                         .add(net.thaumcraft.api.aspects.Aspects.AIR, 25), true)));
+        // o do buraco portátil: perditio 10 e aer 10 por bloco de profundidade, tiro único
+        FOCI.put("portable_hole", register("focus_portable_hole", properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1), "portable_hole",
+                new net.thaumcraft.api.aspects.AspectList()
+                        .add(net.thaumcraft.api.aspects.Aspects.ENTROPY, 10)
+                        .add(net.thaumcraft.api.aspects.Aspects.AIR, 10), false)));
     }
 
     /** A lasca de gelo: não é item de verdade, é só a cara do projétil do foco de gelo. */
@@ -332,7 +338,7 @@ public final class TCItems {
      */
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles",
-            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
             "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",

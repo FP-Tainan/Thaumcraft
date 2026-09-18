@@ -2,6 +2,7 @@ package net.thaumcraft.item;
 
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -97,6 +98,7 @@ public final class Focuses {
             case "excavation" -> excavate(level, player, wand, focus);
             case "frost" -> shootFrost(level, player, wand, focus);
             case "shock" -> shock(level, player, wand, focus);
+            case "portable_hole" -> portableHole(level, player, wand, focus);
             default -> false;
         };
     }
@@ -169,6 +171,40 @@ public final class Focuses {
         if (pointed instanceof LivingEntity && pvp) {
             pointed.hurt(level.damageSources().playerAttack(player), SHOCK_DAMAGE);
         }
+        return true;
+    }
+
+    // ----------------------------------------------------------------- buraco portátil
+
+    /**
+     * O {@code ItemFocusPortableHole}: conta quantos blocos maciços há em linha, a partir do que se mirou, até
+     * trinta e três; cobra o custo vezes essa profundidade e abre o túnel, que dura seis segundos.
+     */
+    private static boolean portableHole(Level level, Player player, ItemStack wand, FocusItem focus) {
+        HitResult hit = player.pick(player.blockInteractionRange(), 1.0f, true);
+        if (!(hit instanceof BlockHitResult block) || hit.getType() != HitResult.Type.BLOCK) return false;
+        BlockPos start = block.getBlockPos();
+        Direction face = block.getDirection();
+        int distance = 0;
+        BlockPos at = start;
+        for (; distance < 33; distance++) {
+            BlockState state = level.getBlockState(at);
+            if (state.is(Blocks.BEDROCK) || state.is(net.thaumcraft.registry.TCBlocks.HOLE) || state.isAir()
+                    || state.getDestroySpeed(level, at) < 0.0f) {
+                break;
+            }
+            at = at.relative(face.getOpposite());
+        }
+        // o custo é o de um bloco vezes a profundidade (o merge do original fica com o maior)
+        net.thaumcraft.api.aspects.AspectList cost = focus.cost();
+        for (net.thaumcraft.api.aspects.Aspect aspect : cost.getAspects()) {
+            cost.merge(aspect, cost.getAmount(aspect) * distance);
+        }
+        if (WandItem.consumeRaw(wand, cost, true)) {
+            net.thaumcraft.block.entity.HoleBlockEntity.createHole(level, start, face.get3DDataValue(), distance + 1,
+                    net.thaumcraft.block.entity.HoleBlockEntity.DURATION);
+        }
+        level.playSound(null, start, net.minecraft.sounds.SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0f, 1.0f);
         return true;
     }
 

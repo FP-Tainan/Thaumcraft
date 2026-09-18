@@ -90,6 +90,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.AIR, WandParts.rod("primal_staff").craftCost()).add(Aspects.FIRE, WandParts.rod("primal_staff").craftCost()).add(Aspects.WATER, WandParts.rod("primal_staff").craftCost()).add(Aspects.EARTH, WandParts.rod("primal_staff").craftCost()).add(Aspects.ORDER, WandParts.rod("primal_staff").craftCost()).add(Aspects.ENTROPY, WandParts.rod("primal_staff").craftCost()).add(Aspects.MAGIC, WandParts.rod("primal_staff").craftCost()*2),
                 Ingredient.of(TCItems.WAND_RODS.get("silverwood")),
                 Arrays.asList(Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCItems.WAND_RODS.get("obsidian")), Ingredient.of(TCItems.WAND_RODS.get("ice")), Ingredient.of(TCItems.WAND_RODS.get("quartz")), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCItems.WAND_RODS.get("reed")), Ingredient.of(TCItems.WAND_RODS.get("blaze")), Ingredient.of(TCItems.WAND_RODS.get("bone")))));
+        // FocusPortableHole
+        ALL.add(new InfusionRecipe("FOCUSPORTABLEHOLE", new ItemStack(TCItems.FOCI.get("portable_hole")), 3,
+                new AspectList().add(Aspects.TRAVEL, 25).add(Aspects.ELDRITCH, 10).add(Aspects.EXCHANGE, 10).add(Aspects.ENTROPY, 25),
+                Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("entropy")))));
         // CoreAlchemy
         ALL.add(new InfusionRecipe("COREALCHEMY", new ItemStack(TCItems.GOLEM_CORES.get("alchemy")), 2,
                 new AspectList().add(Aspects.MAGIC, 15).add(Aspects.WATER, 15).add(Aspects.MOTION, 15),
