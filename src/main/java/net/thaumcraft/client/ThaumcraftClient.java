@@ -33,6 +33,12 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(net.thaumcraft.client.render.FortressArmorRenderer::new,
                 net.thaumcraft.registry.TCItems.FORTRESS_HELMET, net.thaumcraft.registry.TCItems.FORTRESS_CHESTPLATE,
                 net.thaumcraft.registry.TCItems.FORTRESS_LEGGINGS);
+        // o arreio taumostático, com o ModelHoverHarness
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.HoverHarnessRenderer.LAYER,
+                net.thaumcraft.client.render.HoverHarnessRenderer::createLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(net.thaumcraft.client.render.HoverHarnessRenderer::new,
+                net.thaumcraft.registry.TCItems.HOVER_HARNESS);
         // o golem, com a pele da matéria de que ele é feito
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.client.render.GolemRenderer.LAYER,
@@ -133,6 +139,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         // as casas de amuleto, anel e cinto do Baubles
         net.thaumcraft.client.BaublesClient.init();
         net.thaumcraft.client.RunicHud.init();
+        net.thaumcraft.client.HoverClient.init();
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.HOVER_HARNESS,
+                net.thaumcraft.client.gui.HoverHarnessScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.BAUBLES,
                 net.thaumcraft.client.gui.BaublesScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.FOCUS_POUCH,

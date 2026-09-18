@@ -47,6 +47,22 @@ public final class AdditiveGlow {
                     .withDepthStencilState(new DepthStencilState(CompareOp.GREATER_THAN_OR_EQUAL, false))
                     .build());
 
+    /** O mesmo com a mistura comum ({@code SRC_ALPHA, ONE_MINUS_SRC_ALPHA}): os raios de tipo 5 e 6 do original. */
+    public static final RenderPipeline BLENDED_PIPELINE = RenderPipelines.register(
+            RenderPipeline.builder(RenderPipelines.MATRICES_FOG_SNIPPET)
+                    .withLocation(Thaumcraft.id("pipeline/blended_glow"))
+                    .withVertexShader("core/entity")
+                    .withFragmentShader("core/entity")
+                    .withShaderDefine("EMISSIVE")
+                    .withShaderDefine("NO_OVERLAY")
+                    .withShaderDefine("NO_CARDINAL_LIGHTING")
+                    .withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+                    .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
+                    .withVertexBinding(0, DefaultVertexFormat.ENTITY)
+                    .withPrimitiveTopology(PrimitiveTopology.QUADS)
+                    .withDepthStencilState(new DepthStencilState(CompareOp.GREATER_THAN_OR_EQUAL, false))
+                    .build());
+
     /** O mesmo, desenhando as duas faces: o {@code glDisable(GL_CULL_FACE)} de efeitos como o clarão do escudo rúnico. */
     public static final RenderPipeline TWO_SIDED_PIPELINE = RenderPipelines.register(
             RenderPipeline.builder(RenderPipelines.MATRICES_FOG_SNIPPET)
@@ -76,12 +92,23 @@ public final class AdditiveGlow {
                     .sortOnUpload()
                     .createRenderSetup()));
 
+    private static final Function<Identifier, RenderType> BLENDED = Util.memoize(texture ->
+            RenderType.create("thaumcraft_blended_glow", RenderSetup.builder(BLENDED_PIPELINE)
+                    .withTexture("Sampler0", texture)
+                    .sortOnUpload()
+                    .createRenderSetup()));
+
     private AdditiveGlow() {
     }
 
     /** A porta aditiva com esta textura. */
     public static RenderType of(Identifier texture) {
         return BY_TEXTURE.apply(texture);
+    }
+
+    /** A mesma porta, misturando como vidro em vez de somar. */
+    public static RenderType blended(Identifier texture) {
+        return BLENDED.apply(texture);
     }
 
     /** A porta aditiva sem descartar as faces de trás. */

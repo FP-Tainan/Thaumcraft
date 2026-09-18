@@ -21,6 +21,10 @@ public final class TCMenus {
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("focus_pouch"),
                     new MenuType<>(net.thaumcraft.inventory.FocusPouchMenu::new, FeatureFlags.VANILLA_SET));
 
+    public static final MenuType<net.thaumcraft.inventory.HoverHarnessMenu> HOVER_HARNESS =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("hover_harness"),
+                    new MenuType<>(net.thaumcraft.inventory.HoverHarnessMenu::new, FeatureFlags.VANILLA_SET));
+
     public static final MenuType<net.thaumcraft.inventory.DeconstructionTableMenu> DECONSTRUCTION_TABLE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("deconstruction_table"),
                     new MenuType<>(net.thaumcraft.inventory.DeconstructionTableMenu::new, FeatureFlags.VANILLA_SET));

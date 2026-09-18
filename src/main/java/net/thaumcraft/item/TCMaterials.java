@@ -35,6 +35,7 @@ public final class TCMaterials {
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> ROBES_ASSET = assetKey("robes");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> TRAVELLER_ASSET = assetKey("traveller");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> FORTRESS_ASSET = assetKey("fortress");
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> HARNESS_ASSET = assetKey("hover_harness");
 
     /** Armadura de táumio: 2/5/6/2 de proteção e 25 de encantabilidade, os números do original. */
     public static final ArmorMaterial THAUMIUM_ARMOR = new ArmorMaterial(
@@ -59,6 +60,8 @@ public final class TCMaterials {
     public static final ArmorMaterial GOGGLES = special(GOGGLES_ASSET, "repairs_special");
     public static final ArmorMaterial ROBES = special(ROBES_ASSET, "repairs_robes");
     public static final ArmorMaterial TRAVELLER = special(TRAVELLER_ASSET, "repairs_special");
+    /** O arreio taumostático usa o mesmo material; o getIsRepairable dele aceita ouro. */
+    public static final ArmorMaterial HARNESS = special(HARNESS_ASSET, "repairs_harness");
 
     /** O {@code armorMatThaumiumFortress}: 3/7/6/3, durabilidade 40, encantabilidade 25; conserta com táumio. */
     public static final ArmorMaterial FORTRESS = new ArmorMaterial(40,

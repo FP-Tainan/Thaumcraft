@@ -184,6 +184,8 @@ public final class LightningBolt implements ThaumFx.Effect {
             case 2 -> new float[]{0.1f, 0.1f, 0.6f};
             case 3 -> new float[]{0.1f, 1.0f, 0.1f};
             case 4 -> new float[]{0.6f, 0.1f, 0.1f};
+            case 5 -> new float[]{0.6f, 0.2f, 0.6f};
+            case 6 -> new float[]{0.75f, 1.0f, 1.0f};
             default -> new float[]{0.6f, 0.3f, 0.6f};
         };
         float[] thin = switch (this.type) {
@@ -191,11 +193,15 @@ public final class LightningBolt implements ThaumFx.Effect {
             case 2 -> new float[]{0.1f, 0.1f, 1.0f};
             case 3 -> new float[]{0.1f, 0.6f, 0.1f};
             case 4 -> new float[]{1.0f, 0.1f, 0.1f};
+            case 5 -> new float[]{0.0f, 0.0f, 0.0f};
+            case 6 -> new float[]{0.75f, 1.0f, 1.0f};
             default -> new float[]{1.0f, 0.6f, 1.0f};
         };
-        collector.submitCustomGeometry(pose, AdditiveGlow.of(LARGE),
+        // os tipos 5 e 6 misturam como vidro em vez de somar (o glBlendFunc(770, 771) do original)
+        boolean blended = this.type == 5 || this.type == 6;
+        collector.submitCustomGeometry(pose, blended ? AdditiveGlow.blended(LARGE) : AdditiveGlow.of(LARGE),
                 (matrix, consumer) -> this.renderBolt(matrix, consumer, view, partial, 0, wide));
-        collector.submitCustomGeometry(pose, AdditiveGlow.of(SMALL),
+        collector.submitCustomGeometry(pose, blended ? AdditiveGlow.blended(SMALL) : AdditiveGlow.of(SMALL),
                 (matrix, consumer) -> this.renderBolt(matrix, consumer, view, partial, 1, thin));
     }
 

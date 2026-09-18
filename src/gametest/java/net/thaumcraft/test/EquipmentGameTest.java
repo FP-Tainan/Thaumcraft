@@ -163,4 +163,76 @@ public class EquipmentGameTest {
         if (net.thaumcraft.item.VisAmuletItem.vis(stone).getAmount(Aspects.FIRE) != 7) helper.fail("e a pedra perde o mesmo");
         helper.succeed();
     }
+
+    private static ItemStack potentiaJar(int amount) {
+        ItemStack jar = new ItemStack(net.thaumcraft.registry.TCBlocks.JAR);
+        jar.set(net.thaumcraft.registry.TCComponents.JAR_CONTENTS, net.thaumcraft.item.JarContents.of(Aspects.ENERGY, amount, null));
+        return jar;
+    }
+
+    @GameTest
+    public void theHarnessFliesOnPotentia(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(GameType.SURVIVAL);
+        ItemStack harness = new ItemStack(TCItems.HOVER_HARNESS);
+        harness.set(net.thaumcraft.registry.TCComponents.HARNESS_JAR, potentiaJar(2));
+        player.setItemSlot(EquipmentSlot.CHEST, harness);
+        net.thaumcraft.event.Hover.setHover(player, true);
+        net.thaumcraft.event.Hover.serverTick(player, harness);
+        if (!player.getAbilities().flying) helper.fail("pairando, voa");
+        if (!Boolean.TRUE.equals(harness.get(net.thaumcraft.registry.TCComponents.HOVER))) helper.fail("e o arreio guarda que está pairando");
+        for (int t = 0; t < net.thaumcraft.event.Hover.EFFICIENCY; t++) net.thaumcraft.event.Hover.serverTick(player, harness);
+        if (net.thaumcraft.event.Hover.fuel(harness) != 1) helper.fail("360 tiques gastam um ponto de Potentia; sobrou " + net.thaumcraft.event.Hover.fuel(harness));
+        for (int t = 0; t < net.thaumcraft.event.Hover.EFFICIENCY + 1; t++) net.thaumcraft.event.Hover.serverTick(player, harness);
+        net.thaumcraft.event.Hover.serverTick(player, harness);
+        if (net.thaumcraft.event.Hover.getHover(player) || player.getAbilities().flying) helper.fail("sem Potentia, o voo desliga");
+        if (Boolean.TRUE.equals(harness.get(net.thaumcraft.registry.TCComponents.HOVER))) helper.fail("e o arreio também");
+        if (net.thaumcraft.event.Hover.toggleHover(player, harness)) helper.fail("não liga com o jarro vazio");
+        helper.succeed();
+    }
+
+    @GameTest
+    public void theGirdleStretchesThePotentiaAndTheSpeed(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(GameType.SURVIVAL);
+        ItemStack harness = new ItemStack(TCItems.HOVER_HARNESS);
+        harness.set(net.thaumcraft.registry.TCComponents.HARNESS_JAR, potentiaJar(5));
+        player.setItemSlot(EquipmentSlot.CHEST, harness);
+        if (Math.abs(net.thaumcraft.event.Hover.speed(player) - 0.7f) > 0.001f) helper.fail("sem o cinturão, 70% da velocidade");
+        net.thaumcraft.baubles.Baubles.container(player).setItem(net.thaumcraft.baubles.Baubles.BELT, new ItemStack(TCItems.HOVER_GIRDLE));
+        if (Math.abs(net.thaumcraft.event.Hover.speed(player) - 0.91f) > 0.001f) helper.fail("com ele, 91%");
+        net.thaumcraft.event.Hover.setHover(player, true);
+        for (int t = 0; t < 289; t++) net.thaumcraft.event.Hover.serverTick(player, harness);
+        if (net.thaumcraft.event.Hover.fuel(harness) != 4) helper.fail("com o cinturão, 288 tiques por ponto");
+        player.fallDistance = 1.0;
+        ((net.thaumcraft.item.HoverGirdleItem) TCItems.HOVER_GIRDLE).onWornTick(new ItemStack(TCItems.HOVER_GIRDLE), player);
+        if (Math.abs(player.fallDistance - 0.67) > 0.001) helper.fail("o cinturão tira um terço de bloco da queda por tique");
+        // tirando o arreio do peito, o voo acaba
+        player.setItemSlot(EquipmentSlot.CHEST, ItemStack.EMPTY);
+        net.thaumcraft.event.Hover.checkWorn(player);
+        if (net.thaumcraft.event.Hover.getHover(player) || player.getAbilities().flying) helper.fail("sem o arreio no peito não se paira");
+        if (WandItem.modifier(new ItemStack(TCItems.WAND), player, Aspects.AIR) != WandItem.modifier(new ItemStack(TCItems.WAND), player, Aspects.FIRE)) {
+            helper.fail("sem arreio, nada de desconto diferente no ar");
+        }
+        helper.succeed();
+    }
+
+    @GameTest
+    public void theHarnessKeepsItsJar(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        ItemStack harness = new ItemStack(TCItems.HOVER_HARNESS);
+        player.getInventory().setSelectedSlot(0);
+        player.getInventory().setItem(0, harness);
+        var menu = new net.thaumcraft.inventory.HoverHarnessMenu(1, player.getInventory(), harness);
+        if (menu.getSlot(0).mayPlace(new ItemStack(net.thaumcraft.registry.TCBlocks.JAR))) helper.fail("jarro vazio não serve");
+        if (!menu.getSlot(0).mayPlace(potentiaJar(8))) helper.fail("jarro de Potentia serve");
+        menu.getSlot(0).set(potentiaJar(8));
+        menu.removed(player);
+        if (net.thaumcraft.event.Hover.fuel(player.getInventory().getItem(0)) != 8) helper.fail("fechando, o jarro fica no arreio");
+        player.setItemSlot(EquipmentSlot.CHEST, player.getInventory().getItem(0));
+        float air = WandItem.modifier(new ItemStack(TCItems.WAND), player, Aspects.AIR);
+        float fire = WandItem.modifier(new ItemStack(TCItems.WAND), player, Aspects.FIRE);
+        if (Math.abs(fire - air - 0.03f) > 0.001f) helper.fail("5% de desconto no ar, 2% no resto");
+        helper.succeed();
+    }
 }

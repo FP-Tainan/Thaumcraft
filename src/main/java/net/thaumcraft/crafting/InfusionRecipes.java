@@ -132,6 +132,16 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.BEAST, 16).add(Aspects.LIFE, 16).add(Aspects.LIGHT, 8),
                 Ingredient.of(TCBlocks.ARCANE_LAMP.asItem()),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.WHEAT), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.CARROT), Ingredient.of(TCItems.SHARDS.get("fire")))));
+        // HoverHarness
+        ALL.add(new InfusionRecipe("HOVERHARNESS", new ItemStack(TCItems.HOVER_HARNESS), 6,
+                new AspectList().add(Aspects.FLIGHT, 32).add(Aspects.ENERGY, 32).add(Aspects.MECHANISM, 32).add(Aspects.TRAVEL, 16),
+                Ingredient.of(net.minecraft.world.item.Items.LEATHER_CHESTPLATE),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.COMPARATOR), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT))));
+        // HoverGirdle
+        ALL.add(new InfusionRecipe("HOVERGIRDLE", new ItemStack(TCItems.HOVER_GIRDLE), 8,
+                new AspectList().add(Aspects.FLIGHT, 16).add(Aspects.ENERGY, 32).add(Aspects.AIR, 32).add(Aspects.TRAVEL, 16),
+                Ingredient.of(TCItems.MUNDANE_BELT),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.FEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.FEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT))));
         // RunicAmulet
         ALL.add(new InfusionRecipe("RUNICARMOR", new ItemStack(TCItems.RUNIC_AMULET), 4,
                 new AspectList().add(Aspects.ARMOR, 20).add(Aspects.MAGIC, 35).add(Aspects.ENERGY, 35),

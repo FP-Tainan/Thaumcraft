@@ -704,3 +704,24 @@ A mesma auditoria achou, nas receitas geradas:
   da poção (`DefaultCustomIngredients.components`), então só a poção certa serve. As duas receitas do cinturão
   cinético do jar diferem só na meta da poção de arremesso, que aqui é a mesma: fica uma.
 - Os nomes das peças rúnicas e de vis foram traduzidos aqui; o pt_BR do original não os tinha.
+
+## Equipamentos, parte 6: arreio e cinturão taumostáticos (2026-09-18)
+
+- `item/HoverHarnessItem` — o `ItemHoverHarness`: couraça do `armorMatSpecial` com 400 de durabilidade, conserta com
+  ouro, 5% de desconto de vis no ar e 2% no resto. Com ele na mão, clicar abre a casa do jarro
+  (`inventory/HoverHarnessMenu` + `client/gui/HoverHarnessScreen`, a `guihoverharness.png`), que só aceita jarro com
+  Potentia; o jarro volta para o arreio ao fechar.
+- `event/Hover` + `client/HoverClient` — o `Hover`, o `PacketFlyToServer` e a tecla H (`key.thaumcraft.hover`): voa
+  como no criativo, a 70% da velocidade (91% com o cinturão), um ponto de Potentia a cada 360 tiques no ar (288 com o
+  cinturão); sem Potentia desliga sozinho, sem o arreio no peito também. Sons `hhon`, `hhoff` e o zumbido `jacobs`.
+  Pairando, quebra blocos no ar sem o castigo de 5× (`mixin/PlayerHoverMixin`, o `breakSpeedEvent`).
+- **Diferença:** a conta dos tiques até gastar o próximo ponto fica no servidor, e não no arreio (no original ela
+  ia no próprio item, o que no 26.2 mandaria o peito do jogador pela rede a cada tique).
+- `client/render/HoverHarnessRenderer` — o `ModelHoverHarness`: a caixa do tronco com a `hoverharness.png`, o
+  `hoverharness.obj` das costas com a `hoverharness2.png` sem sombreamento (`UnlitCutout`, o `glDisable(GL_LIGHTING)`)
+  e, pairando, os dois anéis de raio (`lightningring.png`, 16 quadros) e as faíscas até os blocos em volta (raio de
+  tipo 6: agora o `LightningBolt` tem os tipos 5 e 6, que misturam como vidro).
+- O mostrador à esquerda (`renderHoverHUD`): o tubo com a Potentia do jarro, o ícone do arreio e o brilho girando.
+- `item/HoverGirdleItem` — o `ItemGirdleHover`: vai no cinto, tira um terço de bloco da queda por tique.
+- Os dois entram na etiqueta `runic_armor` e as receitas de infusão saem do gerador.
+- A tecla era um texto fixo no original; o nome do cinturão e a frase do voo interrompido foram traduzidos aqui.

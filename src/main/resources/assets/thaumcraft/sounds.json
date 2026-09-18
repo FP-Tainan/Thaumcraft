@@ -84,6 +84,12 @@
       "thaumcraft:infuserstart"
     ]
   },
+  "jacobs": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:jacobs"
+    ]
+  },
   "jar": {
     "category": "player",
     "sounds": [

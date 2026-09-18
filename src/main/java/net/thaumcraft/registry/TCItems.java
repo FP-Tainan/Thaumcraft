@@ -157,6 +157,15 @@ public final class TCItems {
     public static final Item ROBE_LEGGINGS = robe("robe_leggings", net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
     public static final Item ROBE_BOOTS = robe("robe_boots", net.minecraft.world.item.equipment.ArmorType.BOOTS);
 
+    /** O arreio taumostático: voa com Potentia; 400 de durabilidade e conserta com ouro. */
+    public static final Item HOVER_HARNESS = register("hover_harness", properties ->
+            new net.thaumcraft.item.HoverHarnessItem(properties.humanoidArmor(net.thaumcraft.item.TCMaterials.HARNESS,
+                    net.minecraft.world.item.equipment.ArmorType.CHESTPLATE).durability(400).rarity(net.minecraft.world.item.Rarity.EPIC)));
+
+    /** O cinturão taumostático: amortece a queda e ajuda o arreio. */
+    public static final Item HOVER_GIRDLE = register("hover_girdle", properties ->
+            new net.thaumcraft.item.HoverGirdleItem(properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
+
     /** As botas do viajante: correm mais, sobem um bloco e amortecem a queda. */
     public static final Item TRAVELLER_BOOTS = register("traveller_boots", properties ->
             new net.thaumcraft.item.TravellerBootsItem(properties
@@ -515,8 +524,8 @@ public final class TCItems {
      * peças dela, depois a matéria-prima, o equipamento e por fim os blocos.
      */
     private static final String[] SHELF = {
-            "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "traveller_boots", "fortress_helmet", "fortress_chestplate", "fortress_leggings",
-            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal", "focus_pouch", "mundane_amulet", "mundane_ring", "mundane_belt", "apprentice_ring_air", "apprentice_ring_earth", "apprentice_ring_fire", "apprentice_ring_water", "apprentice_ring_order", "apprentice_ring_entropy", "vis_stone", "vis_amulet", "runic_amulet", "runic_amulet_emergency", "runic_ring_lesser", "runic_ring", "runic_ring_charged", "runic_ring_regen", "runic_girdle", "runic_girdle_kinetic",
+            "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "hover_harness", "traveller_boots", "fortress_helmet", "fortress_chestplate", "fortress_leggings",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal", "focus_pouch", "mundane_amulet", "mundane_ring", "mundane_belt", "apprentice_ring_air", "apprentice_ring_earth", "apprentice_ring_fire", "apprentice_ring_water", "apprentice_ring_order", "apprentice_ring_entropy", "vis_stone", "vis_amulet", "runic_amulet", "runic_amulet_emergency", "runic_ring_lesser", "runic_ring", "runic_ring_charged", "runic_ring_regen", "runic_girdle", "runic_girdle_kinetic", "hover_girdle",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
             "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",
