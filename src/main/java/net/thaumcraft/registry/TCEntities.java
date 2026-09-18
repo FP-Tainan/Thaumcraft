@@ -11,9 +11,16 @@ import net.thaumcraft.entity.FrostShardEntity;
 
 /** As criaturas e projéteis do mod. */
 public final class TCEntities {
-    /** A lasca de gelo do foco de gelo. */
+    /** A esfera de gelo do foco de gelo, do tamanho que o dano três dá a ela no original. */
     public static final EntityType<FrostShardEntity> FROST_SHARD = register("frost_shard",
             EntityType.Builder.<FrostShardEntity>of(FrostShardEntity::new, MobCategory.MISC)
+                    .sized(0.6f, 0.6f)
+                    .clientTrackingRange(4)
+                    .updateInterval(10));
+
+    /** A brasa do foco de fogo. */
+    public static final EntityType<net.thaumcraft.entity.EmberEntity> EMBER = register("ember",
+            EntityType.Builder.<net.thaumcraft.entity.EmberEntity>of(net.thaumcraft.entity.EmberEntity::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f)
                     .clientTrackingRange(4)
                     .updateInterval(10));

@@ -213,20 +213,30 @@ public class WandItem extends Item {
 
     @Override
     public void onUseTick(Level level, net.minecraft.world.entity.LivingEntity entity, ItemStack stack, int remaining) {
-        if (level.isClientSide() || !(entity instanceof Player player)) return;
+        if (!(entity instanceof Player player)) return;
         // primeiro o nó na mira, depois o foco — a ordem do onUsingTick do original
         NodeBlockEntity node = nodeInSight(level, player);
         if (node != null) {
+            if (level.isClientSide()) return;
             // a cada cinco tiques a varinha dá mais um gole no nó, como no original
             if (remaining % 5 == 0) drain(stack, node, level);
             return;
         }
         FocusItem focus = net.thaumcraft.item.Focuses.on(stack);
         if (focus != null) {
+            // dos dois lados, como o onUsingFocusTick do original: o servidor age, quem vê desenha
             if (!net.thaumcraft.item.Focuses.tick(level, player, stack, focus)) player.stopUsingItem();
             return;
         }
-        player.stopUsingItem();
+        if (!level.isClientSide()) player.stopUsingItem();
+    }
+
+    @Override
+    public boolean releaseUsing(ItemStack stack, Level level, net.minecraft.world.entity.LivingEntity entity,
+                                int remaining) {
+        // soltou o botão: a escavação esquece o bloco que estava roendo
+        if (entity instanceof Player player) net.thaumcraft.item.Focuses.stop(player);
+        return false;
     }
 
     /**

@@ -1,38 +1,68 @@
 package net.thaumcraft.item;
 
-import net.minecraft.core.particles.ParticleTypes;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.thaumcraft.entity.EmberEntity;
+import net.thaumcraft.entity.FrostShardEntity;
 import net.thaumcraft.registry.TCComponents;
 import net.thaumcraft.registry.TCItems;
+import net.thaumcraft.registry.TCSounds;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
- * O que cada foco faz quando a varinha aponta.
+ * O que cada foco faz quando a varinha aponta: os {@code ItemFocusFire}, {@code ItemFocusFrost},
+ * {@code ItemFocusShock} e {@code ItemFocusExcavation} da 4.2.3.5, descompilados, sem as melhorias.
  *
- * <p>Por ora são quatro. O de fogo é um jato de chamas contínuo: enquanto o botão está apertado, a varinha
- * cobra dez centésimos de ignis por tique e cospe fogo pela frente, incendiando o que alcança. O de
- * escavação quebra o bloco na mira a doze blocos de distância, cobrando quinze centésimos de terra por
- * bloco. O de gelo é tiro único: atira uma lasca que machuca e congela onde bate. O do raio é o mais caro
- * de todos — aer 25 por tique — e fulmina a criatura na mira a vinte blocos. Todos os custos são os do
- * original.
+ * <ul>
+ * <li>fogo: enquanto o botão está apertado, cobra ignis 10 (centésimos) por tique e solta duas brasas, que
+ * voam espalhadas, queimam dois de vida de quem acertam e deixam a criatura em chamas por três segundos. Sem a
+ * melhoria do fogo alquímico elas não acendem bloco nenhum;</li>
+ * <li>gelo: tiro único — aqua 5, ignis 2 e perditio 2 — de uma esfera de gelo que machuca três e quica até
+ * três vezes antes de se partir;</li>
+ * <li>raio: aer 25 por tique; do lado de quem vê, um raio da mão até a mira, e do servidor, quatro de dano por
+ * tique na criatura apontada a até vinte blocos;</li>
+ * <li>escavação: o feixe rói o bloco na mira aos poucos, cinco centésimos da dureza por tique — vinte e cinco
+ * em pedra, terra e areia, e o triplo disso em obsidiana — e só cobra terra 15 quando o bloco cai.</li>
+ * </ul>
  */
 public final class Focuses {
-    /** Até onde o jato de fogo chega. */
-    private static final double FIRE_REACH = 6.0;
-    /** Até onde a escavação alcança, bem além do braço. */
-    private static final double DIG_REACH = 12.0;
-    /** Até onde o raio alcança: os vinte blocos do original. */
-    private static final double SHOCK_REACH = 20.0;
-    /** O que o raio tira de vida por tique, o mesmo {@code 4.0F} do original sem potência. */
+    /** Os efeitos do lado de quem vê, que o cliente pendura aqui ao abrir. */
+    public interface ClientEffects {
+        void tick(Level level, Player player, ItemStack wand, FocusItem focus);
+    }
+
+    public static ClientEffects clientEffects = (level, player, wand, focus) -> {
+    };
+
+    /** O alcance do {@code BlockUtils.getTargetBlock} do original. */
+    private static final double TARGET_REACH = 10.0;
+    /** O dano do raio sem potência, por tique. */
     private static final float SHOCK_DAMAGE = 4.0f;
+
+    private static final Map<UUID, Dig> DIGS = new HashMap<>();
+    private static final Map<UUID, Long> FIRE_SOUND = new HashMap<>();
+    private static final Map<UUID, Long> RUMBLE_SOUND = new HashMap<>();
 
     private Focuses() {
     }
@@ -51,138 +81,180 @@ public final class Focuses {
     }
 
     /**
-     * Um tique de foco em uso.
+     * Um tique de foco em uso, dos dois lados.
      *
      * @return se a varinha deu conta de pagar e o foco agiu
      */
     public static boolean tick(Level level, Player player, ItemStack wand, FocusItem focus) {
-        if (!WandItem.consumeRaw(wand, focus.cost(), true)) return false;
-        if (focus.type().equals("fire")) {
-            breatheFire(level, player);
+        // o original sempre confere antes, sem gastar; quem gasta é cada foco, na hora dele
+        if (!WandItem.consumeRaw(wand, focus.cost(), false)) return false;
+        if (level.isClientSide()) {
+            clientEffects.tick(level, player, wand, focus);
             return true;
         }
-        if (focus.type().equals("excavation")) {
-            return excavate(level, player);
-        }
-        if (focus.type().equals("frost")) {
-            shootFrost(level, player);
-            return true;
-        }
-        if (focus.type().equals("shock")) {
-            shock(level, player);
-            return true;
-        }
-        return false;
+        return switch (focus.type()) {
+            case "fire" -> breatheFire(level, player, wand, focus);
+            case "excavation" -> excavate(level, player, wand, focus);
+            case "frost" -> shootFrost(level, player, wand, focus);
+            case "shock" -> shock(level, player, wand, focus);
+            default -> false;
+        };
     }
 
-    /** O gelo: uma lasca sai da ponta da varinha e voa até acertar alguma coisa. */
-    private static void shootFrost(Level level, Player player) {
-        if (!(level instanceof ServerLevel server)) return;
-        var shard = new net.thaumcraft.entity.FrostShardEntity(level, player);
-        shard.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 1.6f, 0.4f);
-        server.addFreshEntity(shard);
-        level.playSound(null, player.blockPosition(), net.thaumcraft.registry.TCSounds.ICE.value(),
-                SoundSource.PLAYERS, 0.4f, 1.0f + level.getRandom().nextFloat() * 0.1f);
+    /** Quando o botão solta, a escavação esquece o bloco que estava roendo. */
+    public static void stop(Player player) {
+        DIGS.remove(player.getUUID());
     }
 
-    /**
-     * O raio: enquanto o botão está apertado, o que estiver na mira leva choque.
-     *
-     * <p>O original mira em criatura a vinte blocos e tira quatro de vida por tique, cobrando aer 25 cada
-     * vez. Aqui é igual; o que muda é o desenho do raio, que no original é uma linha traçada à mão e aqui
-     * é um rastro de faíscas.
-     */
-    private static void shock(Level level, Player player) {
-        if (!(level instanceof ServerLevel server)) return;
+    // ----------------------------------------------------------------- mira
+
+    /** O {@code BlockUtils.getTargetBlock}: o bloco na mira a até dez blocos, sem pegar líquido. */
+    public static HitResult targetBlock(Level level, Player player) {
         Vec3 eyes = player.getEyePosition();
-        Vec3 aim = player.getViewVector(1.0f);
-
-        // até onde o raio chega: a primeira criatura na mira, ou a primeira parede
-        Vec3 far = eyes.add(aim.scale(SHOCK_REACH));
-        var wall = player.pick(SHOCK_REACH, 1.0f, false);
-        if (wall.getType() != net.minecraft.world.phys.HitResult.Type.MISS) far = wall.getLocation();
-
-        Entity struck = null;
-        double nearest = Double.MAX_VALUE;
-        AABB box = new AABB(eyes, far).inflate(1.0);
-        for (Entity target : level.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class,
-                box, entity -> entity != player)) {
-            Vec3 toTarget = target.position().add(0.0, target.getBbHeight() / 2.0, 0.0).subtract(eyes);
-            double away = toTarget.length();
-            if (away > SHOCK_REACH || away >= nearest) continue;
-            if (toTarget.normalize().dot(aim) < 0.97) continue;
-            struck = target;
-            nearest = away;
-        }
-        if (struck != null) far = struck.position().add(0.0, struck.getBbHeight() / 2.0, 0.0);
-
-        // o rastro de faíscas, do punho até onde o raio para
-        Vec3 from = eyes.add(aim.scale(0.6));
-        int steps = Math.max(2, (int) from.distanceTo(far) * 3);
-        for (int step = 0; step <= steps; step++) {
-            Vec3 at = from.lerp(far, step / (double) steps);
-            server.sendParticles(ParticleTypes.ELECTRIC_SPARK, at.x, at.y, at.z, 1, 0.06, 0.06, 0.06, 0.0);
-        }
-        if (struck != null) {
-            struck.hurt(level.damageSources().playerAttack(player), SHOCK_DAMAGE);
-            server.sendParticles(ParticleTypes.ELECTRIC_SPARK, far.x, far.y, far.z, 8, 0.3, 0.3, 0.3, 0.1);
-        }
-        if (level.getGameTime() % 4 == 0) {
-            level.playSound(null, player.blockPosition(), net.thaumcraft.registry.TCSounds.SHOCK.value(),
-                    SoundSource.PLAYERS, 0.35f, 1.0f);
-        }
+        Vec3 far = eyes.add(player.getViewVector(1.0f).scale(TARGET_REACH));
+        return level.clip(new ClipContext(eyes, far, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
     }
 
-    /**
-     * A escavação: quebra o bloco na mira, mais longe do que o braço alcança.
-     *
-     * <p>No original o foco vai roendo o bloco como se fosse uma picareta, e quebra quando termina; aqui
-     * ele quebra de uma vez, a cada meio segundo, cobrando o mesmo que o original cobra por bloco.
-     */
-    private static boolean excavate(Level level, Player player) {
-        if (level.getGameTime() % 10 != 0) return true;
-        var hit = player.pick(DIG_REACH, 1.0f, false);
-        if (!(hit instanceof net.minecraft.world.phys.BlockHitResult block)) return true;
-        var pos = block.getBlockPos();
-        var state = level.getBlockState(pos);
-        if (state.isAir()) return true;
-        // o que não se quebra na mão também não se quebra daqui
-        if (state.getDestroySpeed(level, pos) < 0.0f) return true;
+    /** O {@code EntityUtils.getPointedEntity}: a primeira criatura na mira, com a caixa folgada em 1,1. */
+    public static Entity pointedEntity(Level level, Player player, double range) {
+        Vec3 eyes = player.getEyePosition();
+        Vec3 look = player.getViewVector(1.0f);
+        Vec3 far = eyes.add(look.scale(range));
+        HitResult wall = level.clip(new ClipContext(eyes, far, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,
+                player));
+        if (wall.getType() != HitResult.Type.MISS) far = wall.getLocation();
+        AABB box = player.getBoundingBox().expandTowards(look.scale(range)).inflate(1.0);
+        EntityHitResult hit = ProjectileUtil.getEntityHitResult(player, eyes, far, box,
+                entity -> !entity.isSpectator() && entity.isPickable(), eyes.distanceToSqr(far));
+        return hit == null ? null : hit.getEntity();
+    }
 
-        if (level instanceof ServerLevel server) {
-            server.destroyBlock(pos, true, player);
-            server.sendParticles(ParticleTypes.ENCHANT,
-                    pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 12, 0.4, 0.4, 0.4, 0.4);
+    // ----------------------------------------------------------------- fogo
+
+    private static boolean breatheFire(Level level, Player player, ItemStack wand, FocusItem focus) {
+        long now = System.currentTimeMillis();
+        if (FIRE_SOUND.getOrDefault(player.getUUID(), 0L) < now) {
+            level.playSound(null, player, TCSounds.FIRELOOP.value(), SoundSource.PLAYERS, 0.33f, 2.0f);
+            FIRE_SOUND.put(player.getUUID(), now + 500L);
         }
-        level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 0.5f, 1.4f);
+        if (!WandItem.consumeRaw(wand, focus.cost(), true)) return false;
+        for (int a = 0; a < 2; a++) {
+            EmberEntity ember = new EmberEntity(level, player, 15.0f);
+            ember.setPos(ember.position().add(ember.getDeltaMovement()));
+            level.addFreshEntity(ember);
+        }
         return true;
     }
 
-    /** O jato de chamas: o que estiver na frente pega fogo. */
-    private static void breatheFire(Level level, Player player) {
-        Vec3 eyes = player.getEyePosition();
-        Vec3 aim = player.getViewVector(1.0f);
-        for (int step = 1; step <= FIRE_REACH; step++) {
-            Vec3 at = eyes.add(aim.scale(step));
-            if (level instanceof ServerLevel server) {
-                server.sendParticles(ParticleTypes.FLAME, at.x, at.y, at.z, 3, 0.15, 0.15, 0.15, 0.02);
-                server.sendParticles(ParticleTypes.SMALL_FLAME, at.x, at.y, at.z, 2, 0.2, 0.2, 0.2, 0.01);
+    // ----------------------------------------------------------------- gelo
+
+    private static boolean shootFrost(Level level, Player player, ItemStack wand, FocusItem focus) {
+        if (!WandItem.consumeRaw(wand, focus.cost(), true)) return false;
+        FrostShardEntity shard = new FrostShardEntity(level, player, 1.0f);
+        shard.setDamage(3.0f);
+        level.addFreshEntity(shard);
+        level.playSound(null, shard, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.4f,
+                1.0f + level.getRandom().nextFloat() * 0.1f);
+        return true;
+    }
+
+    // ----------------------------------------------------------------- raio
+
+    private static boolean shock(Level level, Player player, ItemStack wand, FocusItem focus) {
+        if (!WandItem.consumeRaw(wand, focus.cost(), true)) return false;
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), TCSounds.SHOCK.value(),
+                SoundSource.PLAYERS, 0.25f, 1.0f);
+        Entity pointed = pointedEntity(level, player, 20.0);
+        boolean pvp = !(pointed instanceof Player) || (level instanceof ServerLevel server && server.isPvpAllowed());
+        if (pointed instanceof LivingEntity && pvp) {
+            pointed.hurt(level.damageSources().playerAttack(player), SHOCK_DAMAGE);
+        }
+        return true;
+    }
+
+    // ----------------------------------------------------------------- escavação
+
+    private static boolean excavate(Level level, Player player, ItemStack wand, FocusItem focus) {
+        HitResult mop = targetBlock(level, player);
+        long now = System.currentTimeMillis();
+        if (mop.getType() != HitResult.Type.MISS) {
+            if (RUMBLE_SOUND.getOrDefault(player.getUUID(), 0L) < now) {
+                Vec3 at = mop.getLocation();
+                level.playSound(null, at.x, at.y, at.z, TCSounds.RUMBLE.value(), SoundSource.PLAYERS, 0.3f, 1.0f);
+                RUMBLE_SOUND.put(player.getUUID(), now + 1200L);
             }
-            if (!level.getBlockState(net.minecraft.core.BlockPos.containing(at)).isAir()) break;
+        } else {
+            RUMBLE_SOUND.put(player.getUUID(), 0L);
         }
 
-        AABB box = new AABB(eyes, eyes.add(aim.scale(FIRE_REACH))).inflate(1.0);
-        for (Entity target : level.getEntitiesOfClass(Entity.class, box, entity -> entity != player)) {
-            // só o que estiver mesmo na frente, e não tudo dentro da caixa
-            Vec3 toTarget = target.position().add(0.0, target.getBbHeight() / 2.0, 0.0).subtract(eyes);
-            if (toTarget.length() > FIRE_REACH) continue;
-            if (toTarget.normalize().dot(aim) < 0.94) continue;
-            target.igniteForSeconds(4.0f);
-            target.hurt(level.damageSources().onFire(), 1.0f);
+        BlockHitResult block = mop instanceof BlockHitResult b && b.getType() == HitResult.Type.BLOCK
+                && level.mayInteract(player, b.getBlockPos()) ? b : null;
+        Dig dig = DIGS.computeIfAbsent(player.getUUID(), id -> new Dig());
+        Dig.Step step = dig.advance(level, block, false);
+        if (step.breakNow() && WandItem.consumeRaw(wand, focus.cost(), true)) {
+            breakBlock((ServerLevel) level, player, step.pos());
+            dig.reset();
         }
-        if (level.getGameTime() % 4 == 0) {
-            level.playSound(null, player.blockPosition(), SoundEvents.FIRECHARGE_USE,
-                    SoundSource.PLAYERS, 0.4f, 1.6f);
+        return true;
+    }
+
+    /** O {@code excavate} do original: quebra com o que o bloco daria, e a experiência dele. */
+    private static void breakBlock(ServerLevel level, Player player, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        var entity = level.getBlockEntity(pos);
+        if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, state, entity)) return;
+        state.spawnAfterBreak(level, pos, ItemStack.EMPTY, true);
+        level.destroyBlock(pos, true, player);
+        PlayerBlockBreakEvents.AFTER.invoker().afterBlockBreak(level, player, pos, state, entity);
+    }
+
+    /**
+     * O quanto o feixe já roeu do bloco da mira. Os dois lados levam a mesma conta: o servidor para saber
+     * quando quebrar, e quem vê para desenhar a rachadura.
+     */
+    public static final class Dig {
+        public BlockPos pos;
+        private float count;
+
+        /**
+         * @param pos      o bloco sendo roído
+         * @param progress o quadro da rachadura, de zero a nove, ou −1 sem rachadura
+         * @param breakNow se o bloco já foi roído inteiro
+         */
+        public record Step(BlockPos pos, int progress, boolean breakNow) {
+        }
+
+        public void reset() {
+            this.pos = null;
+            this.count = 0.0f;
+        }
+
+        public Step advance(Level level, BlockHitResult hit, boolean client) {
+            if (hit == null || hit.getType() != HitResult.Type.BLOCK) {
+                this.reset();
+                return new Step(null, -1, false);
+            }
+            BlockPos at = hit.getBlockPos();
+            BlockState state = level.getBlockState(at);
+            float hardness = state.getDestroySpeed(level, at);
+            if (hardness < 0.0f) return new Step(null, -1, false);
+            float speed = 0.05f;
+            if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) || state.is(BlockTags.MINEABLE_WITH_SHOVEL)) speed = 0.25f;
+            if (state.is(Blocks.OBSIDIAN)) speed *= 3.0f;
+
+            if (!at.equals(this.pos)) {
+                this.pos = at;
+                this.count = 0.0f;
+                return new Step(at, -1, false);
+            }
+            float bc = this.count;
+            int progress = client && bc > 0.0f && !state.isAir() ? (int) (bc / hardness * 9.0f) : -1;
+            if (bc >= hardness) {
+                if (client) this.count = 0.0f;
+                return new Step(at, progress, !client);
+            }
+            this.count = bc + speed;
+            return new Step(at, progress, false);
         }
     }
 }

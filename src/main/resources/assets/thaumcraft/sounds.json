@@ -40,6 +40,12 @@
       "thaumcraft:crystal"
     ]
   },
+  "fireloop": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:fireloop"
+    ]
+  },
   "ice": {
     "category": "player",
     "sounds": [
@@ -68,6 +74,12 @@
     "sounds": [
       "thaumcraft:page1",
       "thaumcraft:page2"
+    ]
+  },
+  "rumble": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:rumble"
     ]
   },
   "shock": {

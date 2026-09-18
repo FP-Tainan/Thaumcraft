@@ -50,6 +50,10 @@ public final class TCSounds {
     public static final Holder<SoundEvent> TOOL = register("tool");
     /** A valvula do cano abrindo e fechando. */
     public static final Holder<SoundEvent> SQUEEK = register("squeek");
+    /** O jato de brasas do foco de fogo. */
+    public static final Holder<SoundEvent> FIRELOOP = register("fireloop");
+    /** O feixe da escavacao roendo a pedra. */
+    public static final Holder<SoundEvent> RUMBLE = register("rumble");
 
     private TCSounds() {
     }

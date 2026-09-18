@@ -12,10 +12,14 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o thaumômetro é peça de três dimensões, como no original: entra na lista do jogo junto do baú
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("scanner"), ScannerRenderer.Unbaked.CODEC);
 
-        // a lasca de gelo se desenha como o item dela, igual a uma bola de neve
+        // a esfera de gelo e a brasa, com os desenhistas do original
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
-                net.thaumcraft.registry.TCEntities.FROST_SHARD,
-                net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+                net.thaumcraft.registry.TCEntities.FROST_SHARD, net.thaumcraft.client.render.FrostShardRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.EMBER, net.thaumcraft.client.render.EmberRenderer::new);
+        // os raios, fachos e faíscas dos focos
+        net.thaumcraft.client.fx.ThaumFx.init();
+        net.thaumcraft.client.fx.FocusEffects.init();
 
         // o golem, com a pele da matéria de que ele é feito
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(

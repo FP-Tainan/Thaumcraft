@@ -1,0 +1,47 @@
+package net.thaumcraft.entity;
+
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.phys.Vec3;
+
+/**
+ * O arremesso do {@code EntityThrowable} do 1.7.10, que é de onde as brasas e as esferas de gelo do mod saem.
+ *
+ * <p>O projétil nasce no olho de quem lança, dezesseis centésimos para o lado e um décimo abaixo, e parte na
+ * direção da mira. O espalhamento é o do jogo antigo: um sorteio de sino vezes 0,0075 vezes o espalhamento
+ * pedido, em cada eixo — o jogo novo espalha mais que o dobro disso para o mesmo número.
+ */
+final class Throw {
+    private Throw() {
+    }
+
+    static void from(Projectile projectile, LivingEntity thrower, float velocity, float inaccuracy) {
+        float yaw = thrower.getYRot(), pitch = thrower.getXRot();
+        double x = thrower.getX() - Mth.cos(yaw / 180.0f * (float) Math.PI) * 0.16f;
+        double y = thrower.getEyeY() - 0.1;
+        double z = thrower.getZ() - Mth.sin(yaw / 180.0f * (float) Math.PI) * 0.16f;
+        projectile.snapTo(x, y, z, yaw, pitch);
+
+        float f = 0.4f;
+        double mx = -Mth.sin(yaw / 180.0f * (float) Math.PI) * Mth.cos(pitch / 180.0f * (float) Math.PI) * f;
+        double mz = Mth.cos(yaw / 180.0f * (float) Math.PI) * Mth.cos(pitch / 180.0f * (float) Math.PI) * f;
+        double my = -Mth.sin(pitch / 180.0f * (float) Math.PI) * f;
+        // o construtor do EntityThrowable já mira com espalhamento um, e o da brasa mira de novo por cima
+        Vec3 first = heading(projectile.getRandom(), mx, my, mz, 1.5f, 1.0f);
+        projectile.setDeltaMovement(heading(projectile.getRandom(), first.x, first.y, first.z, velocity, inaccuracy));
+    }
+
+    /** O {@code setThrowableHeading} do 1.7.10. */
+    private static Vec3 heading(RandomSource random, double x, double y, double z, float velocity, float inaccuracy) {
+        double length = Math.sqrt(x * x + y * y + z * z);
+        x /= length;
+        y /= length;
+        z /= length;
+        x += random.nextGaussian() * (random.nextBoolean() ? -1 : 1) * 0.0075 * inaccuracy;
+        y += random.nextGaussian() * (random.nextBoolean() ? -1 : 1) * 0.0075 * inaccuracy;
+        z += random.nextGaussian() * (random.nextBoolean() ? -1 : 1) * 0.0075 * inaccuracy;
+        return new Vec3(x * velocity, y * velocity, z * velocity);
+    }
+}
