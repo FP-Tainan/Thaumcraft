@@ -16,6 +16,7 @@
       "net.thaumcraft.test.InfusionGameTest",
       "net.thaumcraft.test.JarDropGameTest",
       "net.thaumcraft.test.MagicalTreeGameTest",
+      "net.thaumcraft.test.ModAspectsGameTest",
       "net.thaumcraft.test.NodeGameTest",
       "net.thaumcraft.test.OreGameTest",
       "net.thaumcraft.test.PortableHoleGameTest",

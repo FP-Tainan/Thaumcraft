@@ -34,6 +34,14 @@ public final class ObjectAspects {
         return found == null ? new AspectList() : found.copy();
     }
 
+    /**
+     * As coisas do próprio mod, que só existem depois que os itens foram registrados. Vale a primeira
+     * anotação de cada uma, como na tabela do jogo.
+     */
+    public static void initMod() {
+        ModObjectAspects.register(TABLE::putIfAbsent);
+    }
+
     public static int size() {
         return TABLE.size();
     }
