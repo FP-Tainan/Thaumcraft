@@ -64,6 +64,14 @@ public final class TCBlocks {
                     .noOcclusion()
                     .sound(SoundType.METAL)));
 
+    /** A válvula: o mesmo cano, com um manípulo que se abre e fecha. */
+    public static final Block TUBE_VALVE = register("tube_valve", properties ->
+            new net.thaumcraft.block.TubeValveBlock(properties
+                    .mapColor(MapColor.METAL)
+                    .strength(0.5f)
+                    .noOcclusion()
+                    .sound(SoundType.METAL)));
+
     /** O alambique arcano: o pote que se empilha sobre o forno e recolhe o que sai dele. */
     public static final Block ALEMBIC = register("alembic", properties ->
             new net.thaumcraft.block.AlembicBlock(properties

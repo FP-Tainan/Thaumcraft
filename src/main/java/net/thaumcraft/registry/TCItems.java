@@ -172,6 +172,10 @@ public final class TCItems {
     public static final Item TUBE = register("tube", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.TUBE, properties));
 
+    /** A válvula do cano. */
+    public static final Item TUBE_VALVE = register("tube_valve", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.TUBE_VALVE, properties));
+
     /** O alambique, para levar na mão. */
     public static final Item ALEMBIC = register("alembic", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ALEMBIC, properties));
@@ -304,7 +308,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "tube",
+            "crucible", "arcane_workbench", "alchemical_furnace", "alembic", "jar", "tube", "tube_valve",
             "infusion_matrix", "pedestal",
             "shimmerleaf", "ethereal_bloom", "taint_crust", "taint_soil", "taint_fibres",
             "golem_bell",

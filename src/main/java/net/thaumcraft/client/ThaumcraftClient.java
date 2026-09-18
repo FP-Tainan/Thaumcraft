@@ -36,6 +36,10 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o tubo mostra a essência correndo por dentro dele
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.TUBE, net.thaumcraft.client.render.TubeRenderer::new);
+        // e a valvula, cujo manipulo gira e rosqueia conforme abre e fecha
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.TUBE_VALVE,
+                net.thaumcraft.client.render.TubeValveRenderer::new);
         // e o alambique, que é de metal fechado, só se lê com os Óculos da Revelação
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.ALEMBIC,

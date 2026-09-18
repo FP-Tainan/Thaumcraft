@@ -31,6 +31,11 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.TubeBlockEntity::new,
                             java.util.Set.of(TCBlocks.TUBE)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.TubeValveBlockEntity> TUBE_VALVE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube_valve"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.TubeValveBlockEntity::new,
+                            java.util.Set.of(TCBlocks.TUBE_VALVE)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.AlembicBlockEntity> ALEMBIC =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("alembic"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.AlembicBlockEntity::new,

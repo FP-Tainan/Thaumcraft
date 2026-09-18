@@ -32,7 +32,8 @@ public class FidelityClientTest implements FabricClientGameTest {
             server.runCommand("execute at @p run setblock ~1 ~3 ~5 thaumcraft:alembic");
             server.runCommand("execute at @p run setblock ~1 ~4 ~5 thaumcraft:alembic");
             server.runCommand("execute at @p run setblock ~ ~1 ~5 thaumcraft:tube");
-            server.runCommand("execute at @p run setblock ~-1 ~1 ~5 thaumcraft:tube");
+            // uma valvula no meio do encanamento, com o manipulo para cima
+            server.runCommand("execute at @p run setblock ~-1 ~1 ~5 thaumcraft:tube_valve[facing=up]");
             server.runCommand("execute at @p run setblock ~ ~ ~5 thaumcraft:jar");
             server.runCommand("execute at @p run setblock ~-1 ~ ~5 thaumcraft:jar");
             context.waitTicks(30);

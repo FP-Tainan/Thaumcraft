@@ -174,17 +174,34 @@ public class TubeBlockEntity extends BlockEntity implements EssentiaTransport {
         }
     }
 
-    /** A fumaça de quem está vazando, na cor do aspecto que ele queria. */
+    /**
+     * O vapor de quem está sangrando, na cor do aspecto que ele queria.
+     *
+     * <p>Não é fumacinha boiando: o tubo está sob pressão e <strong>atira</strong>. O original sorteia uma
+     * direção qualquer da esfera, põe o baforada meio bloco para lá do centro e a manda embora naquele
+     * rumo. Dá o jato entrecortado de registro arrebentado, que é o ponto — é para dar na vista de longe
+     * que aquele cano está errado.
+     */
     private void puff(Level level, BlockPos pos) {
-        int colour = this.suctionType != null ? this.suctionType.color() : 0x888888;
+        int colour = this.suctionType != null ? this.suctionType.color()
+                : this.essentia != null ? this.essentia.color() : 0x888888;
         var random = level.getRandom();
-        level.addParticle(new net.minecraft.core.particles.DustParticleOptions(0xFF000000 | colour, 1.0f),
-                pos.getX() + 0.5 + (random.nextDouble() - random.nextDouble()) * 0.3,
-                pos.getY() + 0.5 + (random.nextDouble() - random.nextDouble()) * 0.3,
-                pos.getZ() + 0.5 + (random.nextDouble() - random.nextDouble()) * 0.3,
-                (random.nextDouble() - random.nextDouble()) * 0.1,
-                random.nextDouble() * 0.1,
-                (random.nextDouble() - random.nextDouble()) * 0.1);
+        // um jato por tique, como no original: dois enchem a tela de bolha
+        {
+            // uma direção qualquer da esfera, tirada por sorteio como no original
+            double up = random.nextDouble() * 2.0 - 1.0;
+            double around = random.nextDouble() * Math.PI * 2.0;
+            double ring = Math.sqrt(1.0 - up * up);
+            double dx = Math.cos(around) * ring;
+            double dz = Math.sin(around) * ring;
+            double speed = 0.12 + random.nextDouble() * 0.1;
+            level.addParticle(net.minecraft.core.particles.ColorParticleOption.create(
+                            net.minecraft.core.particles.ParticleTypes.ENTITY_EFFECT, 0x66000000 | colour),
+                    pos.getX() + 0.5 + dx * 0.4,
+                    pos.getY() + 0.5 + up * 0.4,
+                    pos.getZ() + 0.5 + dz * 0.4,
+                    dx * speed, up * speed, dz * speed);
+        }
     }
 
     /** O vizinho daquele lado, se for coisa de encanar e se aceitar este lado. */

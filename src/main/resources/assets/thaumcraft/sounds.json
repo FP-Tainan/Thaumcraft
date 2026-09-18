@@ -83,6 +83,13 @@
       "thaumcraft:spill"
     ]
   },
+  "tool": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:tool1",
+      "thaumcraft:tool2"
+    ]
+  },
   "wand": {
     "category": "player",
     "sounds": [

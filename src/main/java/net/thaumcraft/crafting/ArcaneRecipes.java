@@ -98,5 +98,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("TUBES", new ItemStack(TCBlocks.TUBE.asItem(), 8),
                 Arrays.asList(null, Ingredient.of(TCResources.get("quicksilver")), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // Válvula: o mesmo tubo com uma alavanca, sem forma nenhuma
+        ALL.add(ArcaneRecipe.loose("TUBES", new ItemStack(TCBlocks.TUBE_VALVE.asItem()),
+                Arrays.asList(Ingredient.of(TCBlocks.TUBE.asItem()),
+                        Ingredient.of(net.minecraft.world.level.block.Blocks.LEVER.asItem())),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
     }
 }

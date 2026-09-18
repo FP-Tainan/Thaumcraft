@@ -31,6 +31,13 @@ public final class WandTriggers {
         if (!(wand.getItem() instanceof WandItem)) return InteractionResult.PASS;
         BlockState state = level.getBlockState(pos);
 
+        // primeiro quem sabe responder por si: válvula, tubo, matriz. É o IWandable do original, e é o
+        // que faz da varinha a chave de fenda da taumaturgia
+        if (level.getBlockEntity(pos) instanceof net.thaumcraft.api.wands.Wandable wandable
+                && wandable.onWand(level, wand, player, pos, net.minecraft.core.Direction.UP)) {
+            return InteractionResult.SUCCESS;
+        }
+
         // a estante de livros vira o caderno de pesquisa
         if (state.is(Blocks.BOOKSHELF)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;

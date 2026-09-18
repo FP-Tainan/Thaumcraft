@@ -46,6 +46,8 @@ public final class TCSounds {
     public static final Holder<SoundEvent> CRYSTAL = register("crystal");
     /** O frasco de essencia. */
     public static final Holder<SoundEvent> JAR = register("jar");
+    /** A valvula do cano virando. */
+    public static final Holder<SoundEvent> TOOL = register("tool");
 
     private TCSounds() {
     }
