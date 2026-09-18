@@ -1,0 +1,215 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "thaumcraft:block/pipe_filter",
+    "caixa": "thaumcraft:block/pipe_filter",
+    "miolo": "thaumcraft:block/pipe_filter_core",
+    "corpo": "thaumcraft:block/pipe_1"
+  },
+  "elements": [
+    {
+      "from": [
+        7,
+        0,
+        7
+      ],
+      "to": [
+        9,
+        16,
+        9
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "south": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "west": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "east": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#corpo"
+        },
+        "up": {
+          "uv": [
+            7,
+            7,
+            9,
+            9
+          ],
+          "texture": "#corpo"
+        },
+        "down": {
+          "uv": [
+            7,
+            7,
+            9,
+            9
+          ],
+          "texture": "#corpo"
+        }
+      }
+    },
+    {
+      "from": [
+        5.5,
+        5.5,
+        5.5
+      ],
+      "to": [
+        10.5,
+        10.5,
+        10.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ],
+          "texture": "#caixa"
+        },
+        "south": {
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ],
+          "texture": "#caixa"
+        },
+        "west": {
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ],
+          "texture": "#caixa"
+        },
+        "east": {
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ],
+          "texture": "#caixa"
+        },
+        "up": {
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ],
+          "texture": "#caixa"
+        },
+        "down": {
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ],
+          "texture": "#caixa"
+        }
+      }
+    },
+    {
+      "from": [
+        5.49,
+        5.49,
+        5.49
+      ],
+      "to": [
+        10.51,
+        10.51,
+        10.51
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5.49,
+            5.49,
+            10.51,
+            10.51
+          ],
+          "texture": "#miolo"
+        },
+        "south": {
+          "uv": [
+            5.49,
+            5.49,
+            10.51,
+            10.51
+          ],
+          "texture": "#miolo"
+        },
+        "west": {
+          "uv": [
+            5.49,
+            5.49,
+            10.51,
+            10.51
+          ],
+          "texture": "#miolo"
+        },
+        "east": {
+          "uv": [
+            5.49,
+            5.49,
+            10.51,
+            10.51
+          ],
+          "texture": "#miolo"
+        },
+        "up": {
+          "uv": [
+            5.49,
+            5.49,
+            10.51,
+            10.51
+          ],
+          "texture": "#miolo"
+        },
+        "down": {
+          "uv": [
+            5.49,
+            5.49,
+            10.51,
+            10.51
+          ],
+          "texture": "#miolo"
+        }
+      }
+    }
+  ]
+}

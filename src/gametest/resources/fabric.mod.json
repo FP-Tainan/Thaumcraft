@@ -32,6 +32,7 @@
       "net.thaumcraft.test.SoundGameTest",
       "net.thaumcraft.test.TabGameTest",
       "net.thaumcraft.test.TaintGameTest",
+      "net.thaumcraft.test.TubeFilterGameTest",
       "net.thaumcraft.test.TubeValveGameTest",
       "net.thaumcraft.test.TubeVariantGameTest",
       "net.thaumcraft.test.WardingFocusGameTest",

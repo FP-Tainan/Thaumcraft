@@ -198,6 +198,10 @@ public final class ArcaneRecipes {
         ALL.add(ArcaneRecipe.loose("TUBES", new ItemStack(TCBlocks.TUBE_VALVE.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.LEVER.asItem())),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // TubeFilter
+        ALL.add(ArcaneRecipe.loose("TUBEFILTER", new ItemStack(TCBlocks.TUBE_FILTER.asItem()),
+                Arrays.asList(Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCResources.get("vis_filter"))),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 16)));
         // TubeRestrict
         ALL.add(ArcaneRecipe.loose("TUBEFILTER", new ItemStack(TCBlocks.TUBE_RESTRICT.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(net.minecraft.world.item.Items.STONE)),

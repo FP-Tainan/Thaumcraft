@@ -44,6 +44,17 @@ public final class AspectTooltip {
             }
         });
 
+        // o rótulo marcado diz o aspecto que leva, em roxo como o do jarro
+        ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> {
+            String marked = stack.get(net.thaumcraft.registry.TCComponents.LABEL_ASPECT);
+            Minecraft minecraft = Minecraft.getInstance();
+            if (marked == null || minecraft.player == null) return;
+            Aspect aspect = Aspect.of(marked);
+            if (aspect == null) return;
+            lines.add((Knowledges.of(minecraft.player).hasDiscovered(aspect) ? aspect.name().copy()
+                    : Component.translatable("tc.aspect.unknown")).withStyle(ChatFormatting.DARK_PURPLE));
+        });
+
         ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> {
             Minecraft minecraft = Minecraft.getInstance();
             if (minecraft.player == null) return;

@@ -521,3 +521,8 @@ A mesma auditoria achou, nas receitas geradas:
 - O **fole arcano**: `TileBellows` e `ModelBellows`; cada fole apontando para o forno alquímico corta um oitavo
   do tempo de fogo, e no forno comum empurra o cozimento (o campo do jogo é alcançado por reflexão, já que o
   26.x não é ofuscado). O forno queimando alumentum destila o dobro de vezes, como no original.
+- O **tubo filtro** (`TileTubeFilter`): com um rótulo marcado preso, só puxa aquele aspecto; agachado, o rótulo
+  sai. A caixa de latão é do modelo do bloco; o miolo, pintado da cor do aspecto, é do desenhista (a cor muda
+  com o rótulo). O **rótulo de jarro** ganhou a receita do original (corante preto, limo e quatro papéis) e a
+  marcação: rótulo + frasco cheio na mesa dá o rótulo marcado (o frasco volta vazio), e o marcado sozinho volta
+  a ser em branco — as `JarLabel0..47` e `JarLabelNull` do jar, feitas como uma receita especial.

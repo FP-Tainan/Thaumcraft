@@ -66,6 +66,10 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.TubeRestrictBlockEntity::new,
                             java.util.Set.of(TCBlocks.TUBE_RESTRICT)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.TubeFilterBlockEntity> TUBE_FILTER = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube_filter"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.TubeFilterBlockEntity::new, java.util.Set.of(TCBlocks.TUBE_FILTER)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.TubeOnewayBlockEntity> TUBE_ONEWAY =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("tube_oneway"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.TubeOnewayBlockEntity::new,

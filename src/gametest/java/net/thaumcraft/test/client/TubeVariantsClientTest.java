@@ -20,6 +20,11 @@ public class TubeVariantsClientTest implements FabricClientGameTest {
             singleplayer.getServer().runCommand("execute at @p run setblock ~ ~-1 ~3 thaumcraft:tube_buffer");
             singleplayer.getServer().runCommand("execute at @p run setblock ~1 ~-1 ~3 thaumcraft:tube_oneway");
             singleplayer.getServer().runCommand("execute at @p run setblock ~2 ~-1 ~3 thaumcraft:jar");
+            // e, na fileira de trás, o filtro com um rótulo de aqua (o miolo fica azul) e um sem rótulo (branco)
+            singleplayer.getServer().runCommand("execute at @p run setblock ~-1 ~-1 ~5 thaumcraft:tube_filter");
+            singleplayer.getServer().runCommand("execute at @p run setblock ~1 ~-1 ~5 thaumcraft:tube_filter");
+            singleplayer.getServer().runCommand("execute at @p run data merge block ~-1 ~-1 ~5 {AspectFilter:\"aqua\"}");
+            singleplayer.getServer().runCommand("give @p thaumcraft:tube_filter");
             singleplayer.getServer().runCommand("give @p thaumcraft:tube_restrict");
             singleplayer.getServer().runCommand("give @p thaumcraft:tube_oneway");
             singleplayer.getServer().runCommand("give @p thaumcraft:tube_buffer");

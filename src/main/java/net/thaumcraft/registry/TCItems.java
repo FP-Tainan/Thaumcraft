@@ -207,6 +207,9 @@ public final class TCItems {
     public static final Item TUBE_RESTRICT = register("tube_restrict", properties ->
             new net.thaumcraft.item.TubeItem(TCBlocks.TUBE_RESTRICT, properties));
 
+    public static final Item TUBE_FILTER = register("tube_filter", properties ->
+            new net.thaumcraft.item.TubeItem(TCBlocks.TUBE_FILTER, properties));
+
     public static final Item TUBE_ONEWAY = register("tube_oneway", properties ->
             new net.thaumcraft.item.TubeItem(TCBlocks.TUBE_ONEWAY, properties));
 
@@ -418,7 +421,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_oneway", "tube_buffer",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer",
             "infusion_matrix", "pedestal",
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",

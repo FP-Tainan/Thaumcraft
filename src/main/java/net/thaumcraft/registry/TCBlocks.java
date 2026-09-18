@@ -149,6 +149,11 @@ public final class TCBlocks {
             new net.thaumcraft.block.TubeRestrictBlock(properties
                     .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
 
+    /** O tubo filtro: com um rótulo marcado, só puxa o aspecto dele. */
+    public static final Block TUBE_FILTER = register("tube_filter", properties ->
+            new net.thaumcraft.block.TubeFilterBlock(properties
+                    .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
+
     /** O tubo de mão única: a essência só anda para onde ele aponta. */
     public static final Block TUBE_ONEWAY = register("tube_oneway", properties ->
             new net.thaumcraft.block.TubeOnewayBlock(properties

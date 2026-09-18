@@ -47,6 +47,7 @@ public class Thaumcraft implements ModInitializer {
         TCFeatures.init();
         TCMenus.init();
         TCNetwork.init();
+        net.thaumcraft.crafting.LabelMarkingRecipe.init();
         // a fila de trocas do foco de Troca Equivalente, e o golpe da varinha que troca um bloco só
         net.thaumcraft.item.Swapper.init();
         net.fabricmc.fabric.api.event.player.AttackBlockCallback.EVENT.register(net.thaumcraft.item.Focuses::tradeSwing);
