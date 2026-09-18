@@ -17,7 +17,7 @@ public class WandGameTest {
     /** As peças e os números delas vieram do original. */
     @GameTest
     public void partsCameFromTheOriginal(GameTestHelper helper) {
-        if (WandParts.CAPS.size() != 4) helper.fail("o original tem quatro pontas");
+        if (WandParts.CAPS.size() != 6) helper.fail("o original tem seis pontas, contando as de cobre e prata");
         if (WandParts.RODS.size() != 9) helper.fail("o original tem nove hastes de varinha");
         if (WandParts.STAFF_RODS.size() != 9) helper.fail("o original tem nove hastes de bastão");
 
@@ -28,6 +28,16 @@ public class WandGameTest {
         if (WandParts.cap("void").discount() != 0.8f) helper.fail("a de vazio cobra vinte por cento a menos");
         if (!WandParts.rod("blaze").glowing()) helper.fail("a haste de blaze acende");
         if (WandParts.rod("obsidian").primal() != Aspects.EARTH) helper.fail("a de obsidiana recolhe terra");
+        // as pontas de cobre e de prata cobram outro tanto de uns aspectos escolhidos
+        if (WandParts.cap("copper").discount(Aspects.ORDER) != 1.0f) helper.fail("a de cobre cobra o cheio em ordo");
+        if (WandParts.cap("copper").discount(Aspects.FIRE) != 1.1f) helper.fail("a de cobre cobra dez por cento a mais em ignis");
+        if (WandParts.cap("silver").discount(Aspects.WATER) != 0.95f) helper.fail("a de prata cobra menos em aqua");
+        if (WandParts.cap("silver").discount(Aspects.ORDER) != 1.0f) helper.fail("a de prata cobra o cheio em ordo");
+        // o núcleo de bastão atende pelo nome com o sufixo, como no original
+        if (WandParts.rod("greatwood_staff") == null || WandParts.rod("greatwood_staff").capacity() != 125) {
+            helper.fail("o núcleo de bastão de greatwood guarda cento e vinte e cinco");
+        }
+        if (!WandParts.rod("primal_staff").runes()) helper.fail("o bastão primordial tem runas");
         helper.succeed();
     }
 

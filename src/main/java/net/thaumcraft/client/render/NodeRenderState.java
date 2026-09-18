@@ -20,4 +20,12 @@ public class NodeRenderState extends BlockEntityRenderState {
     public float ticks;
     /** Um número fixo por nó, para que dois nós vizinhos não pisquem no mesmo compasso. */
     public int seed;
+
+    /** Uma varinha bebendo deste nó: de onde sai a linha, até onde já chegou, e a cor dela. */
+    public record Drain(net.minecraft.world.phys.Vec3 from, net.minecraft.world.phys.Vec3 to, float grow,
+                        int colour) {
+    }
+
+    /** As linhas das varinhas que estão bebendo daqui. */
+    public final List<Drain> drains = new ArrayList<>();
 }

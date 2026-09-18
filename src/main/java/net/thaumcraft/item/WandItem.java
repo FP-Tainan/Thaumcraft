@@ -109,10 +109,11 @@ public class WandItem extends Item {
      */
     public static boolean consumeRaw(ItemStack stack, AspectList cost, boolean reallyDoIt) {
         AspectList list = vis(stack);
-        float discount = cap(stack).discount();
+        WandParts.Cap cap = cap(stack);
         AspectList real = new AspectList();
         for (Aspect aspect : cost.getAspects()) {
-            int needed = Math.max(1, (int) (cost.getAmount(aspect) * discount));
+            // cada ponteira cobra o seu tanto, e as de cobre e prata cobram menos de uns aspectos
+            int needed = Math.max(1, (int) (cost.getAmount(aspect) * cap.discount(aspect)));
             if (list.getAmount(aspect) < needed) return false;
             real.add(aspect, needed);
         }
@@ -140,10 +141,10 @@ public class WandItem extends Item {
      */
     public static boolean consume(ItemStack stack, AspectList cost, boolean reallyDoIt) {
         AspectList list = vis(stack);
-        float discount = cap(stack).discount();
+        WandParts.Cap cap = cap(stack);
         AspectList real = new AspectList();
         for (Aspect aspect : cost.getAspects()) {
-            int needed = (int) (cost.getAmount(aspect) * VIS_UNIT * discount);
+            int needed = (int) (cost.getAmount(aspect) * VIS_UNIT * cap.discount(aspect));
             if (list.getAmount(aspect) < needed) return false;
             real.add(aspect, needed);
         }
@@ -158,7 +159,12 @@ public class WandItem extends Item {
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        // com foco preso, o botão aciona o foco; sem foco, a varinha bebe do nó na mira
+        // o nó na mira vem antes do foco, como no getObjectInUse do original: com um nó na frente a
+        // varinha bebe dele mesmo com foco preso; sem nó, o botão aciona o foco
+        if (nodeInSight(level, player) != null) {
+            player.startUsingItem(hand);
+            return InteractionResult.CONSUME;
+        }
         FocusItem held = net.thaumcraft.item.Focuses.on(stack);
         if (held != null) {
             if (!held.isContinuous()) {
@@ -170,10 +176,7 @@ public class WandItem extends Item {
             player.startUsingItem(hand);
             return InteractionResult.CONSUME;
         }
-        NodeBlockEntity node = nodeInSight(level, player);
-        if (node == null) return InteractionResult.PASS;
-        player.startUsingItem(hand);
-        return InteractionResult.CONSUME;
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -181,6 +184,19 @@ public class WandItem extends Item {
         // o que a varinha faz batendo num bloco: é assim que o original entrega as primeiras peças
         return WandTriggers.use(context.getLevel(), context.getPlayer(), context.getClickedPos(),
                 context.getItemInHand());
+    }
+
+    /**
+     * A varinha não abaixa na mão quando o vis dela muda.
+     *
+     * <p>Bebendo de um nó, o vis muda a cada cinco tiques; e o jogo, vendo a varinha com outros dados,
+     * tomava aquilo por troca de item e tocava a animação de abaixar e levantar o braço — a varinha
+     * sumia da mão justamente enquanto bebia. No original ela fica firme, apontada para o nó.
+     */
+    @Override
+    public boolean allowComponentsUpdateAnimation(Player player, InteractionHand hand, ItemStack oldStack,
+                                                  ItemStack newStack) {
+        return false;
     }
 
     @Override
@@ -197,19 +213,19 @@ public class WandItem extends Item {
     @Override
     public void onUseTick(Level level, net.minecraft.world.entity.LivingEntity entity, ItemStack stack, int remaining) {
         if (level.isClientSide() || !(entity instanceof Player player)) return;
+        // primeiro o nó na mira, depois o foco — a ordem do onUsingTick do original
+        NodeBlockEntity node = nodeInSight(level, player);
+        if (node != null) {
+            // a cada cinco tiques a varinha dá mais um gole no nó, como no original
+            if (remaining % 5 == 0) drain(stack, node, level);
+            return;
+        }
         FocusItem focus = net.thaumcraft.item.Focuses.on(stack);
         if (focus != null) {
             if (!net.thaumcraft.item.Focuses.tick(level, player, stack, focus)) player.stopUsingItem();
             return;
         }
-        // a cada cinco tiques a varinha dá mais um gole no nó, como no original
-        if (remaining % 5 != 0) return;
-        NodeBlockEntity node = nodeInSight(level, player);
-        if (node == null) {
-            player.stopUsingItem();
-            return;
-        }
-        drain(stack, node, level);
+        player.stopUsingItem();
     }
 
     /**
@@ -229,7 +245,7 @@ public class WandItem extends Item {
         addVis(stack, chosen, 1);
         level.playSound(null, node.getBlockPos(), net.thaumcraft.registry.TCSounds.WAND.value(),
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.3f, 1.2f + level.getRandom().nextFloat() * 0.3f);
-        drainTrail(level, node, chosen);
+        node.drained(chosen);
     }
 
     /**
@@ -238,16 +254,9 @@ public class WandItem extends Item {
      * <p>No original o nó drenado solta faíscas na cor do aspecto que está saindo, e elas se veem mesmo
      * sem os óculos — é o que denuncia um nó que alguém está secando.
      */
-    private static void drainTrail(Level level, NodeBlockEntity node, Aspect aspect) {
-        if (!(level instanceof net.minecraft.server.level.ServerLevel server)) return;
-        var pos = node.getBlockPos();
-        server.sendParticles(new net.minecraft.core.particles.DustParticleOptions(
-                        0xFF000000 | aspect.color(), 1.2f),
-                pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 6, 0.3, 0.3, 0.3, 0.02);
-    }
 
     /** O nó na mira de quem segura a varinha. */
-    private static NodeBlockEntity nodeInSight(Level level, Player player) {
+    public static NodeBlockEntity nodeInSight(Level level, Player player) {
         net.minecraft.world.phys.HitResult hit = player.pick(REACH, 1.0f, false);
         if (!(hit instanceof net.minecraft.world.phys.BlockHitResult block)) return null;
         BlockPos pos = block.getBlockPos();

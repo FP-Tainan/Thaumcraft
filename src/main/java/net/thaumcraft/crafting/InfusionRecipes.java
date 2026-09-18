@@ -40,6 +40,21 @@ public final class InfusionRecipes {
     }
 
     static {
+        // WandCapSilver
+        ALL.add(new InfusionRecipe("CAP_silver", new ItemStack(TCItems.WAND_CAPS.get("silver")), 4,
+                new AspectList().add(Aspects.ENERGY, WandParts.cap("silver").craftCost()*2).add(Aspects.AURA, WandParts.cap("silver").craftCost()),
+                Ingredient.of(TCItems.INERT_CAPS.get("silver")),
+                Arrays.asList(Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("salis_mundus")))));
+        // WandCapThaumium
+        ALL.add(new InfusionRecipe("CAP_thaumium", new ItemStack(TCItems.WAND_CAPS.get("thaumium")), 5,
+                new AspectList().add(Aspects.ENERGY, WandParts.cap("thaumium").craftCost()*2).add(Aspects.AURA, WandParts.cap("thaumium").craftCost()),
+                Ingredient.of(TCItems.INERT_CAPS.get("thaumium")),
+                Arrays.asList(Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("salis_mundus")))));
+        // WandCapVoid
+        ALL.add(new InfusionRecipe("CAP_void", new ItemStack(TCItems.WAND_CAPS.get("void")), 8,
+                new AspectList().add(Aspects.ENERGY, WandParts.cap("void").craftCost()*2).add(Aspects.VOID, WandParts.cap("void").craftCost()*2).add(Aspects.ELDRITCH, WandParts.cap("void").craftCost()*2).add(Aspects.AURA, WandParts.cap("void").craftCost()*2),
+                Ingredient.of(TCItems.INERT_CAPS.get("void")),
+                Arrays.asList(Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("salis_mundus")))));
         // WandRodObsidian
         ALL.add(new InfusionRecipe("ROD_obsidian", new ItemStack(TCItems.WAND_RODS.get("obsidian")), 3,
                 new AspectList().add(Aspects.EARTH, WandParts.rod("obsidian").craftCost()*2).add(Aspects.MAGIC, WandParts.rod("obsidian").craftCost()).add(Aspects.DARKNESS, WandParts.rod("blaze").craftCost()),
@@ -70,5 +85,25 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.ENTROPY, WandParts.rod("bone").craftCost()*2).add(Aspects.MAGIC, WandParts.rod("bone").craftCost()).add(Aspects.UNDEAD, WandParts.rod("blaze").craftCost()),
                 Ingredient.of(net.minecraft.world.item.Items.BONE),
                 Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("entropy")))));
+        // WandRodPrimalStaff
+        ALL.add(new InfusionRecipe("ROD_primal_staff", new ItemStack(TCItems.STAFF_RODS.get("primal")), 8,
+                new AspectList().add(Aspects.AIR, WandParts.rod("primal_staff").craftCost()).add(Aspects.FIRE, WandParts.rod("primal_staff").craftCost()).add(Aspects.WATER, WandParts.rod("primal_staff").craftCost()).add(Aspects.EARTH, WandParts.rod("primal_staff").craftCost()).add(Aspects.ORDER, WandParts.rod("primal_staff").craftCost()).add(Aspects.ENTROPY, WandParts.rod("primal_staff").craftCost()).add(Aspects.MAGIC, WandParts.rod("primal_staff").craftCost()*2),
+                Ingredient.of(TCItems.WAND_RODS.get("silverwood")),
+                Arrays.asList(Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCItems.WAND_RODS.get("obsidian")), Ingredient.of(TCItems.WAND_RODS.get("ice")), Ingredient.of(TCItems.WAND_RODS.get("quartz")), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCItems.WAND_RODS.get("reed")), Ingredient.of(TCItems.WAND_RODS.get("blaze")), Ingredient.of(TCItems.WAND_RODS.get("bone")))));
+        // CoreAlchemy
+        ALL.add(new InfusionRecipe("COREALCHEMY", new ItemStack(TCItems.GOLEM_CORES.get("alchemy")), 2,
+                new AspectList().add(Aspects.MAGIC, 15).add(Aspects.WATER, 15).add(Aspects.MOTION, 15),
+                Ingredient.of(TCItems.GOLEM_CORES.get("decanting")),
+                Arrays.asList(Ingredient.of(TCBlocks.JAR.asItem()), Ingredient.of(net.minecraft.world.item.Items.POTION), Ingredient.of(net.minecraft.world.item.Items.POTION), Ingredient.of(net.minecraft.world.item.Items.POTION))));
+        // CoreFishing
+        ALL.add(new InfusionRecipe("COREFISHING", new ItemStack(TCItems.GOLEM_CORES.get("fishing")), 3,
+                new AspectList().add(Aspects.WATER, 16).add(Aspects.HARVEST, 16).add(Aspects.BEAST, 16),
+                Ingredient.of(TCItems.GOLEM_CORES.get("harvest")),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.FISHING_ROD), Ingredient.of(net.minecraft.world.item.Items.COD), Ingredient.of(net.minecraft.world.item.Items.COD), Ingredient.of(net.minecraft.world.item.Items.COD))));
+        // CoreUse
+        ALL.add(new InfusionRecipe("COREUSE", new ItemStack(TCItems.GOLEM_CORES.get("use")), 3,
+                new AspectList().add(Aspects.TOOL, 20).add(Aspects.MECHANISM, 20).add(Aspects.MAN, 20),
+                Ingredient.of(TCItems.GOLEM_CORES.get("empty")),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.COMPARATOR), Ingredient.of(net.minecraft.world.item.Items.FLINT_AND_STEEL), Ingredient.of(net.minecraft.world.item.Items.SHEARS), Ingredient.of(net.minecraft.world.level.block.Blocks.LEVER.asItem()))));
     }
 }

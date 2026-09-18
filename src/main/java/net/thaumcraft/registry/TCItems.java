@@ -242,6 +242,11 @@ public final class TCItems {
     /** As peças soltas: cada haste e cada ponta do original é um item. */
     public static final java.util.Map<String, Item> WAND_RODS = new java.util.LinkedHashMap<>();
     public static final java.util.Map<String, Item> WAND_CAPS = new java.util.LinkedHashMap<>();
+    /** As pontas de taumínio, de vazio e de prata antes da infusão. */
+    private static final String[] INERT = {"thaumium", "void", "silver"};
+    public static final java.util.Map<String, Item> INERT_CAPS = new java.util.LinkedHashMap<>();
+    /** Os núcleos de bastão, de que se fazem os bastões. */
+    public static final java.util.Map<String, Item> STAFF_RODS = new java.util.LinkedHashMap<>();
 
     static {
         for (String tag : WandParts.RODS.keySet()) {
@@ -251,6 +256,14 @@ public final class TCItems {
         }
         for (String tag : WandParts.CAPS.keySet()) {
             WAND_CAPS.put(tag, register("wand_cap_" + tag, Item::new));
+        }
+        // as pontas que saem inertes da bancada e só pegam depois da infusão, como no original
+        for (String tag : INERT) {
+            INERT_CAPS.put(tag, register("wand_cap_" + tag + "_inert", Item::new));
+        }
+        // e os núcleos de bastão: um por haste, mais o primordial
+        for (String tag : WandParts.STAFF_RODS.keySet()) {
+            STAFF_RODS.put(tag, register("staff_rod_" + tag, Item::new));
         }
     }
 
@@ -296,12 +309,16 @@ public final class TCItems {
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles",
             "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock",
-            "wand_cap_iron", "wand_cap_gold", "wand_cap_thaumium", "wand_cap_void",
+            // as pontas na ordem da aba do original, cada inerte logo depois da sua
+            "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
+            "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",
             "wand_rod_greatwood", "wand_rod_obsidian", "wand_rod_silverwood", "wand_rod_ice",
             "wand_rod_quartz", "wand_rod_reed", "wand_rod_blaze", "wand_rod_bone",
+            "staff_rod_greatwood", "staff_rod_obsidian", "staff_rod_silverwood", "staff_rod_ice",
+            "staff_rod_quartz", "staff_rod_reed", "staff_rod_blaze", "staff_rod_bone", "staff_rod_primal",
             "shard_air", "shard_fire", "shard_water", "shard_earth", "shard_order", "shard_entropy",
             "shard_balanced", "salis_mundus", "phial",
-            "thaumium_ingot", "void_ingot", "quicksilver", "magic_tallow", "amber", "enchanted_fabric",
+            "thaumium_ingot", "thaumium_nugget", "void_ingot", "void_nugget", "quicksilver", "magic_tallow", "amber", "enchanted_fabric",
             "vis_filter", "knowledge_fragment", "mirrored_glass", "jar_label", "primal_charm", "gold_coin",
             "alumentum", "nitor",
             "thaumium_pickaxe", "thaumium_axe", "thaumium_shovel", "thaumium_hoe", "thaumium_sword",

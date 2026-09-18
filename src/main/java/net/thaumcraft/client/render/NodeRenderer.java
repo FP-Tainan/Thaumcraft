@@ -58,10 +58,53 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
         state.seed = Math.abs(node.getBlockPos().hashCode()) % FRAMES;
         Minecraft minecraft = Minecraft.getInstance();
         state.ticks = minecraft.player == null ? partial : minecraft.player.tickCount + partial;
+        this.extractDrains(node, state, partial);
+    }
+
+    /**
+     * Quem está bebendo deste nó agora. É o {@code drainEntity} do {@code TileNodeRenderer} original.
+     *
+     * <p>A linha sai de um ponto logo à frente e um pouco abaixo dos olhos de quem segura a varinha —
+     * (−0,1; −0,1; 0,5) girado pelo olhar —, e balança junto com o braço, no mesmo compasso do balanço
+     * da varinha. Vale para qualquer jogador por perto: o uso e o olhar de todos chegam a este lado.
+     */
+    private void extractDrains(NodeBlockEntity node, NodeRenderState state, float partial) {
+        state.drains.clear();
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.level == null) return;
+        net.minecraft.world.phys.Vec3 centre = net.minecraft.world.phys.Vec3.atCenterOf(node.getBlockPos());
+        int colour = -1;
+        for (net.minecraft.world.entity.player.Player player : minecraft.level.players()) {
+            if (player.distanceToSqr(centre) > 64.0 * 64.0) continue;
+            if (!player.isUsingItem() || !(player.getUseItem().getItem() instanceof net.thaumcraft.item.WandItem)) {
+                continue;
+            }
+            NodeBlockEntity seen = net.thaumcraft.item.WandItem.nodeInSight(minecraft.level, player);
+            if (seen == null || !seen.getBlockPos().equals(node.getBlockPos())) continue;
+
+            float using = player.getTicksUsingItem() + partial;
+            float sway = (float) Math.sin(using / 10.0f) * 10.0f;
+            net.minecraft.world.phys.Vec3 tip = new net.minecraft.world.phys.Vec3(-0.1, -0.1, 0.5)
+                    .xRot((float) Math.toRadians(-player.getViewXRot(partial)))
+                    .yRot((float) Math.toRadians(-player.getViewYRot(partial)))
+                    .yRot(-sway * 0.01f)
+                    .xRot(-sway * 0.015f);
+            if (colour < 0) colour = node.shownColour(minecraft.level.getGameTime());
+            state.drains.add(new NodeRenderState.Drain(player.getEyePosition(partial).add(tip), centre,
+                    Math.min(using, 10.0f) / 10.0f, colour));
+        }
     }
 
     @Override
     public void submit(NodeRenderState state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
+        // a linha da varinha bebendo daqui aparece mesmo sem óculos: no original ela fica fora da conta
+        // de quem enxerga o nó
+        for (NodeRenderState.Drain drain : state.drains) {
+            pose.pushPose();
+            pose.translate(0.5f, 0.5f, 0.5f);
+            FloatyLine.submit(pose, collector, drain.from(), drain.to(), drain.colour(), drain.grow(), -0.02f, 0.15f);
+            pose.popPose();
+        }
         if (state.wisps.isEmpty()) return;
 
         float alpha = 1.0f;

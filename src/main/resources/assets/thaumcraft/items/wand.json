@@ -1,9 +1,44 @@
 {
   "model": {
-    "type": "minecraft:special",
-    "base": "thaumcraft:item/wand",
-    "model": {
-      "type": "thaumcraft:wand"
+    "type": "minecraft:select",
+    "property": "minecraft:display_context",
+    "cases": [
+      {
+        "when": [
+          "firstperson_righthand",
+          "firstperson_lefthand"
+        ],
+        "model": {
+          "type": "minecraft:special",
+          "base": "thaumcraft:item/wand",
+          "model": {
+            "type": "thaumcraft:wand",
+            "pose": "first"
+          }
+        }
+      },
+      {
+        "when": [
+          "thirdperson_righthand",
+          "thirdperson_lefthand"
+        ],
+        "model": {
+          "type": "minecraft:special",
+          "base": "thaumcraft:item/wand",
+          "model": {
+            "type": "thaumcraft:wand",
+            "pose": "third"
+          }
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:special",
+      "base": "thaumcraft:item/wand",
+      "model": {
+        "type": "thaumcraft:wand",
+        "pose": "still"
+      }
     }
   }
 }

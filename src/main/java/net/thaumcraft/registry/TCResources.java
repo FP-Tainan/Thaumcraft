@@ -37,5 +37,7 @@ public final class TCResources {
             "primal_charm",
             "void_ingot",
             "gold_coin",
+            "thaumium_nugget",
+            "void_nugget",
     };
 }

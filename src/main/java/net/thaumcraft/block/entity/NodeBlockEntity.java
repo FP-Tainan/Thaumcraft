@@ -134,6 +134,42 @@ public class NodeBlockEntity extends BlockEntity {
         this.sync();
     }
 
+    /**
+     * A cor do último aspecto que uma varinha bebeu daqui, o {@code drainColor} do original.
+     *
+     * <p>É para onde a linha da drenagem vai puxando a cor dela. Só o desenho usa isto.
+     */
+    private int drainColour = 0xFFFFFF;
+    /** A cor que a linha mostra agora, andando um quinto por tique até a {@link #drainColour}. */
+    private int shownColour = 0xFFFFFF;
+    private long shownAt;
+
+    /** Uma varinha acabou de beber este aspecto daqui. */
+    public void drained(Aspect aspect) {
+        if (this.drainColour == aspect.color()) return;
+        this.drainColour = aspect.color();
+        this.sync();
+    }
+
+    /**
+     * A cor da linha da drenagem neste instante.
+     *
+     * <p>O original não troca de cor de uma vez: a cada tique ele anda um quinto do caminho da cor que
+     * estava até a do aspecto bebido, e é isso que dá à linha o degradê quando a varinha passa de um
+     * aspecto a outro.
+     */
+    public int shownColour(long gameTime) {
+        int steps = (int) Math.min(20, gameTime - this.shownAt);
+        for (int step = 0; step < steps; step++) {
+            int r = ((this.drainColour >> 16 & 255) + (this.shownColour >> 16 & 255) * 4) / 5;
+            int g = ((this.drainColour >> 8 & 255) + (this.shownColour >> 8 & 255) * 4) / 5;
+            int b = ((this.drainColour & 255) + (this.shownColour & 255) * 4) / 5;
+            this.shownColour = r << 16 | g << 8 | b;
+        }
+        this.shownAt = gameTime;
+        return this.shownColour;
+    }
+
     private void sync() {
         this.setChanged();
         if (this.level != null && !this.level.isClientSide()) {
@@ -148,6 +184,7 @@ public class NodeBlockEntity extends BlockEntity {
         this.aspects = input.read("aspects", AspectList.CODEC).orElseGet(AspectList::new);
         this.type = input.read("type", NodeType.CODEC).orElse(NodeType.NORMAL);
         this.modifier = input.read("modifier", NodeModifier.CODEC).orElse(null);
+        this.drainColour = input.getIntOr("drain", 0xFFFFFF);
     }
 
     @Override
@@ -157,6 +194,7 @@ public class NodeBlockEntity extends BlockEntity {
         output.store("aspects", AspectList.CODEC, this.aspects);
         output.store("type", NodeType.CODEC, this.type);
         if (this.modifier != null) output.store("modifier", NodeModifier.CODEC, this.modifier);
+        output.putInt("drain", this.drainColour);
     }
 
     @Override

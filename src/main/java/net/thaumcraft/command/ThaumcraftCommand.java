@@ -94,7 +94,77 @@ public final class ThaumcraftCommand {
         root.then(Commands.literal("varinha")
                 .executes(ThaumcraftCommand::fillWand));
 
+        // um nó de aura bem na frente, para testar a varinha sem ter de sair procurando
+        SuggestionProvider<CommandSourceStack> types = (context, builder) -> SharedSuggestionProvider.suggest(
+                java.util.Arrays.stream(net.thaumcraft.api.nodes.NodeType.values())
+                        .map(t -> t.name().toLowerCase(java.util.Locale.ROOT)), builder);
+        SuggestionProvider<CommandSourceStack> modifiers = (context, builder) -> SharedSuggestionProvider.suggest(
+                java.util.stream.Stream.concat(java.util.stream.Stream.of("nenhum"),
+                        java.util.Arrays.stream(net.thaumcraft.api.nodes.NodeModifier.values())
+                                .map(m -> m.name().toLowerCase(java.util.Locale.ROOT))), builder);
+        root.then(Commands.literal("no")
+                .executes(context -> spawnNode(context, null, null))
+                .then(Commands.argument("tipo", StringArgumentType.word()).suggests(types)
+                        .executes(context -> spawnNode(context, StringArgumentType.getString(context, "tipo"), null))
+                        .then(Commands.argument("feitio", StringArgumentType.word()).suggests(modifiers)
+                                .executes(context -> spawnNode(context,
+                                        StringArgumentType.getString(context, "tipo"),
+                                        StringArgumentType.getString(context, "feitio"))))));
+
         dispatcher.register(root);
+    }
+
+    /**
+     * Põe um nó de aura a dois blocos e meio na frente dos olhos de quem chamou.
+     *
+     * <p>Sem tipo, ele é sorteado como na geração do mundo; com tipo, é aquele — e o feitio, se não for
+     * dado, também é sorteado ("nenhum" pede um nó sem feitio). Os aspectos saem do mesmo sorteio da
+     * geração, conforme o bioma e o tipo.
+     */
+    private static int spawnNode(CommandContext<CommandSourceStack> context, String typeName, String modifierName)
+            throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        ServerPlayer player = context.getSource().getPlayerOrException();
+        var level = player.level();
+        var random = level.getRandom();
+
+        net.thaumcraft.api.nodes.NodeType type = net.thaumcraft.world.NodeFeature.rollType(random);
+        if (typeName != null) {
+            type = null;
+            for (var candidate : net.thaumcraft.api.nodes.NodeType.values()) {
+                if (candidate.name().equalsIgnoreCase(typeName)) type = candidate;
+            }
+            if (type == null) {
+                context.getSource().sendFailure(Component.literal("não existe nó do tipo " + typeName));
+                return 0;
+            }
+        }
+        net.thaumcraft.api.nodes.NodeModifier modifier = net.thaumcraft.world.NodeFeature.rollModifier(random);
+        if (modifierName != null) {
+            modifier = null;
+            if (!modifierName.equalsIgnoreCase("nenhum")) {
+                for (var candidate : net.thaumcraft.api.nodes.NodeModifier.values()) {
+                    if (candidate.name().equalsIgnoreCase(modifierName)) modifier = candidate;
+                }
+                if (modifier == null) {
+                    context.getSource().sendFailure(Component.literal("não existe feitio " + modifierName));
+                    return 0;
+                }
+            }
+        }
+
+        net.minecraft.core.BlockPos pos = net.minecraft.core.BlockPos.containing(
+                player.getEyePosition().add(player.getLookAngle().scale(2.5)));
+        if (!level.getBlockState(pos).isAir()) {
+            context.getSource().sendFailure(Component.literal("não há ar livre na frente para o nó"));
+            return 0;
+        }
+        level.setBlock(pos, net.thaumcraft.registry.TCBlocks.NODE.defaultBlockState(), 3);
+        if (!(level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.NodeBlockEntity node)) return 0;
+        node.setup(net.thaumcraft.world.NodeFeature.rollAspects(level, pos, random, type), type, modifier);
+        say(context, "nó " + type.name().toLowerCase(java.util.Locale.ROOT)
+                + (modifier == null ? "" : " " + modifier.name().toLowerCase(java.util.Locale.ROOT))
+                + " posto em " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
+        return 1;
     }
 
     /** Descobre todos os aspectos, enche o bolso de pontos e destranca todas as pesquisas. */

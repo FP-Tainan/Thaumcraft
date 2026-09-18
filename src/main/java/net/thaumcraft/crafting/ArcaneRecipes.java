@@ -58,6 +58,50 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("CAP_gold", new ItemStack(TCItems.WAND_CAPS.get("gold")),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null, Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null, null, null),
                 new AspectList().add(Aspects.ORDER, WandParts.cap("gold").craftCost()).add(Aspects.FIRE, WandParts.cap("gold").craftCost()).add(Aspects.AIR, WandParts.cap("gold").craftCost())));
+        // WandCapCopper
+        ALL.add(new ArcaneRecipe("CAP_copper", new ItemStack(TCItems.WAND_CAPS.get("copper")),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), null, Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), null, null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.cap("copper").craftCost()).add(Aspects.FIRE, WandParts.cap("copper").craftCost()).add(Aspects.AIR, WandParts.cap("copper").craftCost())));
+        // WandCapThaumiumInert
+        ALL.add(new ArcaneRecipe("CAP_thaumium", new ItemStack(TCItems.INERT_CAPS.get("thaumium")),
+                Arrays.asList(Ingredient.of(TCResources.get("thaumium_nugget")), Ingredient.of(TCResources.get("thaumium_nugget")), Ingredient.of(TCResources.get("thaumium_nugget")), Ingredient.of(TCResources.get("thaumium_nugget")), null, Ingredient.of(TCResources.get("thaumium_nugget")), null, null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.cap("thaumium").craftCost()).add(Aspects.FIRE, WandParts.cap("thaumium").craftCost()).add(Aspects.AIR, WandParts.cap("thaumium").craftCost())));
+        // WandCapVoidInert
+        ALL.add(new ArcaneRecipe("CAP_void", new ItemStack(TCItems.INERT_CAPS.get("void")),
+                Arrays.asList(Ingredient.of(TCResources.get("void_nugget")), Ingredient.of(TCResources.get("void_nugget")), Ingredient.of(TCResources.get("void_nugget")), Ingredient.of(TCResources.get("void_nugget")), null, Ingredient.of(TCResources.get("void_nugget")), null, null, null),
+                new AspectList().add(Aspects.ENTROPY, WandParts.cap("void").craftCost() * 3).add(Aspects.ORDER, WandParts.cap("void").craftCost() * 3).add(Aspects.FIRE, WandParts.cap("void").craftCost() * 2).add(Aspects.AIR, WandParts.cap("void").craftCost() * 2)));
+        // WandRodGreatwoodStaff
+        ALL.add(new ArcaneRecipe("ROD_greatwood_staff", new ItemStack(TCItems.STAFF_RODS.get("greatwood")),
+                Arrays.asList(null, null, Ingredient.of(TCResources.get("primal_charm")), null, Ingredient.of(TCItems.WAND_RODS.get("greatwood")), null, Ingredient.of(TCItems.WAND_RODS.get("greatwood")), null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.rod("greatwood_staff").craftCost())));
+        // WandRodObsidianStaff
+        ALL.add(new ArcaneRecipe("ROD_obsidian_staff", new ItemStack(TCItems.STAFF_RODS.get("obsidian")),
+                Arrays.asList(null, null, Ingredient.of(TCResources.get("primal_charm")), null, Ingredient.of(TCItems.WAND_RODS.get("obsidian")), null, Ingredient.of(TCItems.WAND_RODS.get("obsidian")), null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.rod("obsidian_staff").craftCost())));
+        // WandRodSilverwoodStaff
+        ALL.add(new ArcaneRecipe("ROD_silverwood_staff", new ItemStack(TCItems.STAFF_RODS.get("silverwood")),
+                Arrays.asList(null, null, Ingredient.of(TCResources.get("primal_charm")), null, Ingredient.of(TCItems.WAND_RODS.get("silverwood")), null, Ingredient.of(TCItems.WAND_RODS.get("silverwood")), null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.rod("silverwood_staff").craftCost())));
+        // WandRodIceStaff
+        ALL.add(new ArcaneRecipe("ROD_ice_staff", new ItemStack(TCItems.STAFF_RODS.get("ice")),
+                Arrays.asList(null, null, Ingredient.of(TCResources.get("primal_charm")), null, Ingredient.of(TCItems.WAND_RODS.get("ice")), null, Ingredient.of(TCItems.WAND_RODS.get("ice")), null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.rod("ice_staff").craftCost())));
+        // WandRodQuartzStaff
+        ALL.add(new ArcaneRecipe("ROD_quartz_staff", new ItemStack(TCItems.STAFF_RODS.get("quartz")),
+                Arrays.asList(null, null, Ingredient.of(TCResources.get("primal_charm")), null, Ingredient.of(TCItems.WAND_RODS.get("quartz")), null, Ingredient.of(TCItems.WAND_RODS.get("quartz")), null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.rod("quartz_staff").craftCost())));
+        // WandRodReedStaff
+        ALL.add(new ArcaneRecipe("ROD_reed_staff", new ItemStack(TCItems.STAFF_RODS.get("reed")),
+                Arrays.asList(null, null, Ingredient.of(TCResources.get("primal_charm")), null, Ingredient.of(TCItems.WAND_RODS.get("reed")), null, Ingredient.of(TCItems.WAND_RODS.get("reed")), null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.rod("reed_staff").craftCost())));
+        // WandRodBlazeStaff
+        ALL.add(new ArcaneRecipe("ROD_blaze_staff", new ItemStack(TCItems.STAFF_RODS.get("blaze")),
+                Arrays.asList(null, null, Ingredient.of(TCResources.get("primal_charm")), null, Ingredient.of(TCItems.WAND_RODS.get("blaze")), null, Ingredient.of(TCItems.WAND_RODS.get("blaze")), null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.rod("blaze_staff").craftCost())));
+        // WandRodBoneStaff
+        ALL.add(new ArcaneRecipe("ROD_bone_staff", new ItemStack(TCItems.STAFF_RODS.get("bone")),
+                Arrays.asList(null, null, Ingredient.of(TCResources.get("primal_charm")), null, Ingredient.of(TCItems.WAND_RODS.get("bone")), null, Ingredient.of(TCItems.WAND_RODS.get("bone")), null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.rod("bone_staff").craftCost())));
         // FocusFire
         ALL.add(new ArcaneRecipe("FOCUSFIRE", new ItemStack(TCItems.FOCI.get("fire")),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("fire")), null, null, null),
@@ -97,11 +141,6 @@ public final class ArcaneRecipes {
         // Tube
         ALL.add(new ArcaneRecipe("TUBES", new ItemStack(TCBlocks.TUBE.asItem(), 8),
                 Arrays.asList(null, Ingredient.of(TCResources.get("quicksilver")), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null),
-                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
-        // Válvula: o mesmo tubo com uma alavanca, sem forma nenhuma
-        ALL.add(ArcaneRecipe.loose("TUBES", new ItemStack(TCBlocks.TUBE_VALVE.asItem()),
-                Arrays.asList(Ingredient.of(TCBlocks.TUBE.asItem()),
-                        Ingredient.of(net.minecraft.world.level.block.Blocks.LEVER.asItem())),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
     }
 }
