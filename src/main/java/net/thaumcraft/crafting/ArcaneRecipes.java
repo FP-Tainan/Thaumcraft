@@ -146,6 +146,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("FOCUSPRIMAL", new ItemStack(TCItems.FOCI.get("primal")),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.DIAMOND)),
                 new AspectList().add(Aspects.EARTH, 25).add(Aspects.ENTROPY, 25).add(Aspects.ORDER, 25).add(Aspects.AIR, 25).add(Aspects.FIRE, 25).add(Aspects.WATER, 25)));
+        // Deconstructor
+        ALL.add(new ArcaneRecipe("DECONSTRUCTOR", new ItemStack(TCBlocks.DECONSTRUCTION_TABLE.asItem()),
+                Arrays.asList(null, Ingredient.of(TCItems.THAUMOMETER), null, Ingredient.of(net.minecraft.world.item.Items.GOLDEN_AXE), Ingredient.of(TCBlocks.TABLE.asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLDEN_PICKAXE), null, null, null),
+                new AspectList().add(Aspects.ENTROPY, 20)));
         // EnchantedFabric
         ALL.add(new ArcaneRecipe("ENCHFABRIC", new ItemStack(TCResources.get("enchanted_fabric")),
                 Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.STRING), null, Ingredient.of(net.minecraft.world.item.Items.STRING), Ingredient.of(net.minecraft.world.item.Items.WOOL.asList().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.STRING), null, Ingredient.of(net.minecraft.world.item.Items.STRING), null),

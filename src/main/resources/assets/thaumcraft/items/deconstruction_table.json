@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/deconstruction_table",
+    "model": {
+      "type": "thaumcraft:workbench",
+      "texture": "thaumcraft:textures/models/decontable.png"
+    }
+  }
+}

@@ -268,6 +268,15 @@ public final class TCBlocks {
             new net.thaumcraft.block.ArcaneWorkbenchBlock(properties
                     .mapColor(MapColor.WOOD)
                     .strength(2.5f)
+                    .noOcclusion()
+                    .sound(SoundType.WOOD)));
+
+    /** A mesa de desconstrução, que desfaz coisas em pontos de pesquisa. */
+    public static final Block DECONSTRUCTION_TABLE = register("deconstruction_table", properties ->
+            new net.thaumcraft.block.DeconstructionTableBlock(properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5f)
+                    .noOcclusion()
                     .sound(SoundType.WOOD)));
 
     /** A mesa de madeira do mod: vira bancada arcana com a varinha e mesa de pesquisa com a pena. */

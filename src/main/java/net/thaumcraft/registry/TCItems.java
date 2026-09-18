@@ -229,6 +229,10 @@ public final class TCItems {
     public static final Item INFUSION_MATRIX = register("infusion_matrix", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.INFUSION_MATRIX, properties));
 
+    /** A mesa de desconstrução. */
+    public static final Item DECONSTRUCTION_TABLE = register("deconstruction_table", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.DECONSTRUCTION_TABLE, properties.useBlockDescriptionPrefix()));
+
     /** O fole. */
     public static final Item BELLOWS = register("bellows", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.BELLOWS, properties.useBlockDescriptionPrefix()));
@@ -414,7 +418,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "scribing_tools", "table", "crucible", "arcane_workbench", "alchemical_furnace", "bellows", "alembic", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_oneway", "tube_buffer",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_oneway", "tube_buffer",
             "infusion_matrix", "pedestal",
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",

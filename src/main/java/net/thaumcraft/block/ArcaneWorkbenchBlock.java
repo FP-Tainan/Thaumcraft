@@ -29,7 +29,8 @@ public class ArcaneWorkbenchBlock extends BaseEntityBlock {
 
     @Override
     protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        // a mesa é o ModelArcaneWorkbench, desenhado pelo desenhista, como no original
+        return RenderShape.INVISIBLE;
     }
 
     @Override

@@ -94,6 +94,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.fx.BlockRunes.spawn(pos.getX(), y, pos.getZ(), r, g, b, duration, gravity);
             }
         };
+        // as mesas do ModelArcaneWorkbench: a bancada arcana (com a varinha deitada) e o item de cada mesa
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ARCANE_WORKBENCH, net.thaumcraft.client.render.ArcaneWorkbenchRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("workbench"), net.thaumcraft.client.render.WorkbenchModel.Unbaked.CODEC);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.DECONSTRUCTION_TABLE, net.thaumcraft.client.render.DeconstructionTableRenderer::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.DECONSTRUCTION_TABLE,
+                net.thaumcraft.client.gui.DeconstructionTableScreen::new);
         // o fole, com o modelo do original, no chão e na mão
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.BELLOWS, net.thaumcraft.client.render.BellowsRenderer::new);

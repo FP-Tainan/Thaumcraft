@@ -1,6 +1,10 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "thaumcraft:block/arcane_workbench"
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/arcane_workbench",
+    "model": {
+      "type": "thaumcraft:workbench",
+      "texture": "thaumcraft:textures/models/worktable.png"
+    }
   }
 }

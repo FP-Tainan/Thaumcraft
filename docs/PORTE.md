@@ -512,3 +512,12 @@ A mesma auditoria achou, nas receitas geradas:
   caminho quando havia redstone.
 - As folhas da grande-madeira longe demais do tronco para as contas de hoje ficam permanentes: no original a
   folha nascida da árvore só apodrecia quando algo mudava perto dela.
+- **As mesas do `ModelArcaneWorkbench`**: a bancada arcana deixou o modelo JSON aproximado e passou a ser o
+  modelo do original (tampo, base e quatro pés, textura `worktable.png`), com a varinha deitada sobre o tampo
+  quando está na casa dela. A **mesa de desconstrução** chegou com o mesmo modelo (`decontable.png`), o
+  thaumômetro em cima, a coisa sendo desfeita girando acima e o primário que sobra girando rente ao tampo; a
+  tela é a do original e o primário recolhido vira um ponto de pesquisa. **Diferença**: o original desenha a
+  coisa sendo desfeita somando luz, meio fantasma; aqui ela é desenhada normal, acesa.
+- O **fole arcano**: `TileBellows` e `ModelBellows`; cada fole apontando para o forno alquímico corta um oitavo
+  do tempo de fogo, e no forno comum empurra o cozimento (o campo do jogo é alcançado por reflexão, já que o
+  26.x não é ofuscado). O forno queimando alumentum destila o dobro de vezes, como no original.

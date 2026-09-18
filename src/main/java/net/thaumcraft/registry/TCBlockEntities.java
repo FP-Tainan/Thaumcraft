@@ -44,6 +44,10 @@ public final class TCBlockEntities {
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("infusion_pillar"),
             new BlockEntityType<>(net.thaumcraft.block.entity.InfusionPillarBlockEntity::new, java.util.Set.of(TCBlocks.INFUSION_PILLAR)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.DeconstructionTableBlockEntity> DECONSTRUCTION_TABLE = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("deconstruction_table"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.DeconstructionTableBlockEntity::new, java.util.Set.of(TCBlocks.DECONSTRUCTION_TABLE)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.BellowsBlockEntity> BELLOWS = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("bellows"),
             new BlockEntityType<>(net.thaumcraft.block.entity.BellowsBlockEntity::new, java.util.Set.of(TCBlocks.BELLOWS)));
