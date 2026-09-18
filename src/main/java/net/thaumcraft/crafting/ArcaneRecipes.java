@@ -46,6 +46,14 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("ARCANESTONE", new ItemStack(TCBlocks.BUILDING.get("arcane_stone").asItem(), 9),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE)),
                 new AspectList().add(Aspects.EARTH, 1).add(Aspects.FIRE, 1)));
+        // PaveTravel
+        ALL.add(new ArcaneRecipe("PAVETRAVEL", new ItemStack(TCBlocks.BUILDING.get("paving_stone_travel").asItem(), 4),
+                Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), null, null, null),
+                new AspectList().add(Aspects.EARTH, 10).add(Aspects.AIR, 10)));
+        // PaveWard
+        ALL.add(new ArcaneRecipe("PAVEWARD", new ItemStack(TCBlocks.BUILDING.get("paving_stone_warding").asItem(), 4),
+                Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), null, null, null),
+                new AspectList().add(Aspects.FIRE, 10).add(Aspects.ORDER, 10)));
         // InfusionMatrix
         ALL.add(new ArcaneRecipe("INFUSION", new ItemStack(TCBlocks.INFUSION_MATRIX.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem())),
@@ -138,6 +146,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("FOCUSPRIMAL", new ItemStack(TCItems.FOCI.get("primal")),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.DIAMOND)),
                 new AspectList().add(Aspects.EARTH, 25).add(Aspects.ENTROPY, 25).add(Aspects.ORDER, 25).add(Aspects.AIR, 25).add(Aspects.FIRE, 25).add(Aspects.WATER, 25)));
+        // EnchantedFabric
+        ALL.add(new ArcaneRecipe("ENCHFABRIC", new ItemStack(TCResources.get("enchanted_fabric")),
+                Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.STRING), null, Ingredient.of(net.minecraft.world.item.Items.STRING), Ingredient.of(net.minecraft.world.item.Items.WOOL.asList().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.STRING), null, Ingredient.of(net.minecraft.world.item.Items.STRING), null),
+                new AspectList().add(Aspects.AIR, 1).add(Aspects.EARTH, 1).add(Aspects.FIRE, 1).add(Aspects.WATER, 1).add(Aspects.ORDER, 1).add(Aspects.ENTROPY, 1)));
         // Goggles
         ALL.add(new ArcaneRecipe("GOGGLES", new ItemStack(TCItems.GOGGLES),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.LEATHER), null, Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.THAUMOMETER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.THAUMOMETER)),

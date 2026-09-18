@@ -335,6 +335,7 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:shimmerleaf", new AspectList().add(Aspects.PLANT, 2).add(Aspects.EXCHANGE, 2).add(Aspects.MAGIC, 2));
         r.item("thaumcraft:cinderpearl", new AspectList().add(Aspects.PLANT, 2).add(Aspects.FIRE, 2).add(Aspects.MAGIC, 2));
         r.item("thaumcraft:arcane_stone", new AspectList().add(Aspects.EARTH, 1).add(Aspects.MAGIC, 1));
+        r.item("thaumcraft:arcane_stone_bricks", new AspectList().add(Aspects.EARTH, 1).add(Aspects.MAGIC, 1));
         r.item("thaumcraft:quicksilver", new AspectList().add(Aspects.METAL, 3).add(Aspects.POISON, 1).add(Aspects.EXCHANGE, 2));
         r.item("thaumcraft:amber", new AspectList().add(Aspects.TRAP, 2).add(Aspects.CRYSTAL, 2));
         r.item("thaumcraft:knowledge_fragment", new AspectList().add(Aspects.MIND, 8));
