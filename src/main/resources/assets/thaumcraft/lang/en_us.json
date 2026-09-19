@@ -1274,5 +1274,6 @@
   "wandtable.text1": "Vis Cost",
   "wandtable.text2": "Experience Cost",
   "wandtable.text3": "Start Upgrade",
-  "tc.researchmissing": "Missing required research!"
+  "tc.researchmissing": "Missing required research!",
+  "key.thaumcraft.misc": "Misc Wand Toggle"
 }

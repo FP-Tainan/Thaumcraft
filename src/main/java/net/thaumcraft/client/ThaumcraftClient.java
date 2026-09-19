@@ -249,6 +249,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.client.render.AspectTint.register();
         // a tecla de trocar foco, com o menu radial, e a tela da bolsa de focos
         net.thaumcraft.client.FocusRadial.init();
+        // o arquiteto: a tecla G e a prévia da área
+        net.thaumcraft.client.ArchitectKey.init();
+        net.thaumcraft.client.render.ArchitectOverlay.init();
         // as casas de amuleto, anel e cinto do Baubles
         net.thaumcraft.client.BaublesClient.init();
         net.thaumcraft.client.RunicHud.init();

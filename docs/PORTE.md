@@ -1123,3 +1123,23 @@ número 13 do `BlockStoneDevice` (descompilados do jar).
   à direita, como o `drawHoveringTextFixed`.
 - **Testes**: `FocalManipulatorGameTest` (custo por posto, experiência e postos, puxar da rede até a melhoria entrar) e
   `FocalManipulatorClientTest` (a mesa trabalhando e a tela).
+
+## Arquiteto
+
+Porte do `IArchitect`, do `getArchitectBlocks`/`showAxis` dos focos de troca e de proteção, do `WandManager.toggleMisc`
+e `getAreaX/Y/Z/Dim`, da tecla G do `KeyHandler` (`PacketItemKeyToServer`, número 1) e do `handleArchitectOverlay` do
+`REHWandHandler` (descompilados do jar).
+
+- **Área** (`Architect`, componente `thaumcraft:wand_area`): x, y, z e a dimensão escolhida, guardados na varinha; sem
+  mexer (ou acima do máximo do foco), valem o máximo — 3 + 2 por ampliação na troca, 3 + 1 na proteção.
+- **Tecla G** (`ArchitectKey`, "Alternância da varinha"): de pé, cresce a dimensão escolhida (todas, ou uma) e volta a
+  zero depois do máximo; agachado, troca a dimensão (a troca não tem a terceira).
+- **Troca**: com arquiteto, cada bloco igual à mostra no plano da face, dentro da área, vira um trocador que não se
+  espalha. **Proteção**: sempre pela lista do arquiteto (sem a melhoria, a área é zero: só o bloco da mira); cada bloco
+  paga o seu vis e para quando acaba; desfazer pega os protegidos do mesmo dono.
+- **Prévia** (`ArchitectOverlay` + `shaders/core/architect`): cada bloco da área ganha a casca do vidro protegido,
+  ligada entre os blocos, azulada, piscando e somando luz — com o `GL_ADD` do original (a cor soma com a textura) —, vista
+  através de tudo; no bloco da mira, as setas (`architect_arrows.png`) das dimensões que a tecla muda. O contorno comum
+  some enquanto a prévia aparece.
+- **Testes**: `ArchitectGameTest` (a tecla, os blocos da troca, a proteção da parede inteira) e `ArchitectClientTest`
+  (a prévia no chão e na parede).

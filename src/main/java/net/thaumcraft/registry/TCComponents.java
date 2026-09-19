@@ -34,6 +34,11 @@ public final class TCComponents {
             builder -> builder.persistent(Codec.SHORT.listOf())
                     .networkSynchronized(ByteBufCodecs.SHORT.apply(ByteBufCodecs.list())));
 
+    /** A área do arquiteto na varinha: o {@code areax}, {@code areay}, {@code areaz} e {@code aread} do original. */
+    public static final DataComponentType<java.util.List<Integer>> WAND_AREA = register("wand_area",
+            builder -> builder.persistent(Codec.INT.listOf())
+                    .networkSynchronized(ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list())));
+
     /** O bloco que o foco de Troca Equivalente escolheu, guardado na varinha pelo id do item dele. */
     public static final DataComponentType<String> WAND_PICKED = register("wand_picked",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));

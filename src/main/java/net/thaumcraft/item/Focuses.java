@@ -399,21 +399,30 @@ public final class Focuses {
         net.minecraft.world.level.block.entity.BlockEntity tile = level.getBlockEntity(pos);
         int owner = wardOwner(player);
         boolean changed = false;
+        int side = block.getDirection().get3DDataValue();
         if (tile == null && state.isSolidRender()) {
-            if (WandItem.consumeFocus(wand, focus.cost(WandItem.focusStack(wand)), true, player)) {
-                int light = state.getLightEmission();
-                level.setBlock(pos, net.thaumcraft.registry.TCBlocks.WARDED.defaultBlockState()
+            // cada bloco da área paga o seu; sem vis, para
+            for (BlockPos c : Architect.wardingBlocks(wand, level, pos, side, player, true)) {
+                if (!WandItem.consumeFocus(wand, focus.cost(WandItem.focusStack(wand)), true, player)) break;
+                BlockState at = level.getBlockState(c);
+                if (level.getBlockEntity(c) != null || !at.isSolidRender()) continue;
+                int light = at.getLightEmission();
+                level.setBlock(c, net.thaumcraft.registry.TCBlocks.WARDED.defaultBlockState()
                         .setValue(net.thaumcraft.block.WardedBlock.LIGHT, light), Block.UPDATE_ALL);
-                if (level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.WardedBlockEntity warded) {
-                    warded.ward(state, owner);
-                    level.sendBlockUpdated(pos, state, level.getBlockState(pos), Block.UPDATE_ALL);
+                if (level.getBlockEntity(c) instanceof net.thaumcraft.block.entity.WardedBlockEntity warded) {
+                    warded.ward(at, owner);
+                    level.sendBlockUpdated(c, at, level.getBlockState(c), Block.UPDATE_ALL);
+                    if (level instanceof ServerLevel server) net.thaumcraft.net.TCNetwork.blockSparkle(server, c, 0xFCA000);
                 }
-                if (level instanceof ServerLevel server) net.thaumcraft.net.TCNetwork.blockSparkle(server, pos, 0xFCA000);
-                changed = true;
             }
+            changed = true;
         } else if (tile instanceof net.thaumcraft.block.entity.WardedBlockEntity warded && warded.owner() == owner) {
-            level.setBlock(pos, warded.stored(), Block.UPDATE_ALL);
-            if (level instanceof ServerLevel server) net.thaumcraft.net.TCNetwork.blockSparkle(server, pos, 0xFCA000);
+            for (BlockPos c : Architect.wardingBlocks(wand, level, pos, side, player, true)) {
+                if (level.getBlockEntity(c) instanceof net.thaumcraft.block.entity.WardedBlockEntity other && other.owner() == owner) {
+                    level.setBlock(c, other.stored(), Block.UPDATE_ALL);
+                    if (level instanceof ServerLevel server) net.thaumcraft.net.TCNetwork.blockSparkle(server, c, 0xFCA000);
+                }
+            }
             changed = true;
         }
         if (changed) {
@@ -479,7 +488,14 @@ public final class Focuses {
         }
         Item picked = picked(wand);
         if (picked != null && level.getBlockEntity(pos) == null && level instanceof ServerLevel server) {
-            Swapper.add(server, pos, state, picked, 3 + WandItem.focusEnlarge(wand), player, player.getInventory().getSelectedSlot());
+            if (FocusItem.isUpgradedWith(WandItem.focusStack(wand), FocusUpgradeTable.ARCHITECT)) {
+                // com o arquiteto, cada bloco da área vira um trocador que não se espalha
+                for (BlockPos c : Architect.tradeBlocks(wand, level, pos, block.getDirection().get3DDataValue(), player)) {
+                    Swapper.add(server, c, level.getBlockState(c), picked, 0, player, player.getInventory().getSelectedSlot());
+                }
+            } else {
+                Swapper.add(server, pos, state, picked, 3 + WandItem.focusEnlarge(wand), player, player.getInventory().getSelectedSlot());
+            }
         }
         return true;
     }

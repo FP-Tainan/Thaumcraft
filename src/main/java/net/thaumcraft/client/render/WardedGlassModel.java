@@ -59,38 +59,47 @@ public class WardedGlassModel implements BlockStateModel {
 
     /** O índice do original: os oito vizinhos no plano da face, como bits, e a tabela. */
     static int index(BlockAndTintGetter level, BlockPos pos, Direction face) {
+        return index((x, y, z) -> glass(level, x, y, z), pos, face.get3DDataValue());
+    }
+
+    /** Quem conta como vizinho ligado. */
+    public interface Connected {
+        boolean at(int x, int y, int z);
+    }
+
+    /** O mesmo índice com outra regra de vizinho: a prévia do arquiteto liga os blocos da área. */
+    public static int index(Connected glass, BlockPos pos, int side) {
         int x = pos.getX(), y = pos.getY(), z = pos.getZ();
         boolean[] b = new boolean[8];
-        int side = face.get3DDataValue();
         if (side == 0 || side == 1) {
-            b[0] = glass(level, x - 1, y, z - 1);
-            b[1] = glass(level, x, y, z - 1);
-            b[2] = glass(level, x + 1, y, z - 1);
-            b[3] = glass(level, x - 1, y, z);
-            b[4] = glass(level, x + 1, y, z);
-            b[5] = glass(level, x - 1, y, z + 1);
-            b[6] = glass(level, x, y, z + 1);
-            b[7] = glass(level, x + 1, y, z + 1);
+            b[0] = glass.at(x - 1, y, z - 1);
+            b[1] = glass.at(x, y, z - 1);
+            b[2] = glass.at(x + 1, y, z - 1);
+            b[3] = glass.at(x - 1, y, z);
+            b[4] = glass.at(x + 1, y, z);
+            b[5] = glass.at(x - 1, y, z + 1);
+            b[6] = glass.at(x, y, z + 1);
+            b[7] = glass.at(x + 1, y, z + 1);
         } else if (side == 2 || side == 3) {
             int a = side == 2 ? 1 : -1, c = side == 3 ? 1 : -1;
-            b[0] = glass(level, x + a, y + 1, z);
-            b[1] = glass(level, x, y + 1, z);
-            b[2] = glass(level, x + c, y + 1, z);
-            b[3] = glass(level, x + a, y, z);
-            b[4] = glass(level, x + c, y, z);
-            b[5] = glass(level, x + a, y - 1, z);
-            b[6] = glass(level, x, y - 1, z);
-            b[7] = glass(level, x + c, y - 1, z);
+            b[0] = glass.at(x + a, y + 1, z);
+            b[1] = glass.at(x, y + 1, z);
+            b[2] = glass.at(x + c, y + 1, z);
+            b[3] = glass.at(x + a, y, z);
+            b[4] = glass.at(x + c, y, z);
+            b[5] = glass.at(x + a, y - 1, z);
+            b[6] = glass.at(x, y - 1, z);
+            b[7] = glass.at(x + c, y - 1, z);
         } else {
             int a = side == 5 ? 1 : -1, c = side == 4 ? 1 : -1;
-            b[0] = glass(level, x, y + 1, z + a);
-            b[1] = glass(level, x, y + 1, z);
-            b[2] = glass(level, x, y + 1, z + c);
-            b[3] = glass(level, x, y, z + a);
-            b[4] = glass(level, x, y, z + c);
-            b[5] = glass(level, x, y - 1, z + a);
-            b[6] = glass(level, x, y - 1, z);
-            b[7] = glass(level, x, y - 1, z + c);
+            b[0] = glass.at(x, y + 1, z + a);
+            b[1] = glass.at(x, y + 1, z);
+            b[2] = glass.at(x, y + 1, z + c);
+            b[3] = glass.at(x, y, z + a);
+            b[4] = glass.at(x, y, z + c);
+            b[5] = glass.at(x, y - 1, z + a);
+            b[6] = glass.at(x, y - 1, z);
+            b[7] = glass.at(x, y - 1, z + c);
         }
         int id = 0;
         for (int i = 0; i < 8; i++) if (b[i]) id |= 1 << i;
