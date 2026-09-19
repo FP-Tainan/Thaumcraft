@@ -68,6 +68,7 @@ public class Thaumcraft implements ModInitializer {
         net.thaumcraft.event.Champions.init();
         net.thaumcraft.entity.eldritch.BossSpawns.init();
         net.thaumcraft.world.outer.Labyrinth.init();
+        net.thaumcraft.research.Incurable.init();
         net.thaumcraft.event.MobDrops.init();
         net.thaumcraft.research.WarpEvents.guardianSpawner = net.thaumcraft.entity.eldritch.EldritchGuardianEntity::spawnForWarp;
         // os encantamentos: o Reparo com vis

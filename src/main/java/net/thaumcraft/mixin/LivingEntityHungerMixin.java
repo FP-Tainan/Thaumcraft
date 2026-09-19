@@ -34,7 +34,7 @@ public abstract class LivingEntityHungerMixin {
             int amp = pe.getAmplifier() - 1;
             int duration = pe.getDuration() - 600;
             player.removeEffect(TCEffects.UNNATURAL_HUNGER);
-            if (duration > 0 && amp >= 0) player.addEffect(new MobEffectInstance(TCEffects.UNNATURAL_HUNGER, duration, amp, true, true));
+            if (duration > 0 && amp >= 0) net.thaumcraft.research.Incurable.add(player, new MobEffectInstance(TCEffects.UNNATURAL_HUNGER, duration, amp, true, true));
             player.sendSystemMessage(Component.translatable("warp.text.hunger.2").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC));
         } else if (this.useItem.has(DataComponents.FOOD)) {
             player.sendSystemMessage(Component.translatable("warp.text.hunger.1").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));

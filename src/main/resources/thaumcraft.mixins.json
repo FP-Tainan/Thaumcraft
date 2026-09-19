@@ -12,6 +12,7 @@
     "ItemEntityBathSaltsMixin",
     "ItemEntityAccessor",
     "LivingEntityHungerMixin",
+    "LivingEntityIncurableMixin",
     "ItemStackWarpMixin",
     "BlockDropsMiningMixin",
     "AbstractArrowDamageMixin",

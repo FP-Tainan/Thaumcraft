@@ -1636,3 +1636,12 @@ catorze gomos, os números 10 e 11 do `BlockAiry`, e o fim das salas de chefe do
   fazendo o papel do `RecipesRobeArmorDyes` e do `RecipesVoidRobeArmorDyes`.
 - **Pistas**: "Revelações das Terras de Fora" agora desperta examinando a pedra de glifos ou a pedra rúnica (que viram
   item, como no original).
+
+## Os efeitos que o leite não tira
+
+O original limpava os `getCurativeItems` dos efeitos que a distorção, o gás e a gosma de fluxo, a infusão instável e a
+fome estranha põem — o leite não os tira. Hoje o leite limpa tudo de uma vez (`removeAllEffects`); o `Incurable` marca
+esses efeitos e o `LivingEntityIncurableMixin` os devolve logo depois. Teste: `WarpGameTest.milkDoesNotCureWarp`.
+
+A ponteira de prata (`WandCapSilverInert`) continua de fora: no original ela só existia se outro mod trouxesse lingote
+de prata (`Config.foundSilverIngot`).

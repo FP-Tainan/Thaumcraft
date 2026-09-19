@@ -408,7 +408,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
             if (level.getRandom().nextBoolean()) {
                 target.addEffect(new MobEffectInstance(TCEffects.FLUX_TAINT, 120, 0, false, true));
             } else {
-                target.addEffect(new MobEffectInstance(TCEffects.VIS_EXHAUST, 2400, 0, true, true));
+                net.thaumcraft.research.Incurable.add(target, new MobEffectInstance(TCEffects.VIS_EXHAUST, 2400, 0, true, true));
             }
             if (!all) break;
         }

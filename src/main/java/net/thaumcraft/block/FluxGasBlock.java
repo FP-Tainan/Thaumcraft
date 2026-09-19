@@ -48,7 +48,7 @@ public class FluxGasBlock extends FluxBlock {
             return;
         }
         int md = state.getValue(LEVEL);
-        if (level.getRandom().nextBoolean()) living.addEffect(new MobEffectInstance(TCEffects.VIS_EXHAUST, 1200, md / 3, true, true));
+        if (level.getRandom().nextBoolean()) net.thaumcraft.research.Incurable.add(living, new MobEffectInstance(TCEffects.VIS_EXHAUST, 1200, md / 3, true, true));
         else living.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 80 + md * 20, 0));
         if (md > 0) level.setBlockAndUpdate(pos, state.setValue(LEVEL, md - 1));
         else level.removeBlock(pos, false);

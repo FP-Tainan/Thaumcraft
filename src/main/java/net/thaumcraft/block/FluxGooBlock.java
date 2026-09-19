@@ -66,7 +66,7 @@ public class FluxGooBlock extends FluxBlock {
         float slow = 1.0f - fullness(state);
         entity.setDeltaMovement(entity.getDeltaMovement().multiply(slow, 1.0, slow));
         if (!level.isClientSide() && entity instanceof LivingEntity living) {
-            living.addEffect(new MobEffectInstance(TCEffects.VIS_EXHAUST, 600, md / 3, true, true));
+            net.thaumcraft.research.Incurable.add(living, new MobEffectInstance(TCEffects.VIS_EXHAUST, 600, md / 3, true, true));
         }
     }
 

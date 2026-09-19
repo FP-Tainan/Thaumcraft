@@ -82,4 +82,16 @@ public class WarpGameTest {
         if (after.warpTemp() != 2) helper.fail("a temporária perde um ponto, está " + after.warpTemp());
         helper.succeed();
     }
+
+    /** O leite tira os efeitos comuns, mas não os da distorção (o getCurativeItems vazio do original). */
+    @net.fabricmc.fabric.api.gametest.v1.GameTest(maxTicks = 20)
+    public void milkDoesNotCureWarp(net.minecraft.gametest.framework.GameTestHelper helper) {
+        var cow = helper.spawn(net.minecraft.world.entity.EntityTypes.COW, new net.minecraft.core.BlockPos(1, 2, 1));
+        cow.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.SPEED, 600));
+        net.thaumcraft.research.Incurable.add(cow, new net.minecraft.world.effect.MobEffectInstance(net.thaumcraft.registry.TCEffects.SUN_SCORNED, 600));
+        cow.removeAllEffects();
+        if (cow.hasEffect(net.minecraft.world.effect.MobEffects.SPEED)) helper.fail("o leite tira a velocidade");
+        if (!cow.hasEffect(net.thaumcraft.registry.TCEffects.SUN_SCORNED)) helper.fail("o leite não tira o desprezo do sol");
+        helper.succeed();
+    }
 }

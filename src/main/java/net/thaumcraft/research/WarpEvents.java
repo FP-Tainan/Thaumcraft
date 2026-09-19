@@ -91,13 +91,13 @@ public final class WarpEvents {
                     if (eff <= 12) {
                         say(player, "warp.text.11");
                     } else if (eff <= 16) {
-                        player.addEffect(lasting(TCEffects.VIS_EXHAUST, 5000, Math.min(3, warp / 15), true));
+                        net.thaumcraft.research.Incurable.add(player, lasting(TCEffects.VIS_EXHAUST, 5000, Math.min(3, warp / 15), true));
                         say(player, "warp.text.1");
                     } else if (eff <= 20) {
-                        player.addEffect(lasting(TCEffects.THAUMARHIA, Math.min(32000, 10 * warp), 0, true));
+                        net.thaumcraft.research.Incurable.add(player, lasting(TCEffects.THAUMARHIA, Math.min(32000, 10 * warp), 0, true));
                         say(player, "warp.text.15");
                     } else if (eff <= 24) {
-                        player.addEffect(lasting(TCEffects.UNNATURAL_HUNGER, 5000, Math.min(3, warp / 15), true));
+                        net.thaumcraft.research.Incurable.add(player, lasting(TCEffects.UNNATURAL_HUNGER, 5000, Math.min(3, warp / 15), true));
                         say(player, "warp.text.2");
                     } else if (eff <= 28) {
                         say(player, "warp.text.12");
@@ -106,19 +106,19 @@ public final class WarpEvents {
                     } else if (eff <= 36) {
                         player.addEffect(new MobEffectInstance(TCEffects.BLURRED_VISION, Math.min(32000, 10 * warp), 0, true, true));
                     } else if (eff <= 40) {
-                        player.addEffect(lasting(TCEffects.SUN_SCORNED, 5000, Math.min(3, warp / 15), true));
+                        net.thaumcraft.research.Incurable.add(player, lasting(TCEffects.SUN_SCORNED, 5000, Math.min(3, warp / 15), true));
                         say(player, "warp.text.5");
                     } else if (eff <= 44) {
                         player.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 1200, Math.min(3, warp / 15), true, true));
                         say(player, "warp.text.9");
                     } else if (eff <= 48) {
-                        player.addEffect(lasting(TCEffects.INFECTIOUS_VIS_EXHAUST, 6000, Math.min(3, warp / 15), false));
+                        net.thaumcraft.research.Incurable.add(player, lasting(TCEffects.INFECTIOUS_VIS_EXHAUST, 6000, Math.min(3, warp / 15), false));
                         say(player, "warp.text.1");
                     } else if (eff <= 52) {
                         player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, Math.min(40 * warp, 6000), 0, true, true));
                         say(player, "warp.text.10");
                     } else if (eff <= 56) {
-                        player.addEffect(lasting(TCEffects.DEATH_GAZE, 6000, Math.min(3, warp / 15), true));
+                        net.thaumcraft.research.Incurable.add(player, lasting(TCEffects.DEATH_GAZE, 6000, Math.min(3, warp / 15), true));
                         say(player, "warp.text.4");
                     } else if (eff <= 60) {
                         suddenlySpiders(player, warp, false);
@@ -132,7 +132,7 @@ public final class WarpEvents {
                         if (Knowledges.of(player).warpSticky() > 0) Warp.addSticky(player, -1);
                         say(player, "warp.text.14");
                     } else if (eff <= 80) {
-                        player.addEffect(lasting(TCEffects.UNNATURAL_HUNGER, 6000, Math.min(3, warp / 15), true));
+                        net.thaumcraft.research.Incurable.add(player, lasting(TCEffects.UNNATURAL_HUNGER, 6000, Math.min(3, warp / 15), true));
                         say(player, "warp.text.2");
                     } else if (eff <= 84) {
                         grantResearch(player, warp / 10);
