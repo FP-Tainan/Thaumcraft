@@ -1286,5 +1286,18 @@
   "tc.bore.silk": "Silk Touch",
   "block.thaumcraft.wand_pedestal": "Wand Recharge Pedestal",
   "block.thaumcraft.recharge_focus": "Compound Recharge Focus",
-  "container.wandpedestal": "Wand Recharge Pedestal"
+  "container.wandpedestal": "Wand Recharge Pedestal",
+  "block.thaumcraft.arcane_spa": "Arcane Spa",
+  "block.thaumcraft.purifying_fluid": "Purifying Fluid",
+  "block.thaumcraft.liquid_death": "Liquid Death",
+  "item.thaumcraft.bath_salts": "Purifying Bath Salts",
+  "item.thaumcraft.bucket_pure": "Bucket of Purifying Fluid",
+  "item.thaumcraft.bucket_death": "Bucket of Liquid Death",
+  "effect.thaumcraft.warp_ward": "Warp Ward",
+  "text.spa.mix.true": "Mix with ingredient",
+  "text.spa.mix.false": "Use just the fluid",
+  "fluid.thaumcraft.purifying_fluid": "Purifying Fluid",
+  "fluid.thaumcraft.liquid_death": "Liquid Death",
+  "death.attack.dissolve": "%1$s was dissolved",
+  "death.attack.dissolve.player": "%1$s was dissolved whilst fighting %2$s"
 }

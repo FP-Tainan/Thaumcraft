@@ -543,6 +543,37 @@ public final class TCBlocks {
                     .noOcclusion()
                     .sound(SoundType.STONE)));
 
+    /** Os blocos dos fluidos: o purificante (luz 10) e a morte líquida (luz 8). */
+    public static final Block PURIFYING_FLUID = register("purifying_fluid", properties ->
+            new net.thaumcraft.fluid.ThaumFluid.LiquidBlock(TCFluids.PURIFYING, properties
+                    .mapColor(MapColor.WATER)
+                    .replaceable()
+                    .noCollision()
+                    .strength(100.0f)
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)
+                    .noLootTable()
+                    .liquid()
+                    .lightLevel(state -> 10)
+                    .sound(SoundType.EMPTY)));
+    public static final Block LIQUID_DEATH = register("liquid_death", properties ->
+            new net.thaumcraft.fluid.ThaumFluid.LiquidBlock(TCFluids.DEATH, properties
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .replaceable()
+                    .noCollision()
+                    .strength(100.0f)
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)
+                    .noLootTable()
+                    .liquid()
+                    .lightLevel(state -> 8)
+                    .sound(SoundType.EMPTY)));
+
+    /** O spa arcano, o número 12 do BlockStoneDevice. */
+    public static final Block ARCANE_SPA = register("arcane_spa", properties ->
+            new net.thaumcraft.block.ArcaneSpaBlock(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0f, 25.0f)
+                    .sound(SoundType.STONE)));
+
     /** A mesa de madeira do mod: vira bancada arcana com a varinha e mesa de pesquisa com a pena. */
     public static final Block TABLE = register("table", properties ->
             new net.thaumcraft.block.TableBlock(properties

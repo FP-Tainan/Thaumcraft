@@ -94,6 +94,8 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.METAL, 2).add(Aspects.EXCHANGE, 1)));
         ALL.add(new CrucibleRecipe("ETHEREALBLOOM", new ItemStack(TCBlocks.ETHEREAL_BLOOM.asItem()), TCBlocks.SHIMMERLEAF.asItem(),
                 new AspectList().add(Aspects.MAGIC, 16).add(Aspects.PLANT, 16).add(Aspects.HEAL, 16).add(Aspects.TAINT, 8)));
+        ALL.add(new CrucibleRecipe("LIQUIDDEATH", new ItemStack(TCItems.BUCKET_DEATH), net.minecraft.world.item.Items.GLASS_BOTTLE,
+                new AspectList().add(Aspects.DEATH, 32).add(Aspects.POISON, 32).add(Aspects.ENTROPY, 32)));
         ALL.add(new CrucibleRecipe("GOLEMSTRAW", new ItemStack(TCItems.GOLEM_PLACERS.get("straw")), net.minecraft.world.level.block.Blocks.HAY_BLOCK.asItem(),
                 new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
         ALL.add(new CrucibleRecipe("GOLEMWOOD", new ItemStack(TCItems.GOLEM_PLACERS.get("wood")), TCBlocks.GREATWOOD_LOG.asItem(),
@@ -122,5 +124,7 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.FLESH, 5).add(Aspects.BEAST, 5)));
         ALL.add(new CrucibleRecipe("CORELIQUID", new ItemStack(TCItems.GOLEM_CORES.get("decanting")), TCItems.GOLEM_CORE_BLANK,
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.VOID, 5)));
+        ALL.add(new CrucibleRecipe("BATHSALTS", new ItemStack(TCItems.BATH_SALTS), TCResources.get("salis_mundus"),
+                new AspectList().add(Aspects.MIND, 6).add(Aspects.AURA, 6).add(Aspects.ORDER, 6).add(Aspects.HEAL, 6)));
     }
 }

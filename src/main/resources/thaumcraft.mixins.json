@@ -7,7 +7,8 @@
     "PlayerRunicMixin",
     "PlayerHoverMixin",
     "OverworldBiomeBuilderMixin",
-    "NoteBlockMixin"
+    "NoteBlockMixin",
+    "ItemEntityBathSaltsMixin"
   ],
   "client": [
     "ItemInHandRendererMixin"

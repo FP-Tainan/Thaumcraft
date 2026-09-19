@@ -1189,3 +1189,26 @@ Porte do `TileWandPedestal`, `TileWandPedestalRenderer` e dos números 5 e 8 do 
   nó, na cor do aspecto que está bebendo.
 - **Receitas** de infusão do jar (as peças 5 e 8 entraram no mapeador de itens).
 - **Testes**: `WandPedestalGameTest` (bebe do nó, comparador; compostos só com o foco) e `WandPedestalClientTest`.
+
+## Spa arcano, sais de banho e fluidos
+
+Porte do `TileSpa`, `ContainerSpa`, `GuiSpa`, do número 12 do `BlockStoneDevice`, do `BlockFluidPure`, do
+`BlockFluidDeath`, do `ItemBathSalts`, dos baldes, do `PotionWarpWard`, do `DamageSourceThaumcraft.dissolve` e dos
+trechos `itemExpire` e `livingDrops` do `EventHandlerEntity` (descompilados do jar).
+
+- **Fluidos** (`fluid/ThaumFluid`, `PurifyingFluid`, `LiquidDeathFluid`, `TCFluids`): o fluido que corre do jogo de
+  hoje, com as texturas animadas do original. O **purificante** (luz 10, anda a cada 5 tiques, 8 níveis) dá ao jogador
+  que entra numa fonte a **proteção contra a dobra** (`TCEffects.WARP_WARD`, o ícone recortado da `potions.png`) por
+  `min(32000, 200000 / √dobra)` tiques e a fonte some; borbulha branco. A **morte líquida** (luz 8) dissolve o que vive
+  — 1 de dano por nível, até 4 — e quem morre dissolvido solta cristais de essência dos aspectos dele; borbulha roxo.
+  O fluido finito do Forge não existe hoje: a morte líquida corre perdendo dois níveis por bloco. Nenhum forma fonte.
+- **Baldes** dos dois e **sais de banho**: soltos, os sais duram dez segundos; se acabam numa fonte de água, ela vira
+  purificante (no jogo de hoje o item boia, então vale também a fonte logo abaixo dele).
+- **Spa** (`ArcaneSpaBlock`/`ArcaneSpaBlockEntity`): tanque de cinco baldes (aberto aos canos de fluido do Fabric, menos
+  por cima) e a casa dos sais; um recipiente na mão despeja no tanque; a mão vazia abre a tela. A cada 40 tiques, sem
+  redstone, verte um balde por cima — misturando, água + sal vira purificante; sem misturar, o fluido do tanque — e,
+  com o bloco de cima já cheio, numa casa vizinha encostada (até dois blocos). A água não sai onde evapora.
+- **Tela** (`ArcaneSpaScreen`): a casa, o botão de misturar e o tanque com o fluido desenhado.
+- **Receitas** do jar: o spa (arcana), os sais e o balde de morte líquida (crisol).
+- **Testes**: `SpaGameTest` (purificante pelo spa, só o fluido, a proteção contra a dobra, a morte líquida, os sais na
+  água) e `SpaClientTest`.

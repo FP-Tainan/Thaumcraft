@@ -56,6 +56,10 @@ public final class TCBlockEntities {
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("wand_pedestal"),
             new BlockEntityType<>(net.thaumcraft.block.entity.WandPedestalBlockEntity::new, java.util.Set.of(TCBlocks.WAND_PEDESTAL)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.ArcaneSpaBlockEntity> ARCANE_SPA = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_spa"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.ArcaneSpaBlockEntity::new, java.util.Set.of(TCBlocks.ARCANE_SPA)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.BellowsBlockEntity> BELLOWS = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("bellows"),
             new BlockEntityType<>(net.thaumcraft.block.entity.BellowsBlockEntity::new, java.util.Set.of(TCBlocks.BELLOWS)));

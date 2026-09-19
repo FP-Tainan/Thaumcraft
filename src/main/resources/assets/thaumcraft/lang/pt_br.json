@@ -1290,5 +1290,18 @@
   "tc.bore.silk": "Toque Suave",
   "block.thaumcraft.wand_pedestal": "Pedestal de Recarga de Varinha",
   "block.thaumcraft.recharge_focus": "Composto de Recarga de Focus",
-  "container.wandpedestal": "Pedestal de Recarga de Varinha"
+  "container.wandpedestal": "Pedestal de Recarga de Varinha",
+  "block.thaumcraft.arcane_spa": "Spa Arcano",
+  "block.thaumcraft.purifying_fluid": "Fluido Purificante",
+  "block.thaumcraft.liquid_death": "Morte Líquida",
+  "item.thaumcraft.bath_salts": "Sais de Banho Purificantes",
+  "item.thaumcraft.bucket_pure": "Balde de Fluido Purificante",
+  "item.thaumcraft.bucket_death": "Balde de Morte Líquida",
+  "effect.thaumcraft.warp_ward": "Proteção contra a Dobra",
+  "text.spa.mix.true": "Misturar com o ingrediente",
+  "text.spa.mix.false": "Usar só o fluido",
+  "fluid.thaumcraft.purifying_fluid": "Fluido Purificante",
+  "fluid.thaumcraft.liquid_death": "Morte Líquida",
+  "death.attack.dissolve": "%1$s foi dissolvido",
+  "death.attack.dissolve.player": "%1$s foi dissolvido enquanto lutava contra %2$s"
 }

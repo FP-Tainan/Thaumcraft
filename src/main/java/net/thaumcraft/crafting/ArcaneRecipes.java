@@ -94,6 +94,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("ARCANELAMP", new ItemStack(TCBlocks.ARCANE_LAMP.asItem()),
                 Arrays.asList(null, Ingredient.of(net.minecraft.world.level.block.Blocks.DAYLIGHT_DETECTOR.asItem()), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.AMBER_BLOCK.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(TCItems.NITOR), null),
                 new AspectList().add(Aspects.FIRE, 8).add(Aspects.AIR, 8).add(Aspects.WATER, 4).add(Aspects.ENTROPY, 4)));
+        // ArcaneSpa
+        ALL.add(new ArcaneRecipe("ARCANESPA", new ItemStack(TCBlocks.ARCANE_SPA.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.level.block.Blocks.QUARTZ_BLOCK.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.IRON_BARS.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.QUARTZ_BLOCK.asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCBlocks.JAR.asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.PISTON.asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem())),
+                new AspectList().add(Aspects.WATER, 16).add(Aspects.ORDER, 8).add(Aspects.EARTH, 4)));
         // PaveWard
         ALL.add(new ArcaneRecipe("PAVEWARD", new ItemStack(TCBlocks.BUILDING.get("paving_stone_warding").asItem(), 4),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), null, null, null),

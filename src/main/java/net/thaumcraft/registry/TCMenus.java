@@ -51,6 +51,12 @@ public final class TCMenus {
             new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.ArcaneBoreMenu::new,
                     net.minecraft.core.BlockPos.STREAM_CODEC));
 
+    /** O spa arcano: a tela abre sabendo de qual é. */
+    public static final MenuType<net.thaumcraft.inventory.ArcaneSpaMenu> ARCANE_SPA = Registry.register(
+            BuiltInRegistries.MENU, Thaumcraft.id("arcane_spa"),
+            new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.ArcaneSpaMenu::new,
+                    net.minecraft.core.BlockPos.STREAM_CODEC));
+
     public static final MenuType<net.thaumcraft.inventory.AlchemicalFurnaceMenu> ALCHEMICAL_FURNACE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("alchemical_furnace"),
                     new MenuType<>(net.thaumcraft.inventory.AlchemicalFurnaceMenu::new,

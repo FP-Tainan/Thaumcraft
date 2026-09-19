@@ -187,6 +187,32 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.ETHEREAL_BLOOM, net.thaumcraft.client.render.EtherealBloomRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.DECONSTRUCTION_TABLE,
                 net.thaumcraft.client.gui.DeconstructionTableScreen::new);
+        // os fluidos (o purificante e a morte líquida), as bolhas deles e a tela do spa arcano
+        net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderingRegistry.register(net.thaumcraft.registry.TCFluids.PURIFYING,
+                net.thaumcraft.registry.TCFluids.PURIFYING_FLOWING, new net.minecraft.client.renderer.block.FluidModel.Unbaked(
+                        new net.minecraft.client.resources.model.sprite.Material(Thaumcraft.id("block/fluidpure"), true),
+                        new net.minecraft.client.resources.model.sprite.Material(Thaumcraft.id("block/fluidpure"), true), null, null));
+        net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderingRegistry.register(net.thaumcraft.registry.TCFluids.DEATH,
+                net.thaumcraft.registry.TCFluids.DEATH_FLOWING, new net.minecraft.client.renderer.block.FluidModel.Unbaked(
+                        new net.minecraft.client.resources.model.sprite.Material(Thaumcraft.id("block/fluiddeath"), true),
+                        new net.minecraft.client.resources.model.sprite.Material(Thaumcraft.id("block/fluiddeath"), true), null, null));
+        net.thaumcraft.fluid.ThaumFluid.clientEffects = new net.thaumcraft.fluid.ThaumFluid.ClientEffects() {
+            @Override
+            public void purifying(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos, int meta, net.minecraft.util.RandomSource random) {
+                net.thaumcraft.client.fx.Bubble.spawn(pos.getX() + random.nextFloat(), pos.getY() + 0.125f * (8 - meta),
+                        pos.getZ() + random.nextFloat(), 1.0f, 1.0f, 1.0f, 0.25f, 0, random);
+            }
+
+            @Override
+            public void death(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos, int meta, net.minecraft.util.RandomSource random) {
+                float h = random.nextFloat() * 0.075f;
+                int red = (int) ((0.3f - random.nextFloat() * 0.1f) * 255), blue = (int) ((0.4f + random.nextFloat() * 0.1f) * 255);
+                net.thaumcraft.client.fx.SlimyBubble.spawn(pos.getX() + random.nextFloat(), pos.getY() + 0.1f + 0.225f * meta,
+                        pos.getZ() + random.nextFloat(), 0.075f + h, 0xCC000000 | red << 16 | blue, random);
+            }
+        };
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.ARCANE_SPA,
+                net.thaumcraft.client.gui.ArcaneSpaScreen::new);
         // o pedestal de recarga: a varinha girando em cima e a linha até o nó de que bebe
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.WAND_PEDESTAL, net.thaumcraft.client.render.WandPedestalRenderer::new);

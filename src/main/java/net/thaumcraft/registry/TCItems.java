@@ -479,6 +479,21 @@ public final class TCItems {
     public static final Item RECHARGE_FOCUS = register("recharge_focus", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.RECHARGE_FOCUS, properties.useBlockDescriptionPrefix()));
 
+    public static final Item ARCANE_SPA = register("arcane_spa", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_SPA, properties.useBlockDescriptionPrefix()));
+    /** Os sais de banho, que viram fluido purificante na água. */
+    public static final Item BATH_SALTS = register("bath_salts", properties ->
+            new net.minecraft.world.item.Item(properties));
+    /** Os baldes dos dois fluidos. */
+    public static final Item BUCKET_PURE = register("bucket_pure", properties ->
+            new net.minecraft.world.item.BucketItem(TCFluids.PURIFYING, properties
+                    .craftRemainder(net.minecraft.world.item.Items.BUCKET).stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)));
+    public static final Item BUCKET_DEATH = register("bucket_death", properties ->
+            new net.minecraft.world.item.BucketItem(TCFluids.DEATH, properties
+                    .craftRemainder(net.minecraft.world.item.Items.BUCKET).stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)));
+
     /** O fole. */
     public static final Item BELLOWS = register("bellows", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.BELLOWS, properties.useBlockDescriptionPrefix()));
