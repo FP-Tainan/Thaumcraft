@@ -295,6 +295,10 @@ public final class TCItems {
     public static final Item MNEMONIC_MATRIX = register("mnemonic_matrix", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.MNEMONIC_MATRIX, properties.useBlockDescriptionPrefix()));
 
+    public static final Item BANNER = register("banner", properties ->
+            new net.thaumcraft.item.BannerItem(TCBlocks.BANNER, properties.useBlockDescriptionPrefix()));
+    public static final Item FLUX_SCRUBBER = register("flux_scrubber", properties ->
+            new net.thaumcraft.item.FluxScrubberItem(TCBlocks.FLUX_SCRUBBER, properties.useBlockDescriptionPrefix()));
     public static final Item ITEM_GRATE = register("item_grate", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ITEM_GRATE, properties.useBlockDescriptionPrefix()));
 

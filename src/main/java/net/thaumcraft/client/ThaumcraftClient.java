@@ -97,6 +97,13 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.TRUNK,
                 net.thaumcraft.client.gui.TrunkScreen::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("traveling_trunk"), net.thaumcraft.client.render.TrunkRenderer.Unbaked.CODEC);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.FLUX_SCRUBBER, net.thaumcraft.client.render.FluxScrubberRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("flux_scrubber"), net.thaumcraft.client.render.FluxScrubberRenderer.Unbaked.CODEC);
+        // o estandarte, no mundo e na mão
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.BANNER, net.thaumcraft.client.render.BannerRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("banner"), net.thaumcraft.client.render.BannerRenderer.Unbaked.CODEC);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.GOLEM,
                 net.thaumcraft.client.render.GolemRenderer::new);

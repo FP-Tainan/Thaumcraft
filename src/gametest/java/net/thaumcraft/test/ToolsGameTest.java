@@ -89,4 +89,44 @@ public class ToolsGameTest {
         if (pick.getDamageValue() != 9) helper.fail("a picareta devia se consertar um ponto, está " + pick.getDamageValue());
         helper.succeed();
     }
+
+    /** O estandarte: a cor vem do item, o frasco pinta o aspecto, e quebrado ele leva as duas coisas no item. */
+    @GameTest
+    public void bannersKeepColourAndAspect(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        helper.setBlock(new BlockPos(2, 1, 2), Blocks.STONE);
+        BlockPos at = new BlockPos(2, 2, 2);
+        ItemStack banner = net.thaumcraft.block.BannerBlock.stack(14);
+        player.setItemInHand(InteractionHand.MAIN_HAND, banner);
+        BlockPos below = helper.absolutePos(new BlockPos(2, 1, 2));
+        banner.useOn(new UseOnContext(player, InteractionHand.MAIN_HAND, new BlockHitResult(Vec3.atCenterOf(below).add(0, 0.5, 0), Direction.UP, below, false)));
+        var te = helper.getBlockEntity(at, net.thaumcraft.block.entity.BannerBlockEntity.class);
+        if (te.getColor() != 14) helper.fail("o estandarte vermelho devia ter a cor 14, tem " + te.getColor());
+        ItemStack phial = new ItemStack(TCItems.PHIAL);
+        phial.set(net.thaumcraft.registry.TCComponents.PHIAL_ASPECT, "ignis");
+        player.setItemInHand(InteractionHand.MAIN_HAND, phial);
+        helper.getLevel().getBlockState(helper.absolutePos(at)).useItemOn(phial, helper.getLevel(), player, InteractionHand.MAIN_HAND,
+                new BlockHitResult(Vec3.atCenterOf(helper.absolutePos(at)), Direction.NORTH, helper.absolutePos(at), false));
+        if (te.getAspect() == null || !te.getAspect().tag().equals("ignis")) helper.fail("o frasco devia pintar Ignis");
+        if (!phial.isEmpty()) helper.fail("o frasco se gasta");
+        var drops = net.minecraft.world.level.block.Block.getDrops(helper.getLevel().getBlockState(helper.absolutePos(at)), helper.getLevel(),
+                helper.absolutePos(at), te);
+        if (drops.isEmpty() || drops.getFirst().get(net.thaumcraft.registry.TCComponents.BANNER_COLOR) == null
+                || !"ignis".equals(drops.getFirst().get(net.thaumcraft.registry.TCComponents.BANNER_ASPECT))) {
+            helper.fail("o estandarte quebrado leva a cor e o aspecto");
+        }
+        helper.succeed();
+    }
+
+    /** O purificador, com força, desfaz um nível de gosma de fluxo perto e conta a carga (sorteia 16 lugares por tique). */
+    @GameTest(maxTicks = 1200)
+    public void theFluxScrubberCleansGoo(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 1, 1), net.thaumcraft.registry.TCBlocks.FLUX_SCRUBBER);
+        for (int x = 0; x < 5; x++) for (int z = 0; z < 5; z++) helper.setBlock(new BlockPos(x, 1, z).above(1).offset(0, 0, 0), net.thaumcraft.registry.TCBlocks.FLUX_GOO);
+        var te = helper.getBlockEntity(new BlockPos(1, 1, 1), net.thaumcraft.block.entity.FluxScrubberBlockEntity.class);
+        helper.succeedWhen(() -> {
+            te.power = 5;
+            if (te.charges == 0) helper.fail("o purificador devia ter desfeito algum fluxo");
+        });
+    }
 }

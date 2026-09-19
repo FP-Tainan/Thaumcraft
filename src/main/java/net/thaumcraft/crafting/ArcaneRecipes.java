@@ -38,6 +38,70 @@ public final class ArcaneRecipes {
     }
 
     static {
+        // Banner_0
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(0),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.white()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.white()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.white()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_1
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(1),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.orange()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.orange()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.orange()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_2
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(2),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.magenta()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.magenta()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.magenta()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_3
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(3),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.lightBlue()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.lightBlue()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.lightBlue()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_4
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(4),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.yellow()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.yellow()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.yellow()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_5
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(5),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.lime()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.lime()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.lime()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_6
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(6),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.pink()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.pink()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.pink()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_7
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(7),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.gray()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.gray()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.gray()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_8
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(8),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.lightGray()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.lightGray()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.lightGray()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_9
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(9),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.cyan()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.cyan()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.cyan()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_10
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(10),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.purple()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.purple()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.purple()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_11
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(11),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.blue()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.blue()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.blue()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_12
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(12),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.brown()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.brown()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.brown()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_13
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(13),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.green()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.green()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.green()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_14
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(14),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.red()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.red()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.red()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
+        // Banner_15
+        ALL.add(new ArcaneRecipe("BANNERS", net.thaumcraft.block.BannerBlock.stack(15),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), Ingredient.of(net.minecraft.world.item.Items.STICK), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), Ingredient.of(net.minecraft.world.item.Items.OAK_SLAB), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 5)));
         // PrimalCharm
         ALL.add(new ArcaneRecipe("BASICARTIFACE", new ItemStack(TCResources.get("primal_charm")),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARDS.get("entropy"))),
@@ -54,6 +118,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("WARDEDARCANA", new ItemStack(TCItems.IRON_KEY, 2),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_NUGGET), Ingredient.of(net.minecraft.world.item.Items.IRON_NUGGET), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_NUGGET), null, null, null, null, null),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // FluxScrubber
+        ALL.add(new ArcaneRecipe("FLUXSCRUB", new ItemStack(TCBlocks.FLUX_SCRUBBER.asItem()),
+                Arrays.asList(null, Ingredient.of(TCBlocks.BELLOWS.asItem()), null, Ingredient.of(net.minecraft.world.level.block.Blocks.IRON_BARS.asItem()), Ingredient.of(TCResources.get("vis_filter")), Ingredient.of(net.minecraft.world.level.block.Blocks.IRON_BARS.asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem())),
+                new AspectList().add(Aspects.WATER, 16).add(Aspects.ORDER, 16).add(Aspects.AIR, 8)));
         // GoldKey
         ALL.add(new ArcaneRecipe("WARDEDARCANA", new ItemStack(TCItems.GOLD_KEY, 2),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null, null, null, null, null),

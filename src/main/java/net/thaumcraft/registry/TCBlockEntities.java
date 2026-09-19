@@ -216,6 +216,14 @@ public final class TCBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("thaumatorium_top"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.ThaumatoriumTopBlockEntity::new, java.util.Set.of(TCBlocks.THAUMATORIUM)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.BannerBlockEntity> BANNER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("banner"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.BannerBlockEntity::new, java.util.Set.of(TCBlocks.BANNER)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.FluxScrubberBlockEntity> FLUX_SCRUBBER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("flux_scrubber"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.FluxScrubberBlockEntity::new, java.util.Set.of(TCBlocks.FLUX_SCRUBBER)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.ItemGrateBlockEntity> ITEM_GRATE =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("item_grate"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.ItemGrateBlockEntity::new, java.util.Set.of(TCBlocks.ITEM_GRATE)));

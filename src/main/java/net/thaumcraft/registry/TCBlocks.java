@@ -298,6 +298,14 @@ public final class TCBlocks {
             new net.thaumcraft.block.MnemonicMatrixBlock(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f)
                     .sound(SoundType.METAL).noOcclusion()));
 
+    /** O estandarte (o aparelho de madeira 8): de pé ou na parede, colorido ou dos cultistas. */
+    public static final Block BANNER = register("banner", properties ->
+            new net.thaumcraft.block.BannerBlock(properties.mapColor(MapColor.WOOD).strength(2.5f, 10.0f).sound(SoundType.WOOD).noOcclusion()));
+
+    /** O purificador de fluxo (o aparelho de pedra 14). */
+    public static final Block FLUX_SCRUBBER = register("flux_scrubber", properties ->
+            new net.thaumcraft.block.FluxScrubberBlock(properties.mapColor(MapColor.STONE).strength(3.0f, 25.0f).sound(SoundType.STONE).noOcclusion()));
+
     /** A grade de itens: deixa passar só os itens, aberta. */
     public static final Block ITEM_GRATE = register("item_grate", properties ->
             new net.thaumcraft.block.ItemGrateBlock(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f)

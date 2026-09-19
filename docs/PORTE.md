@@ -1466,3 +1466,14 @@ Descompilados do jar: `ItemNuggetEdible`, `ItemTripleMeatTreat`, `ItemElemental*
 - **Ressonador** (o que há e o que puxa num cano), **verificador de sanidade** (o tubo da distorção no canto da tela) e
   **pedra sinistra** (acende com um nó sombrio à frente).
 - **Testes**: `ToolsGameTest`; tela: `ToolsClientTest`.
+
+## Estandartes e purificador de fluxo
+
+- **Estandartes** (`TileBanner`, `TileBannerRenderer`/`ModelBanner`, o aparelho de madeira 8): o dos cultistas e os
+  dezesseis coloridos (bancada arcana, receitas geradas desenrolando o laço do original), de pé (dezesseis rumos) ou na
+  parede, com o pano balançando; o frasco de essência pinta o aspecto (agachado apaga); quebrado, leva cor e aspecto no
+  item, que se desenha como o estandarte.
+- **Purificador de fluxo** (`TileFluxScrubber`, o aparelho de pedra 14): bebe Aer da rede de vis e desfaz a gosma e o
+  gás de fluxo a até dezesseis blocos, juntando Praecantatio que sai por cano; o topo de obelisco com a ponta balançando.
+- A **caixa mágica** (`BlockMagicBox`) não entra: no original ela não tem receita nem aparece no criativo.
+- **Testes**: `ToolsGameTest` (estandarte, purificador); tela: `BannerClientTest`.

@@ -72,6 +72,7 @@
       "net.thaumcraft.test.client.InfusionRunClientTest",
       "net.thaumcraft.test.client.WarpClientTest",
       "net.thaumcraft.test.client.ToolsClientTest",
+      "net.thaumcraft.test.client.BannerClientTest",
       "net.thaumcraft.test.client.BookClientTest",
       "net.thaumcraft.test.client.NodeClientTest",
       "net.thaumcraft.test.client.WandClientTest",
