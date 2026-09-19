@@ -1,0 +1,17 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:ingots/silver"
+      ]
+    }
+  ],
+  "type": "thaumcraft:tag_smelting",
+  "ingredient": "thaumcraft:native_silver_cluster",
+  "result_tag": "c:ingots/silver",
+  "count": 2,
+  "experience": 1,
+  "cookingtime": 200
+}

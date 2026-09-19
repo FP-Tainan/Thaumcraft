@@ -53,6 +53,8 @@ public class Thaumcraft implements ModInitializer {
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_LEVEL_TICK.register(
                 net.thaumcraft.block.entity.ArcaneEarBlockEntity::endTick);
         net.thaumcraft.crafting.LabelMarkingRecipe.init();
+        net.thaumcraft.crafting.TagSmeltingRecipe.init();
+        net.thaumcraft.crafting.MetalIngotRecipe.init();
         // a fila de trocas do foco de Troca Equivalente, e o golpe da varinha que troca um bloco só
         net.thaumcraft.item.Swapper.init();
         net.thaumcraft.event.FortressMasks.init();

@@ -35,6 +35,25 @@ public class CrucibleGameTest {
     }
 
     /** As receitas de crisol vieram do original e cobram o que têm de cobrar. */
+    /**
+     * Estanho, prata e chumbo pelas etiquetas c: o {@code TransTin} multiplica qualquer pepita de estanho (a do
+     * Thaumcraft está na etiqueta) em três, e o aglomerado dá a pepita na fornalha infernal.
+     */
+    @GameTest
+    public void otherMetalsGoByTags(GameTestHelper helper) {
+        var tinNugget = net.thaumcraft.registry.TCResources.get("tin_nugget");
+        AspectList water = new AspectList().add(Aspects.METAL, 2).add(Aspects.CRYSTAL, 1);
+        CrucibleRecipe trans = CrucibleRecipes.find(water, new ItemStack(tinNugget));
+        if (trans == null || !trans.research().equals("TRANSTIN")) helper.fail("a pepita de estanho devia fechar o TransTin");
+        if (!trans.result().is(tinNugget) || trans.result().getCount() != 3) helper.fail("o TransTin dá três pepitas de estanho");
+        for (String key : new String[]{"PURETIN", "PURESILVER", "PURELEAD", "TRANSSILVER", "TRANSLEAD"}) {
+            if (CrucibleRecipes.ALL.stream().noneMatch(r -> r.research().equals(key))) helper.fail("faltou a receita " + key);
+        }
+        var bonus = net.thaumcraft.crafting.SmeltingBonus.of(new ItemStack(net.thaumcraft.registry.TCResources.get("native_lead_cluster")));
+        if (bonus != net.thaumcraft.registry.TCResources.get("lead_nugget")) helper.fail("o aglomerado de chumbo dá pepita de chumbo");
+        helper.succeed();
+    }
+
     @GameTest
     public void recipesCameFromTheOriginal(GameTestHelper helper) {
         if (CrucibleRecipes.ALL.size() < 15) {

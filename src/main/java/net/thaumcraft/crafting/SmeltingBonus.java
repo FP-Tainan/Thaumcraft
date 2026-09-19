@@ -32,7 +32,10 @@ public final class SmeltingBonus {
     @Nullable
     public static Item of(ItemStack in) {
         init();
-        return in.isEmpty() ? null : BONUS.get(in.getItem());
+        if (in.isEmpty()) return null;
+        Item found = BONUS.get(in.getItem());
+        // estanho, prata e chumbo, pelas etiquetas c:
+        return found != null ? found : OtherMetals.smeltingBonus(in);
     }
 
     public static int size() {
@@ -56,6 +59,9 @@ public final class SmeltingBonus {
         add(TCResources.get("native_iron_cluster"), net.minecraft.world.item.Items.IRON_NUGGET);
         add(TCResources.get("native_cinnabar_cluster"), TCResources.get("quicksilver_drop"));
         add(TCResources.get("native_copper_cluster"), net.minecraft.world.item.Items.COPPER_NUGGET);
+        add(TCResources.get("native_tin_cluster"), TCResources.get("tin_nugget"));
+        add(TCResources.get("native_silver_cluster"), TCResources.get("silver_nugget"));
+        add(TCResources.get("native_lead_cluster"), TCResources.get("lead_nugget"));
         add(net.minecraft.world.item.Items.CHICKEN, TCItems.NUGGET_CHICKEN);
         add(net.minecraft.world.item.Items.BEEF, TCItems.NUGGET_BEEF);
         add(net.minecraft.world.item.Items.PORKCHOP, TCItems.NUGGET_PORK);

@@ -619,7 +619,7 @@ public class ResearchPageScreen extends Screen {
         this.aspectGrid(graphics, cost, 3, x + start + 28, y + 96 + 32 - 10 * rows, mx, my, 1);
         ItemStack out = recipe.result();
         this.item(graphics, out, x + 48 + start, y + 36, true);
-        ItemStack catalyst = new ItemStack(recipe.catalyst());
+        ItemStack catalyst = cycle(recipe.catalystStacks());
         this.item(graphics, catalyst, x + 26 + start, y + 72, false);
         if (over(mx, my, x + 48 + start, y + 36)) this.itemTooltip(out, mx, my, false);
         if (over(mx, my, x + 26 + start, y + 72)) this.itemTooltip(catalyst, mx, my, true);

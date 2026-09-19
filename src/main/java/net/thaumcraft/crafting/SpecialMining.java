@@ -35,6 +35,11 @@ public final class SpecialMining {
         init();
         float r = random.nextFloat();
         Result found = RESULTS.get(is.getItem());
+        // estanho, prata e chumbo, pelas etiquetas c:
+        if (found == null) {
+            Item other = OtherMetals.specialMining(is);
+            if (other != null) found = new Result(other, 1.0f);
+        }
         if (found != null && r <= chance * found.chance()) return new ItemStack(found.item(), is.getCount());
         return is.copy();
     }

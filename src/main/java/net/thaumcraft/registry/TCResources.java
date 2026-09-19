@@ -47,5 +47,11 @@ public final class TCResources {
             "native_copper_cluster",
             "native_cinnabar_cluster",
             "native_gold_cluster",
+            "tin_nugget",
+            "native_tin_cluster",
+            "silver_nugget",
+            "native_silver_cluster",
+            "lead_nugget",
+            "native_lead_cluster",
     };
 }

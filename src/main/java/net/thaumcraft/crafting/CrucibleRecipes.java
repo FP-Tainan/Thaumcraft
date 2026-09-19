@@ -25,6 +25,8 @@ public final class CrucibleRecipes {
     }
 
     public static void init() {
+        // estanho, prata e chumbo, pelas etiquetas c: (os Config.foundXIngot do original)
+        if (ALL.stream().noneMatch(r -> r.research().equals("PURETIN"))) OtherMetals.addCrucibleRecipes(ALL);
     }
 
     /** A receita que esta água e esta coisa fecham, se houver alguma. */
@@ -138,5 +140,7 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.MIND, 6).add(Aspects.AURA, 6).add(Aspects.ORDER, 6).add(Aspects.HEAL, 6)));
         ALL.add(new CrucibleRecipe("SANESOAP", new ItemStack(TCItems.SANITY_SOAP), TCBlocks.BUILDING.get("tallow_block").asItem(),
                 new AspectList().add(Aspects.MIND, 16).add(Aspects.ELDRITCH, 16).add(Aspects.ORDER, 16).add(Aspects.HEAL, 16)));
+        // estanho, prata e chumbo, pelas etiquetas c: (os Config.foundXIngot do original)
+        OtherMetals.addCrucibleRecipes(ALL);
     }
 }

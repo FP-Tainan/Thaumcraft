@@ -14,9 +14,29 @@ import net.thaumcraft.api.aspects.AspectList;
  * @param result   o que sai
  * @param catalyst o que se joga para fechar
  * @param cost     o que a água precisa ter
+ * @param catalystTag quando o catalisador é qualquer coisa de uma etiqueta (o {@code "oreTin"} do dicionário de então),
+ *                 a etiqueta; o {@code catalyst} fica vazio
  */
 public record CrucibleRecipe(String research, ItemStack result, net.minecraft.world.item.Item catalyst,
-                             AspectList cost) {
+                             AspectList cost,
+                             net.minecraft.tags.@org.jetbrains.annotations.Nullable TagKey<net.minecraft.world.item.Item> catalystTag) {
+
+    public CrucibleRecipe(String research, ItemStack result, net.minecraft.world.item.Item catalyst, AspectList cost) {
+        this(research, result, catalyst, cost, null);
+    }
+
+    /** Com o catalisador por etiqueta. */
+    public CrucibleRecipe(String research, ItemStack result, net.minecraft.tags.TagKey<net.minecraft.world.item.Item> catalystTag, AspectList cost) {
+        this(research, result, net.minecraft.world.item.Items.AIR, cost, catalystTag);
+    }
+
+    /** O que serve de catalisador, para mostrar: o item, ou tudo o que a etiqueta tem. */
+    public java.util.List<ItemStack> catalystStacks() {
+        if (this.catalystTag == null) return java.util.List.of(new ItemStack(this.catalyst));
+        java.util.List<ItemStack> out = new java.util.ArrayList<>();
+        for (var holder : net.minecraft.core.registries.BuiltInRegistries.ITEM.getTagOrEmpty(this.catalystTag)) out.add(new ItemStack(holder));
+        return out;
+    }
 
     /** Esta água e esta coisa fecham esta receita? */
     public boolean matches(AspectList inside, ItemStack thrown) {
@@ -34,7 +54,8 @@ public record CrucibleRecipe(String research, ItemStack result, net.minecraft.wo
     public int hash() {
         StringBuilder key = new StringBuilder(this.research).append('|')
                 .append(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this.result.getItem())).append('x').append(this.result.getCount())
-                .append('|').append(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this.catalyst));
+                .append('|').append(this.catalystTag != null ? "#" + this.catalystTag.location()
+                        : net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this.catalyst));
         for (Aspect aspect : this.cost.getAspectsSorted()) key.append('|').append(aspect.tag()).append(this.cost.getAmount(aspect));
         return key.toString().hashCode();
     }
@@ -50,7 +71,9 @@ public record CrucibleRecipe(String research, ItemStack result, net.minecraft.wo
 
     /** O {@code catalystMatches}. */
     public boolean catalystMatches(ItemStack stack) {
-        if (stack.isEmpty() || !stack.is(this.catalyst)) return false;
+        if (stack.isEmpty()) return false;
+        if (this.catalystTag != null) return stack.is(this.catalystTag);
+        if (!stack.is(this.catalyst)) return false;
         // o frasco como catalisador é o frasco cheio (o itemEssence 1 do original), de qualquer essência
         return this.catalyst != net.thaumcraft.registry.TCItems.PHIAL || net.thaumcraft.item.PhialItem.aspectOf(stack) != null;
     }

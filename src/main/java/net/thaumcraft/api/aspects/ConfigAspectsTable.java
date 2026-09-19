@@ -59,14 +59,17 @@ final class ConfigAspectsTable {
         r.tag("c:ingots/tin", new AspectList().add(Aspects.METAL, 3).add(Aspects.CRYSTAL, 1));
         r.tag("c:dusts/tin", new AspectList().add(Aspects.METAL, 2).add(Aspects.ENTROPY, 1).add(Aspects.CRYSTAL, 1));
         r.tag("c:ores/tin", new AspectList().add(Aspects.METAL, 3).add(Aspects.ENTROPY, 1).add(Aspects.CRYSTAL, 1));
+        r.item("thaumcraft:native_tin_cluster", new AspectList().add(Aspects.ORDER, 1).add(Aspects.METAL, 5).add(Aspects.EARTH, 1).add(Aspects.CRYSTAL, 2));
         r.tag("c:nuggets/silver", new AspectList().add(Aspects.METAL, 1));
         r.tag("c:ingots/silver", new AspectList().add(Aspects.METAL, 3).add(Aspects.GREED, 1));
         r.tag("c:dusts/silver", new AspectList().add(Aspects.METAL, 2).add(Aspects.ENTROPY, 1).add(Aspects.GREED, 1));
         r.tag("c:ores/silver", new AspectList().add(Aspects.METAL, 3).add(Aspects.ENTROPY, 1).add(Aspects.GREED, 1));
+        r.item("thaumcraft:native_silver_cluster", new AspectList().add(Aspects.ORDER, 1).add(Aspects.METAL, 5).add(Aspects.EARTH, 1).add(Aspects.GREED, 2));
         r.tag("c:nuggets/lead", new AspectList().add(Aspects.METAL, 1));
         r.tag("c:ingots/lead", new AspectList().add(Aspects.METAL, 3).add(Aspects.ORDER, 1));
         r.tag("c:dusts/lead", new AspectList().add(Aspects.METAL, 2).add(Aspects.ENTROPY, 1).add(Aspects.ORDER, 1));
         r.tag("c:ores/lead", new AspectList().add(Aspects.METAL, 3).add(Aspects.ENTROPY, 1).add(Aspects.ORDER, 1));
+        r.item("thaumcraft:native_lead_cluster", new AspectList().add(Aspects.ORDER, 1).add(Aspects.METAL, 5).add(Aspects.EARTH, 1).add(Aspects.ORDER, 2));
         r.item("minecraft:bedrock", new AspectList().add(Aspects.VOID, 16).add(Aspects.ENTROPY, 16).add(Aspects.EARTH, 16).add(Aspects.DARKNESS, 16));
         r.item("minecraft:dirt", new AspectList().add(Aspects.EARTH, 2));
         r.item("minecraft:coarse_dirt", new AspectList().add(Aspects.EARTH, 2));

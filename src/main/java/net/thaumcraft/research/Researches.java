@@ -792,19 +792,19 @@ public final class Researches {
                         new Page.Text("tc.research_page.PURECOPPER.1"),
                         new Page.Recipe(Page.Kind.CRUCIBLE, List.of("PureCopper"))), 0, null));
         add(new Research("PURETIN", "ALCHEMY", new AspectList().add(Aspects.METAL, 3).add(Aspects.ORDER, 2).add(Aspects.CRYSTAL, 1), -4, 7, 1,
-                null, null, List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
+                null, () -> new net.minecraft.world.item.ItemStack(TCResources.get("native_tin_cluster")), List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
                 List.of("PUREIRON"), List.of(), List.of(),
                 List.of(
                         new Page.Text("tc.research_page.PURETIN.1"),
                         new Page.Recipe(Page.Kind.CRUCIBLE, List.of("PureTin"))), 0, "c:ingots/tin"));
         add(new Research("PURESILVER", "ALCHEMY", new AspectList().add(Aspects.METAL, 3).add(Aspects.ORDER, 2).add(Aspects.GREED, 1), -3, 8, 1,
-                null, null, List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
+                null, () -> new net.minecraft.world.item.ItemStack(TCResources.get("native_silver_cluster")), List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
                 List.of("PUREIRON"), List.of(), List.of(),
                 List.of(
                         new Page.Text("tc.research_page.PURESILVER.1"),
                         new Page.Recipe(Page.Kind.CRUCIBLE, List.of("PureSilver"))), 0, "c:ingots/silver"));
         add(new Research("PURELEAD", "ALCHEMY", new AspectList().add(Aspects.METAL, 3).add(Aspects.ORDER, 3), -2, 9, 1,
-                null, null, List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
+                null, () -> new net.minecraft.world.item.ItemStack(TCResources.get("native_lead_cluster")), List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
                 List.of("PUREIRON"), List.of(), List.of(),
                 List.of(
                         new Page.Text("tc.research_page.PURELEAD.1"),
@@ -828,19 +828,19 @@ public final class Researches {
                         new Page.Text("tc.research_page.TRANSCOPPER.1"),
                         new Page.Recipe(Page.Kind.CRUCIBLE, List.of("TransCopper"))), 0, null));
         add(new Research("TRANSTIN", "ALCHEMY", new AspectList().add(Aspects.METAL, 3).add(Aspects.EXCHANGE, 2).add(Aspects.CRYSTAL, 1), 2, 7, 1,
-                null, null, List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
+                null, () -> new net.minecraft.world.item.ItemStack(TCResources.get("tin_nugget")), List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
                 List.of("TRANSIRON"), List.of(), List.of(),
                 List.of(
                         new Page.Text("tc.research_page.TRANSTIN.1"),
                         new Page.Recipe(Page.Kind.CRUCIBLE, List.of("TransTin"))), 0, "c:ingots/tin"));
         add(new Research("TRANSSILVER", "ALCHEMY", new AspectList().add(Aspects.METAL, 3).add(Aspects.EXCHANGE, 2).add(Aspects.GREED, 1), 1, 8, 1,
-                null, null, List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
+                null, () -> new net.minecraft.world.item.ItemStack(TCResources.get("silver_nugget")), List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
                 List.of("TRANSIRON"), List.of(), List.of(),
                 List.of(
                         new Page.Text("tc.research_page.TRANSSILVER.1"),
                         new Page.Recipe(Page.Kind.CRUCIBLE, List.of("TransSilver"))), 0, "c:ingots/silver"));
         add(new Research("TRANSLEAD", "ALCHEMY", new AspectList().add(Aspects.METAL, 3).add(Aspects.EXCHANGE, 2).add(Aspects.ORDER, 1), 0, 9, 1,
-                null, null, List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
+                null, () -> new net.minecraft.world.item.ItemStack(TCResources.get("lead_nugget")), List.of(Research.Mark.SECONDARY, Research.Mark.CONCEALED),
                 List.of("TRANSIRON"), List.of(), List.of(),
                 List.of(
                         new Page.Text("tc.research_page.TRANSLEAD.1"),
