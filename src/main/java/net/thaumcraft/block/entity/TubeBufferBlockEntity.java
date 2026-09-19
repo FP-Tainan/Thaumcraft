@@ -35,6 +35,8 @@ public class TubeBufferBlockEntity extends BlockEntity implements EssentiaTransp
     private final boolean[] open = {true, true, true, true, true, true};
     private final byte[] choked = new byte[6];
     private int count;
+    /** Os foles que sopram aqui (o {@code getBellows}), conferidos a cada segundo. */
+    private int bellows = -1;
 
     public TubeBufferBlockEntity(BlockPos pos, BlockState state) {
         super(TCBlockEntities.TUBE_BUFFER, pos, state);
@@ -42,6 +44,7 @@ public class TubeBufferBlockEntity extends BlockEntity implements EssentiaTransp
 
     public static void tick(Level level, BlockPos pos, BlockState state, TubeBufferBlockEntity buffer) {
         buffer.count++;
+        if (buffer.bellows < 0 || buffer.count % 20 == 0) buffer.bellows = net.thaumcraft.block.BellowsBlock.blowingInto(level, pos);
         // como o tubo, confere de dois em dois tiques se o que há em volta mudou
         if (!level.isClientSide() && buffer.count % 2 == 0) {
             BlockState wanted = net.thaumcraft.block.TubeBlock.connect(state, level, pos);
@@ -136,11 +139,12 @@ public class TubeBufferBlockEntity extends BlockEntity implements EssentiaTransp
         return null;
     }
 
-    /** Sem fole, um; estrangulado de vez, nada. O fole ainda não existe neste porte. */
+    /** Um; com foles soprando aqui, 32 por fole (menos no lado meio estrangulado); estrangulado de vez, nada. */
     @Override
     public int getSuctionAmount(@Nullable Direction face) {
-        if (face == null) return 1;
-        return this.choked[face.get3DDataValue()] == 2 ? 0 : 1;
+        int choke = face == null ? 0 : this.choked[face.get3DDataValue()];
+        if (choke == 2) return 0;
+        return this.bellows > 0 && choke != 1 ? this.bellows * 32 : 1;
     }
 
     @Override

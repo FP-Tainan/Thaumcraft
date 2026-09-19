@@ -67,8 +67,9 @@ public class EssentiaCrystalizerBlockEntity extends BlockEntity implements Aspec
                     crystalizer.fillReservoir(level, pos);
                     crystalizer.progress = 0;
                 } else {
-                    // o drainVis de terra da rede de vis, que aqui ainda não existe, somaria o dobro do que bebesse
-                    crystalizer.progress += 1;
+                    // e o dobro do que beber de Terra da rede de vis
+                    crystalizer.progress += 1 + net.thaumcraft.api.visnet.VisNet.drainVis(level, pos, net.thaumcraft.api.aspects.Aspects.EARTH,
+                            Math.min(20, Math.max(1, (PROGRESS_MAX - crystalizer.progress) / 2))) * 2;
                 }
             }
             if (crystalizer.aspect != null && crystalizer.progress >= PROGRESS_MAX) {

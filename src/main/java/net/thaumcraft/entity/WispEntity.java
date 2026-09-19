@@ -116,8 +116,13 @@ public class WispEntity extends Monster {
     protected void customServerAiStep(ServerLevel level) {
         super.customServerAiStep(level);
         if (this.aspect() == null) {
-            // no bioma sombrio o original sorteava entre os aspectos das trevas; o bioma não existe aqui
-            if (this.random.nextInt(10) != 0) {
+            // na Mata Assombrada, um dos aspectos das trevas
+            if (level.getBiome(this.blockPosition()).is(net.thaumcraft.world.TCBiomes.EERIE)) {
+                Aspect[] dark = {net.thaumcraft.api.aspects.Aspects.DARKNESS, net.thaumcraft.api.aspects.Aspects.UNDEAD,
+                        net.thaumcraft.api.aspects.Aspects.ENTROPY, net.thaumcraft.api.aspects.Aspects.ELDRITCH,
+                        net.thaumcraft.api.aspects.Aspects.POISON, net.thaumcraft.api.aspects.Aspects.DEATH};
+                this.setAspect(dark[this.random.nextInt(6)]);
+            } else if (this.random.nextInt(10) != 0) {
                 List<Aspect> primals = Aspects.primals();
                 this.setAspect(primals.get(this.random.nextInt(primals.size())));
             } else {
