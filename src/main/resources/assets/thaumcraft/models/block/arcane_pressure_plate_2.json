@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "thaumcraft:block/arcane_pressure_plate_2",
+    "t": "thaumcraft:block/arcane_pressure_plate_2"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        1,
+        15
+      ],
+      "faces": {
+        "down": {
+          "texture": "#t"
+        },
+        "up": {
+          "texture": "#t"
+        },
+        "north": {
+          "texture": "#t"
+        },
+        "south": {
+          "texture": "#t"
+        },
+        "west": {
+          "texture": "#t"
+        },
+        "east": {
+          "texture": "#t"
+        }
+      }
+    }
+  ]
+}

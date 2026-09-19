@@ -23,6 +23,8 @@
     "thaumcraft:infusion_pillar",
     "thaumcraft:infusion_pillar_top",
     "thaumcraft:cinnabar_ore",
-    "thaumcraft:amber_ore"
+    "thaumcraft:amber_ore",
+    "thaumcraft:arcane_door",
+    "thaumcraft:warded_glass"
   ]
 }

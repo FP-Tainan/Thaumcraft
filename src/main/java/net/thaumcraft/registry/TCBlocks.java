@@ -369,6 +369,30 @@ public final class TCBlocks {
                     .sound(SoundType.GRASS)
                     .pushReaction(PushReaction.DESTROY)));
 
+    /** A porta arcana: de ferro, dura (15), quase à prova de explosão; só abre para o dono e quem tem chave. */
+    public static final Block ARCANE_DOOR = register("arcane_door", properties ->
+            new net.thaumcraft.block.ArcaneDoorBlock(properties
+                    .mapColor(MapColor.METAL).strength(15.0f, 999.0f).noOcclusion().sound(SoundType.METAL)
+                    .pushReaction(PushReaction.BLOCK)));
+
+    /** A placa de pressão arcana: com dono, dispara com tudo, com tudo menos o dono, ou só com o dono. */
+    public static final Block ARCANE_PRESSURE_PLATE = register("arcane_pressure_plate", properties ->
+            new net.thaumcraft.block.ArcanePressurePlateBlock(properties
+                    .mapColor(MapColor.WOOD).strength(2.0f, 999.0f).noCollision().sound(SoundType.WOOD)
+                    .pushReaction(PushReaction.BLOCK)));
+
+    /** O ouvido arcano: escuta os blocos musicais e dá sinal quando ouve a nota dele. */
+    public static final Block ARCANE_EAR = register("arcane_ear", properties ->
+            new net.thaumcraft.block.ArcaneEarBlock(properties
+                    .mapColor(MapColor.WOOD).strength(2.5f, 10.0f).noOcclusion().sound(SoundType.WOOD)));
+
+    /** O vidro protegido: com dono, duro (5), que explosão não quebra e se emenda com o vizinho. */
+    public static final Block WARDED_GLASS = register("warded_glass", properties ->
+            new net.thaumcraft.block.WardedGlassBlock(properties
+                    .mapColor(MapColor.NONE).strength(5.0f, 999.0f).noOcclusion().sound(SoundType.GLASS)
+                    .isValidSpawn((s, l, p, e) -> false).isRedstoneConductor((s, l, p) -> false)
+                    .isSuffocating((s, l, p) -> false).isViewBlocking((s, l, p) -> false)));
+
     /** A crosta da mácula: o que sobra de um tronco ou de uma folha que ela tomou. */
     public static final Block TAINT_CRUST = register("taint_crust", properties ->
             new net.thaumcraft.block.TaintBlock(properties

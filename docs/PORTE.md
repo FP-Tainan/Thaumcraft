@@ -909,3 +909,25 @@ A mesma auditoria achou, nas receitas geradas:
     prata e chumbo não existem sem mods.
   - o tesouro de masmorra é a lista do baú de 2014 com peso até cinco e uma unidade (maçã dourada, dois discos, as três
     armaduras de cavalo, livro encantado), sorteada por igual.
+
+## Porta arcana, chaves, placa de pressão arcana, ouvido arcano e vidro protegido (2026-09-20)
+
+- **Porta arcana** (`ArcaneDoorBlock`, o `BlockArcaneDoor`): porta com dono (quem pôs); só o dono e quem tem chave
+  abrem com a mão, os outros levam "a porta se recusa a abrir" e o som dela emperrada. A redstone não a mexe; a placa
+  de pressão arcana ao lado, de alguém que a porta conhece, abre quando liga e fecha quando desliga. Dura (15),
+  explosão, wither e dragão não a quebram.
+- **Chaves** (`KeyItem`, o `ItemKey`): de ferro e de ouro. Em branco, o dono grava a chave para aquela porta ou placa
+  (a de ouro de outro também grava as de ferro); gravada, brilha e põe quem a usa na lista (a de ferro só abre; a de
+  ouro também dá acesso a outros e mexe na placa). As mensagens são as do original.
+- **Placa de pressão arcana** (`ArcanePressurePlateBlock`): dispara com tudo, com tudo menos o dono e as chaves, ou só
+  com eles (o dono troca com a mão; a cara muda, applate1 a 3). Sinal forte embaixo; imune a explosão e chefão.
+- **Ouvido arcano** (`ArcaneEarBlock`, o `TileSensor`): afinado como bloco musical (a mão sobe a nota e ele toca, com o
+  instrumento do bloco de baixo); ouve a até 64 blocos um bloco musical do mesmo instrumento tocando a mesma nota e dá
+  meio segundo de sinal. As notas chegam por um gancho no bloco musical (`mixin/NoteBlockMixin`), como o
+  `NoteBlockEvent` do original.
+- **Vidro protegido** (`WardedGlassBlock` + `WardedGlassModel`): com dono, duro (5), imune a explosão e chefão; a textura
+  emenda com o vizinho pela tabela de 47 quadros do `UtilsFX` (a mesma conta de vizinhos do original, trocando a
+  textura de cada face na hora de desenhar); batido, mostra o escudo.
+- **Diferenças:**
+  - o ouvido usa os instrumentos do bloco musical de hoje (o original tinha cinco: harpa, bumbo, caixa, chimbal e baixo;
+    os mesmos blocos de baixo dão os mesmos cinco).

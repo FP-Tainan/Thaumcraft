@@ -69,7 +69,8 @@ public final class BlockWardFx implements ThaumFx.Effect {
         if (!minecraft.options.keyAttack.isDown() || minecraft.player.isSpectator()) return;
         HitResult hit = minecraft.hitResult;
         if (hit instanceof BlockHitResult block && hit.getType() == HitResult.Type.BLOCK
-                && minecraft.level.getBlockState(block.getBlockPos()).is(TCBlocks.WARDED)) {
+                && (minecraft.level.getBlockState(block.getBlockPos()).is(TCBlocks.WARDED)
+                || minecraft.level.getBlockState(block.getBlockPos()).is(TCBlocks.WARDED_GLASS))) {
             spawn(block);
         }
     }

@@ -6,7 +6,8 @@
     "LivingEntityArmorMixin",
     "PlayerRunicMixin",
     "PlayerHoverMixin",
-    "OverworldBiomeBuilderMixin"
+    "OverworldBiomeBuilderMixin",
+    "NoteBlockMixin"
   ],
   "client": [
     "ItemInHandRendererMixin"

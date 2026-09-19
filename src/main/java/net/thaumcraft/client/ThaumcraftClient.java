@@ -276,6 +276,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                         pos.getX() + 0.5f + random.nextFloat() - random.nextFloat(),
                         pos.getY() + 0.5f + random.nextFloat() - random.nextFloat(),
                         pos.getZ() + 0.5f + random.nextFloat() - random.nextFloat(), 2.0f, 7, 0.0f);
+        // o vidro protegido emendado
+        net.thaumcraft.client.render.WardedGlassModel.init();
         net.thaumcraft.block.ShimmerleafBlock.clientEffects = net.thaumcraft.client.fx.Wisp::colored;
         // o cogumelo-vis: a chaminha roxa que encolhe e cai
         net.thaumcraft.block.VishroomBlock.clientEffects = (x, y, z) ->

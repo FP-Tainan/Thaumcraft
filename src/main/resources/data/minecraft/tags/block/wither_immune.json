@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "thaumcraft:arcane_door",
+    "thaumcraft:arcane_pressure_plate",
+    "thaumcraft:warded_glass"
+  ]
+}

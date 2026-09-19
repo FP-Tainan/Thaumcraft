@@ -366,6 +366,7 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:wisp_essence", new AspectList().add(Aspects.AURA, 2));
         r.item("thaumcraft:crystal_essence", new AspectList());
         r.complex("thaumcraft:goggles", new AspectList().add(Aspects.SENSES, 4));
+        r.complex("thaumcraft:arcane_ear", new AspectList().add(Aspects.SENSES, 4));
         r.item("thaumcraft:apprentice_ring_air", new AspectList().add(Aspects.MAGIC, 5));
         r.item("thaumcraft:focus_pech", new AspectList().add(Aspects.MAGIC, 5).add(Aspects.POISON, 5).add(Aspects.ENTROPY, 5).add(Aspects.ELDRITCH, 5).add(Aspects.WEAPON, 5));
     }

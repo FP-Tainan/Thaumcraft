@@ -142,6 +142,18 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.WorkbenchChargerBlockEntity::new,
                             java.util.Set.of(TCBlocks.WORKBENCH_CHARGER)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.OwnedBlockEntity> OWNED =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("owned"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.OwnedBlockEntity::new, java.util.Set.of(TCBlocks.ARCANE_DOOR, TCBlocks.WARDED_GLASS)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.ArcanePressurePlateBlockEntity> ARCANE_PRESSURE_PLATE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_pressure_plate"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.ArcanePressurePlateBlockEntity::new, java.util.Set.of(TCBlocks.ARCANE_PRESSURE_PLATE)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.ArcaneEarBlockEntity> ARCANE_EAR =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_ear"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.ArcaneEarBlockEntity::new, java.util.Set.of(TCBlocks.ARCANE_EAR)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.ManaPodBlockEntity> MANA_POD =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("mana_pod"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.ManaPodBlockEntity::new, java.util.Set.of(TCBlocks.MANA_POD)));

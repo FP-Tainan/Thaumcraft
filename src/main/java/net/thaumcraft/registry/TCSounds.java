@@ -94,6 +94,8 @@ public final class TCSounds {
     public static final Holder<SoundEvent> PECH_DEATH = register("pech_death");
     /** O pech partindo para cima. */
     public static final Holder<SoundEvent> PECH_CHARGE = register("pech_charge");
+    /** A porta arcana emperrada para quem nao tem chave. */
+    public static final Holder<SoundEvent> DOOR_FAIL = register("door_fail");
 
     private TCSounds() {
     }

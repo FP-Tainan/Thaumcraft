@@ -188,6 +188,23 @@ public final class TCItems {
             new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.5f).alwaysEdible().build(),
             net.minecraft.world.item.component.Consumables.defaultFood().consumeSeconds(0.5f).build())));
 
+    /** A porta arcana, a placa de pressão arcana e o ouvido arcano, para levar na mão. */
+    public static final Item ARCANE_DOOR = register("arcane_door", properties ->
+            new net.minecraft.world.item.DoubleHighBlockItem(TCBlocks.ARCANE_DOOR, properties.stacksTo(1)));
+    public static final Item ARCANE_PRESSURE_PLATE = register("arcane_pressure_plate", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_PRESSURE_PLATE, properties.useBlockDescriptionPrefix()));
+    public static final Item ARCANE_EAR = register("arcane_ear", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_EAR, properties.useBlockDescriptionPrefix()));
+
+    public static final Item WARDED_GLASS = register("warded_glass", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.WARDED_GLASS, properties.useBlockDescriptionPrefix()));
+
+    /** As chaves arcanas: a de ferro abre, a de ouro também grava chaves e mexe na placa. */
+    public static final Item IRON_KEY = register("iron_key", properties ->
+            new net.thaumcraft.item.KeyItem(0, properties.rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item GOLD_KEY = register("gold_key", properties ->
+            new net.thaumcraft.item.KeyItem(1, properties.rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
     /** O cogumelo-vis, para levar na mão. */
     public static final Item VISHROOM = register("vishroom", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.VISHROOM, properties.useBlockDescriptionPrefix()));
@@ -613,12 +630,12 @@ public final class TCItems {
             "shard_balanced", "salis_mundus", "phial", "crystal_essence", "wisp_essence", "zombie_brain", "mana_bean",
             "thaumium_ingot", "thaumium_nugget", "void_ingot", "void_nugget", "quicksilver", "magic_tallow", "amber", "enchanted_fabric",
             "vis_filter", "knowledge_fragment", "mirrored_glass", "jar_label", "primal_charm", "gold_coin",
-            "alumentum", "nitor", "loot_bag", "loot_bag_uncommon", "loot_bag_rare",
+            "alumentum", "nitor", "iron_key", "gold_key", "loot_bag", "loot_bag_uncommon", "loot_bag_rare",
             "thaumium_pickaxe", "thaumium_axe", "thaumium_shovel", "thaumium_hoe", "thaumium_sword",
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "hungry_chest", "levitator", "arcane_lamp", "growth_lamp", "fertility_lamp", "alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer", "node_stabilizer", "node_stabilizer_advanced", "node_converter", "vis_relay", "workbench_charger",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "hungry_chest", "levitator", "arcane_door", "arcane_pressure_plate", "arcane_ear", "warded_glass", "arcane_lamp", "growth_lamp", "fertility_lamp", "alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer", "node_stabilizer", "node_stabilizer_advanced", "node_converter", "vis_relay", "workbench_charger",
             "infusion_matrix", "pedestal",
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",

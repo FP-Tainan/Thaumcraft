@@ -46,6 +46,12 @@
       "thaumcraft:crystal"
     ]
   },
+  "door_fail": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:doorfail"
+    ]
+  },
   "erase": {
     "category": "player",
     "sounds": [

@@ -42,6 +42,26 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("BASICARTIFACE", new ItemStack(TCResources.get("primal_charm")),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARDS.get("entropy"))),
                 new AspectList().add(Aspects.EARTH, 25).add(Aspects.FIRE, 25).add(Aspects.AIR, 25).add(Aspects.WATER, 25).add(Aspects.ORDER, 25).add(Aspects.ENTROPY, 25)));
+        // ArcaneDoor
+        ALL.add(new ArcaneRecipe("WARDEDARCANA", new ItemStack(TCItems.ARCANE_DOOR),
+                Arrays.asList(Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCResources.get("thaumium_ingot"))),
+                new AspectList().add(Aspects.WATER, 20).add(Aspects.ORDER, 10).add(Aspects.EARTH, 10).add(Aspects.FIRE, 5)));
+        // WardedGlass
+        ALL.add(new ArcaneRecipe("WARDEDARCANA", new ItemStack(TCBlocks.WARDED_GLASS.asItem(), 8),
+                Arrays.asList(Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem())),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 10).add(Aspects.EARTH, 5).add(Aspects.FIRE, 5)));
+        // IronKey
+        ALL.add(new ArcaneRecipe("WARDEDARCANA", new ItemStack(TCItems.IRON_KEY, 2),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_NUGGET), Ingredient.of(net.minecraft.world.item.Items.IRON_NUGGET), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_NUGGET), null, null, null, null, null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // GoldKey
+        ALL.add(new ArcaneRecipe("WARDEDARCANA", new ItemStack(TCItems.GOLD_KEY, 2),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null, null, null, null, null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // ArcanePressurePlate
+        ALL.add(new ArcaneRecipe("WARDEDARCANA", new ItemStack(TCBlocks.ARCANE_PRESSURE_PLATE.asItem()),
+                Arrays.asList(null, Ingredient.of(TCItems.ZOMBIE_BRAIN), null, Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCResources.get("thaumium_ingot")), null, null, null),
+                new AspectList().add(Aspects.WATER, 20).add(Aspects.ORDER, 10).add(Aspects.FIRE, 5).add(Aspects.EARTH, 10)));
         // NodeStabilizer
         ALL.add(new ArcaneRecipe("NODESTABILIZER", new ItemStack(TCBlocks.NODE_STABILIZER.asItem()),
                 Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), null, Ingredient.of(net.minecraft.world.level.block.Blocks.QUARTZ_BLOCK.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.PISTON.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.QUARTZ_BLOCK.asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.NITOR), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem())),
@@ -78,6 +98,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("LEVITATOR", new ItemStack(TCBlocks.LEVITATOR.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem())),
                 new AspectList().add(Aspects.AIR, 10).add(Aspects.EARTH, 5)));
+        // ArcaneEar
+        ALL.add(new ArcaneRecipe("ARCANEEAR", new ItemStack(TCBlocks.ARCANE_EAR.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.REDSTONE), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem())),
+                new AspectList().add(Aspects.AIR, 10).add(Aspects.ORDER, 10)));
         // InfusionMatrix
         ALL.add(new ArcaneRecipe("INFUSION", new ItemStack(TCBlocks.INFUSION_MATRIX.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem())),
