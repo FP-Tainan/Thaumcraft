@@ -248,6 +248,25 @@ public final class TCNetwork {
         }
     }
 
+    /**
+     * Um aviso do canto da tela ({@code PlayerNotifications.addNotification}) que no original nascia na máquina de quem
+     * joga: o texto pela chave, com um argumento opcional que também é chave de idioma.
+     */
+    public record Notice(String key, String arg) implements CustomPacketPayload {
+        public static final Type<Notice> TYPE = new Type<>(Thaumcraft.id("notice"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, Notice> CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8, Notice::key, ByteBufCodecs.STRING_UTF8, Notice::arg, Notice::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static void notice(ServerPlayer player, String key, String arg) {
+        ServerPlayNetworking.send(player, new Notice(key, arg == null ? "" : arg));
+    }
+
     public static void miscEvent(ServerPlayer player, int kind) {
         ServerPlayNetworking.send(player, new MiscEvent(kind));
     }
@@ -286,6 +305,7 @@ public final class TCNetwork {
         PayloadTypeRegistry.clientboundPlay().register(MiscEvent.TYPE, MiscEvent.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockBubble.TYPE, BlockBubble.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(ResearchComplete.TYPE, ResearchComplete.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(Notice.TYPE, Notice.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela
         ServerPlayNetworking.registerGlobalReceiver(ResearchRequest.TYPE, (payload, context) ->

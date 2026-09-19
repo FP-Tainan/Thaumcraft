@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "KKK",
+    "KKK",
+    "KKK"
+  ],
+  "key": {
+    "K": "thaumcraft:knowledge_fragment"
+  },
+  "result": {
+    "id": "thaumcraft:research_notes",
+    "count": 1,
+    "components": {
+      "thaumcraft:unknown_note": {}
+    }
+  }
+}

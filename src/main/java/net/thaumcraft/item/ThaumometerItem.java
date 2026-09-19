@@ -1,11 +1,8 @@
 package net.thaumcraft.item;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -13,8 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.thaumcraft.api.aspects.AspectList;
+import net.thaumcraft.research.Knowledges;
 import net.thaumcraft.research.ScanManager;
 
 import java.util.HashMap;
@@ -22,34 +18,39 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * O thaumômetro: aponte para alguma coisa e segure o botão direito para examinar.
- *
- * <p>As contas são as da 4.2.3.5: o exame leva vinte tiques e a mira tem de continuar na mesma coisa o tempo
- * todo — olhou para o lado, começa de novo. Cada coisa só rende ponto na primeira vez; depois o aparelho só
- * mostra do que ela é feita.
+ * O thaumômetro: o {@code ItemThaumometer} da 4.2.3.5. Aponte e segure o botão direito: o uso dura vinte e cinco
+ * tiques e o exame fecha faltando cinco. A mira tem de ficar no que estava quando o botão desceu — desviou, o exame
+ * morre até o próximo clique. O que já foi examinado não se examina de novo: o aparelho nem começa.
  */
 public class ThaumometerItem extends Item {
-    /**
-     * Quanto tempo o botão fica apertado, e quando o exame fecha.
-     *
-     * <p>No original são vinte e cinco tiques com o exame fechando faltando cinco — um segundo redondo.
-     * Aqui ele demora um pouco mais, dois segundos, que dá mais peso ao aparelho; o resto da conta é igual.
-     */
-    private static final int USE_TICKS = 45;
+    private static final int USE_TICKS = 25;
     private static final int FINISH_AT = 5;
-    /** Até onde a mira alcança. */
-    private static final double REACH = 16.0;
 
-    /** O que cada jogador estava mirando quando começou; se mudar, o exame recomeça. */
-    private static final Map<UUID, String> AIMING = new HashMap<>();
+    /** O {@code startScan}: o que cada jogador mirava ao apertar. Um mapa por lado, que no mundo local os dois dividem a máquina. */
+    private static final Map<UUID, String> AIMING_SERVER = new HashMap<>();
+    private static final Map<UUID, String> AIMING_CLIENT = new HashMap<>();
+
+    /** As runas do exame; o desenho mora no cliente. */
+    public static Runes runes = (level, target) -> {
+    };
+
+    public interface Runes {
+        void spawn(Level level, ScanManager.Target target);
+    }
 
     public ThaumometerItem(Properties properties) {
         super(properties);
     }
 
+    private static Map<UUID, String> aiming(Level level) {
+        return level.isClientSide() ? AIMING_CLIENT : AIMING_SERVER;
+    }
+
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (!level.isClientSide()) AIMING.put(player.getUUID(), target(level, player));
+        ScanManager.Target target = valid(level, player);
+        if (target != null) aiming(level).put(player.getUUID(), target.marker());
+        else aiming(level).remove(player.getUUID());
         return ItemUtils.startUsingInstantly(level, player, hand);
     }
 
@@ -66,75 +67,42 @@ public class ThaumometerItem extends Item {
     @Override
     public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int remaining) {
         if (!(entity instanceof Player player)) return;
-        if (level.isClientSide()) return;
-
-        String now = target(level, player);
-        String started = AIMING.get(player.getUUID());
-        if (now == null || !now.equals(started)) {
-            // mirou noutra coisa: o exame recomeça do zero
-            AIMING.put(player.getUUID(), now);
-            player.startUsingItem(player.getUsedItemHand());
+        Map<UUID, String> aiming = aiming(level);
+        String started = aiming.get(player.getUUID());
+        if (started == null) return;
+        ScanManager.Target target = valid(level, player);
+        if (target == null || !target.marker().equals(started)) {
+            aiming.remove(player.getUUID());
             return;
         }
-        // o tique-taque do aparelho enquanto ele lê
-        if (remaining % 2 == 0) {
-            level.playSound(null, player.blockPosition(), net.thaumcraft.registry.TCSounds.CAMERA_TICKS.value(),
-                    net.minecraft.sounds.SoundSource.PLAYERS, 0.3f, 0.9f + level.getRandom().nextFloat() * 0.2f);
+        if (level.isClientSide()) {
+            // as runas que sobem do alvo, a cada tique, e o tique-taque do aparelho
+            runes.spawn(level, target);
+            if (remaining % 2 == 0) {
+                level.playLocalSound(player.getX(), player.getY(), player.getZ(),
+                        net.thaumcraft.registry.TCSounds.CAMERA_TICKS.value(), SoundSource.PLAYERS,
+                        0.2f, 0.45f + level.getRandom().nextFloat() * 0.1f, false);
+            }
         }
         if (remaining > FINISH_AT) return;
-
+        aiming.remove(player.getUUID());
         player.stopUsingItem();
-        AIMING.remove(player.getUUID());
-        finish(level, player);
-    }
-
-    /** Termina o exame do que estiver na mira. */
-    private static void finish(Level level, Player player) {
-        Entity creature = ScanManager.entityInSight(level, player, REACH);
-        if (creature != null) {
-            ScanManager.Result result = ScanManager.scan(player, ScanManager.keyOf(creature),
-                    ScanManager.aspectsOf(creature), ScanManager.nameOf(creature));
-            tell(player, result);
-            return;
+        if (!level.isClientSide()) {
+            ScanManager.scan(player, target.key(), target.aspects(), target.name(), target.clue());
         }
-        BlockPos pos = ScanManager.blockInSight(player, REACH);
-        if (pos == null) return;
-        BlockState state = level.getBlockState(pos);
-        if (state.isAir()) return;
-        AspectList aspects = ScanManager.aspectsOf(state);
-        ScanManager.Result result = ScanManager.scan(player, ScanManager.keyOf(state), aspects,
-                ScanManager.nameOf(state));
-        tell(player, result);
     }
 
-    private static void tell(Player player, ScanManager.Result result) {
-        if (!result.scanned()) {
-            if (result.message() != null) player.sendOverlayMessage(result.message());
-            return;
-        }
-        player.level().playSound(null, player.blockPosition(), net.thaumcraft.registry.TCSounds.CAMERA_CLACK.value(),
-                net.minecraft.sounds.SoundSource.PLAYERS, 0.6f, 1.0f);
-        // os pontos ganhos aparecem nos avisos do canto (o ScanManager manda um por aspecto)
-        if (result.aspects().isEmpty()) player.sendOverlayMessage(result.message());
-    }
-
-    /** Uma marca do que está na mira agora, para saber se o jogador desviou o olhar. */
-    private static String target(Level level, Player player) {
-        Entity creature = ScanManager.entityInSight(level, player, REACH);
-        if (creature != null) return "e" + creature.getId();
-        BlockPos pos = ScanManager.blockInSight(player, REACH);
-        if (pos == null) return null;
-        return "b" + pos.asLong();
+    /** O alvo, se ainda não foi examinado (o {@code isValidScanTarget}). */
+    private static ScanManager.Target valid(Level level, Player player) {
+        ScanManager.Target target = ScanManager.target(level, player);
+        if (target == null || Knowledges.of(player).hasScanned(target.key())) return null;
+        return target;
     }
 
     @Override
     public boolean releaseUsing(ItemStack stack, Level level, LivingEntity entity, int remaining) {
-        if (entity instanceof Player player) AIMING.remove(player.getUUID());
+        if (entity instanceof Player player) aiming(level).remove(player.getUUID());
         return false;
     }
 
-    /** O nome que o aparelho mostra quando não há nada para ler. */
-    public static Component nothing() {
-        return Component.translatable("tc.scan.nothing");
-    }
 }

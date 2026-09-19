@@ -1477,3 +1477,26 @@ Descompilados do jar: `ItemNuggetEdible`, `ItemTripleMeatTreat`, `ItemElemental*
   gás de fluxo a até dezesseis blocos, juntando Praecantatio que sai por cano; o topo de obelisco com a ponta balançando.
 - A **caixa mágica** (`BlockMagicBox`) não entra: no original ela não tem receita nem aparece no criativo.
 - **Testes**: `ToolsGameTest` (estandarte, purificador); tela: `BannerClientTest`.
+
+## Pistas, pesquisas escondidas e o exame fiel
+
+Descompilados do jar: `ResearchManager.createClue`/`findHiddenResearch`, `ScanManager.completeScan`/`isValidScanTarget`/
+`generateNodeAspects`, `ItemThaumometer.doScan`/`onUsingTick`, `ItemResearchNotes` (metadado 42), `ItemResource` (9) e a
+conta de visibilidade do `GuiResearchBrowser`.
+
+- **Gatilhos**: `research/ResearchTriggers.java`, gerado pelo `scratchpad/gatilhos.js` a partir dos `setItemTriggers`,
+  `setEntityTriggers` e `setAspectTriggers` do `ConfigResearch` do jar (27 pesquisas). O portal e o portal do End não têm
+  item hoje; os do Eldritch entram com a fatia dele.
+- **Pista** (`createClue`): o primeiro exame de uma coisa pode acordar uma pesquisa escondida ou perdida cujo gatilho
+  bata (o item, a criatura, ou um aspecto ganho); marca `@CHAVE` e avisa no canto.
+- **Livro**: a pesquisa aparece se sabida, se tem a pista, ou se não é perdida/escondida (e a encoberta com os pais
+  feitos). Saiu a regra inventada do `hint:`.
+- **Thaumômetro**: vinte e cinco tiques, fecha faltando cinco; criatura até dez blocos, bloco no alcance do braço; o que
+  já foi examinado não começa; desviou a mira, o exame morre até o próximo clique; as runas sobem do alvo e o tique-taque
+  toca baixo, só para quem examina. Nodos se examinam pelo `generateNodeAspects`. Os avisos são os do original
+  (`tc.unknownobject`, `tc.discoveryerror` com o aspecto que falta) no canto da tela; as mensagens `tc.scan.*` eram
+  invenção e saíram, junto do estalo de câmera.
+- **Fragmento de conhecimento**: um ou dois pontos de cada primário, com os avisos. **Nove fragmentos** fazem a nota de
+  conhecimento desconhecido; lida, vira a nota de uma pesquisa escondida (sorteada pela hora do mundo), ou, sem nenhuma,
+  some e devolve de sete a nove fragmentos. As notas de pesquisa voltam a não empilhar, como no original.
+- **Testes**: `ClueGameTest`; tela: `ClueClientTest`.

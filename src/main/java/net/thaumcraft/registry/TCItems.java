@@ -732,7 +732,7 @@ public final class TCItems {
 
     /** As notas de pesquisa, e a descoberta em que elas viram. Não ficam na aba: saem do livro. */
     public static final Item RESEARCH_NOTES = registerHidden("research_notes", properties ->
-            new net.thaumcraft.item.ResearchNotesItem(properties.stacksTo(64)));
+            new net.thaumcraft.item.ResearchNotesItem(properties.stacksTo(1)));
 
     /** A varinha: a haste e as pontas vêm nos dados dela, como no original. */
     public static final Item WAND = register("wand", properties ->

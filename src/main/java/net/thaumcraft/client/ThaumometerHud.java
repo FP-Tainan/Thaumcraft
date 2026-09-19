@@ -30,8 +30,6 @@ import java.util.Map;
 public final class ThaumometerHud {
     private static final net.minecraft.resources.Identifier UNKNOWN = Thaumcraft.id("textures/aspects/_unknown.png");
 
-    /** Até onde a mira alcança: o mesmo do aparelho. */
-    private static final double REACH = 16.0;
 
     private ThaumometerHud() {
     }
@@ -48,21 +46,10 @@ public final class ThaumometerHud {
         if (!raised(player)) return;
 
         // o visor olha para o mesmo alvo que o exame vai pegar, e na mesma ordem: bicho, depois bloco
-        Component name;
-        AspectList aspects;
-        Entity creature = ScanManager.entityInSight(minecraft.level, player, REACH);
-        if (creature != null) {
-            name = ScanManager.nameOf(creature);
-            aspects = ScanManager.aspectsOf(creature);
-            if (aspects == null) aspects = new AspectList();
-        } else {
-            net.minecraft.core.BlockPos pos = ScanManager.blockInSight(player, REACH);
-            if (pos == null) return;
-            BlockState state = minecraft.level.getBlockState(pos);
-            if (state.isAir()) return;
-            name = ScanManager.nameOf(state);
-            aspects = ScanManager.aspectsOf(state);
-        }
+        ScanManager.Target target = ScanManager.target(minecraft.level, player);
+        if (target == null) return;
+        Component name = target.name();
+        AspectList aspects = target.aspects() == null ? new AspectList() : target.aspects();
 
         PlayerKnowledge knowledge = Knowledges.of(player);
         int centerX = graphics.guiWidth() / 2;

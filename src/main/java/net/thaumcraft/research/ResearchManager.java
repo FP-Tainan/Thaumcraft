@@ -168,17 +168,72 @@ public final class ResearchManager {
     }
 
     /**
-     * Esta pesquisa aparece no mapa?
-     *
-     * <p>As virtuais nunca aparecem: são só degrau. As perdidas somem depois de sabidas. As escondidas
-     * esperam topar com o que as desperta, e as encobertas esperam os pais.
+     * Esta pesquisa aparece no mapa? A conta do {@code GuiResearchBrowser}: a virtual nunca; a sabida sempre; a que ainda
+     * não se sabe aparece se já tem a pista ({@code @CHAVE}), e fora isso some se for perdida, escondida, ou encoberta
+     * sem os pais feitos.
      */
     public static boolean isVisible(PlayerKnowledge knowledge, Research research) {
         if (research.is(Research.Mark.VIRTUAL)) return false;
-        if (knowledge.hasResearch(research.key())) return !research.is(Research.Mark.LOST);
-        if (research.is(Research.Mark.LOST)) return false;
-        if (research.is(Research.Mark.HIDDEN)) return knowledge.hasScanned("hint:" + research.key());
-        if (research.is(Research.Mark.CONCEALED)) return canUnlock(knowledge, research);
-        return true;
+        if (knowledge.hasResearch(research.key())) return true;
+        if (knowledge.hasResearch("@" + research.key())) return true;
+        if (research.is(Research.Mark.LOST) || research.is(Research.Mark.HIDDEN)) return false;
+        return !research.is(Research.Mark.CONCEALED) || canUnlock(knowledge, research);
+    }
+
+    /**
+     * O {@code createClue}: examinar alguma coisa pela primeira vez pode dar a pista de uma pesquisa escondida ou perdida.
+     * Valem as que ainda não se sabem nem têm pista, e cujo gatilho ({@link ResearchTriggers}) bate — o item examinado,
+     * a criatura examinada ou um dos aspectos que o exame rendeu. Das que baterem, uma é sorteada.
+     *
+     * @param clue o {@link net.minecraft.world.item.ItemStack} ou o nome ({@code minecraft:enderman}) da criatura
+     */
+    public static boolean createClue(Player player, Object clue, net.thaumcraft.api.aspects.AspectList aspects) {
+        PlayerKnowledge knowledge = Knowledges.of(player);
+        java.util.List<String> keys = new java.util.ArrayList<>();
+        for (Research research : Researches.ALL.values()) {
+            if (research.tags().size() == 0 || !(research.is(Research.Mark.LOST) || research.is(Research.Mark.HIDDEN))
+                    || knowledge.hasResearch(research.key()) || knowledge.hasResearch("@" + research.key())) continue;
+            ResearchTriggers.Triggers triggers = ResearchTriggers.of(research.key());
+            if (triggers == null) continue;
+            if (clue instanceof net.minecraft.world.item.ItemStack stack && !triggers.items().isEmpty()) {
+                if (triggers.items().stream().anyMatch(t -> t.test(stack))) {
+                    keys.add(research.key());
+                    continue;
+                }
+            } else if (clue instanceof String entity && !triggers.entities().isEmpty()) {
+                if (triggers.entities().contains(entity)) {
+                    keys.add(research.key());
+                    continue;
+                }
+            }
+            if (aspects != null && aspects.size() > 0) {
+                for (net.thaumcraft.api.aspects.Aspect aspect : triggers.aspects()) {
+                    if (aspects.getAmount(aspect) > 0) {
+                        keys.add(research.key());
+                        break;
+                    }
+                }
+            }
+        }
+        if (keys.isEmpty()) return false;
+        String key = keys.get(player.getRandom().nextInt(keys.size()));
+        return complete(player, "@" + key);
+    }
+
+    /**
+     * O {@code findHiddenResearch}: a pesquisa escondida que uma nota de conhecimento desconhecido revela — uma das que
+     * ainda não se sabem, com os pais feitos e algum gatilho, sorteada pela hora do mundo (a mesma em cada cinquenta
+     * tiques). Sem nenhuma, {@code "FAIL"}.
+     */
+    public static String findHiddenResearch(Player player) {
+        PlayerKnowledge knowledge = Knowledges.of(player);
+        java.util.List<String> keys = new java.util.ArrayList<>();
+        for (Research research : Researches.ALL.values()) {
+            if (!research.is(Research.Mark.HIDDEN) || research.tags().size() == 0) continue;
+            if (!knowledge.hasResearch(research.key()) && canUnlock(knowledge, research)
+                    && ResearchTriggers.of(research.key()) != null) keys.add(research.key());
+        }
+        java.util.Random rand = new java.util.Random(player.level().getOverworldClockTime() / 10L / 5L);
+        return keys.isEmpty() ? "FAIL" : keys.get(rand.nextInt(keys.size()));
     }
 }

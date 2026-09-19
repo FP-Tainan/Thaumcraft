@@ -23,7 +23,11 @@ public class KnowledgeFragmentItem extends Item {
         if (!level.isClientSide()) {
             var knowledge = Knowledges.of(player);
             for (Aspect aspect : net.thaumcraft.api.aspects.Aspects.primals()) {
-                knowledge.pool().add(aspect, level.getRandom().nextInt(2) + 1);
+                int q = level.getRandom().nextInt(2) + 1;
+                knowledge.pool().add(aspect, q);
+                if (player instanceof net.minecraft.server.level.ServerPlayer server) {
+                    net.thaumcraft.net.TCNetwork.aspectPool(server, aspect, q, knowledge.points(aspect));
+                }
             }
             Knowledges.save(player, knowledge);
         }

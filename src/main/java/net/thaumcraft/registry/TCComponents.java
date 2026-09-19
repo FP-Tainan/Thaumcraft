@@ -87,6 +87,10 @@ public final class TCComponents {
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
     /** O golem guardado é avançado (o {@code advanced} do {@code ItemGolemPlacer}): o cérebro no jarro. */
+    /** A nota de conhecimento desconhecido: o metadado 42 do {@code ItemResearchNotes}, feita de nove fragmentos. */
+    public static final DataComponentType<net.minecraft.util.Unit> UNKNOWN_NOTE = register("unknown_note",
+            builder -> builder.persistent(net.minecraft.util.Unit.CODEC).networkSynchronized(net.minecraft.network.codec.StreamCodec.unit(net.minecraft.util.Unit.INSTANCE)));
+
     public static final DataComponentType<net.minecraft.util.Unit> GOLEM_ADVANCED = register("golem_advanced",
             builder -> builder.persistent(net.minecraft.util.Unit.CODEC).networkSynchronized(net.minecraft.network.codec.StreamCodec.unit(net.minecraft.util.Unit.INSTANCE)));
 

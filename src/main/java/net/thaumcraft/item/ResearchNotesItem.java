@@ -37,6 +37,10 @@ public class ResearchNotesItem extends Item {
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (stack.has(net.thaumcraft.registry.TCComponents.UNKNOWN_NOTE) && ResearchNotes.get(stack) == null) {
+            if (!level.isClientSide()) reveal(level, player, hand, stack);
+            return InteractionResult.SUCCESS;
+        }
         ResearchNote note = ResearchNotes.get(stack);
         if (note == null || !note.complete()) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
@@ -54,6 +58,27 @@ public class ResearchNotesItem extends Item {
         return InteractionResult.SUCCESS;
     }
 
+    /**
+     * O conhecimento desconhecido, lido: vira a nota de uma pesquisa escondida ({@code findHiddenResearch}); sem nenhuma
+     * a achar, a teoria era falsa — a nota some e devolve de sete a nove fragmentos.
+     */
+    private static void reveal(Level level, Player player, InteractionHand hand, ItemStack stack) {
+        String key = ResearchManager.findHiddenResearch(player);
+        if (key.equals("FAIL")) {
+            stack.shrink(1);
+            ItemStack fragments = new ItemStack(net.thaumcraft.registry.TCResources.get("knowledge_fragment"), 7 + level.getRandom().nextInt(3));
+            level.addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(level, player.getX(), player.getY() + player.getEyeHeight() / 2.0f,
+                    player.getZ(), fragments));
+            level.playSound(null, player, TCSounds.ERASE.value(), SoundSource.PLAYERS, 0.75f, 1.0f);
+            return;
+        }
+        ItemStack note = ResearchNotes.create(key, new java.util.Random(level.getRandom().nextLong()));
+        if (note.isEmpty()) return;
+        note.setCount(stack.getCount());
+        player.setItemInHand(hand, note);
+        level.playSound(null, player, TCSounds.WRITE.value(), SoundSource.PLAYERS, 0.75f, 1.0f);
+    }
+
     @Override
     public Component getName(ItemStack stack) {
         ResearchNote note = ResearchNotes.get(stack);
@@ -65,6 +90,10 @@ public class ResearchNotesItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display,
                                 Consumer<Component> tooltip, TooltipFlag flag) {
+        if (stack.has(net.thaumcraft.registry.TCComponents.UNKNOWN_NOTE)) {
+            tooltip.accept(Component.translatable("item.researchnotes.unknown.1").withStyle(ChatFormatting.GOLD));
+            tooltip.accept(Component.translatable("item.researchnotes.unknown.2").withStyle(ChatFormatting.BLUE));
+        }
         ResearchNote note = ResearchNotes.get(stack);
         if (note == null) return;
         Research research = Researches.get(note.key());

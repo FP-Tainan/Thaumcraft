@@ -564,6 +564,10 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX(), pos.getY(), pos.getZ(), colour, count);
         // os avisos do canto: o PacketAspectDiscovery, o PacketAspectPool e o PacketWarpMessage
         PlayerNotifications.init();
+        // as runas do thaumômetro enquanto ele lê (o blockRunes do doScan)
+        net.thaumcraft.item.ThaumometerItem.runes = (level, target) -> net.thaumcraft.client.fx.BlockRunes.spawn(
+                target.x(), target.y(), target.z(), 0.3f + level.getRandom().nextFloat() * 0.7f, 0.0f,
+                0.3f + level.getRandom().nextFloat() * 0.7f, target.runes(), 0.03f);
         // a distorção na tela: a vinheta, a névoa e os filtros das poções; e as bolhas do sabão
         WarpClient.init();
         // as ferramentas mágicas: faíscas, bolhas, a varredura de minérios da picareta e o redemoinho da espada
@@ -612,6 +616,13 @@ public class ThaumcraftClient implements ClientModInitializer {
                     String text = net.minecraft.network.chat.Component.translatable("tc.addaspectdiscovery", aspect.name()).getString();
                     PlayerNotifications.add("§6" + text, aspect);
                     player.playSound(net.minecraft.sounds.SoundEvents.EXPERIENCE_ORB_PICKUP, 0.2f, 0.5f + player.getRandom().nextFloat() * 0.2f);
+                }));
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.Notice.TYPE, (payload, context) -> context.client().execute(() -> {
+                    var text = payload.arg().isEmpty()
+                            ? net.minecraft.network.chat.Component.translatable(payload.key())
+                            : net.minecraft.network.chat.Component.translatable(payload.key(), net.minecraft.network.chat.Component.translatable(payload.arg()));
+                    PlayerNotifications.add(text.getString());
                 }));
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 net.thaumcraft.net.TCNetwork.AspectPool.TYPE, (payload, context) -> context.client().execute(() -> {
