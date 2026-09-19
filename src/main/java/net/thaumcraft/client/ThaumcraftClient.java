@@ -649,7 +649,7 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.render.NitorRenderer::new);
         // as marcas do sino do golem, que só aparecem com o sino na mão
         net.thaumcraft.client.render.MarkerOverlay.init();
-        ThaumometerHud.init();
+
         AspectTooltip.init();
         WandHud.init();
         // o Thaumonomicon abre o mapa das pesquisas, e nada disso encosta no lado do servidor
