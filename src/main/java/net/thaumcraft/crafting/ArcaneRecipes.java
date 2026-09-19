@@ -206,6 +206,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("DECONSTRUCTOR", new ItemStack(TCBlocks.DECONSTRUCTION_TABLE.asItem()),
                 Arrays.asList(null, Ingredient.of(TCItems.THAUMOMETER), null, Ingredient.of(net.minecraft.world.item.Items.GOLDEN_AXE), Ingredient.of(TCBlocks.TABLE.asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLDEN_PICKAXE), null, null, null),
                 new AspectList().add(Aspects.ENTROPY, 20)));
+        // ArcaneBoreBase
+        ALL.add(new ArcaneRecipe("ARCANEBORE", new ItemStack(TCBlocks.ARCANE_BORE_BASE.asItem()),
+                Arrays.asList(Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.DISPENSER.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem())),
+                new AspectList().add(Aspects.AIR, 10).add(Aspects.ORDER, 10)));
         // EnchantedFabric
         ALL.add(new ArcaneRecipe("ENCHFABRIC", new ItemStack(TCResources.get("enchanted_fabric")),
                 Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.STRING), null, Ingredient.of(net.minecraft.world.item.Items.STRING), Ingredient.of(net.minecraft.world.item.Items.WOOL.asList().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.STRING), null, Ingredient.of(net.minecraft.world.item.Items.STRING), null),

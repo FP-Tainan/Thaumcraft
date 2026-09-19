@@ -127,6 +127,22 @@ public final class TCBlocks {
                     .ignitedByLava()
                     .sound(SoundType.WOOD)));
 
+    /** A base da broca arcana e a broca, os números 4 e 5 do BlockWoodenDevice. */
+    public static final Block ARCANE_BORE_BASE = register("arcane_bore_base", properties ->
+            new net.thaumcraft.block.ArcaneBoreBaseBlock(properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5f, 10.0f)
+                    .noOcclusion()
+                    .ignitedByLava()
+                    .sound(SoundType.WOOD)));
+    public static final Block ARCANE_BORE = register("arcane_bore", properties ->
+            new net.thaumcraft.block.ArcaneBoreBlock(properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5f, 10.0f)
+                    .noOcclusion()
+                    .ignitedByLava()
+                    .sound(SoundType.WOOD)));
+
     /** A barreira que a pedra de proteção levanta: parede para bicho, ar para gente. */
     public static final Block WARDING_BARRIER = register("warding_barrier", properties ->
             new net.thaumcraft.block.WardingBarrierBlock(properties

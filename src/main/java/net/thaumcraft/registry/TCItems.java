@@ -478,6 +478,11 @@ public final class TCItems {
     public static final Item BELLOWS = register("bellows", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.BELLOWS, properties.useBlockDescriptionPrefix()));
 
+    public static final Item ARCANE_BORE_BASE = register("arcane_bore_base", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_BORE_BASE, properties.useBlockDescriptionPrefix()));
+    public static final Item ARCANE_BORE = register("arcane_bore", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_BORE, properties.useBlockDescriptionPrefix()));
+
     // as escadas e a laje de pedra arcana
     public static final Item ARCANE_STONE_STAIRS = register("arcane_stone_stairs", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_STONE_STAIRS, properties.useBlockDescriptionPrefix()));

@@ -1279,5 +1279,13 @@
   "wandtable.text2": "Custo de Experiência",
   "wandtable.text3": "Começar Melhoria",
   "tc.researchmissing": "Pesquisa requerida em falta!",
-  "key.thaumcraft.misc": "Alternância da varinha"
+  "key.thaumcraft.misc": "Alternância da varinha",
+  "block.thaumcraft.arcane_bore": "Escavador Arcano",
+  "block.thaumcraft.arcane_bore_base": "Base Para Escavador Arcano",
+  "tc.bore.width": "Largura: %s",
+  "tc.bore.speed": "Velocidade: +%s",
+  "tc.bore.other": "Outras propriedades:",
+  "tc.bore.clusters": "Aglomerados Nativos",
+  "tc.bore.fortune": "Fortuna %s",
+  "tc.bore.silk": "Toque Suave"
 }

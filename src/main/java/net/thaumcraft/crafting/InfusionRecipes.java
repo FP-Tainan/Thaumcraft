@@ -152,6 +152,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.TOOL, 20).add(Aspects.MECHANISM, 20).add(Aspects.MAN, 20),
                 Ingredient.of(TCItems.GOLEM_CORES.get("empty")),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.COMPARATOR), Ingredient.of(net.minecraft.world.item.Items.FLINT_AND_STEEL), Ingredient.of(net.minecraft.world.item.Items.SHEARS), Ingredient.of(net.minecraft.world.level.block.Blocks.LEVER.asItem()))));
+        // ArcaneBore
+        ALL.add(new InfusionRecipe("ARCANEBORE", new ItemStack(TCBlocks.ARCANE_BORE.asItem()), 4,
+                new AspectList().add(Aspects.ENERGY, 16).add(Aspects.MINE, 32).add(Aspects.MECHANISM, 32).add(Aspects.VOID, 16).add(Aspects.MOTION, 16),
+                Ingredient.of(net.minecraft.world.level.block.Blocks.PISTON.asItem()),
+                Arrays.asList(Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.DIAMOND_PICKAXE), Ingredient.of(net.minecraft.world.item.Items.DIAMOND_SHOVEL), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("earth")))));
         // LampGrowth
         ALL.add(new InfusionRecipe("LAMPGROWTH", new ItemStack(TCBlocks.GROWTH_LAMP.asItem()), 4,
                 new AspectList().add(Aspects.PLANT, 16).add(Aspects.LIGHT, 8).add(Aspects.LIFE, 16),

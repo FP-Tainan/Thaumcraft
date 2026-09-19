@@ -84,6 +84,28 @@ public final class TCNetwork {
         }
     }
 
+    /** Do servidor para quem está perto: o {@code PacketBoreDig} (98, o bloco da vez) e o som do bloco que saiu (99). */
+    public record BoreDig(net.minecraft.core.BlockPos pos, int id, int param) implements CustomPacketPayload {
+        public static final Type<BoreDig> TYPE = new Type<>(Thaumcraft.id("bore_dig"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, BoreDig> CODEC = StreamCodec.composite(
+                net.minecraft.core.BlockPos.STREAM_CODEC, BoreDig::pos,
+                ByteBufCodecs.VAR_INT, BoreDig::id,
+                ByteBufCodecs.INT, BoreDig::param,
+                BoreDig::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    /** A quem estiver a até sessenta e quatro blocos da broca, como o original. */
+    public static void boreDig(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos pos, int id, int param) {
+        for (ServerPlayer player : level.players()) {
+            if (player.blockPosition().closerThan(pos, 64.0)) ServerPlayNetworking.send(player, new BoreDig(pos, id, param));
+        }
+    }
+
     /** Do servidor para quem está perto: um raio de um nó a outro, o {@code PacketFXBlockZap}. */
     public record BlockZap(net.minecraft.world.phys.Vec3 from, net.minecraft.world.phys.Vec3 to) implements CustomPacketPayload {
         public static final Type<BlockZap> TYPE = new Type<>(Thaumcraft.id("block_zap"));
@@ -131,6 +153,7 @@ public final class TCNetwork {
         ResearchTablePayloads.init();
         PayloadTypeRegistry.clientboundPlay().register(ScanSummary.TYPE, ScanSummary.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockSparkle.TYPE, BlockSparkle.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(BoreDig.TYPE, BoreDig.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockZap.TYPE, BlockZap.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(EntityZap.TYPE, EntityZap.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(ObjectAspectsSync.TYPE, ObjectAspectsSync.CODEC);

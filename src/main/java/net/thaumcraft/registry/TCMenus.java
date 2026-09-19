@@ -45,6 +45,12 @@ public final class TCMenus {
             new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.FocalManipulatorMenu::new,
                     net.minecraft.core.BlockPos.STREAM_CODEC));
 
+    /** A broca arcana: a tela abre sabendo de qual é. */
+    public static final MenuType<net.thaumcraft.inventory.ArcaneBoreMenu> ARCANE_BORE = Registry.register(
+            BuiltInRegistries.MENU, Thaumcraft.id("arcane_bore"),
+            new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.ArcaneBoreMenu::new,
+                    net.minecraft.core.BlockPos.STREAM_CODEC));
+
     public static final MenuType<net.thaumcraft.inventory.AlchemicalFurnaceMenu> ALCHEMICAL_FURNACE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("alchemical_furnace"),
                     new MenuType<>(net.thaumcraft.inventory.AlchemicalFurnaceMenu::new,

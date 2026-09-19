@@ -56,6 +56,13 @@ public final class TCBlockEntities {
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("bellows"),
             new BlockEntityType<>(net.thaumcraft.block.entity.BellowsBlockEntity::new, java.util.Set.of(TCBlocks.BELLOWS)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.ArcaneBoreBaseBlockEntity> ARCANE_BORE_BASE = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_bore_base"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.ArcaneBoreBaseBlockEntity::new, java.util.Set.of(TCBlocks.ARCANE_BORE_BASE)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.ArcaneBoreBlockEntity> ARCANE_BORE = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_bore"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.ArcaneBoreBlockEntity::new, java.util.Set.of(TCBlocks.ARCANE_BORE)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.WardingStoneBlockEntity> WARDING_STONE = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("warding_stone"),
             new BlockEntityType<>(net.thaumcraft.block.entity.WardingStoneBlockEntity::new,

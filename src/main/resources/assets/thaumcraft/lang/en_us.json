@@ -1275,5 +1275,13 @@
   "wandtable.text2": "Experience Cost",
   "wandtable.text3": "Start Upgrade",
   "tc.researchmissing": "Missing required research!",
-  "key.thaumcraft.misc": "Misc Wand Toggle"
+  "key.thaumcraft.misc": "Misc Wand Toggle",
+  "block.thaumcraft.arcane_bore": "Arcane Bore",
+  "block.thaumcraft.arcane_bore_base": "Arcane Bore Base",
+  "tc.bore.width": "Width: %s",
+  "tc.bore.speed": "Speed: +%s",
+  "tc.bore.other": "Other properties:",
+  "tc.bore.clusters": "Native Clusters",
+  "tc.bore.fortune": "Fortune %s",
+  "tc.bore.silk": "Silk Touch"
 }

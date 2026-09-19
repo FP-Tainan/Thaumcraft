@@ -187,6 +187,27 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.ETHEREAL_BLOOM, net.thaumcraft.client.render.EtherealBloomRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.DECONSTRUCTION_TABLE,
                 net.thaumcraft.client.gui.DeconstructionTableScreen::new);
+        // a broca arcana: a broca e a base com os modelos do original, a tela, o facho e as migalhas
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ARCANE_BORE, net.thaumcraft.client.render.ArcaneBoreRenderers.Bore::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ARCANE_BORE_BASE, net.thaumcraft.client.render.ArcaneBoreRenderers.Base::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("arcane_bore"), net.thaumcraft.client.render.ArcaneBoreRenderers.Unbaked.CODEC);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.ARCANE_BORE,
+                net.thaumcraft.client.gui.ArcaneBoreScreen::new);
+        net.thaumcraft.block.entity.ArcaneBoreBlockEntity.clientEffects = new net.thaumcraft.block.entity.ArcaneBoreBlockEntity.ClientEffects() {
+            @Override
+            public Object beam(net.minecraft.world.level.Level level, double px, double py, double pz, double tx, double ty, double tz,
+                               int type, int colour, boolean reverse, float endMod, Object old, int impact) {
+                return net.thaumcraft.client.fx.BoreFx.beam(level, px, py, pz, tx, ty, tz, type, colour, reverse, endMod, old, impact);
+            }
+
+            @Override
+            public void digFx(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos from, net.minecraft.core.BlockPos to,
+                              net.minecraft.world.level.block.state.BlockState state) {
+                net.thaumcraft.client.fx.BoreFx.dig(level, from, to, state);
+            }
+        };
         // o manipulador focal: a mesa com o foco girando em cima, a tela e as estrelinhas de quando trabalha
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.FOCAL_MANIPULATOR, net.thaumcraft.client.render.FocalManipulatorRenderer::new);
@@ -379,6 +400,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                     new net.thaumcraft.client.gui.ThaumonomiconScreen());
             return net.minecraft.world.InteractionResult.SUCCESS;
         });
+        // a broca arcana: o bloco da vez e o som do bloco que saiu
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.BoreDig.TYPE, (payload, context) -> context.client().execute(() -> {
+                    var level = context.client().level;
+                    if (level != null && level.getBlockEntity(payload.pos()) instanceof net.thaumcraft.block.entity.ArcaneBoreBlockEntity bore) {
+                        bore.boreEvent(payload.id(), payload.param());
+                    }
+                }));
         // o resumo do exame chega do servidor e vai para o canto da tela
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 net.thaumcraft.net.TCNetwork.BlockSparkle.TYPE, (payload, context) -> context.client().execute(() ->

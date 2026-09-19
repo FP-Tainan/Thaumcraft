@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/arcane_bore",
+    "model": {
+      "type": "thaumcraft:arcane_bore",
+      "bore": true
+    }
+  }
+}

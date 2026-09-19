@@ -1143,3 +1143,31 @@ e `getAreaX/Y/Z/Dim`, da tecla G do `KeyHandler` (`PacketItemKeyToServer`, núme
   some enquanto a prévia aparece.
 - **Testes**: `ArchitectGameTest` (a tecla, os blocos da troca, a proteção da parede inteira) e `ArchitectClientTest`
   (a prévia no chão e na parede).
+
+## Broca arcana
+
+Porte do `TileArcaneBore`, `TileArcaneBoreBase`, `ContainerArcaneBore`, `GuiArcaneBore`, `TileArcaneBoreRenderer`,
+`TileArcaneBoreBaseRenderer`, `ModelBore`, `ModelBoreBase`, `ModelBoreEmit`, `FXBeamBore`, `FXBoreSparkle`,
+`PacketBoreDig` e dos números 4 e 5 do `BlockWoodenDevice`/`BlockWoodenDeviceItem` (descompilados do jar).
+
+- **Base** (`ArcaneBoreBaseBlock`): o bico nasce do lado oposto ao que o jogador olha; a varinha o vira para a face
+  batida. Puxa Perditio pelos canos (força 128, menos pelo bico).
+- **Broca** (`ArcaneBoreBlock`): só em cima ou embaixo de uma base (o `canPlaceItemBlockOnSide`); cava para onde o
+  jogador estava (como o pistão); a varinha a vira; a mão abre a tela; sem a base, cai com o que tem dentro. A caixa
+  vai um bloco além, para onde cava, como no original.
+- **Trabalho** (`ArcaneBoreBlockEntity`): com redstone (nela ou na base), foco de escavação e picareta que não esteja
+  por quebrar, percorre a espiral de raio 2 + ampliar em volta do eixo e cava o primeiro bloco sólido de cada ponto,
+  até 64 de fundo; o tempo de cada bloco é `max(10 − velocidade, dureza × 2 − velocidade × 2)`, quatro vezes mais sem
+  Perditio (da rede de vis ou de canos na base). Colhe com a sorte (tesouro do foco ou fortuna da picareta) ou a seda,
+  junta os itens soltos em volta, refina com a radiestesia, manda tudo para um inventário encostado no bico da base
+  (ou cospe pelo bico) e gasta 1 da picareta. Com uma lâmpada arcana encostada na base, deixa luzes pelo túnel.
+- **Visual**: os modelos do original (`bore.png`, `jar.png`, `vortex.png`), o corpo girando e inclinando para o bloco
+  da vez, os dois fachos (`beam1` verde e `beam2` laranja), as migalhas do bloco e as faíscas verdes voando até o bico
+  (o bloco da vez e o som do que saiu chegam pelo `TCNetwork.BoreDig`, o `PacketBoreDig`).
+- **Tela** (`ArcaneBoreScreen`): as duas casas, o aviso de picareta por quebrar e a largura, a velocidade e as outras
+  propriedades (os textos, que o original escreve em inglês fixo, foram para as línguas).
+- **Falta aqui**: o conserto da picareta com o encantamento Reparo (espera os encantamentos do Thaumcraft) e a
+  picareta do núcleo elemental dando radiestesia (espera as ferramentas elementais).
+- **Receitas** do jar: a base na bancada arcana, a broca na infusão (as peças 4 e 5 entraram no mapeador de itens).
+- **Testes**: `ArcaneBoreGameTest` (cavar e encher o baú, parada sem redstone/picareta, o que o foco dá, cair sem a
+  base) e `ArcaneBoreClientTest` (trabalhando, parada e a tela).
