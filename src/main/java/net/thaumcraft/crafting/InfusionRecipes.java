@@ -305,6 +305,21 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.METAL, 24).add(Aspects.ARMOR, 20).add(Aspects.MAGIC, 16),
                 Ingredient.of(TCItems.GEAR.get("thaumium_leggings")),
                 Arrays.asList(Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER))));
+        // VoidRobeHelm
+        ALL.add(new InfusionRecipe("ARMORVOIDFORTRESS", new ItemStack(TCItems.VOID_ROBE_HELMET), 6,
+                new AspectList().add(Aspects.METAL, 16).add(Aspects.SENSES, 16).add(Aspects.ARMOR, 16).add(Aspects.CLOTH, 16).add(Aspects.MAGIC, 16).add(Aspects.ELDRITCH, 16).add(Aspects.VOID, 16),
+                Ingredient.of(TCItems.GEAR.get("void_helmet")),
+                Arrays.asList(Ingredient.of(TCItems.GOGGLES), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")))));
+        // VoidRobeChest
+        ALL.add(new InfusionRecipe("ARMORVOIDFORTRESS", new ItemStack(TCItems.VOID_ROBE_CHESTPLATE), 6,
+                new AspectList().add(Aspects.METAL, 24).add(Aspects.ARMOR, 24).add(Aspects.CLOTH, 24).add(Aspects.MAGIC, 16).add(Aspects.ELDRITCH, 16).add(Aspects.VOID, 24),
+                Ingredient.of(TCItems.GEAR.get("void_chestplate")),
+                Arrays.asList(Ingredient.of(TCItems.ROBE_CHESTPLATE), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(net.minecraft.world.item.Items.LEATHER))));
+        // VoidRobeLegs
+        ALL.add(new InfusionRecipe("ARMORVOIDFORTRESS", new ItemStack(TCItems.VOID_ROBE_LEGGINGS), 6,
+                new AspectList().add(Aspects.METAL, 20).add(Aspects.ARMOR, 20).add(Aspects.CLOTH, 20).add(Aspects.MAGIC, 16).add(Aspects.ELDRITCH, 16).add(Aspects.VOID, 20),
+                Ingredient.of(TCItems.GEAR.get("void_leggings")),
+                Arrays.asList(Ingredient.of(TCItems.ROBE_LEGGINGS), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(net.minecraft.world.item.Items.LEATHER))));
         // HelmGoggles
         ALL.add(InfusionRecipe.onCentral("HELMGOGGLES", 5,
                 new AspectList().add(Aspects.SENSES, 32).add(Aspects.AURA, 16).add(Aspects.ARMOR, 16),

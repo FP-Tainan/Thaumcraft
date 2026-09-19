@@ -36,8 +36,8 @@ public class CultistArmorRenderer implements ArmorRenderer {
         return new ModelLayerLocation(Thaumcraft.id(name), "main");
     }
 
-    private final Identifier texture;
-    private final Model inner, outer;
+    protected final Identifier texture;
+    protected final Model inner, outer;
 
     public CultistArmorRenderer(EntityRendererProvider.Context context, Identifier texture, ModelLayerLocation inner,
                                 ModelLayerLocation outer, BiConsumer<Model, Float> sway) {

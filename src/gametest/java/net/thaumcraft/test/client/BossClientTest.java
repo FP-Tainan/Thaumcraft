@@ -54,6 +54,21 @@ public class BossClientTest implements FabricClientGameTest {
             server.runCommand("tp @p " + (p.getX() + 0.5) + " " + (p.getY() + 2) + " " + (p.getZ() - 4.5) + " 0 5");
             context.waitTicks(100);
             context.takeScreenshot("chefes");
+            // o manto do vazio no jogador, de fábrica e tingido de verde
+            server.runOnServer(s -> {
+                var player = s.getPlayerList().getPlayers().getFirst();
+                player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, new net.minecraft.world.item.ItemStack(net.thaumcraft.registry.TCItems.VOID_ROBE_HELMET));
+                var chest = new net.minecraft.world.item.ItemStack(net.thaumcraft.registry.TCItems.VOID_ROBE_CHESTPLATE);
+                chest.set(net.minecraft.core.component.DataComponents.DYED_COLOR, new net.minecraft.world.item.component.DyedItemColor(0x33AA33));
+                player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.CHEST, chest);
+                player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.LEGS, new net.minecraft.world.item.ItemStack(net.thaumcraft.registry.TCItems.VOID_ROBE_LEGGINGS));
+                player.getInventory().setItem(0, chest.copy());
+            });
+            server.runCommand("time set noon");
+            context.getInput().pressKey(options -> options.keyTogglePerspective);
+            context.getInput().pressKey(options -> options.keyTogglePerspective);
+            context.waitTicks(10);
+            context.takeScreenshot("manto-do-vazio");
         }
     }
 }

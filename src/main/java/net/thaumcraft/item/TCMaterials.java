@@ -51,6 +51,7 @@ public final class TCMaterials {
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> TRAVELLER_ASSET = assetKey("traveller");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> FORTRESS_ASSET = assetKey("fortress");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> HARNESS_ASSET = assetKey("hover_harness");
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> VOID_ROBE_ASSET = assetKey("void_robe");
 
     /** Armadura de táumio: 2/5/6/2 de proteção e 25 de encantabilidade, os números do original. */
     public static final ArmorMaterial THAUMIUM_ARMOR = new ArmorMaterial(
@@ -67,6 +68,13 @@ public final class TCMaterials {
             10, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_NETHERITE, 0.0f, 0.0f,
             net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/void")),
             VOID_ARMOR_ASSET);
+
+    /** O manto do vazio: o mesmo {@code armorMatVoid} (3/7/6/3, durabilidade 10, encantabilidade 10), num desenho próprio. */
+    public static final ArmorMaterial VOID_ROBE = new ArmorMaterial(10,
+            Map.of(ArmorType.BOOTS, 3, ArmorType.LEGGINGS, 6, ArmorType.CHESTPLATE, 7, ArmorType.HELMET, 3),
+            10, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f,
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/void")),
+            VOID_ROBE_ASSET);
 
     /**
      * O {@code armorMatSpecial} do original: 1/3/2/1 de proteção, 25 de durabilidade e de encantabilidade. É o

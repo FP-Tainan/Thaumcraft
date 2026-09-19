@@ -22,6 +22,8 @@ public final class Revealing {
         if (player.getOffhandItem().is(TCItems.THAUMOMETER)) return true;
         ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
         // o elmo de fortaleza com os óculos embutidos também revela (o showNodes do ItemFortressArmor)
-        return head.is(TCItems.GOGGLES) || Boolean.TRUE.equals(head.get(net.thaumcraft.registry.TCComponents.FORTRESS_GOGGLES));
+        // e o capuz do manto do vazio (o showNodes do ItemVoidRobeArmor)
+        return head.is(TCItems.GOGGLES) || head.is(TCItems.VOID_ROBE_HELMET)
+                || Boolean.TRUE.equals(head.get(net.thaumcraft.registry.TCComponents.FORTRESS_GOGGLES));
     }
 }

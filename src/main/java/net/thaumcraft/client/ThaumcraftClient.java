@@ -80,6 +80,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                         net.thaumcraft.client.render.CultistArmorRenderer.ROBE_OUTER, net.thaumcraft.client.render.CultistArmorRenderer::robeSway),
                 net.thaumcraft.registry.TCItems.CULTIST_ROBE_HELMET, net.thaumcraft.registry.TCItems.CULTIST_ROBE_CHESTPLATE,
                 net.thaumcraft.registry.TCItems.CULTIST_ROBE_LEGGINGS);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(net.thaumcraft.client.render.VoidRobeArmorRenderer::new,
+                net.thaumcraft.registry.TCItems.VOID_ROBE_HELMET, net.thaumcraft.registry.TCItems.VOID_ROBE_CHESTPLATE,
+                net.thaumcraft.registry.TCItems.VOID_ROBE_LEGGINGS);
         net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(context -> new net.thaumcraft.client.render.CultistArmorRenderer(context,
                         Thaumcraft.id("textures/models/cultist_plate_armor.png"), net.thaumcraft.client.render.CultistArmorRenderer.PLATE_INNER,
                         net.thaumcraft.client.render.CultistArmorRenderer.PLATE_OUTER, net.thaumcraft.client.render.CultistArmorRenderer::plateSway),

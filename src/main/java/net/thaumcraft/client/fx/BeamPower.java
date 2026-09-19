@@ -99,7 +99,7 @@ public final class BeamPower implements ThaumFx.Effect {
         if (minecraft.player == null) return;
         // no original só o que vai na cabeça (o IRevealer) acende o fio; o taumômetro na mão não
         var head = minecraft.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD);
-        boolean revealing = head.is(net.thaumcraft.registry.TCItems.GOGGLES)
+        boolean revealing = head.is(net.thaumcraft.registry.TCItems.GOGGLES) || head.is(net.thaumcraft.registry.TCItems.VOID_ROBE_HELMET)
                 || Boolean.TRUE.equals(head.get(net.thaumcraft.registry.TCComponents.FORTRESS_GOGGLES));
         float slide = minecraft.player.tickCount + partial;
         float var12 = -slide * 0.2f - Mth.floor(-slide * 0.1f);

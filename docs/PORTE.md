@@ -1625,3 +1625,14 @@ catorze gomos, os números 10 e 11 do `BlockAiry`, e o fim das salas de chefe do
 - **Campo sugador** (`sapping_field`): quem não é eldritch anda devagar, cansa, enfraquece e às vezes murcha.
 - A fechadura agora chama os três (`BossSpawns`), cada chefe nascendo virado para ela.
 - **Testes**: `BossGameTest`; tela: `BossClientTest`.
+
+## Eldritch: manto do vazio e as pistas que faltavam
+
+- **Armadura de manto do vazio** (`ItemVoidRobeArmor`): capuz, manto e calças com a proteção do metal do vazio, cinco por
+  cento de desconto de vis e dois de distorção por peça, conserto sozinho, o capuz revelando como os óculos. No corpo, o
+  `ModelRobe` dos cultistas; a cor do tingimento vai no pano (a `void_robe_armor_overlay.png`, que o `getArmorTexture` do
+  original devolve no passe que o Forge tinge) e os enfeites por cima. As três receitas de infusão entram pelo gerador.
+- **Tingir**: os mantos do taumaturgo e do vazio entram na etiqueta `minecraft:dyeable` — é a receita de tingir do jogo
+  fazendo o papel do `RecipesRobeArmorDyes` e do `RecipesVoidRobeArmorDyes`.
+- **Pistas**: "Revelações das Terras de Fora" agora desperta examinando a pedra de glifos ou a pedra rúnica (que viram
+  item, como no original).

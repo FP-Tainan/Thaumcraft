@@ -388,6 +388,16 @@ public final class TCItems {
                 .humanoidArmor(net.thaumcraft.item.TCMaterials.FORTRESS, type).rarity(net.minecraft.world.item.Rarity.RARE)));
     }
 
+    /** A armadura de manto do vazio (o capuz revela como os óculos). */
+    public static final Item VOID_ROBE_HELMET = voidRobe("void_robe_helmet", net.minecraft.world.item.equipment.ArmorType.HELMET);
+    public static final Item VOID_ROBE_CHESTPLATE = voidRobe("void_robe_chestplate", net.minecraft.world.item.equipment.ArmorType.CHESTPLATE);
+    public static final Item VOID_ROBE_LEGGINGS = voidRobe("void_robe_leggings", net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
+
+    private static Item voidRobe(String name, net.minecraft.world.item.equipment.ArmorType type) {
+        return register(name, properties -> new net.thaumcraft.item.VoidRobeItem(properties
+                .humanoidArmor(net.thaumcraft.item.TCMaterials.VOID_ROBE, type).rarity(net.minecraft.world.item.Rarity.EPIC)));
+    }
+
     private static Item robe(String name, net.minecraft.world.item.equipment.ArmorType type) {
         return register(name, properties -> new net.thaumcraft.item.RobeItem(type, properties
                 .humanoidArmor(net.thaumcraft.item.TCMaterials.ROBES, type).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
@@ -883,6 +893,8 @@ public final class TCItems {
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINTACLE_GIANT)));
     public static final Item CRUSTED_OPENING = register("crusted_opening", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.CRUSTED_OPENING, properties.useBlockDescriptionPrefix()));
+    public static final Item GLYPHED_STONE = registerHidden("glyphed_stone", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GLYPHED_STONE, properties.useBlockDescriptionPrefix()));
     public static final Item ANCIENT_DOORWAY = registerHidden("ancient_doorway", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ANCIENT_DOORWAY, properties.useBlockDescriptionPrefix()));
     public static final Item ANCIENT_LOCK = registerHidden("ancient_lock", properties ->
@@ -950,6 +962,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
+            "void_robe_helmet", "void_robe_chestplate", "void_robe_leggings",
             "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "hungry_chest", "levitator", "arcane_door", "arcane_pressure_plate", "arcane_ear", "warded_glass", "mirror", "essentia_mirror", "hand_mirror", "arcane_lamp", "growth_lamp", "fertility_lamp", "alchemical_construct", "advanced_alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer", "essentia_reservoir", "mnemonic_matrix", "item_grate", "node_stabilizer", "node_stabilizer_advanced", "node_converter", "vis_relay", "workbench_charger",
             "infusion_matrix", "pedestal",
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
