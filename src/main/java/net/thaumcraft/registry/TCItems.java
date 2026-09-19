@@ -59,22 +59,72 @@ public final class TCItems {
                     ? net.thaumcraft.item.TCMaterials.THAUMIUM_ARMOR
                     : net.thaumcraft.item.TCMaterials.VOID_ARMOR;
             GEAR.put(piece.name(), register(piece.name(), properties -> switch (piece.kind()) {
-                case "pickaxe" -> new Item(properties.pickaxe(tool, 1.0f, -2.8f));
-                case "axe" -> new Item(properties.axe(tool, 6.0f, -3.1f));
-                case "shovel" -> new Item(properties.shovel(tool, 1.5f, -3.0f));
-                case "hoe" -> new Item(properties.hoe(tool, -1.0f, -1.0f));
-                case "sword" -> new Item(properties.sword(tool, 3.0f, -2.4f));
-                case "helmet" -> new Item(properties.humanoidArmor(armor,
+                case "pickaxe" -> gear(piece, properties.pickaxe(tool, 1.0f, -2.8f));
+                case "axe" -> gear(piece, properties.axe(tool, 6.0f, -3.1f));
+                case "shovel" -> gear(piece, properties.shovel(tool, 1.5f, -3.0f));
+                case "hoe" -> gear(piece, properties.hoe(tool, -1.0f, -1.0f));
+                case "sword" -> gear(piece, properties.sword(tool, 3.0f, -2.4f));
+                case "helmet" -> gear(piece, properties.humanoidArmor(armor,
                         net.minecraft.world.item.equipment.ArmorType.HELMET));
-                case "chestplate" -> new Item(properties.humanoidArmor(armor,
+                case "chestplate" -> gear(piece, properties.humanoidArmor(armor,
                         net.minecraft.world.item.equipment.ArmorType.CHESTPLATE));
-                case "leggings" -> new Item(properties.humanoidArmor(armor,
+                case "leggings" -> gear(piece, properties.humanoidArmor(armor,
                         net.minecraft.world.item.equipment.ArmorType.LEGGINGS));
-                case "boots" -> new Item(properties.humanoidArmor(armor,
+                case "boots" -> gear(piece, properties.humanoidArmor(armor,
                         net.minecraft.world.item.equipment.ArmorType.BOOTS));
-                default -> new Item(properties);
+                default -> gear(piece, properties);
             }));
         }
+    }
+
+    /** As ferramentas elementais (os núcleos de fogo, água, terra e ar na ferramenta de táumio). */
+    public static final Item ELEMENTAL_PICKAXE = register("elemental_pickaxe", properties -> new net.thaumcraft.item.ElementalPickaxeItem(
+            properties.pickaxe(net.thaumcraft.item.TCMaterials.ELEMENTAL, 1.0f, -2.8f).rarity(net.minecraft.world.item.Rarity.RARE)));
+    public static final Item ELEMENTAL_AXE = register("elemental_axe", properties -> new net.thaumcraft.item.ElementalAxeItem(
+            properties.axe(net.thaumcraft.item.TCMaterials.ELEMENTAL, 6.0f, -3.1f).rarity(net.minecraft.world.item.Rarity.RARE)));
+    public static final Item ELEMENTAL_SHOVEL = register("elemental_shovel", properties -> new net.thaumcraft.item.ElementalShovelItem(
+            properties.shovel(net.thaumcraft.item.TCMaterials.ELEMENTAL, 1.5f, -3.0f).rarity(net.minecraft.world.item.Rarity.RARE)));
+    public static final Item ELEMENTAL_HOE = register("elemental_hoe", properties -> new net.thaumcraft.item.ElementalHoeItem(
+            net.thaumcraft.item.TCMaterials.ELEMENTAL, -1.0f, -1.0f, properties.rarity(net.minecraft.world.item.Rarity.RARE)));
+    public static final Item ELEMENTAL_SWORD = register("elemental_sword", properties -> new net.thaumcraft.item.ElementalSwordItem(
+            properties.sword(net.thaumcraft.item.TCMaterials.ELEMENTAL, 3.0f, -2.4f).rarity(net.minecraft.world.item.Rarity.RARE)));
+    /** O ressonador de essência, o verificador de sanidade e a pedra sinistra. */
+    public static final Item RESONATOR = register("resonator", properties -> new net.thaumcraft.item.ResonatorItem(
+            properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item SANITY_CHECKER = register("sanity_checker", properties -> new Item(
+            properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item SINISTER_STONE = register("sinister_stone", properties -> new net.thaumcraft.item.SinisterStoneItem(
+            properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
+    /** O arco de osso (512 de uso, encantabilidade 3). */
+    public static final Item BONE_BOW = register("bone_bow", properties -> new net.thaumcraft.item.BoneBowItem(
+            properties.durability(512).enchantable(3)));
+    /** As flechas primordiais, uma por primário. */
+    public static final java.util.Map<String, Item> PRIMAL_ARROWS = new java.util.LinkedHashMap<>();
+
+    static {
+        String[] types = net.thaumcraft.entity.PrimalArrowEntity.TYPES;
+        for (int i = 0; i < types.length; i++) {
+            int type = i;
+            PRIMAL_ARROWS.put(types[i], register("primal_arrow_" + types[i], properties -> new net.thaumcraft.item.PrimalArrowItem(type, properties)));
+        }
+    }
+
+    /** O triturador primordial (picareta e pá de metal do vazio). */
+    public static final Item PRIMAL_CRUSHER = register("primal_crusher", properties -> new net.thaumcraft.item.PrimalCrusherItem(
+            properties.pickaxe(net.thaumcraft.item.TCMaterials.PRIMAL_VOID, 2.5f, -2.8f).rarity(net.minecraft.world.item.Rarity.EPIC)));
+    /** A lâmina carmesim dos cultistas. */
+    public static final Item CRIMSON_SWORD = register("crimson_sword", properties -> new net.thaumcraft.item.CrimsonSwordItem(
+            properties.sword(net.thaumcraft.item.TCMaterials.CRIMSON_VOID, 3.0f, -2.4f).rarity(net.minecraft.world.item.Rarity.RARE)));
+
+    /** A peça de táumio é comum; a do vazio se conserta, distorce e enfraquece no golpe (a espada 60, as outras 80). */
+    private static Item gear(TCGear.Piece piece, Item.Properties properties) {
+        if (!piece.material().equals("void")) return new Item(properties);
+        int weakness = switch (piece.kind()) {
+            case "sword" -> 60;
+            case "pickaxe", "axe", "shovel", "hoe" -> 80;
+            default -> 0;
+        };
+        return new net.thaumcraft.item.VoidGearItem(properties, weakness);
     }
 
     /** Os fragmentos de aspecto: um por primário, que é o que o original tira do minério infundido. */
@@ -182,6 +232,29 @@ public final class TCItems {
             net.minecraft.world.item.component.Consumables.defaultFood().onConsume(
                     new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
                             new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.HUNGER, 600, 0), 0.8f)).build())));
+
+    /** As pepitas de carne (o {@code ItemNuggetEdible}): o bônus de fundir carne; um de fome, 0,3 de saturação, meio segundo. */
+    public static final Item NUGGET_CHICKEN = register("nugget_chicken", properties -> new Item(properties.food(
+            new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.3f).build(),
+            net.minecraft.world.item.component.Consumables.defaultFood().consumeSeconds(0.5f).build())));
+    public static final Item NUGGET_BEEF = register("nugget_beef", properties -> new Item(properties.food(
+            new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.3f).build(),
+            net.minecraft.world.item.component.Consumables.defaultFood().consumeSeconds(0.5f).build())));
+    public static final Item NUGGET_PORK = register("nugget_pork", properties -> new Item(properties.food(
+            new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.3f).build(),
+            net.minecraft.world.item.component.Consumables.defaultFood().consumeSeconds(0.5f).build())));
+    public static final Item NUGGET_FISH = register("nugget_fish", properties -> new Item(properties.food(
+            new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.3f).build(),
+            net.minecraft.world.item.component.Consumables.defaultFood().consumeSeconds(0.5f).build())));
+    /**
+     * O petisco de três carnes ({@code ItemTripleMeatTreat}): carne de lobo, 6 de fome e 0,8 de saturação, comível mesmo
+     * sem fome, com dois em três de regeneração por um quarto de segundo.
+     */
+    public static final Item TRIPLE_MEAT_TREAT = register("triple_meat_treat", properties -> new Item(properties.food(
+            new net.minecraft.world.food.FoodProperties.Builder().nutrition(6).saturationModifier(0.8f).alwaysEdible().build(),
+            net.minecraft.world.item.component.Consumables.defaultFood().onConsume(
+                    new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                            new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.REGENERATION, 5, 0), 0.66f)).build())));
 
     /** O feijão de mana: um ponto de um aspecto; comido (meio segundo, mesmo sem fome) dá um efeito ao acaso. */
     public static final Item MANA_BEAN = register("mana_bean", properties -> new net.thaumcraft.item.ManaBeanItem(properties.food(

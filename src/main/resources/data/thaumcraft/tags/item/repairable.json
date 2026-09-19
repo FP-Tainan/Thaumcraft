@@ -26,6 +26,14 @@
     "thaumcraft:void_axe",
     "thaumcraft:void_shovel",
     "thaumcraft:void_hoe",
-    "thaumcraft:void_sword"
+    "thaumcraft:void_sword",
+    "thaumcraft:elemental_pickaxe",
+    "thaumcraft:elemental_axe",
+    "thaumcraft:elemental_shovel",
+    "thaumcraft:elemental_hoe",
+    "thaumcraft:elemental_sword",
+    "thaumcraft:primal_crusher",
+    "thaumcraft:crimson_sword",
+    "thaumcraft:bone_bow"
   ]
 }

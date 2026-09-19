@@ -330,6 +330,7 @@ public class ThaumcraftClient implements ClientModInitializer {
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essentia_crystalizer"), net.thaumcraft.client.render.EssentiaCrystalizerRenderer.Unbaked.CODEC);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essentia_reservoir"), net.thaumcraft.client.render.EssentiaReservoirRenderer.Unbaked.CODEC);
         net.thaumcraft.client.render.AspectTint.register();
+        net.thaumcraft.client.render.SinisterActive.register();
         // a tecla de trocar foco, com o menu radial, e a tela da bolsa de focos
         net.thaumcraft.client.FocusRadial.init();
         // a Pressa nas botas: o empurrão é do lado de quem anda
@@ -558,6 +559,42 @@ public class ThaumcraftClient implements ClientModInitializer {
         PlayerNotifications.init();
         // a distorção na tela: a vinheta, a névoa e os filtros das poções; e as bolhas do sabão
         WarpClient.init();
+        // as ferramentas mágicas: faíscas, bolhas, a varredura de minérios da picareta e o redemoinho da espada
+        net.thaumcraft.item.ToolFx.client = new net.thaumcraft.item.ToolFx.Client() {
+            @Override
+            public void sparkle(net.minecraft.core.BlockPos pos, int colour, int count) {
+                net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX(), pos.getY(), pos.getZ(), colour, count);
+            }
+
+            @Override
+            public void bubble(net.minecraft.world.level.Level level, double x, double y, double z, float r, float g, float b) {
+                net.thaumcraft.client.fx.Bubble.spawn(x, y, z, r, g, b, 1.0f, 1, level.getRandom());
+            }
+
+            @Override
+            public void oreScan(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos) {
+                net.thaumcraft.client.fx.OreScan.start(level, pos);
+            }
+
+            @Override
+            public void smokeSpiral(net.minecraft.world.level.Level level, double x, double y, double z, float radius, int start, int miny, int colour) {
+                net.thaumcraft.client.fx.SmokeSpiral.spawn(x, y, z, radius, start, miny, colour, level.getRandom());
+            }
+        };
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.BlockBubble.TYPE, (payload, context) -> context.client().execute(() -> {
+                    var level = context.client().level;
+                    if (level == null) return;
+                    var random = level.getRandom();
+                    float r = (payload.colour() >> 16 & 255) / 255.0f, g = (payload.colour() >> 8 & 255) / 255.0f, b = (payload.colour() & 255) / 255.0f;
+                    var p = payload.pos();
+                    for (int a = 0; a < 2; a++) {
+                        net.thaumcraft.client.fx.Bubble.spawn(p.getX(), p.getY() + random.nextFloat(), p.getZ() + random.nextFloat(), r, g, b, 1.0f, 1, random);
+                        net.thaumcraft.client.fx.Bubble.spawn(p.getX() + 1, p.getY() + random.nextFloat(), p.getZ() + random.nextFloat(), r, g, b, 1.0f, 1, random);
+                        net.thaumcraft.client.fx.Bubble.spawn(p.getX() + random.nextFloat(), p.getY() + random.nextFloat(), p.getZ(), r, g, b, 1.0f, 1, random);
+                        net.thaumcraft.client.fx.Bubble.spawn(p.getX() + random.nextFloat(), p.getY() + random.nextFloat(), p.getZ() + 1, r, g, b, 1.0f, 1, random);
+                    }
+                }));
         net.thaumcraft.item.SanitySoapItem.clientEffects = (level, x, y, z, r, g, b) ->
                 net.thaumcraft.client.fx.Bubble.spawn(x, y, z, r, g, b, 1.0f, 1, level.getRandom());
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(

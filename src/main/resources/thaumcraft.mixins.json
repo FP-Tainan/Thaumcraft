@@ -11,7 +11,10 @@
     "ItemEntityBathSaltsMixin",
     "ItemEntityAccessor",
     "LivingEntityHungerMixin",
-    "ItemStackWarpMixin"
+    "ItemStackWarpMixin",
+    "BlockDropsMiningMixin",
+    "AbstractArrowDamageMixin",
+    "AbstractArrowAccessor"
   ],
   "client": [
     "ItemInHandRendererMixin",

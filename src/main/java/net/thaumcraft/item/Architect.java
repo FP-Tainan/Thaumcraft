@@ -53,6 +53,10 @@ public final class Architect {
             Player player = context.player();
             ItemStack held = player.getMainHandItem();
             if (payload.key() == 1 && held.getItem() instanceof WandItem) toggleMisc(held, player);
+            // na pá elemental, a tecla G troca o jeito de pôr os blocos
+            if (payload.key() == 1 && held.getItem() instanceof ElementalShovelItem) {
+                ElementalShovelItem.setOrientation(held, ElementalShovelItem.getOrientation(held) + 1);
+            }
         }));
     }
 

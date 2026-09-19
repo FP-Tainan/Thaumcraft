@@ -27,7 +27,8 @@ public final class ArchitectKey {
         ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
             if (KEY_G.isDown()) {
                 if (!pressed && minecraft.player != null && minecraft.gui.screen() == null
-                        && minecraft.player.getMainHandItem().getItem() instanceof WandItem) {
+                        && (minecraft.player.getMainHandItem().getItem() instanceof WandItem
+                        || minecraft.player.getMainHandItem().getItem() instanceof net.thaumcraft.item.ElementalShovelItem)) {
                     ClientPlayNetworking.send(new Architect.Key(1));
                 }
                 pressed = true;

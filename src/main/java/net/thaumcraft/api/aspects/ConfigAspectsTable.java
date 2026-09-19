@@ -358,6 +358,11 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:loot_bag", new AspectList().add(Aspects.GREED, 8));
         r.item("thaumcraft:loot_bag_uncommon", new AspectList().add(Aspects.GREED, 16));
         r.item("thaumcraft:loot_bag_rare", new AspectList().add(Aspects.GREED, 32));
+        r.item("thaumcraft:nugget_beef", new AspectList().add(Aspects.HUNGER, 1));
+        r.item("thaumcraft:nugget_chicken", new AspectList().add(Aspects.HUNGER, 1));
+        r.item("thaumcraft:nugget_pork", new AspectList().add(Aspects.HUNGER, 1));
+        r.item("thaumcraft:nugget_fish", new AspectList().add(Aspects.HUNGER, 1));
+        r.complex("thaumcraft:triple_meat_treat", minus(new AspectList().add(Aspects.HEAL, 1), Aspects.HUNGER, 1));
         r.item("thaumcraft:shard_air", new AspectList().add(Aspects.MAGIC, 1).add(Aspects.AIR, 2).add(Aspects.CRYSTAL, 1));
         r.item("thaumcraft:shard_fire", new AspectList().add(Aspects.MAGIC, 1).add(Aspects.FIRE, 2).add(Aspects.CRYSTAL, 1));
         r.item("thaumcraft:shard_water", new AspectList().add(Aspects.MAGIC, 1).add(Aspects.WATER, 2).add(Aspects.CRYSTAL, 1));

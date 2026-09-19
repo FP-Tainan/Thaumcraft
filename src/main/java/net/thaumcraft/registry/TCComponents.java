@@ -52,6 +52,10 @@ public final class TCComponents {
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
     /** A máscara presa num elmo de fortaleza: 0 o diabo sorridente, 1 o fantasma irado, 2 o demônio que bebe. */
+    /** O {@code or} da pá elemental: de que jeito ela põe os blocos (0 a 2), trocado com a tecla G. */
+    public static final DataComponentType<Integer> SHOVEL_ORIENTATION = register("shovel_orientation",
+            builder -> builder.persistent(Codec.intRange(0, 2)).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     public static final DataComponentType<Integer> FORTRESS_MASK = register("fortress_mask",
             builder -> builder.persistent(Codec.intRange(0, 2)).networkSynchronized(ByteBufCodecs.VAR_INT));
 

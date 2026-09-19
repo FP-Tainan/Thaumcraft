@@ -29,6 +29,21 @@ public final class TCMaterials {
             BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 150, 8.0f, 3.0f, 10,
             net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/void")));
 
+    /** O {@code toolMatElemental}: nível de diamante, 1500 de uso, 10 de velocidade, 3 de dano, 18 de encantabilidade. */
+    public static final ToolMaterial ELEMENTAL = new ToolMaterial(
+            BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 1500, 10.0f, 3.0f, 18,
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/thaumium")));
+
+    /** O {@code toolMatCrimsonVoid} da espada carmesim: nível 4, 200 de uso, 8 de velocidade, 3,5 de dano, 20; conserta com o amuleto primordial. */
+    public static final ToolMaterial CRIMSON_VOID = new ToolMaterial(
+            BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 200, 8.0f, 3.5f, 20,
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, Thaumcraft.id("repairs_primal")));
+
+    /** O {@code PRIMALVOID} do triturador primordial: nível 5, 500 de uso, 8 de velocidade, 4 de dano, 20. */
+    public static final ToolMaterial PRIMAL_VOID = new ToolMaterial(
+            BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 500, 8.0f, 4.0f, 20,
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, Thaumcraft.id("repairs_primal")));
+
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> THAUMIUM_ARMOR_ASSET = assetKey("thaumium");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> VOID_ARMOR_ASSET = assetKey("void");
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> GOGGLES_ASSET = assetKey("goggles");

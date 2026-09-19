@@ -1443,3 +1443,26 @@ Porte do `WarpEvents`, das poções (`PotionUnnaturalHunger`, `PotionDeathGaze`,
   temporária e às vezes um ponto da que gruda.
 - **Diferença**: no original as poções da distorção não se curavam com leite; aqui o leite ainda tira.
 - **Testes**: `WarpGameTest` (pesquisa proibida, fabricar, sabão, evento abrindo as pesquisas); tela: `WarpClientTest`.
+
+## Itens soltos: comida, ferramentas elementais, arco de osso, relíquias
+
+Descompilados do jar: `ItemNuggetEdible`, `ItemTripleMeatTreat`, `ItemElemental*`, `ItemPrimalCrusher`,
+`ItemCrimsonSword`, `ItemVoid*`, `ItemBowBone`, `ItemPrimalArrow`/`EntityPrimalArrow`/`RenderPrimalArrow`,
+`ItemResonator`, `ItemSanityChecker`, `ItemCompassStone`, `EntityFollowingItem`, `FXSmokeSpiral`, `startScan`.
+
+- **Comida**: as quatro pepitas de carne (bônus de fundir carne na fornalha infernal, tabela regerada; o peixe vale para
+  bacalhau e salmão) e o petisco de três carnes (quatro receitas sem forma, geradas pelo `scratchpad/comida.js`).
+- **Ferramentas elementais** (infusão, receitas regeradas): a picareta põe fogo, varre os minérios/água/lava através das
+  paredes por cinco segundos e às vezes solta aglomerado nativo; o machado puxa os itens e derruba a árvore de fora para
+  dentro; a pá cava 3×3 e põe nove blocos (tecla G troca a orientação, com a prévia do arquiteto); a enxada ara 3×3, faz de
+  farinha de osso e faz crescer as mudas mágicas; a espada ergue quem a segura num redemoinho de fumaça e acerta em volta
+  do alvo. O que a pá e o triturador cavam voa até quem cavou (`FollowingItemEntity`).
+- **Triturador primordial** e **lâmina carmesim**: consertam-se sozinhos e distorcem dois; o triturador cava 3×3 (a
+  receita espera a pérola primordial do Eldritch). O **metal do vazio** também se conserta, distorce um e enfraquece.
+- **Arco de osso** (arma em dez tiques, atira mais longe, meio ponto a mais) e as **seis flechas primordiais** (qualquer
+  arco as atira; ar e ordem furam armadura, fogo queima, água deixa lento, terra empurra, entropia murcha), com o
+  fogo-fátuo da cor do primário. **Diferença**: o arco de hoje pega a flecha que achar primeiro; no original a primordial
+  tinha preferência.
+- **Ressonador** (o que há e o que puxa num cano), **verificador de sanidade** (o tubo da distorção no canto da tela) e
+  **pedra sinistra** (acende com um nó sombrio à frente).
+- **Testes**: `ToolsGameTest`; tela: `ToolsClientTest`.

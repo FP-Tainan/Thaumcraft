@@ -26,6 +26,7 @@ public final class WarpItems {
 
     private static void fill() {
         WARP.put(TCItems.FOCI.get("hellbat"), 1);
+        WARP.put(TCItems.SINISTER_STONE, 1);
         WARP.put(TCBlocks.BRAIN_JAR.asItem(), 1);
         WARP.put(TCItems.BUCKET_DEATH, 1);
         WARP.put(TCItems.BOTTLE_TAINT, 1);

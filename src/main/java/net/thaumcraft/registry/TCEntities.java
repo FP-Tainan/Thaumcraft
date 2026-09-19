@@ -262,6 +262,20 @@ public final class TCEntities {
                     .clientTrackingRange(6)
                     .updateInterval(20));
 
+    /** A flecha primordial. */
+    public static final EntityType<net.thaumcraft.entity.PrimalArrowEntity> PRIMAL_ARROW = register("primal_arrow",
+            EntityType.Builder.<net.thaumcraft.entity.PrimalArrowEntity>of(net.thaumcraft.entity.PrimalArrowEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(4)
+                    .updateInterval(20));
+
+    /** O item que voa até quem o colheu (a pá e o triturador de três por três). */
+    public static final EntityType<net.thaumcraft.entity.FollowingItemEntity> FOLLOWING_ITEM = register("following_item",
+            EntityType.Builder.<net.thaumcraft.entity.FollowingItemEntity>of(net.thaumcraft.entity.FollowingItemEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .clientTrackingRange(6)
+                    .updateInterval(1));
+
     /** A garrafa de mácula arremessada. */
     public static final EntityType<net.thaumcraft.entity.BottleTaintEntity> BOTTLE_TAINT = register("bottle_taint",
             EntityType.Builder.<net.thaumcraft.entity.BottleTaintEntity>of(net.thaumcraft.entity.BottleTaintEntity::new, MobCategory.MISC)

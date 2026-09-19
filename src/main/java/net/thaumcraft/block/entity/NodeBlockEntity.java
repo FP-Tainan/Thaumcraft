@@ -92,7 +92,11 @@ public class NodeBlockEntity extends BlockEntity {
         boolean change = node.hungryFirst(level, pos);
         node.count++;
         node.checkLock(level, pos, state);
-        if (level.isClientSide()) return;
+        if (level.isClientSide()) {
+            // o nó sombrio se anuncia à pedra sinistra de quem vê
+            if (node.type == NodeType.DARK && node.count % 50 == 0) net.thaumcraft.item.SinisterStoneItem.mark(level, pos);
+            return;
+        }
         if (node.base.isEmpty()) {
             // nó posto na mão não vem com nada dentro: aqui ele ganha o que teria se tivesse nascido sozinho
             // (o do tronco do pinheiro-de-prata, como os que nascem nele)

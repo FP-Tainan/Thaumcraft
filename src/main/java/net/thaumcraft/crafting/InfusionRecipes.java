@@ -170,6 +170,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.VOID, 16).add(Aspects.EXCHANGE, 16).add(Aspects.HUNGER, 16).add(Aspects.GREED, 16),
                 Ingredient.of(TCItems.ZOMBIE_BRAIN),
                 Arrays.asList(Ingredient.of(TCItems.GOLEM_CORES.get("fill")), Ingredient.of(net.minecraft.world.item.Items.COMPARATOR), Ingredient.of(TCItems.GOLEM_CORES.get("empty")), Ingredient.of(net.minecraft.world.item.Items.PAPER))));
+        // CoreLumber
+        ALL.add(new InfusionRecipe("CORELUMBER", new ItemStack(TCItems.GOLEM_CORES.get("chop")), 2,
+                new AspectList().add(Aspects.TOOL, 16).add(Aspects.TREE, 16).add(Aspects.HARVEST, 16),
+                Ingredient.of(TCItems.GOLEM_CORES.get("harvest")),
+                Arrays.asList(Ingredient.of(TCItems.ELEMENTAL_AXE), Ingredient.of(net.minecraft.world.item.Items.IRON_AXE), Ingredient.of(net.minecraft.world.item.Items.IRON_AXE), Ingredient.of(net.minecraft.world.item.Items.IRON_AXE))));
         // CoreFishing
         ALL.add(new InfusionRecipe("COREFISHING", new ItemStack(TCItems.GOLEM_CORES.get("fishing")), 3,
                 new AspectList().add(Aspects.WATER, 16).add(Aspects.HARVEST, 16).add(Aspects.BEAST, 16),
@@ -250,6 +255,31 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.ARMOR, 33).add(Aspects.MAGIC, 55).add(Aspects.AIR, 64),
                 Ingredient.of(TCItems.RUNIC_GIRDLE),
                 Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")), net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients.components(net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.SPLASH_POTION, net.minecraft.world.item.alchemy.Potions.STRONG_HARMING)), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")))));
+        // ElementalAxe
+        ALL.add(new InfusionRecipe("ELEMENTALAXE", new ItemStack(TCItems.ELEMENTAL_AXE), 1,
+                new AspectList().add(Aspects.WATER, 16).add(Aspects.TREE, 8),
+                Ingredient.of(TCItems.GEAR.get("thaumium_axe")),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(TCBlocks.GREATWOOD_LOG.asItem()))));
+        // ElementalPick
+        ALL.add(new InfusionRecipe("ELEMENTALPICK", new ItemStack(TCItems.ELEMENTAL_PICKAXE), 1,
+                new AspectList().add(Aspects.FIRE, 8).add(Aspects.MINE, 8).add(Aspects.SENSES, 8),
+                Ingredient.of(TCItems.GEAR.get("thaumium_pickaxe")),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(TCBlocks.GREATWOOD_LOG.asItem()))));
+        // ElementalSword
+        ALL.add(new InfusionRecipe("ELEMENTALSWORD", new ItemStack(TCItems.ELEMENTAL_SWORD), 1,
+                new AspectList().add(Aspects.AIR, 8).add(Aspects.MOTION, 8).add(Aspects.ENERGY, 8),
+                Ingredient.of(TCItems.GEAR.get("thaumium_sword")),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(TCBlocks.GREATWOOD_LOG.asItem()))));
+        // ElementalShovel
+        ALL.add(new InfusionRecipe("ELEMENTALSHOVEL", new ItemStack(TCItems.ELEMENTAL_SHOVEL), 1,
+                new AspectList().add(Aspects.EARTH, 16).add(Aspects.CRAFT, 8),
+                Ingredient.of(TCItems.GEAR.get("thaumium_shovel")),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(TCBlocks.GREATWOOD_LOG.asItem()))));
+        // ElementalHoe
+        ALL.add(new InfusionRecipe("ELEMENTALHOE", new ItemStack(TCItems.ELEMENTAL_HOE), 1,
+                new AspectList().add(Aspects.HARVEST, 8).add(Aspects.PLANT, 8).add(Aspects.EARTH, 8),
+                Ingredient.of(TCItems.GEAR.get("thaumium_hoe")),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(TCBlocks.GREATWOOD_LOG.asItem()))));
         // BootsTraveller
         ALL.add(new InfusionRecipe("BOOTSTRAVELLER", new ItemStack(TCItems.TRAVELLER_BOOTS), 1,
                 new AspectList().add(Aspects.FLIGHT, 25).add(Aspects.TRAVEL, 25),
@@ -299,5 +329,15 @@ public final class InfusionRecipes {
                 Ingredient.of(TCItems.FORTRESS_HELMET),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.DYE.red()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.GHAST_TEAR), Ingredient.of(net.minecraft.world.item.Items.MILK_BUCKET), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT)),
                 stack -> { stack.set(net.thaumcraft.registry.TCComponents.FORTRESS_MASK, 2); return stack; }));
+        // SanityCheck
+        ALL.add(new InfusionRecipe("SANITYCHECK", new ItemStack(TCItems.SANITY_CHECKER), 4,
+                new AspectList().add(Aspects.MIND, 24).add(Aspects.SENSES, 24).add(Aspects.ELDRITCH, 8),
+                Ingredient.of(TCItems.THAUMOMETER),
+                Arrays.asList(Ingredient.of(TCResources.get("mirrored_glass")), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(net.minecraft.world.item.Items.DIAMOND))));
+        // SinStone
+        ALL.add(new InfusionRecipe("SINSTONE", new ItemStack(TCItems.SINISTER_STONE), 5,
+                new AspectList().add(Aspects.SENSES, 8).add(Aspects.DARKNESS, 8).add(Aspects.ELDRITCH, 8).add(Aspects.AURA, 8),
+                Ingredient.of(net.minecraft.world.item.Items.FLINT),
+                Arrays.asList(Ingredient.of(TCItems.NITOR), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCResources.get("knowledge_fragment")), Ingredient.of(TCItems.SHARDS.get("entropy")))));
     }
 }

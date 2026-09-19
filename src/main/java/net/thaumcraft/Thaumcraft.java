@@ -76,6 +76,7 @@ public class Thaumcraft implements ModInitializer {
         // o onItemUseFirst dos golens: o golem nasce e o sino marca antes de o baú se abrir
         net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register(net.thaumcraft.item.GolemPlacerItem::placeFirst);
         net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register(net.thaumcraft.item.GolemBellItem::markFirst);
+        net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register(net.thaumcraft.item.ResonatorItem::useFirst);
         // o baú itinerante vai atrás do dono de um mundo a outro
         net.fabricmc.fabric.api.entity.event.v1.ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register(
                 (player, origin, destination) -> net.thaumcraft.entity.TravelingTrunkEntity.followOwner(player));
@@ -88,6 +89,11 @@ public class Thaumcraft implements ModInitializer {
             for (var player : server.getPlayerList().getPlayers()) net.thaumcraft.research.WarpEvents.tick(player);
         });
         net.thaumcraft.fluid.PurifyingFluid.permanentWarp = player -> net.thaumcraft.research.Knowledges.of(player).warpPerm();
+
+        // as ferramentas elementais: o machado derruba a árvore e a espada acerta as criaturas em volta do alvo
+        net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents.BEFORE.register(
+                (level, player, pos, state, be) -> !net.thaumcraft.item.ElementalAxeItem.fell(level, player, pos, state, be));
+        net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(net.thaumcraft.item.ElementalSwordItem::sweep);
 
         // o comando de teste, para destrancar a pesquisa sem ter de jogar tudo de novo
         net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register(

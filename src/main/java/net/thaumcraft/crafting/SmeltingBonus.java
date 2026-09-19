@@ -4,6 +4,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.ItemStack;
 import net.thaumcraft.registry.TCBlocks;
+import net.thaumcraft.registry.TCItems;
 import net.thaumcraft.registry.TCResources;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,5 +56,10 @@ public final class SmeltingBonus {
         add(TCResources.get("native_iron_cluster"), net.minecraft.world.item.Items.IRON_NUGGET);
         add(TCResources.get("native_cinnabar_cluster"), TCResources.get("quicksilver_drop"));
         add(TCResources.get("native_copper_cluster"), net.minecraft.world.item.Items.COPPER_NUGGET);
+        add(net.minecraft.world.item.Items.CHICKEN, TCItems.NUGGET_CHICKEN);
+        add(net.minecraft.world.item.Items.BEEF, TCItems.NUGGET_BEEF);
+        add(net.minecraft.world.item.Items.PORKCHOP, TCItems.NUGGET_PORK);
+        add(net.minecraft.world.item.Items.COD, TCItems.NUGGET_FISH);
+        add(net.minecraft.world.item.Items.SALMON, TCItems.NUGGET_FISH);
     }
 }

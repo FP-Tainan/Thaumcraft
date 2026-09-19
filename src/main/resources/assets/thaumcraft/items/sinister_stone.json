@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "thaumcraft:sinister_active",
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "thaumcraft:item/sinister_stone_active"
+    },
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "thaumcraft:item/sinister_stone"
+    }
+  }
+}

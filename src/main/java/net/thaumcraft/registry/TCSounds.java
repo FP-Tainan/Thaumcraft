@@ -118,6 +118,12 @@ public final class TCSounds {
     public static final Holder<SoundEvent> WHISPERS = register("whispers");
     /** O coracao disparando no susto da distorcao. */
     public static final Holder<SoundEvent> HEARTBEAT = register("heartbeat");
+    /** O vento da espada elemental. */
+    public static final Holder<SoundEvent> WIND = register("wind");
+    /** O golpe largo da espada elemental. */
+    public static final Holder<SoundEvent> SWING = register("swing");
+    /** O toque do ressonador no cano. */
+    public static final Holder<SoundEvent> ALEMBIC_KNOCK = register("alembic_knock");
 
     private TCSounds() {
     }

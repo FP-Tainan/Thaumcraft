@@ -80,6 +80,29 @@ public final class AdditiveGlow {
                     .withDepthStencilState(new DepthStencilState(CompareOp.GREATER_THAN_OR_EQUAL, false))
                     .build());
 
+    /** O mesmo aditivo, nas duas faces e por cima de tudo ({@code glDisable(GL_DEPTH_TEST)}): o que se vê através das paredes. */
+    public static final RenderPipeline XRAY_PIPELINE = RenderPipelines.register(
+            RenderPipeline.builder(RenderPipelines.MATRICES_FOG_SNIPPET)
+                    .withLocation(Thaumcraft.id("pipeline/additive_glow_xray"))
+                    .withVertexShader("core/entity")
+                    .withFragmentShader("core/entity")
+                    .withShaderDefine("EMISSIVE")
+                    .withShaderDefine("NO_OVERLAY")
+                    .withShaderDefine("NO_CARDINAL_LIGHTING")
+                    .withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+                    .withColorTargetState(new ColorTargetState(BlendFunction.LIGHTNING))
+                    .withVertexBinding(0, DefaultVertexFormat.ENTITY)
+                    .withPrimitiveTopology(PrimitiveTopology.QUADS)
+                    .withCull(false)
+                    .withDepthStencilState(new DepthStencilState(CompareOp.ALWAYS_PASS, false))
+                    .build());
+
+    private static final Function<Identifier, RenderType> XRAY = Util.memoize(texture ->
+            RenderType.create("thaumcraft_additive_glow_xray", RenderSetup.builder(XRAY_PIPELINE)
+                    .withTexture("Sampler0", texture)
+                    .sortOnUpload()
+                    .createRenderSetup()));
+
     private static final Function<Identifier, RenderType> BY_TEXTURE = Util.memoize(texture ->
             RenderType.create("thaumcraft_additive_glow", RenderSetup.builder(PIPELINE)
                     .withTexture("Sampler0", texture)
@@ -109,6 +132,11 @@ public final class AdditiveGlow {
     /** A mesma porta, misturando como vidro em vez de somar. */
     public static RenderType blended(Identifier texture) {
         return BLENDED.apply(texture);
+    }
+
+    /** A porta aditiva por cima de tudo, através das paredes. */
+    public static RenderType xray(Identifier texture) {
+        return XRAY.apply(texture);
     }
 
     /** A porta aditiva sem descartar as faces de trás. */

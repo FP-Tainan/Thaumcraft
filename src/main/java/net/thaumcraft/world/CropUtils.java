@@ -57,29 +57,57 @@ public final class CropUtils {
 
     /** O {@code harvestBlock}: quebra como um jogador quebraria, com o estalo e o que cai. */
     public static boolean harvestBlock(ServerLevel level, Player player, BlockPos pos) {
+        return harvestBlock(level, player, pos, ItemStack.EMPTY, false, 0);
+    }
+
+    /**
+     * O {@code BlockUtils.harvestBlock} inteiro: com a ferramenta de quem colhe (a sorte e a seda dela) e, com
+     * {@code follow}, o que cai sai voando até ele ({@link net.thaumcraft.entity.FollowingItemEntity}, rastro {@code color}).
+     */
+    public static boolean harvestBlock(ServerLevel level, Player player, BlockPos pos, ItemStack tool, boolean follow, int color) {
         BlockState state = level.getBlockState(pos);
         if (state.getDestroySpeed(level, pos) < 0.0f) return false;
         level.levelEvent(2001, pos, Block.getId(state));
         var be = level.getBlockEntity(pos);
+        if (player.getAbilities().instabuild) {
+            level.removeBlock(pos, false);
+            return true;
+        }
         boolean canHarvest = player.hasCorrectToolForDrops(state);
         state.getBlock().playerWillDestroy(level, pos, state, player);
         boolean removed = level.removeBlock(pos, false);
         if (removed) {
             state.getBlock().destroy(level, pos, state);
-            if (canHarvest) Block.dropResources(state, level, pos, be, player, ItemStack.EMPTY);
+            if (canHarvest) {
+                Block.dropResources(state, level, pos, be, player, tool);
+                if (follow) {
+                    for (var e : level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                            new net.minecraft.world.phys.AABB(pos).inflate(2.0), e -> e.tickCount == 0 && !(e instanceof net.thaumcraft.entity.FollowingItemEntity))) {
+                        var fi = new net.thaumcraft.entity.FollowingItemEntity(level, e.getX(), e.getY(), e.getZ(), e.getItem().copy(), player, color);
+                        fi.push(e.getDeltaMovement());
+                        level.addFreshEntity(fi);
+                        e.discard();
+                    }
+                }
+            }
         }
         return true;
     }
 
     /** O {@code breakFurthestBlock}: acha, seguindo o tronco, o bloco mais longe dele e quebra esse. */
     public static boolean breakFurthestBlock(ServerLevel level, BlockPos pos, Block block, Player player) {
+        return breakFurthestBlock(level, pos, block, player, ItemStack.EMPTY, false, 0);
+    }
+
+    /** O mesmo, com a ferramenta e os itens seguindo quem colhe (o machado elemental). */
+    public static boolean breakFurthestBlock(ServerLevel level, BlockPos pos, Block block, Player player, ItemStack tool, boolean follow, int color) {
         lastx = pos.getX();
         lasty = pos.getY();
         lastz = pos.getZ();
         lastdistance = 0.0;
         findBlocks(level, pos, block);
         BlockPos last = new BlockPos(lastx, lasty, lastz);
-        boolean worked = harvestBlock(level, player, last);
+        boolean worked = harvestBlock(level, player, last, tool, follow, color);
         level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
         if (worked) {
             // as folhas em volta são avisadas, para caírem com o tempo

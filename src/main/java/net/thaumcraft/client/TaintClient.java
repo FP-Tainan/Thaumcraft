@@ -58,6 +58,13 @@ public final class TaintClient {
                 context -> new TaintRenderers.Taintacle(context, TaintRenderers.TAINTACLE_SMALL, 6, 0.2f));
         EntityRendererRegistry.register(TCEntities.BOTTLE_TAINT, ThrownItemRenderer::new);
         EntityRendererRegistry.register(TCEntities.SPECIAL_ITEM, net.minecraft.client.renderer.entity.ItemEntityRenderer::new);
+        EntityRendererRegistry.register(TCEntities.FOLLOWING_ITEM, net.minecraft.client.renderer.entity.ItemEntityRenderer::new);
+        EntityRendererRegistry.register(TCEntities.PRIMAL_ARROW, net.thaumcraft.client.render.PrimalArrowRenderer::new);
+        // o rastro do item que voa até quem o colheu: faíscas (o sparkle) ou, no tipo 10, bolhas azuis
+        net.thaumcraft.entity.FollowingItemEntity.clientEffects = (level, x, y, z, type) -> {
+            if (type == 10) net.thaumcraft.client.fx.Bubble.spawn(x, y, z, 0.33f, 0.33f, 1.0f, 1.0f, 1, level.getRandom());
+            else net.thaumcraft.client.fx.Sparkle.spawn(level.getRandom(), x, y, z, 1.5f, type, 0.0f);
+        };
 
         TaintedMonster.sploosh = TaintFx::sploosh;
         TaintSplosion.effect = TaintFx::taintsplosion;

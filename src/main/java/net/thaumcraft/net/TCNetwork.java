@@ -206,6 +206,24 @@ public final class TCNetwork {
         }
     }
 
+    /** O {@code PacketFXBlockBubble}: bolhas nas quatro faces de um bloco (o machado elemental derrubando a árvore). */
+    public record BlockBubble(net.minecraft.core.BlockPos pos, int colour) implements CustomPacketPayload {
+        public static final Type<BlockBubble> TYPE = new Type<>(Thaumcraft.id("block_bubble"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, BlockBubble> CODEC = StreamCodec.composite(
+                net.minecraft.core.BlockPos.STREAM_CODEC, BlockBubble::pos, ByteBufCodecs.INT, BlockBubble::colour, BlockBubble::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static void blockBubble(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos pos, int colour) {
+        for (ServerPlayer player : level.players()) {
+            if (player.blockPosition().closerThan(pos, 32.0)) ServerPlayNetworking.send(player, new BlockBubble(pos, colour));
+        }
+    }
+
     /** O {@code PacketMiscEvent}: 0 é o susto (a vinheta e o coração), 1 a névoa longa, 2 a névoa curta. */
     public record MiscEvent(int kind) implements CustomPacketPayload {
         public static final Type<MiscEvent> TYPE = new Type<>(Thaumcraft.id("misc_event"));
@@ -266,6 +284,7 @@ public final class TCNetwork {
         PayloadTypeRegistry.clientboundPlay().register(AspectDiscovery.TYPE, AspectDiscovery.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(WarpMessage.TYPE, WarpMessage.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(MiscEvent.TYPE, MiscEvent.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(BlockBubble.TYPE, BlockBubble.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(ResearchComplete.TYPE, ResearchComplete.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela

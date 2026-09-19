@@ -1,4 +1,10 @@
 {
+  "alembic_knock": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:alembicknock"
+    ]
+  },
   "brain": {
     "category": "player",
     "sounds": [
@@ -280,6 +286,13 @@
       "thaumcraft:swarmattack"
     ]
   },
+  "swing": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:swing1",
+      "thaumcraft:swing2"
+    ]
+  },
   "tentacle": {
     "category": "player",
     "sounds": [
@@ -319,6 +332,13 @@
     "category": "player",
     "sounds": [
       "thaumcraft:whispers"
+    ]
+  },
+  "wind": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:wind1",
+      "thaumcraft:wind2"
     ]
   },
   "wisp_dead": {

@@ -109,7 +109,8 @@ public class InfernalFurnaceGameTest {
     public void theSmeltingBonusTable(GameTestHelper helper) {
         if (SmeltingBonus.of(new ItemStack(Items.RAW_IRON)) != Items.IRON_NUGGET) helper.fail("ferro bruto dá pepita de ferro");
         if (SmeltingBonus.of(new ItemStack(Items.GOLD_ORE)) != Items.GOLD_NUGGET) helper.fail("minério de ouro dá pepita de ouro");
-        if (SmeltingBonus.size() != 14) helper.fail("catorze pares hoje, são " + SmeltingBonus.size());
+        if (SmeltingBonus.size() != 19) helper.fail("dezenove pares hoje (as pepitas de carne entraram), são " + SmeltingBonus.size());
+        if (SmeltingBonus.of(new ItemStack(Items.BEEF)) != net.thaumcraft.registry.TCItems.NUGGET_BEEF) helper.fail("carne de vaca dá pepita de vaca");
         helper.succeed();
     }
 }

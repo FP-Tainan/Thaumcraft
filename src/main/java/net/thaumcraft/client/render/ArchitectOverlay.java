@@ -93,7 +93,9 @@ public final class ArchitectOverlay {
         Player player = minecraft.player;
         if (player == null || minecraft.level == null) return;
         ItemStack wand = player.getMainHandItem();
-        if (!(wand.getItem() instanceof WandItem) || !Architect.active(wand)) return;
+        // a pá elemental também mostra onde os blocos vão (o IArchitect dela), sem os eixos
+        boolean shovel = wand.getItem() instanceof net.thaumcraft.item.ElementalShovelItem;
+        if (!shovel && (!(wand.getItem() instanceof WandItem) || !Architect.active(wand))) return;
         HitResult hit = minecraft.hitResult;
         if (!(hit instanceof BlockHitResult target) || hit.getType() != HitResult.Type.BLOCK) return;
         BlockPos pos = target.getBlockPos();
@@ -102,7 +104,8 @@ public final class ArchitectOverlay {
         int hash = (pos.getX() + "" + pos.getY() + "" + pos.getZ() + "" + side + "" + ticks / 5).hashCode();
         if (hash != lastHash) {
             lastHash = hash;
-            List<BlockPos> found = Architect.blocks(wand, minecraft.level, pos, side, player);
+            List<BlockPos> found = shovel ? net.thaumcraft.item.ElementalShovelItem.architectBlocks(wand, minecraft.level, pos, side, player)
+                    : Architect.blocks(wand, minecraft.level, pos, side, player);
             blocks = found == null ? List.of() : found;
             set = new HashSet<>(blocks);
         }
@@ -112,8 +115,10 @@ public final class ArchitectOverlay {
         Vec3 camera = context.levelState().cameraRenderState.pos;
         PoseStack pose = context.poseStack();
         SubmitNodeCollector collector = context.submitNodeCollector();
-        axes(pose, collector, camera, pos, player, Architect.showAxis(wand, side, Architect.Axis.X),
-                Architect.showAxis(wand, side, Architect.Axis.Y), Architect.showAxis(wand, side, Architect.Axis.Z));
+        if (!shovel) {
+            axes(pose, collector, camera, pos, player, Architect.showAxis(wand, side, Architect.Axis.X),
+                    Architect.showAxis(wand, side, Architect.Axis.Y), Architect.showAxis(wand, side, Architect.Axis.Z));
+        }
         TextureAtlasSprite[] sprites = sprites(minecraft);
         for (BlockPos c : blocks) block(pose, collector, camera, c, ticks, sprites);
     }

@@ -79,6 +79,8 @@ public final class WarpClient {
             PlayerNotifications.add("§a" + net.minecraft.network.chat.Component.translatable("tc.addclue").getString());
             player.playSound(TCSounds.LEARN.value(), 0.2f, 1.0f + player.getRandom().nextFloat() * 0.1f);
         }));
+        // o verificador de sanidade na mão: o medidor da distorção no canto de cima
+        HudElementRegistry.addLast(Thaumcraft.id("sanity_checker"), (graphics, tracker) -> sanity(graphics));
         // a vinheta vai junto da do jogo, debaixo do resto da tela
         HudElementRegistry.attachElementAfter(VanillaHudElements.MISC_OVERLAYS, Thaumcraft.id("warp_vignette"),
                 (graphics, tracker) -> vignette(graphics));
@@ -126,6 +128,34 @@ public final class WarpClient {
         fog.environmentalEnd = Math.min(fog.environmentalEnd, end);
         fog.skyEnd = Math.min(fog.skyEnd, end);
         fog.cloudEnd = Math.min(fog.cloudEnd, end);
+    }
+
+    private static final Identifier HUD = Thaumcraft.id("textures/gui/hud.png");
+
+    /**
+     * O {@code renderSanityHud}: o tubo de vidro no canto, cheio de baixo para cima com a distorção permanente (roxo
+     * escuro), a que gruda (roxo) e a temporária (lilás), e a caveira quando passa de cem.
+     */
+    private static void sanity(GuiGraphicsExtractor graphics) {
+        var player = Minecraft.getInstance().player;
+        if (player == null || !player.getMainHandItem().is(net.thaumcraft.registry.TCItems.SANITY_CHECKER)) return;
+        var k = net.thaumcraft.research.Knowledges.of(player);
+        float tw = k.warpTotal();
+        int p = k.warpPerm(), s = k.warpSticky(), t = k.warpTemp();
+        float mod = 1.0f;
+        if (tw > 100.0f) {
+            mod = 100.0f / tw;
+            tw = 100.0f;
+        }
+        int gap = (int) ((100.0f - tw) / 100.0f * 48.0f);
+        int wt = (int) (t / 100.0f * 48.0f * mod);
+        int ws = (int) (s / 100.0f * 48.0f * mod);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, HUD, 1, 1, 152, 0, 20, 76, 256, 256);
+        if (t > 0) graphics.blit(RenderPipelines.GUI_TEXTURED, HUD, 7, 21 + gap, 200, gap, 8, wt + gap, 256, 256, ARGB.colorFromFloat(1.0f, 1.0f, 0.5f, 1.0f));
+        if (s > 0) graphics.blit(RenderPipelines.GUI_TEXTURED, HUD, 7, 21 + wt + gap, 200, wt + gap, 8, wt + ws + gap, 256, 256, ARGB.colorFromFloat(1.0f, 0.75f, 0.0f, 0.75f));
+        if (p > 0) graphics.blit(RenderPipelines.GUI_TEXTURED, HUD, 7, 21 + wt + ws + gap, 200, wt + ws + gap, 8, 48, 256, 256, ARGB.colorFromFloat(1.0f, 0.5f, 0.0f, 0.5f));
+        graphics.blit(RenderPipelines.GUI_TEXTURED, HUD, 1, 1, 176, 0, 20, 76, 256, 256);
+        if (tw >= 100.0f) graphics.blit(RenderPipelines.GUI_TEXTURED, HUD, 1, 1, 216, 0, 20, 16, 256, 256);
     }
 
     /** O {@code renderVignette}: escurece as bordas (como a vinheta do jogo), pulsando um pouco. */

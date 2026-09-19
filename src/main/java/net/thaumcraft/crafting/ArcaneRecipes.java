@@ -114,6 +114,34 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("ARCANEEAR", new ItemStack(TCBlocks.ARCANE_EAR.asItem()),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.REDSTONE), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem())),
                 new AspectList().add(Aspects.AIR, 10).add(Aspects.ORDER, 10)));
+        // BoneBow
+        ALL.add(new ArcaneRecipe("BONEBOW", new ItemStack(TCItems.BONE_BOW),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.STRING), Ingredient.of(net.minecraft.world.item.Items.BONE), null, Ingredient.of(net.minecraft.world.item.Items.STRING), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(net.minecraft.world.item.Items.BONE), Ingredient.of(net.minecraft.world.item.Items.STRING), Ingredient.of(net.minecraft.world.item.Items.BONE), null),
+                new AspectList().add(Aspects.AIR, 16).add(Aspects.ENTROPY, 32)));
+        // PrimalArrow_0
+        ALL.add(new ArcaneRecipe("PRIMALARROW", new ItemStack(TCItems.PRIMAL_ARROWS.get("air"), 8),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW)),
+                new AspectList().add(Aspects.AIR, 8)));
+        // PrimalArrow_1
+        ALL.add(new ArcaneRecipe("PRIMALARROW", new ItemStack(TCItems.PRIMAL_ARROWS.get("fire"), 8),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW)),
+                new AspectList().add(Aspects.FIRE, 8)));
+        // PrimalArrow_2
+        ALL.add(new ArcaneRecipe("PRIMALARROW", new ItemStack(TCItems.PRIMAL_ARROWS.get("water"), 8),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW)),
+                new AspectList().add(Aspects.WATER, 8)));
+        // PrimalArrow_3
+        ALL.add(new ArcaneRecipe("PRIMALARROW", new ItemStack(TCItems.PRIMAL_ARROWS.get("earth"), 8),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW)),
+                new AspectList().add(Aspects.EARTH, 8)));
+        // PrimalArrow_4
+        ALL.add(new ArcaneRecipe("PRIMALARROW", new ItemStack(TCItems.PRIMAL_ARROWS.get("order"), 8),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW)),
+                new AspectList().add(Aspects.ORDER, 8)));
+        // PrimalArrow_5
+        ALL.add(new ArcaneRecipe("PRIMALARROW", new ItemStack(TCItems.PRIMAL_ARROWS.get("entropy"), 8),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW)),
+                new AspectList().add(Aspects.ENTROPY, 8)));
         // InfusionMatrix
         ALL.add(new ArcaneRecipe("INFUSION", new ItemStack(TCBlocks.INFUSION_MATRIX.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem())),
@@ -314,6 +342,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("TUBES", new ItemStack(TCBlocks.TUBE.asItem(), 8),
                 Arrays.asList(null, Ingredient.of(TCResources.get("quicksilver_drop")), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // Resonator
+        ALL.add(new ArcaneRecipe("TUBES", new ItemStack(TCItems.RESONATOR),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.STICK), null),
+                new AspectList().add(Aspects.WATER, 5).add(Aspects.AIR, 5)));
         // TubeBuffer
         ALL.add(new ArcaneRecipe("CENTRIFUGE", new ItemStack(TCBlocks.TUBE_BUFFER.asItem()),
                 Arrays.asList(Ingredient.of(TCItems.PHIAL), Ingredient.of(TCBlocks.TUBE_VALVE.asItem()), Ingredient.of(TCItems.PHIAL), Ingredient.of(TCBlocks.TUBE.asItem()), null, Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCItems.PHIAL), Ingredient.of(TCBlocks.TUBE_RESTRICT.asItem()), Ingredient.of(TCItems.PHIAL)),
