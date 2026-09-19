@@ -66,6 +66,7 @@ public class Thaumcraft implements ModInitializer {
         // a morte líquida: o que a criatura dissolvida deixa, e o tanque do spa aberto aos canos (menos por cima)
         net.thaumcraft.event.Dissolve.init();
         net.thaumcraft.event.Champions.init();
+        net.thaumcraft.event.MobDrops.init();
         // os encantamentos: o Reparo com vis
         net.thaumcraft.event.Enchantments.init();
         net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntity(
