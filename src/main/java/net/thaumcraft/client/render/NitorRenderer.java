@@ -41,8 +41,8 @@ import net.thaumcraft.block.entity.NitorBlockEntity;
  * Nitors lado a lado não fervem no mesmo compasso.
  */
 public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, NitorRenderer.State> {
-    /** O facho do original: a célula de baixo à esquerda da folha {@code misc/particles.png}. */
-    private static final Identifier WISP = Thaumcraft.id("textures/misc/wisp.png");
+    /** O facho do original: a célula de baixo à esquerda da folha {@code misc/particles.png}, recortada (o {@code misc/wisp.png} de verdade é a chama do fogo-fátuo). */
+    private static final Identifier WISP = Thaumcraft.id("textures/misc/nitor_wisp.png");
 
     /** O facho que vive mais tempo: {@code 36 / 0,7}. É até aí que se olha para trás. */
     private static final int LONGEST_LIFE = 52;

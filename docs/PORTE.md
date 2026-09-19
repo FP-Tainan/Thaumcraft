@@ -805,3 +805,40 @@ A mesma auditoria achou, nas receitas geradas:
 - **Diferença:** a conta de fragmentos da pedra infundida é "um ou dois, mais de zero à fortuna" (o original sorteava
   de 1 a 2 + fortuna de uma vez; o intervalo é o mesmo). Os aglomerados só existem por receita, como no mundo normal
   do original (lá eles nascem na dimensão Eldritch).
+
+## Criaturas básicas (2026-09-19)
+
+- **Zumbi Raivoso** (`BrainyZombieEntity`, o `EntityBrainyZombie`): zumbi de 25 de vida, 5 de dano, três de armadura
+  a mais, sem reforços, que revida quem o fere. Nasce onde nasce zumbi na superfície (peso 10). Larga três sorteios
+  de meio a meio de carne podre, o cérebro de zumbi em (5 + pilhagem) de 10, e o raro do zumbi (ferro, cenoura,
+  batata) só morto por jogador.
+- **Zumbi Furioso** (`GiantBrainyZombieEntity`): 60 de vida, pula no alvo; cada golpe que leva soma um décimo de
+  raiva (até dois), que o faz crescer e bater mais forte e passa devagar. Doze sorteios de duas carnes podres, o
+  cérebro, e o raro dele (taumio, cenoura, batata, âmbar). Ainda só por ovo: quem o solta é o nó sombrio, que não
+  pinta bioma aqui.
+- A pele `bzombie.png` do original era de 64×32; foi convertida para o formato de hoje (braço e perna esquerdos
+  copiados dos direitos, como o jogo faz com pele antiga).
+- **Fogo-fátuo** (`WispEntity`, o `EntityWisp`): bola de vis de um aspecto (nove em dez primordiais), que vagueia
+  sem gravidade e dá choques de longe (`TCNetwork.EntityZap`, o raio do `PacketFXWispZap`). Nasce no Nether (peso
+  5), no escuro, até oito por perto. Morto, larga a **essência etérea** do aspecto dele.
+- **Essência etérea** (`WispEssenceItem`): dois de aura mais dois do aspecto que carrega, pintada da cor dele; na
+  aba do criativo vem uma de cada aspecto.
+- **Morcego Infernal** (`FireBatEntity` + `FireBatModel`/`FireBatRenderer`, o `EntityFireBat`, o `ModelFireBat` e o
+  `RenderFireBat`): o modelo é o do morcego do jogo de 1.7 (o de hoje mudou), a 35% do tamanho, sempre aceso,
+  soltando fumaça e chama. Dorme pendurado até alguém chegar a quatro blocos, persegue quem vê a doze e, encostando,
+  põe fogo, morde sem empurrar ou — uma vez em dez — explode sem quebrar bloco. Imune a fogo e explosão; água e
+  chuva o afogam. Nasce no Nether (peso 10, de um a dois) e, no Dia das Bruxas, em todo lugar (peso 5). Larga de
+  zero a dois de pólvora, mais a pilhagem.
+- **Foco dos Nove Infernos** (`Focuses.hellbat`, o `ItemFocusHellbat`): ignis 2, perditio 1 e aer 1 por morcego,
+  um por segundo; o morcego invocado sai da mão e vai atrás da criatura na mira a até 32 blocos. Invocado, morde
+  com dois, não larga nada e, sem alvo, se desfaz. A receita de infusão entrou.
+- **Cérebro de zumbi**: comida de 4 com 0,2 de saturação, 80% de chance de fome por 30 segundos, carne de lobo.
+  Com ele entraram os aspectos dele e as receitas de infusão que só esperavam por ele: o núcleo de triagem do golem
+  e a máscara do diabo sorridente.
+- **Sons:** `wisp_live`, `wisp_dead` e, já para o pech, os seis dele.
+- **Diferenças:**
+  - comer o cérebro não dá distorção (a distorção ainda não existe).
+  - as variantes bomba, diabo e vampiro do morcego estão prontas na criatura, mas só o manipulador focal as liga.
+  - o morcego invocado conta o dono como quem feriu o alvo (o original só marcava "ferido recentemente", sem jogador);
+    o jogo de hoje precisa do jogador para dar a experiência, então o efeito é o mesmo.
+  - o zumbi raivoso nasce nos biomas onde nasce zumbi (o original: todo bioma da superfície com monstros).

@@ -48,6 +48,17 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.GOLEM,
                 net.thaumcraft.client.render.GolemRenderer::new);
+        // as criaturas: os zumbis, o fogo-fátuo e o morcego de fogo
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.BRAINY_ZOMBIE, net.thaumcraft.client.render.BrainyZombieRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.GIANT_BRAINY_ZOMBIE, net.thaumcraft.client.render.BrainyZombieRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.WISP, net.thaumcraft.client.render.WispRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.FireBatRenderer.LAYER, net.thaumcraft.client.render.FireBatModel::createBodyLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.FIREBAT, net.thaumcraft.client.render.FireBatRenderer::new);
         // o nó de aura é uma nuvem de bolhas, e quem a pinta é este desenhista
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.NODE, net.thaumcraft.client.render.NodeRenderer::new);
@@ -274,6 +285,20 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.net.TCNetwork.BlockSparkle.TYPE, (payload, context) -> context.client().execute(() ->
                         net.thaumcraft.client.fx.GenericFx.blockSparkle(payload.pos().getX(), payload.pos().getY(),
                                 payload.pos().getZ(), payload.colour(), 1)));
+        // o choque do fogo-fátuo: o bolt de uma criatura na outra (do pé de quem dá até o peito de quem leva)
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.EntityZap.TYPE, (payload, context) -> context.client().execute(() -> {
+                    var level = context.client().level;
+                    if (level == null) return;
+                    var source = level.getEntity(payload.source());
+                    var target = level.getEntity(payload.target());
+                    if (source == null || target == null) return;
+                    net.thaumcraft.client.fx.LightningBolt bolt = new net.thaumcraft.client.fx.LightningBolt(source.getX(), source.getY(), source.getZ(),
+                            target.getX(), target.getY() + target.getEyeHeight() - 0.7, target.getZ(), level.getRandom().nextLong(), 3, 0.4f, 4);
+                    bolt.defaultFractal();
+                    bolt.setType(0);
+                    bolt.finalizeBolt();
+                }));
         // o raio de um nó a outro: o nodeBolt de tipo 0 e o estalo baixinho
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 net.thaumcraft.net.TCNetwork.BlockZap.TYPE, (payload, context) -> context.client().execute(() -> {

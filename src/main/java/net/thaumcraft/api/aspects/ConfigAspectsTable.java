@@ -339,6 +339,7 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:arcane_stone", new AspectList().add(Aspects.EARTH, 1).add(Aspects.MAGIC, 1));
         r.item("thaumcraft:arcane_stone_bricks", new AspectList().add(Aspects.EARTH, 1).add(Aspects.MAGIC, 1));
         r.item("thaumcraft:quicksilver", new AspectList().add(Aspects.METAL, 3).add(Aspects.POISON, 1).add(Aspects.EXCHANGE, 2));
+        r.item("thaumcraft:zombie_brain", new AspectList().add(Aspects.FLESH, 2).add(Aspects.MIND, 4).add(Aspects.UNDEAD, 2));
         r.item("thaumcraft:amber", new AspectList().add(Aspects.TRAP, 2).add(Aspects.CRYSTAL, 2));
         r.item("thaumcraft:knowledge_fragment", new AspectList().add(Aspects.MIND, 8));
         r.item("thaumcraft:gold_coin", new AspectList().add(Aspects.GREED, 1));
@@ -355,6 +356,8 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:crucible", r.copy("minecraft:cauldron").add(Aspects.CRAFT, 4).add(Aspects.MAGIC, 4));
         r.item("thaumcraft:thaumonomicon", r.copy("minecraft:bookshelf").add(Aspects.MAGIC, 2).merge(Aspects.MIND, 2));
         r.item("thaumcraft:phial", new AspectList().add(Aspects.VOID, 1));
+        r.item("thaumcraft:wisp_essence", new AspectList().add(Aspects.AURA, 2));
+        r.item("thaumcraft:crystal_essence", new AspectList());
         r.complex("thaumcraft:goggles", new AspectList().add(Aspects.SENSES, 4));
         r.item("thaumcraft:apprentice_ring_air", new AspectList().add(Aspects.MAGIC, 5));
     }

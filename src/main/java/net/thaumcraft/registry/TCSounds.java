@@ -78,6 +78,22 @@ public final class TCSounds {
     public static final Holder<SoundEvent> JACOBS = register("jacobs");
     /** A sacola de tesouro aberta. */
     public static final Holder<SoundEvent> COINS = register("coins");
+    /** O fogo-fatuo crepitando. */
+    public static final Holder<SoundEvent> WISP_LIVE = register("wisp_live");
+    /** O fogo-fatuo se apagando. */
+    public static final Holder<SoundEvent> WISP_DEAD = register("wisp_dead");
+    /** O pech resmungando. */
+    public static final Holder<SoundEvent> PECH_IDLE = register("pech_idle");
+    /** O pech aceitando a troca. */
+    public static final Holder<SoundEvent> PECH_TRADE = register("pech_trade");
+    /** O pech sacudindo os dados. */
+    public static final Holder<SoundEvent> PECH_DICE = register("pech_dice");
+    /** O pech apanhando. */
+    public static final Holder<SoundEvent> PECH_HIT = register("pech_hit");
+    /** O pech morrendo. */
+    public static final Holder<SoundEvent> PECH_DEATH = register("pech_death");
+    /** O pech partindo para cima. */
+    public static final Holder<SoundEvent> PECH_CHARGE = register("pech_charge");
 
     private TCSounds() {
     }

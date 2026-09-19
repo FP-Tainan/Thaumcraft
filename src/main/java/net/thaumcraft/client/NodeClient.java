@@ -25,8 +25,13 @@ public final class NodeClient {
 
     /** O {@code burst} com o som de falha: o nó que o transdutor mexeu. */
     public static void burst(Level level, net.minecraft.world.phys.Vec3 at) {
+        burst(level, at, true);
+    }
+
+    /** O {@code burst}, com ou sem o som. */
+    public static void burst(Level level, net.minecraft.world.phys.Vec3 at, boolean sound) {
         net.thaumcraft.client.fx.Burst.spawn(at, 1.0f, level.getRandom());
-        level.playLocalSound(at.x, at.y, at.z, net.thaumcraft.registry.TCSounds.CRAFT_FAIL.value(), net.minecraft.sounds.SoundSource.BLOCKS, 0.5f, 1.0f, false);
+        if (sound) level.playLocalSound(at.x, at.y, at.z, net.thaumcraft.registry.TCSounds.CRAFT_FAIL.value(), net.minecraft.sounds.SoundSource.BLOCKS, 0.5f, 1.0f, false);
     }
 
     /** O {@code nodeBolt}: o raio de tipo 0 do transdutor, dez tiques, quatro de força. */
@@ -38,6 +43,17 @@ public final class NodeClient {
         bolt.defaultFractal();
         bolt.setType(0);
         bolt.finalizeBolt();
+    }
+
+    /** O {@code wispFX}: a chama colorida do fogo-fátuo, caindo de leve. */
+    public static void wisp(double x, double y, double z, float size, int colour) {
+        net.thaumcraft.client.fx.Wisp.colored(x, y, z, size, (colour >> 16 & 255) / 255.0f, (colour >> 8 & 255) / 255.0f, (colour & 255) / 255.0f);
+    }
+
+    /** O rastro de faíscas do morcego-bomba: os quadros 151 a 159 da folha, brancos. */
+    public static void batBomb(double x, double y, double z, net.minecraft.util.RandomSource random) {
+        net.thaumcraft.client.fx.ThaumFx.add(new net.thaumcraft.client.fx.GenericFx(x, y, z, 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.8f, false,
+                151, 9, 1, 7 + random.nextInt(5), 0, 1.0f + random.nextFloat() * 0.5f));
     }
 
     public static boolean isLocalPlayer(Entity entity) {

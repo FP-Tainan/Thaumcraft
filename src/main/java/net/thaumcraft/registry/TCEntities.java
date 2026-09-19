@@ -54,6 +54,43 @@ public final class TCEntities {
                     .eyeHeight(0.8f)
                     .clientTrackingRange(8));
 
+    /** O zumbi zangado: nasce onde nascem monstros na superfície, peso dez. */
+    public static final EntityType<net.thaumcraft.entity.BrainyZombieEntity> BRAINY_ZOMBIE = register("brainy_zombie",
+            net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType.Builder.createMob(
+                            net.thaumcraft.entity.BrainyZombieEntity::new, MobCategory.MONSTER, mob -> mob
+                                    .defaultAttributes(net.thaumcraft.entity.BrainyZombieEntity::attributes)
+                                    .spawnPlacement(net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                                            net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                                            net.minecraft.world.entity.monster.Monster::checkMonsterSpawnRules))
+                    .sized(0.6f, 1.95f).eyeHeight(1.74f).clientTrackingRange(8));
+
+    /** O zumbi furioso: o dos nós sombrios; cresce com a raiva. */
+    public static final EntityType<net.thaumcraft.entity.GiantBrainyZombieEntity> GIANT_BRAINY_ZOMBIE = register("giant_brainy_zombie",
+            net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType.Builder.createMob(
+                            net.thaumcraft.entity.GiantBrainyZombieEntity::new, MobCategory.MONSTER, mob -> mob
+                                    .defaultAttributes(net.thaumcraft.entity.GiantBrainyZombieEntity::attributes))
+                    .sized(1.32f, 3.96f).clientTrackingRange(8));
+
+    /** O fogo-fátuo: do tamanho de 0,9, sem gravidade. */
+    public static final EntityType<net.thaumcraft.entity.WispEntity> WISP = register("wisp",
+            net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType.Builder.createMob(
+                            net.thaumcraft.entity.WispEntity::new, MobCategory.MONSTER, mob -> mob
+                                    .defaultAttributes(net.thaumcraft.entity.WispEntity::attributes)
+                                    .spawnPlacement(net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                                            net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                                            net.thaumcraft.entity.WispEntity::checkSpawn))
+                    .sized(0.9f, 0.9f).clientTrackingRange(8));
+
+    /** O morcego de fogo: meio por 0,9, imune ao fogo. */
+    public static final EntityType<net.thaumcraft.entity.FireBatEntity> FIREBAT = register("firebat",
+            net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType.Builder.createMob(
+                            net.thaumcraft.entity.FireBatEntity::new, MobCategory.MONSTER, mob -> mob
+                                    .defaultAttributes(net.thaumcraft.entity.FireBatEntity::attributes)
+                                    .spawnPlacement(net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                                            net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                                            net.thaumcraft.entity.FireBatEntity::checkSpawn))
+                    .sized(0.5f, 0.9f).fireImmune().clientTrackingRange(5));
+
     private TCEntities() {
     }
 
@@ -67,5 +104,6 @@ public final class TCEntities {
     public static void init() {
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(
                 GOLEM, net.thaumcraft.entity.GolemEntity.attributes());
+        net.thaumcraft.world.CreatureSpawns.init();
     }
 }

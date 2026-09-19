@@ -106,6 +106,24 @@ public final class TCNetwork {
         }
     }
 
+    /** Do servidor para quem está perto: o raio de uma criatura em outra, o {@code PacketFXWispZap}. */
+    public record EntityZap(int source, int target) implements CustomPacketPayload {
+        public static final Type<EntityZap> TYPE = new Type<>(Thaumcraft.id("entity_zap"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, EntityZap> CODEC = StreamCodec.composite(
+                ByteBufCodecs.VAR_INT, EntityZap::source, ByteBufCodecs.VAR_INT, EntityZap::target, EntityZap::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static void entityZap(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.Entity source, net.minecraft.world.entity.Entity target) {
+        for (ServerPlayer player : level.players()) {
+            if (player.distanceToSqr(source) < 32.0 * 32.0) ServerPlayNetworking.send(player, new EntityZap(source.getId(), target.getId()));
+        }
+    }
+
     private TCNetwork() {
     }
 
@@ -114,6 +132,7 @@ public final class TCNetwork {
         PayloadTypeRegistry.clientboundPlay().register(ScanSummary.TYPE, ScanSummary.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockSparkle.TYPE, BlockSparkle.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockZap.TYPE, BlockZap.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(EntityZap.TYPE, EntityZap.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(ObjectAspectsSync.TYPE, ObjectAspectsSync.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela

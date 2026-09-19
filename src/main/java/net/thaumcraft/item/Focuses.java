@@ -103,6 +103,7 @@ public final class Focuses {
             case "trade" -> trade(level, player, wand, focus);
             case "primal" -> primal(level, player, wand);
             case "warding" -> warding(level, player, wand, focus);
+            case "hellbat" -> hellbat(level, player, wand, focus);
             default -> false;
         };
     }
@@ -123,6 +124,11 @@ public final class Focuses {
 
     /** O {@code EntityUtils.getPointedEntity}: a primeira criatura na mira, com a caixa folgada em 1,1. */
     public static Entity pointedEntity(Level level, Player player, double range) {
+        return pointedEntity(level, player, range, null);
+    }
+
+    /** O mesmo, pulando as criaturas de uma classe (o foco dos morcegos não mira os próprios morcegos). */
+    public static Entity pointedEntity(Level level, Player player, double range, Class<? extends Entity> skip) {
         Vec3 eyes = player.getEyePosition();
         Vec3 look = player.getViewVector(1.0f);
         Vec3 far = eyes.add(look.scale(range));
@@ -131,7 +137,7 @@ public final class Focuses {
         if (wall.getType() != HitResult.Type.MISS) far = wall.getLocation();
         AABB box = player.getBoundingBox().expandTowards(look.scale(range)).inflate(1.0);
         EntityHitResult hit = ProjectileUtil.getEntityHitResult(player, eyes, far, box,
-                entity -> !entity.isSpectator() && entity.isPickable(), eyes.distanceToSqr(far));
+                entity -> !entity.isSpectator() && entity.isPickable() && (skip == null || !skip.isInstance(entity)), eyes.distanceToSqr(far));
         return hit == null ? null : hit.getEntity();
     }
 
@@ -213,6 +219,43 @@ public final class Focuses {
         level.addFreshEntity(orb);
         level.playSound(null, orb, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.3f,
                 0.8f + level.getRandom().nextFloat() * 0.1f);
+        return true;
+    }
+
+    // ----------------------------------------------------------------- nove infernos
+
+    private static final Map<UUID, Long> HELLBAT_COOLDOWN = new HashMap<>();
+
+    /**
+     * O {@code ItemFocusHellbat}: um morcego de fogo invocado sai da mão e vai atrás da criatura na mira, a até 32
+     * blocos. Sem criatura na mira, nada acontece; um por segundo.
+     */
+    private static boolean hellbat(Level level, Player player, ItemStack wand, FocusItem focus) {
+        long now = System.currentTimeMillis();
+        if (HELLBAT_COOLDOWN.getOrDefault(player.getUUID(), 0L) > now) return false;
+        Entity pointed = pointedEntity(level, player, 32.0, net.thaumcraft.entity.FireBatEntity.class);
+        if (!(pointed instanceof LivingEntity target)) return false;
+        if (target instanceof Player && !(level instanceof ServerLevel server && server.isPvpAllowed())) return false;
+        HELLBAT_COOLDOWN.put(player.getUUID(), now + 1000L);
+        double yaw = player.getYRot() / 180.0f * (float) Math.PI;
+        Vec3 look = player.getViewVector(1.0f);
+        double px = player.getX() - Math.cos(yaw) * 0.16f + look.x * 0.5;
+        double py = player.getBoundingBox().minY + player.getBbHeight() / 2.0f + 0.25 - 0.05000000014901161 + look.y * 0.5;
+        double pz = player.getZ() - Math.sin(yaw) * 0.16f + look.z * 0.5;
+        net.thaumcraft.entity.FireBatEntity bat = net.thaumcraft.registry.TCEntities.FIREBAT.create(level,
+                net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED);
+        if (bat == null) return false;
+        bat.snapTo(px, py + bat.getBbHeight(), pz, player.getYRot(), 0.0f);
+        bat.setTarget(target);
+        bat.owner = player;
+        bat.setIsSummoned(true);
+        bat.setIsBatHanging(false);
+        if (WandItem.consumeRaw(wand, focus.cost(), true, player) && level.addFreshEntity(bat)) {
+            level.levelEvent(net.minecraft.world.level.block.LevelEvent.PARTICLES_MOBBLOCK_SPAWN, BlockPos.containing(px, py, pz), 0);
+            level.playSound(null, bat, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.2f, 0.95f + level.getRandom().nextFloat() * 0.1f);
+        } else {
+            level.playSound(null, player, TCSounds.WAND_FAIL.value(), SoundSource.PLAYERS, 0.1f, 0.8f + level.getRandom().nextFloat() * 0.1f);
+        }
         return true;
     }
 

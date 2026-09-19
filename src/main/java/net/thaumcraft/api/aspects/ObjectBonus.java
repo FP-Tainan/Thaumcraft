@@ -112,7 +112,8 @@ final class ObjectBonus {
         Aspect phial = PhialItem.aspectOf(stack);
         if (phial != null) tmp.add(phial, PhialItem.PORTION);
         Aspect crystal = net.thaumcraft.item.CrystalEssenceItem.aspectOf(stack);
-        if (crystal != null) tmp.add(crystal, 1);
+        // a essência etérea carrega dois pontos; a cristalizada, um
+        if (crystal != null) tmp.add(crystal, stack.is(net.thaumcraft.registry.TCItems.WISP_ESSENCE) ? 2 : 1);
         JarContents jar = stack.get(TCComponents.JAR_CONTENTS);
         if (jar != null && jar.heldAspect() != null && jar.amount() > 0) tmp.add(jar.heldAspect(), jar.amount());
         if (source != null) tmp.add(source);

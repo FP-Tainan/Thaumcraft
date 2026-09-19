@@ -172,6 +172,26 @@ public final class TCItems {
     public static final Item LOOT_BAG_RARE = register("loot_bag_rare", properties ->
             new net.thaumcraft.item.LootBagItem(2, properties.stacksTo(16).rarity(net.minecraft.world.item.Rarity.RARE)));
 
+    /** O cérebro de zumbi: carne de lobo, 4 de fome e 0,2 de saturação, com 80% de chance de fome por 30 segundos. */
+    public static final Item ZOMBIE_BRAIN = register("zombie_brain", properties -> new Item(properties.food(
+            new net.minecraft.world.food.FoodProperties.Builder().nutrition(4).saturationModifier(0.2f).build(),
+            net.minecraft.world.item.component.Consumables.defaultFood().onConsume(
+                    new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                            new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.HUNGER, 600, 0), 0.8f)).build())));
+
+    /** A essência etérea: o que sobra do fogo-fátuo, com dois pontos do aspecto dele. */
+    public static final Item WISP_ESSENCE = register("wisp_essence", net.thaumcraft.item.WispEssenceItem::new);
+
+    /** Os ovos das criaturas, nas cores do ItemSpawnerEgg do original. */
+    public static final Item BRAINY_ZOMBIE_SPAWN_EGG = register("brainy_zombie_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.BRAINY_ZOMBIE)));
+    public static final Item GIANT_BRAINY_ZOMBIE_SPAWN_EGG = register("giant_brainy_zombie_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.GIANT_BRAINY_ZOMBIE)));
+    public static final Item WISP_SPAWN_EGG = register("wisp_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.WISP)));
+    public static final Item FIREBAT_SPAWN_EGG = register("firebat_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.FIREBAT)));
+
     /** O arreio taumostático: voa com Potentia; 400 de durabilidade e conserta com ouro. */
     public static final Item HOVER_HARNESS = register("hover_harness", properties ->
             new net.thaumcraft.item.HoverHarnessItem(properties.humanoidArmor(net.thaumcraft.item.TCMaterials.HARNESS,
@@ -256,6 +276,13 @@ public final class TCItems {
                         .add(net.thaumcraft.api.aspects.Aspects.WATER, 10), false)));
         // o primordial: o custo de verdade é sorteado a cada disparo, de 50 a 250 de cada primário; aqui fica
         // o piso, que é o que se confere antes de atirar
+        // o dos Nove Infernos: ignis 2, perditio 1 e aer 1 por morcego, um por segundo
+        FOCI.put("hellbat", register("focus_hellbat", properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1), "hellbat",
+                new net.thaumcraft.api.aspects.AspectList()
+                        .add(net.thaumcraft.api.aspects.Aspects.FIRE, 200)
+                        .add(net.thaumcraft.api.aspects.Aspects.ENTROPY, 100)
+                        .add(net.thaumcraft.api.aspects.Aspects.AIR, 100), false)));
         FOCI.put("primal", register("focus_primal", properties -> new net.thaumcraft.item.FocusItem(
                 properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), "primal",
                 net.thaumcraft.item.Focuses.primalCost(0L).copy(), false)));
@@ -552,7 +579,7 @@ public final class TCItems {
      */
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "hover_harness", "traveller_boots", "fortress_helmet", "fortress_chestplate", "fortress_leggings",
-            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_primal", "focus_pouch", "mundane_amulet", "mundane_ring", "mundane_belt", "apprentice_ring_air", "apprentice_ring_earth", "apprentice_ring_fire", "apprentice_ring_water", "apprentice_ring_order", "apprentice_ring_entropy", "vis_stone", "vis_amulet", "runic_amulet", "runic_amulet_emergency", "runic_ring_lesser", "runic_ring", "runic_ring_charged", "runic_ring_regen", "runic_girdle", "runic_girdle_kinetic", "hover_girdle",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_hellbat", "focus_primal", "focus_pouch", "mundane_amulet", "mundane_ring", "mundane_belt", "apprentice_ring_air", "apprentice_ring_earth", "apprentice_ring_fire", "apprentice_ring_water", "apprentice_ring_order", "apprentice_ring_entropy", "vis_stone", "vis_amulet", "runic_amulet", "runic_amulet_emergency", "runic_ring_lesser", "runic_ring", "runic_ring_charged", "runic_ring_regen", "runic_girdle", "runic_girdle_kinetic", "hover_girdle",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
             "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",
@@ -561,7 +588,7 @@ public final class TCItems {
             "staff_rod_greatwood", "staff_rod_obsidian", "staff_rod_silverwood", "staff_rod_ice",
             "staff_rod_quartz", "staff_rod_reed", "staff_rod_blaze", "staff_rod_bone", "staff_rod_primal",
             "shard_air", "shard_fire", "shard_water", "shard_earth", "shard_order", "shard_entropy",
-            "shard_balanced", "salis_mundus", "phial", "crystal_essence",
+            "shard_balanced", "salis_mundus", "phial", "crystal_essence", "wisp_essence", "zombie_brain",
             "thaumium_ingot", "thaumium_nugget", "void_ingot", "void_nugget", "quicksilver", "magic_tallow", "amber", "enchanted_fabric",
             "vis_filter", "knowledge_fragment", "mirrored_glass", "jar_label", "primal_charm", "gold_coin",
             "alumentum", "nitor", "loot_bag", "loot_bag_uncommon", "loot_bag_rare",
@@ -589,6 +616,7 @@ public final class TCItems {
             "cinnabar_ore", "amber_ore",
             "crystal_cluster_air", "crystal_cluster_fire", "crystal_cluster_water", "crystal_cluster_earth",
             "crystal_cluster_order", "crystal_cluster_entropy", "crystal_cluster_balanced",
+            "brainy_zombie_spawn_egg", "giant_brainy_zombie_spawn_egg", "wisp_spawn_egg", "firebat_spawn_egg",
     };
 
     /**
@@ -609,7 +637,11 @@ public final class TCItems {
         CreativeModeTab tab = CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
                 .title(Component.translatable("itemGroup.thaumcraft"))
                 .icon(() -> new ItemStack(THAUMOMETER))
-                .displayItems((parameters, output) -> displayOrder().forEach(output::accept))
+                .displayItems((parameters, output) -> displayOrder().forEach(item -> {
+                    // a essência etérea vem uma de cada aspecto, como no getSubItems do original
+                    if (item == WISP_ESSENCE) net.thaumcraft.item.WispEssenceItem.variants().forEach(output::accept);
+                    else output.accept(item);
+                }))
                 .build();
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, TAB_KEY, tab);
     }

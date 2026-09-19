@@ -97,6 +97,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.AIR, WandParts.rod("primal_staff").craftCost()).add(Aspects.FIRE, WandParts.rod("primal_staff").craftCost()).add(Aspects.WATER, WandParts.rod("primal_staff").craftCost()).add(Aspects.EARTH, WandParts.rod("primal_staff").craftCost()).add(Aspects.ORDER, WandParts.rod("primal_staff").craftCost()).add(Aspects.ENTROPY, WandParts.rod("primal_staff").craftCost()).add(Aspects.MAGIC, WandParts.rod("primal_staff").craftCost()*2),
                 Ingredient.of(TCItems.WAND_RODS.get("silverwood")),
                 Arrays.asList(Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCItems.WAND_RODS.get("obsidian")), Ingredient.of(TCItems.WAND_RODS.get("ice")), Ingredient.of(TCItems.WAND_RODS.get("quartz")), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCItems.WAND_RODS.get("reed")), Ingredient.of(TCItems.WAND_RODS.get("blaze")), Ingredient.of(TCItems.WAND_RODS.get("bone")))));
+        // FocusHellbat
+        ALL.add(new InfusionRecipe("FOCUSHELLBAT", new ItemStack(TCItems.FOCI.get("hellbat")), 3,
+                new AspectList().add(Aspects.FIRE, 25).add(Aspects.AIR, 15).add(Aspects.BEAST, 15).add(Aspects.ENTROPY, 25),
+                Ingredient.of(net.minecraft.world.item.Items.MAGMA_CREAM),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("entropy")))));
         // FocusPortableHole
         ALL.add(new InfusionRecipe("FOCUSPORTABLEHOLE", new ItemStack(TCItems.FOCI.get("portable_hole")), 3,
                 new AspectList().add(Aspects.TRAVEL, 25).add(Aspects.ELDRITCH, 10).add(Aspects.EXCHANGE, 10).add(Aspects.ENTROPY, 25),
@@ -117,6 +122,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.MAGIC, 15).add(Aspects.WATER, 15).add(Aspects.MOTION, 15),
                 Ingredient.of(TCItems.GOLEM_CORES.get("decanting")),
                 Arrays.asList(Ingredient.of(TCBlocks.JAR.asItem()), Ingredient.of(net.minecraft.world.item.Items.POTION), Ingredient.of(net.minecraft.world.item.Items.POTION), Ingredient.of(net.minecraft.world.item.Items.POTION))));
+        // CoreSorting
+        ALL.add(new InfusionRecipe("CORESORTING", new ItemStack(TCItems.GOLEM_CORES.get("sorting")), 3,
+                new AspectList().add(Aspects.VOID, 16).add(Aspects.EXCHANGE, 16).add(Aspects.HUNGER, 16).add(Aspects.GREED, 16),
+                Ingredient.of(TCItems.ZOMBIE_BRAIN),
+                Arrays.asList(Ingredient.of(TCItems.GOLEM_CORES.get("fill")), Ingredient.of(net.minecraft.world.item.Items.COMPARATOR), Ingredient.of(TCItems.GOLEM_CORES.get("empty")), Ingredient.of(net.minecraft.world.item.Items.PAPER))));
         // CoreFishing
         ALL.add(new InfusionRecipe("COREFISHING", new ItemStack(TCItems.GOLEM_CORES.get("fishing")), 3,
                 new AspectList().add(Aspects.WATER, 16).add(Aspects.HARVEST, 16).add(Aspects.BEAST, 16),
@@ -213,6 +223,12 @@ public final class InfusionRecipes {
                 Ingredient.of(TCItems.FORTRESS_HELMET),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.SLIME_BALL), Ingredient.of(TCItems.GOGGLES)),
                 stack -> { stack.set(net.thaumcraft.registry.TCComponents.FORTRESS_GOGGLES, true); return stack; }));
+        // MaskGrinningDevil
+        ALL.add(InfusionRecipe.onCentral("MASKGRINNINGDEVIL", 8,
+                new AspectList().add(Aspects.MIND, 64).add(Aspects.HEAL, 64).add(Aspects.ARMOR, 16),
+                Ingredient.of(TCItems.FORTRESS_HELMET),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.INK_SAC), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCBlocks.SHIMMERLEAF.asItem()), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT)),
+                stack -> { stack.set(net.thaumcraft.registry.TCComponents.FORTRESS_MASK, 0); return stack; }));
         // MaskAngryGhost
         ALL.add(InfusionRecipe.onCentral("MASKANGRYGHOST", 8,
                 new AspectList().add(Aspects.ENTROPY, 64).add(Aspects.DEATH, 64).add(Aspects.ARMOR, 16),

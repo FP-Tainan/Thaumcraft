@@ -124,6 +124,46 @@
       "thaumcraft:page2"
     ]
   },
+  "pech_charge": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:pech_charge1",
+      "thaumcraft:pech_charge2"
+    ]
+  },
+  "pech_death": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:pech_death"
+    ]
+  },
+  "pech_dice": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:pech_dice"
+    ]
+  },
+  "pech_hit": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:pech_hit1",
+      "thaumcraft:pech_hit2"
+    ]
+  },
+  "pech_idle": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:pech_idle1",
+      "thaumcraft:pech_idle2",
+      "thaumcraft:pech_idle3"
+    ]
+  },
+  "pech_trade": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:pech_trade"
+    ]
+  },
   "pump": {
     "category": "player",
     "sounds": [
@@ -197,6 +237,20 @@
     "category": "player",
     "sounds": [
       "thaumcraft:wandfail"
+    ]
+  },
+  "wisp_dead": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:wispdead"
+    ]
+  },
+  "wisp_live": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:wisplive1",
+      "thaumcraft:wisplive2",
+      "thaumcraft:wisplive3"
     ]
   },
   "write": {
