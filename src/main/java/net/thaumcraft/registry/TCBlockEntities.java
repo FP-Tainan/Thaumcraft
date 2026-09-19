@@ -117,6 +117,31 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.EtherealBloomBlockEntity::new,
                             java.util.Set.of(TCBlocks.ETHEREAL_BLOOM)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.NodeStabilizerBlockEntity> NODE_STABILIZER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("node_stabilizer"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.NodeStabilizerBlockEntity::new,
+                            java.util.Set.of(TCBlocks.NODE_STABILIZER, TCBlocks.NODE_STABILIZER_ADVANCED)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.NodeConverterBlockEntity> NODE_CONVERTER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("node_converter"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.NodeConverterBlockEntity::new,
+                            java.util.Set.of(TCBlocks.NODE_CONVERTER)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.EnergizedNodeBlockEntity> ENERGIZED_NODE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("energized_node"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.EnergizedNodeBlockEntity::new,
+                            java.util.Set.of(TCBlocks.ENERGIZED_NODE)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.VisRelayBlockEntity> VIS_RELAY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("vis_relay"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.VisRelayBlockEntity::new,
+                            java.util.Set.of(TCBlocks.VIS_RELAY)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.WorkbenchChargerBlockEntity> WORKBENCH_CHARGER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("workbench_charger"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.WorkbenchChargerBlockEntity::new,
+                            java.util.Set.of(TCBlocks.WORKBENCH_CHARGER)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.CentrifugeBlockEntity> CENTRIFUGE =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("centrifuge"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.CentrifugeBlockEntity::new,

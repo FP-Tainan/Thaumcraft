@@ -164,6 +164,29 @@ public final class TCBlocks {
             new net.thaumcraft.block.TubeBufferBlock(properties
                     .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
 
+    /** O estabilizador de nó: trava o nó de cima, e o avançado trava mais. */
+    public static final Block NODE_STABILIZER = register("node_stabilizer", properties -> new net.thaumcraft.block.NodeStabilizerBlock(false, properties
+            .mapColor(MapColor.STONE).strength(3.0f, 25.0f).noOcclusion().sound(SoundType.STONE)));
+    public static final Block NODE_STABILIZER_ADVANCED = register("node_stabilizer_advanced", properties -> new net.thaumcraft.block.NodeStabilizerBlock(true, properties
+            .mapColor(MapColor.STONE).strength(3.0f, 25.0f).noOcclusion().sound(SoundType.STONE)));
+
+    /** O transdutor de nó: com redstone, energiza o nó estabilizado de baixo. */
+    public static final Block NODE_CONVERTER = register("node_converter", properties -> new net.thaumcraft.block.NodeConverterBlock(properties
+            .mapColor(MapColor.STONE).strength(3.0f, 25.0f).noOcclusion().sound(SoundType.STONE)));
+
+    /** O nó energizado: a fonte da rede de vis, entre o estabilizador e o transdutor. */
+    public static final Block ENERGIZED_NODE = register("energized_node", properties -> new net.thaumcraft.block.EnergizedNodeBlock(properties
+            .mapColor(MapColor.NONE).strength(-1.0f, 3600000.0f).noLootTable().noOcclusion().noCollision().lightLevel(state -> 8)));
+
+    /** O relé de vis: leva o vis da rede adiante. */
+    public static final Block VIS_RELAY = register("vis_relay", properties -> new net.thaumcraft.block.VisRelayBlock(properties
+            .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)
+            .lightLevel(state -> state.getValue(net.thaumcraft.block.VisRelayBlock.LIT) ? 10 : 2)));
+
+    /** O carregador da bancada arcana: enche a varinha da bancada com o vis da rede. */
+    public static final Block WORKBENCH_CHARGER = register("workbench_charger", properties -> new net.thaumcraft.block.WorkbenchChargerBlock(properties
+            .mapColor(MapColor.METAL).strength(0.5f).noOcclusion().sound(SoundType.METAL)));
+
     /** A centrífuga alquímica: parte a essência composta nos dois aspectos de que ela é feita. */
     public static final Block CENTRIFUGE = register("centrifuge", properties ->
             new net.thaumcraft.block.CentrifugeBlock(properties

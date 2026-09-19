@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/workbench_charger",
+    "model": {
+      "type": "thaumcraft:vis_relay",
+      "charger": true
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/vis_relay",
+    "model": {
+      "type": "thaumcraft:vis_relay",
+      "charger": false
+    }
+  }
+}

@@ -42,7 +42,8 @@ public final class TCItems {
         // a matéria-prima do mod, que só existe para entrar em receita
         for (String name : TCResources.NAMES) {
             TCResources.ALL.put(name, register(name, name.equals("knowledge_fragment")
-                    ? net.thaumcraft.item.KnowledgeFragmentItem::new : Item::new));
+                    ? net.thaumcraft.item.KnowledgeFragmentItem::new
+                    : name.equals("primal_charm") ? net.thaumcraft.item.PrimalCharmItem::new : Item::new));
         }
     }
 
@@ -312,6 +313,18 @@ public final class TCItems {
     public static final Item TUBE_BUFFER = register("tube_buffer", properties ->
             new net.thaumcraft.item.TubeItem(TCBlocks.TUBE_BUFFER, properties));
 
+    /** A rede de vis: estabilizadores, transdutor, relé e carregador. */
+    public static final Item NODE_STABILIZER = register("node_stabilizer", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.NODE_STABILIZER, properties.useBlockDescriptionPrefix()));
+    public static final Item NODE_STABILIZER_ADVANCED = register("node_stabilizer_advanced", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.NODE_STABILIZER_ADVANCED, properties.useBlockDescriptionPrefix()));
+    public static final Item NODE_CONVERTER = register("node_converter", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.NODE_CONVERTER, properties.useBlockDescriptionPrefix()));
+    public static final Item VIS_RELAY = register("vis_relay", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.VIS_RELAY, properties.useBlockDescriptionPrefix()));
+    public static final Item WORKBENCH_CHARGER = register("workbench_charger", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.WORKBENCH_CHARGER, properties.useBlockDescriptionPrefix()));
+
     public static final Item CENTRIFUGE = register("centrifuge", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.CENTRIFUGE, properties.useBlockDescriptionPrefix()));
 
@@ -550,7 +563,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "hungry_chest", "levitator", "arcane_lamp", "growth_lamp", "fertility_lamp", "alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "hungry_chest", "levitator", "arcane_lamp", "growth_lamp", "fertility_lamp", "alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer", "node_stabilizer", "node_stabilizer_advanced", "node_converter", "vis_relay", "workbench_charger",
             "infusion_matrix", "pedestal",
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",

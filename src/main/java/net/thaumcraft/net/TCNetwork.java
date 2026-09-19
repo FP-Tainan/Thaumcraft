@@ -84,6 +84,28 @@ public final class TCNetwork {
         }
     }
 
+    /** Do servidor para quem está perto: um raio de um nó a outro, o {@code PacketFXBlockZap}. */
+    public record BlockZap(net.minecraft.world.phys.Vec3 from, net.minecraft.world.phys.Vec3 to) implements CustomPacketPayload {
+        public static final Type<BlockZap> TYPE = new Type<>(Thaumcraft.id("block_zap"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, BlockZap> CODEC = StreamCodec.composite(
+                net.minecraft.world.phys.Vec3.STREAM_CODEC, BlockZap::from,
+                net.minecraft.world.phys.Vec3.STREAM_CODEC, BlockZap::to,
+                BlockZap::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    /** Manda o raio a quem estiver a até trinta e dois blocos do nó. */
+    public static void blockZap(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos near,
+                                net.minecraft.world.phys.Vec3 from, net.minecraft.world.phys.Vec3 to) {
+        for (ServerPlayer player : level.players()) {
+            if (player.blockPosition().closerThan(near, 32.0)) ServerPlayNetworking.send(player, new BlockZap(from, to));
+        }
+    }
+
     private TCNetwork() {
     }
 
@@ -91,6 +113,7 @@ public final class TCNetwork {
         ResearchTablePayloads.init();
         PayloadTypeRegistry.clientboundPlay().register(ScanSummary.TYPE, ScanSummary.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockSparkle.TYPE, BlockSparkle.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(BlockZap.TYPE, BlockZap.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(ObjectAspectsSync.TYPE, ObjectAspectsSync.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela

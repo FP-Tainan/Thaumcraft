@@ -39,6 +39,13 @@ public final class TCEntities {
                     .clientTrackingRange(4)
                     .updateInterval(10));
 
+    /** O orbe de aspecto: a bolinha de vis que vai sozinha para a varinha. */
+    public static final EntityType<net.thaumcraft.entity.AspectOrbEntity> ASPECT_ORB = register("aspect_orb",
+            EntityType.Builder.<net.thaumcraft.entity.AspectOrbEntity>of(net.thaumcraft.entity.AspectOrbEntity::new, MobCategory.MISC)
+                    .sized(0.125f, 0.125f)
+                    .clientTrackingRange(6)
+                    .updateInterval(20));
+
     /** O golem: o servo que faz o trabalho chato. */
     public static final EntityType<net.thaumcraft.entity.GolemEntity> GOLEM = register("golem",
             EntityType.Builder.<net.thaumcraft.entity.GolemEntity>of(

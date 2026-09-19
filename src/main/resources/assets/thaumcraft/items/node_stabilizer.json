@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/node_stabilizer",
+    "model": {
+      "type": "thaumcraft:node_stabilizer",
+      "lock": 1
+    }
+  }
+}

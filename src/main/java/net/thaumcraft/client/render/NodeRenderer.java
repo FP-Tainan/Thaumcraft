@@ -112,6 +112,11 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
             FloatyLine.submit(pose, collector, drain.from(), drain.to(), drain.colour(), drain.grow(), -0.02f, 0.15f);
             pose.popPose();
         }
+        drawWisps(state, pose, collector, camera);
+    }
+
+    /** As bolhas dos aspectos e o miolo branco: o {@code renderNode} do original. */
+    static void drawWisps(NodeRenderState state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
         if (state.wisps.isEmpty()) return;
 
         float alpha = 1.0f;

@@ -746,3 +746,38 @@ A mesma auditoria achou, nas receitas geradas:
   - a pérola primordial (`itemEldritchObject` 3) da sacola rara fica para quando o Eldritch chegar.
   - as sacolas também caíam dos monstros campeões, que ainda não existem aqui.
 - Os nomes das sacolas foram traduzidos aqui; o pt_BR do original não os tinha.
+
+## A rede de vis e o comportamento completo dos nós (2026-09-18)
+
+- `block/entity/NodeBlockEntity` agora é o `TileNode` inteiro: além de refazer (600/400/900 tiques), os nós
+  vizinhos (até quatro blocos) disputam vis — o mais cheio suga um ponto do mais vazio, às vezes crescendo, com um
+  raio entre os dois (`TCNetwork.BlockZap`, o `PacketFXBlockZap`); um aspecto que fica em zero vai perdendo o teto a
+  cada 1200 tiques até morrer, às vezes deixando o nó mais pálido, e o nó sem aspecto nenhum some (o do tronco vira
+  tora); o tempo em que o pedaço de mundo ficou descarregado é recuperado ao voltar (`lastActive`). O instável solta
+  orbes de vis; o faminto puxa e fere quem chega a quinze blocos, alimenta-se do que morre nele, come os blocos em
+  volta e mostra as migalhas voando (`client/fx/BoreParticle`, o `FXBoreParticles`); o maculado espalha fibras.
+- `entity/AspectOrbEntity` + `client/render/AspectOrbRenderer` — o `EntityAspectOrb`: sai do nó instável, dos
+  monstros mortos por alguém (`event/AspectOrbs`: metade das vezes, cada primordial de que eram feitos) e do amuleto
+  primordial carregado (`item/PrimalCharmItem`); voa para a varinha da barra que tenha lugar e a enche.
+- **Estabilizador de nó** (comum e avançado, `NodeStabilizerBlock` + `NodeStabilizerRenderer` com o
+  `node_stabilizer.obj`): embaixo do nó e sem redstone, trava — o comum dobra o tempo de refazer e não deixa o nó
+  sugar os vizinhos, o avançado multiplica por vinte; nenhum travado é sugado. Travado, o instável às vezes se acalma
+  e o esmaecido volta a pálido. Os pistões abrem e a bolha envolve o nó.
+- **Transdutor de nó** (`NodeConverterBlock` + renderer): em cima do nó estabilizado, com redstone, drena o nó em mil
+  tiques e o transforma no **nó energizado** (`EnergizedNodeBlock`), a fonte da rede: gera por tique a raiz quadrada
+  de cada primordial do nó. Tirando o sinal, volta a nó, vazio. Sem o estabilizador ou o transdutor, o energizado
+  estoura. Raios e o estouro (`client/fx/Burst`, o `FXBurst`) como no original.
+- `api/visnet/VisNodeBlockEntity` + `VisNet` — o `TileVisNode` e o `VisNetHandler`: a árvore de fontes e relés, cada
+  relé pendurado no ponto mais perto à vista e da mesma cor.
+- **Relé de vis** (`VisRelayBlock`, preso na face de um bloco): alcance de oito, cristal afinável com a varinha ou
+  com um fragmento, fio de luz até o pai (`client/fx/BeamPower`, o `FXBeamPower`: quase invisível sem os óculos) que
+  pisca na cor do aspecto que passa. O **amuleto de vis** e a **pedra de vis** agora se enchem perto de um relé.
+- **Relé carregador** (`WorkbenchChargerBlock`): em cima da bancada arcana, enche a varinha dela com o vis da rede.
+- Receitas (arcana e infusão) saem dos geradores; nomes traduzidos aqui (o pt_BR do original não os tinha).
+- **Diferenças e pendências:**
+  - o bioma não se pinta aqui: o nó maculado não macula o bioma, o sombrio e o puro não mudam o bioma, e um nó não
+    vira maculado por estar em bioma maculado. O zumbi cerebral gigante do nó sombrio chega com as criaturas.
+  - o estouro do nó energizado não espalha gosma e gás de fluxo (o fluxo ainda não existe).
+  - o aspecto que morre num nó sai também do teto dele (no original ele ficava no teto sem voltar nunca); o efeito
+    é o mesmo, muda só a média usada na disputa entre vizinhos.
+  - a dica "@FOCUSPRIMAL" do amuleto primordial fica para o Eldritch.

@@ -107,6 +107,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.EARTH, 25).add(Aspects.ARMOR, 25).add(Aspects.ORDER, 25).add(Aspects.MIND, 10),
                 Ingredient.of(net.minecraft.world.item.Items.NETHER_STAR),
                 Arrays.asList(Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("order")))));
+        // NodeStabilizerAdv
+        ALL.add(new InfusionRecipe("NODESTABILIZERADV", new ItemStack(TCBlocks.NODE_STABILIZER_ADVANCED.asItem()), 10,
+                new AspectList().add(Aspects.AURA, 32).add(Aspects.MAGIC, 16).add(Aspects.ORDER, 16).add(Aspects.ENERGY, 16),
+                Ingredient.of(TCBlocks.NODE_STABILIZER.asItem()),
+                Arrays.asList(Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.ALUMENTUM), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.ALUMENTUM), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()))));
         // CoreAlchemy
         ALL.add(new InfusionRecipe("COREALCHEMY", new ItemStack(TCItems.GOLEM_CORES.get("alchemy")), 2,
                 new AspectList().add(Aspects.MAGIC, 15).add(Aspects.WATER, 15).add(Aspects.MOTION, 15),

@@ -18,6 +18,8 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.EMBER, net.thaumcraft.client.render.EmberRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.ASPECT_ORB, net.thaumcraft.client.render.AspectOrbRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.PRIMAL_ORB, net.thaumcraft.client.render.PrimalOrbRenderer::new);
         // o Alumentum voando: o RenderAlumentum não desenha nada, só o rastro aparece
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
@@ -126,6 +128,20 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.BELLOWS, net.thaumcraft.client.render.BellowsRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("bellows"), net.thaumcraft.client.render.BellowsRenderer.Unbaked.CODEC);
+        // a rede de vis: estabilizadores, transdutor, nó energizado, relés e carregador
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.NODE_STABILIZER, net.thaumcraft.client.render.NodeStabilizerRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.NODE_CONVERTER, net.thaumcraft.client.render.NodeConverterRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ENERGIZED_NODE, net.thaumcraft.client.render.EnergizedNodeRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.VIS_RELAY, context -> new net.thaumcraft.client.render.VisRelayRenderer<>(context));
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.WORKBENCH_CHARGER, context -> new net.thaumcraft.client.render.VisRelayRenderer<>(context));
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("node_stabilizer"), net.thaumcraft.client.render.NodeStabilizerRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("node_converter"), net.thaumcraft.client.render.NodeConverterRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("vis_relay"), net.thaumcraft.client.render.VisRelayRenderer.Unbaked.CODEC);
         // a alquimia: a centrífuga, o cristalizador e a cor da essência cristalizada
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.CENTRIFUGE, net.thaumcraft.client.render.CentrifugeRenderer::new);
@@ -244,6 +260,19 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.net.TCNetwork.BlockSparkle.TYPE, (payload, context) -> context.client().execute(() ->
                         net.thaumcraft.client.fx.GenericFx.blockSparkle(payload.pos().getX(), payload.pos().getY(),
                                 payload.pos().getZ(), payload.colour(), 1)));
+        // o raio de um nó a outro: o nodeBolt de tipo 0 e o estalo baixinho
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.BlockZap.TYPE, (payload, context) -> context.client().execute(() -> {
+                    var level = context.client().level;
+                    if (level == null) return;
+                    net.thaumcraft.client.fx.LightningBolt bolt = new net.thaumcraft.client.fx.LightningBolt(payload.from().x, payload.from().y,
+                            payload.from().z, payload.to().x, payload.to().y, payload.to().z, level.getRandom().nextLong(), 10, 4.0f, 5);
+                    bolt.defaultFractal();
+                    bolt.setType(0);
+                    bolt.finalizeBolt();
+                    level.playLocalSound(payload.from().x, payload.from().y, payload.from().z, net.thaumcraft.registry.TCSounds.ZAP.value(),
+                            net.minecraft.sounds.SoundSource.BLOCKS, 0.1f, 1.0f + level.getRandom().nextFloat() * 0.2f, false);
+                }));
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 net.thaumcraft.net.TCNetwork.ScanSummary.TYPE, (payload, context) -> context.client().execute(() -> {
                     java.util.List<net.minecraft.network.chat.Component> linhas = new java.util.ArrayList<>();

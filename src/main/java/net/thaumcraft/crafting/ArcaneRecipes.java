@@ -42,6 +42,22 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("BASICARTIFACE", new ItemStack(TCResources.get("primal_charm")),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARDS.get("entropy"))),
                 new AspectList().add(Aspects.EARTH, 25).add(Aspects.FIRE, 25).add(Aspects.AIR, 25).add(Aspects.WATER, 25).add(Aspects.ORDER, 25).add(Aspects.ENTROPY, 25)));
+        // NodeStabilizer
+        ALL.add(new ArcaneRecipe("NODESTABILIZER", new ItemStack(TCBlocks.NODE_STABILIZER.asItem()),
+                Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), null, Ingredient.of(net.minecraft.world.level.block.Blocks.QUARTZ_BLOCK.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.PISTON.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.QUARTZ_BLOCK.asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.NITOR), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem())),
+                new AspectList().add(Aspects.WATER, 32).add(Aspects.EARTH, 32).add(Aspects.ORDER, 32)));
+        // NodeTransducer
+        ALL.add(new ArcaneRecipe("VISPOWER", new ItemStack(TCBlocks.NODE_CONVERTER.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(net.minecraft.world.item.Items.COMPARATOR), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.NODE_STABILIZER.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem())),
+                new AspectList().add(Aspects.FIRE, 32).add(Aspects.AIR, 32).add(Aspects.ENTROPY, 32)));
+        // NodeRelay
+        ALL.add(new ArcaneRecipe("VISPOWER", new ItemStack(TCBlocks.VIS_RELAY.asItem(), 2),
+                Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null),
+                new AspectList().add(Aspects.FIRE, 8).add(Aspects.ORDER, 8)));
+        // NodeChargeRelay
+        ALL.add(new ArcaneRecipe("VISCHARGERELAY", new ItemStack(TCBlocks.WORKBENCH_CHARGER.asItem()),
+                Arrays.asList(null, Ingredient.of(TCBlocks.VIS_RELAY.asItem()), null, Ingredient.of(TCItems.WAND_RODS.get("greatwood")), null, Ingredient.of(TCItems.WAND_RODS.get("greatwood")), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT)),
+                new AspectList().add(Aspects.FIRE, 16).add(Aspects.ORDER, 16).add(Aspects.AIR, 16)));
         // ArcaneStone1
         ALL.add(new ArcaneRecipe("ARCANESTONE", new ItemStack(TCBlocks.BUILDING.get("arcane_stone").asItem(), 9),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE)),

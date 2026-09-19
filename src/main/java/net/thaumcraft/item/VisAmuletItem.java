@@ -20,8 +20,8 @@ import java.util.function.Consumer;
 /**
  * A pedra e o amuleto de vis: o {@code ItemAmuletVis} da 4.2.3.5. Guardam vis dos seis primários — 25 pontos a
  * pedra, 250 o amuleto — e, vestidos, passam aos poucos para a varinha na mão (até cinco centésimos por aspecto a
- * cada cinco tiques). O amuleto só se veste com a pesquisa dele. Encher o amuleto pelos relés de vis chega com a rede
- * de vis.
+ * cada cinco tiques). O amuleto só se veste com a pesquisa dele. Perto de um relé de vis, os dois se enchem com o vis
+ * da rede.
  */
 public class VisAmuletItem extends Item implements BaubleItem {
     private final boolean greater;
@@ -52,6 +52,12 @@ public class VisAmuletItem extends Item implements BaubleItem {
     @Override
     public void onWornTick(ItemStack stack, LivingEntity wearer) {
         if (wearer.level().isClientSide() || wearer.tickCount % 5 != 0) return;
+        this.feedWand(stack, wearer);
+        this.chargeFromRelay(stack, wearer);
+    }
+
+    /** Passa até cinco centésimos de cada aspecto para a varinha na mão. */
+    private void feedWand(ItemStack stack, LivingEntity wearer) {
         ItemStack wand = wearer.getMainHandItem();
         if (!(wand.getItem() instanceof WandItem)) return;
         AspectList mine = vis(stack);
@@ -69,6 +75,32 @@ public class VisAmuletItem extends Item implements BaubleItem {
             moved = true;
         }
         if (moved) {
+            stack.set(TCComponents.WAND_VIS, mine);
+            if (wearer instanceof Player player) net.thaumcraft.baubles.Baubles.touch(player);
+        }
+    }
+
+    /** Perto de um relé da rede de vis (a menos de cinco blocos), o amuleto puxa dele até cinco centésimos de cada. */
+    private void chargeFromRelay(ItemStack stack, LivingEntity wearer) {
+        var ref = net.thaumcraft.block.entity.VisRelayBlockEntity.NEARBY_PLAYERS.get(wearer.getUUID());
+        if (ref == null) return;
+        var relay = ref.get();
+        if (relay == null || relay.isRemoved() || relay.getBlockPos().distToCenterSqr(wearer.position()) >= 26.0) {
+            net.thaumcraft.block.entity.VisRelayBlockEntity.NEARBY_PLAYERS.remove(wearer.getUUID());
+            return;
+        }
+        AspectList mine = vis(stack);
+        boolean charged = false;
+        for (Aspect aspect : Aspects.primals()) {
+            int room = this.maxVis(stack) - mine.getAmount(aspect);
+            if (room <= 0) continue;
+            int got = relay.consumeVis(aspect, Math.min(5, room));
+            if (got <= 0) continue;
+            mine.add(aspect, got);
+            relay.triggerConsumeEffect(aspect);
+            charged = true;
+        }
+        if (charged) {
             stack.set(TCComponents.WAND_VIS, mine);
             if (wearer instanceof Player player) net.thaumcraft.baubles.Baubles.touch(player);
         }

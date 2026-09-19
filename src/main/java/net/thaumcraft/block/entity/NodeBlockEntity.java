@@ -6,27 +6,46 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.thaumcraft.api.aspects.Aspect;
 import net.thaumcraft.api.aspects.AspectList;
 import net.thaumcraft.api.nodes.NodeModifier;
 import net.thaumcraft.api.nodes.NodeType;
+import net.thaumcraft.block.NodeStabilizerBlock;
 import net.thaumcraft.registry.TCBlockEntities;
+import net.thaumcraft.registry.TCBlocks;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Um nó de aura: o poço de vis de que as varinhas bebem.
+ * Um nó de aura: o {@code TileNode} da 4.2.3.5.
  *
- * <p>As contas são as da 4.2.3.5. Cada nó tem uma lista de aspectos com um teto — o que ele tem de berço —
- * e o que sobrou agora. De tempos em tempos ele devolve um ponto a um aspecto que esteja faltando, e a
- * pressa disso é o feitio dele: seiscentos tiques no comum, quatrocentos no brilhante, novecentos no
- * pálido, e o esmaecido não se refaz nunca mais.
+ * <p>Cada nó tem, por aspecto, um teto (a base) e o que tem agora. De tempos em tempos devolve um ponto a um aspecto
+ * que esteja faltando — a cada 600 tiques o comum, 400 o brilhante, 900 o pálido; o esmaecido nunca. Um nó que fica
+ * sem nada de um aspecto vai perdendo o teto dele (a cada 1200 tiques) até o aspecto morrer, e às vezes fica mais
+ * pálido; sem aspecto nenhum, o nó some. Nós vizinhos (até quatro blocos) disputam vis: o mais cheio suga um ponto do
+ * mais vazio, às vezes crescendo com isso, com um raio entre os dois.
+ *
+ * <p>O estabilizador embaixo trava o nó: o comum dobra o tempo de refazer e impede que ele sugue os vizinhos; o
+ * avançado multiplica por vinte. Nenhum travado é sugado por outro nó. O instável solta orbes de vis (travado, às vezes
+ * se acalma); o esmaecido travado às vezes volta a pálido; o faminto puxa e fere quem chega perto e come os blocos em
+ * volta; o maculado espalha fibras de mácula.
  */
 public class NodeBlockEntity extends BlockEntity {
     /** De quanto em quanto tempo um nó comum devolve um ponto. */
@@ -41,12 +60,17 @@ public class NodeBlockEntity extends BlockEntity {
     private NodeType type = NodeType.NORMAL;
     private NodeModifier modifier;
     private int count;
+    private int regeneration = -1;
+    private int wait;
+    private long lastActive;
+    private boolean catchUp;
+    private int lock;
 
     public NodeBlockEntity(BlockPos pos, BlockState state) {
         super(TCBlockEntities.NODE, pos, state);
     }
 
-    /** Quantos tiques o nó espera entre um ponto e o próximo. Zero quer dizer que ele não se refaz. */
+    /** Quantos tiques o nó espera entre um ponto e o próximo, sem a trava. Zero quer dizer que ele não se refaz. */
     public int regenerationInterval() {
         if (this.modifier == NodeModifier.BRIGHT) return REGEN_BRIGHT;
         if (this.modifier == NodeModifier.PALE) return REGEN_PALE;
@@ -54,8 +78,15 @@ public class NodeBlockEntity extends BlockEntity {
         return REGEN_NORMAL;
     }
 
+    /** A trava do estabilizador de baixo: 0 nenhuma, 1 o comum, 2 o avançado. */
+    public int lock() {
+        return this.lock;
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, NodeBlockEntity node) {
+        boolean change = node.hungryFirst(level, pos);
         node.count++;
+        node.checkLock(level, pos, state);
         if (level.isClientSide()) return;
         if (node.base.isEmpty()) {
             // nó posto na mão não vem com nada dentro: aqui ele ganha o que teria se tivesse nascido sozinho
@@ -64,25 +95,297 @@ public class NodeBlockEntity extends BlockEntity {
                     state.is(net.thaumcraft.registry.TCBlocks.SILVERWOOD_KNOT));
             return;
         }
-        int interval = node.regenerationInterval();
-        if (interval <= 0 || node.count % interval != 0) return;
-        if (node.rechargeOne(level)) node.sync();
+        ServerLevel server = (ServerLevel) level;
+        change |= node.discharge(server, pos, state);
+        change |= node.recharge(server, pos, state);
+        if (node.isRemoved()) return;
+        change |= node.taint(server, pos);
+        change |= node.stability(server, pos);
+        change |= node.hungrySecond(server, pos);
+        if (change) node.sync();
+    }
+
+    // ---------------------------------------------------------------------------------------------- a trava
+
+    /** O {@code checkLock}: de cinquenta em cinquenta tiques, olha o estabilizador de baixo. */
+    private void checkLock(Level level, BlockPos pos, BlockState state) {
+        if (!(this.count <= 1 || this.count % 50 == 0) || !state.is(TCBlocks.NODE)) return;
+        int old = this.lock;
+        this.lock = 0;
+        BlockPos below = pos.below();
+        if (level.getBlockState(below).getBlock() instanceof NodeStabilizerBlock stabilizer && !level.hasNeighborSignal(below)) {
+            this.lock = stabilizer.lock();
+        }
+        if (old != this.lock) this.regeneration = -1;
+    }
+
+    // ---------------------------------------------------------------------------------------------- os vizinhos
+
+    /** O {@code handleDischarge}: suga um ponto de um nó vizinho mais vazio. */
+    private boolean discharge(ServerLevel level, BlockPos pos, BlockState state) {
+        if (!state.is(TCBlocks.NODE) || this.lock == 1 || this.modifier == NodeModifier.FADING) return false;
+        boolean shiny = this.type == NodeType.HUNGRY || this.modifier == NodeModifier.BRIGHT;
+        int inc = this.modifier == null ? 2 : shiny ? 1 : this.modifier == NodeModifier.PALE ? 3 : 2;
+        if (this.count % inc != 0) return false;
+        RandomSource random = level.getRandom();
+        int x = random.nextInt(5) - random.nextInt(5);
+        int y = random.nextInt(5) - random.nextInt(5);
+        int z = random.nextInt(5) - random.nextInt(5);
+        if (this.modifier == NodeModifier.PALE && random.nextBoolean()) return false;
+        if (x == 0 && y == 0 && z == 0) return false;
+        BlockPos there = pos.offset(x, y, z);
+        if (!level.getBlockState(there).is(TCBlocks.NODE) || !(level.getBlockEntity(there) instanceof NodeBlockEntity other)) return false;
+        if (other.lock > 0) return false;
+        int otherAvg = (other.aspects.visSize() + other.base.visSize()) / 2;
+        int thisAvg = (this.aspects.visSize() + this.base.visSize()) / 2;
+        if (otherAvg >= thisAvg || other.base.size() == 0) return false;
+        Aspect aspect = other.base.getAspects().get(random.nextInt(other.base.size()));
+        boolean moved = false;
+        if (this.aspects.getAmount(aspect) < this.base.getAmount(aspect) && other.aspects.reduce(aspect, 1)) {
+            this.addToContainer(aspect, 1);
+            moved = true;
+        } else if (other.aspects.reduce(aspect, 1)) {
+            if (random.nextInt(1 + (int) (this.base.getAmount(aspect) / (shiny ? 1.5 : 1.0))) == 0) {
+                this.base.add(aspect, 1);
+                if (this.modifier == NodeModifier.PALE && random.nextInt(100) == 0) {
+                    this.modifier = null;
+                    this.regeneration = -1;
+                }
+                if (random.nextInt(3) == 0) other.setBase(aspect, other.base.getAmount(aspect) - 1);
+            }
+            moved = true;
+        }
+        if (!moved) return false;
+        other.wait = other.regeneration / 2;
+        other.sync();
+        net.thaumcraft.net.TCNetwork.blockZap(level, pos, Vec3.atCenterOf(there), Vec3.atCenterOf(pos));
+        return true;
+    }
+
+    // ---------------------------------------------------------------------------------------------- refazer e minguar
+
+    /** O {@code handleRecharge}: devolve pontos, recupera o tempo em que ficou descarregado e deixa morrer o que acabou. */
+    private boolean recharge(ServerLevel level, BlockPos pos, BlockState state) {
+        boolean change = false;
+        RandomSource random = level.getRandom();
+        if (this.regeneration < 0) {
+            this.regeneration = this.regenerationInterval();
+            if (this.lock == 1) this.regeneration *= 2;
+            if (this.lock == 2) this.regeneration *= 20;
+        }
+        if (this.catchUp) {
+            this.catchUp = false;
+            int inc = this.regeneration * 75;
+            int amount = inc > 0 ? (int) ((System.currentTimeMillis() - this.lastActive) / inc) : 0;
+            for (int a = 0; a < Math.min(amount, this.base.visSize()); a++) {
+                if (this.rechargeOne(random)) change = true;
+            }
+        }
+        if (this.count % 1200 == 0) {
+            for (Aspect aspect : new ArrayList<>(this.base.getAspects())) {
+                if (this.aspects.getAmount(aspect) > 0) continue;
+                this.setBase(aspect, this.base.getAmount(aspect) - 1);
+                if (random.nextInt(20) == 0 || this.base.getAmount(aspect) <= 0) {
+                    this.base.remove(aspect);
+                    if (random.nextInt(5) == 0) {
+                        if (this.modifier == NodeModifier.BRIGHT) this.modifier = null;
+                        else if (this.modifier == null) this.modifier = NodeModifier.PALE;
+                        if (this.modifier == NodeModifier.PALE && random.nextInt(5) == 0) this.modifier = NodeModifier.FADING;
+                    }
+                    this.nodeChange();
+                    break;
+                }
+                this.nodeChange();
+            }
+            if (this.base.isEmpty()) {
+                // sem aspecto nenhum, o nó some: o do ar vira ar, o do tronco vira tora comum
+                if (state.is(TCBlocks.SILVERWOOD_KNOT)) {
+                    level.setBlockAndUpdate(pos, TCBlocks.SILVERWOOD_LOG.defaultBlockState());
+                } else {
+                    level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                }
+                return false;
+            }
+        }
+        if (this.wait > 0) this.wait--;
+        if (this.regeneration > 0 && this.wait == 0 && this.count % this.regeneration == 0) {
+            this.lastActive = System.currentTimeMillis();
+            if (this.rechargeOne(random)) change = true;
+        }
+        return change;
     }
 
     /**
      * Devolve um ponto a um aspecto que esteja faltando, sorteado entre os que faltam.
      *
-     * <p>É assim no original: não é o primeiro da lista nem o mais vazio — é um qualquer entre os que
-     * ainda não encheram.
+     * <p>É assim no original: não é o primeiro da lista nem o mais vazio — é um qualquer entre os que ainda não
+     * encheram.
      */
-    private boolean rechargeOne(Level level) {
+    private boolean rechargeOne(RandomSource random) {
         List<Aspect> missing = new ArrayList<>();
         for (Aspect aspect : this.base.getAspects()) {
             if (this.aspects.getAmount(aspect) < this.base.getAmount(aspect)) missing.add(aspect);
         }
         if (missing.isEmpty()) return false;
-        this.aspects.add(missing.get(level.getRandom().nextInt(missing.size())), 1);
+        this.aspects.add(missing.get(random.nextInt(missing.size())), 1);
         return true;
+    }
+
+    /** O {@code nodeChange}: o tempo de refazer é recalculado e os vizinhos ficam sabendo. */
+    private void nodeChange() {
+        this.regeneration = -1;
+        this.sync();
+    }
+
+    // ---------------------------------------------------------------------------------------------- os tipos
+
+    /** O {@code handleTaintNode}: o maculado espalha fibras de mácula em volta. */
+    private boolean taint(ServerLevel level, BlockPos pos) {
+        if (this.type != NodeType.TAINTED || this.count % 50 != 0) return false;
+        // o bioma maculado não existe neste porte: fica só a parte das fibras (o hardNode do original, ligado)
+        RandomSource random = level.getRandom();
+        if (random.nextBoolean()) {
+            BlockPos at = pos.offset(random.nextInt(5) - random.nextInt(5), random.nextInt(5) - random.nextInt(5),
+                    random.nextInt(5) - random.nextInt(5));
+            net.thaumcraft.block.TaintFibreBlock.spread(level, at, random);
+        }
+        return false;
+    }
+
+    /** O {@code handleNodeStability}: o instável solta orbes; travado, às vezes se acalma, e o esmaecido revive. */
+    private boolean stability(ServerLevel level, BlockPos pos) {
+        if (this.count % 100 != 0) return false;
+        boolean change = false;
+        RandomSource random = level.getRandom();
+        if (this.type == NodeType.UNSTABLE && random.nextBoolean()) {
+            if (this.lock == 0) {
+                List<Aspect> primals = new ArrayList<>();
+                for (Aspect aspect : this.base.getAspects()) if (aspect.isPrimal()) primals.add(aspect);
+                if (!primals.isEmpty()) {
+                    Aspect aspect = primals.get(random.nextInt(primals.size()));
+                    if (this.aspects.reduce(aspect, 1)) {
+                        level.addFreshEntity(new net.thaumcraft.entity.AspectOrbEntity(level, pos.getX() + 0.5, pos.getY() + 0.5,
+                                pos.getZ() + 0.5, aspect, 1));
+                        change = true;
+                    }
+                }
+            } else if (random.nextInt(10000 / this.lock) == 42) {
+                this.type = NodeType.NORMAL;
+                change = true;
+            }
+        }
+        if (this.modifier == NodeModifier.FADING && this.lock > 0 && random.nextInt(12500 / this.lock) == 69) {
+            this.modifier = NodeModifier.PALE;
+            change = true;
+        }
+        return change;
+    }
+
+    /**
+     * O {@code handleHungryNodeFirst}: dos dois lados. Quem está a quinze blocos é puxado (quem joga, do lado de quem
+     * joga; o resto, no servidor); quem chega a menos de dois leva dano e, se morre, alimenta o nó. De quem joga, o nó
+     * também mostra migalhas dos blocos em volta vindo para ele.
+     */
+    private boolean hungryFirst(Level level, BlockPos pos) {
+        if (this.type != NodeType.HUNGRY) return false;
+        boolean change = false;
+        if (level.isClientSide()) {
+            for (int a = 0; a < 2; a++) {
+                BlockPos target = this.hungryTarget(level, pos);
+                if (target != null) {
+                    BlockState block = level.getBlockState(target);
+                    if (!block.isAir()) {
+                        net.thaumcraft.client.NodeClient.hungryFx(level, target, block, pos);
+                    }
+                }
+            }
+        }
+        Vec3 centre = Vec3.atCenterOf(pos);
+        for (Entity entity : level.getEntities((Entity) null, new AABB(pos).inflate(15.0))) {
+            if (entity instanceof Player player && player.getAbilities().invulnerable) continue;
+            // quem joga se move do lado de quem joga
+            if (entity instanceof Player != level.isClientSide()) continue;
+            if (level.isClientSide() && !net.thaumcraft.client.NodeClient.isLocalPlayer(entity)) continue;
+            if (!level.isClientSide() && entity.isAlive() && !entity.isInvulnerable() && entity.distanceToSqr(centre) < 4.0) {
+                change |= this.feed((ServerLevel) level, entity);
+            }
+            double dx = (centre.x - entity.getX()) / 15.0;
+            double dy = (centre.y - entity.getY()) / 15.0;
+            double dz = (centre.z - entity.getZ()) / 15.0;
+            double d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+            double pull = 1.0 - d;
+            if (pull > 0.0) {
+                pull *= pull;
+                entity.setDeltaMovement(entity.getDeltaMovement().add(dx / d * pull * 0.15, dy / d * pull * 0.25, dz / d * pull * 0.15));
+                entity.hurtMarked = true;
+            }
+        }
+        return change;
+    }
+
+    /** Quem chegou perto demais do faminto: um de dano, e se morre, um ponto de um dos primordiais de que era feito. */
+    private boolean feed(ServerLevel level, Entity entity) {
+        entity.hurtServer(level, level.damageSources().fellOutOfWorld(), 1.0f);
+        if (entity.isAlive()) return false;
+        AspectList found = net.thaumcraft.research.ScanManager.aspectsOf(entity);
+        if (found == null || found.size() == 0) return false;
+        AspectList primals = DeconstructionTableBlockEntity.reduceToPrimals(found);
+        if (primals.size() == 0) return false;
+        Aspect aspect = primals.getAspects().get(level.getRandom().nextInt(primals.size()));
+        if (this.aspects.getAmount(aspect) < this.base.getAmount(aspect)) {
+            this.addToContainer(aspect, 1);
+            return true;
+        }
+        if (level.getRandom().nextInt(1 + this.base.getAmount(aspect) * 2) < primals.getAmount(aspect)) {
+            this.base.add(aspect, 1);
+            return true;
+        }
+        return false;
+    }
+
+    /** O {@code handleHungryNodeSecond}: de cinquenta em cinquenta tiques, come um bloco em volta, se não for duro. */
+    private boolean hungrySecond(ServerLevel level, BlockPos pos) {
+        if (this.type != NodeType.HUNGRY || this.count % 50 != 0) return false;
+        BlockPos target = this.hungryTarget(level, pos);
+        if (target == null) return false;
+        BlockState block = level.getBlockState(target);
+        if (block.isAir()) return false;
+        float hardness = block.getDestroySpeed(level, target);
+        if (hardness >= 0.0f && hardness < 5.0f) level.destroyBlock(target, true);
+        return false;
+    }
+
+    /** Um bloco à vista do nó, numa direção qualquer até quinze blocos, nunca acima do chão daquela coluna. */
+    private BlockPos hungryTarget(Level level, BlockPos pos) {
+        RandomSource random = level.getRandom();
+        int tx = pos.getX() + random.nextInt(16) - random.nextInt(16);
+        int ty = pos.getY() + random.nextInt(16) - random.nextInt(16);
+        int tz = pos.getZ() + random.nextInt(16) - random.nextInt(16);
+        int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING, tx, tz);
+        if (ty > top) ty = top;
+        Vec3 from = Vec3.atCenterOf(pos);
+        BlockHitResult hit = level.clip(new ClipContext(from, new Vec3(tx + 0.5, ty + 0.5, tz + 0.5),
+                ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, net.minecraft.world.phys.shapes.CollisionContext.empty()));
+        if (hit.getType() != HitResult.Type.BLOCK) return null;
+        BlockPos at = hit.getBlockPos();
+        if (at.equals(pos) || at.distToCenterSqr(from) >= 256.0) return null;
+        return at;
+    }
+
+    // ---------------------------------------------------------------------------------------------- o que tem
+
+    /** O {@code addToContainer}: põe até o teto; devolve o que sobrou. */
+    public int addToContainer(Aspect aspect, int amount) {
+        int left = Math.max(0, amount + this.aspects.getAmount(aspect) - this.base.getAmount(aspect));
+        if (amount - left > 0) this.aspects.add(aspect, amount - left);
+        return left;
+    }
+
+    /** O {@code setNodeVisBase}. */
+    private void setBase(Aspect aspect, int amount) {
+        int have = this.base.getAmount(aspect);
+        if (have < amount) this.base.add(aspect, amount - have);
+        else this.base.remove(aspect, have - amount);
     }
 
     /** Tira vis do nó, se houver. */
@@ -131,6 +434,14 @@ public class NodeBlockEntity extends BlockEntity {
         this.aspects = base.copy();
         this.type = type;
         this.modifier = modifier;
+        this.regeneration = -1;
+        this.sync();
+    }
+
+    /** Para o transdutor: tudo de uma vez, com o que tem agora separado do teto. */
+    public void setup(AspectList base, AspectList now, NodeType type, NodeModifier modifier) {
+        this.setup(base, type, modifier);
+        this.aspects = now.copy();
         this.sync();
     }
 
@@ -185,6 +496,10 @@ public class NodeBlockEntity extends BlockEntity {
         this.type = input.read("type", NodeType.CODEC).orElse(NodeType.NORMAL);
         this.modifier = input.read("modifier", NodeModifier.CODEC).orElse(null);
         this.drainColour = input.getIntOr("drain", 0xFFFFFF);
+        this.lastActive = input.getLongOr("lastActive", 0L);
+        // o tempo em que o pedaço de mundo ficou sem ninguém: o nó recupera o que teria refeito nele
+        int regen = this.regenerationInterval();
+        if (regen > 0 && this.lastActive > 0L && System.currentTimeMillis() > this.lastActive + regen * 75L) this.catchUp = true;
     }
 
     @Override
@@ -195,6 +510,7 @@ public class NodeBlockEntity extends BlockEntity {
         output.store("type", NodeType.CODEC, this.type);
         if (this.modifier != null) output.store("modifier", NodeModifier.CODEC, this.modifier);
         output.putInt("drain", this.drainColour);
+        output.putLong("lastActive", this.lastActive);
     }
 
     @Override
