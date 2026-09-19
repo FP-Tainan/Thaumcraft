@@ -100,6 +100,10 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.DEATH, 32).add(Aspects.POISON, 32).add(Aspects.ENTROPY, 32)));
         ALL.add(new CrucibleRecipe("BOTTLETAINT", new ItemStack(TCItems.BOTTLE_TAINT), TCItems.PHIAL,
                 new AspectList().add(Aspects.TAINT, 8).add(Aspects.MAGIC, 8)));
+        ALL.add(new CrucibleRecipe("VOIDMETAL", new ItemStack(TCResources.get("void_ingot")), TCResources.get("void_seed"),
+                new AspectList().add(Aspects.METAL, 8)));
+        ALL.add(new CrucibleRecipe("VOIDMETAL", new ItemStack(TCResources.get("void_seed")), net.minecraft.world.item.Items.ENDER_PEARL,
+                new AspectList().add(Aspects.DARKNESS, 8).add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 2)));
         ALL.add(new CrucibleRecipe("GOLEMSTRAW", new ItemStack(TCItems.GOLEM_PLACERS.get("straw")), net.minecraft.world.level.block.Blocks.HAY_BLOCK.asItem(),
                 new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
         ALL.add(new CrucibleRecipe("GOLEMWOOD", new ItemStack(TCItems.GOLEM_PLACERS.get("wood")), TCBlocks.GREATWOOD_LOG.asItem(),

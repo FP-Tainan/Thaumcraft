@@ -318,6 +318,18 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("ENCHFABRIC", new ItemStack(TCResources.get("enchanted_fabric")),
                 Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.STRING), null, Ingredient.of(net.minecraft.world.item.Items.STRING), Ingredient.of(net.minecraft.world.item.Items.WOOL.asList().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.STRING), null, Ingredient.of(net.minecraft.world.item.Items.STRING), null),
                 new AspectList().add(Aspects.AIR, 1).add(Aspects.EARTH, 1).add(Aspects.FIRE, 1).add(Aspects.WATER, 1).add(Aspects.ORDER, 1).add(Aspects.ENTROPY, 1)));
+        // RobeChest
+        ALL.add(new ArcaneRecipe("ENCHFABRIC", new ItemStack(TCItems.ROBE_CHESTPLATE),
+                Arrays.asList(Ingredient.of(TCResources.get("enchanted_fabric")), null, Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric"))),
+                new AspectList().add(Aspects.AIR, 5)));
+        // RobeLegs
+        ALL.add(new ArcaneRecipe("ENCHFABRIC", new ItemStack(TCItems.ROBE_LEGGINGS),
+                Arrays.asList(Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), null, Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), null, Ingredient.of(TCResources.get("enchanted_fabric"))),
+                new AspectList().add(Aspects.WATER, 5)));
+        // RobeBoots
+        ALL.add(new ArcaneRecipe("ENCHFABRIC", new ItemStack(TCItems.ROBE_BOOTS),
+                Arrays.asList(Ingredient.of(TCResources.get("enchanted_fabric")), null, Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), null, Ingredient.of(TCResources.get("enchanted_fabric")), null, null, null),
+                new AspectList().add(Aspects.EARTH, 3)));
         // Goggles
         ALL.add(new ArcaneRecipe("GOGGLES", new ItemStack(TCItems.GOGGLES),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.LEATHER), null, Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.THAUMOMETER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.THAUMOMETER)),
