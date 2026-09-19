@@ -166,6 +166,13 @@ public final class TCEntities {
                     .clientTrackingRange(10)
                     .updateInterval(3));
 
+    /** A aranha da mente, o susto da distorção. */
+    public static final EntityType<net.thaumcraft.entity.MindSpiderEntity> MIND_SPIDER = register("mind_spider",
+            EntityType.Builder.<net.thaumcraft.entity.MindSpiderEntity>of(net.thaumcraft.entity.MindSpiderEntity::new, MobCategory.MONSTER)
+                    .sized(0.3f, 0.3f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
     /** O tentáculo da mácula. */
     public static final EntityType<net.thaumcraft.entity.taint.TaintacleEntity> TAINTACLE = register("taintacle",
             net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType.Builder.createMob(
@@ -278,6 +285,7 @@ public final class TCEntities {
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TRAVELING_TRUNK, net.thaumcraft.entity.TravelingTrunkEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(THAUMIC_SLIME, net.thaumcraft.entity.taint.ThaumicSlimeEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_SPIDER, net.thaumcraft.entity.taint.TaintSpiderEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(MIND_SPIDER, net.thaumcraft.entity.MindSpiderEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINTACLE_SMALL, net.thaumcraft.entity.taint.TaintacleSmallEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_SPORE, net.thaumcraft.entity.taint.TaintSporeEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_SPORE_SWARMER, net.thaumcraft.entity.taint.TaintSporeSwarmerEntity.attributes());

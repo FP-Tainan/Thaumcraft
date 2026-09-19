@@ -47,7 +47,7 @@ public class ResearchNotesItem extends Item {
             player.sendSystemMessage(Component.translatable("tc.researcherror"));
             return InteractionResult.FAIL;
         }
-        ResearchManager.completeWithSiblings(knowledge, research);
+        ResearchManager.completeWithSiblings(player, knowledge, research);
         Knowledges.save(player, knowledge);
         stack.shrink(1);
         level.playSound(null, player, TCSounds.LEARN.value(), SoundSource.PLAYERS, 0.75f, 1.0f);
@@ -71,6 +71,12 @@ public class ResearchNotesItem extends Item {
         if (research == null) return;
         tooltip.accept(research.name().copy().withStyle(ChatFormatting.GOLD));
         tooltip.accept(Component.translatable("tc.research_text." + note.key()).withStyle(ChatFormatting.ITALIC));
+        // a pesquisa proibida avisa o tamanho do perigo (o tc.forbidden, de um a cinco)
+        int warp = research.warp();
+        if (warp > 0) {
+            warp = Math.min(5, warp);
+            tooltip.accept(Component.translatable("tc.forbidden", Component.translatable("tc.forbidden.level." + warp)).withStyle(ChatFormatting.DARK_PURPLE));
+        }
     }
 
     /** Nota comum é rara, descoberta é épica, como no original. */

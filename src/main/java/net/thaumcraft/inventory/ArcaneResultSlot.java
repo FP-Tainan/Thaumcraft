@@ -27,6 +27,8 @@ public class ArcaneResultSlot extends Slot {
 
     @Override
     public void onTake(Player player, ItemStack stack) {
+        // o firePlayerCraftingEvent e o onCrafting do SlotCraftingArcaneWorkbench (é por aí que a distorção do item gruda)
+        stack.onCraftedBy(player, stack.getCount());
         this.menu.take();
         super.onTake(player, stack);
     }

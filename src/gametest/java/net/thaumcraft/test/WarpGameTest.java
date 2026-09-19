@@ -28,4 +28,58 @@ public class WarpGameTest {
         if (Knowledges.of(player).warpTemp() != 2) helper.fail("a temporária sai");
         helper.succeed();
     }
+
+    /** Pesquisa proibida dá distorção: a dos Óculos (seis) vira três permanentes e três que grudam. */
+    @GameTest
+    public void forbiddenResearchWarps(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        int warp = net.thaumcraft.research.Researches.get("OCULUS").warp();
+        net.thaumcraft.research.ResearchManager.complete(player, "OCULUS");
+        var k = Knowledges.of(player);
+        if (k.warpPerm() != warp - warp / 2 || k.warpSticky() != warp / 2) helper.fail("os Óculos deviam dar " + warp + " de distorção, deu " + k.warpPerm() + "+" + k.warpSticky());
+        helper.succeed();
+    }
+
+    /** Fabricar a morte líquida gruda um ponto (o addWarpToItem). */
+    @GameTest
+    public void craftingWarpedThingsSticks(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        new net.minecraft.world.item.ItemStack(net.thaumcraft.registry.TCItems.BUCKET_DEATH).onCraftedBy(player, 1);
+        if (Knowledges.of(player).warpSticky() != 1) helper.fail("o balde de morte líquida devia grudar um ponto");
+        helper.succeed();
+    }
+
+    /** O sabão leva toda a temporária e se gasta. */
+    @GameTest
+    public void soapWashesTemporaryWarp(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        Warp.add(player, 5, true);
+        var soap = new net.minecraft.world.item.ItemStack(net.thaumcraft.registry.TCItems.SANITY_SOAP, 2);
+        soap.getItem().releaseUsing(soap, helper.getLevel(), player, 0);
+        if (Knowledges.of(player).warpTemp() != 0) helper.fail("o sabão leva a temporária");
+        if (soap.getCount() != 1) helper.fail("o sabão se gasta");
+        helper.succeed();
+    }
+
+    /**
+     * Com o contador alto o evento sempre sai; com distorção de verdade acima de cinquenta, as pesquisas proibidas se
+     * abrem (e a pista dos sais de banho); e a temporária perde um ponto.
+     */
+    @GameTest
+    public void warpEventsOpenForbiddenResearch(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.thaumcraft.registry.TCEffects.WARP_WARD, 100));
+        Warp.add(player, 60, false);
+        Warp.add(player, 3, true);
+        var k = Knowledges.of(player);
+        k.setWarpCounter(10000);
+        Knowledges.save(player, k);
+        net.thaumcraft.research.WarpEvents.checkWarpEvent(player);
+        var after = Knowledges.of(player);
+        if (!after.hasResearch("ELDRITCHMINOR") || !after.hasResearch("ELDRITCHMAJOR")) helper.fail("as pesquisas eldritch deviam se abrir");
+        if (!after.hasResearch("@BATHSALTS")) helper.fail("a pista dos sais de banho devia aparecer");
+        if (after.warpCounter() >= 10000) helper.fail("o contador desce");
+        if (after.warpTemp() != 2) helper.fail("a temporária perde um ponto, está " + after.warpTemp());
+        helper.succeed();
+    }
 }

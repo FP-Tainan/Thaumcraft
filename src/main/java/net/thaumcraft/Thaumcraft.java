@@ -83,6 +83,12 @@ public class Thaumcraft implements ModInitializer {
         net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(
                 (player, level, hand, entity, hit) -> net.thaumcraft.item.GolemBellItem.pickUp(player, level, hand, entity));
 
+        // a distorção: os eventos de cem em cem segundos e o olhar mortal; e o fluido purificante pesa pela permanente
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server -> {
+            for (var player : server.getPlayerList().getPlayers()) net.thaumcraft.research.WarpEvents.tick(player);
+        });
+        net.thaumcraft.fluid.PurifyingFluid.permanentWarp = player -> net.thaumcraft.research.Knowledges.of(player).warpPerm();
+
         // o comando de teste, para destrancar a pesquisa sem ter de jogar tudo de novo
         net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register(
                 (dispatcher, registry, environment) ->

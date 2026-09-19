@@ -1419,3 +1419,27 @@ do `ClientProxy`, do `PlayerNotifications`/`REHNotifyHandler` e dos `addWarpToPl
   `PacketAspectPool`/`PacketAspectDiscovery` como no original; o resumo inventado do visor do thaumômetro saiu.
 - **Testes**: `InfusionGameTest` (tirar o meio para a infusão, receita sem pesquisa, alambique não é fonte),
   `WarpGameTest`; tela: `InfusionRunClientTest`.
+
+## Distorção: eventos, poções e sabão
+
+Porte do `WarpEvents`, das poções (`PotionUnnaturalHunger`, `PotionDeathGaze`, `PotionBlurredVision`,
+`PotionSunScorned`, `PotionThaumarhia`), do `EntityMindSpider`/`RenderMindSpider`, do `ItemSanitySoap`, do
+`PacketMiscEvent`, do `checkShaders`/`renderVignette`/`fogDensityEvent` e das fontes de distorção (descompilados do jar).
+
+- **Eventos** de cem em cem segundos (sem a proteção contra a dobra): a chance, o sorteio e a lista inteira do original
+  (pontos de pesquisa, cansaço de vis, taumarria, fome estranha, névoa, vista embaçada, desprezo do sol, fadiga, fago do
+  fluxo, visão noturna, olhar mortal, aranhas da mente falsas e de verdade, cegueira, um ponto que gruda indo embora), com
+  a máscara do diabo sorridente descontando; acima de 10/25/50 de distorção de verdade, a pista dos sais de banho e as
+  pesquisas ELDRITCHMINOR/ELDRITCHMAJOR. O guardião eldritch da névoa espera o Eldritch (`WarpEvents.guardianSpawner`).
+- **Fontes**: pesquisa proibida (metade permanente, metade que gruda; o livro e as notas avisam o nível), fabricar as
+  coisas do `addWarpToItem` (tabela gerada pelo `scratchpad/dobra-itens.js`; falta a pedra sinistra), a infusão e o
+  equipamento que distorce (`WarpEvents.WarpingGear`, com o tooltip).
+- **Poções**: ícones recortados da `potions.png`; o olhar mortal vira contra o jogador o que ele encara e o faz murchar;
+  a fome estranha cansa a cada tique e só a carne podre e o cérebro de zumbi aliviam.
+- **Tela**: os quatro filtros do original (`post_effect/desaturate|blur|hunger|sun_scorned`, com o bloom do Thaumcraft
+  traduzido para o GLSL de hoje), a vinheta com o coração disparado no susto, a névoa (a exponencial de então vira a
+  linear de hoje, fechando em 2/densidade blocos) e as aranhas da mente quase transparentes, que só quem as chamou vê.
+- **Sabão higienizante** (crisol: bloco de sebo + Mens/Alienis/Ordo/Sano 16): dez segundos esfregando, leva toda a
+  temporária e às vezes um ponto da que gruda.
+- **Diferença**: no original as poções da distorção não se curavam com leite; aqui o leite ainda tira.
+- **Testes**: `WarpGameTest` (pesquisa proibida, fabricar, sabão, evento abrindo as pesquisas); tela: `WarpClientTest`.

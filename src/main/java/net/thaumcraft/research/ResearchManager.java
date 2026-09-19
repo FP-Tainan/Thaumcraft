@@ -73,7 +73,7 @@ public final class ResearchManager {
         for (net.thaumcraft.api.aspects.Aspect aspect : research.tags().getAspects()) {
             knowledge.spend(aspect, research.tags().getAmount(aspect));
         }
-        completeWithSiblings(knowledge, research);
+        completeWithSiblings(player, knowledge, research);
         Knowledges.save(player, knowledge);
         player.level().playSound(null, player.blockPosition(),
                 net.thaumcraft.registry.TCSounds.LEARN.value(),
@@ -103,14 +103,48 @@ public final class ResearchManager {
     }
 
     /** Marca a pesquisa como sabida, e com ela as irmãs que já dá para abrir, como o original faz. */
-    public static void completeWithSiblings(PlayerKnowledge knowledge, Research research) {
-        knowledge.completeResearch(research.key());
+    public static void completeWithSiblings(Player player, PlayerKnowledge knowledge, Research research) {
+        complete(player, knowledge, research.key());
         for (String sibling : research.siblings()) {
             Research other = Researches.get(sibling);
             if (other != null && !knowledge.hasResearch(sibling) && canUnlock(knowledge, other)) {
-                knowledge.completeResearch(sibling);
+                complete(player, knowledge, sibling);
             }
         }
+    }
+
+    /**
+     * O {@code completeResearch(player, key)}: marca como sabida e, sendo pesquisa proibida, cobra a distorção — metade
+     * (arredondada para cima) permanente e a outra metade da que gruda; com um só ponto, permanente.
+     */
+    public static boolean complete(Player player, PlayerKnowledge knowledge, String key) {
+        if (!knowledge.completeResearch(key)) return false;
+        Research research = Researches.get(key);
+        int warp = research == null ? 0 : research.warp();
+        if (warp > 0 && player != null && !player.level().isClientSide()) {
+            if (warp > 1) {
+                int w2 = warp / 2;
+                if (warp - w2 > 0) Warp.add(player, knowledge, warp - w2, false);
+                if (w2 > 0) Warp.addSticky(player, knowledge, w2);
+            } else {
+                Warp.add(player, knowledge, warp, false);
+            }
+        }
+        if (player instanceof net.minecraft.server.level.ServerPlayer server) net.thaumcraft.net.TCNetwork.researchComplete(server, key);
+        return true;
+    }
+
+    /** Completa e guarda. */
+    public static boolean complete(Player player, String key) {
+        PlayerKnowledge knowledge = Knowledges.of(player);
+        boolean done = complete(player, knowledge, key);
+        if (done) Knowledges.save(player, knowledge);
+        return done;
+    }
+
+    /** Uma pista ({@code @CHAVE}): a pesquisa escondida que ela desperta passa a aparecer no livro. */
+    public static boolean clue(Player player, String key) {
+        return complete(player, key);
     }
 
     /**

@@ -65,6 +65,73 @@ public final class TCEffects {
                 }
             });
 
+    /** A fome estranha ({@code PotionUnnaturalHunger}): cansa o jogador a cada tique; só carne podre e cérebro a aliviam. */
+    public static final Holder<MobEffect> UNNATURAL_HUNGER = register("unnatural_hunger", new MobEffect(MobEffectCategory.HARMFUL, 4482611) {
+        @Override
+        public boolean applyEffectTick(ServerLevel level, LivingEntity target, int amplifier) {
+            if (target instanceof Player player) player.causeFoodExhaustion(0.025f * (amplifier + 1));
+            return true;
+        }
+
+        @Override
+        public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+            return true;
+        }
+    });
+
+    /** O olhar da morte ({@code PotionDeathGaze}): o que o jogador encara se volta contra ele e murcha (ver {@code WarpEvents}). */
+    public static final Holder<MobEffect> DEATH_GAZE = register("death_gaze", new MobEffect(MobEffectCategory.HARMFUL, 6702131) {
+    });
+
+    /** A vista embaçada ({@code PotionBlurredVision}): só o borrão na tela. */
+    public static final Holder<MobEffect> BLURRED_VISION = register("blurred_vision", new MobEffect(MobEffectCategory.HARMFUL, 8421504) {
+    });
+
+    /**
+     * O desprezo do sol ({@code PotionSunScorned}): a cada dois segundos, na claridade e debaixo do céu, pode pegar fogo;
+     * no escuro, cura um pouco.
+     */
+    public static final Holder<MobEffect> SUN_SCORNED = register("sun_scorned", new MobEffect(MobEffectCategory.HARMFUL, 16308330) {
+        @Override
+        public boolean applyEffectTick(ServerLevel level, LivingEntity target, int amplifier) {
+            float f = brightness(level, target.blockPosition());
+            if (f > 0.5f && level.getRandom().nextFloat() * 30.0f < (f - 0.4f) * 2.0f && level.canSeeSky(target.blockPosition())) {
+                target.igniteForSeconds(4.0f);
+            } else if (f < 0.25f && level.getRandom().nextFloat() > f * 2.0f) {
+                target.heal(1.0f);
+            }
+            return true;
+        }
+
+        @Override
+        public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+            return duration % 40 == 0;
+        }
+    });
+
+    /** A taumarria ({@code PotionThaumarhia}): de segundo em segundo, uma chance em quinze de brotar gosma de fluxo onde se pisa. */
+    public static final Holder<MobEffect> THAUMARHIA = register("thaumarhia", new MobEffect(MobEffectCategory.HARMFUL, 6702199) {
+        @Override
+        public boolean applyEffectTick(ServerLevel level, LivingEntity target, int amplifier) {
+            if (level.getRandom().nextInt(15) == 0 && level.isEmptyBlock(target.blockPosition())) {
+                level.setBlockAndUpdate(target.blockPosition(), TCBlocks.FLUX_GOO.defaultBlockState());
+            }
+            return true;
+        }
+
+        @Override
+        public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+            return duration % 20 == 0;
+        }
+    });
+
+    /** O {@code getBrightness} de uma criatura no 1.7.10: a tabela de claridade do mundo pela luz do lugar. */
+    public static float brightness(ServerLevel level, net.minecraft.core.BlockPos pos) {
+        float light = level.getMaxLocalRawBrightness(pos) / 15.0f;
+        float f = 1.0f - light;
+        return (1.0f - f) / (f * 3.0f + 1.0f);
+    }
+
     private TCEffects() {
     }
 

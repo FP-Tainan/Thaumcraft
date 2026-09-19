@@ -132,5 +132,7 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.VOID, 5)));
         ALL.add(new CrucibleRecipe("BATHSALTS", new ItemStack(TCItems.BATH_SALTS), TCResources.get("salis_mundus"),
                 new AspectList().add(Aspects.MIND, 6).add(Aspects.AURA, 6).add(Aspects.ORDER, 6).add(Aspects.HEAL, 6)));
+        ALL.add(new CrucibleRecipe("SANESOAP", new ItemStack(TCItems.SANITY_SOAP), TCBlocks.BUILDING.get("tallow_block").asItem(),
+                new AspectList().add(Aspects.MIND, 16).add(Aspects.ELDRITCH, 16).add(Aspects.ORDER, 16).add(Aspects.HEAL, 16)));
     }
 }

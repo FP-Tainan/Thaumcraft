@@ -206,6 +206,38 @@ public final class TCNetwork {
         }
     }
 
+    /** O {@code PacketMiscEvent}: 0 é o susto (a vinheta e o coração), 1 a névoa longa, 2 a névoa curta. */
+    public record MiscEvent(int kind) implements CustomPacketPayload {
+        public static final Type<MiscEvent> TYPE = new Type<>(Thaumcraft.id("misc_event"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, MiscEvent> CODEC = StreamCodec.composite(
+                ByteBufCodecs.VAR_INT, MiscEvent::kind, MiscEvent::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    /** O {@code PacketResearchComplete}: uma pesquisa (ou pista, com arroba) acabou de se completar. */
+    public record ResearchComplete(String key) implements CustomPacketPayload {
+        public static final Type<ResearchComplete> TYPE = new Type<>(Thaumcraft.id("research_complete"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, ResearchComplete> CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8, ResearchComplete::key, ResearchComplete::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static void miscEvent(ServerPlayer player, int kind) {
+        ServerPlayNetworking.send(player, new MiscEvent(kind));
+    }
+
+    public static void researchComplete(ServerPlayer player, String key) {
+        ServerPlayNetworking.send(player, new ResearchComplete(key));
+    }
+
     public static void aspectPool(ServerPlayer player, net.thaumcraft.api.aspects.Aspect aspect, int amount, int total) {
         ServerPlayNetworking.send(player, new AspectPool(aspect.tag(), amount, total));
     }
@@ -233,6 +265,8 @@ public final class TCNetwork {
         PayloadTypeRegistry.clientboundPlay().register(AspectPool.TYPE, AspectPool.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(AspectDiscovery.TYPE, AspectDiscovery.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(WarpMessage.TYPE, WarpMessage.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(MiscEvent.TYPE, MiscEvent.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(ResearchComplete.TYPE, ResearchComplete.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela
         ServerPlayNetworking.registerGlobalReceiver(ResearchRequest.TYPE, (payload, context) ->

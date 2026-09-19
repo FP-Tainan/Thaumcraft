@@ -9,10 +9,14 @@
     "OverworldBiomeBuilderMixin",
     "NoteBlockMixin",
     "ItemEntityBathSaltsMixin",
-    "ItemEntityAccessor"
+    "ItemEntityAccessor",
+    "LivingEntityHungerMixin",
+    "ItemStackWarpMixin"
   ],
   "client": [
-    "ItemInHandRendererMixin"
+    "ItemInHandRendererMixin",
+    "GameRendererWarpMixin",
+    "FogRendererWarpMixin"
   ],
   "injectors": {
     "defaultRequire": 1

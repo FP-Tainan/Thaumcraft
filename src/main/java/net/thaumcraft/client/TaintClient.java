@@ -46,6 +46,8 @@ public final class TaintClient {
         EntityRendererRegistry.register(TCEntities.TAINT_CREEPER, TaintRenderers.Creeper::new);
         EntityRendererRegistry.register(TCEntities.TAINT_VILLAGER, TaintRenderers.Villager::new);
         EntityRendererRegistry.register(TCEntities.TAINT_SPIDER, TaintSpiderRenderer::new);
+        // a aranha da mente (da distorção) usa a pele da aranha maculada
+        EntityRendererRegistry.register(TCEntities.MIND_SPIDER, net.thaumcraft.client.render.MindSpiderRenderer::new);
         EntityRendererRegistry.register(TCEntities.THAUMIC_SLIME, TaintRenderers.Slime::new);
         EntityRendererRegistry.register(TCEntities.TAINT_SPORE, TaintRenderers.Spore::new);
         EntityRendererRegistry.register(TCEntities.TAINT_SPORE_SWARMER, TaintRenderers.Swarmer::new);

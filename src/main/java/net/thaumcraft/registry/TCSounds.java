@@ -116,6 +116,8 @@ public final class TCSounds {
     public static final Holder<SoundEvent> GOLEM_IRON_SHOOT = register("golem_iron_shoot");
     /** Os sussurros de quem ganha distorcao. */
     public static final Holder<SoundEvent> WHISPERS = register("whispers");
+    /** O coracao disparando no susto da distorcao. */
+    public static final Holder<SoundEvent> HEARTBEAT = register("heartbeat");
 
     private TCSounds() {
     }

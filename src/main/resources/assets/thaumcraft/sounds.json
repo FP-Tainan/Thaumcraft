@@ -100,6 +100,12 @@
       "thaumcraft:gore2"
     ]
   },
+  "heartbeat": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:heartbeat"
+    ]
+  },
   "hhoff": {
     "category": "player",
     "sounds": [

@@ -547,6 +547,8 @@ public final class TCItems {
     /** Os sais de banho, que viram fluido purificante na água. */
     public static final Item BATH_SALTS = register("bath_salts", properties ->
             new net.minecraft.world.item.Item(properties));
+    /** O sabão higienizante, que lava a distorção temporária e às vezes a que gruda. */
+    public static final Item SANITY_SOAP = register("sanity_soap", net.thaumcraft.item.SanitySoapItem::new);
     /** Os baldes dos dois fluidos. */
     public static final Item BUCKET_PURE = register("bucket_pure", properties ->
             new net.minecraft.world.item.BucketItem(TCFluids.PURIFYING, properties

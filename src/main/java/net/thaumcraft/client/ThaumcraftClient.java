@@ -556,6 +556,10 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX(), pos.getY(), pos.getZ(), colour, count);
         // os avisos do canto: o PacketAspectDiscovery, o PacketAspectPool e o PacketWarpMessage
         PlayerNotifications.init();
+        // a distorção na tela: a vinheta, a névoa e os filtros das poções; e as bolhas do sabão
+        WarpClient.init();
+        net.thaumcraft.item.SanitySoapItem.clientEffects = (level, x, y, z, r, g, b) ->
+                net.thaumcraft.client.fx.Bubble.spawn(x, y, z, r, g, b, 1.0f, 1, level.getRandom());
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 net.thaumcraft.net.TCNetwork.AspectDiscovery.TYPE, (payload, context) -> context.client().execute(() -> {
                     var aspect = net.thaumcraft.api.aspects.Aspect.of(payload.tag());
