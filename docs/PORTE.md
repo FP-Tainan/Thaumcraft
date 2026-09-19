@@ -965,3 +965,41 @@ Fonte: `BlockMirror`, `BlockMirrorItem`, `TileMirror`, `TileMirrorEssentia`, `Ti
   funil, essência do outro lado, espelho de mão, as três infusões) e `MirrorClientTest` (parede com espelho sem par,
   par ligado e de essência; espelho no chão).
 - Diferença conhecida: o fio de essência ainda é o de partículas que a matriz já usava, não o `EssentiaSourceFX`.
+
+## Fornalha infernal
+
+Fonte: `BlockArcaneFurnace`, `BlockArcaneFurnaceRenderer`, `TileArcaneFurnace`, `TileArcaneFurnaceNozzle`,
+`WandManager.createArcaneFurnace/fitArcaneFurnace/replaceArcaneFurnace`, `BlockUtils.isBlockTouchingOnSide` e o
+`addSmeltingBonus` do `ConfigRecipes` (descompilados do jar).
+
+- **Formação** (`InfernalFurnaceStructure`): a varinha numa obsidiana, tijolo do Nether ou grade de ferro, com a pesquisa
+  INFERNALFURNACE, procura o cubo 3 × 3 × 3 (cantos de tijolo, meio das bordas de obsidiana, lava no centro, o alto do
+  centro vazio e exatamente uma grade no meio de uma parede da camada do meio) e gasta 50 de Ignis e 50 de Terra. Cada
+  bloco vira a parte da posição dele (`PART` 1 a 9, linha a linha do noroeste, em cada camada; 0 o centro; 10 a boca,
+  que guarda para que lado fica o centro). Os blocos são postos sem avisar os vizinhos, senão o centro se desfaria ao
+  ver o cubo pela metade.
+- **Bloco** (`InfernalFurnaceBlock`): dureza 10, resistência 300 (os 500 do original na conta de hoje), luz 3 (13 no
+  centro e na boca), picareta. Colisão: o centro tem um quarto de altura e a boca, a metade do lado do centro. Itens que
+  pousam na lava do centro entram na fornalha; bichos que não aguentam fogo tomam 3 de lava e pegam fogo. Fumaça grossa
+  sai pelo alto aberto. Faltando um bloco em volta do centro, tudo volta a ser o que era (o laço do original pula os
+  blocos ao sul do centro e do meio de cima, e aqui também). Do centro quebrado sai um blaze com Regeneração III e
+  Resistência. Cada parte deixa o bloco que era.
+- **Fornalha** (`InfernalFurnaceBlockEntity`): 32 casas; funde uma unidade por vez, 140 tiques (80 acelerada), 20 a
+  menos por fole a dois blocos do centro, virado para ele e sem sinal (até três). Acelera com Ignis da rede de vis (5 de
+  cada vez) ou pelos bicos. O que não funde se desfaz com um chiado. O fundido sai pela boca a 0,13, com a experiência
+  da receita e o bônus de fundição (sem fole, 1 em 4 de um; com foles, 44% por fole).
+- **Bicos** (`InfernalFurnaceNozzleBlockEntity`): os blocos do meio das paredes e o de baixo, encostados no centro,
+  aceitam cano por fora e puxam Ignis com força 128 quando a pressa acaba; cada unidade dá 600 tiques.
+- **Bônus de fundição** (`SmeltingBonus`, gerado por `scratchpad/bonus-fundicao.js`): os minérios de ouro, ferro,
+  cobre e cinábrio e os aglomerados nativos. O minério de hoje cai bruto, e o bruto entra junto com o bloco. Estanho,
+  prata e chumbo não existem no jogo de hoje; as pepitas de carne entram quando as pepitas chegarem.
+- **Visual**: as 25 texturas `furnaceN` do jar; as paredes usam o `calculateTexture` do original, portado inteiro
+  (`InfernalFurnaceModel`, como o vidro protegido): cada face mostra o seu pedaço do desenho grande, e a face da boca
+  ganha a moldura (o "tocando no lado" do original olha os oito vizinhos no plano da face). A boca desenha, dentro do
+  centro e vistos de fora, a grade a 0,625, os olhos a 0,8 e o fogo a 0,9 com 1,5 de altura; o centro mostra a lava
+  pelo alto aberto. Conferido contra a imagem do bloco na wiki do FTB.
+- **Testes**: `InfernalFurnaceGameTest` (o cubo precisa de uma grade só, a numeração, o que cai na lava sai fundido
+  pela boca, o que não funde some, quebrar desfaz, a tabela de bônus) e `InfernalFurnaceClientTest`.
+- Armadilha: o original soma posição inteira com `float`; nas coordenadas enormes dos testes isso arredondava a saída
+  para dentro do centro, e o lingote voltava para a lava. Aqui as contas de posição são em `double`.
+- Diferença: a gota de lava que espirra pela boca é a partícula de lava do jogo, que não aceita o empurrão do original.

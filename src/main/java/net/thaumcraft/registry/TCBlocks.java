@@ -409,6 +409,15 @@ public final class TCBlocks {
                     .mapColor(MapColor.NONE).strength(1.0f, 10.0f).noOcclusion().noCollision().sound(MIRROR_SOUND)
                     .pushReaction(PushReaction.DESTROY)));
 
+    /** A fornalha infernal: o cubo que a varinha forma de obsidiana, tijolo do Nether, grade e lava. Sem item. */
+    public static final Block INFERNAL_FURNACE = register("infernal_furnace", properties ->
+            new net.thaumcraft.block.InfernalFurnaceBlock(properties
+                    .mapColor(MapColor.COLOR_BLACK).strength(10.0f, 300.0f).requiresCorrectToolForDrops().noOcclusion()
+                    .lightLevel(state -> { int part = state.getValue(net.thaumcraft.block.InfernalFurnaceBlock.PART); return part == 0 || part == 10 ? 13 : 3; })
+                    .isRedstoneConductor((s, l, p) -> s.getValue(net.thaumcraft.block.InfernalFurnaceBlock.PART) != 0 && s.getValue(net.thaumcraft.block.InfernalFurnaceBlock.PART) != 10)
+                    .isSuffocating((s, l, p) -> s.getValue(net.thaumcraft.block.InfernalFurnaceBlock.PART) != 0 && s.getValue(net.thaumcraft.block.InfernalFurnaceBlock.PART) != 10)
+                    .isValidSpawn((s, l, p, e) -> false).pushReaction(PushReaction.BLOCK)));
+
     /** A crosta da mácula: o que sobra de um tronco ou de uma folha que ela tomou. */
     public static final Block TAINT_CRUST = register("taint_crust", properties ->
             new net.thaumcraft.block.TaintBlock(properties

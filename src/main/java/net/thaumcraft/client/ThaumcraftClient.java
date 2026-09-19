@@ -285,6 +285,18 @@ public class ThaumcraftClient implements ClientModInitializer {
                         pos.getZ() + 0.5f + random.nextFloat() - random.nextFloat(), 2.0f, 7, 0.0f);
         // o vidro protegido emendado
         net.thaumcraft.client.render.WardedGlassModel.init();
+        // a fornalha infernal: as paredes que formam o desenho grande de cada face, as faíscas de quando ela se forma
+        // e a lava que espirra pela boca
+        net.thaumcraft.client.render.InfernalFurnaceModel.init();
+        net.thaumcraft.block.InfernalFurnaceBlock.clientEffects = (level, pos) ->
+                net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX(), pos.getY(), pos.getZ(), 0xFF6600, 5);
+        net.thaumcraft.block.entity.InfernalFurnaceBlockEntity.clientEffects = (level, pos, fx, fz) -> {
+            var random = level.getRandom();
+            level.addParticle(net.minecraft.core.particles.ParticleTypes.LAVA,
+                    pos.getX() + 0.5 + (random.nextFloat() - random.nextFloat()) * 0.3 + fx,
+                    pos.getY() + 0.3,
+                    pos.getZ() + 0.5 + (random.nextFloat() - random.nextFloat()) * 0.3 + fz, 0.0, 0.0, 0.0);
+        };
         net.thaumcraft.block.ShimmerleafBlock.clientEffects = net.thaumcraft.client.fx.Wisp::colored;
         // o cogumelo-vis: a chaminha roxa que encolhe e cai
         net.thaumcraft.block.VishroomBlock.clientEffects = (x, y, z) ->

@@ -162,6 +162,14 @@ public final class TCBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("essentia_mirror"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.EssentiaMirrorBlockEntity::new, java.util.Set.of(TCBlocks.ESSENTIA_MIRROR)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.InfernalFurnaceBlockEntity> INFERNAL_FURNACE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("infernal_furnace"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.InfernalFurnaceBlockEntity::new, java.util.Set.of(TCBlocks.INFERNAL_FURNACE)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.InfernalFurnaceNozzleBlockEntity> INFERNAL_FURNACE_NOZZLE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("infernal_furnace_nozzle"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.InfernalFurnaceNozzleBlockEntity::new, java.util.Set.of(TCBlocks.INFERNAL_FURNACE)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.ManaPodBlockEntity> MANA_POD =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("mana_pod"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.ManaPodBlockEntity::new, java.util.Set.of(TCBlocks.MANA_POD)));

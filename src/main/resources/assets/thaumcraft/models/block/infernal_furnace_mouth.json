@@ -1,0 +1,9 @@
+{
+  "textures": {"particle": "thaumcraft:block/infernal_furnace_13", "grate": "thaumcraft:block/infernal_furnace_13",
+    "eyes": "thaumcraft:block/infernal_furnace_15", "fire": "minecraft:block/fire_0"},
+  "elements": [
+    {"from": [0, 0, -10], "to": [16, 16, -10], "shade": false, "faces": {"south": {"uv": [0, 0, 16, 16], "texture": "#grate"}}},
+    {"from": [0, 0, -12.8], "to": [16, 16, -12.8], "shade": false, "faces": {"south": {"uv": [0, 0, 16, 16], "texture": "#eyes"}}},
+    {"from": [0, 0, -14.4], "to": [16, 24, -14.4], "shade": false, "faces": {"south": {"uv": [0, 0, 16, 16], "texture": "#fire"}}}
+  ]
+}

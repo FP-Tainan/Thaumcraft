@@ -38,6 +38,12 @@ public final class WandTriggers {
             return InteractionResult.SUCCESS;
         }
 
+        // obsidiana, tijolo do Nether ou grade de um cubo certo: a fornalha infernal (evento 2 do original)
+        if (net.thaumcraft.block.InfernalFurnaceStructure.isTrigger(state) && player != null
+                && net.thaumcraft.research.ResearchManager.knows(player, "INFERNALFURNACE")) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            if (net.thaumcraft.block.InfernalFurnaceStructure.create(wand, player, level, pos)) return InteractionResult.SUCCESS;
+        }
         // a estante de livros vira o caderno de pesquisa
         if (state.is(Blocks.BOOKSHELF)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
