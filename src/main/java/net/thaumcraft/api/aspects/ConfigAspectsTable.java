@@ -50,6 +50,7 @@ final class ConfigAspectsTable {
         r.tag("c:ingots/copper", new AspectList().add(Aspects.METAL, 3).add(Aspects.EXCHANGE, 1));
         r.tag("c:dusts/copper", new AspectList().add(Aspects.METAL, 2).add(Aspects.ENTROPY, 1).add(Aspects.EXCHANGE, 1));
         r.tag("c:ores/copper", new AspectList().add(Aspects.METAL, 2).add(Aspects.EARTH, 1).add(Aspects.EXCHANGE, 1));
+        r.item("thaumcraft:native_copper_cluster", new AspectList().add(Aspects.ORDER, 1).add(Aspects.METAL, 5).add(Aspects.EARTH, 1).add(Aspects.EXCHANGE, 2));
         r.tag("c:nuggets/tin", new AspectList().add(Aspects.METAL, 1));
         r.tag("c:ingots/tin", new AspectList().add(Aspects.METAL, 3).add(Aspects.CRYSTAL, 1));
         r.tag("c:dusts/tin", new AspectList().add(Aspects.METAL, 2).add(Aspects.ENTROPY, 1).add(Aspects.CRYSTAL, 1));
@@ -316,6 +317,10 @@ final class ConfigAspectsTable {
         r.complex("minecraft:daylight_detector", new AspectList().merge(Aspects.SENSES, 2).merge(Aspects.LIGHT, 3).merge(Aspects.MECHANISM, 3));
         r.complex("thaumcraft:table", new AspectList().add(Aspects.TOOL, 1));
         r.item("thaumcraft:arcane_workbench", r.copy("thaumcraft:table").add(Aspects.CRAFT, 4));
+        r.item("thaumcraft:native_iron_cluster", new AspectList().add(Aspects.ORDER, 1).add(Aspects.METAL, 6).add(Aspects.EARTH, 1));
+        r.item("thaumcraft:native_gold_cluster", new AspectList().add(Aspects.ORDER, 1).add(Aspects.METAL, 4).add(Aspects.EARTH, 1).add(Aspects.GREED, 2));
+        r.item("thaumcraft:native_cinnabar_cluster", new AspectList().add(Aspects.ORDER, 1).add(Aspects.METAL, 4).add(Aspects.EARTH, 1).add(Aspects.EXCHANGE, 4).add(Aspects.POISON, 2));
+        r.item("thaumcraft:quicksilver_drop", new AspectList().add(Aspects.METAL, 1));
         r.item("thaumcraft:thaumium_nugget", new AspectList().add(Aspects.METAL, 1));
         r.item("thaumcraft:cinnabar_ore", new AspectList().add(Aspects.EARTH, 1).add(Aspects.METAL, 2).add(Aspects.EXCHANGE, 2).add(Aspects.POISON, 1));
         r.item("thaumcraft:amber_ore", new AspectList().add(Aspects.EARTH, 1).add(Aspects.TRAP, 3).add(Aspects.CRYSTAL, 2));

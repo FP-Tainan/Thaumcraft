@@ -216,7 +216,7 @@ public final class ArcaneRecipes {
                 new AspectList().add(Aspects.AIR, 10).add(Aspects.ORDER, 5)));
         // Tube
         ALL.add(new ArcaneRecipe("TUBES", new ItemStack(TCBlocks.TUBE.asItem(), 8),
-                Arrays.asList(null, Ingredient.of(TCResources.get("quicksilver")), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null),
+                Arrays.asList(null, Ingredient.of(TCResources.get("quicksilver_drop")), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), null),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
         // TubeBuffer
         ALL.add(new ArcaneRecipe("CENTRIFUGE", new ItemStack(TCBlocks.TUBE_BUFFER.asItem()),

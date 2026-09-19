@@ -74,8 +74,24 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.ENTROPY, 2)));
         ALL.add(new CrucibleRecipe("ENTROPICPROCESSING", new ItemStack(net.minecraft.world.item.Items.BONE_MEAL, 4), net.minecraft.world.item.Items.BONE,
                 new AspectList().add(Aspects.ENTROPY, 1)));
+        ALL.add(new CrucibleRecipe("PUREIRON", new ItemStack(TCResources.get("native_iron_cluster")), net.minecraft.world.item.Items.IRON_ORE,
+                new AspectList().add(Aspects.METAL, 1).add(Aspects.ORDER, 1)));
+        ALL.add(new CrucibleRecipe("PUREIRON", new ItemStack(TCResources.get("native_iron_cluster")), net.minecraft.world.item.Items.DEEPSLATE_IRON_ORE,
+                new AspectList().add(Aspects.METAL, 1).add(Aspects.ORDER, 1)));
+        ALL.add(new CrucibleRecipe("PUREGOLD", new ItemStack(TCResources.get("native_gold_cluster")), net.minecraft.world.item.Items.GOLD_ORE,
+                new AspectList().add(Aspects.METAL, 1).add(Aspects.ORDER, 1)));
+        ALL.add(new CrucibleRecipe("PUREGOLD", new ItemStack(TCResources.get("native_gold_cluster")), net.minecraft.world.item.Items.DEEPSLATE_GOLD_ORE,
+                new AspectList().add(Aspects.METAL, 1).add(Aspects.ORDER, 1)));
+        ALL.add(new CrucibleRecipe("PURECOPPER", new ItemStack(TCResources.get("native_copper_cluster")), net.minecraft.world.item.Items.COPPER_ORE,
+                new AspectList().add(Aspects.METAL, 1).add(Aspects.ORDER, 1)));
+        ALL.add(new CrucibleRecipe("PURECOPPER", new ItemStack(TCResources.get("native_copper_cluster")), net.minecraft.world.item.Items.DEEPSLATE_COPPER_ORE,
+                new AspectList().add(Aspects.METAL, 1).add(Aspects.ORDER, 1)));
+        ALL.add(new CrucibleRecipe("TRANSIRON", new ItemStack(net.minecraft.world.item.Items.IRON_NUGGET, 3), net.minecraft.world.item.Items.IRON_NUGGET,
+                new AspectList().add(Aspects.METAL, 2)));
         ALL.add(new CrucibleRecipe("TRANSGOLD", new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET, 3), net.minecraft.world.item.Items.GOLD_NUGGET,
                 new AspectList().add(Aspects.METAL, 2).add(Aspects.GREED, 1)));
+        ALL.add(new CrucibleRecipe("TRANSCOPPER", new ItemStack(net.minecraft.world.item.Items.COPPER_NUGGET, 3), net.minecraft.world.item.Items.COPPER_NUGGET,
+                new AspectList().add(Aspects.METAL, 2).add(Aspects.EXCHANGE, 1)));
         ALL.add(new CrucibleRecipe("ETHEREALBLOOM", new ItemStack(TCBlocks.ETHEREAL_BLOOM.asItem()), TCBlocks.SHIMMERLEAF.asItem(),
                 new AspectList().add(Aspects.MAGIC, 16).add(Aspects.PLANT, 16).add(Aspects.HEAL, 16).add(Aspects.TAINT, 8)));
         ALL.add(new CrucibleRecipe("GOLEMSTRAW", new ItemStack(TCItems.GOLEM_PLACERS.get("straw")), net.minecraft.world.level.block.Blocks.HAY_BLOCK.asItem(),

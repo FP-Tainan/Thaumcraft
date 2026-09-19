@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:quicksilver"
+  ],
+  "result": {
+    "id": "thaumcraft:quicksilver_drop",
+    "count": 9
+  }
+}

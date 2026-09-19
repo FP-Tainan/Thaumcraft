@@ -88,4 +88,21 @@ public class OreGameTest {
             helper.succeed();
         });
     }
+
+    @GameTest
+    public void theOrePurifiesIntoANativeCluster(GameTestHelper helper) {
+        var water = new net.thaumcraft.api.aspects.AspectList()
+                .add(net.thaumcraft.api.aspects.Aspects.METAL, 1).add(net.thaumcraft.api.aspects.Aspects.ORDER, 1);
+        for (var ore : new net.minecraft.world.item.Item[]{Items.IRON_ORE, Items.DEEPSLATE_IRON_ORE}) {
+            var recipe = net.thaumcraft.crafting.CrucibleRecipes.find(water, new ItemStack(ore));
+            if (recipe == null || !recipe.result().is(net.thaumcraft.registry.TCResources.get("native_iron_cluster"))) {
+                helper.fail("metallum e ordo com minério de ferro dão o aglomerado nativo: " + ore);
+            }
+        }
+        var gold = net.thaumcraft.crafting.CrucibleRecipes.find(water, new ItemStack(Items.GOLD_ORE));
+        if (gold == null || !gold.result().is(net.thaumcraft.registry.TCResources.get("native_gold_cluster"))) helper.fail("e o de ouro");
+        var cinnabar = net.thaumcraft.crafting.CrucibleRecipes.find(water, new ItemStack(TCBlocks.CINNABAR_ORE));
+        if (cinnabar != null) helper.fail("o cinábrio não se purifica no crisol (só pela picareta do núcleo e pelo foco)");
+        helper.succeed();
+    }
 }

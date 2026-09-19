@@ -238,9 +238,7 @@ perde na água; daqui em diante ela é recolhida, levada e guardada.
   sem precisar de um número de tela para cada um.
 - As texturas são as do original: `pipe_1` e `pipe_2` no tubo, `metalbase` e `goldbase` no alambique,
   `jar_side`/`jar_top`/`jar_bottom` no jarro e `al_furnace_*` no forno.
-- **Diferença**: a receita do tubo pede uma *gota de mercúrio* no original, que é o mercúrio miúdo que
-  sai dos minérios nativos. Os minérios nativos são de uma fatia que ainda não chegou, então aqui a
-  receita pede o próprio mercúrio.
+- A receita do tubo pede a *gota de mercúrio*, como no original (chegou com os aglomerados nativos).
 - Falta da fatia: as variações de tubo (válvula, filtro, estreito, de mão única, tampão), o jarro do
   vazio, o fole que acelera o forno e o forno arcano.
 
@@ -842,3 +840,16 @@ A mesma auditoria achou, nas receitas geradas:
   - o morcego invocado conta o dono como quem feriu o alvo (o original só marcava "ferido recentemente", sem jogador);
     o jogo de hoje precisa do jogador para dar a experiência, então o efeito é o mesmo.
   - o zumbi raivoso nasce nos biomas onde nasce zumbi (o original: todo bioma da superfície com monstros).
+
+## Aglomerados nativos (2026-09-20)
+
+- **Aglomerados nativos** de ferro, cobre, ouro e cinábrio e a **gota de mercúrio** (o  5, 16, 17, 21 e 31).
+  Cada aglomerado funde em dois lingotes (o de cinábrio em dois mercúrios); nove gotas fazem um mercúrio e um mercúrio
+  desfaz em nove.
+- No crisol, **metallum e ordo** com o minério viram o aglomerado (PUREIRON, PUREGOLD, PURECOPPER), e **metallum** com
+  a pepita faz três (TRANSIRON, TRANSCOPPER). O minério de hoje tem duas caras (pedra e ardósia); as duas valem.
+- **Correção:** o mapeador de itens aproximava duas pepitas — a de taumio virava o lingote e a gota de mercúrio virava
+  o mercúrio. A receita do tubo volta a pedir a gota, como no original.
+- **Diferença:** estanho, prata e chumbo (os aglomerados 18 a 20 e as pepitas 2 a 4) só existiam no original quando
+  outro mod trazia o lingote; sem mods, ficam de fora, como lá. As pepitas de ferro e de cobre são as do próprio jogo.
+  O cobre, que no original dependia de outro mod, hoje é do jogo e entra.

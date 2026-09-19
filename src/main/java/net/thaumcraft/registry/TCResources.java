@@ -39,5 +39,10 @@ public final class TCResources {
             "gold_coin",
             "thaumium_nugget",
             "void_nugget",
+            "quicksilver_drop",
+            "native_iron_cluster",
+            "native_copper_cluster",
+            "native_cinnabar_cluster",
+            "native_gold_cluster",
     };
 }
