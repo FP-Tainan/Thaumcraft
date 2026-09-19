@@ -1643,5 +1643,48 @@ O original limpava os `getCurativeItems` dos efeitos que a distorção, o gás e
 fome estranha põem — o leite não os tira. Hoje o leite limpa tudo de uma vez (`removeAllEffects`); o `Incurable` marca
 esses efeitos e o `LivingEntityIncurableMixin` os devolve logo depois. Teste: `WarpGameTest.milkDoesNotCureWarp`.
 
-A ponteira de prata (`WandCapSilverInert`) continua de fora: no original ela só existia se outro mod trouxesse lingote
-de prata (`Config.foundSilverIngot`).
+
+## O Thaumonomicon fiel (2026-09-19)
+
+Descompilados do jar: `GuiResearchRecipe`, `GuiResearchBrowser`, `GuiResearchPopup`, `TCFontRenderer`, `ResearchPage`,
+`ResearchItem` e o `ConfigResearch`/`ConfigRecipes` inteiros.
+
+- **Páginas** (`ResearchPageScreen`): a folha dupla ampliada 1,3×, o texto na letra miúda do livro (a fonte unicode de
+  então, hoje a `uniform`) com as figuras `<IMG>` (as `research1..5` e `eldritchajor1..2` copiadas do jar) e os
+  filetes `<LINE>`; bancada comum (com e sem forma), bancada arcana (com o vis), crisol (a água, a seta e o
+  catalisador), fornalha, infusão (os pedestais em volta, a instabilidade), infusão de encantamento (o nível em rodízio,
+  a experiência), aumento rúnico, e as **montagens de estrutura** em camadas sobre o chão quadriculado. As listas de
+  receitas trocam uma por segundo; o ingrediente que outra pesquisa ensina leva até ela com um clique
+  (`recipe.clickthrough`) e o marcador do rodapé volta. "Aspectos" ganha as páginas dos aspectos descobertos, quatro por
+  página, com as coisas examinadas sob o cursor.
+- **O que cada página cita** é gerado do jar (`scratchpad/livro-pesquisas.js` → `Researches`, `scratchpad/livro-receitas.js`
+  → `BookRecipes`) e achado nas tabelas do mod (`BookPages`). Teste: `ResearchGameTest.everyBookRecipeResolves` (toda
+  página de receita acha tantas receitas quantos nomes cita).
+- **Mapa** (`ThaumonomiconScreen`): o `GuiResearchBrowser` — ícones de item e de desenho, apagados enquanto não se pode
+  abrir (o item escurecido pelo `TintedItems`, que leva a cor do `glColor` de então até a colagem do item na tela); as
+  linhas curvas, ondulantes e desbotando do original; a aura roxa do conhecimento proibido; a faísca da recém-aprendida e
+  da aba dela; a caixa do cursor com o subtítulo, o aviso proibido e o que falta; o arrasto que volta macio para os
+  limites; o som de câmera nas abas.
+- **Faixa "Research Completed!"** (`ResearchPopup`): três segundos no canto, uma de cada vez, por cima de tudo.
+- Testes de tela: `BookClientTest`, `BookPagesClientTest` (uma página de cada tipo, o tooltip e a faixa).
+
+## O thaumômetro em primeira pessoa
+
+`ThaumometerFirstPerson`: o `ItemThaumometerRenderer` com as transformações do `ItemRenderer` de então — o aparelho
+erguido, as duas mãos (o braço direito do modelo nas duas, como no original), o vidro que tremula, e na lente o nome, os
+aspectos do que já foi examinado e o tipo do nodo. Saíram o visor inventado no meio da tela e a pose erguida inventada.
+
+## Cetros
+
+`ArcaneSceptreRecipe` na bancada (três pontas em volta do amuleto primordial no canto de cima à direita, a haste no
+meio; uma vez e meia o custo), vis uma vez e meia, um décimo a menos de gasto, sem troca de foco, a ponta maior com a
+achatada embaixo e as dez runas girando. As três receitas de exemplo do livro vêm do `ConfigResearch`. Teste:
+`WandAssemblyGameTest.sceptreFollowsTheOriginal`; tela: `SceptreClientTest`.
+
+## Estanho, prata e chumbo
+
+Os metais que o original aproveitava quando outro mod os trazia, agora pelas etiquetas `c:` (`OtherMetals`): pepitas e
+aglomerados nativos, crisol `PureX`/`TransX` com catalisador por etiqueta, mineração especial, bônus da fornalha
+infernal, fundição do aglomerado no primeiro lingote da etiqueta (`thaumcraft:tag_smelting`), lingote ↔ nove pepitas, a
+ponta de prata inerte. Sem mod que traga o lingote, as receitas nem carregam e as pesquisas não aparecem. Teste:
+`CrucibleGameTest.otherMetalsGoByTags`.
