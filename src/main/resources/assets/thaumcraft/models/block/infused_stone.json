@@ -1,0 +1,93 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "thaumcraft:block/infused_ore_stone",
+    "stone": "thaumcraft:block/infused_ore_stone",
+    "vein": "thaumcraft:block/infused_ore_vein"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stone",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#stone",
+          "cullface": "south"
+        },
+        "east": {
+          "texture": "#stone",
+          "cullface": "east"
+        },
+        "west": {
+          "texture": "#stone",
+          "cullface": "west"
+        },
+        "up": {
+          "texture": "#stone",
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#stone",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "light_emission": 10,
+      "faces": {
+        "north": {
+          "texture": "#vein",
+          "cullface": "north",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#vein",
+          "cullface": "south",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#vein",
+          "cullface": "east",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#vein",
+          "cullface": "west",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#vein",
+          "cullface": "up",
+          "tintindex": 0
+        },
+        "down": {
+          "texture": "#vein",
+          "cullface": "down",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

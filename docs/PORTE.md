@@ -781,3 +781,27 @@ A mesma auditoria achou, nas receitas geradas:
   - o aspecto que morre num nó sai também do teto dele (no original ele ficava no teto sem voltar nunca); o efeito
     é o mesmo, muda só a média usada na disputa entre vizinhos.
   - a dica "@FOCUSPRIMAL" do amuleto primordial fica para o Eldritch.
+
+## Minérios e cristais (2026-09-19)
+
+- **Cinábrio** e **âmbar preso em pedra** (o `BlockCustomOre` 0 e 7): o cinábrio dá a si mesmo e fundido vira
+  mercúrio; o âmbar dá de um a um mais a fortuna, com um a quatro de experiência, e também funde em âmbar.
+- `world/ThaumOresFeature` — o `generateOres` inteiro, uma vez por pedaço de mundo: 18 blocos soltos de cinábrio da
+  altura 0 à 51, 20 de âmbar até 24 abaixo da superfície e 8 veios de seis de pedra infundida (uma vez em três do
+  aspecto do bioma). As alturas são as do mundo de 1.7.10, que começava no zero.
+- **Correção da pedra infundida**, que tinha entrado aproximada numa fatia antiga: agora é como o
+  `BlockCustomOreRenderer` — a pedra de base e, por cima, a veia animada tingida na cor do aspecto e brilhando
+  (brilho 10, o 160 do original) em vez de luz de bloco; dureza 1,5 (era 3), de um a dois mais a fortuna
+  fragmentos (era um só), zero a três de experiência, e a geração nos números do original (era um veio de cinco,
+  três vezes por pedaço).
+- **Aglomerados de cristal** (`CrystalClusterBlock` + `CrystalClusterRenderer`, o `BlockCrystal` e o
+  `TileCrystalRenderer`): um por primordial e o misto, feitos de seis fragmentos. Crescem da face em que foram
+  postos e caem sem apoio; luz sete, faíscas na cor deles (`client/fx/Spark`, o `FXSpark` com a
+  `particles2.png`), seis fragmentos ao quebrar. As lascas saem do mesmo sorteio do original, então cada aglomerado
+  tem o formato que teria lá.
+- **Estabilizadores da infusão:** a matriz agora conta as cabeças e os aglomerados de cristal em volta (o
+  `IInfusionStabiliser`), como no original: cada um tira um décimo da instabilidade, e o par espelhado mais.
+- Com os cristais, a receita do **amuleto de vis** entrou.
+- **Diferença:** a conta de fragmentos da pedra infundida é "um ou dois, mais de zero à fortuna" (o original sorteava
+  de 1 a 2 + fortuna de uma vez; o intervalo é o mesmo). Os aglomerados só existem por receita, como no mundo normal
+  do original (lá eles nascem na dimensão Eldritch).

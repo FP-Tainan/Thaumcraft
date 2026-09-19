@@ -1,6 +1,12 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "thaumcraft:block/infused_stone_entropy"
+    "model": "thaumcraft:block/infused_stone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -11184777
+      }
+    ]
   }
 }

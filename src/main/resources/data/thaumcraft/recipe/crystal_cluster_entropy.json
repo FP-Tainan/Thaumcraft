@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:shard_entropy",
+    "thaumcraft:shard_entropy",
+    "thaumcraft:shard_entropy",
+    "thaumcraft:shard_entropy",
+    "thaumcraft:shard_entropy",
+    "thaumcraft:shard_entropy"
+  ],
+  "result": {
+    "id": "thaumcraft:crystal_cluster_entropy"
+  }
+}

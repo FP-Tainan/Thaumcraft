@@ -39,12 +39,36 @@ public final class TCBlocks {
 
     static {
         for (String tag : new String[]{"air", "fire", "water", "earth", "order", "entropy"}) {
-            INFUSED_STONE.put(tag, register("infused_stone_" + tag, properties -> new Block(properties
+            // o BlockCustomOre: dureza 1,5, resistência 5, de zero a três de experiência; o brilho é o da veia, no modelo
+            INFUSED_STONE.put(tag, register("infused_stone_" + tag, properties -> new net.minecraft.world.level.block.DropExperienceBlock(
+                    net.minecraft.util.valueproviders.UniformInt.of(0, 3), properties
                     .mapColor(MapColor.STONE)
-                    .strength(3.0f, 5.0f)
+                    .strength(1.5f, 5.0f)
                     .requiresCorrectToolForDrops()
-                    .lightLevel(state -> 4)
                     .sound(SoundType.STONE))));
+        }
+    }
+
+    /** O minério de cinábrio: dá a si mesmo, e fundido vira mercúrio. */
+    public static final Block CINNABAR_ORE = register("cinnabar_ore", properties -> new Block(properties
+            .mapColor(MapColor.STONE).strength(1.5f, 5.0f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
+
+    /** O âmbar preso em pedra: dá âmbar e de um a quatro de experiência. */
+    public static final Block AMBER_ORE = register("amber_ore", properties -> new net.minecraft.world.level.block.DropExperienceBlock(
+            net.minecraft.util.valueproviders.UniformInt.of(1, 4), properties
+            .mapColor(MapColor.STONE).strength(1.5f, 5.0f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
+
+    /** Os aglomerados de cristal: um por primordial e o misto. */
+    public static final java.util.Map<String, Block> CRYSTAL_CLUSTERS = new java.util.LinkedHashMap<>();
+
+    static {
+        String[] kinds = {"air", "fire", "water", "earth", "order", "entropy", "balanced"};
+        SoundType crystal = new SoundType(1.0f, 1.0f, TCSounds.CRYSTAL.value(), TCSounds.CRYSTAL.value(), TCSounds.CRYSTAL.value(),
+                TCSounds.CRYSTAL.value(), TCSounds.CRYSTAL.value());
+        for (int i = 0; i < kinds.length; i++) {
+            int kind = i;
+            CRYSTAL_CLUSTERS.put(kinds[i], register("crystal_cluster_" + kinds[i], properties -> new net.thaumcraft.block.CrystalClusterBlock(kind, properties
+                    .mapColor(MapColor.NONE).strength(0.7f, 1.0f).lightLevel(state -> 7).noOcclusion().sound(crystal))));
         }
     }
 

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:shard_order",
+    "thaumcraft:shard_order",
+    "thaumcraft:shard_order",
+    "thaumcraft:shard_order",
+    "thaumcraft:shard_order",
+    "thaumcraft:shard_order"
+  ],
+  "result": {
+    "id": "thaumcraft:crystal_cluster_order"
+  }
+}

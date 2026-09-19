@@ -18,6 +18,7 @@
           "children": [
             {
               "type": "minecraft:item",
+              "name": "thaumcraft:infused_stone_entropy",
               "conditions": [
                 {
                   "condition": "minecraft:match_tool",
@@ -34,17 +35,27 @@
                     }
                   }
                 }
-              ],
-              "name": "thaumcraft:infused_stone_entropy"
+              ]
             },
             {
               "type": "minecraft:item",
               "name": "thaumcraft:shard_entropy",
               "functions": [
                 {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "type": "minecraft:uniform",
+                    "min": 1,
+                    "max": 2
+                  }
+                },
+                {
                   "function": "minecraft:apply_bonus",
                   "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:ore_drops"
+                  "formula": "minecraft:uniform_bonus_count",
+                  "parameters": {
+                    "bonusMultiplier": 1
+                  }
                 },
                 {
                   "function": "minecraft:explosion_decay"

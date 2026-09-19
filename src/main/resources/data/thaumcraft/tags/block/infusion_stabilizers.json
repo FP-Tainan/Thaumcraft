@@ -1,0 +1,21 @@
+{
+  "values": [
+    "minecraft:skeleton_skull",
+    "minecraft:skeleton_wall_skull",
+    "minecraft:wither_skeleton_skull",
+    "minecraft:wither_skeleton_wall_skull",
+    "minecraft:zombie_head",
+    "minecraft:zombie_wall_head",
+    "minecraft:player_head",
+    "minecraft:player_wall_head",
+    "minecraft:creeper_head",
+    "minecraft:creeper_wall_head",
+    "thaumcraft:crystal_cluster_air",
+    "thaumcraft:crystal_cluster_fire",
+    "thaumcraft:crystal_cluster_water",
+    "thaumcraft:crystal_cluster_earth",
+    "thaumcraft:crystal_cluster_order",
+    "thaumcraft:crystal_cluster_entropy",
+    "thaumcraft:crystal_cluster_balanced"
+  ]
+}

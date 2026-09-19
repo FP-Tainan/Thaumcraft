@@ -500,7 +500,27 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
                 if (loaded && !twin.held().isEmpty()) this.symmetry--;
             }
         }
+        // os estabilizadores (cabeças e aglomerados de cristal, o IInfusionStabiliser): cada um tira um décimo, e o
+        // par espelhado tira mais dois décimos — a construção simétrica deles acalma a infusão
+        float sym = 0.0f;
+        for (int x = -12; x <= 12; x++) {
+            for (int z = -12; z <= 12; z++) {
+                if (x == 0 && z == 0) continue;
+                for (int y = -5; y <= 10; y++) {
+                    BlockPos at = pos.offset(x, -y, z);
+                    if (!level.isLoaded(at) || !level.getBlockState(at).is(INFUSION_STABILIZERS)) continue;
+                    sym += 0.1f;
+                    BlockPos mirror = new BlockPos(pos.getX() * 2 - at.getX(), at.getY(), pos.getZ() * 2 - at.getZ());
+                    if (level.getBlockState(mirror).is(INFUSION_STABILIZERS)) sym -= 0.2f;
+                }
+            }
+        }
+        this.symmetry = (int) (this.symmetry + sym);
     }
+
+    /** O que estabiliza a infusão: as cabeças (o {@code Blocks.skull}) e o que implementa o {@code IInfusionStabiliser}. */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> INFUSION_STABILIZERS =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.thaumcraft.Thaumcraft.id("infusion_stabilizers"));
 
     /** Os pedestais de fora que a matriz enxerga — o do meio não conta. */
     private List<BlockPos> pedestals(Level level, BlockPos pos) {

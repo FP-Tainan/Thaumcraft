@@ -39,15 +39,18 @@ public final class TCFeatures {
     private TCFeatures() {
     }
 
-    public static final ResourceKey<PlacedFeature> INFUSED_STONE_PLACED =
-            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("infused_stone"));
+    /** Os minérios do mod: cinábrio, âmbar e os veios de pedra infundida, como no generateOres. */
+    public static final Feature<NoneFeatureConfiguration> THAUM_ORES = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("thaum_ores"), new net.thaumcraft.world.ThaumOresFeature(NoneFeatureConfiguration.CODEC));
+    public static final ResourceKey<PlacedFeature> THAUM_ORES_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("thaum_ores"));
 
     public static void init() {
-        // os veios de pedra infundida, de onde saem os fragmentos
+        // os minérios: cinábrio, âmbar e os veios de pedra infundida, de onde saem os fragmentos
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES,
-                INFUSED_STONE_PLACED);
+                THAUM_ORES_PLACED);
         // um nó a cada trinta e seis pedaços de mundo, que é a raridade do original
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),

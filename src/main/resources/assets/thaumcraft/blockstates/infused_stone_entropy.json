@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:block/infused_stone_entropy"
+      "model": "thaumcraft:block/infused_stone"
     }
   }
 }

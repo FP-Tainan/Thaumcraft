@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/crystal_cluster_entropy",
+    "model": {
+      "type": "thaumcraft:crystal_cluster",
+      "aspect": "entropy"
+    }
+  }
+}

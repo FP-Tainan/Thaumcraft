@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:shard_air",
+    "thaumcraft:shard_fire",
+    "thaumcraft:shard_water",
+    "thaumcraft:shard_earth",
+    "thaumcraft:shard_order",
+    "thaumcraft:shard_entropy"
+  ],
+  "result": {
+    "id": "thaumcraft:crystal_cluster_balanced"
+  }
+}

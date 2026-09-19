@@ -317,6 +317,8 @@ final class ConfigAspectsTable {
         r.complex("thaumcraft:table", new AspectList().add(Aspects.TOOL, 1));
         r.item("thaumcraft:arcane_workbench", r.copy("thaumcraft:table").add(Aspects.CRAFT, 4));
         r.item("thaumcraft:thaumium_nugget", new AspectList().add(Aspects.METAL, 1));
+        r.item("thaumcraft:cinnabar_ore", new AspectList().add(Aspects.EARTH, 1).add(Aspects.METAL, 2).add(Aspects.EXCHANGE, 2).add(Aspects.POISON, 1));
+        r.item("thaumcraft:amber_ore", new AspectList().add(Aspects.EARTH, 1).add(Aspects.TRAP, 3).add(Aspects.CRYSTAL, 2));
         r.item("thaumcraft:infused_stone_air", new AspectList().add(Aspects.EARTH, 1).add(Aspects.AIR, 3).add(Aspects.CRYSTAL, 2));
         r.item("thaumcraft:infused_stone_fire", new AspectList().add(Aspects.EARTH, 1).add(Aspects.FIRE, 3).add(Aspects.CRYSTAL, 2));
         r.item("thaumcraft:infused_stone_water", new AspectList().add(Aspects.EARTH, 1).add(Aspects.WATER, 3).add(Aspects.CRYSTAL, 2));

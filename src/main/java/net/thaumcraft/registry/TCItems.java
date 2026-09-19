@@ -92,6 +92,12 @@ public final class TCItems {
             register("infused_stone_" + entry.getKey(), properties ->
                     new net.minecraft.world.item.BlockItem(entry.getValue(), properties));
         }
+        register("cinnabar_ore", properties -> new net.minecraft.world.item.BlockItem(TCBlocks.CINNABAR_ORE, properties.useBlockDescriptionPrefix()));
+        register("amber_ore", properties -> new net.minecraft.world.item.BlockItem(TCBlocks.AMBER_ORE, properties.useBlockDescriptionPrefix()));
+        for (var entry : TCBlocks.CRYSTAL_CLUSTERS.entrySet()) {
+            register("crystal_cluster_" + entry.getKey(), properties ->
+                    new net.minecraft.world.item.BlockItem(entry.getValue(), properties.useBlockDescriptionPrefix()));
+        }
     }
 
     static {
@@ -580,6 +586,9 @@ public final class TCItems {
             "paving_stone_travel", "paving_stone_warding",
             "infused_stone_air", "infused_stone_fire", "infused_stone_water",
             "infused_stone_earth", "infused_stone_order", "infused_stone_entropy",
+            "cinnabar_ore", "amber_ore",
+            "crystal_cluster_air", "crystal_cluster_fire", "crystal_cluster_water", "crystal_cluster_earth",
+            "crystal_cluster_order", "crystal_cluster_entropy", "crystal_cluster_balanced",
     };
 
     /**

@@ -142,6 +142,11 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.WorkbenchChargerBlockEntity::new,
                             java.util.Set.of(TCBlocks.WORKBENCH_CHARGER)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.CrystalClusterBlockEntity> CRYSTAL_CLUSTER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("crystal_cluster"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.CrystalClusterBlockEntity::new,
+                            java.util.Set.copyOf(TCBlocks.CRYSTAL_CLUSTERS.values())));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.CentrifugeBlockEntity> CENTRIFUGE =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("centrifuge"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.CentrifugeBlockEntity::new,

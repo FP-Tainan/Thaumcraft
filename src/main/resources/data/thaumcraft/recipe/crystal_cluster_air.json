@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:shard_air",
+    "thaumcraft:shard_air",
+    "thaumcraft:shard_air",
+    "thaumcraft:shard_air",
+    "thaumcraft:shard_air",
+    "thaumcraft:shard_air"
+  ],
+  "result": {
+    "id": "thaumcraft:crystal_cluster_air"
+  }
+}

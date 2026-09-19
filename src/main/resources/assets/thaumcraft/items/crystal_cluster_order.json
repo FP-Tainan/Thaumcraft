@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/crystal_cluster_order",
+    "model": {
+      "type": "thaumcraft:crystal_cluster",
+      "aspect": "order"
+    }
+  }
+}

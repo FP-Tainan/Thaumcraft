@@ -128,6 +128,20 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.BELLOWS, net.thaumcraft.client.render.BellowsRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("bellows"), net.thaumcraft.client.render.BellowsRenderer.Unbaked.CODEC);
+        // os minérios e cristais: a veia da pedra infundida na cor do aspecto, o aglomerado de cristal e a faísca dele
+        int[] veins = {16777086, 16727041, 37119, 40960, 15650047, 5592439};
+        int vein = 0;
+        for (var stone : net.thaumcraft.registry.TCBlocks.INFUSED_STONE.values()) {
+            net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                    java.util.List.of(net.minecraft.client.color.block.BlockTintSources.constant(0xFF000000 | veins[vein++])), stone);
+        }
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.CRYSTAL_CLUSTER, net.thaumcraft.client.render.CrystalClusterRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("crystal_cluster"), net.thaumcraft.client.render.CrystalClusterRenderer.Unbaked.CODEC);
+        net.thaumcraft.block.CrystalClusterBlock.clientEffects = (level, pos, colour, random) ->
+                net.thaumcraft.client.fx.Spark.spawn(new net.minecraft.world.phys.Vec3(pos.getX() + 0.3 + random.nextFloat() * 0.4,
+                        pos.getY() + 0.3 + random.nextFloat() * 0.4, pos.getZ() + 0.3 + random.nextFloat() * 0.4),
+                        0.2f + random.nextFloat() * 0.1f, 0xCC000000 | colour, random);
         // a rede de vis: estabilizadores, transdutor, nó energizado, relés e carregador
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.NODE_STABILIZER, net.thaumcraft.client.render.NodeStabilizerRenderer::new);

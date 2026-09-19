@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/crystal_cluster_water",
+    "model": {
+      "type": "thaumcraft:crystal_cluster",
+      "aspect": "water"
+    }
+  }
+}

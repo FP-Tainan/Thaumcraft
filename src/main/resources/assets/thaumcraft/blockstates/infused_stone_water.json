@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:block/infused_stone_water"
+      "model": "thaumcraft:block/infused_stone"
     }
   }
 }

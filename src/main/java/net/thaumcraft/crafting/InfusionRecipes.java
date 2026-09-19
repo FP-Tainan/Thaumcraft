@@ -147,6 +147,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.FLIGHT, 16).add(Aspects.ENERGY, 32).add(Aspects.AIR, 32).add(Aspects.TRAVEL, 16),
                 Ingredient.of(TCItems.MUNDANE_BELT),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.FEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.FEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT))));
+        // VisAmulet
+        ALL.add(new InfusionRecipe("VISAMULET", new ItemStack(TCItems.VIS_AMULET), 6,
+                new AspectList().add(Aspects.AURA, 24).add(Aspects.ENERGY, 64).add(Aspects.MAGIC, 64).add(Aspects.VOID, 24),
+                Ingredient.of(TCItems.MUNDANE_AMULET),
+                Arrays.asList(Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCBlocks.CRYSTAL_CLUSTERS.get("balanced").asItem()), Ingredient.of(TCBlocks.CRYSTAL_CLUSTERS.get("balanced").asItem()), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCBlocks.CRYSTAL_CLUSTERS.get("balanced").asItem()), Ingredient.of(TCBlocks.CRYSTAL_CLUSTERS.get("balanced").asItem()))));
         // RunicAmulet
         ALL.add(new InfusionRecipe("RUNICARMOR", new ItemStack(TCItems.RUNIC_AMULET), 4,
                 new AspectList().add(Aspects.ARMOR, 20).add(Aspects.MAGIC, 35).add(Aspects.ENERGY, 35),
