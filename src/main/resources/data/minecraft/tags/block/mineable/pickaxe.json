@@ -26,6 +26,9 @@
     "thaumcraft:amber_ore",
     "thaumcraft:arcane_door",
     "thaumcraft:warded_glass",
-    "thaumcraft:infernal_furnace"
+    "thaumcraft:infernal_furnace",
+    "thaumcraft:advanced_alchemical_construct",
+    "thaumcraft:advanced_alchemical_furnace",
+    "thaumcraft:essentia_reservoir"
   ]
 }

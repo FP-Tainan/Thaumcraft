@@ -1215,5 +1215,9 @@
   "tc.handmirrorerror": "Destination mirror is missing or misplaced. Link broken.",
   "tc.mirror.already_linked": "That mirror is already linked to a valid destination.",
   "tc.mirror.in": "in",
-  "container.handmirror": "Hand Mirror"
+  "container.handmirror": "Hand Mirror",
+  "block.thaumcraft.advanced_alchemical_construct": "Advanced Alchemical Construct",
+  "block.thaumcraft.advanced_alchemical_furnace": "Advanced Alchemical Furnace",
+  "block.thaumcraft.essentia_reservoir": "Essentia Reservoir",
+  "block.thaumcraft.infernal_furnace": "Infernal Furnace"
 }

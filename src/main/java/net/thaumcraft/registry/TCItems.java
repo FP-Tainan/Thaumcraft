@@ -211,6 +211,12 @@ public final class TCItems {
     public static final Item HAND_MIRROR = register("hand_mirror", properties ->
             new net.thaumcraft.item.HandMirrorItem(properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
 
+    public static final Item ADVANCED_ALCHEMICAL_CONSTRUCT = register("advanced_alchemical_construct", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ADVANCED_ALCHEMICAL_CONSTRUCT, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ESSENTIA_RESERVOIR = register("essentia_reservoir", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ESSENTIA_RESERVOIR, properties.useBlockDescriptionPrefix()));
+
     /** As chaves arcanas: a de ferro abre, a de ouro também grava chaves e mexe na placa. */
     public static final Item IRON_KEY = register("iron_key", properties ->
             new net.thaumcraft.item.KeyItem(0, properties.rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
@@ -647,7 +653,7 @@ public final class TCItems {
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
             "void_helmet", "void_chestplate", "void_leggings", "void_boots",
-            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "hungry_chest", "levitator", "arcane_door", "arcane_pressure_plate", "arcane_ear", "warded_glass", "mirror", "essentia_mirror", "hand_mirror", "arcane_lamp", "growth_lamp", "fertility_lamp", "alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer", "node_stabilizer", "node_stabilizer_advanced", "node_converter", "vis_relay", "workbench_charger",
+            "scribing_tools", "table", "crucible", "arcane_workbench", "deconstruction_table", "alchemical_furnace", "bellows", "alembic", "hungry_chest", "levitator", "arcane_door", "arcane_pressure_plate", "arcane_ear", "warded_glass", "mirror", "essentia_mirror", "hand_mirror", "arcane_lamp", "growth_lamp", "fertility_lamp", "alchemical_construct", "advanced_alchemical_construct", "jar", "jar_void", "tube", "tube_valve", "tube_restrict", "tube_filter", "tube_oneway", "tube_buffer", "centrifuge", "essentia_crystalizer", "essentia_reservoir", "node_stabilizer", "node_stabilizer_advanced", "node_converter", "vis_relay", "workbench_charger",
             "infusion_matrix", "pedestal",
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",

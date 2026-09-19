@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {"type": "minecraft:model", "model": "thaumcraft:block/essentia_reservoir"},
+      {"type": "minecraft:special", "base": "thaumcraft:block/essentia_reservoir", "model": {"type": "thaumcraft:essentia_reservoir"}}
+    ]
+  }
+}

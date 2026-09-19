@@ -60,6 +60,12 @@ public final class GenericFx implements ThaumFx.Effect {
         float r = (colour >> 16 & 255) / 255.0f, g = (colour >> 8 & 255) / 255.0f, b = (colour & 255) / 255.0f;
         // o particleCount do original, com as partículas no máximo
         for (int a = 0; a < count * 2; a++) {
+            // a cor -9999 do original: cada faísca de uma cor clara qualquer
+            if (colour == -9999) {
+                r = 0.33f + random.nextFloat() * 0.67f;
+                g = 0.33f + random.nextFloat() * 0.67f;
+                b = 0.33f + random.nextFloat() * 0.67f;
+            }
             ThaumFx.add(new GenericFx(bx - 0.1f + random.nextFloat() * 1.2f, by - 0.1f + random.nextFloat() * 1.2f,
                     bz - 0.1f + random.nextFloat() * 1.2f, 0.0, random.nextFloat() * 0.02, 0.0,
                     r - 0.2f + random.nextFloat() * 0.4f, g - 0.2f + random.nextFloat() * 0.4f,

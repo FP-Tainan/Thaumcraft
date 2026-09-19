@@ -222,7 +222,7 @@ public class WandItem extends Item {
         if (tube != null) return tube;
         // o que a varinha faz batendo num bloco: é assim que o original entrega as primeiras peças
         return WandTriggers.use(context.getLevel(), context.getPlayer(), context.getClickedPos(),
-                context.getItemInHand());
+                context.getItemInHand(), context.getClickedFace());
     }
 
     /**

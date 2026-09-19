@@ -40,6 +40,13 @@
       "thaumcraft:craftstart"
     ]
   },
+  "creak": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:creak1",
+      "thaumcraft:creak2"
+    ]
+  },
   "crystal": {
     "category": "player",
     "sounds": [

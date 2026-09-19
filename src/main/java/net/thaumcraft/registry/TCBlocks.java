@@ -242,6 +242,21 @@ public final class TCBlocks {
     public static final Block ALCHEMICAL_CONSTRUCT = register("alchemical_construct", properties ->
             new Block(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f).sound(SoundType.METAL)));
 
+    /** A construção alquímica avançada: o aparelho de metal 3, peça da fornalha alquímica avançada. */
+    public static final Block ADVANCED_ALCHEMICAL_CONSTRUCT = register("advanced_alchemical_construct", properties ->
+            new Block(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f).sound(SoundType.METAL)));
+
+    /** A fornalha alquímica avançada: o 3 × 3 × 2 que a varinha forma; sem item. */
+    public static final Block ADVANCED_ALCHEMICAL_FURNACE = register("advanced_alchemical_furnace", properties ->
+            new net.thaumcraft.block.AdvancedAlchemicalFurnaceBlock(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f)
+                    .sound(SoundType.METAL).noOcclusion().pushReaction(PushReaction.BLOCK)
+                    .lightLevel(state -> state.getValue(net.thaumcraft.block.AdvancedAlchemicalFurnaceBlock.LIGHT))));
+
+    /** O reservatório de essência: 256 de qualquer mistura. */
+    public static final Block ESSENTIA_RESERVOIR = register("essentia_reservoir", properties ->
+            new net.thaumcraft.block.EssentiaReservoirBlock(properties.mapColor(MapColor.METAL).strength(2.0f, 10.2f)
+                    .sound(SoundType.METAL).noOcclusion().isRedstoneConductor((s, l, p) -> false)));
+
     /** O bloco de âmbar: o BlockCosmeticOpaque 0, translúcido. */
     public static final Block AMBER_BLOCK = register("amber_block", properties ->
             new net.thaumcraft.block.AmberBlock(properties.mapColor(MapColor.COLOR_ORANGE).strength(1.5f, 3.0f)

@@ -170,6 +170,18 @@ public final class TCBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("infernal_furnace_nozzle"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.InfernalFurnaceNozzleBlockEntity::new, java.util.Set.of(TCBlocks.INFERNAL_FURNACE)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.AdvancedAlchemicalFurnaceBlockEntity> ADVANCED_ALCHEMICAL_FURNACE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("advanced_alchemical_furnace"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.AdvancedAlchemicalFurnaceBlockEntity::new, java.util.Set.of(TCBlocks.ADVANCED_ALCHEMICAL_FURNACE)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.AdvancedAlchemicalFurnaceNozzleBlockEntity> ADVANCED_ALCHEMICAL_FURNACE_NOZZLE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("advanced_alchemical_furnace_nozzle"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.AdvancedAlchemicalFurnaceNozzleBlockEntity::new, java.util.Set.of(TCBlocks.ADVANCED_ALCHEMICAL_FURNACE)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.EssentiaReservoirBlockEntity> ESSENTIA_RESERVOIR =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("essentia_reservoir"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.EssentiaReservoirBlockEntity::new, java.util.Set.of(TCBlocks.ESSENTIA_RESERVOIR)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.ManaPodBlockEntity> MANA_POD =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("mana_pod"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.ManaPodBlockEntity::new, java.util.Set.of(TCBlocks.MANA_POD)));

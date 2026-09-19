@@ -28,13 +28,18 @@ public final class WandTriggers {
      * @return o que dizer ao jogo, ou {@code PASS} se aquele bloco não responde à varinha
      */
     public static InteractionResult use(Level level, Player player, BlockPos pos, ItemStack wand) {
+        return use(level, player, pos, wand, net.minecraft.core.Direction.UP);
+    }
+
+    /** O mesmo, sabendo em que face a varinha bateu (o reservatório de essência vira para ela). */
+    public static InteractionResult use(Level level, Player player, BlockPos pos, ItemStack wand, net.minecraft.core.Direction face) {
         if (!(wand.getItem() instanceof WandItem)) return InteractionResult.PASS;
         BlockState state = level.getBlockState(pos);
 
         // primeiro quem sabe responder por si: válvula, tubo, matriz. É o IWandable do original, e é o
         // que faz da varinha a chave de fenda da taumaturgia
         if (level.getBlockEntity(pos) instanceof net.thaumcraft.api.wands.Wandable wandable
-                && wandable.onWand(level, wand, player, pos, net.minecraft.core.Direction.UP)) {
+                && wandable.onWand(level, wand, player, pos, face)) {
             return InteractionResult.SUCCESS;
         }
 
@@ -43,6 +48,12 @@ public final class WandTriggers {
                 && net.thaumcraft.research.ResearchManager.knows(player, "INFERNALFURNACE")) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
             if (net.thaumcraft.block.InfernalFurnaceStructure.create(wand, player, level, pos)) return InteractionResult.SUCCESS;
+        }
+        // uma construção alquímica em volta de uma fornalha alquímica montada certo: a fornalha avançada (evento 7)
+        if (net.thaumcraft.block.AdvancedAlchemicalFurnaceStructure.isTrigger(state) && player != null
+                && net.thaumcraft.research.ResearchManager.knows(player, "ADVALCHEMYFURNACE")) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            if (net.thaumcraft.block.AdvancedAlchemicalFurnaceStructure.create(wand, player, level, pos)) return InteractionResult.SUCCESS;
         }
         // a estante de livros vira o caderno de pesquisa
         if (state.is(Blocks.BOOKSHELF)) {

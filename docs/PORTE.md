@@ -1003,3 +1003,40 @@ Fonte: `BlockArcaneFurnace`, `BlockArcaneFurnaceRenderer`, `TileArcaneFurnace`, 
 - Armadilha: o original soma posição inteira com `float`; nas coordenadas enormes dos testes isso arredondava a saída
   para dentro do centro, e o lingote voltava para a lava. Aqui as contas de posição são em `double`.
 - Diferença: a gota de lava que espirra pela boca é a partícula de lava do jogo, que não aceita o empurrão do original.
+
+## Fornalha alquímica avançada, construção alquímica avançada e reservatório de essência
+
+Fonte: `BlockAlchemyFurnace`, `TileAlchemyFurnaceAdvanced`, `TileAlchemyFurnaceAdvancedNozzle`,
+`TileAlchemyFurnaceAdvancedRenderer`, `WandManager.createAdvancedAlchemicalFurnace`, o aparelho de metal 3,
+`BlockEssentiaReservoir(Item/Renderer)`, `TileEssentiaReservoir(Renderer)` e `FXSlimyBubble` (descompilados do jar).
+
+- **Construção alquímica avançada**: o aparelho de metal 3, um cubo com a `alchemyblockadv`. A receita arcana pede a
+  pérola primordial, que chega com o Eldritch; o gerador a pega sozinho quando ela existir.
+- **Formação** (`AdvancedAlchemicalFurnaceStructure`): a varinha numa construção alquímica (comum ou avançada), com a
+  pesquisa ADVALCHEMYFURNACE, procura uma fornalha alquímica a até um bloco; embaixo ela tem de estar cercada das oito
+  construções avançadas e em cima haver alambiques nos cantos e construções nos lados. Gasta 50 de Ignis, Aqua e Ordo,
+  e cada bloco faísca numa cor qualquer (a cor -9999 do original, que as faíscas agora entendem).
+- **Bloco** (`AdvancedAlchemicalFurnaceBlock`): as partes com o número do original (0 o meio, 1 os bicos, 4 os cantos
+  de baixo, 3 os lados e 2 os cantos de cima); nada se desenha sozinho. O meio tem 0,7 de altura para o que não é bicho
+  (os itens caem nele) e se acende com o calor. Tirar uma parte faz o meio desmontar tudo no tique seguinte; cada parte
+  volta a ser a peça que era. O comparador nos bicos dá só 0 ou 1: a conta do original,
+  `floor(r * 14) + vis > 0 ? 1 : 0`, pela precedência, é isso.
+- **Fornalha** (`AdvancedAlchemicalFurnaceBlockEntity`): a cada cinco tiques bebe da rede de vis até 50 de Ignis
+  (calor), Perditio e Aqua, até 500 de cada. O item que cai é desfeito se houver o dobro do tamanho dele em calor e o
+  tamanho em cada força; depois ela descansa `5 + (1 - calor/500) × 100` tiques. Guarda até 500 de essência.
+- **Bicos** (`AdvancedAlchemicalFurnaceNozzleBlockEntity`): soltam para o cano de fora a essência do meio (o primeiro
+  aspecto guardado).
+- **Visual** (`AdvancedAlchemicalFurnaceRenderer`): o `adv_alch_furnace.obj` do jar pelo `ObjModel` — a base (acesa
+  acima de 100 de calor) e os quatro tanques (acesos com essência); a gosma de fluxo na boca e nas janelas dos tanques
+  na altura do que está cheio; o fogo nas quatro grelhas subindo com o calor. As bolhas roxas saem pelo `SlimyBubble`
+  (o `FXSlimyBubble`, quadros 144 a 150 da `particles.png`).
+- **Reservatório** (`EssentiaReservoirBlock`/`EssentiaReservoirBlockEntity`): 256 de qualquer mistura; puxa uma unidade
+  a cada cinco tiques do cano do bocal com força 24 e solta pelo mesmo bocal. Posto, o bocal vira para o bloco clicado;
+  a varinha o vira para longe da face batida (agachado, para ela) — para isso a varinha agora diz aos blocos em que
+  face bateu. Comparador `floor(r × 14) + (tem essência ? 1 : 0)`. Range de vez em quando (o som `creak`), mais quanto
+  mais cheio. O líquido muda de cor passando pelos aspectos guardados. Quebrado com essência, estoura sem quebrar blocos.
+  A infusão sai do gerador.
+- **Pendente**: o fluxo que o reservatório quebrado derrama (a gosma e o gás) chega com a fatia do fluxo; o lugar já
+  chama `Flux.spill`.
+- **Testes**: `AdvancedAlchemyGameTest` (o molde, a numeração, o item desfeito e o bico, desmontar, o reservatório, a
+  varinha no bocal, a infusão) e `AdvancedAlchemyClientTest`.

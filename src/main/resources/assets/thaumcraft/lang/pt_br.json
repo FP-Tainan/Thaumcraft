@@ -1219,5 +1219,9 @@
   "tc.handmirrorerror": "O espelho de destino desapareceu ou foi deslocado. Ligação quebrada.",
   "tc.mirror.already_linked": "Esse espelho já está ligado a um destino válido.",
   "tc.mirror.in": "em",
-  "container.handmirror": "Espelho de Mão"
+  "container.handmirror": "Espelho de Mão",
+  "block.thaumcraft.advanced_alchemical_construct": "Construção Alquímica Avançada",
+  "block.thaumcraft.advanced_alchemical_furnace": "Fornalha Alquímica Avançada",
+  "block.thaumcraft.essentia_reservoir": "Reservatório de Essência",
+  "block.thaumcraft.infernal_furnace": "Fornalha Infernal"
 }

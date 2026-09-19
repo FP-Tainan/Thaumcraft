@@ -120,6 +120,13 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.MIRROR, net.thaumcraft.client.render.MirrorRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.ESSENTIA_MIRROR, net.thaumcraft.client.render.MirrorRenderer::new);
+        // a fornalha alquímica avançada (o modelo inteiro sai do meio) e o reservatório de essência
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ADVANCED_ALCHEMICAL_FURNACE, net.thaumcraft.client.render.AdvancedAlchemicalFurnaceRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ESSENTIA_RESERVOIR, net.thaumcraft.client.render.EssentiaReservoirRenderer::new);
+        net.thaumcraft.block.AdvancedAlchemicalFurnaceBlock.clientEffects = (level, x, y, z, size) ->
+                net.thaumcraft.client.fx.SlimyBubble.spawn(x, y, z, size, net.thaumcraft.client.fx.SlimyBubble.purple(level.getRandom()), level.getRandom());
         // a tabela de aspectos que o servidor montou; no jogo de um jogador só, o servidor é esta mesma máquina
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 net.thaumcraft.net.TCNetwork.ObjectAspectsSync.TYPE, (payload, context) -> context.client().execute(() -> {
@@ -194,6 +201,7 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.ESSENTIA_CRYSTALIZER, net.thaumcraft.client.render.EssentiaCrystalizerRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essentia_crystalizer"), net.thaumcraft.client.render.EssentiaCrystalizerRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essentia_reservoir"), net.thaumcraft.client.render.EssentiaReservoirRenderer.Unbaked.CODEC);
         net.thaumcraft.client.render.AspectTint.register();
         // a tecla de trocar foco, com o menu radial, e a tela da bolsa de focos
         net.thaumcraft.client.FocusRadial.init();

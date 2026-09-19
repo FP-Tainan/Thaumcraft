@@ -162,6 +162,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.BEAST, 16).add(Aspects.LIFE, 16).add(Aspects.LIGHT, 8),
                 Ingredient.of(TCBlocks.ARCANE_LAMP.asItem()),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.WHEAT), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.CARROT), Ingredient.of(TCItems.SHARDS.get("fire")))));
+        // EssentiaReservoir
+        ALL.add(new InfusionRecipe("ESSENTIARESERVOIR", new ItemStack(TCBlocks.ESSENTIA_RESERVOIR.asItem()), 6,
+                new AspectList().add(Aspects.WATER, 8).add(Aspects.VOID, 8).add(Aspects.MAGIC, 8).add(Aspects.EXCHANGE, 8),
+                Ingredient.of(TCBlocks.TUBE_BUFFER.asItem()),
+                Arrays.asList(Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCBlocks.JAR.asItem()), Ingredient.of(TCBlocks.JAR.asItem()), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCBlocks.JAR.asItem()), Ingredient.of(TCBlocks.JAR.asItem()))));
         // HoverHarness
         ALL.add(new InfusionRecipe("HOVERHARNESS", new ItemStack(TCItems.HOVER_HARNESS), 6,
                 new AspectList().add(Aspects.FLIGHT, 32).add(Aspects.ENERGY, 32).add(Aspects.MECHANISM, 32).add(Aspects.TRAVEL, 16),
