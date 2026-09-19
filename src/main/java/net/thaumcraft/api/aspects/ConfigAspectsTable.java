@@ -23,6 +23,10 @@ final class ConfigAspectsTable {
         r.tag("minecraft:saplings", new AspectList().add(Aspects.TREE, 1).add(Aspects.PLANT, 2));
         r.tag("minecraft:leaves", new AspectList().add(Aspects.PLANT, 1));
         r.tag("c:dyes", new AspectList().add(Aspects.SENSES, 1));
+        r.item("minecraft:ink_sac", new AspectList().add(Aspects.SENSES, 1));
+        r.item("minecraft:cocoa_beans", new AspectList().add(Aspects.SENSES, 1));
+        r.item("minecraft:lapis_lazuli", new AspectList().add(Aspects.SENSES, 1));
+        r.item("minecraft:bone_meal", new AspectList().add(Aspects.SENSES, 1));
         r.tag("c:ores/lapis", new AspectList().add(Aspects.EARTH, 1).add(Aspects.SENSES, 3));
         r.tag("c:ores/diamond", new AspectList().add(Aspects.EARTH, 1).add(Aspects.GREED, 3).add(Aspects.CRYSTAL, 3));
         r.tag("c:gems/diamond", new AspectList().add(Aspects.CRYSTAL, 4).add(Aspects.GREED, 4));

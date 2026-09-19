@@ -484,30 +484,44 @@ public final class TCBlocks {
                     .isSuffocating((s, l, p) -> s.getValue(net.thaumcraft.block.InfernalFurnaceBlock.PART) != 0 && s.getValue(net.thaumcraft.block.InfernalFurnaceBlock.PART) != 10)
                     .isValidSpawn((s, l, p, e) -> false).pushReaction(PushReaction.BLOCK)));
 
-    /** A crosta da mácula: o que sobra de um tronco ou de uma folha que ela tomou. */
+    /** O som de carne da mácula ({@code CustomSoundType("gore", 0.5, 0.8)}). */
+    private static final SoundType GORE_SOUND = new SoundType(0.5f, 0.8f, TCSounds.GORE.value(), TCSounds.GORE.value(), TCSounds.GORE.value(),
+            TCSounds.GORE.value(), TCSounds.GORE.value());
+
+    /** A crosta da mácula (o {@code blockTaint} 0): cai como areia, escorre e vira gosma. */
     public static final Block TAINT_CRUST = register("taint_crust", properties ->
-            new net.thaumcraft.block.TaintBlock(properties
-                    .mapColor(MapColor.COLOR_PURPLE)
-                    .strength(0.6f)
-                    .randomTicks()
-                    .sound(SoundType.SLIME_BLOCK)));
+            new net.thaumcraft.block.TaintBlock(net.thaumcraft.block.TaintBlock.CRUST, properties
+                    .mapColor(MapColor.COLOR_PURPLE).strength(1.75f, 10.0f).randomTicks().sound(GORE_SOUND)));
 
-    /** O solo maculado: a terra que ela tomou. */
+    /** O solo maculado (o {@code blockTaint} 1): a terra que ela tomou; fora do bioma volta a ser terra. */
     public static final Block TAINT_SOIL = register("taint_soil", properties ->
-            new net.thaumcraft.block.TaintBlock(properties
-                    .mapColor(MapColor.COLOR_PURPLE)
-                    .strength(0.6f)
-                    .randomTicks()
-                    .sound(SoundType.SLIME_BLOCK)));
+            new net.thaumcraft.block.TaintBlock(net.thaumcraft.block.TaintBlock.SOIL, properties
+                    .mapColor(MapColor.COLOR_PURPLE).strength(1.5f, 10.0f).randomTicks().sound(GORE_SOUND)));
 
-    /** As fibras da mácula: o mato roxo que nasce por cima do que ela tomou. */
+    /** O bloco de carne (o {@code blockTaint} 2): nove carnes podres; não se espalha. */
+    public static final Block FLESH_BLOCK = register("flesh_block", properties ->
+            new net.thaumcraft.block.TaintBlock(net.thaumcraft.block.TaintBlock.FLESH, properties
+                    .mapColor(MapColor.COLOR_PURPLE).strength(0.2f, 10.0f).sound(GORE_SOUND)));
+
+    /** As fibras da mácula: a película, o capim e os talos de esporos que ela cria por cima do que tomou. */
     public static final Block TAINT_FIBRES = register("taint_fibres", properties ->
             new net.thaumcraft.block.TaintFibreBlock(properties
-                    .mapColor(MapColor.COLOR_PURPLE)
-                    .instabreak()
-                    .noCollision()
-                    .noOcclusion()
-                    .sound(SoundType.GRASS)));
+                    .mapColor(MapColor.COLOR_PURPLE).strength(1.0f, 5.0f).noCollision().noOcclusion().randomTicks()
+                    .lightLevel(net.thaumcraft.block.TaintFibreBlock::light).sound(GORE_SOUND).pushReaction(PushReaction.DESTROY)));
+
+    /** A gosma de fluxo: o fluxo que escorre. Luz 7, some com qualquer bloco posto em cima. */
+    public static final Block FLUX_GOO = register("flux_goo", properties ->
+            new net.thaumcraft.block.FluxGooBlock(properties
+                    .mapColor(MapColor.COLOR_PURPLE).strength(100.0f).noCollision().noOcclusion().noLootTable().replaceable()
+                    .lightLevel(state -> 7).sound(new SoundType(1.0f, 1.0f, TCSounds.GORE.value(), TCSounds.GORE.value(),
+                            TCSounds.GORE.value(), TCSounds.GORE.value(), TCSounds.GORE.value()))
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** O gás de fluxo: o fluxo que sobe. */
+    public static final Block FLUX_GAS = register("flux_gas", properties ->
+            new net.thaumcraft.block.FluxGasBlock(properties
+                    .mapColor(MapColor.COLOR_PURPLE).strength(100.0f).noCollision().noOcclusion().noLootTable().replaceable()
+                    .lightLevel(state -> 7).pushReaction(PushReaction.DESTROY)));
 
     /** A Flor Etérea: a única coisa que faz a mácula recuar. */
     public static final Block ETHEREAL_BLOOM = register("ethereal_bloom", properties ->

@@ -12,10 +12,17 @@ public final class TCDamageTypes {
     /** O {@code dissolve}: a morte líquida. */
     public static final ResourceKey<DamageType> DISSOLVE = ResourceKey.create(Registries.DAMAGE_TYPE, Thaumcraft.id("dissolve"));
 
+    /** O {@code taint}: o fluxo da mácula. */
+    public static final ResourceKey<DamageType> TAINT = ResourceKey.create(Registries.DAMAGE_TYPE, Thaumcraft.id("taint"));
+
     private TCDamageTypes() {
     }
 
     public static DamageSource dissolve(Level level) {
         return new DamageSource(level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(DISSOLVE));
+    }
+
+    public static DamageSource taint(Level level) {
+        return new DamageSource(level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(TAINT));
     }
 }

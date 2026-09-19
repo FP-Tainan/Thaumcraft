@@ -1,6 +1,18 @@
 {
   "variants": {
-    "": {
+    "kind=0": {
+      "model": "thaumcraft:block/taint_fibres"
+    },
+    "kind=1": {
+      "model": "thaumcraft:block/taint_fibres"
+    },
+    "kind=2": {
+      "model": "thaumcraft:block/taint_fibres"
+    },
+    "kind=3": {
+      "model": "thaumcraft:block/taint_fibres"
+    },
+    "kind=4": {
       "model": "thaumcraft:block/taint_fibres"
     }
   }

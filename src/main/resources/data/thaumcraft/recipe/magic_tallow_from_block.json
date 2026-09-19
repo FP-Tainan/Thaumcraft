@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": "thaumcraft:tallow_block"
+  },
+  "result": {
+    "id": "thaumcraft:magic_tallow",
+    "count": 9
+  }
+}

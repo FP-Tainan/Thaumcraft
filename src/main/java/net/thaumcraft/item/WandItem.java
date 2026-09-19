@@ -231,6 +231,8 @@ public class WandItem extends Item {
             ItemStack worn = player.getItemBySlot(slot);
             if (worn.getItem() instanceof net.thaumcraft.api.wands.VisDiscountGear gear) total += gear.visDiscount(worn, player, aspect);
         }
+        // a exaustão de vis tira 10% do desconto por nível
+        total -= net.thaumcraft.registry.TCEffects.exhaustion(player);
         return total / 100.0f;
     }
 

@@ -96,6 +96,8 @@ public final class TCSounds {
     public static final Holder<SoundEvent> PECH_CHARGE = register("pech_charge");
     /** A porta arcana emperrada para quem nao tem chave. */
     public static final Holder<SoundEvent> DOOR_FAIL = register("door_fail");
+    /** A carne da macula e a gosma de fluxo. */
+    public static final Holder<SoundEvent> GORE = register("gore");
     /** O suspiro do cerebro no jarro. */
     public static final Holder<SoundEvent> BRAIN = register("brain");
     /** O reservatorio de essencia rangendo de cheio. */

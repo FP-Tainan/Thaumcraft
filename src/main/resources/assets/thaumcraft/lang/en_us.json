@@ -1303,5 +1303,15 @@
   "enchantment.thaumcraft.haste": "Haste",
   "enchantment.thaumcraft.repair": "Repair",
   "block.thaumcraft.brain_jar": "Brain in a Jar",
-  "block.thaumcraft.node_jar": "Node in a Jar"
+  "block.thaumcraft.node_jar": "Node in a Jar",
+  "effect.thaumcraft.flux_taint": "Taint Poison",
+  "effect.thaumcraft.vis_exhaust": "Flux Flu",
+  "effect.thaumcraft.infectious_vis_exhaust": "Flux Phage",
+  "death.attack.taint": "%1$s was corrupted by Taint",
+  "death.attack.taint.player": "%1$s was corrupted by Taint whilst fighting %2$s",
+  "block.thaumcraft.flesh_block": "Block of Flesh",
+  "block.thaumcraft.flux_goo": "Flux Goo",
+  "block.thaumcraft.flux_gas": "Flux Gas",
+  "entity.thaumcraft.falling_taint": "Tainted Crust",
+  "item.thaumcraft.flesh_block": "Block of Flesh"
 }

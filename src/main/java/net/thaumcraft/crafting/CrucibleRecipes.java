@@ -64,6 +64,8 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.WATER, 1).add(Aspects.EARTH, 2)));
         ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.GLOWSTONE_DUST, 2), net.minecraft.world.item.Items.GLOWSTONE_DUST,
                 new AspectList().add(Aspects.LIGHT, 3).add(Aspects.SENSES, 1)));
+        ALL.add(new CrucibleRecipe("ALCHEMICALDUPLICATION", new ItemStack(net.minecraft.world.item.Items.INK_SAC, 2), net.minecraft.world.item.Items.INK_SAC,
+                new AspectList().add(Aspects.WATER, 2).add(Aspects.SENSES, 2)));
         ALL.add(new CrucibleRecipe("ALCHEMICALMANUFACTURE", new ItemStack(net.minecraft.world.level.block.Blocks.COBWEB.asItem()), net.minecraft.world.item.Items.STRING,
                 new AspectList().add(Aspects.TRAP, 2).add(Aspects.CLOTH, 2)));
         ALL.add(new CrucibleRecipe("ALCHEMICALMANUFACTURE", new ItemStack(net.minecraft.world.level.block.Blocks.MOSSY_COBBLESTONE.asItem()), net.minecraft.world.level.block.Blocks.COBBLESTONE.asItem(),
@@ -104,6 +106,8 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.MAN, 8).add(Aspects.MOTION, 8).add(Aspects.SOUL, 8)));
         ALL.add(new CrucibleRecipe("GOLEMCLAY", new ItemStack(TCItems.GOLEM_PLACERS.get("clay")), net.minecraft.world.level.block.Blocks.BRICKS.asItem(),
                 new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
+        ALL.add(new CrucibleRecipe("GOLEMFLESH", new ItemStack(TCItems.GOLEM_PLACERS.get("flesh")), TCBlocks.FLESH_BLOCK.asItem(),
+                new AspectList().add(Aspects.MAN, 8).add(Aspects.MOTION, 8).add(Aspects.SOUL, 8)));
         ALL.add(new CrucibleRecipe("GOLEMSTONE", new ItemStack(TCItems.GOLEM_PLACERS.get("stone")), net.minecraft.world.level.block.Blocks.STONE_BRICKS.asItem(),
                 new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
         ALL.add(new CrucibleRecipe("GOLEMIRON", new ItemStack(TCItems.GOLEM_PLACERS.get("iron")), net.minecraft.world.level.block.Blocks.IRON_BLOCK.asItem(),

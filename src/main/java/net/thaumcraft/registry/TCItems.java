@@ -555,6 +555,9 @@ public final class TCItems {
     public static final Item TAINT_SOIL = register("taint_soil", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.TAINT_SOIL, properties));
 
+    public static final Item FLESH_BLOCK = register("flesh_block", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.FLESH_BLOCK, properties));
+
     public static final Item TAINT_FIBRES = register("taint_fibres", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.TAINT_FIBRES, properties));
 

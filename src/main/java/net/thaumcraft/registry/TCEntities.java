@@ -18,6 +18,13 @@ public final class TCEntities {
                     .clientTrackingRange(4)
                     .updateInterval(10));
 
+    /** A crosta da mácula caindo, do tamanho da areia caindo. */
+    public static final EntityType<net.thaumcraft.entity.FallingTaintEntity> FALLING_TAINT = register("falling_taint",
+            EntityType.Builder.<net.thaumcraft.entity.FallingTaintEntity>of(net.thaumcraft.entity.FallingTaintEntity::new, MobCategory.MISC)
+                    .sized(0.98f, 0.98f)
+                    .clientTrackingRange(10)
+                    .updateInterval(20));
+
     /** A brasa do foco de fogo. */
     public static final EntityType<net.thaumcraft.entity.EmberEntity> EMBER = register("ember",
             EntityType.Builder.<net.thaumcraft.entity.EmberEntity>of(net.thaumcraft.entity.EmberEntity::new, MobCategory.MISC)

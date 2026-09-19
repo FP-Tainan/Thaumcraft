@@ -1,6 +1,5 @@
 {
-  "parent": "minecraft:block/tinted_cross",
   "textures": {
-    "cross": "thaumcraft:block/taint_fibres"
+    "particle": "thaumcraft:block/taint_fibres"
   }
 }

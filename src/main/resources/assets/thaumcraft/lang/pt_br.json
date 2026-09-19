@@ -1307,5 +1307,15 @@
   "enchantment.thaumcraft.haste": "Pressa",
   "enchantment.thaumcraft.repair": "Auto Reparo",
   "block.thaumcraft.brain_jar": "Cérebro na Jarra",
-  "block.thaumcraft.node_jar": "Node na Jarra"
+  "block.thaumcraft.node_jar": "Node na Jarra",
+  "effect.thaumcraft.flux_taint": "Fluxo Maculado",
+  "effect.thaumcraft.vis_exhaust": "Gripe do Fluxo",
+  "effect.thaumcraft.infectious_vis_exhaust": "Fago do Fluxo",
+  "death.attack.taint": "%1$s foi corrompido pela Mácula",
+  "death.attack.taint.player": "%1$s foi corrompido pela Mácula enquanto lutava com %2$s",
+  "block.thaumcraft.flesh_block": "Bloco de Carne",
+  "block.thaumcraft.flux_goo": "Gosma de Fluxo",
+  "block.thaumcraft.flux_gas": "Gás de Fluxo",
+  "entity.thaumcraft.falling_taint": "Crosta Maculada",
+  "item.thaumcraft.flesh_block": "Bloco de Carne"
 }

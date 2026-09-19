@@ -261,7 +261,7 @@ public class NodeBlockEntity extends BlockEntity {
             if (random.nextBoolean()) {
                 BlockPos fibre = pos.offset(random.nextInt(5) - random.nextInt(5), random.nextInt(5) - random.nextInt(5),
                         random.nextInt(5) - random.nextInt(5));
-                net.thaumcraft.block.TaintFibreBlock.spread(level, fibre, random);
+                net.thaumcraft.block.TaintFibreBlock.spreadFibres(level, fibre);
             }
         } else if (this.type != NodeType.PURE && this.type != NodeType.TAINTED && this.count % 100 == 0
                 && level.getBiome(pos).is(net.thaumcraft.world.TCBiomes.TAINTED_LAND) && random.nextInt(500) == 0) {

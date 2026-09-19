@@ -63,13 +63,14 @@ public class EnergizedNodeBlock extends BaseEntityBlock {
     }
 
     /**
-     * O {@code BlockAiry.explodify}: o nó some numa explosão de força três, sem fogo. (No original, gosma e gás de fluxo
-     * se espalhavam em volta; o fluxo ainda não existe aqui.)
+     * O {@code BlockAiry.explodify}: o nó some numa explosão de força três, sem fogo, e gosma e gás de fluxo se
+     * espalham em volta.
      */
     public static void explodify(Level level, BlockPos pos) {
         if (level.isClientSide()) return;
         level.removeBlock(pos, false);
         level.explode(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3.0f, false, Level.ExplosionInteraction.BLOCK);
+        net.thaumcraft.world.Flux.explodify((net.minecraft.server.level.ServerLevel) level, pos);
     }
 
     @Override

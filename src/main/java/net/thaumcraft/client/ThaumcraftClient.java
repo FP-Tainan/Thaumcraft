@@ -383,12 +383,26 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.gui.screens.MenuScreens.register(
                 net.thaumcraft.registry.TCMenus.ALCHEMICAL_FURNACE,
                 net.thaumcraft.client.gui.AlchemicalFurnaceScreen::new);
-        // a mácula vem cinza na textura, como no original; quem a pinta é o jogo, com a cor do capim
-        // do bioma maculado do mod — 7160201, que é 0x6D40C9
+        // a mácula vem cinza na textura, como no original: o solo e as fibras pegam a cor do capim do lugar (a média
+        // dos nove em volta, que no bioma maculado é 0x6D40C9)
         net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
-                java.util.List.of(state -> 0xFF6D40C9),
+                java.util.List.of(net.minecraft.client.color.block.BlockTintSources.grass()),
                 net.thaumcraft.registry.TCBlocks.TAINT_SOIL,
                 net.thaumcraft.registry.TCBlocks.TAINT_FIBRES);
+        net.thaumcraft.client.render.TaintFibreModel.init();
+        net.thaumcraft.client.render.FluxModel.init();
+        // as bolhas da gosma de fluxo: o FXBubble na cor de sempre (rosa), quase transparente, na altura da gosma
+        net.thaumcraft.block.FluxGooBlock.clientEffects = (level, pos, meta) -> {
+            var random = level.getRandom();
+            net.thaumcraft.client.fx.Bubble.spawn(pos.getX() + random.nextFloat(), pos.getY() + 0.125f * meta, pos.getZ() + random.nextFloat(),
+                    1.0f, 0.0f, 0.5f, 0.25f, 0, random);
+        };
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.FALLING_TAINT, net.thaumcraft.client.render.FallingTaintRenderer::new);
+        net.thaumcraft.entity.FallingTaintEntity.landEffect = net.thaumcraft.client.fx.TaintFx::land;
+        net.thaumcraft.block.TaintBlock.clientDrip = (level, x, y, z) -> {
+            if (level instanceof net.minecraft.client.multiplayer.ClientLevel client) net.thaumcraft.client.fx.TaintFx.droplet(client, x, y, z, 0.3f, 0.1f, 0.8f);
+        };
         // as folhas das árvores mágicas: a da grande-madeira pega o verde da folhagem do lugar, a do
         // pinheiro-de-prata tem o cinza-azulado fixo do original, 8952234
         net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(

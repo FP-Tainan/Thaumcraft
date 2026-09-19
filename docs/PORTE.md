@@ -1258,3 +1258,47 @@ Porte do `TileJarBrain`, `TileJarNode`, `ItemJarNode`, `ModelBrain`, dos número
   nó o mostra um tanto mais baixo. A varinha quebra o vidro e o solta como estava. Quebrado, sai o item com o nó
   (`thaumcraft:jarred_node`), que põe o jarro de volta e lista os aspectos na dica; na mão, o nó aparece em três planos.
 - **Testes**: `SpecialJarGameTest` (o cérebro come; a caixa vira jarro e a varinha solta) e `SpecialJarClientTest`.
+
+## Mácula e fluxo (blocos)
+
+Porte do `BlockTaint`, `BlockTaintFibres`, `BlockTaintFibreRenderer`, `EntityFallingTaint`, `BlockFluxGoo`,
+`BlockFluxGas`, `BlockGasRenderer`, `PotionFluxTaint`, `PotionVisExhaust`, `PotionInfectiousVisExhaust`,
+`TileEtherealBloom` e dos derrames do `BlockEssentiaReservoir`, `BlockAiry.explodify` e `TileCrucible.spill`
+(descompilados do jar). A regra antiga, inventada (a mácula secando sozinha, a flor limpando bloco a bloco), saiu.
+
+- **Crosta, solo e carne** (`TaintBlock`, números 0, 1 e 2): dureza 1,75/1,5/0,2, resistência 10, som de carne
+  (`gore`). No tique ao acaso, com dois vizinhos maculados, uma vez em mil pinta de Terra Maculada uma coluna vizinha
+  (`BiomePainter`) com o som de raízes. A crosta cai como areia (`FallingTaintEntity`) se embaixo há ar, fogo, fibra,
+  coisa substituível ou fluido — menos com tronco a um bloco — e escorrega de lado de uma coluna de crosta. Um bloco
+  sorteado perto, dentro do bioma, ganha fibra; ali a crosta com ar em cima vira, uma vez em duzentas, um enxameador
+  de esporos (gancho da fauna), e a cercada de crosta vira gosma cheia. Fora do bioma, a crosta vira gosma (1 em 20)
+  e o solo, terra (1 em 10). Quem pisa pega o fluxo da mácula (jogador 1 em 100 por 4 s; bichos 1 em 20 por 8 s). A
+  crosta pinga (a gota do `FXDrop`) com ar embaixo. Caem: nada, terra e nove carnes podres (com toque de seda, o
+  próprio bloco). O solo pega a cor do capim do lugar. Bloco de carne: nove carnes podres na bancada; é a base do
+  golem de carne no crisol.
+- **Fibras** (`TaintFibreBlock`, `KIND` 0 a 4): a película, o capim, o capim que brilha (luz 8), o talo de esporos e o
+  talo com esporo (luz 10). Só vivem no bioma (fora dele somem; a película também some cercada só de mácula ou ar).
+  O `spreadFibres`: colado a bloco firme, não cercado só de mácula, em ar, coisa substituível, flor ou folha — nove
+  vezes em dez a película; na outra (com chão firme e ar em cima), capim (9/10), o que brilha ou o talo. Sem fibra no
+  lugar sorteado, com dois vizinhos maculados, tronco/abóbora/melancia/cacto viram crosta; com três, terra, areia,
+  cascalho e argila viram solo. O talo solta um esporo (gancho da fauna). Desenho (`TaintFibreModel`): toda forma forra
+  cada face firme em volta que não seja do bloco da mácula (a 0,005, na cor do capim); a película acende um brilho
+  `taint_over` em 5% das faces; o capim é uma cruz deslocada pelo mesmo hash do original; os talos, os quatro planos
+  de uma plantação, sem cor.
+- **Gosma e gás de fluxo** (`FluxBlock`/`FluxGooBlock`/`FluxGasBlock`): o fluido finito do Forge, oito quanta, luz 7,
+  qualquer bloco posto em cima o substitui. A gosma desce a cada 30 tiques, prende quem anda nela (quanto mais cheia
+  mais) e dá exaustão de vis; parada, vira slime taumático (gancho), pinta o bioma e vira fibra, ou evapora um quantum
+  (às vezes subindo como gás); bolhas cor-de-rosa. O gás sobe a cada 12 tiques e, respirado, dá exaustão de vis ou
+  náusea. Desenho (`FluxModel`): a altura dos quanta (7/8 cheia, inteira com mais do mesmo do lado de onde vem); o
+  gás sem teto firme é um cubo inteiro.
+- **Derrames** (`Flux`): o reservatório quebrado (50 sorteios a até 4 blocos, gosma abaixo e gás acima, até o tanto de
+  essência/16), o nó energizado explodindo (50 sorteios a até 7, sem limite) e o `spill` do crisol (pronto para a
+  fatia do crisol).
+- **Efeitos**: fluxo da mácula (fere 1 a cada 40 tiques, metade por nível; cura o que é maculado; dano `taint`),
+  exaustão de vis (+10% de custo por nível) e a contagiosa (passa para quem está a quatro blocos, um nível abaixo).
+- **Flor Etérea**: a cada segundo devolve a uma coluna a até sete blocos (num raio de nove) que seja de Terra
+  Maculada, Mata Assombrada ou Floresta Mágica o bioma natural do gerador (a Terra Maculada natural vira planície). É
+  só isso: a mácula fora do bioma é que definha.
+- **Bancada**: bloco de carne, de taumium e de sebo (e de volta, menos a carne).
+- **Testes**: `TaintGameTest` (solo e crosta fora do bioma, a crosta caindo e presa por tronco, fibras nascendo e
+  morrendo, o derrame, a gosma caindo sem se multiplicar, a flor devolvendo o bioma) e `TaintClientTest`.
