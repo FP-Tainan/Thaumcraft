@@ -2,6 +2,7 @@ package net.thaumcraft.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -9,29 +10,26 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 import net.thaumcraft.block.entity.CrucibleBlockEntity;
 
 /**
- * A água dentro do crisol.
- *
- * <p>Ela fica na cor do que está dissolvido — o crisol mistura as cores dos aspectos —, sobe um dedo
- * quando ferve e treme de leve, que é o que o original faz para mostrar que ele está no ponto.
+ * A água do crisol: o {@code TileCrucibleRenderer} da 4.2.3.5 — a água parada do jogo num quadrado do tamanho do bloco,
+ * na altura do tanque e da essência, e puxando para o roxo quanto mais essência houver (vermelho perde um terço, verde
+ * tudo e azul metade da mistura). A água de hoje é cinza na textura; a cor da água comum do jogo entra por baixo.
  */
 public class CrucibleRenderer implements BlockEntityRenderer<CrucibleBlockEntity, CrucibleRenderer.State> {
-    private static final Identifier WATER = Identifier.withDefaultNamespace("textures/block/water_still.png");
-    /** A altura da água parada dentro do caldeirão. */
-    private static final float LEVEL = 0.86f;
-    /** A textura da água do jogo é uma tira de trinta e dois quadros; só o primeiro serve. */
-    private static final float FRAME = 1.0f / 32.0f;
+    /** O azul da água comum, que no jogo de então já vinha na textura. */
+    private static final int WATER = 0x3F76E4;
 
-    /** O que o desenhista precisa saber do crisol neste quadro. */
     public static class State extends BlockEntityRenderState {
         public boolean water;
-        public boolean boiling;
-        public int color;
-        public float ticks;
+        public float height;
+        public float recolor;
     }
 
     public CrucibleRenderer(BlockEntityRendererProvider.Context context) {
@@ -47,45 +45,34 @@ public class CrucibleRenderer implements BlockEntityRenderer<CrucibleBlockEntity
                                    net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay crumbling) {
         BlockEntityRenderState.extractBase(crucible, state, crumbling);
         state.water = crucible.hasWater();
-        state.boiling = crucible.boiling();
-        state.color = crucible.brew();
-        state.ticks = crucible.getLevel() == null ? 0.0f : crucible.getLevel().getGameTime() + partial;
+        state.height = crucible.fluidHeight();
+        float recolor = crucible.tagAmount() / 100.0f;
+        if (recolor > 0.0f) recolor = 0.5f + recolor / 2.0f;
+        state.recolor = recolor;
     }
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
         if (!state.water) return;
-        // fervendo a água sobe um dedo e treme de leve
-        float height = LEVEL + (state.boiling
-                ? 0.02f + (float) Math.sin(state.ticks / 4.0f) * 0.01f
-                : 0.0f);
-        int light = state.boiling ? 0xF000F0 : state.lightCoords;
-        int color = 0xFF000000 | state.color;
-
-        pose.pushPose();
-        collector.submitCustomGeometry(pose, RenderTypes.entityTranslucent(WATER), (matrix, consumer) -> {
-            // um quadrado no tamanho do vão de dentro do caldeirão, desenhado dos dois lados para que
-            // ele apareça tanto de cima quanto de quem está mais baixo que a borda
-            vertex(matrix, consumer, 0.125f, height, 0.125f, 0.0f, 0.0f, color, light);
-            vertex(matrix, consumer, 0.125f, height, 0.875f, 0.0f, FRAME, color, light);
-            vertex(matrix, consumer, 0.875f, height, 0.875f, 1.0f, FRAME, color, light);
-            vertex(matrix, consumer, 0.875f, height, 0.125f, 1.0f, 0.0f, color, light);
-
-            vertex(matrix, consumer, 0.875f, height, 0.125f, 1.0f, 0.0f, color, light);
-            vertex(matrix, consumer, 0.875f, height, 0.875f, 1.0f, FRAME, color, light);
-            vertex(matrix, consumer, 0.125f, height, 0.875f, 0.0f, FRAME, color, light);
-            vertex(matrix, consumer, 0.125f, height, 0.125f, 0.0f, 0.0f, color, light);
+        TextureAtlasSprite sprite = Minecraft.getInstance().getAtlasManager()
+                .get(new SpriteId(TextureAtlas.LOCATION_BLOCKS, Identifier.withDefaultNamespace("block/water_still")));
+        float r = (1.0f - state.recolor / 3.0f) * (WATER >> 16 & 255) / 255.0f;
+        float g = (1.0f - state.recolor) * (WATER >> 8 & 255) / 255.0f;
+        float b = (1.0f - state.recolor / 2.0f) * (WATER & 255) / 255.0f;
+        int color = 0xFF000000 | (int) (Math.max(0, r) * 255) << 16 | (int) (Math.max(0, g) * 255) << 8 | (int) (Math.max(0, b) * 255);
+        float h = state.height;
+        int light = state.lightCoords;
+        collector.submitCustomGeometry(pose, RenderTypes.entityTranslucent(TextureAtlas.LOCATION_BLOCKS), (matrix, consumer) -> {
+            vertex(matrix, consumer, 0, h, 0, sprite.getU0(), sprite.getV0(), color, light);
+            vertex(matrix, consumer, 0, h, 1, sprite.getU0(), sprite.getV1(), color, light);
+            vertex(matrix, consumer, 1, h, 1, sprite.getU1(), sprite.getV1(), color, light);
+            vertex(matrix, consumer, 1, h, 0, sprite.getU1(), sprite.getV0(), color, light);
         });
-        pose.popPose();
     }
 
     private static void vertex(PoseStack.Pose matrix, VertexConsumer consumer, float x, float y, float z,
                                float u, float v, int color, int light) {
-        consumer.addVertex(matrix, x, y, z)
-                .setColor(color)
-                .setUv(u, v)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(light)
+        consumer.addVertex(matrix, x, y, z).setColor(color).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light)
                 .setNormal(matrix, 0.0f, 1.0f, 0.0f);
     }
 }

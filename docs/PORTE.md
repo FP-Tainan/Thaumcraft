@@ -1344,3 +1344,28 @@ Porte do `registerEntityAspects` do `ConfigAspects` e do `ScanManager.generateEn
 Wither, que era um tipo de esqueleto, virou criatura própria; o cavalo de então vale para cavalo, burro, mula e os dois
 mortos-vivos, e o barco para os barcos (não os de baú). O jogador é Humanus 4 e mais três aspectos tirados do nome.
 O que não está na tabela não se examina (nem solta orbes). Teste: `EntityAspectsGameTest`.
+
+## Crisol fiel
+
+Porte do `TileCrucible`, da parte do crisol do `BlockMetalDevice`, do `TileCrucibleRenderer`, do `EntitySpecialItem`
+e dos efeitos `crucibleBoil`/`Froth`/`FrothDown`/`Bubble`, do `ItemEssence` (descompilados do jar). A regra antiga
+(água sim/não, cor misturada) saiu.
+
+- **Tanque** de 1000 mB de água (canos do jogo enchem e esvaziam por qualquer lado); balde ou garrafa d'água enchem o
+  tanque inteiro e voltam vazios.
+- **Calor**: só com água; fogo, lava ou nitor embaixo (o bloco de magma e a fogueira não valiam); +1 por tique e +2
+  por fole em qualquer dos quatro lados, até 200; ferve acima de 150.
+- **O que cai dentro** (com água e fervendo): cada item da pilha fecha uma receita (de quem jogou, com a pesquisa —
+  item de funil não fabrica, como o nome vazio do original) ou vira aspectos; a conta do original processa só uma
+  parte da pilha por toque. A receita bebe 50 mB e o resultado sai flutuando (`SpecialItemEntity`, imune a explosão).
+  O que não tem aspecto pula para fora. Quem entra fervendo se queima de dez em dez toques.
+- **Transbordo**: com mais de cem de essência, a cada cinco tiques um ponto sorteado some e sai um quantum de fluxo.
+- **Decomposição**: fervendo e sossegado cinco segundos, um aspecto (sorteado de novo se deu primordial) perde um
+  ponto e vira um dos seus componentes (o primordial sai como fluxo), bebendo 2 mB.
+- **Despejo**: quebrado, ou com a varinha agachado, a água some e cada dois de essência viram um derrame de fluxo.
+- **Desenho**: a água parada do jogo na altura do tanque e da essência, puxando para o roxo com a essência; espuma,
+  espuma escorrendo pela borda (mais de cem), bolhas da cor dos aspectos, a fervura de quando algo cai dentro e o
+  estalo da lava. Comparador pela essência.
+- **Frasco**: como no original, enche-se no alambique e nos jarros (oito) e se despeja nos jarros — não no crisol.
+- **Testes**: `CrucibleGameTest` (o frasco no jarro, a pilha dissolvendo em partes, receita com e sem quem jogou, o
+  transbordo e a decomposição, o fluxo ao quebrar).

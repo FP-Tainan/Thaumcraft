@@ -69,6 +69,9 @@ public class Thaumcraft implements ModInitializer {
         net.thaumcraft.event.Enchantments.init();
         net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntity(
                 (spa, side) -> side == net.minecraft.core.Direction.UP ? null : spa.tank, net.thaumcraft.registry.TCBlockEntities.ARCANE_SPA);
+        // o crisol aceita água de qualquer lado (o IFluidHandler do TileCrucible)
+        net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntity(
+                (crucible, side) -> crucible.tank, net.thaumcraft.registry.TCBlockEntities.CRUCIBLE);
         net.fabricmc.fabric.api.event.player.AttackBlockCallback.EVENT.register(net.thaumcraft.item.Focuses::tradeSwing);
 
         // o comando de teste, para destrancar a pesquisa sem ter de jogar tudo de novo

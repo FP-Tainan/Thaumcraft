@@ -225,6 +225,13 @@ public final class TCEntities {
                     .clientTrackingRange(10)
                     .updateInterval(3));
 
+    /** A coisa que sai do crisol, flutuando. */
+    public static final EntityType<net.thaumcraft.entity.SpecialItemEntity> SPECIAL_ITEM = register("special_item",
+            EntityType.Builder.<net.thaumcraft.entity.SpecialItemEntity>of(net.thaumcraft.entity.SpecialItemEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .clientTrackingRange(6)
+                    .updateInterval(20));
+
     /** A garrafa de mácula arremessada. */
     public static final EntityType<net.thaumcraft.entity.BottleTaintEntity> BOTTLE_TAINT = register("bottle_taint",
             EntityType.Builder.<net.thaumcraft.entity.BottleTaintEntity>of(net.thaumcraft.entity.BottleTaintEntity::new, MobCategory.MISC)

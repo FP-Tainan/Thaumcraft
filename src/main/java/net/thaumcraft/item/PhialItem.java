@@ -12,18 +12,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.thaumcraft.api.aspects.Aspect;
-import net.thaumcraft.api.aspects.AspectList;
-import net.thaumcraft.block.entity.CrucibleBlockEntity;
 import net.thaumcraft.registry.TCComponents;
 
 import java.util.function.Consumer;
 
 /**
- * O frasco de vidro, que guarda um aspecto de essência.
- *
- * <p>No original ele sai da bancada e se enche no alambique. Aqui, enquanto o alambique não chega, ele se
- * enche direto do crisol fervendo: um toque no caldeirão tira dele o aspecto mais abundante e o guarda —
- * oito pontos por frasco, que é o que um frasco vale no mod.
+ * O frasco de vidro: o {@code ItemEssence} da 4.2.3.5 — vazio ou com oito de um aspecto. Enche-se no alambique e nos
+ * jarros e se despeja nos jarros.
  */
 public class PhialItem extends Item {
     /** O quanto um frasco leva de uma vez, como no original. */
@@ -39,6 +34,10 @@ public class PhialItem extends Item {
         return tag == null ? null : Aspect.of(tag);
     }
 
+    /**
+     * O {@code onItemUseFirst} do {@code ItemEssence}: o frasco vazio tira oito do alambique ou de um jarro (o comum ou o
+     * do vazio) que tenha oito; o cheio despeja os seus oito num jarro que os aceite e volta vazio.
+     */
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
@@ -46,32 +45,43 @@ public class PhialItem extends Item {
         ItemStack stack = context.getItemInHand();
         Player player = context.getPlayer();
         if (player == null) return InteractionResult.PASS;
-        if (aspectOf(stack) != null) return InteractionResult.PASS;
-        if (!(level.getBlockEntity(pos) instanceof CrucibleBlockEntity crucible)) return InteractionResult.PASS;
-        if (!crucible.boiling()) return InteractionResult.PASS;
-
-        // o aspecto mais abundante é o que sai primeiro
-        AspectList inside = crucible.aspects();
-        Aspect chosen = null;
-        int most = 0;
-        for (Aspect aspect : inside.getAspects()) {
-            int amount = inside.getAmount(aspect);
-            if (amount <= most) continue;
-            chosen = aspect;
-            most = amount;
+        var te = level.getBlockEntity(pos);
+        Aspect held = aspectOf(stack);
+        if (held == null && te instanceof net.thaumcraft.block.entity.AlembicBlockEntity alembic && alembic.amount() >= PORTION) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            Aspect aspect = alembic.aspect();
+            if (alembic.takeFromContainer(aspect, PORTION)) give(level, player, stack, filled(aspect), pos);
+            return InteractionResult.SUCCESS;
         }
-        if (chosen == null || most < PORTION) return InteractionResult.PASS;
-        if (level.isClientSide()) return InteractionResult.SUCCESS;
+        if (held == null && te instanceof net.thaumcraft.block.entity.JarBlockEntity jar && jar.amount() >= PORTION) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            Aspect aspect = jar.aspect();
+            if (jar.takeFromContainer(aspect, PORTION)) give(level, player, stack, filled(aspect), pos);
+            return InteractionResult.SUCCESS;
+        }
+        if (held != null && te instanceof net.thaumcraft.block.entity.JarBlockEntity jar
+                && jar.amount() <= net.thaumcraft.block.entity.JarBlockEntity.CAPACITY - PORTION && jar.doesContainerAccept(held)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            if (jar.addToContainer(held, PORTION) == 0) give(level, player, stack, new ItemStack(this), pos);
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
+    }
 
-        inside.reduce(chosen, PORTION);
-        ItemStack filled = new ItemStack(this);
-        filled.set(TCComponents.PHIAL_ASPECT, chosen.tag());
-        stack.shrink(1);
-        if (!player.getInventory().add(filled)) player.drop(filled, false);
-        level.playSound(null, pos, net.thaumcraft.registry.TCSounds.JAR.value(), SoundSource.BLOCKS, 0.7f, 1.0f);
-        crucible.setChanged();
-        level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
-        return InteractionResult.SUCCESS;
+    /** Um frasco cheio de oito do aspecto. */
+    public ItemStack filled(Aspect aspect) {
+        ItemStack phial = new ItemStack(this);
+        phial.set(TCComponents.PHIAL_ASPECT, aspect.tag());
+        return phial;
+    }
+
+    private static void give(Level level, Player player, ItemStack used, ItemStack result, BlockPos pos) {
+        used.shrink(1);
+        if (!player.getInventory().add(result)) {
+            level.addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, result));
+        }
+        level.playSound(null, player, SoundEvents.GENERIC_SWIM, SoundSource.PLAYERS, 0.25f, 1.0f);
+        player.containerMenu.broadcastChanges();
     }
 
     @Override

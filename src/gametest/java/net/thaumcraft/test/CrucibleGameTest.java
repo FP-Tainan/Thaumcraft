@@ -90,35 +90,21 @@ public class CrucibleGameTest {
         helper.succeed();
     }
 
-    /** O frasco tira do crisol fervendo o aspecto mais abundante. */
+    /** O frasco do original não se enche no crisol: enche-se no jarro (oito) e se despeja nele. */
     @GameTest
-    public void aPhialTakesTheThickestAspect(GameTestHelper helper) {
+    public void aPhialFillsFromAJar(GameTestHelper helper) {
         BlockPos pos = new BlockPos(1, 2, 1);
-        helper.setBlock(pos.below(), Blocks.LAVA.defaultBlockState());
-        helper.setBlock(pos, TCBlocks.CRUCIBLE.defaultBlockState());
-        CrucibleBlockEntity crucible = helper.getBlockEntity(pos, CrucibleBlockEntity.class);
-        crucible.setWater(true);
-        for (int i = 0; i <= CrucibleBlockEntity.MAX_HEAT; i++) {
-            CrucibleBlockEntity.tick(helper.getLevel(), helper.absolutePos(pos),
-                    helper.getBlockState(pos), crucible);
-        }
-        crucible.aspects().add(Aspects.FIRE, 12);
-        crucible.aspects().add(Aspects.EARTH, 3);
-
+        helper.setBlock(pos, TCBlocks.JAR.defaultBlockState());
+        var jar = helper.getBlockEntity(pos, net.thaumcraft.block.entity.JarBlockEntity.class);
+        jar.addToContainer(Aspects.FIRE, 12);
         var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
         ItemStack phial = new ItemStack(TCItems.PHIAL);
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, phial);
-        var hit = new net.minecraft.world.phys.BlockHitResult(
-                net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(pos)),
+        var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(pos)),
                 net.minecraft.core.Direction.UP, helper.absolutePos(pos), false);
-        var context = new net.minecraft.world.item.context.UseOnContext(
-                helper.getLevel(), player, net.minecraft.world.InteractionHand.MAIN_HAND, phial, hit);
-        TCItems.PHIAL.useOn(context);
-
-        if (crucible.aspects().getAmount(Aspects.FIRE) != 4) {
-            helper.fail("o frasco devia ter levado oito de fogo, sobrou "
-                    + crucible.aspects().getAmount(Aspects.FIRE));
-        }
+        TCItems.PHIAL.useOn(new net.minecraft.world.item.context.UseOnContext(helper.getLevel(), player,
+                net.minecraft.world.InteractionHand.MAIN_HAND, phial, hit));
+        if (jar.amount() != 4) helper.fail("o frasco devia ter levado oito do jarro, sobrou " + jar.amount());
         boolean found = false;
         for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
             ItemStack in = player.getInventory().getItem(slot);
@@ -128,31 +114,112 @@ public class CrucibleGameTest {
         helper.succeed();
     }
 
-    /** O que se joga dentro, fervendo, se desfaz nos aspectos que tem. */
-    @GameTest
-    public void whatFallsInDissolves(GameTestHelper helper) {
-        BlockPos pos = new BlockPos(1, 2, 1);
+    private static CrucibleBlockEntity boiling(GameTestHelper helper, BlockPos pos) {
         helper.setBlock(pos.below(), Blocks.LAVA.defaultBlockState());
         helper.setBlock(pos, TCBlocks.CRUCIBLE.defaultBlockState());
         CrucibleBlockEntity crucible = helper.getBlockEntity(pos, CrucibleBlockEntity.class);
         crucible.setWater(true);
-
-        // esquenta até passar do ponto
         for (int i = 0; i <= CrucibleBlockEntity.MAX_HEAT; i++) {
-            CrucibleBlockEntity.tick(helper.getLevel(), helper.absolutePos(pos),
-                    helper.getBlockState(pos), crucible);
+            CrucibleBlockEntity.tick(helper.getLevel(), helper.absolutePos(pos), helper.getBlockState(pos), crucible);
         }
         if (!crucible.boiling()) helper.fail("com lava embaixo e água dentro ele devia ferver");
+        return crucible;
+    }
 
-        var where = helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 3.0, 1.5));
-        ItemEntity thrown = new ItemEntity(helper.getLevel(), where.x, where.y, where.z,
-                new ItemStack(Items.STONE));
+    /**
+     * O que se joga dentro, fervendo, se desfaz nos aspectos que tem. A conta do original anda o índice e encolhe a pilha
+     * ao mesmo tempo, então de uma vez só vai uma parte (de três pedras, duas); o resto vai no toque seguinte.
+     */
+    @GameTest
+    public void whatFallsInDissolves(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(1, 2, 1);
+        CrucibleBlockEntity crucible = boiling(helper, pos);
+        var where = helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 2.5, 1.5));
+        ItemEntity thrown = new ItemEntity(helper.getLevel(), where.x, where.y, where.z, new ItemStack(Items.STONE, 3));
         helper.getLevel().addFreshEntity(thrown);
-        CrucibleBlockEntity.tick(helper.getLevel(), helper.absolutePos(pos), helper.getBlockState(pos), crucible);
-
-        if (crucible.aspects().getAmount(Aspects.EARTH) <= 0) {
-            helper.fail("a pedra devia ter virado terra dentro da água");
+        crucible.attemptSmelt(thrown);
+        if (crucible.aspects().getAmount(Aspects.EARTH) != 4) {
+            helper.fail("de três pedras, duas deviam virar quatro de terra, deu " + crucible.aspects().getAmount(Aspects.EARTH));
         }
+        if (thrown.getItem().getCount() != 1) helper.fail("devia sobrar uma pedra");
+        crucible.attemptSmelt(thrown);
+        if (thrown.isAlive() || crucible.aspects().getAmount(Aspects.EARTH) != 6) helper.fail("no segundo toque a última pedra devia ir");
+        helper.succeed();
+    }
+
+    /** Receita sem quem jogou (um funil) não fecha; com o jogador que pesquisou, sai flutuando e bebe 50 mB. */
+    @GameTest
+    public void recipesNeedAThrowerAndDrinkWater(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(1, 2, 1);
+        CrucibleBlockEntity crucible = boiling(helper, pos);
+        for (var aspect : Aspects.primals()) crucible.aspects().add(aspect, 2);
+        var where = helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 2.5, 1.5));
+        ItemEntity loose = new ItemEntity(helper.getLevel(), where.x, where.y, where.z, new ItemStack(TCItems.SHARDS.get("air")));
+        helper.getLevel().addFreshEntity(loose);
+        crucible.attemptSmelt(loose);
+        if (!helper.getLevel().getEntities(net.thaumcraft.registry.TCEntities.SPECIAL_ITEM, e -> true).isEmpty()) {
+            helper.fail("sem quem jogou não devia sair nada");
+        }
+        var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        var knowledge = net.thaumcraft.research.Knowledges.of(player);
+        knowledge.completeResearch("CRUCIBLE");
+        net.thaumcraft.research.Knowledges.save(player, knowledge);
+        crucible.aspects().remove(Aspects.AIR, crucible.aspects().getAmount(Aspects.AIR));
+        for (var aspect : Aspects.primals()) {
+            int have = crucible.aspects().getAmount(aspect);
+            if (have < 2) crucible.aspects().add(aspect, 2 - have);
+        }
+        ItemEntity thrown = new ItemEntity(helper.getLevel(), where.x, where.y, where.z, new ItemStack(TCItems.SHARDS.get("air")));
+        thrown.setThrower(player);
+        helper.getLevel().addFreshEntity(thrown);
+        int before = crucible.water();
+        crucible.attemptSmelt(thrown);
+        if (helper.getLevel().getEntities(net.thaumcraft.registry.TCEntities.SPECIAL_ITEM, e -> true).isEmpty()) {
+            helper.fail("o fragmento equilibrado devia sair flutuando");
+        }
+        if (before - crucible.water() != 50) helper.fail("a receita devia beber 50 mB, bebeu " + (before - crucible.water()));
+        helper.succeed();
+    }
+
+    /** Com mais de cem de essência, o crisol transborda fluxo; e os compostos se desfazem, bebendo 2 mB. */
+    @GameTest(maxTicks = 200)
+    public void overflowSpillsAndCompoundsBreakDown(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(2, 2, 2);
+        CrucibleBlockEntity crucible = boiling(helper, pos);
+        crucible.aspects().add(Aspects.FIRE, 120);
+        for (int i = 0; i < 100; i++) {
+            CrucibleBlockEntity.tick(helper.getLevel(), helper.absolutePos(pos), helper.getBlockState(pos), crucible);
+        }
+        if (crucible.tagAmount() > 110) helper.fail("o transbordo devia ter levado essência: " + crucible.tagAmount());
+
+        BlockPos other = new BlockPos(5, 2, 5);
+        CrucibleBlockEntity second = boiling(helper, other);
+        second.aspects().add(Aspects.CRYSTAL, 1);
+        int water = second.water();
+        for (int i = 0; i < 400; i++) {
+            CrucibleBlockEntity.tick(helper.getLevel(), helper.absolutePos(other), helper.getBlockState(other), second);
+        }
+        if (second.aspects().getAmount(Aspects.CRYSTAL) != 0) helper.fail("o cristal devia ter se desfeito");
+        if (second.water() >= water) helper.fail("a decomposição devia beber água");
+        helper.succeed();
+    }
+
+    /** Quebrado, o crisol despeja a essência como fluxo em volta. */
+    @GameTest
+    public void breakingSpillsFlux(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(2, 2, 2);
+        for (int dx = -1; dx <= 1; dx++) for (int dz = -1; dz <= 1; dz++) helper.setBlock(pos.offset(dx, -1, dz), Blocks.STONE);
+        helper.setBlock(pos, TCBlocks.CRUCIBLE.defaultBlockState());
+        CrucibleBlockEntity crucible = helper.getBlockEntity(pos, CrucibleBlockEntity.class);
+        crucible.setWater(true);
+        crucible.aspects().add(Aspects.FIRE, 60);
+        helper.getLevel().destroyBlock(helper.absolutePos(pos), false);
+        int flux = 0;
+        for (int dx = -1; dx <= 1; dx++) for (int dy = 0; dy <= 1; dy++) for (int dz = -1; dz <= 1; dz++) {
+            var state = helper.getBlockState(pos.offset(dx, dy, dz));
+            if (state.is(TCBlocks.FLUX_GOO) || state.is(TCBlocks.FLUX_GAS)) flux++;
+        }
+        if (flux == 0) helper.fail("quebrado com essência, devia ter saído fluxo");
         helper.succeed();
     }
 }

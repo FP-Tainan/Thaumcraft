@@ -13,8 +13,8 @@ import net.thaumcraft.client.render.AdditiveGlow;
 public final class Bubble implements ThaumFx.Effect {
     private double x, y, z, prevX, prevY, prevZ, mx, my, mz;
     private final float red, green, blue, alpha;
-    private final float scale;
-    private final double speed = 0.002;
+    private float scale;
+    private double speed = 0.002;
     private int maxAge;
     private int particle = 16;
     private final RandomSource random;
@@ -42,14 +42,47 @@ public final class Bubble implements ThaumFx.Effect {
         ThaumFx.add(new Bubble(x, y, z, red, green, blue, alpha, age, random));
     }
 
+    /** Uma bolha com a velocidade de subida dada (o {@code bubblespeed}). */
+    public static void spawn(double x, double y, double z, float red, float green, float blue, int age, double speed, RandomSource random) {
+        Bubble bubble = new Bubble(x, y, z, red, green, blue, 1.0f, age, random);
+        bubble.speed = speed;
+        ThaumFx.add(bubble);
+    }
+
+    /** A espuma do crisol fervendo ({@code setFroth}: miúda, rápida, descendo um fio). */
+    public static void froth(double x, double y, double z, RandomSource random) {
+        Bubble bubble = new Bubble(x, y, z, 0.5f, 0.5f, 0.7f, 1.0f, -4, random);
+        bubble.scale *= 0.75f;
+        bubble.maxAge = 4 + random.nextInt(3);
+        bubble.speed = -0.001;
+        bubble.mx /= 5.0;
+        bubble.my /= 10.0;
+        bubble.mz /= 5.0;
+        ThaumFx.add(bubble);
+    }
+
+    /** A espuma que escorre pela borda do crisol cheio demais ({@code setFroth2}). */
+    public static void frothDown(double x, double y, double z, RandomSource random) {
+        Bubble bubble = new Bubble(x, y, z, 0.5f, 0.5f, 0.7f, 1.0f, -4, random);
+        bubble.scale *= 0.75f;
+        bubble.maxAge = 12 + random.nextInt(12);
+        bubble.speed = -0.005;
+        bubble.mx /= 5.0;
+        bubble.my /= 10.0;
+        bubble.mz /= 5.0;
+        ThaumFx.add(bubble);
+    }
+
     @Override
     public boolean tick() {
         this.prevX = this.x;
         this.prevY = this.y;
         this.prevZ = this.z;
         this.my += this.speed;
-        this.mx += (this.random.nextFloat() - this.random.nextFloat()) * 0.01f;
-        this.mz += (this.random.nextFloat() - this.random.nextFloat()) * 0.01f;
+        if (this.speed > 0.0) {
+            this.mx += (this.random.nextFloat() - this.random.nextFloat()) * 0.01f;
+            this.mz += (this.random.nextFloat() - this.random.nextFloat()) * 0.01f;
+        }
         this.x += this.mx;
         this.y += this.my;
         this.z += this.mz;

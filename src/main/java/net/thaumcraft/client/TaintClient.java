@@ -55,6 +55,7 @@ public final class TaintClient {
         EntityRendererRegistry.register(TCEntities.TAINTACLE_SMALL,
                 context -> new TaintRenderers.Taintacle(context, TaintRenderers.TAINTACLE_SMALL, 6, 0.2f));
         EntityRendererRegistry.register(TCEntities.BOTTLE_TAINT, ThrownItemRenderer::new);
+        EntityRendererRegistry.register(TCEntities.SPECIAL_ITEM, net.minecraft.client.renderer.entity.ItemEntityRenderer::new);
 
         TaintedMonster.sploosh = TaintFx::sploosh;
         TaintSplosion.effect = TaintFx::taintsplosion;
