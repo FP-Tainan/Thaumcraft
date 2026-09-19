@@ -1576,3 +1576,34 @@ Descompilados do jar: `EntityEldritchCrab`, `EntityInhabitedZombie`, `EntityEldr
   as salas das Terras de Fora (6.4).
 - Campeões: caranguejo (0) e zumbi habitado (3) entram na lista, como no original.
 - **Testes**: `EldritchCreatureGameTest`; tela: `EldritchCreatureClientTest`.
+
+## Eldritch 6.4: as Terras de Fora
+
+Descompilados do jar: `WorldProviderOuter`, `ChunkProviderOuter`, `BiomeGenEldritch`, `TeleporterThaumcraft`,
+`MazeHandler`, `MazeThread`, `MazeGenerator`, `Cell`, `CellLoc`, `GenCommon`, `GenPassage`, `Gen2x2`, `GenBossRoom`,
+`GenKeyRoom`, `GenNestRoom`, `GenLibraryRoom`, `GenPortal`, `MapBossData`, `BlockEldritchPortal`, `BlockEldritchNothing`, o
+`BlockEldritch` inteiro (7 porta, 8 fechadura, 10 pedra rúnica), o 12 do `BlockAiry`, o 7 do `BlockCrystal`,
+`TileEldritchPortal`, `TileEldritchLock`, `TileEldritchTrap`, `TileEldritchNothing`, `TileEldritchCrystal` e os
+desenhistas deles, `EntityPermanentItem`, o `createOculus` do `WandManager`.
+
+- **A dimensão** (`thaumcraft:outer`): sem céu, sem tempo, névoa grossa da cor do original, sem chuva, sem cama; o bioma
+  eldritch com o zumbi habitado e o guardião. Os chunks nascem vazios (`OuterChunkGenerator`, o `ChunkProviderOuter`) e o
+  labirinto é o recurso do bioma. **Diferença:** o original guardava o labirinto num `labyrinth.dat` à parte; aqui é um
+  dado salvo do mundo (`Labyrinth`), com a mesma tabela de chunk para casa.
+- **O labirinto** (`world/outer`): o anel do mundo de cima e o olho no altar reservam o labirinto (traçado em outra linha
+  de execução, como o `MazeThread`); cada chunk das Terras de Fora que é casa vira a sala dela no andar cinquenta — o
+  portal no meio, as quatro partes da sala do chefe, a sala da chave (a tábua rúnica boiando, dois a quatro guardiões),
+  ninhos, bibliotecas, corredores (rúnicos, incrustados, maculados, de aranhas da mente) — com os enfeites no fim (pedras
+  incrustadas luminosas, cristais estranhos, aberturas de caranguejo, urnas). Os geradores recebem os números do 1.7 e
+  os traduzem num lugar só (`MazeBlocks`). **Diferença:** o nada que dá para fora era marcado pelo aviso de vizinho do
+  1.7; aqui é conferido no fim da construção do chunk e da beirada dos vizinhos.
+- **O óculo**: altar com os quatro olhos, nó sombrio em cima e o labirinto traçado — a varinha com cem de cada primordial
+  o transforma no portal. **O portal** leva às Terras de Fora (ensinando "Entrar nas Terras de Fora") e de volta, para
+  uma quina ao lado do portal mais perto do outro lado. **Diferença:** o original varria cada bloco de um quadrado de 257
+  por 257; aqui, lá dentro o portal é achado pelo labirinto, e aqui fora pelas entidades de bloco, do chunk mais perto
+  para o mais longe.
+- **Blocos**: o nada (céu de estrelas nas faces abertas, oito de dano do vazio), o intransponível, a porta antiga, a
+  fechadura (a tábua rúnica abre; cinco segundos depois a porta some e a sala ganha o chefe da vez — golem, guardião-mor,
+  culto ou mácula; o golem, o guardião-mor e o tentáculo gigante chegam na 6.5), a pedra rúnica (choque e distorção a
+  três blocos; as runas de cada face sorteadas entre 24 modelos), os cristais estranhos (`vcrystal.obj`).
+- **Testes**: `OuterLandsGameTest`; tela: `OuterLandsClientTest` (entra pelo portal e fotografa a sala e um corredor).

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "thaumcraft:block/deco_3",
+    "up": "thaumcraft:block/deco_2",
+    "north": "thaumcraft:block/deco_3",
+    "south": "thaumcraft:block/deco_3",
+    "west": "thaumcraft:block/deco_3",
+    "east": "thaumcraft:block/deco_3",
+    "particle": "thaumcraft:block/deco_3"
+  }
+}

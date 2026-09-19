@@ -1,0 +1,78 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "thaumcraft:block/runed_stone_0"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_1"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_2"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_3"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_4"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_5"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_6"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_7"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_8"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_9"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_10"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_11"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_12"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_13"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_14"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_15"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_16"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_17"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_18"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_19"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_20"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_21"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_22"
+      },
+      {
+        "model": "thaumcraft:block/runed_stone_23"
+      }
+    ]
+  }
+}

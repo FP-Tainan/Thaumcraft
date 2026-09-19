@@ -59,6 +59,7 @@ public final class TaintClient {
         EntityRendererRegistry.register(TCEntities.BOTTLE_TAINT, ThrownItemRenderer::new);
         EntityRendererRegistry.register(TCEntities.SPECIAL_ITEM, net.minecraft.client.renderer.entity.ItemEntityRenderer::new);
         EntityRendererRegistry.register(TCEntities.FOLLOWING_ITEM, net.minecraft.client.renderer.entity.ItemEntityRenderer::new);
+        EntityRendererRegistry.register(TCEntities.PERMANENT_ITEM, net.minecraft.client.renderer.entity.ItemEntityRenderer::new);
         EntityRendererRegistry.register(TCEntities.PRIMAL_ARROW, net.thaumcraft.client.render.PrimalArrowRenderer::new);
         // o rastro do item que voa até quem o colheu: faíscas (o sparkle) ou, no tipo 10, bolhas azuis
         net.thaumcraft.entity.FollowingItemEntity.clientEffects = (level, x, y, z, type) -> {

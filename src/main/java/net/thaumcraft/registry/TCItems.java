@@ -877,6 +877,14 @@ public final class TCItems {
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.ELDRITCH_GUARDIAN)));
     public static final Item CRUSTED_OPENING = register("crusted_opening", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.CRUSTED_OPENING, properties.useBlockDescriptionPrefix()));
+    public static final Item ANCIENT_DOORWAY = registerHidden("ancient_doorway", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ANCIENT_DOORWAY, properties.useBlockDescriptionPrefix()));
+    public static final Item ANCIENT_LOCK = registerHidden("ancient_lock", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ANCIENT_LOCK, properties.useBlockDescriptionPrefix()));
+    public static final Item RUNED_STONE = registerHidden("runed_stone", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.RUNED_STONE, properties.useBlockDescriptionPrefix()));
+    public static final Item STRANGE_CRYSTALS = registerHidden("strange_crystals", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.STRANGE_CRYSTALS, properties.useBlockDescriptionPrefix()));
 
     public static final ResourceKey<CreativeModeTab> TAB_KEY =
             ResourceKey.create(Registries.CREATIVE_MODE_TAB, Thaumcraft.id("thaumcraft"));

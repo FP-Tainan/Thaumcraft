@@ -285,4 +285,19 @@ public final class TCBlockEntities {
     public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.CrabSpawnerBlockEntity> CRAB_SPAWNER =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("crab_spawner"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.CrabSpawnerBlockEntity::new, java.util.Set.of(TCBlocks.CRUSTED_OPENING)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.EldritchNothingBlockEntity> ELDRITCH_NOTHING =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("eldritch_nothing"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.EldritchNothingBlockEntity::new, java.util.Set.of(TCBlocks.ELDRITCH_NOTHING)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.AncientLockBlockEntity> ANCIENT_LOCK =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("ancient_lock"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.AncientLockBlockEntity::new, java.util.Set.of(TCBlocks.ANCIENT_LOCK)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.RunedStoneBlockEntity> RUNED_STONE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("runed_stone"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.RunedStoneBlockEntity::new, java.util.Set.of(TCBlocks.RUNED_STONE)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.StrangeCrystalBlockEntity> STRANGE_CRYSTALS =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("strange_crystals"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.StrangeCrystalBlockEntity::new, java.util.Set.of(TCBlocks.STRANGE_CRYSTALS)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.EldritchPortalBlockEntity> ELDRITCH_PORTAL =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("eldritch_portal"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.EldritchPortalBlockEntity::new, java.util.Set.of(TCBlocks.ELDRITCH_PORTAL)));
 }

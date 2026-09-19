@@ -67,6 +67,12 @@ public final class WandTriggers {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
             if (net.thaumcraft.block.NodeJarStructure.create(wand, player, level, pos)) return InteractionResult.SUCCESS;
         }
+        // o altar do anel com os quatro olhos e um nó sombrio em cima: o óculo, o portal para as Terras de Fora (evento 6)
+        if (state.is(net.thaumcraft.registry.TCBlocks.ELDRITCH_ALTAR) && player != null
+                && net.thaumcraft.research.ResearchManager.knows(player, "OCULUS")) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            if (createOculus(wand, player, level, pos)) return InteractionResult.SUCCESS;
+        }
         // a estante de livros vira o caderno de pesquisa
         if (state.is(Blocks.BOOKSHELF)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
@@ -115,5 +121,25 @@ public final class WandTriggers {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    /**
+     * O {@code createOculus}: altar com os quatro olhos, ainda fechado, nó sombrio logo acima e labirinto já traçado — cem
+     * de cada primordial da varinha, e o nó vira o portal eldritch.
+     */
+    private static boolean createOculus(ItemStack wand, Player player, Level level, BlockPos pos) {
+        if (!(level.getBlockEntity(pos) instanceof net.thaumcraft.block.entity.eldritch.EldritchAltarBlockEntity altar)) return false;
+        if (!(level.getBlockEntity(pos.above()) instanceof net.thaumcraft.block.entity.NodeBlockEntity node)) return false;
+        if (altar.getEyes() != 4 || altar.isOpen() || node.type() != net.thaumcraft.api.nodes.NodeType.DARK || !altar.checkForMaze()) return false;
+        var cost = new net.thaumcraft.api.aspects.AspectList();
+        for (var primal : net.thaumcraft.api.aspects.Aspects.primals()) cost.add(primal, 100);
+        if (!WandItem.consume(wand, cost, true, player)) return false;
+        level.playSound(null, pos, net.thaumcraft.registry.TCSounds.WAND.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
+        altar.setOpen(true);
+        level.removeBlockEntity(pos.above());
+        level.setBlockAndUpdate(pos.above(), net.thaumcraft.registry.TCBlocks.ELDRITCH_PORTAL.defaultBlockState());
+        altar.setChanged();
+        level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
+        return true;
     }
 }

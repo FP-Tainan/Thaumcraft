@@ -402,7 +402,11 @@ final class ConfigAspectsTable {
         r.block("thaumcraft:eldritch_capstone", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
         r.block("thaumcraft:glyphed_stone", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
         r.block("thaumcraft:eldritch_deco", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:ancient_doorway", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:ancient_lock", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
         r.block("thaumcraft:crusted_opening", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:runed_stone", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:eldritch_portal", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.TRAVEL, 8));
         r.block("thaumcraft:eldritch_capstone", new AspectList().add(Aspects.VOID, 4).add(Aspects.ELDRITCH, 4));
         r.block("thaumcraft:glyphed_stone", new AspectList().add(Aspects.MIND, 2).add(Aspects.EARTH, 1).add(Aspects.ELDRITCH, 1));
         r.block("thaumcraft:eldritch_deco", new AspectList().add(Aspects.METAL, 2).add(Aspects.MECHANISM, 2).add(Aspects.ELDRITCH, 1));

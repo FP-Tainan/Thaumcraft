@@ -116,6 +116,25 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.render.EldritchOrbRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(net.thaumcraft.registry.TCBlockEntities.CRAB_SPAWNER,
                 net.thaumcraft.client.render.CrabVentRenderer::new);
+        // o labirinto das Terras de Fora: o nada, o portal, os cristais estranhos, a fechadura e a pedra rúnica
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(net.thaumcraft.registry.TCBlockEntities.ELDRITCH_NOTHING,
+                net.thaumcraft.client.render.EldritchNothingRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(net.thaumcraft.registry.TCBlockEntities.ELDRITCH_PORTAL,
+                net.thaumcraft.client.render.EldritchPortalRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(net.thaumcraft.registry.TCBlockEntities.STRANGE_CRYSTALS,
+                net.thaumcraft.client.render.StrangeCrystalRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.AncientLockRenderer.CUBE, net.thaumcraft.client.render.AncientLockRenderer::createLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(net.thaumcraft.registry.TCBlockEntities.ANCIENT_LOCK,
+                net.thaumcraft.client.render.AncientLockRenderer::new);
+        net.thaumcraft.block.eldritch.AncientLockBlock.clientEffects = (level, pos, random) -> {
+            int red = (int) ((0.65f + random.nextFloat() * 0.1f) * 255.0f);
+            net.thaumcraft.client.fx.Spark.spawn(new net.minecraft.world.phys.Vec3(pos.getX() + random.nextFloat(), pos.getY() + random.nextFloat(),
+                    pos.getZ() + random.nextFloat()), 0.5f, 0xCC000000 | red << 16 | 0xFFFF, random);
+        };
+        net.thaumcraft.block.eldritch.RunedStoneBlock.clientEffects = (level, x, y, z, r) ->
+                net.thaumcraft.client.fx.BlockRunes.spawn(x, y, z, 0.5f + r.nextFloat() * 0.5f, r.nextFloat() * 0.3f, 0.9f + r.nextFloat() * 0.1f,
+                        16 + r.nextInt(4), 0.0f);
         net.thaumcraft.entity.eldritch.EldritchGuardianEntity.GuardianFx.client = net.thaumcraft.client.fx.GuardianWisp::spawn;
         net.thaumcraft.entity.eldritch.EldritchOrbEntity.clientBurst = orb -> {
             var random = orb.level().getRandom();

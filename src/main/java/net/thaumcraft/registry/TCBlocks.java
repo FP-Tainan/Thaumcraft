@@ -715,6 +715,35 @@ public final class TCBlocks {
                     .requiresCorrectToolForDrops().sound(SoundType.STONE).lightLevel(state -> 4).noLootTable()
                     .isValidSpawn((s, l, p, t) -> false)));
 
+    /** O labirinto das Terras de Fora (6.4): o nada, o intransponível, a porta antiga, a fechadura e a pedra rúnica. */
+    public static final Block ELDRITCH_NOTHING = register("eldritch_nothing", properties ->
+            new net.thaumcraft.block.eldritch.EldritchNothingBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(-1.0f, 6000000.0f)
+                    .sound(SoundType.GLASS).lightLevel(state -> 3).noLootTable().isValidSpawn((s, l, p, t) -> false)
+                    .pushReaction(PushReaction.BLOCK)));
+    public static final Block IMPASSABLE = register("impassable", properties ->
+            new net.thaumcraft.block.eldritch.ImpassableBlock(properties.mapColor(MapColor.NONE).strength(-1.0f, 3600000.0f)
+                    .noOcclusion().noLootTable().isValidSpawn((s, l, p, t) -> false).pushReaction(PushReaction.BLOCK)));
+    public static final Block ANCIENT_DOORWAY = register("ancient_doorway", properties ->
+            new Block(properties.mapColor(MapColor.COLOR_BLACK).strength(-1.0f, 3600000.0f).sound(SoundType.STONE)
+                    .lightLevel(state -> 12).noLootTable().isValidSpawn((s, l, p, t) -> false).pushReaction(PushReaction.BLOCK)));
+    public static final Block ANCIENT_LOCK = register("ancient_lock", properties ->
+            new net.thaumcraft.block.eldritch.AncientLockBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(-1.0f, 3600000.0f)
+                    .sound(SoundType.STONE).lightLevel(state -> 5).noLootTable().isValidSpawn((s, l, p, t) -> false)
+                    .pushReaction(PushReaction.BLOCK)));
+    public static final Block RUNED_STONE = register("runed_stone", properties ->
+            new net.thaumcraft.block.eldritch.RunedStoneBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(15.0f, 30.0f)
+                    .requiresCorrectToolForDrops().sound(SoundType.STONE).noLootTable().isValidSpawn((s, l, p, t) -> false)));
+    /** Os cristais estranhos (o 7 do BlockCrystal). */
+    public static final Block STRANGE_CRYSTALS = register("strange_crystals", properties ->
+            new net.thaumcraft.block.eldritch.StrangeCrystalBlock(properties.mapColor(MapColor.NONE).strength(0.7f, 1.0f)
+                    .lightLevel(state -> 7).noOcclusion().sound(new SoundType(1.0f, 1.0f, TCSounds.CRYSTAL.value(), TCSounds.CRYSTAL.value(),
+                            TCSounds.CRYSTAL.value(), TCSounds.CRYSTAL.value(), TCSounds.CRYSTAL.value()))));
+    /** O portal eldritch: o óculo sobre o altar e o de volta, no labirinto. */
+    public static final Block ELDRITCH_PORTAL = register("eldritch_portal", properties ->
+            new net.thaumcraft.block.eldritch.EldritchPortalBlock(properties.mapColor(MapColor.COLOR_PURPLE).strength(-1.0f, 200000.0f)
+                    .lightLevel(state -> 15).noCollision().noOcclusion().noLootTable().isValidSpawn((s, l, p, t) -> false)
+                    .pushReaction(PushReaction.BLOCK)));
+
     /** As urnas velhas e os caixotes abandonados, nas três raridades. */
     public static final java.util.List<Block> LOOT_URNS = new java.util.ArrayList<>();
     public static final java.util.List<Block> LOOT_CRATES = new java.util.ArrayList<>();

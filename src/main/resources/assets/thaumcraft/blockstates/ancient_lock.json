@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "thaumcraft:block/ancient_lock_down"
+    },
+    "facing=up": {
+      "model": "thaumcraft:block/ancient_lock_up"
+    },
+    "facing=north": {
+      "model": "thaumcraft:block/ancient_lock_north"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/ancient_lock_south"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/ancient_lock_west"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/ancient_lock_east"
+    }
+  }
+}

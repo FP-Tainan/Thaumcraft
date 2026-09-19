@@ -294,6 +294,11 @@ public final class TCEntities {
                     .clientTrackingRange(6)
                     .updateInterval(20));
 
+    /** O item que não some, da sala da chave. */
+    public static final EntityType<net.thaumcraft.entity.PermanentItemEntity> PERMANENT_ITEM = register("permanent_item",
+            EntityType.Builder.<net.thaumcraft.entity.PermanentItemEntity>of(net.thaumcraft.entity.PermanentItemEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(6).updateInterval(20));
+
     /** A flecha primordial. */
     public static final EntityType<net.thaumcraft.entity.PrimalArrowEntity> PRIMAL_ARROW = register("primal_arrow",
             EntityType.Builder.<net.thaumcraft.entity.PrimalArrowEntity>of(net.thaumcraft.entity.PrimalArrowEntity::new, MobCategory.MISC)

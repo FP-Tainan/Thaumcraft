@@ -94,8 +94,14 @@ public final class EldritchAltarSpawns {
         }
     }
 
-    /** O {@code checkForMaze}. Chega com as Terras de Fora. */
+    /** O {@code checkForMaze}: sem labirinto reservado aqui perto, reserva um e responde que ainda não há. */
     static boolean checkForMaze(Level level, BlockPos pos, int w, int h) {
-        return false;
+        var maze = net.thaumcraft.world.outer.Labyrinth.get(level.getServer());
+        if (maze == null) return false;
+        if (!maze.mazesInRange(pos.getX() >> 4, pos.getZ() >> 4, w, h)) {
+            maze.reserve(pos.getX() >> 4, pos.getZ() >> 4, w, h, level.getRandom().nextLong());
+            return false;
+        }
+        return true;
     }
 }

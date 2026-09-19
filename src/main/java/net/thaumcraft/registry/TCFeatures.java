@@ -63,6 +63,14 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> RUINS_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("ruins"));
 
+    /** O gerador das Terras de Fora: chunks vazios, com os recursos do bioma. */
+    public static final com.mojang.serialization.MapCodec<net.thaumcraft.world.outer.OuterChunkGenerator> OUTER_GENERATOR = Registry.register(
+            BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("outer"), net.thaumcraft.world.outer.OuterChunkGenerator.CODEC);
+
+    /** O labirinto das Terras de Fora: cada chunk que é casa dele vira a sala da casa. */
+    public static final Feature<NoneFeatureConfiguration> MAZE = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("maze"), new net.thaumcraft.world.outer.MazeFeature());
+
     public static void init() {
         // as ruínas: uma tentativa por pedaço, como o generateSurface
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
