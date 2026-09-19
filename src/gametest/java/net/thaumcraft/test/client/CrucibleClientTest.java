@@ -33,6 +33,21 @@ public class CrucibleClientTest implements FabricClientGameTest {
                     "execute at @p run data merge block ~ ~ ~2 {Heat:200s,water:1b,Aspects:{ignis:40,terra:30}}");
             context.waitTicks(30);
             context.takeScreenshot("crisol_fervendo");
+            // as quatro faces e a de cima, para conferir a textura de cada lado
+            String[] voltas = {"180 20", "-90 20", "0 20", "90 20"};
+            String[] nomes = {"norte", "leste", "sul", "oeste"};
+            for (int lado = 0; lado < 4; lado++) {
+                int dx = lado == 1 ? -3 : lado == 3 ? 3 : 0;
+                int dz = lado == 0 ? 5 : lado == 2 ? -1 : 2;
+                singleplayer.getServer().runCommand("execute as @p at @s run tp @s ~" + dx + " ~ ~" + (dz - 2) + " " + voltas[lado]);
+                context.waitTicks(10);
+                context.takeScreenshot("crisol_" + nomes[lado]);
+                singleplayer.getServer().runCommand("execute as @p at @s run tp @s ~" + (-dx) + " ~ ~" + (2 - dz) + " 0 35");
+                context.waitTicks(5);
+            }
+            singleplayer.getServer().runCommand("execute as @p at @s run tp @s ~ ~2 ~ 0 70");
+            context.waitTicks(10);
+            context.takeScreenshot("crisol_de_cima");
             context.runOnClient(minecraft -> {
                 var pos = minecraft.player.blockPosition().offset(0, 1, 3);
                 var be = minecraft.level.getBlockEntity(pos);

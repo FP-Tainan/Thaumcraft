@@ -71,7 +71,9 @@
       "net.thaumcraft.test.EntityAspectsGameTest",
       "net.thaumcraft.test.TrunkGameTest",
       "net.thaumcraft.test.WarpGameTest",
-      "net.thaumcraft.test.ToolsGameTest"
+      "net.thaumcraft.test.ToolsGameTest",
+      "net.thaumcraft.test.ArcaneBenchGameTest",
+      "net.thaumcraft.test.CrucibleCraftGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",
@@ -130,7 +132,9 @@
       "net.thaumcraft.test.client.TaintFaunaClientTest",
       "net.thaumcraft.test.client.TrunkClientTest",
       "net.thaumcraft.test.client.BookPagesClientTest",
-      "net.thaumcraft.test.client.SceptreClientTest"
+      "net.thaumcraft.test.client.SceptreClientTest",
+      "net.thaumcraft.test.client.ArcaneBenchClientTest",
+      "net.thaumcraft.test.client.NamesClientTest"
     ]
   }
 }

@@ -113,13 +113,6 @@ public final class WandTriggers {
             level.playSound(null, pos, net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.BLOCKS, 0.15f, 0.5f);
             return InteractionResult.SUCCESS;
         }
-        // a bancada comum também vira bancada arcana: atalho deste porte, anotado em docs/PORTE.md
-        if (state.is(Blocks.CRAFTING_TABLE)) {
-            if (level.isClientSide()) return InteractionResult.SUCCESS;
-            level.setBlockAndUpdate(pos, net.thaumcraft.registry.TCBlocks.ARCANE_WORKBENCH.defaultBlockState());
-            level.playSound(null, pos, net.thaumcraft.registry.TCSounds.WAND.value(), SoundSource.BLOCKS, 0.8f, 1.1f);
-            return InteractionResult.SUCCESS;
-        }
         return InteractionResult.PASS;
     }
 

@@ -1,5 +1,6 @@
 package net.thaumcraft.inventory;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,6 +27,8 @@ import java.util.List;
  */
 public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
     private final Container bench;
+    /** O que a bancada tinha na última conta, para refazê-la só quando muda. */
+    private final NonNullList<ItemStack> seen = NonNullList.withSize(ArcaneWorkbenchBlockEntity.SIZE, ItemStack.EMPTY);
     private final ResultContainer result = new ResultContainer();
     private final Player player;
 
@@ -70,6 +73,30 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(inventory, col, 16 + col * 18, 209));
         }
         this.refresh();
+    }
+
+    /**
+     * A bancada guarda as coisas no próprio bloco, e um baú não avisa o menu quando alguém mexe nele — por isso o
+     * resultado é refeito a cada tique, quando a grade ou a varinha mudam de verdade. (No original o {@code TileMagicWorkbench}
+     * avisava a tela a cada mudança.)
+     */
+    @Override
+    public void broadcastChanges() {
+        if (this.gridChanged()) this.refresh();
+        super.broadcastChanges();
+    }
+
+    /** A grade (e a varinha) está diferente da última vez que o resultado foi calculado? */
+    private boolean gridChanged() {
+        boolean changed = false;
+        for (int slot = 0; slot < ArcaneWorkbenchBlockEntity.SIZE; slot++) {
+            ItemStack now = this.bench.getItem(slot);
+            if (!ItemStack.matches(now, this.seen.get(slot))) {
+                this.seen.set(slot, now.copy());
+                changed = true;
+            }
+        }
+        return changed;
     }
 
     /** Refaz o que a grade está pedindo, e se a varinha dá conta de pagar. */

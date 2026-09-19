@@ -140,7 +140,7 @@ public final class TCItems {
         // o minério infundido também vai para a aba do criativo
         for (var entry : TCBlocks.INFUSED_STONE.entrySet()) {
             register("infused_stone_" + entry.getKey(), properties ->
-                    new net.minecraft.world.item.BlockItem(entry.getValue(), properties));
+                    new net.minecraft.world.item.BlockItem(entry.getValue(), properties.useBlockDescriptionPrefix()));
         }
         register("cinnabar_ore", properties -> new net.minecraft.world.item.BlockItem(TCBlocks.CINNABAR_ORE, properties.useBlockDescriptionPrefix()));
         register("amber_ore", properties -> new net.minecraft.world.item.BlockItem(TCBlocks.AMBER_ORE, properties.useBlockDescriptionPrefix()));
@@ -158,7 +158,7 @@ public final class TCItems {
         // os blocos de construção também vão para a aba do criativo
         for (var entry : TCBlocks.BUILDING.entrySet()) {
             register(entry.getKey(), properties ->
-                    new net.minecraft.world.item.BlockItem(entry.getValue(), properties));
+                    new net.minecraft.world.item.BlockItem(entry.getValue(), properties.useBlockDescriptionPrefix()));
         }
     }
 
@@ -713,11 +713,11 @@ public final class TCItems {
 
     /** A bancada arcana, para levar na mão. */
     public static final Item ARCANE_WORKBENCH = register("arcane_workbench", properties ->
-            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_WORKBENCH, properties));
+            new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_WORKBENCH, properties.useBlockDescriptionPrefix()));
 
     /** O crisol, para levar na mão. */
     public static final Item CRUCIBLE = register("crucible", properties ->
-            new net.minecraft.world.item.BlockItem(net.thaumcraft.registry.TCBlocks.CRUCIBLE, properties));
+            new net.minecraft.world.item.BlockItem(net.thaumcraft.registry.TCBlocks.CRUCIBLE, properties.useBlockDescriptionPrefix()));
 
     /** O fragmento equilibrado: o que o crisol faz de seis primários. */
     public static final Item SHARD_BALANCED = register("shard_balanced", Item::new);

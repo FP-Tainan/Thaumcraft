@@ -3,9 +3,10 @@
   "textures": {
     "particle": "thaumcraft:block/crucible3",
     "side": "thaumcraft:block/crucible3",
-    "top": "thaumcraft:block/crucible5",
-    "bottom": "thaumcraft:block/crucible3",
-    "inside": "thaumcraft:block/crucible6"
+    "top": "thaumcraft:block/crucible3",
+    "bottom": "thaumcraft:block/crucible2",
+    "inside": "thaumcraft:block/crucible5",
+    "floor": "thaumcraft:block/crucible6"
   },
   "elements": [
     {
@@ -25,7 +26,7 @@
           "cullface": "down"
         },
         "up": {
-          "texture": "#inside",
+          "texture": "#floor",
           "shade": false
         },
         "north": {
