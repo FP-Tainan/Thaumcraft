@@ -87,6 +87,12 @@
       "thaumcraft:fly2"
     ]
   },
+  "golem_iron_shoot": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:golemironshoot"
+    ]
+  },
   "gore": {
     "category": "player",
     "sounds": [
@@ -281,6 +287,12 @@
     "sounds": [
       "thaumcraft:tool1",
       "thaumcraft:tool2"
+    ]
+  },
+  "upgrade": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:upgrade"
     ]
   },
   "wand": {

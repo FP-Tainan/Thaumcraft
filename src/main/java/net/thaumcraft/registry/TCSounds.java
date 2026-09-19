@@ -110,6 +110,10 @@ public final class TCSounds {
     public static final Holder<SoundEvent> FLY = register("fly");
     /** O reservatorio de essencia rangendo de cheio. */
     public static final Holder<SoundEvent> CREAK = register("creak");
+    /** A melhoria encaixando no golem. */
+    public static final Holder<SoundEvent> UPGRADE = register("upgrade");
+    /** O lanca-dardos do golem. */
+    public static final Holder<SoundEvent> GOLEM_IRON_SHOOT = register("golem_iron_shoot");
 
     private TCSounds() {
     }

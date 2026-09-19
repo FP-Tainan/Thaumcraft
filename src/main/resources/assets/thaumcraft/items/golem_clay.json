@@ -1,6 +1,22 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "thaumcraft:item/golem_clay"
+    "type": "minecraft:composite",
+    "models": [
+      { "type": "minecraft:model", "model": "thaumcraft:item/golem_clay" },
+      {
+        "type": "minecraft:condition",
+        "property": "minecraft:has_component",
+        "component": "thaumcraft:golem_advanced",
+        "on_true": { "type": "minecraft:model", "model": "thaumcraft:item/golem_over_adv" },
+        "on_false": { "type": "minecraft:empty" }
+      },
+      {
+        "type": "minecraft:condition",
+        "property": "minecraft:has_component",
+        "component": "thaumcraft:golem_core",
+        "on_true": { "type": "minecraft:model", "model": "thaumcraft:item/golem_over_core" },
+        "on_false": { "type": "minecraft:empty" }
+      }
+    ]
   }
 }

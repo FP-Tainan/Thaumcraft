@@ -195,6 +195,8 @@ public final class TCItems {
             new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_PRESSURE_PLATE, properties.useBlockDescriptionPrefix()));
     public static final Item ARCANE_EAR = register("arcane_ear", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.ARCANE_EAR, properties.useBlockDescriptionPrefix()));
+    public static final Item GOLEM_FETTER = register("golem_fetter", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GOLEM_FETTER, properties.useBlockDescriptionPrefix()));
 
     public static final Item WARDED_GLASS = register("warded_glass", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.WARDED_GLASS, properties.useBlockDescriptionPrefix()));
@@ -393,16 +395,38 @@ public final class TCItems {
     static {
         for (String material : net.thaumcraft.api.golems.GolemTypes.ALL.keySet()) {
             GOLEM_PLACERS.put(material, register("golem_" + material, properties ->
-                    new net.thaumcraft.item.GolemPlacerItem(properties.stacksTo(16), material)));
+                    new net.thaumcraft.item.GolemPlacerItem(properties.stacksTo(1), material)));
         }
-        for (String core : net.thaumcraft.api.golems.GolemTypes.CORES) {
+        for (int i = 0; i < net.thaumcraft.api.golems.GolemTypes.CORES.length; i++) {
+            final int index = i;
+            String core = net.thaumcraft.api.golems.GolemTypes.CORES[i];
             GOLEM_CORES.put(core, register("golem_core_" + core, properties ->
-                    new net.thaumcraft.item.GolemCoreItem(properties, core)));
+                    new net.thaumcraft.item.GolemCoreItem(properties.rarity(net.minecraft.world.item.Rarity.UNCOMMON), index)));
         }
     }
 
     /** O núcleo em branco: o disco de barro sem serviço nenhum, de onde saem todos os outros. */
-    public static final Item GOLEM_CORE_BLANK = register("golem_core_blank", Item::new);
+    public static final Item GOLEM_CORE_BLANK = register("golem_core_blank", properties ->
+            new net.thaumcraft.item.GolemCoreItem(properties, net.thaumcraft.item.GolemCoreItem.BLANK));
+
+    /** As melhorias de golem, na ordem do original: ar, terra, fogo, água, ordem e entropia. */
+    public static final java.util.List<Item> GOLEM_UPGRADES = new java.util.ArrayList<>();
+
+    /** Os acessórios de golem, na ordem do original. */
+    public static final java.util.List<Item> GOLEM_DECORATIONS = new java.util.ArrayList<>();
+
+    static {
+        for (int i = 0; i < net.thaumcraft.item.GolemUpgradeItem.NAMES.length; i++) {
+            final int index = i;
+            GOLEM_UPGRADES.add(register("golem_upgrade_" + net.thaumcraft.item.GolemUpgradeItem.NAMES[i], properties ->
+                    new net.thaumcraft.item.GolemUpgradeItem(properties.rarity(net.minecraft.world.item.Rarity.UNCOMMON), index)));
+        }
+        for (int i = 0; i < net.thaumcraft.item.GolemDecorationItem.NAMES.length; i++) {
+            final int index = i;
+            GOLEM_DECORATIONS.add(register("golem_decoration_" + net.thaumcraft.item.GolemDecorationItem.NAMES[i], properties ->
+                    new net.thaumcraft.item.GolemDecorationItem(properties, index)));
+        }
+    }
 
     /** O sino do golem: com ele se diz ao golem para onde levar o que junta. */
     public static final Item GOLEM_BELL = register("golem_bell", properties ->
@@ -734,9 +758,14 @@ public final class TCItems {
             "golem_bell",
             "golem_straw", "golem_wood", "golem_tallow", "golem_clay",
             "golem_flesh", "golem_stone", "golem_iron", "golem_thaumium",
-            "golem_core_fill", "golem_core_empty", "golem_core_gather", "golem_core_harvest",
+            "golem_core_blank", "golem_core_fill", "golem_core_empty", "golem_core_gather", "golem_core_harvest",
             "golem_core_guard", "golem_core_decanting", "golem_core_alchemy", "golem_core_chop",
             "golem_core_use", "golem_core_butcher", "golem_core_sorting", "golem_core_fishing",
+            "golem_upgrade_air", "golem_upgrade_earth", "golem_upgrade_fire", "golem_upgrade_water",
+            "golem_upgrade_order", "golem_upgrade_entropy",
+            "golem_decoration_tophat", "golem_decoration_glasses", "golem_decoration_bowtie", "golem_decoration_fez",
+            "golem_decoration_dart", "golem_decoration_visor", "golem_decoration_armor", "golem_decoration_mace",
+            "golem_fetter",
             "arcane_stone", "arcane_stone_bricks", "arcane_stone_stairs", "arcane_stone_slab", "thaumium_block", "tallow_block",
             "amber_block", "amber_bricks",
             "paving_stone_travel", "paving_stone_warding",

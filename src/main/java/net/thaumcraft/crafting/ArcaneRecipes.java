@@ -82,6 +82,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("FOCALMANIPULATION", new ItemStack(TCBlocks.FOCAL_MANIPULATOR.asItem()),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.ARCANE_STONE_SLAB.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCBlocks.TABLE.asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT)),
                 new AspectList().add(Aspects.FIRE, 32).add(Aspects.AIR, 32).add(Aspects.ENTROPY, 32).add(Aspects.EARTH, 32).add(Aspects.WATER, 32).add(Aspects.ORDER, 32)));
+        // GolemFetter
+        ALL.add(new ArcaneRecipe("GOLEMFETTER", new ItemStack(TCItems.GOLEM_FETTER),
+                Arrays.asList(Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem())),
+                new AspectList().add(Aspects.EARTH, 5).add(Aspects.ORDER, 5)));
         // ArcaneStone1
         ALL.add(new ArcaneRecipe("ARCANESTONE", new ItemStack(TCBlocks.BUILDING.get("arcane_stone").asItem(), 9),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE)),
@@ -234,6 +238,62 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("COREGATHER", new ItemStack(TCItems.GOLEM_CORE_BLANK),
                 Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.BRICK), null, Ingredient.of(net.minecraft.world.item.Items.BRICK), Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.item.Items.BRICK), null, Ingredient.of(net.minecraft.world.item.Items.BRICK), null),
                 new AspectList().add(Aspects.ORDER, 5).add(Aspects.FIRE, 5)));
+        // UpgradeAir
+        ALL.add(new ArcaneRecipe("UPGRADEAIR", new ItemStack(TCItems.GOLEM_UPGRADES.get(0)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET)),
+                new AspectList().add(Aspects.AIR, 10)));
+        // UpgradeEarth
+        ALL.add(new ArcaneRecipe("UPGRADEEARTH", new ItemStack(TCItems.GOLEM_UPGRADES.get(1)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET)),
+                new AspectList().add(Aspects.EARTH, 10)));
+        // UpgradeFire
+        ALL.add(new ArcaneRecipe("UPGRADEFIRE", new ItemStack(TCItems.GOLEM_UPGRADES.get(2)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET)),
+                new AspectList().add(Aspects.FIRE, 10)));
+        // UpgradeWater
+        ALL.add(new ArcaneRecipe("UPGRADEWATER", new ItemStack(TCItems.GOLEM_UPGRADES.get(3)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET)),
+                new AspectList().add(Aspects.WATER, 10)));
+        // UpgradeOrder
+        ALL.add(new ArcaneRecipe("UPGRADEORDER", new ItemStack(TCItems.GOLEM_UPGRADES.get(4)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET)),
+                new AspectList().add(Aspects.ORDER, 10)));
+        // UpgradeEntropy
+        ALL.add(new ArcaneRecipe("UPGRADEENTROPY", new ItemStack(TCItems.GOLEM_UPGRADES.get(5)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET)),
+                new AspectList().add(Aspects.ENTROPY, 10)));
+        // TinyHat
+        ALL.add(new ArcaneRecipe("TINYHAT", new ItemStack(TCItems.GOLEM_DECORATIONS.get(0)),
+                Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), null, null, Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), Ingredient.of(net.minecraft.world.item.Items.WOOL.black())),
+                new AspectList().add(Aspects.ORDER, 8).add(Aspects.FIRE, 8)));
+        // TinyFez
+        ALL.add(new ArcaneRecipe("TINYFEZ", new ItemStack(TCItems.GOLEM_DECORATIONS.get(3)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.red()), Ingredient.of(net.minecraft.world.item.Items.WOOL.red()), Ingredient.of(net.minecraft.world.item.Items.STRING), Ingredient.of(net.minecraft.world.item.Items.WOOL.red()), Ingredient.of(net.minecraft.world.item.Items.WOOL.red()), Ingredient.of(net.minecraft.world.item.Items.STRING), null, null, Ingredient.of(net.minecraft.world.item.Items.STRING)),
+                new AspectList().add(Aspects.WATER, 4).add(Aspects.EARTH, 4)));
+        // TinyBowtie
+        ALL.add(new ArcaneRecipe("TINYBOWTIE", new ItemStack(TCItems.GOLEM_DECORATIONS.get(2)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), Ingredient.of(net.minecraft.world.item.Items.STRING), Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), null, Ingredient.of(net.minecraft.world.item.Items.WOOL.black()), null, null, null),
+                new AspectList().add(Aspects.AIR, 4).add(Aspects.ORDER, 4)));
+        // TinyGlasses
+        ALL.add(new ArcaneRecipe("TINYGLASSES", new ItemStack(TCItems.GOLEM_DECORATIONS.get(1)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS.asItem()), null, null, null, null, null, null),
+                new AspectList().add(Aspects.AIR, 4).add(Aspects.WATER, 4)));
+        // TinyDart
+        ALL.add(new ArcaneRecipe("TINYDART", new ItemStack(TCItems.GOLEM_DECORATIONS.get(4)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.level.block.Blocks.DISPENSER.asItem()), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.ARROW), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.ARROW)),
+                new AspectList().add(Aspects.AIR, 4).add(Aspects.FIRE, 4)));
+        // TinyVisor
+        ALL.add(new ArcaneRecipe("TINYVISOR", new ItemStack(TCItems.GOLEM_DECORATIONS.get(5)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_HELMET), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, null, null, null, null, null),
+                new AspectList().add(Aspects.EARTH, 4).add(Aspects.WATER, 4)));
+        // TinyArmor
+        ALL.add(new ArcaneRecipe("TINYARMOR", new ItemStack(TCItems.GOLEM_DECORATIONS.get(6)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_CHESTPLATE), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, null, null),
+                new AspectList().add(Aspects.EARTH, 8)));
+        // TinyHammer
+        ALL.add(new ArcaneRecipe("TINYHAMMER", new ItemStack(TCItems.GOLEM_DECORATIONS.get(7)),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null),
+                new AspectList().add(Aspects.EARTH, 4).add(Aspects.FIRE, 4)));
         // Filter
         ALL.add(new ArcaneRecipe("DISTILESSENTIA", new ItemStack(TCResources.get("vis_filter"), 2),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCBlocks.SILVERWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), null, null, null, null, null, null),

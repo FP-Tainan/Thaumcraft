@@ -75,6 +75,21 @@ public final class TCEntities {
                     .eyeHeight(0.8f)
                     .clientTrackingRange(8));
 
+    /** A boia do golem pescador. */
+    public static final EntityType<net.thaumcraft.entity.GolemBobberEntity> GOLEM_BOBBER = register("golem_bobber",
+            EntityType.Builder.<net.thaumcraft.entity.GolemBobberEntity>of(net.thaumcraft.entity.GolemBobberEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .noSave()
+                    .clientTrackingRange(4)
+                    .updateInterval(5));
+
+    /** O dardo do lança-dardos do golem. */
+    public static final EntityType<net.thaumcraft.entity.DartEntity> DART = register("dart",
+            EntityType.Builder.<net.thaumcraft.entity.DartEntity>of(net.thaumcraft.entity.DartEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(4)
+                    .updateInterval(20));
+
     /** O zumbi zangado: nasce onde nascem monstros na superfície, peso dez. */
     public static final EntityType<net.thaumcraft.entity.BrainyZombieEntity> BRAINY_ZOMBIE = register("brainy_zombie",
             net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType.Builder.createMob(

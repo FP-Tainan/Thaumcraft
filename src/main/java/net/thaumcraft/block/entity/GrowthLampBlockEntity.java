@@ -137,15 +137,7 @@ public class GrowthLampBlockEntity extends BlockEntity implements EssentiaTransp
      * a verruga do Nether madura, o cacau maduro, a abóbora e a melancia inteiras, e a cana e o cacto de cima.
      */
     static boolean isGrownCrop(Level level, BlockPos pos, BlockState state) {
-        Block block = state.getBlock();
-        if (block instanceof BonemealableBlock growable && !growable.isValidBonemealTarget(level, pos, state)
-                && !(block instanceof StemBlock)) {
-            return true;
-        }
-        if (block instanceof NetherWartBlock && state.getValue(NetherWartBlock.AGE) >= 3) return true;
-        if (block instanceof CocoaBlock && state.getValue(CocoaBlock.AGE) >= 2) return true;
-        if (block == Blocks.MELON || block == Blocks.PUMPKIN) return true;
-        return (block == Blocks.SUGAR_CANE || block == Blocks.CACTUS) && level.getBlockState(pos.below()).is(block);
+        return net.thaumcraft.world.CropUtils.isGrownCrop(level, pos);
     }
 
     /** Um ponto de Herba de quem está no lado preso, de cinco em cinco tiques. */

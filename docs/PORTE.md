@@ -80,9 +80,9 @@ Hoje o mod já se joga do começo ao meio, nesta ordem:
 13. **Fazer um golem** — um fardo de feno no crisol com *humanus*, *motus* e *spiritus* vira um golem de
     palha; os outros sete saem do mesmo jeito, cada um da sua matéria. Na bancada arcana saem o sino e o
     núcleo em branco, e no crisol o núcleo em branco vira o núcleo do serviço que se quiser.
-14. **Pôr o golem para trabalhar** — encaixa-se o núcleo nele com um toque, toca-se o sino num baú e
-    depois no golem, e ele passa a juntar o que estiver caído no chão (ou a colher o que estiver maduro)
-    e a levar tudo para aquele baú.
+14. **Pôr o golem para trabalhar** — o golem é posto na face do baú que vai ser a casa dele; encaixa-se o núcleo
+    com um toque; toca-se o sino no golem (para ligá-lo) e depois nas faces dos baús ou blocos onde ele deve buscar ou
+    levar. O toque sem nada na mão abre a tela dele, onde se diz o que buscar e quanto.
 
 15. **Errar uma infusão** — quando a magia escapa, a mácula brota no chão em volta e começa a comer o
     terreno. A Flor Etérea, feita no crisol a partir da folha-cintilante, é a única coisa que a faz
@@ -356,40 +356,58 @@ cobra também paciência — ela leva tempo, e pode dar errado no meio.
 - Falta da fatia: a infusão que encanta (o original também encanta itens na matriz), as melhorias rúnicas
   e as cinquenta e oito receitas que esperam peças das fatias seguintes.
 
-## Fatia 7 — golens
+## Fatia 7 — golens (refeitos fiéis)
 
-O golem é o servo que faz o trabalho chato no lugar de quem o fez. De que ele é feito manda no corpo
-dele; o núcleo encaixado nele manda no serviço.
+Porte do `EntityGolemBase`, do `GolemHelper`, do `InventoryMob`, do `InventoryUtils`, de todas as tarefas de
+`thaumcraft.common.entities.ai.{inventory,interact,fluid,combat,misc}` que os golens usam, do `ContainerGolem` com o
+`ContainerGhostSlots`, do `GuiGolem`, do `RenderGolemBase` com o `ModelGolem` e o `ModelGolemAccessories`, do
+`RenderEventHandler.renderMarkedBlocks`, do `EntityGolemBobber`/`RenderGolemBobber`, do `EntityDart`/`RenderDart` e
+dos itens `ItemGolemPlacer`, `ItemGolemCore`, `ItemGolemUpgrade`, `ItemGolemDecoration` e `ItemGolemBell` (tudo
+descompilado do jar). O golem de dois núcleos com o sino de um baú só saiu inteiro.
 
-- `api/golems/GolemTypes` — **gerada** pelo `scratchpad/fatia7-golens.js` a partir do
-  `EnumGolemType` do original: as oito matérias, com vida, carga, força, couro, passo, resistência ao
-  fogo, quantas melhorias cabem, de quanto em quanto ele se remenda e o vis que custa. A palha é o golem
-  de todo dia — dez de vida, carrega uma coisa só, e pega fogo; o táumio é o topo — quarenta de vida,
-  trinta e duas coisas na mão e duas melhorias. A argila, a pedra, o ferro e o táumio não queimam.
-- `entity/GolemEntity` — o bicho. A matéria escolhida vira atributo na hora: vida, passo, força e
-  couro saem da tabela, e ele se remenda sozinho no compasso da matéria de que é feito.
-- `entity/ai/GolemWorkGoal` — o vaivém de três tempos do original: procura serviço, pega, leva para
-  casa. O núcleo de **juntar** cata o que está caído no chão a doze blocos; o de **colher** quebra a
-  plantação madura e **replanta** uma semente, como o do original faz. Ele carrega uma pilha do tamanho
-  que a matéria dele aguenta e despeja tudo no baú que o sino marcou.
-- `client/render/GolemModel` — o corpo, refeito caixa por caixa do `ModelGolem` do original: cabeça de
-  oito por nove por oito, tronco de dezesseis por doze por onze, braços de quatro por vinte e cinco (é o
-  que dá ao golem aquele jeito de bracinho comprido), pernas de seis por dezesseis. As peles são as
-  oito do próprio mod.
-- `item/GolemPlacerItem`, `item/GolemCoreItem` e `item/GolemBellItem` — o golem guardado na mão, o
-  disco do serviço e o sino.
-- As receitas vieram todas do original, e foram as tabelas geradas que as trouxeram: os golens e os
-  núcleos são **receitas de crisol** (o gerador do crisol aprendeu a resolver as variáveis locais que o
-  original usa, como o `coreBlank` que aparece em seis receitas), e o sino e o núcleo em branco são
-  **receitas de bancada arcana**. Com isso as receitas de crisol pularam de dezoito para trinta e três.
-- **Diferença**: no original o sino marca as faces dos baús com marcas coloridas, e o golem lê essas
-  marcas — dá para mandar golens diferentes em baús diferentes pela cor. Aqui o sino guarda um baú de
-  cada vez: toca-se no baú e depois no golem. As marcas coloridas pedem uma camada de desenho e de rede
-  que ainda não existe por aqui.
-- **Diferença**: dos doze núcleos, dois já sabem trabalhar — juntar e colher. Os outros dez existem como
-  item, com os nomes e as receitas do original, mas ainda não têm serviço: o de proteger pede a briga
-  do original, o de alquimia pede a essência encanada ligada ao golem, o de pescar pede a bóia. Eles
-  chegam com as peças que faltam.
+- **O golem** (`entity/GolemEntity`): a matéria (`GolemTypes`, gerada do `EnumGolemType`) dá vida, couro (mais
+  visor 1 e blindagem 4, até 20), passo (o do tipo: gravata ×1,1, blindagem ×0,88, ar +15% cada, avançado ×1,1, os
+  pesados ×2 debaixo d'água), carga (mais `min(16, max(4, carga))` por terra), força, fogo e remendo (a cada
+  `regenDelay` tiques, ⅔ com o barrete). Casa = onde foi posto; o baú da casa é o bloco atrás da face tocada. Alcance
+  16 (+4 por água, +10% com óculos, +20% avançado). Longe demais da casa (48) ou preso num bloco, volta para perto dela.
+  Parado com a tela aberta ou em cima da algema acesa, a IA desliga.
+- **Núcleos** (as tarefas de cada um na prioridade do original): 0 encher (busca nos baús marcados até a casa ter a
+  quantidade pedida, ou "qualquer quantidade"), 1 esvaziar, 2 juntar, 3 colher (com ordem, replanta — sementes, cacau
+  no tronco, vagem de mana), 4 guardar (com ordem: chaves de monstros, bichos, jogadores e creepers), 5 decantar
+  (fontes e tanques marcados para o tanque da casa; com entropia, bombeia o lago todo), 6 alquimia (dos alambiques ou
+  do jarro da casa para os jarros marcados, na ordem de preferência do original), 7 lenhar (o tronco inteiro, do
+  bloco mais longe), 8 usar (clica o que carrega nos blocos marcados, direito ou esquerdo, agachado ou não),
+  9 açougue (o bicho mais velho, só se sobrarem dois), 10 separar, 11 pescar (a boia, as tabelas de pesca do jogo de
+  então, o fogo assa o peixe). Todos fogem do creeper inchando, abrem portas e porteiras e voltam para casa.
+- **Melhorias** (até duas de cada; 1 casa, 2 no táumio/sebo/carne, +1 avançado): ar, terra, fogo (mais casas, fogo
+  no golpe), água, ordem (cores nas marcas e nas casas, chaves de guarda), entropia (espinhos, dicionário de "minérios",
+  ignorar dano e componentes). **Acessórios**: cartola (+5 de vida), óculos, gravata, barrete, lança-dardos (o
+  `EntityDart`), visor (o golpe conta como de jogador, para o que só cai assim), blindagem, maça (+2 de dano).
+- **O sino**: tocado no golem, liga-se a ele e copia as marcas; tocado num bloco (vê a água também), marca e desmarca a
+  face — com a ordem no golem, gira as dezesseis cores (agachado, tira). Batido no golem, recolhe-o como item com tudo
+  (núcleo, melhorias, acessórios, marcas, casas); agachado, larga o núcleo e, por sorte, as melhorias. O golem guardado
+  e o sino agem antes de o baú abrir (o `onItemUseFirst`).
+- **Casas fantasmas** (`inventory/GolemMenu`): a cópia do que se põe, a quantidade mudando no clique (256 no de encher),
+  seis de cada vez com rolagem; a de líquido aceita recipientes. **A tela** (`client/gui/GolemScreen`): a fala do golem
+  (ou, no avançado, de vez em quando uma ameaça), as abas de cor, as chaves de cada núcleo (em inglês, como no
+  original), o golem em pé.
+- **Desenho**: o corpo encolhido a quatro décimos dentro do modelo, as poses do original (cabeça baixa sem núcleo ou
+  algemado, o despertar com o tique-taque, os braços no passo, carregando, batendo, abertos no alquimista), o balanço
+  do passo, o verde do remendo, o núcleo no peito e as plaquinhas das melhorias abaixo dele, os acessórios, as
+  rachaduras conforme a vida, o que carrega nos braços, o balde (`bucket.obj`) com o líquido dentro, o jarro do
+  alquimista, a vara do pescador. As marcas no mundo: a runa colorida em cada face, o bloco de ar aceso, a casa e a
+  linha de escrita saindo da cabeça do golem.
+- **A algema** (`block/GolemFetterBlock`, o 9/10 do `BlockCosmeticSolid`): acende com redstone e desliga o golem em cima.
+- **Receitas**: as melhorias, os acessórios e a algema na bancada arcana (o gerador aprendeu a lã de cada cor, que
+  saía branca), e o golem avançado na infusão (qualquer golem com o cérebro no jarro). O núcleo de lenhar espera o
+  machado elemental.
+- **Diferenças que ficam**: o "dicionário de minérios" são as etiquetas `c:` de hoje; a navegação acha caminho de
+  outro jeito, mas vai até o ponto exato como a de então; o golem pensa em trabalho novo a cada dez tiques (o
+  original, a cada quinze) porque o jogo de hoje só avalia as tarefas de dois em dois tiques; as mensagens do sino
+  saem na barra de ação (o original tinha o `PlayerNotifications`, ainda não portado).
+- **Testes**: `GolemGameTest` (a tabela, o corpo, o item e o sino guardando tudo, e cada núcleo de ponta a ponta:
+  juntar, encher na quantidade exata, esvaziar, separar, colher e replantar, lenhar, guardar, açougue com casal,
+  decantar, alquimia; a algema; as cores do sino; salvar e carregar) e `GolemClientTest` (fila, costas, tela, marcas).
 
 ## Fatia 8 — a mácula
 

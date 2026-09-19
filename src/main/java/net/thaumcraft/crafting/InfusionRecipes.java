@@ -147,6 +147,12 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.TRAVEL, 8).add(Aspects.WATER, 8).add(Aspects.EXCHANGE, 8),
                 Ingredient.of(TCResources.get("mirrored_glass")),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL))));
+        // AdvancedGolem
+        ALL.add(InfusionRecipe.onCentral("ADVANCEDGOLEM", 3,
+                new AspectList().add(Aspects.MIND, 8).add(Aspects.SENSES, 8).add(Aspects.LIFE, 8),
+                Ingredient.of(TCItems.GOLEM_PLACERS.values().toArray(new net.minecraft.world.item.Item[0])),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.REDSTONE), Ingredient.of(net.minecraft.world.item.Items.GLOWSTONE_DUST), Ingredient.of(net.minecraft.world.item.Items.GUNPOWDER), Ingredient.of(TCBlocks.JAR.asItem()), Ingredient.of(TCItems.ZOMBIE_BRAIN)),
+                stack -> { stack.set(net.thaumcraft.registry.TCComponents.GOLEM_ADVANCED, net.minecraft.util.Unit.INSTANCE); return stack; }));
         // CoreAlchemy
         ALL.add(new InfusionRecipe("COREALCHEMY", new ItemStack(TCItems.GOLEM_CORES.get("alchemy")), 2,
                 new AspectList().add(Aspects.MAGIC, 15).add(Aspects.WATER, 15).add(Aspects.MOTION, 15),

@@ -73,6 +73,12 @@ public class Thaumcraft implements ModInitializer {
         net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntity(
                 (crucible, side) -> crucible.tank, net.thaumcraft.registry.TCBlockEntities.CRUCIBLE);
         net.fabricmc.fabric.api.event.player.AttackBlockCallback.EVENT.register(net.thaumcraft.item.Focuses::tradeSwing);
+        // o onItemUseFirst dos golens: o golem nasce e o sino marca antes de o baú se abrir
+        net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register(net.thaumcraft.item.GolemPlacerItem::placeFirst);
+        net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register(net.thaumcraft.item.GolemBellItem::markFirst);
+        // e o onLeftClickEntity do sino: recolhe o golem
+        net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(
+                (player, level, hand, entity, hit) -> net.thaumcraft.item.GolemBellItem.pickUp(player, level, hand, entity));
 
         // o comando de teste, para destrancar a pesquisa sem ter de jogar tudo de novo
         net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register(

@@ -76,10 +76,36 @@ public final class TCComponents {
     public static final DataComponentType<String> LABEL_ASPECT = register("label_aspect",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
-    /** A casa que o sino do golem está guardando: o baú para onde o golem vai levar o que juntar. */
-    public static final DataComponentType<net.minecraft.core.BlockPos> GOLEM_HOME = register("golem_home",
-            builder -> builder.persistent(net.minecraft.core.BlockPos.CODEC)
-                    .networkSynchronized(net.minecraft.core.BlockPos.STREAM_CODEC));
+    /** O golem guardado é avançado (o {@code advanced} do {@code ItemGolemPlacer}): o cérebro no jarro. */
+    public static final DataComponentType<net.minecraft.util.Unit> GOLEM_ADVANCED = register("golem_advanced",
+            builder -> builder.persistent(net.minecraft.util.Unit.CODEC).networkSynchronized(net.minecraft.network.codec.StreamCodec.unit(net.minecraft.util.Unit.INSTANCE)));
+
+    /** O núcleo do golem guardado (o {@code core}). */
+    public static final DataComponentType<Integer> GOLEM_CORE = register("golem_core",
+            builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** As melhorias do golem guardado (o {@code upgrades}, −1 é casa vazia). */
+    public static final DataComponentType<java.util.List<Byte>> GOLEM_UPGRADES = register("golem_upgrades",
+            builder -> builder.persistent(Codec.BYTE.listOf()).networkSynchronized(ByteBufCodecs.BYTE.apply(ByteBufCodecs.list())));
+
+    /** Os enfeites do golem guardado (o {@code deco}: as letras H G B F R V P M). */
+    public static final DataComponentType<String> GOLEM_DECO = register("golem_deco",
+            builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+
+    /** As marcas do sino (e do golem guardado): o {@code markers}. */
+    public static final DataComponentType<java.util.List<net.thaumcraft.entity.golem.Marker>> GOLEM_MARKERS = register("golem_markers",
+            builder -> builder.persistent(net.thaumcraft.entity.golem.Marker.CODEC.listOf())
+                    .networkSynchronized(net.thaumcraft.entity.golem.Marker.STREAM_CODEC.apply(ByteBufCodecs.list())));
+
+    /** O que as casas fantasmas do golem guardado pedem (o {@code Inventory}). */
+    public static final DataComponentType<java.util.List<net.thaumcraft.item.GolemPlacerItem.Ghost>> GOLEM_INVENTORY = register("golem_inventory",
+            builder -> builder.persistent(net.thaumcraft.item.GolemPlacerItem.Ghost.CODEC.listOf())
+                    .networkSynchronized(net.thaumcraft.item.GolemPlacerItem.Ghost.STREAM_CODEC.apply(ByteBufCodecs.list())));
+
+    /** A que golem o sino está ligado: o {@code golemid}, a casa e a face dela. */
+    public static final DataComponentType<net.thaumcraft.item.GolemBellItem.Link> GOLEM_LINK = register("golem_link",
+            builder -> builder.persistent(net.thaumcraft.item.GolemBellItem.Link.CODEC)
+                    .networkSynchronized(net.thaumcraft.item.GolemBellItem.Link.STREAM_CODEC));
 
     /** O que um jarro quebrado leva dentro: a essência, quanto dela e o rótulo. */
     public static final DataComponentType<net.thaumcraft.item.JarContents> JAR_CONTENTS = register("jar_contents",

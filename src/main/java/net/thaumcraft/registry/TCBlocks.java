@@ -634,6 +634,11 @@ public final class TCBlocks {
         }
     }
 
+    /** A algema de golem: pedra arcana com um olho em cima, que acende com redstone e desliga o golem sobre ela. */
+    public static final Block GOLEM_FETTER = register("golem_fetter", properties ->
+            new net.thaumcraft.block.GolemFetterBlock(properties.mapColor(MapColor.STONE).strength(2.0f, 10.0f)
+                    .requiresCorrectToolForDrops().sound(SoundType.STONE)));
+
     private TCBlocks() {
     }
 
