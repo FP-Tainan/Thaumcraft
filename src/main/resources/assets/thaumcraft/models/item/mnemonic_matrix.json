@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {"brain": "thaumcraft:block/mnemonic_matrix", "particle": "thaumcraft:block/mnemonic_matrix"},
+  "elements": [
+    {"from": [3, 3, 3], "to": [13, 13, 13], "faces": {"north": {"texture": "#brain"}, "south": {"texture": "#brain"}, "east": {"texture": "#brain"}, "west": {"texture": "#brain"}, "up": {"texture": "#brain"}, "down": {"texture": "#brain"}}}
+  ]
+}

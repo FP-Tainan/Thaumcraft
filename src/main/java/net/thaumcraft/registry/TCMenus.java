@@ -25,6 +25,12 @@ public final class TCMenus {
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("hand_mirror"),
                     new MenuType<>(net.thaumcraft.inventory.HandMirrorMenu::new, FeatureFlags.VANILLA_SET));
 
+    /** O taumatório: a tela abre sabendo de qual é. */
+    public static final MenuType<net.thaumcraft.inventory.ThaumatoriumMenu> THAUMATORIUM = Registry.register(
+            BuiltInRegistries.MENU, Thaumcraft.id("thaumatorium"),
+            new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.ThaumatoriumMenu::new,
+                    net.minecraft.core.BlockPos.STREAM_CODEC));
+
     public static final MenuType<net.thaumcraft.inventory.HoverHarnessMenu> HOVER_HARNESS =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("hover_harness"),
                     new MenuType<>(net.thaumcraft.inventory.HoverHarnessMenu::new, FeatureFlags.VANILLA_SET));

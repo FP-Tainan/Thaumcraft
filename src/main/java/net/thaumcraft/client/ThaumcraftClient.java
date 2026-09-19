@@ -125,6 +125,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.ADVANCED_ALCHEMICAL_FURNACE, net.thaumcraft.client.render.AdvancedAlchemicalFurnaceRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.ESSENTIA_RESERVOIR, net.thaumcraft.client.render.EssentiaReservoirRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.THAUMATORIUM, net.thaumcraft.client.render.ThaumatoriumRenderer::new);
         net.thaumcraft.block.AdvancedAlchemicalFurnaceBlock.clientEffects = (level, x, y, z, size) ->
                 net.thaumcraft.client.fx.SlimyBubble.spawn(x, y, z, size, net.thaumcraft.client.fx.SlimyBubble.purple(level.getRandom()), level.getRandom());
         // a tabela de aspectos que o servidor montou; no jogo de um jogador só, o servidor é esta mesma máquina
@@ -217,6 +219,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.gui.FocusPouchScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.HAND_MIRROR,
                 net.thaumcraft.client.gui.HandMirrorScreen::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.THAUMATORIUM,
+                net.thaumcraft.client.gui.ThaumatoriumScreen::new);
         // as botas do viajante: o empurrão de quem anda é do lado de quem joga
         net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.END_CLIENT_TICK.register(client -> {
             var player = client.player;

@@ -1,0 +1,16 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {"grate": "thaumcraft:block/item_grate", "hatch": "thaumcraft:block/item_grate_hatch", "metal": "thaumcraft:block/metalbase", "particle": "thaumcraft:block/item_grate"},
+  "elements": [
+    {"from": [0, 13, 0], "to": [16, 16, 16], "faces": {"north": {"texture": "#grate"}, "south": {"texture": "#grate"}, "east": {"texture": "#grate"}, "west": {"texture": "#grate"}, "up": {"texture": "#grate"}, "down": {"texture": "#grate"}}},
+    {"from": [2.968, 13, 0], "to": [2.968, 16, 16], "faces": {"east": {"texture": "#metal"}}},
+    {"from": [0, 13, 2.968], "to": [16, 16, 2.968], "faces": {"south": {"texture": "#metal"}}},
+    {"from": [8.968, 13, 0], "to": [8.968, 16, 16], "faces": {"east": {"texture": "#metal"}}},
+    {"from": [0, 13, 8.968], "to": [16, 16, 8.968], "faces": {"south": {"texture": "#metal"}}},
+    {"from": [13.032, 13, 0], "to": [13.032, 16, 16], "faces": {"west": {"texture": "#metal"}}},
+    {"from": [0, 13, 13.032], "to": [16, 16, 13.032], "faces": {"north": {"texture": "#metal"}}},
+    {"from": [7.032, 13, 0], "to": [7.032, 16, 16], "faces": {"west": {"texture": "#metal"}}},
+    {"from": [0, 13, 7.032], "to": [16, 16, 7.032], "faces": {"north": {"texture": "#metal"}}},
+    {"from": [1, 14, 1], "to": [15, 15, 15], "faces": {"north": {"texture": "#hatch"}, "south": {"texture": "#hatch"}, "east": {"texture": "#hatch"}, "west": {"texture": "#hatch"}, "up": {"texture": "#hatch"}, "down": {"texture": "#hatch"}}}
+  ]
+}

@@ -29,6 +29,9 @@
     "thaumcraft:infernal_furnace",
     "thaumcraft:advanced_alchemical_construct",
     "thaumcraft:advanced_alchemical_furnace",
-    "thaumcraft:essentia_reservoir"
+    "thaumcraft:essentia_reservoir",
+    "thaumcraft:thaumatorium",
+    "thaumcraft:mnemonic_matrix",
+    "thaumcraft:item_grate"
   ]
 }

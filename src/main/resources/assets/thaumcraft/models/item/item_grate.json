@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {"grate": "thaumcraft:block/item_grate", "hatch": "thaumcraft:block/item_grate_hatch", "particle": "thaumcraft:block/item_grate"},
+  "elements": [
+    {"from": [0, 13, 0], "to": [16, 16, 16], "faces": {"north": {"texture": "#grate"}, "south": {"texture": "#grate"}, "east": {"texture": "#grate"}, "west": {"texture": "#grate"}, "up": {"texture": "#grate"}, "down": {"texture": "#grate"}}},
+    {"from": [0, 13, 0], "to": [16, 16, 16], "faces": {"north": {"texture": "#hatch"}, "south": {"texture": "#hatch"}, "east": {"texture": "#hatch"}, "west": {"texture": "#hatch"}, "up": {"texture": "#hatch"}, "down": {"texture": "#hatch"}}}
+  ]
+}

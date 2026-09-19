@@ -79,8 +79,11 @@ public class TaintGameTest {
 
         helper.succeedWhen(() -> {
             var at = helper.absolutePos(bloomAt);
-            helper.getLevel().getBlockState(at)
-                    .randomTick(helper.getLevel(), at, helper.getLevel().getRandom());
+            // o sorteio da flor escolhe um bloco qualquer em volta: quatro por tique, para não depender da sorte
+            for (int i = 0; i < 4; i++) {
+                helper.getLevel().getBlockState(at)
+                        .randomTick(helper.getLevel(), at, helper.getLevel().getRandom());
+            }
             if (TaintBlock.isTaint(helper.getBlockState(dirty))) {
                 helper.fail("a flor devia ter limpado a mácula ali perto");
             }

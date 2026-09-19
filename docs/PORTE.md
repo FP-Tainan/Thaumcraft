@@ -995,9 +995,10 @@ Fonte: `BlockArcaneFurnace`, `BlockArcaneFurnaceRenderer`, `TileArcaneFurnace`, 
   prata e chumbo não existem no jogo de hoje; as pepitas de carne entram quando as pepitas chegarem.
 - **Visual**: as 25 texturas `furnaceN` do jar; as paredes usam o `calculateTexture` do original, portado inteiro
   (`InfernalFurnaceModel`, como o vidro protegido): cada face mostra o seu pedaço do desenho grande, e a face da boca
-  ganha a moldura (o "tocando no lado" do original olha os oito vizinhos no plano da face). A boca desenha, dentro do
-  centro e vistos de fora, a grade a 0,625, os olhos a 0,8 e o fogo a 0,9 com 1,5 de altura; o centro mostra a lava
-  pelo alto aberto. Conferido contra a imagem do bloco na wiki do FTB.
+  ganha a moldura (o "tocando no lado" do original olha os oito vizinhos no plano da face). A boca desenha, na própria casa e
+  virados para fora, a grade a 0,625 da borda de fora, os olhos a 0,8 e o fogo a 0,9 com 1,5 de altura; atrás deles, o
+  cubo de lava do centro. (No MCP do 1.7.10, `func_147764_f` é a face X+ e `func_147798_e` a X−: lidas trocadas, as
+  faces caíam dentro do centro.) Conferido contra a imagem do bloco na wiki do FTB.
 - **Testes**: `InfernalFurnaceGameTest` (o cubo precisa de uma grade só, a numeração, o que cai na lava sai fundido
   pela boca, o que não funde some, quebrar desfaz, a tabela de bônus) e `InfernalFurnaceClientTest`.
 - Armadilha: o original soma posição inteira com `float`; nas coordenadas enormes dos testes isso arredondava a saída
@@ -1040,3 +1041,37 @@ Fonte: `BlockAlchemyFurnace`, `TileAlchemyFurnaceAdvanced`, `TileAlchemyFurnaceA
   chama `Flux.spill`.
 - **Testes**: `AdvancedAlchemyGameTest` (o molde, a numeração, o item desfeito e o bico, desmontar, o reservatório, a
   varinha no bocal, a infusão) e `AdvancedAlchemyClientTest`.
+
+## Taumatório, matriz mnemônica e grade de itens
+
+Fonte: `TileThaumatorium`, `TileThaumatoriumTop`, `ContainerThaumatorium`, `GuiThaumatorium`,
+`TileThaumatoriumRenderer`, `TileBrainbox`, `TileGrate`, `EntityItemGrate`, os números 5, 6, 10, 11 e 12 do
+`BlockMetalDevice`/`BlockMetalDeviceItem`/`BlockMetalDeviceRenderer` e o `WandManager.createThaumatorium`
+(descompilados do jar).
+
+- **Formação** (`ThaumatoriumStructure`): a varinha numa de duas construções alquímicas empilhadas sobre um crisol,
+  com a pesquisa THAUMATORIUM, gasta 15 de Ignis, 30 de Ordo e 30 de Aqua; o taumatório fica virado para a face batida.
+  Na mesma peça, esse gatilho vem antes do da fornalha avançada, como no original.
+- **Bloco** (`ThaumatoriumBlock`): as duas metades (`TOP`), invisíveis — o `thaumatorium.obj` inteiro sai da de baixo.
+  A mão (sem agachar) abre a tela. Sem o crisol embaixo ou sem a outra metade, cada uma volta a ser construção
+  alquímica (e o catalisador cai).
+- **Taumatório** (`ThaumatoriumBlockEntity`): funciona com fogo, lava ou nitor debaixo do crisol e sem redstone; a cada
+  cinco tiques escolhe, entre as receitas marcadas, a que o catalisador fecha, puxa com força 128 o aspecto que falta
+  (dos canos dos lados e de cima, nas duas metades, menos pela frente) e, completo, gasta um catalisador e solta o
+  resultado pela frente — num inventário encostado (se ele não tem lugar, espera) ou no chão, com o vapor. A metade
+  de cima (`ThaumatoriumTopBlockEntity`) só repassa canos e funis. As receitas guardadas são as de crisol, pelo número
+  de cada uma (`CrucibleRecipe.hash`, feito do que a receita é, não da posição na tabela).
+- **Tela** (`ThaumatoriumMenu`/`ThaumatoriumScreen`): a `gui_thaumatorium.png`; as receitas que o jogador já pesquisou e
+  que aceitam o catalisador, mais as marcadas; setas para passar, clique no resultado para marcar/desmarcar (som
+  `hhon`), barrinhas do quanto já entrou de cada aspecto e o "marcadas/cabem" com matrizes.
+- **Matriz mnemônica** (`MnemonicMatrixBlock`): a caixa de 3/16 a 13/16 com o pino para o bloco em que foi posta; cai
+  sem ele. Cada uma encostada no taumatório (dos lados ou em cima, nas duas metades) com o pino nele dá duas receitas a
+  mais. A receita arcana sai do gerador.
+- **Grade de itens** (`ItemGrateBlock`/`ItemGrateBlockEntity`): a chapa de 13/16 a 16/16; aberta, os itens atravessam e
+  um funil em cima a usa como inventário (o item sai logo abaixo, descendo); fechada, é chão para tudo. A mão ou a
+  redstone abre/fecha, com o som da porta. Receita de bancada do jar: grade de ferro sobre alçapão. As nervuras de
+  metal por baixo da chapa são as faces que o renderizador do original desenha dentro do bloco.
+- O `EntityItemGrate` (o item que não é empurrado para fora de dentro de uma grade) virou item comum: aberta, a grade
+  não segura item nenhum, e a diferença só aparece com a grade fechada em cima de um item.
+- **Testes**: `ThaumatoriumGameTest` (os números das receitas, a formação, puxar do reservatório e fazer alumentum, a
+  matriz, a metade de cima, desmontar, a grade) e `ThaumatoriumClientTest` (o bloco e a tela).

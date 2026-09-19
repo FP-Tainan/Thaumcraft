@@ -1219,5 +1219,8 @@
   "block.thaumcraft.advanced_alchemical_construct": "Advanced Alchemical Construct",
   "block.thaumcraft.advanced_alchemical_furnace": "Advanced Alchemical Furnace",
   "block.thaumcraft.essentia_reservoir": "Essentia Reservoir",
-  "block.thaumcraft.infernal_furnace": "Infernal Furnace"
+  "block.thaumcraft.infernal_furnace": "Infernal Furnace",
+  "block.thaumcraft.thaumatorium": "Thaumatorium",
+  "block.thaumcraft.mnemonic_matrix": "Mnemonic Matrix",
+  "block.thaumcraft.item_grate": "Item Grate"
 }

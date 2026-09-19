@@ -257,6 +257,21 @@ public final class TCBlocks {
             new net.thaumcraft.block.EssentiaReservoirBlock(properties.mapColor(MapColor.METAL).strength(2.0f, 10.2f)
                     .sound(SoundType.METAL).noOcclusion().isRedstoneConductor((s, l, p) -> false)));
 
+    /** O taumatório: as duas construções alquímicas sobre o crisol que a varinha transforma; sem item. */
+    public static final Block THAUMATORIUM = register("thaumatorium", properties ->
+            new net.thaumcraft.block.ThaumatoriumBlock(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f)
+                    .sound(SoundType.METAL).noOcclusion().pushReaction(PushReaction.BLOCK)));
+
+    /** A matriz mnemônica: duas receitas a mais para o taumatório para que está virada. */
+    public static final Block MNEMONIC_MATRIX = register("mnemonic_matrix", properties ->
+            new net.thaumcraft.block.MnemonicMatrixBlock(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f)
+                    .sound(SoundType.METAL).noOcclusion()));
+
+    /** A grade de itens: deixa passar só os itens, aberta. */
+    public static final Block ITEM_GRATE = register("item_grate", properties ->
+            new net.thaumcraft.block.ItemGrateBlock(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f)
+                    .sound(SoundType.METAL).noOcclusion().isRedstoneConductor((s, l, p) -> false)));
+
     /** O bloco de âmbar: o BlockCosmeticOpaque 0, translúcido. */
     public static final Block AMBER_BLOCK = register("amber_block", properties ->
             new net.thaumcraft.block.AmberBlock(properties.mapColor(MapColor.COLOR_ORANGE).strength(1.5f, 3.0f)

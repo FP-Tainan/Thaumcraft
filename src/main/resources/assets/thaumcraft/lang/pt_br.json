@@ -1223,5 +1223,8 @@
   "block.thaumcraft.advanced_alchemical_construct": "Construção Alquímica Avançada",
   "block.thaumcraft.advanced_alchemical_furnace": "Fornalha Alquímica Avançada",
   "block.thaumcraft.essentia_reservoir": "Reservatório de Essência",
-  "block.thaumcraft.infernal_furnace": "Fornalha Infernal"
+  "block.thaumcraft.infernal_furnace": "Fornalha Infernal",
+  "block.thaumcraft.thaumatorium": "Taumatório",
+  "block.thaumcraft.mnemonic_matrix": "Matriz Mnemônica",
+  "block.thaumcraft.item_grate": "Gradil de Itens"
 }

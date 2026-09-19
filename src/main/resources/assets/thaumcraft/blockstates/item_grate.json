@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "closed=false,powered=false": {"model": "thaumcraft:block/item_grate"},
+    "closed=false,powered=true": {"model": "thaumcraft:block/item_grate"},
+    "closed=true,powered=false": {"model": "thaumcraft:block/item_grate_closed"},
+    "closed=true,powered=true": {"model": "thaumcraft:block/item_grate_closed"}
+  }
+}

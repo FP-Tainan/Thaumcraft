@@ -182,6 +182,18 @@ public final class TCBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("essentia_reservoir"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.EssentiaReservoirBlockEntity::new, java.util.Set.of(TCBlocks.ESSENTIA_RESERVOIR)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.ThaumatoriumBlockEntity> THAUMATORIUM =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("thaumatorium"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.ThaumatoriumBlockEntity::new, java.util.Set.of(TCBlocks.THAUMATORIUM)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.ThaumatoriumTopBlockEntity> THAUMATORIUM_TOP =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("thaumatorium_top"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.ThaumatoriumTopBlockEntity::new, java.util.Set.of(TCBlocks.THAUMATORIUM)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.ItemGrateBlockEntity> ITEM_GRATE =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("item_grate"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.ItemGrateBlockEntity::new, java.util.Set.of(TCBlocks.ITEM_GRATE)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.ManaPodBlockEntity> MANA_POD =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("mana_pod"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.ManaPodBlockEntity::new, java.util.Set.of(TCBlocks.MANA_POD)));

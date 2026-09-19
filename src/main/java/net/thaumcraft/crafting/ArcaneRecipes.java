@@ -258,6 +258,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("ESSENTIACRYSTAL", new ItemStack(TCBlocks.ESSENTIA_CRYSTALIZER.asItem()),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.DISPENSER.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(net.minecraft.world.item.Items.OAK_PLANKS)),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.EARTH, 15).add(Aspects.ORDER, 5)));
+        // MnemonicMatrix
+        ALL.add(new ArcaneRecipe("THAUMATORIUM", new ItemStack(TCBlocks.MNEMONIC_MATRIX.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCResources.get("amber")), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCResources.get("amber")), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(TCResources.get("amber")), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCResources.get("amber")), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT)),
+                new AspectList().add(Aspects.FIRE, 5).add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
         // MirrorGlass
         ALL.add(ArcaneRecipe.loose("BASICARTIFACE", new ItemStack(TCResources.get("mirrored_glass")),
                 Arrays.asList(Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(net.minecraft.world.level.block.Blocks.GLASS_PANE.asItem())),

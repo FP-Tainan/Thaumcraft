@@ -27,6 +27,32 @@ public record CrucibleRecipe(String research, ItemStack result, net.minecraft.wo
         return true;
     }
 
+    /**
+     * O {@code hash} do original: o número que identifica a receita (o taumatório guarda as escolhidas por ele). Sai do
+     * que ela é — pesquisa, resultado, catalisador e custo — e não da ordem na tabela.
+     */
+    public int hash() {
+        StringBuilder key = new StringBuilder(this.research).append('|')
+                .append(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this.result.getItem())).append('x').append(this.result.getCount())
+                .append('|').append(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this.catalyst));
+        for (Aspect aspect : this.cost.getAspectsSorted()) key.append('|').append(aspect.tag()).append(this.cost.getAmount(aspect));
+        return key.toString().hashCode();
+    }
+
+    /** O {@code getCrucibleRecipeFromHash}. */
+    @org.jetbrains.annotations.Nullable
+    public static CrucibleRecipe byHash(int hash) {
+        for (CrucibleRecipe recipe : CrucibleRecipes.ALL) {
+            if (recipe.hash() == hash) return recipe;
+        }
+        return null;
+    }
+
+    /** O {@code catalystMatches}. */
+    public boolean catalystMatches(ItemStack stack) {
+        return !stack.isEmpty() && stack.is(this.catalyst);
+    }
+
     /** O que sobra na água depois de a receita cobrar o que lhe é devido. */
     public AspectList removeFrom(AspectList inside) {
         AspectList left = inside.copy();

@@ -49,6 +49,12 @@ public final class WandTriggers {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
             if (net.thaumcraft.block.InfernalFurnaceStructure.create(wand, player, level, pos)) return InteractionResult.SUCCESS;
         }
+        // duas construções alquímicas sobre um crisol: o taumatório (evento 5, que vem antes do 7 na mesma peça)
+        if (state.is(net.thaumcraft.registry.TCBlocks.ALCHEMICAL_CONSTRUCT) && player != null
+                && net.thaumcraft.research.ResearchManager.knows(player, "THAUMATORIUM")) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            if (net.thaumcraft.block.ThaumatoriumStructure.create(wand, player, level, pos, face)) return InteractionResult.SUCCESS;
+        }
         // uma construção alquímica em volta de uma fornalha alquímica montada certo: a fornalha avançada (evento 7)
         if (net.thaumcraft.block.AdvancedAlchemicalFurnaceStructure.isTrigger(state) && player != null
                 && net.thaumcraft.research.ResearchManager.knows(player, "ADVALCHEMYFURNACE")) {
