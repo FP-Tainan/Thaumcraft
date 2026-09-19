@@ -73,6 +73,7 @@ public final class ThaumometerHud {
         if (creature != null) {
             name = ScanManager.nameOf(creature);
             aspects = ScanManager.aspectsOf(creature);
+            if (aspects == null) aspects = new AspectList();
         } else {
             net.minecraft.core.BlockPos pos = ScanManager.blockInSight(player, REACH);
             if (pos == null) return;

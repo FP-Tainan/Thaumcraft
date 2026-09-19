@@ -61,7 +61,8 @@
       "net.thaumcraft.test.WardingFocusGameTest",
       "net.thaumcraft.test.WandAssemblyGameTest",
       "net.thaumcraft.test.WandGameTest",
-      "net.thaumcraft.test.TaintFaunaGameTest"
+      "net.thaumcraft.test.TaintFaunaGameTest",
+      "net.thaumcraft.test.EntityAspectsGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",

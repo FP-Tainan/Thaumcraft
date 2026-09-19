@@ -48,7 +48,7 @@ public final class ScanManager {
         // coisa caída no chão conta como o item que ela é, e não como um bicho à parte
         ItemStack dropped = droppedItem(entity);
         if (dropped != null) return keyOf(dropped);
-        return "entity:" + BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
+        return EntityAspects.key(entity);
     }
 
     /** O que uma coisa caída no chão carrega, ou nada se não for uma coisa caída. */
@@ -68,24 +68,11 @@ public final class ScanManager {
         return "block:" + BuiltInRegistries.BLOCK.getKey(state.getBlock());
     }
 
-    /** De que a criatura é feita. No original cada bicho tem a sua lista; aqui vale a regra geral dele. */
+    /** De que a criatura é feita: a coisa caída é o item dela; o resto, a tabela do original ({@link EntityAspects}). */
     public static AspectList aspectsOf(Entity entity) {
         ItemStack dropped = droppedItem(entity);
         if (dropped != null) return ObjectAspects.of(dropped);
-        AspectList list = new AspectList();
-        if (entity instanceof net.minecraft.world.entity.LivingEntity living) {
-            list.add(Aspects.LIFE, 2 + (int) (living.getMaxHealth() / 10.0f));
-            list.add(Aspects.MOTION, 2);
-            if (living instanceof net.minecraft.world.entity.monster.Enemy) list.add(Aspects.WEAPON, 2);
-            if (living instanceof net.minecraft.world.entity.animal.Animal) list.add(Aspects.BEAST, 2);
-            if (living instanceof Player) list.add(Aspects.MAN, 4);
-            if (living.getType().getCategory() == net.minecraft.world.entity.MobCategory.MONSTER) {
-                list.add(Aspects.DEATH, 2);
-            }
-        } else {
-            list.add(Aspects.MOTION, 2);
-        }
-        return list;
+        return EntityAspects.of(entity);
     }
 
     /**

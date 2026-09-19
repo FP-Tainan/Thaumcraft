@@ -1335,3 +1335,12 @@ mod são desenhadas para eles).
 - **Matérias**: gosma maculada e ramo de mácula (o que a fauna deixa).
 - **Testes**: `TaintFaunaGameTest` (conversão, slime do zumbi, esporo estourando e segurando no talo, slime crescendo e
   se dividindo, o que a vaca deixa) e `TaintFaunaClientTest`.
+
+## Aspectos das criaturas
+
+Porte do `registerEntityAspects` do `ConfigAspects` e do `ScanManager.generateEntityAspects` (do jar): a tabela
+`EntityAspectsTable` é gerada pelo `scratchpad/entidades-aspectos.js` e troca a conta inventada de antes. Vale a
+última anotação cujas condições batem (o creeper carregado, o tipo do pech, o aspecto do fogo-fátuo); o esqueleto do
+Wither, que era um tipo de esqueleto, virou criatura própria; o cavalo de então vale para cavalo, burro, mula e os dois
+mortos-vivos, e o barco para os barcos (não os de baú). O jogador é Humanus 4 e mais três aspectos tirados do nome.
+O que não está na tabela não se examina (nem solta orbes). Teste: `EntityAspectsGameTest`.
