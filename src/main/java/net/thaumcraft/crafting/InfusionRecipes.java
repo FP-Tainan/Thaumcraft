@@ -117,6 +117,21 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.AURA, 32).add(Aspects.MAGIC, 16).add(Aspects.ORDER, 16).add(Aspects.ENERGY, 16),
                 Ingredient.of(TCBlocks.NODE_STABILIZER.asItem()),
                 Arrays.asList(Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.ALUMENTUM), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.ALUMENTUM), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()))));
+        // Mirror
+        ALL.add(new InfusionRecipe("MIRROR", new ItemStack(TCBlocks.MIRROR.asItem()), 1,
+                new AspectList().add(Aspects.TRAVEL, 8).add(Aspects.DARKNESS, 8).add(Aspects.EXCHANGE, 8),
+                Ingredient.of(TCResources.get("mirrored_glass")),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL))));
+        // MirrorHand
+        ALL.add(new InfusionRecipe("MIRRORHAND", new ItemStack(TCItems.HAND_MIRROR), 5,
+                new AspectList().add(Aspects.TOOL, 16).add(Aspects.TRAVEL, 16),
+                Ingredient.of(TCBlocks.MIRROR.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.STICK), Ingredient.of(net.minecraft.world.item.Items.COMPASS), Ingredient.of(net.minecraft.world.item.Items.MAP))));
+        // MirrorEssentia
+        ALL.add(new InfusionRecipe("MIRRORESSENTIA", new ItemStack(TCBlocks.ESSENTIA_MIRROR.asItem()), 2,
+                new AspectList().add(Aspects.TRAVEL, 8).add(Aspects.WATER, 8).add(Aspects.EXCHANGE, 8),
+                Ingredient.of(TCResources.get("mirrored_glass")),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL))));
         // CoreAlchemy
         ALL.add(new InfusionRecipe("COREALCHEMY", new ItemStack(TCItems.GOLEM_CORES.get("alchemy")), 2,
                 new AspectList().add(Aspects.MAGIC, 15).add(Aspects.WATER, 15).add(Aspects.MOTION, 15),

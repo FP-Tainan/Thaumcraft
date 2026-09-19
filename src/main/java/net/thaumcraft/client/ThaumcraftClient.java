@@ -115,6 +115,11 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o buraco do Buraco Portátil: as paredes de estrelas e as faíscas das quinas
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.HOLE, net.thaumcraft.client.render.HoleRenderer::new);
+        // o vidro dos espelhos: prateado sem par, o céu de estrelas com par
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.MIRROR, net.thaumcraft.client.render.MirrorRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ESSENTIA_MIRROR, net.thaumcraft.client.render.MirrorRenderer::new);
         // a tabela de aspectos que o servidor montou; no jogo de um jogador só, o servidor é esta mesma máquina
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 net.thaumcraft.net.TCNetwork.ObjectAspectsSync.TYPE, (payload, context) -> context.client().execute(() -> {
@@ -202,6 +207,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.gui.BaublesScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.FOCUS_POUCH,
                 net.thaumcraft.client.gui.FocusPouchScreen::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.HAND_MIRROR,
+                net.thaumcraft.client.gui.HandMirrorScreen::new);
         // as botas do viajante: o empurrão de quem anda é do lado de quem joga
         net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.END_CLIENT_TICK.register(client -> {
             var player = client.player;

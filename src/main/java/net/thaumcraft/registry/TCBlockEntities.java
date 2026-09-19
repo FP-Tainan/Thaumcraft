@@ -154,6 +154,14 @@ public final class TCBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_ear"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.ArcaneEarBlockEntity::new, java.util.Set.of(TCBlocks.ARCANE_EAR)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.MirrorBlockEntity> MIRROR =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("mirror"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.MirrorBlockEntity::new, java.util.Set.of(TCBlocks.MIRROR)));
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.EssentiaMirrorBlockEntity> ESSENTIA_MIRROR =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("essentia_mirror"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.EssentiaMirrorBlockEntity::new, java.util.Set.of(TCBlocks.ESSENTIA_MIRROR)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.ManaPodBlockEntity> MANA_POD =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("mana_pod"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.ManaPodBlockEntity::new, java.util.Set.of(TCBlocks.MANA_POD)));

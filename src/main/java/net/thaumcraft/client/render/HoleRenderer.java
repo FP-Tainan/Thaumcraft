@@ -43,7 +43,7 @@ public class HoleRenderer implements BlockEntityRenderer<HoleBlockEntity, HoleRe
                     .withPrimitiveTopology(com.mojang.blaze3d.PrimitiveTopology.QUADS)
                     .withDepthStencilState(com.mojang.blaze3d.pipeline.DepthStencilState.DEFAULT)
                     .build());
-    private static final RenderType HOLE = RenderType.create("thaumcraft_hole",
+    static final RenderType HOLE = RenderType.create("thaumcraft_hole",
             RenderSetup.builder(PIPELINE)
                     .withTexture("Sampler0", TUNNEL)
                     .withTexture("Sampler1", FIELD)

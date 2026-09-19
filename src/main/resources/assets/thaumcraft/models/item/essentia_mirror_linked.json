@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "thaumcraft:block/essentia_mirror_frame",
+    "layer1": "thaumcraft:block/mirror_pane_open"
+  }
+}

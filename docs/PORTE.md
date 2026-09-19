@@ -931,3 +931,37 @@ A mesma auditoria achou, nas receitas geradas:
 - **Diferenças:**
   - o ouvido usa os instrumentos do bloco musical de hoje (o original tinha cinco: harpa, bumbo, caixa, chimbal e baixo;
     os mesmos blocos de baixo dão os mesmos cinco).
+
+## Espelhos (mágico, de essência e de mão)
+
+Fonte: `BlockMirror`, `BlockMirrorItem`, `TileMirror`, `TileMirrorEssentia`, `TileMirrorRenderer`, `ItemHandMirror`,
+`ContainerHandMirror`, `GuiHandMirror`, `InventoryHandMirror` e o `EssentiaHandler` (descompilados do jar).
+
+- **Bloco** (`MirrorBlock`): os números 0–5 e 6–11 do original viraram dois blocos, `mirror` e `essentia_mirror`, com
+  `facing` nos seis lados (a face em que se clicou). Placa de 1/16 colada no apoio, sem colisão, dureza 1, resistência
+  10, som do jarro a 0,5 de volume e tom 2. Cai quando o bloco de trás sai. Ao quebrar (até no criativo, como o
+  `onBlockHarvested` do original), o espelho ligado cai lembrando o par e o par deixa de estar ligado.
+- **Ligação** (`LinkedMirrorBlockEntity`): o código que o original repete nas duas entidades ficou numa só —
+  `restoreLink`, `invalidateLink`, `isLinkValid`, `isLinkValidSimple`, `isDestinationValid` e a tentativa de religar a
+  cada 40 tiques, espaçando 20 a mais por falha até 600. O `linkDim` numérico virou o nome do mundo.
+- **Espelho mágico** (`MirrorBlockEntity`): item que encosta na casa (a casa inteira, como no original) vai para a fila
+  do par; o par cospe um por vez depois do primeiro segundo, no ritmo `(instabilidade / 50)²`, do vidro para a frente a
+  0,15, e o item só volta a entrar num espelho 20 tiques depois (o `timeUntilPortal` do original é o
+  `portalCooldown`). Cada item soma um de instabilidade; ela cai um por segundo e com Ordo da rede de vis. É um
+  inventário de uma casa que nunca guarda: funil que põe nele manda direto para o par. Evento 1: a fumaça escura.
+- **Espelho de essência** (`EssentiaMirrorBlockEntity`): fonte de essência para quem chama (a matriz de infusão), uma
+  unidade por vez, tirada dos recipientes na caixa à frente do par (`EssentiaSources.drainFacing`, o `getSources` com
+  direção: 17 × 17 de largura e 8 de fundo), sem contar outros espelhos de essência.
+- **Espelho de mão** (`HandMirrorItem`, `HandMirrorMenu`, `HandMirrorScreen`): clicado num espelho mágico guarda onde
+  ele está (e brilha); com ele na mão, abre a casa do meio da `guihandmirror.png` — o que se põe nela sai pelo
+  espelho ligado, com o som do enderman a 0,1. Sem o espelho no lugar, a ligação se desfaz com o zap.
+- **Visual**: a moldura é o `renderItemIn2D` do original (a textura extrudada 1/16) feito modelo de bloco — frente e
+  verso inteiros e uma faixa por borda de pixel, geradas da textura pelo `Espelho.java` do scratchpad. O vidro
+  (`MirrorRenderer`) fica a 0,02 da parede: prateado sem par; com par, o céu de estrelas do buraco portátil recuado
+  3/16 de cada lado e o vidro quase transparente por cima; no mágico instável ele treme para fora
+  (`instabilidade / 10000`). O item é a moldura com o vidro (`mirrorpaneopen` quando ligado).
+- **Receitas**: as três infusões saem do gerador (`mapa-itens.js` agora conhece `blockMirror` e `itemHandMirror`).
+- **Testes**: `MirrorGameTest` (ligar pelo item e atravessar três itens, quebrar lembrando o par, cair sem parede,
+  funil, essência do outro lado, espelho de mão, as três infusões) e `MirrorClientTest` (parede com espelho sem par,
+  par ligado e de essência; espelho no chão).
+- Diferença conhecida: o fio de essência ainda é o de partículas que a matriz já usava, não o `EssentiaSourceFX`.

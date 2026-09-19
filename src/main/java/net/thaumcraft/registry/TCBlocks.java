@@ -393,6 +393,22 @@ public final class TCBlocks {
                     .isValidSpawn((s, l, p, e) -> false).isRedstoneConductor((s, l, p) -> false)
                     .isSuffocating((s, l, p) -> false).isViewBlocking((s, l, p) -> false)));
 
+    /** O som de vidro do jarro, baixo e agudo: o CustomStepSound("jar", 0.5, 2.0) dos espelhos. */
+    private static final SoundType MIRROR_SOUND = new SoundType(0.5f, 2.0f, TCSounds.JAR.value(), TCSounds.JAR.value(), TCSounds.JAR.value(),
+            TCSounds.JAR.value(), TCSounds.JAR.value());
+
+    /** O espelho mágico: o que entra por um sai pelo par. */
+    public static final Block MIRROR = register("mirror", properties ->
+            new net.thaumcraft.block.MirrorBlock(false, properties
+                    .mapColor(MapColor.NONE).strength(1.0f, 10.0f).noOcclusion().noCollision().sound(MIRROR_SOUND)
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** O espelho de essência: quem bebe essência dele bebe dos recipientes à frente do par. */
+    public static final Block ESSENTIA_MIRROR = register("essentia_mirror", properties ->
+            new net.thaumcraft.block.MirrorBlock(true, properties
+                    .mapColor(MapColor.NONE).strength(1.0f, 10.0f).noOcclusion().noCollision().sound(MIRROR_SOUND)
+                    .pushReaction(PushReaction.DESTROY)));
+
     /** A crosta da mácula: o que sobra de um tronco ou de uma folha que ela tomou. */
     public static final Block TAINT_CRUST = register("taint_crust", properties ->
             new net.thaumcraft.block.TaintBlock(properties

@@ -1206,5 +1206,14 @@
   "tc.scan.nothing": "There is nothing here worth studying.",
   "tc.tooltip.unknown": "and %s unknown aspect(s)",
   "tc.visdiscount": "Vis discount",
-  "tc.workbench.insufficient": "Insufficient vis"
+  "tc.workbench.insufficient": "Insufficient vis",
+  "block.thaumcraft.mirror": "Magic Mirror",
+  "block.thaumcraft.essentia_mirror": "Essentia Mirror",
+  "item.thaumcraft.hand_mirror": "Magic Hand Mirror",
+  "tc.handmirrorlinkedto": "Linked to",
+  "tc.handmirrorlinked": "Link established.",
+  "tc.handmirrorerror": "Destination mirror is missing or misplaced. Link broken.",
+  "tc.mirror.already_linked": "That mirror is already linked to a valid destination.",
+  "tc.mirror.in": "in",
+  "container.handmirror": "Hand Mirror"
 }

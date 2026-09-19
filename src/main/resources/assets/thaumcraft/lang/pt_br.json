@@ -1210,5 +1210,14 @@
   "tc.scan.nothing": "Não há nada aqui que valha estudar.",
   "tc.tooltip.unknown": "e mais %s aspecto(s) que você ainda não conhece",
   "tc.visdiscount": "Desconto em vis",
-  "tc.workbench.insufficient": "Vis insuficiente"
+  "tc.workbench.insufficient": "Vis insuficiente",
+  "block.thaumcraft.mirror": "Espelho Mágico",
+  "block.thaumcraft.essentia_mirror": "Espelho de Essência",
+  "item.thaumcraft.hand_mirror": "Espelho Mágico de Mão",
+  "tc.handmirrorlinkedto": "Conectado com",
+  "tc.handmirrorlinked": "Ligação estabelecida.",
+  "tc.handmirrorerror": "O espelho de destino desapareceu ou foi deslocado. Ligação quebrada.",
+  "tc.mirror.already_linked": "Esse espelho já está ligado a um destino válido.",
+  "tc.mirror.in": "em",
+  "container.handmirror": "Espelho de Mão"
 }
