@@ -91,6 +91,23 @@ public final class TCEntities {
                                             net.thaumcraft.entity.FireBatEntity::checkSpawn))
                     .sized(0.5f, 0.9f).fireImmune().clientTrackingRange(5));
 
+    /** O pech: seis décimos por um e oito, os olhos a dois terços da altura. */
+    public static final EntityType<net.thaumcraft.entity.PechEntity> PECH = register("pech",
+            net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType.Builder.createMob(
+                            net.thaumcraft.entity.PechEntity::new, MobCategory.MONSTER, mob -> mob
+                                    .defaultAttributes(net.thaumcraft.entity.PechEntity::attributes)
+                                    .spawnPlacement(net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                                            net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                                            net.thaumcraft.entity.PechEntity::checkSpawn))
+                    .sized(0.6f, 1.8f).eyeHeight(1.8f * 0.66f).clientTrackingRange(8));
+
+    /** A rajada do pech mago e do foco dos pechs. */
+    public static final EntityType<net.thaumcraft.entity.PechBlastEntity> PECH_BLAST = register("pech_blast",
+            EntityType.Builder.<net.thaumcraft.entity.PechBlastEntity>of(net.thaumcraft.entity.PechBlastEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .clientTrackingRange(4)
+                    .updateInterval(10));
+
     private TCEntities() {
     }
 

@@ -101,6 +101,8 @@ public class CreatureGameTest {
         player.snapTo(spot.x, spot.y, spot.z, 0.0f, 8.0f);
         var cow = helper.spawn(EntityTypes.COW, new BlockPos(1, 1, 6));
         cow.setNoAi(true);
+        // mira no meio da vaca
+        player.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, cow.getBoundingBox().getCenter());
         ItemStack wand = new ItemStack(TCItems.WAND);
         wand.set(TCComponents.WAND_FOCUS, "hellbat");
         AspectList vis = new AspectList();

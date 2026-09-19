@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "#c:dyes/green",
+    "thaumcraft:white_tallow_candle"
+  ],
+  "result": {
+    "id": "thaumcraft:green_tallow_candle"
+  }
+}

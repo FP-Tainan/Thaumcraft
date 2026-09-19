@@ -36,6 +36,18 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> SILVERWOOD_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("silverwood"));
 
+    /** O que os biomas do mod semeiam: vagens de mana, cogumelos-vis, as árvores da Floresta Mágica e as fibras. */
+    public static final Feature<NoneFeatureConfiguration> MANA_PODS = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("mana_pods"), new net.thaumcraft.world.MagicalForestFeatures.ManaPods(NoneFeatureConfiguration.CODEC));
+    public static final Feature<NoneFeatureConfiguration> VISHROOMS = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("vishrooms"), new net.thaumcraft.world.MagicalForestFeatures.Vishrooms(NoneFeatureConfiguration.CODEC));
+    public static final Feature<NoneFeatureConfiguration> TALL_SILVERWOOD = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("tall_silverwood"), new net.thaumcraft.world.MagicalForestFeatures.TallSilverwood(NoneFeatureConfiguration.CODEC));
+    public static final Feature<NoneFeatureConfiguration> FOREST_GREATWOOD = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("forest_greatwood"), new net.thaumcraft.world.MagicalForestFeatures.ForestGreatwood(NoneFeatureConfiguration.CODEC));
+    public static final Feature<NoneFeatureConfiguration> TAINT_FIBRES = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("taint_fibres"), new net.thaumcraft.world.MagicalForestFeatures.TaintFibres(NoneFeatureConfiguration.CODEC));
+
     private TCFeatures() {
     }
 

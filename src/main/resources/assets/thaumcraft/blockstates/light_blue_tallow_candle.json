@@ -1,0 +1,78 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "thaumcraft:block/tallow_candle_0"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_1"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_2"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_3"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_4"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_5"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_6"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_7"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_8"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_9"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_10"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_11"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_12"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_13"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_14"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_15"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_16"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_17"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_18"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_19"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_20"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_21"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_22"
+      },
+      {
+        "model": "thaumcraft:block/tallow_candle_23"
+      }
+    ]
+  }
+}

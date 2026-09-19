@@ -374,6 +374,7 @@ public class WandRenderer implements SpecialModelRenderer<WandRenderer.Parts> {
             case "trade" -> 0x857B93;
             case "primal" -> 0xA5A2C1;
             case "hellbat" -> 0xDC3502;
+            case "pech" -> 0x229944;
             case "warding" -> 0xFFE9CF;
             default -> 0xFFFFFF;
         };

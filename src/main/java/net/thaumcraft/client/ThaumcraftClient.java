@@ -59,6 +59,15 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.render.FireBatRenderer.LAYER, net.thaumcraft.client.render.FireBatModel::createBodyLayer);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.FIREBAT, net.thaumcraft.client.render.FireBatRenderer::new);
+        // o pech, a rajada dele (que é só os fogos-fátuos) e a tela de troca
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.PechRenderer.LAYER, net.thaumcraft.client.render.PechModel::createBodyLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.PECH, net.thaumcraft.client.render.PechRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.PECH_BLAST, net.minecraft.client.renderer.entity.NoopRenderer::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.PECH,
+                net.thaumcraft.client.gui.PechScreen::new);
         // o nó de aura é uma nuvem de bolhas, e quem a pinta é este desenhista
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.NODE, net.thaumcraft.client.render.NodeRenderer::new);
@@ -145,6 +154,12 @@ public class ThaumcraftClient implements ClientModInitializer {
         for (var stone : net.thaumcraft.registry.TCBlocks.INFUSED_STONE.values()) {
             net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
                     java.util.List.of(net.minecraft.client.color.block.BlockTintSources.constant(0xFF000000 | veins[vein++])), stone);
+        }
+        // as velas: o corpo e os pingos na cor de cada uma (o colorMultiplier do BlockCandle); o pavio sem tinta
+        for (int i = 0; i < net.thaumcraft.registry.TCBlocks.CANDLE_COLOURS.length; i++) {
+            net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                    java.util.List.of(net.minecraft.client.color.block.BlockTintSources.constant(0xFF000000 | net.thaumcraft.registry.TCBlocks.CANDLE_TINTS[i])),
+                    net.thaumcraft.registry.TCBlocks.TALLOW_CANDLES.get(net.thaumcraft.registry.TCBlocks.CANDLE_COLOURS[i]));
         }
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.CRYSTAL_CLUSTER, net.thaumcraft.client.render.CrystalClusterRenderer::new);
@@ -262,6 +277,12 @@ public class ThaumcraftClient implements ClientModInitializer {
                         pos.getY() + 0.5f + random.nextFloat() - random.nextFloat(),
                         pos.getZ() + 0.5f + random.nextFloat() - random.nextFloat(), 2.0f, 7, 0.0f);
         net.thaumcraft.block.ShimmerleafBlock.clientEffects = net.thaumcraft.client.fx.Wisp::colored;
+        // o cogumelo-vis: a chaminha roxa que encolhe e cai
+        net.thaumcraft.block.VishroomBlock.clientEffects = (x, y, z) ->
+                net.thaumcraft.client.fx.Wisp.coloredFalling(x, y, z, 0.1f, 0.5f, 0.3f, 0.8f, true, 0.015f);
+        // a vagem de mana: a casca e o miolo que brilha
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.MANA_POD, net.thaumcraft.client.render.ManaPodRenderer::new);
         // o Nitor é um orbe de luz, e não um desenho chapado
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.NITOR,

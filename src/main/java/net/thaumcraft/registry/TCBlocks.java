@@ -72,6 +72,23 @@ public final class TCBlocks {
         }
     }
 
+    /** As cores das velas, na ordem do número de cada uma no original (a da lã). */
+    public static final String[] CANDLE_COLOURS = {"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink",
+            "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black"};
+    /** O {@code Utils.colors}: a tinta de cada vela. */
+    public static final int[] CANDLE_TINTS = {15790320, 15435844, 12801229, 6719955, 14602026, 4312372, 14188952, 4408131,
+            10526880, 2651799, 8073150, 2437522, 5320730, 3887386, 11743532, 1973019};
+    /** As velas de sebo, uma por cor: luz 14 (o 0,95 do original), dureza 0,1, som de lã, sem colisão. */
+    public static final java.util.Map<String, Block> TALLOW_CANDLES = new java.util.LinkedHashMap<>();
+
+    static {
+        for (String colour : CANDLE_COLOURS) {
+            TALLOW_CANDLES.put(colour, register(colour + "_tallow_candle", properties -> new net.thaumcraft.block.TallowCandleBlock(properties
+                    .mapColor(MapColor.NONE).strength(0.1f).noCollision().noOcclusion().lightLevel(state -> 14)
+                    .sound(SoundType.WOOL).pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY))));
+        }
+    }
+
     /** O jarro lacrado: um pote de vidro com tampa de chumbo, que guarda essência. */
     public static final Block JAR = register("jar", properties ->
             new net.thaumcraft.block.JarBlock(properties
@@ -327,6 +344,28 @@ public final class TCBlocks {
                     .noCollision()
                     .noOcclusion()
                     .lightLevel(state -> 8)
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** O cogumelo-vis: o da Floresta Mágica, com luz oito, que deixa tonto quem encosta. */
+    public static final Block VISHROOM = register("vishroom", properties ->
+            new net.thaumcraft.block.VishroomBlock(properties
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .instabreak()
+                    .noCollision()
+                    .noOcclusion()
+                    .lightLevel(state -> 8)
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** A vagem de mana: pendura embaixo das toras da Floresta Mágica e dá feijões de mana. */
+    public static final Block MANA_POD = register("mana_pod", properties ->
+            new net.thaumcraft.block.ManaPodBlock(properties
+                    .mapColor(MapColor.PLANT)
+                    .strength(0.5f)
+                    .noOcclusion()
+                    .randomTicks()
+                    .lightLevel(state -> state.getValue(net.thaumcraft.block.ManaPodBlock.AGE))
                     .sound(SoundType.GRASS)
                     .pushReaction(PushReaction.DESTROY)));
 

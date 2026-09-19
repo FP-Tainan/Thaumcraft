@@ -101,6 +101,18 @@ public final class Wisp implements ThaumFx.Effect {
         ThaumFx.add(wisp);
     }
 
+    /** O mesmo, encolhendo e caindo: o do cogumelo-vis. */
+    public static void coloredFalling(double x, double y, double z, float size, float red, float green, float blue, boolean shrink,
+                                      float gravity) {
+        Wisp wisp = new Wisp(random(), x, y, z, size, -1);
+        wisp.red = red == 0.0f ? 1.0f : red;
+        wisp.green = green;
+        wisp.blue = blue;
+        wisp.shrink = shrink;
+        wisp.gravity = gravity;
+        ThaumFx.add(wisp);
+    }
+
     /** O {@code wispFX2}: parado, com gravidade. */
     public static void fx2(double x, double y, double z, float size, int type, boolean shrink, float gravity) {
         Wisp wisp = new Wisp(random(), x, y, z, size, type);

@@ -1,0 +1,159 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "thaumcraft:block/tallow_candle",
+    "candle": "thaumcraft:block/tallow_candle",
+    "wick": "thaumcraft:block/tallow_candle_wick"
+  },
+  "elements": [
+    {
+      "from": [
+        6,
+        0,
+        6
+      ],
+      "to": [
+        10,
+        8,
+        10
+      ],
+      "faces": {
+        "north": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "down": {
+          "texture": "#candle",
+          "tintindex": 0,
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        0,
+        10
+      ],
+      "to": [
+        7,
+        1,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "down": {
+          "texture": "#candle",
+          "tintindex": 0,
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        10,
+        0,
+        6
+      ],
+      "to": [
+        11,
+        1,
+        7
+      ],
+      "faces": {
+        "north": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#candle",
+          "tintindex": 0
+        },
+        "down": {
+          "texture": "#candle",
+          "tintindex": 0,
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        7.6,
+        8,
+        7.6
+      ],
+      "to": [
+        8.4,
+        10,
+        8.4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#wick"
+        },
+        "south": {
+          "texture": "#wick"
+        },
+        "east": {
+          "texture": "#wick"
+        },
+        "west": {
+          "texture": "#wick"
+        },
+        "up": {
+          "texture": "#wick"
+        },
+        "down": {
+          "texture": "#wick"
+        }
+      }
+    }
+  ]
+}

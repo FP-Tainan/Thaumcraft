@@ -44,6 +44,7 @@ public class NodeFeature extends Feature<NoneFeatureConfiguration> {
 
         NodeType type = rollType(random);
         NodeModifier modifier = rollModifier(random);
+        type = taintedLand(level, pos, random, type);
         AspectList aspects = rollAspects(level, pos, random, type);
 
         level.setBlock(pos, TCBlocks.NODE.defaultBlockState(), 3);
@@ -72,10 +73,17 @@ public class NodeFeature extends Feature<NoneFeatureConfiguration> {
                                     boolean silverwood) {
         NodeType type = silverwood ? NodeType.PURE : rollType(random);
         NodeModifier modifier = rollModifier(random);
+        type = taintedLand(level, pos, random, type);
         AspectList aspects = rollAspects(level, pos, random, type, silverwood);
         if (!(level.getBlockEntity(pos) instanceof NodeBlockEntity node)) return false;
         node.setup(aspects, type, modifier);
         return true;
+    }
+
+    /** Na Terra Maculada, o nó que não é puro nasce maculado metade das vezes (o sorteio do original). */
+    public static NodeType taintedLand(net.minecraft.world.level.LevelAccessor level, BlockPos pos, RandomSource random, NodeType type) {
+        if (type != NodeType.PURE && level.getBiome(pos).is(TCBiomes.TAINTED_LAND) && random.nextBoolean()) return NodeType.TAINTED;
+        return type;
     }
 
     /** O tipo: quase sempre comum, e de vez em quando um dos outros. */
@@ -109,6 +117,11 @@ public class NodeFeature extends Feature<NoneFeatureConfiguration> {
     public static AspectList rollAspects(net.minecraft.world.level.LevelAccessor level, BlockPos pos,
                                          RandomSource random, NodeType type, boolean quarter) {
         int aura = BiomeAura.auraOf(level.getBiome(pos));
+        // na Terra Maculada, uma vez e meia a aura; e o que nasceu maculado, mais meia vez
+        if (type != NodeType.PURE && level.getBiome(pos).is(TCBiomes.TAINTED_LAND)) {
+            aura = (int) (aura * 1.5f);
+            if (type == NodeType.TAINTED) aura = (int) (aura * 1.5f);
+        }
         if (quarter) aura /= 4;
         int value = random.nextInt(Math.max(1, aura / 2)) + aura / 2;
 

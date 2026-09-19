@@ -98,6 +98,10 @@ public final class TCItems {
             register("crystal_cluster_" + entry.getKey(), properties ->
                     new net.minecraft.world.item.BlockItem(entry.getValue(), properties.useBlockDescriptionPrefix()));
         }
+        for (var entry : TCBlocks.TALLOW_CANDLES.entrySet()) {
+            register(entry.getKey() + "_tallow_candle", properties ->
+                    new net.minecraft.world.item.BlockItem(entry.getValue(), properties.useBlockDescriptionPrefix()));
+        }
     }
 
     static {
@@ -179,6 +183,15 @@ public final class TCItems {
                     new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
                             new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.HUNGER, 600, 0), 0.8f)).build())));
 
+    /** O feijão de mana: um ponto de um aspecto; comido (meio segundo, mesmo sem fome) dá um efeito ao acaso. */
+    public static final Item MANA_BEAN = register("mana_bean", properties -> new net.thaumcraft.item.ManaBeanItem(properties.food(
+            new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.5f).alwaysEdible().build(),
+            net.minecraft.world.item.component.Consumables.defaultFood().consumeSeconds(0.5f).build())));
+
+    /** O cogumelo-vis, para levar na mão. */
+    public static final Item VISHROOM = register("vishroom", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.VISHROOM, properties.useBlockDescriptionPrefix()));
+
     /** A essência etérea: o que sobra do fogo-fátuo, com dois pontos do aspecto dele. */
     public static final Item WISP_ESSENCE = register("wisp_essence", net.thaumcraft.item.WispEssenceItem::new);
 
@@ -191,6 +204,8 @@ public final class TCItems {
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.WISP)));
     public static final Item FIREBAT_SPAWN_EGG = register("firebat_spawn_egg", properties ->
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.FIREBAT)));
+    public static final Item PECH_SPAWN_EGG = register("pech_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.PECH)));
 
     /** O arreio taumostático: voa com Potentia; 400 de durabilidade e conserta com ouro. */
     public static final Item HOVER_HARNESS = register("hover_harness", properties ->
@@ -283,6 +298,13 @@ public final class TCItems {
                         .add(net.thaumcraft.api.aspects.Aspects.FIRE, 200)
                         .add(net.thaumcraft.api.aspects.Aspects.ENTROPY, 100)
                         .add(net.thaumcraft.api.aspects.Aspects.AIR, 100), false)));
+        // o dos pechs: terra, perditio e aqua 10 por rajada, quatro por segundo
+        FOCI.put("pech", register("focus_pech", properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1), "pech",
+                new net.thaumcraft.api.aspects.AspectList()
+                        .add(net.thaumcraft.api.aspects.Aspects.EARTH, 10)
+                        .add(net.thaumcraft.api.aspects.Aspects.ENTROPY, 10)
+                        .add(net.thaumcraft.api.aspects.Aspects.WATER, 10), false)));
         FOCI.put("primal", register("focus_primal", properties -> new net.thaumcraft.item.FocusItem(
                 properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), "primal",
                 net.thaumcraft.item.Focuses.primalCost(0L).copy(), false)));
@@ -579,7 +601,7 @@ public final class TCItems {
      */
     private static final String[] SHELF = {
             "thaumometer", "thaumonomicon", "goggles", "robe_chestplate", "robe_leggings", "robe_boots", "hover_harness", "traveller_boots", "fortress_helmet", "fortress_chestplate", "fortress_leggings",
-            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_hellbat", "focus_primal", "focus_pouch", "mundane_amulet", "mundane_ring", "mundane_belt", "apprentice_ring_air", "apprentice_ring_earth", "apprentice_ring_fire", "apprentice_ring_water", "apprentice_ring_order", "apprentice_ring_entropy", "vis_stone", "vis_amulet", "runic_amulet", "runic_amulet_emergency", "runic_ring_lesser", "runic_ring", "runic_ring_charged", "runic_ring_regen", "runic_girdle", "runic_girdle_kinetic", "hover_girdle",
+            "wand", "staff", "focus_fire", "focus_excavation", "focus_frost", "focus_shock", "focus_portable_hole", "focus_trade", "focus_warding", "focus_hellbat", "focus_pech", "focus_primal", "focus_pouch", "mundane_amulet", "mundane_ring", "mundane_belt", "apprentice_ring_air", "apprentice_ring_earth", "apprentice_ring_fire", "apprentice_ring_water", "apprentice_ring_order", "apprentice_ring_entropy", "vis_stone", "vis_amulet", "runic_amulet", "runic_amulet_emergency", "runic_ring_lesser", "runic_ring", "runic_ring_charged", "runic_ring_regen", "runic_girdle", "runic_girdle_kinetic", "hover_girdle",
             // as pontas na ordem da aba do original, cada inerte logo depois da sua
             "wand_cap_iron", "wand_cap_gold", "wand_cap_copper", "wand_cap_silver", "wand_cap_silver_inert",
             "wand_cap_thaumium", "wand_cap_thaumium_inert", "wand_cap_void", "wand_cap_void_inert",
@@ -588,7 +610,7 @@ public final class TCItems {
             "staff_rod_greatwood", "staff_rod_obsidian", "staff_rod_silverwood", "staff_rod_ice",
             "staff_rod_quartz", "staff_rod_reed", "staff_rod_blaze", "staff_rod_bone", "staff_rod_primal",
             "shard_air", "shard_fire", "shard_water", "shard_earth", "shard_order", "shard_entropy",
-            "shard_balanced", "salis_mundus", "phial", "crystal_essence", "wisp_essence", "zombie_brain",
+            "shard_balanced", "salis_mundus", "phial", "crystal_essence", "wisp_essence", "zombie_brain", "mana_bean",
             "thaumium_ingot", "thaumium_nugget", "void_ingot", "void_nugget", "quicksilver", "magic_tallow", "amber", "enchanted_fabric",
             "vis_filter", "knowledge_fragment", "mirrored_glass", "jar_label", "primal_charm", "gold_coin",
             "alumentum", "nitor", "loot_bag", "loot_bag_uncommon", "loot_bag_rare",
@@ -601,7 +623,7 @@ public final class TCItems {
             "greatwood_log", "silverwood_log", "greatwood_planks", "silverwood_planks", "greatwood_stairs",
             "silverwood_stairs", "greatwood_slab", "silverwood_slab", "greatwood_leaves", "silverwood_leaves",
             "greatwood_sapling", "silverwood_sapling",
-            "shimmerleaf", "cinderpearl", "ethereal_bloom", "taint_crust", "taint_soil", "taint_fibres",
+            "shimmerleaf", "cinderpearl", "vishroom", "ethereal_bloom", "taint_crust", "taint_soil", "taint_fibres",
             "golem_bell",
             "golem_straw", "golem_wood", "golem_tallow", "golem_clay",
             "golem_flesh", "golem_stone", "golem_iron", "golem_thaumium",
@@ -616,7 +638,10 @@ public final class TCItems {
             "cinnabar_ore", "amber_ore",
             "crystal_cluster_air", "crystal_cluster_fire", "crystal_cluster_water", "crystal_cluster_earth",
             "crystal_cluster_order", "crystal_cluster_entropy", "crystal_cluster_balanced",
-            "brainy_zombie_spawn_egg", "giant_brainy_zombie_spawn_egg", "wisp_spawn_egg", "firebat_spawn_egg",
+            "white_tallow_candle", "orange_tallow_candle", "magenta_tallow_candle", "light_blue_tallow_candle", "yellow_tallow_candle",
+            "lime_tallow_candle", "pink_tallow_candle", "gray_tallow_candle", "light_gray_tallow_candle", "cyan_tallow_candle",
+            "purple_tallow_candle", "blue_tallow_candle", "brown_tallow_candle", "green_tallow_candle", "red_tallow_candle", "black_tallow_candle",
+            "brainy_zombie_spawn_egg", "giant_brainy_zombie_spawn_egg", "wisp_spawn_egg", "firebat_spawn_egg", "pech_spawn_egg",
     };
 
     /**

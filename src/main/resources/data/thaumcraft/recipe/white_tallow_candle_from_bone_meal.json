@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:bone_meal",
+    "#thaumcraft:tallow_candles"
+  ],
+  "result": {
+    "id": "thaumcraft:white_tallow_candle"
+  }
+}

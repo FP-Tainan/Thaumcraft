@@ -1,0 +1,8 @@
+{
+  "feature": "thaumcraft:taint_fibres",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

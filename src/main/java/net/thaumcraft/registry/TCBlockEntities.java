@@ -142,6 +142,10 @@ public final class TCBlockEntities {
                     new BlockEntityType<>(net.thaumcraft.block.entity.WorkbenchChargerBlockEntity::new,
                             java.util.Set.of(TCBlocks.WORKBENCH_CHARGER)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.ManaPodBlockEntity> MANA_POD =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("mana_pod"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.ManaPodBlockEntity::new, java.util.Set.of(TCBlocks.MANA_POD)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.CrystalClusterBlockEntity> CRYSTAL_CLUSTER =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("crystal_cluster"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.CrystalClusterBlockEntity::new,

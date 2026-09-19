@@ -16,6 +16,7 @@
     "thaumcraft:crystal_cluster_earth",
     "thaumcraft:crystal_cluster_order",
     "thaumcraft:crystal_cluster_entropy",
-    "thaumcraft:crystal_cluster_balanced"
+    "thaumcraft:crystal_cluster_balanced",
+    "#thaumcraft:tallow_candles"
   ]
 }

@@ -843,7 +843,7 @@ A mesma auditoria achou, nas receitas geradas:
 
 ## Aglomerados nativos (2026-09-20)
 
-- **Aglomerados nativos** de ferro, cobre, ouro e cinábrio e a **gota de mercúrio** (o  5, 16, 17, 21 e 31).
+- **Aglomerados nativos** de ferro, cobre, ouro e cinábrio e a **gota de mercúrio** (o `ItemNugget` 5, 16, 17, 21 e 31).
   Cada aglomerado funde em dois lingotes (o de cinábrio em dois mercúrios); nove gotas fazem um mercúrio e um mercúrio
   desfaz em nove.
 - No crisol, **metallum e ordo** com o minério viram o aglomerado (PUREIRON, PUREGOLD, PURECOPPER), e **metallum** com
@@ -853,3 +853,59 @@ A mesma auditoria achou, nas receitas geradas:
 - **Diferença:** estanho, prata e chumbo (os aglomerados 18 a 20 e as pepitas 2 a 4) só existiam no original quando
   outro mod trazia o lingote; sem mods, ficam de fora, como lá. As pepitas de ferro e de cobre são as do próprio jogo.
   O cobre, que no original dependia de outro mod, hoje é do jogo e entra.
+
+## Velas, biomas, vagem de mana e cogumelo-vis (2026-09-20)
+
+- **Velas de sebo** (`TallowCandleBlock`, o `BlockCandle` e o `BlockCandleRenderer`): dezesseis cores, luz 14 (o
+  0,95 do original), sem colisão, só em chão firme, fumaça e chama no pavio; estabilizam a infusão. Os pingos de sebo
+  no pé saem do mesmo sorteio do renderizador original e viram variantes do modelo. Três velas de um barbante e dois
+  sebos; o corante pinta a branca e a farinha de osso branqueia qualquer uma.
+- **Biomas** (`TCBiomes`, dados em `data/thaumcraft/worldgen/biome`): **Floresta Mágica**, **Terra Maculada** e
+  **Sinistro**, com as cores, as criaturas e as decorações do `BiomeGenMagicalForest`, do `BiomeGenTaint` e do
+  `BiomeGenEerie` (árvores, flores, mato, nenúfares, cogumelos, pedras com musgo, cogumelos gigantes, vagens de mana,
+  cogumelos-vis, fibras e manchas de mácula, nos números do `BiomeDecorator` de cada um). A árvore grande da floresta
+  é o `WorldGenBigMagicTree` (o carvalho grande de 2014, de 11 a 22 de altura).
+- **Onde nascem** (`mixin/OverworldBiomeBuilderMixin`): o mundo de hoje escolhe bioma por clima, e não por peso. A
+  Floresta Mágica fica com metade das florestas frias e temperadas; a Terra Maculada, com metade das planícies frias
+  — perto da proporção de pesos do original (5 e 2). O Sinistro só aparece onde um nó sombrio pinta.
+- **Pintar bioma** (`world/BiomePainter`, o `Utils.setBiomeAt`): troca o bioma de uma coluna e manda para quem está
+  vendo, como o `/fillbiome`. Com isso os nós voltaram a fazer o que o original faz: o **maculado** pinta Terra
+  Maculada em volta, o **sombrio** pinta Sinistro e chama zumbis furiosos (até três por perto, com alguém a 24 blocos),
+  o **puro** devolve a Floresta Mágica à Terra Maculada (e o do pinheiro-de-prata pinta Floresta Mágica em volta).
+  Um nó comum na Terra Maculada vira maculado uma vez em quinhentas; e nasce maculado metade das vezes, com mais aura.
+- **Correção da tabela de aura** (`world/BiomeAura`): tinha só 12 dos 31 tipos do original. Agora os 31 vêm do jar,
+  com os tipos do dicionário de biomas do Forge nas marcas de convenção do Fabric (quente, frio, úmido, seco, mágico,
+  assustador...). Muda a aura e o aspecto dos nós e dos veios de pedra infundida conforme o bioma.
+- **Vagem de mana** (`ManaPodBlock` + `ManaPodRenderer`) e **feijão de mana** (`ManaBeanItem`): a vagem pendura
+  embaixo de tora em bioma mágico, cresce até sete (uma vez em trinta), brilha do tamanho que tem e, no três, escolhe
+  o aspecto das vizinhas e das misturas delas; dá feijões. O feijão (meio segundo de comer, mesmo sem fome) dá um
+  efeito ao acaso da lista de poções de 1.7 e, uma vez em quatro, um ponto de pesquisa do aspecto; plantado embaixo de
+  uma tora em bioma mágico, vira vagem.
+- **Cogumelo-vis** (`VishroomBlock`): luz oito, chaminha roxa, e quem encosta fica tonto por dez segundos.
+- **Diferenças:**
+  - o bioma se pinta de quatro em quatro blocos (é como o jogo de hoje guarda bioma); no original era coluna a coluna.
+  - os nomes em português dos biomas são tradução do porte (o original não tinha).
+  - a mácula ainda se alastra pela regra antiga do porte; a de verdade, que depende do bioma, chega com a fauna da
+    mácula e o fluxo.
+
+## Pech (2026-09-20)
+
+- **Pech** (`PechEntity` + `PechModel`/`PechRenderer`, o `EntityPech`, o `ModelPech` e o `RenderPech`): 30 de vida, 6
+  de dano, rápido, dois de armadura a mais; foge de gente enquanto não é manso, abre portas, cata do chão o que é de
+  valor e o que couber na mochila de nove casas (menos o que ele mesmo largou numa troca). Três tipos pelo que nasce
+  na mão: o **coletor** (briga de perto), o **mago** (varinha com o foco dos pechs, rajadas) e o **caçador** (arco).
+  Quem fere um pech arruma briga com todos a 32 blocos (bravos de 400 a 800 tiques); ele resmunga mexendo o queixão.
+  Nasce na Floresta Mágica e no Sinistro (menos de quatro por perto). Morto, larga quase tudo da mochila, feijões de
+  mana, às vezes uma moeda e, raro, um fragmento de conhecimento.
+- **Troca** (`PechMenu` + `PechScreen`, o `ContainerPech` e o `GuiPech`): o item de valor (ouro, pérola, diamante,
+  esmeralda, maçã dourada, feijão de mana, ou qualquer coisa com Lucrum) come o pech e pode deixá-lo manso; manso, o
+  clique abre a troca, e o botão dos dados vira o valor do item em coisas da mochila, da tabela do tipo dele
+  (`PechTrades`, com os números do jar) e, nos valores altos, tesouros de masmorra. De vez em quando a amizade acaba.
+- **Rajada** (`PechBlastEntity`, o `EntityPechBlast`): cai de leve e, onde bate, fere tudo a dois blocos (menos pechs)
+  com veneno, lentidão ou fraqueza.
+- **Foco dos pechs** (o `ItemFocusPech`): terra, perditio e aqua 10 por rajada, quatro por segundo.
+- **Diferenças:**
+  - os livros de Pressa e de Reparo da tabela do mago chegam com os encantamentos do Thaumcraft; as pepitas de estanho,
+    prata e chumbo não existem sem mods.
+  - o tesouro de masmorra é a lista do baú de 2014 com peso até cinco e uma unidade (maçã dourada, dois discos, as três
+    armaduras de cavalo, livro encantado), sorteada por igual.

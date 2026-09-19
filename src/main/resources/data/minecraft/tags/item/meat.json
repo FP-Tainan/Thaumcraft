@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumcraft:zombie_brain"
+    "thaumcraft:zombie_brain",
+    "thaumcraft:mana_bean"
   ]
 }

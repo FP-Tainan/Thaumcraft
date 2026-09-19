@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "features": [
+      {
+        "chance": 0.07142857142857142,
+        "feature": {
+          "feature": "thaumcraft:tall_silverwood",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.1,
+        "feature": {
+          "feature": "thaumcraft:forest_greatwood",
+          "placement": []
+        }
+      }
+    ],
+    "default": {
+      "feature": "thaumcraft:big_magic_tree",
+      "placement": []
+    }
+  }
+}

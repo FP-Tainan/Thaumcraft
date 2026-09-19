@@ -40,6 +40,12 @@ public final class TCMenus {
             new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.ResearchTableMenu::new,
                     net.minecraft.core.BlockPos.STREAM_CODEC));
 
+    /** A troca com o pech: a tela abre sabendo de qual pech é. */
+    public static final MenuType<net.thaumcraft.inventory.PechMenu> PECH = Registry.register(
+            BuiltInRegistries.MENU, Thaumcraft.id("pech"),
+            new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.PechMenu::new,
+                    net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
+
     private TCMenus() {
     }
 

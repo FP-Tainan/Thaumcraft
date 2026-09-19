@@ -341,6 +341,7 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:silverwood_sapling", new AspectList().add(Aspects.PLANT, 2).add(Aspects.TREE, 1).add(Aspects.MAGIC, 1));
         r.item("thaumcraft:shimmerleaf", new AspectList().add(Aspects.PLANT, 2).add(Aspects.EXCHANGE, 2).add(Aspects.MAGIC, 2));
         r.item("thaumcraft:cinderpearl", new AspectList().add(Aspects.PLANT, 2).add(Aspects.FIRE, 2).add(Aspects.MAGIC, 2));
+        r.item("thaumcraft:vishroom", new AspectList().add(Aspects.PLANT, 2).add(Aspects.POISON, 1).add(Aspects.MAGIC, 2));
         r.item("thaumcraft:arcane_stone", new AspectList().add(Aspects.EARTH, 1).add(Aspects.MAGIC, 1));
         r.item("thaumcraft:arcane_stone_bricks", new AspectList().add(Aspects.EARTH, 1).add(Aspects.MAGIC, 1));
         r.item("thaumcraft:quicksilver", new AspectList().add(Aspects.METAL, 3).add(Aspects.POISON, 1).add(Aspects.EXCHANGE, 2));
@@ -359,12 +360,14 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:shard_entropy", new AspectList().add(Aspects.MAGIC, 1).add(Aspects.ENTROPY, 2).add(Aspects.CRYSTAL, 1));
         r.item("thaumcraft:salis_mundus", r.copy("thaumcraft:shard_balanced").add(Aspects.MAGIC, 2));
         r.item("thaumcraft:crucible", r.copy("minecraft:cauldron").add(Aspects.CRAFT, 4).add(Aspects.MAGIC, 4));
+        r.item("thaumcraft:white_tallow_candle", new AspectList().add(Aspects.LIGHT, 2).add(Aspects.FLESH, 1).add(Aspects.MAGIC, 1));
         r.item("thaumcraft:thaumonomicon", r.copy("minecraft:bookshelf").add(Aspects.MAGIC, 2).merge(Aspects.MIND, 2));
         r.item("thaumcraft:phial", new AspectList().add(Aspects.VOID, 1));
         r.item("thaumcraft:wisp_essence", new AspectList().add(Aspects.AURA, 2));
         r.item("thaumcraft:crystal_essence", new AspectList());
         r.complex("thaumcraft:goggles", new AspectList().add(Aspects.SENSES, 4));
         r.item("thaumcraft:apprentice_ring_air", new AspectList().add(Aspects.MAGIC, 5));
+        r.item("thaumcraft:focus_pech", new AspectList().add(Aspects.MAGIC, 5).add(Aspects.POISON, 5).add(Aspects.ENTROPY, 5).add(Aspects.ELDRITCH, 5).add(Aspects.WEAPON, 5));
     }
 
     static void blocks(ObjectAspects.Registrar r) {

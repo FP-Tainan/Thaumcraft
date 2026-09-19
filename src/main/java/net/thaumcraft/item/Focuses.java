@@ -104,6 +104,7 @@ public final class Focuses {
             case "primal" -> primal(level, player, wand);
             case "warding" -> warding(level, player, wand, focus);
             case "hellbat" -> hellbat(level, player, wand, focus);
+            case "pech" -> pechBlast(level, player, wand, focus);
             default -> false;
         };
     }
@@ -219,6 +220,22 @@ public final class Focuses {
         level.addFreshEntity(orb);
         level.playSound(null, orb, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.3f,
                 0.8f + level.getRandom().nextFloat() * 0.1f);
+        return true;
+    }
+
+    // ----------------------------------------------------------------- pechs
+
+    private static final Map<UUID, Long> PECH_COOLDOWN = new HashMap<>();
+
+    /** O {@code ItemFocusPech}: a rajada do pech, de quem segura a varinha; quatro por segundo. */
+    private static boolean pechBlast(Level level, Player player, ItemStack wand, FocusItem focus) {
+        long now = System.currentTimeMillis();
+        if (PECH_COOLDOWN.getOrDefault(player.getUUID(), 0L) > now) return false;
+        if (!WandItem.consumeRaw(wand, focus.cost(), true, player)) return false;
+        PECH_COOLDOWN.put(player.getUUID(), now + 250L);
+        net.thaumcraft.entity.PechBlastEntity blast = new net.thaumcraft.entity.PechBlastEntity(level, player, 0, 0, false);
+        level.addFreshEntity(blast);
+        level.playSound(null, blast, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.4f, 1.0f + level.getRandom().nextFloat() * 0.1f);
         return true;
     }
 

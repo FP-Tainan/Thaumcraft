@@ -56,6 +56,33 @@ public final class NodeClient {
                 151, 9, 1, 7 + random.nextInt(5), 0, 1.0f + random.nextFloat() * 0.5f));
     }
 
+    /** O rastro da rajada do pech: fogos-fátuos dos tipos 3 e 2 e uma faísca, três vezes por tique. */
+    public static void pechBlastTrail(net.minecraft.world.entity.Entity blast) {
+        net.minecraft.util.RandomSource r = blast.level().getRandom();
+        for (int a = 0; a < 3; a++) {
+            net.thaumcraft.client.fx.Wisp.fx2(blast.getX() + (r.nextFloat() - r.nextFloat()) * 0.2f, blast.getY() + (r.nextFloat() - r.nextFloat()) * 0.2f,
+                    blast.getZ() + (r.nextFloat() - r.nextFloat()) * 0.2f, 0.3f, 3, true, 0.02f);
+            net.thaumcraft.client.fx.Wisp.fx2((blast.getX() + blast.xo) / 2.0 + (r.nextFloat() - r.nextFloat()) * 0.2f,
+                    (blast.getY() + blast.yo) / 2.0 + (r.nextFloat() - r.nextFloat()) * 0.2f,
+                    (blast.getZ() + blast.zo) / 2.0 + (r.nextFloat() - r.nextFloat()) * 0.2f, 0.3f, 2, true, 0.02f);
+            net.thaumcraft.client.fx.Sparkle.spawn(r, blast.getX() + (r.nextFloat() - r.nextFloat()) * 0.1f, blast.getY() + (r.nextFloat() - r.nextFloat()) * 0.1f,
+                    blast.getZ() + (r.nextFloat() - r.nextFloat()) * 0.1f, 1.5f, 5, 0.0f);
+        }
+    }
+
+    /** O estouro da rajada: nove vezes três fogos-fátuos (tipos 3, 2 e 0) saindo para fora. */
+    public static void pechBlastBurst(net.minecraft.world.entity.Entity blast) {
+        net.minecraft.util.RandomSource r = blast.level().getRandom();
+        int[] types = {3, 2, 0};
+        for (int a = 0; a < 9; a++) {
+            for (int type : types) {
+                float fx = (r.nextFloat() - r.nextFloat()) * 0.3f, fy = (r.nextFloat() - r.nextFloat()) * 0.3f, fz = (r.nextFloat() - r.nextFloat()) * 0.3f;
+                net.thaumcraft.client.fx.Wisp.fx3(blast.getX() + fx, blast.getY() + fy, blast.getZ() + fz, blast.getX() + fx * 8.0f,
+                        blast.getY() + fy * 8.0f, blast.getZ() + fz * 8.0f, 0.3f, type, true, 0.02f);
+            }
+        }
+    }
+
     public static boolean isLocalPlayer(Entity entity) {
         return entity == Minecraft.getInstance().player;
     }

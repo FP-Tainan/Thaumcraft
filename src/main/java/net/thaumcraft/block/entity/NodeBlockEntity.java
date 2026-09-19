@@ -101,6 +101,8 @@ public class NodeBlockEntity extends BlockEntity {
         if (node.isRemoved()) return;
         change |= node.taint(server, pos);
         change |= node.stability(server, pos);
+        change |= node.dark(server, pos);
+        change |= node.pure(server, pos, state);
         change |= node.hungrySecond(server, pos);
         if (change) node.sync();
     }
@@ -239,15 +241,80 @@ public class NodeBlockEntity extends BlockEntity {
 
     // ---------------------------------------------------------------------------------------------- os tipos
 
-    /** O {@code handleTaintNode}: o maculado espalha fibras de mácula em volta. */
+    /**
+     * O {@code handleTaintNode}: o maculado pinta de Terra Maculada uma coluna a até oito blocos e espalha fibras em
+     * volta; um nó comum dentro da Terra Maculada, uma vez em quinhentos, vira maculado.
+     */
     private boolean taint(ServerLevel level, BlockPos pos) {
-        if (this.type != NodeType.TAINTED || this.count % 50 != 0) return false;
-        // o bioma maculado não existe neste porte: fica só a parte das fibras (o hardNode do original, ligado)
         RandomSource random = level.getRandom();
-        if (random.nextBoolean()) {
-            BlockPos at = pos.offset(random.nextInt(5) - random.nextInt(5), random.nextInt(5) - random.nextInt(5),
-                    random.nextInt(5) - random.nextInt(5));
-            net.thaumcraft.block.TaintFibreBlock.spread(level, at, random);
+        if (this.type == NodeType.TAINTED && this.count % 50 == 0) {
+            BlockPos at = new BlockPos(pos.getX() + random.nextInt(8) - random.nextInt(8), pos.getY(),
+                    pos.getZ() + random.nextInt(8) - random.nextInt(8));
+            if (!level.getBiome(at).is(net.thaumcraft.world.TCBiomes.TAINTED_LAND)) {
+                net.thaumcraft.world.BiomePainter.paint(level, at, net.thaumcraft.world.TCBiomes.TAINTED_LAND);
+            }
+            if (random.nextBoolean()) {
+                BlockPos fibre = pos.offset(random.nextInt(5) - random.nextInt(5), random.nextInt(5) - random.nextInt(5),
+                        random.nextInt(5) - random.nextInt(5));
+                net.thaumcraft.block.TaintFibreBlock.spread(level, fibre, random);
+            }
+        } else if (this.type != NodeType.PURE && this.type != NodeType.TAINTED && this.count % 100 == 0
+                && level.getBiome(pos).is(net.thaumcraft.world.TCBiomes.TAINTED_LAND) && random.nextInt(500) == 0) {
+            this.type = NodeType.TAINTED;
+            this.nodeChange();
+        }
+        return false;
+    }
+
+    /** Os nós que pintam bioma só o fazem na superfície (fora do Nether e do Fim), como no original. */
+    private static boolean paintsBiomes(ServerLevel level) {
+        return level.dimension() != net.minecraft.world.level.Level.NETHER && level.dimension() != net.minecraft.world.level.Level.END;
+    }
+
+    /**
+     * O {@code handleDarkNode}: o sombrio pinta de Sinistro uma coluna a até doze blocos e, com alguém a vinte e quatro
+     * blocos, às vezes chama um zumbi furioso (até três por perto).
+     */
+    private boolean dark(ServerLevel level, BlockPos pos) {
+        if (this.type != NodeType.DARK || this.count % 50 != 0 || !paintsBiomes(level)) return false;
+        RandomSource random = level.getRandom();
+        BlockPos at = new BlockPos(pos.getX() + random.nextInt(12) - random.nextInt(12), pos.getY(),
+                pos.getZ() + random.nextInt(12) - random.nextInt(12));
+        if (!level.getBiome(at).is(net.thaumcraft.world.TCBiomes.EERIE)) {
+            net.thaumcraft.world.BiomePainter.paint(level, at, net.thaumcraft.world.TCBiomes.EERIE);
+        }
+        if (random.nextBoolean() && level.getNearestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 24.0, false) != null) {
+            var near = level.getEntitiesOfClass(net.thaumcraft.entity.GiantBrainyZombieEntity.class,
+                    new net.minecraft.world.phys.AABB(pos).inflate(10.0, 6.0, 10.0));
+            if (near.size() <= 3) {
+                var giant = net.thaumcraft.registry.TCEntities.GIANT_BRAINY_ZOMBIE.create(level, net.minecraft.world.entity.EntitySpawnReason.SPAWNER);
+                if (giant != null) {
+                    giant.snapTo(pos.getX() + (random.nextDouble() - random.nextDouble()) * 5.0, pos.getY() + random.nextInt(3) - 1,
+                            pos.getZ() + (random.nextDouble() - random.nextDouble()) * 5.0, random.nextFloat() * 360.0f, 0.0f);
+                    if (giant.checkSpawnRules(level, net.minecraft.world.entity.EntitySpawnReason.SPAWNER) && giant.checkSpawnObstruction(level)) {
+                        level.addFreshEntity(giant);
+                        level.levelEvent(net.minecraft.world.level.block.LevelEvent.PARTICLES_MOBBLOCK_SPAWN, pos, 0);
+                        giant.spawnAnim();
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * O {@code handlePureNode}: o puro devolve a Floresta Mágica à Terra Maculada em volta; o que mora num tronco de
+     * pinheiro-de-prata pinta de Floresta Mágica qualquer bioma perto.
+     */
+    private boolean pure(ServerLevel level, BlockPos pos, BlockState state) {
+        if (this.type != NodeType.PURE || this.count % 50 != 0 || !paintsBiomes(level)) return false;
+        RandomSource random = level.getRandom();
+        BlockPos at = new BlockPos(pos.getX() + random.nextInt(8) - random.nextInt(8), pos.getY(),
+                pos.getZ() + random.nextInt(8) - random.nextInt(8));
+        var biome = level.getBiome(at);
+        if (biome.is(net.thaumcraft.world.TCBiomes.MAGICAL_FOREST)) return false;
+        if (biome.is(net.thaumcraft.world.TCBiomes.TAINTED_LAND) || state.is(TCBlocks.SILVERWOOD_KNOT)) {
+            net.thaumcraft.world.BiomePainter.paint(level, at, net.thaumcraft.world.TCBiomes.MAGICAL_FOREST);
         }
         return false;
     }
