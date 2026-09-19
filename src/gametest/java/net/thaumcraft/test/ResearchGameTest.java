@@ -63,7 +63,7 @@ public class ResearchGameTest {
 
     /**
      * Toda página de receita do livro acha a sua receita nas tabelas do mod — tantas quantos nomes a página cita. Ficam
-     * de fora só os cetros (ainda por fazer) e as pesquisas dos metais que vinham de outros mods, que nem aparecem sem
+     * de fora só as pesquisas dos metais que vinham de outros mods, que nem aparecem sem
      * o lingote.
      */
     @GameTest
@@ -71,7 +71,7 @@ public class ResearchGameTest {
         java.util.List<String> missing = new java.util.ArrayList<>();
         int pages = 0;
         for (Research research : Researches.ALL.values()) {
-            if (research.requires() != null || research.key().equals("SCEPTRE")) continue;
+            if (research.requires() != null) continue;
             for (net.thaumcraft.research.Page page : research.pages()) {
                 if (!(page instanceof net.thaumcraft.research.Page.Recipe recipe)) continue;
                 pages++;

@@ -129,7 +129,8 @@
       "net.thaumcraft.test.client.FidelityClientTest",
       "net.thaumcraft.test.client.TaintFaunaClientTest",
       "net.thaumcraft.test.client.TrunkClientTest",
-      "net.thaumcraft.test.client.BookPagesClientTest"
+      "net.thaumcraft.test.client.BookPagesClientTest",
+      "net.thaumcraft.test.client.SceptreClientTest"
     ]
   }
 }

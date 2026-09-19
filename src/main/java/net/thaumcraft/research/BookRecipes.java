@@ -55,6 +55,20 @@ public final class BookRecipes {
         ALL.put(name, new Ref(research, result, true));
     }
 
+    /** Um cetro de exemplo: " TF / RT / T  ", ponta, haste e amuleto primordial, custo um e meio do da varinha. */
+    private static void sceptre(String name, String cap, String rod) {
+        var capPart = net.thaumcraft.api.wands.WandParts.cap(cap);
+        var rodPart = net.thaumcraft.api.wands.WandParts.RODS.get(rod);
+        int cost = (int) (capPart.craftCost() * rodPart.craftCost() * 1.5f);
+        var vis = new net.thaumcraft.api.aspects.AspectList();
+        for (var primal : net.thaumcraft.api.aspects.Aspects.primals()) vis.add(primal, cost);
+        var t = net.minecraft.world.item.crafting.Ingredient.of(TCItems.WAND_CAPS.get(cap));
+        var r = net.minecraft.world.item.crafting.Ingredient.of(rod.equals("wood") ? net.minecraft.world.item.Items.STICK : TCItems.WAND_RODS.get(rod));
+        var f = net.minecraft.world.item.crafting.Ingredient.of(TCResources.get("primal_charm"));
+        ALL.put(name, new net.thaumcraft.crafting.ArcaneRecipe("SCEPTRE", net.thaumcraft.item.WandItem.bookStack(cap, rod, true),
+                java.util.Arrays.asList(null, t, f, null, r, t, t, null, null), vis));
+    }
+
     private static void enchantment(String name, String research, String enchantment) {
         ALL.put(name, new Enchant(research, enchantment));
     }
@@ -416,9 +430,9 @@ public final class BookRecipes {
         crafting("Clusters3", () -> new net.minecraft.world.item.ItemStack(TCBlocks.CRYSTAL_CLUSTERS.get("earth").asItem()), 0, 0, List.of(List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("earth"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("earth"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("earth"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("earth"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("earth"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("earth")))));
         crafting("Clusters4", () -> new net.minecraft.world.item.ItemStack(TCBlocks.CRYSTAL_CLUSTERS.get("order").asItem()), 0, 0, List.of(List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("order"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("order"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("order"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("order"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("order"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("order")))));
         crafting("Clusters5", () -> new net.minecraft.world.item.ItemStack(TCBlocks.CRYSTAL_CLUSTERS.get("entropy").asItem()), 0, 0, List.of(List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("entropy"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("entropy"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("entropy"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("entropy"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("entropy"))), List.of(new net.minecraft.world.item.ItemStack(TCItems.SHARDS.get("entropy")))));
-        refAny("Sceptre_1", "SCEPTRE", () -> new net.minecraft.world.item.ItemStack(TCItems.WAND));
-        refAny("Sceptre_2", "SCEPTRE", () -> new net.minecraft.world.item.ItemStack(TCItems.WAND));
-        refAny("Sceptre_3", "SCEPTRE", () -> new net.minecraft.world.item.ItemStack(TCItems.WAND));
+        sceptre("Sceptre_1", "iron", "wood");
+        sceptre("Sceptre_2", "gold", "greatwood");
+        sceptre("Sceptre_3", "thaumium", "silverwood");
     }
 
 }

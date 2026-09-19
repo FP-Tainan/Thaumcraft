@@ -95,7 +95,7 @@ public class WandRenderer implements SpecialModelRenderer<WandRenderer.Parts> {
      * @param ticks       o relógio, para o que pulsa
      */
     public record Parts(String rod, String cap, boolean staff, boolean glowing, boolean runes,
-                        int focusColour, float using, Motion motion, float ticks) {
+                        int focusColour, float using, Motion motion, float ticks, boolean sceptre) {
     }
 
     private final Pose pose;
@@ -251,7 +251,20 @@ public class WandRenderer implements SpecialModelRenderer<WandRenderer.Parts> {
         pose.pushPose();
         if (staff) pose.scale(1.3f, 1.1f, 1.3f);
         else pose.scale(1.2f, 1.0f, 1.2f);
-        box(pose, collector, capTexture, CAP, light, overlay);
+        if (parts.sceptre()) {
+            // o cetro: a ponta de cima maior, e outra achatada logo abaixo dela
+            pose.pushPose();
+            pose.scale(1.3f, 1.3f, 1.3f);
+            box(pose, collector, capTexture, CAP, light, overlay);
+            pose.popPose();
+            pose.pushPose();
+            pose.translate(0.0, 0.3, 0.0);
+            pose.scale(1.0f, 0.66f, 1.0f);
+            box(pose, collector, capTexture, CAP, light, overlay);
+            pose.popPose();
+        } else {
+            box(pose, collector, capTexture, CAP, light, overlay);
+        }
         if (staff) {
             // a terceira ponta do bastão, achatada, logo abaixo da de cima
             pose.translate(0.0, 0.225, 0.0);
@@ -279,6 +292,16 @@ public class WandRenderer implements SpecialModelRenderer<WandRenderer.Parts> {
             collector.submitCustomGeometry(pose, RenderTypes.entityTranslucent(FOCUS_TEXTURE), (matrix, consumer) ->
                     MeshDrawer.draw(FOCUS, matrix, consumer, glow, overlay, colour));
             pose.popPose();
+        }
+
+        // as dez runas que giram em volta da ponta do cetro
+        if (parts.sceptre()) {
+            for (int rot = 0; rot < 10; rot++) {
+                pose.pushPose();
+                pose.mulPose(Axis.YP.rotationDegrees(36 * rot + parts.ticks()));
+                this.rune(pose, collector, 0.16, -0.01, -0.125, rot, parts.ticks());
+                pose.popPose();
+            }
         }
 
         // as runas do bastão primordial: quatro fileiras de catorze, uma em cada lado, acesas
@@ -360,7 +383,7 @@ public class WandRenderer implements SpecialModelRenderer<WandRenderer.Parts> {
         }
         return new Parts(WandItem.rodTag(stack), WandItem.capTag(stack), staff,
                 rod != null && rod.glowing(), rod != null && rod.runes(),
-                focus == null ? -1 : colour(focus), using, motion, ticks);
+                focus == null ? -1 : colour(focus), using, motion, ticks, WandItem.isSceptre(stack));
     }
 
     /** A cor de cada foco, o {@code getFocusColor} de cada um no original. */

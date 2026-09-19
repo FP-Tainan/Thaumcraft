@@ -70,6 +70,21 @@ public class WandItem extends Item {
         return stack;
     }
 
+    /**
+     * O {@code getSubItems} do original: na aba criativa, a de graveto e ferro, a de madeira-grande e ouro, a de
+     * madeira-prata e taumium e o cetro de madeira-prata e taumium, todos cheios.
+     */
+    public static java.util.List<ItemStack> creativeVariants() {
+        java.util.List<ItemStack> out = java.util.List.of(bookStack("iron", "wood", false), bookStack("gold", "greatwood", false),
+                bookStack("thaumium", "silverwood", false), bookStack("thaumium", "silverwood", true));
+        for (ItemStack stack : out) {
+            AspectList full = new AspectList();
+            for (Aspect aspect : net.thaumcraft.api.aspects.Aspects.primals()) full.add(aspect, maxVis(stack));
+            setVis(stack, full);
+        }
+        return out;
+    }
+
     /** O {@code getFocusItem}: o foco preso, como item, com as melhorias dele; vazio se não houver. */
     public static ItemStack focusStack(ItemStack wand) {
         FocusItem focus = Focuses.on(wand);
@@ -136,9 +151,14 @@ public class WandItem extends Item {
         return found != null ? found : WandParts.cap("iron");
     }
 
-    /** Quanto a varinha comporta de cada aspecto, em centésimos. */
+    /** O {@code isSceptre}: o cetro é a varinha com a marca, montada com o amuleto primordial. */
+    public static boolean isSceptre(ItemStack stack) {
+        return stack.has(TCComponents.WAND_SCEPTRE);
+    }
+
+    /** Quanto a varinha comporta de cada aspecto, em centésimos; o cetro, uma vez e meia. */
     public static int maxVis(ItemStack stack) {
-        return rod(stack).capacity() * VIS_UNIT;
+        return rod(stack).capacity() * (isSceptre(stack) ? 150 : 100);
     }
 
     // ----------------------------------------------------------------- o vis
@@ -217,6 +237,8 @@ public class WandItem extends Item {
     public static float modifier(ItemStack stack, @org.jetbrains.annotations.Nullable Player player, Aspect aspect) {
         float modifier = cap(stack).discount(aspect);
         if (player != null) modifier -= totalVisDiscount(player, aspect);
+        // o cetro gasta um décimo a menos
+        if (isSceptre(stack)) modifier -= 0.1f;
         return Math.max(modifier, 0.1f);
     }
 
@@ -467,7 +489,7 @@ public class WandItem extends Item {
     public Component getName(ItemStack stack) {
         // "Varinha de X com pontas de Y", que é como o original monta o nome
         Component name = Component.translatable(
-                this.staff ? "item.thaumcraft.staff.named" : "item.thaumcraft.wand.named",
+                this.staff ? "item.thaumcraft.staff.named" : isSceptre(stack) ? "item.thaumcraft.sceptre.named" : "item.thaumcraft.wand.named",
                 Component.translatable("tc.rod." + rodTag(stack)),
                 Component.translatable("tc.cap." + capTag(stack)));
         String focus = stack.get(TCComponents.WAND_FOCUS);

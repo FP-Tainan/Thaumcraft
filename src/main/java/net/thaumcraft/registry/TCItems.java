@@ -1015,6 +1015,8 @@ public final class TCItems {
                 .displayItems((parameters, output) -> displayOrder().forEach(item -> {
                     // a essência etérea vem uma de cada aspecto, como no getSubItems do original
                     if (item == WISP_ESSENCE) net.thaumcraft.item.WispEssenceItem.variants().forEach(output::accept);
+                    // as quatro varinhas cheias do original, com o cetro
+                    else if (item == WAND) net.thaumcraft.item.WandItem.creativeVariants().forEach(output::accept);
                     else output.accept(item);
                 }))
                 .build();

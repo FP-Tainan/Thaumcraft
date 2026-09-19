@@ -80,7 +80,8 @@ public final class FocusRadial {
         if (down) {
             if (!pressed) lock = false;
             ItemStack held = player.getMainHandItem();
-            if (!lock && held.getItem() instanceof WandItem && minecraft.gui.screen() == null) {
+            // o cetro não troca de foco (o KeyHandler do original o deixa de fora)
+            if (!lock && held.getItem() instanceof WandItem && !WandItem.isSceptre(held) && minecraft.gui.screen() == null) {
                 if (player.isShiftKeyDown()) {
                     ClientPlayNetworking.send(new FocusSwap.Change(FocusSwap.REMOVE));
                     lock = true;
