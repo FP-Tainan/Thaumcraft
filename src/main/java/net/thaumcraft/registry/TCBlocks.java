@@ -529,6 +529,20 @@ public final class TCBlocks {
                     .noOcclusion()
                     .sound(SoundType.STONE)));
 
+    /** O pedestal de recarga de varinhas e o foco composto que vai em cima dele (os números 5 e 8 do BlockStoneDevice). */
+    public static final Block WAND_PEDESTAL = register("wand_pedestal", properties ->
+            new net.thaumcraft.block.WandPedestalBlock(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0f, 25.0f)
+                    .noOcclusion()
+                    .sound(SoundType.STONE)));
+    public static final Block RECHARGE_FOCUS = register("recharge_focus", properties ->
+            new net.thaumcraft.block.RechargeFocusBlock(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0f, 25.0f)
+                    .noOcclusion()
+                    .sound(SoundType.STONE)));
+
     /** A mesa de madeira do mod: vira bancada arcana com a varinha e mesa de pesquisa com a pena. */
     public static final Block TABLE = register("table", properties ->
             new net.thaumcraft.block.TableBlock(properties

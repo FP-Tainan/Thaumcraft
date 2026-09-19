@@ -1287,5 +1287,8 @@
   "tc.bore.other": "Outras propriedades:",
   "tc.bore.clusters": "Aglomerados Nativos",
   "tc.bore.fortune": "Fortuna %s",
-  "tc.bore.silk": "Toque Suave"
+  "tc.bore.silk": "Toque Suave",
+  "block.thaumcraft.wand_pedestal": "Pedestal de Recarga de Varinha",
+  "block.thaumcraft.recharge_focus": "Composto de Recarga de Focus",
+  "container.wandpedestal": "Pedestal de Recarga de Varinha"
 }

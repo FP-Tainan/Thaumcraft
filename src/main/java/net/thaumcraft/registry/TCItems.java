@@ -474,6 +474,11 @@ public final class TCItems {
     public static final Item FOCAL_MANIPULATOR = register("focal_manipulator", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.FOCAL_MANIPULATOR, properties.useBlockDescriptionPrefix()));
 
+    public static final Item WAND_PEDESTAL = register("wand_pedestal", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.WAND_PEDESTAL, properties.useBlockDescriptionPrefix()));
+    public static final Item RECHARGE_FOCUS = register("recharge_focus", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.RECHARGE_FOCUS, properties.useBlockDescriptionPrefix()));
+
     /** O fole. */
     public static final Item BELLOWS = register("bellows", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.BELLOWS, properties.useBlockDescriptionPrefix()));

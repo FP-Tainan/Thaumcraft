@@ -1171,3 +1171,21 @@ Porte do `TileArcaneBore`, `TileArcaneBoreBase`, `ContainerArcaneBore`, `GuiArca
 - **Receitas** do jar: a base na bancada arcana, a broca na infusão (as peças 4 e 5 entraram no mapeador de itens).
 - **Testes**: `ArcaneBoreGameTest` (cavar e encher o baú, parada sem redstone/picareta, o que o foco dá, cair sem a
   base) e `ArcaneBoreClientTest` (trabalhando, parada e a tela).
+
+## Pedestal de recarga e foco composto
+
+Porte do `TileWandPedestal`, `TileWandPedestalRenderer` e dos números 5 e 8 do `BlockStoneDevice` e do
+`BlockStoneDeviceRenderer` (descompilados do jar).
+
+- **Pedestal** (`WandPedestalBlock`/`WandPedestalBlockEntity`): os três degraus de pedra do renderizador do original
+  (modelo de bloco com as caixas e as texturas por lado); a mão põe a varinha ou o amuleto de vis e tira o que está em
+  cima (jogado aos pés de quem tocou, com o estalo). A cada cinco tiques, bebe um ponto de um nó a até oito blocos,
+  do primeiro aspecto em que ainda cabe; deixa sempre um no nó, menos com a ponta de ferro ou a haste de madeira. O
+  comparador lê de 1 a 15 o quanto a varinha está cheia.
+- **Foco composto** (`RechargeFocusBlock`): a cruz de pedra de sete dezesseis avos; posto sobre o pedestal, ele também
+  quebra os aspectos compostos do nó nos primários (um ponto do composto vira um ponto de um primário dele). Tocá-lo é
+  tocar o pedestal.
+- **Visual** (`WandPedestalRenderer`): a varinha girando sobre a coluna, subindo e descendo, e a linha ondulante até o
+  nó, na cor do aspecto que está bebendo.
+- **Receitas** de infusão do jar (as peças 5 e 8 entraram no mapeador de itens).
+- **Testes**: `WandPedestalGameTest` (bebe do nó, comparador; compostos só com o foco) e `WandPedestalClientTest`.

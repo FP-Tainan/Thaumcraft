@@ -112,6 +112,16 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.EARTH, 25).add(Aspects.ARMOR, 25).add(Aspects.ORDER, 25).add(Aspects.MIND, 10),
                 Ingredient.of(net.minecraft.world.item.Items.NETHER_STAR),
                 Arrays.asList(Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("order")))));
+        // WandPed
+        ALL.add(new InfusionRecipe("WANDPED", new ItemStack(TCBlocks.WAND_PEDESTAL.asItem()), 3,
+                new AspectList().add(Aspects.AURA, 10).add(Aspects.MAGIC, 15).add(Aspects.EXCHANGE, 15),
+                Ingredient.of(TCBlocks.PEDESTAL.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.DIAMOND), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(net.minecraft.world.item.Items.DIAMOND))));
+        // WandPedFocus
+        ALL.add(new InfusionRecipe("WANDPEDFOC", new ItemStack(TCBlocks.RECHARGE_FOCUS.asItem()), 4,
+                new AspectList().add(Aspects.ORDER, 10).add(Aspects.MAGIC, 15).add(Aspects.EXCHANGE, 10),
+                Ingredient.of(net.minecraft.world.item.Items.COMPARATOR),
+                Arrays.asList(Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCResources.get("vis_filter")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCResources.get("vis_filter")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCResources.get("vis_filter")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCResources.get("vis_filter")))));
         // NodeStabilizerAdv
         ALL.add(new InfusionRecipe("NODESTABILIZERADV", new ItemStack(TCBlocks.NODE_STABILIZER_ADVANCED.asItem()), 10,
                 new AspectList().add(Aspects.AURA, 32).add(Aspects.MAGIC, 16).add(Aspects.ORDER, 16).add(Aspects.ENERGY, 16),

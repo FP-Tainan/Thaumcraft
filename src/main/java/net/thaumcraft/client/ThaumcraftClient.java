@@ -187,6 +187,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.ETHEREAL_BLOOM, net.thaumcraft.client.render.EtherealBloomRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.DECONSTRUCTION_TABLE,
                 net.thaumcraft.client.gui.DeconstructionTableScreen::new);
+        // o pedestal de recarga: a varinha girando em cima e a linha até o nó de que bebe
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.WAND_PEDESTAL, net.thaumcraft.client.render.WandPedestalRenderer::new);
         // a broca arcana: a broca e a base com os modelos do original, a tela, o facho e as migalhas
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.ARCANE_BORE, net.thaumcraft.client.render.ArcaneBoreRenderers.Bore::new);

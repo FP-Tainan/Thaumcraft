@@ -52,6 +52,10 @@ public final class TCBlockEntities {
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("focal_manipulator"),
             new BlockEntityType<>(net.thaumcraft.block.entity.FocalManipulatorBlockEntity::new, java.util.Set.of(TCBlocks.FOCAL_MANIPULATOR)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.WandPedestalBlockEntity> WAND_PEDESTAL = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("wand_pedestal"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.WandPedestalBlockEntity::new, java.util.Set.of(TCBlocks.WAND_PEDESTAL)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.BellowsBlockEntity> BELLOWS = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("bellows"),
             new BlockEntityType<>(net.thaumcraft.block.entity.BellowsBlockEntity::new, java.util.Set.of(TCBlocks.BELLOWS)));
