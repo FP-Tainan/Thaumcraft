@@ -86,6 +86,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.render.DartRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.GOLEM,
                 net.thaumcraft.client.gui.GolemScreen::new);
+        // o baú itinerante
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.TrunkRenderer.LAYER, net.thaumcraft.client.render.TrunkRenderer.Model::createLayer);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.TRAVELING_TRUNK,
+                net.thaumcraft.client.render.TrunkRenderer::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.TRUNK,
+                net.thaumcraft.client.gui.TrunkScreen::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("traveling_trunk"), net.thaumcraft.client.render.TrunkRenderer.Unbaked.CODEC);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.GOLEM,
                 net.thaumcraft.client.render.GolemRenderer::new);

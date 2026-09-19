@@ -102,6 +102,15 @@ public final class TCComponents {
             builder -> builder.persistent(net.thaumcraft.item.GolemPlacerItem.Ghost.CODEC.listOf())
                     .networkSynchronized(net.thaumcraft.item.GolemPlacerItem.Ghost.STREAM_CODEC.apply(ByteBufCodecs.list())));
 
+    /** A melhoria do baú itinerante guardado (o {@code upgrade} do {@code ItemTrunkSpawner}). */
+    public static final DataComponentType<Integer> TRUNK_UPGRADE = register("trunk_upgrade",
+            builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** O que o baú itinerante guardado leva dentro (só com a ordem). */
+    public static final DataComponentType<java.util.List<net.minecraft.world.item.ItemStack>> TRUNK_INVENTORY = register("trunk_inventory",
+            builder -> builder.persistent(net.minecraft.world.item.ItemStack.OPTIONAL_CODEC.listOf())
+                    .networkSynchronized(net.minecraft.world.item.ItemStack.OPTIONAL_LIST_STREAM_CODEC));
+
     /** A que golem o sino está ligado: o {@code golemid}, a casa e a face dela. */
     public static final DataComponentType<net.thaumcraft.item.GolemBellItem.Link> GOLEM_LINK = register("golem_link",
             builder -> builder.persistent(net.thaumcraft.item.GolemBellItem.Link.CODEC)

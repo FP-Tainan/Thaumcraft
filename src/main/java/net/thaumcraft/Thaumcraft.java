@@ -76,6 +76,9 @@ public class Thaumcraft implements ModInitializer {
         // o onItemUseFirst dos golens: o golem nasce e o sino marca antes de o baú se abrir
         net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register(net.thaumcraft.item.GolemPlacerItem::placeFirst);
         net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register(net.thaumcraft.item.GolemBellItem::markFirst);
+        // o baú itinerante vai atrás do dono de um mundo a outro
+        net.fabricmc.fabric.api.entity.event.v1.ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register(
+                (player, origin, destination) -> net.thaumcraft.entity.TravelingTrunkEntity.followOwner(player));
         // e o onLeftClickEntity do sino: recolhe o golem
         net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(
                 (player, level, hand, entity, hit) -> net.thaumcraft.item.GolemBellItem.pickUp(player, level, hand, entity));

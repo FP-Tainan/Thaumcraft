@@ -74,6 +74,12 @@ public final class TCMenus {
             new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.PechMenu::new,
                     net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
 
+    /** A tela do baú itinerante. */
+    public static final MenuType<net.thaumcraft.inventory.TrunkMenu> TRUNK = Registry.register(
+            BuiltInRegistries.MENU, Thaumcraft.id("traveling_trunk"),
+            new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.TrunkMenu::new,
+                    net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
+
     /** A tela do golem: abre sabendo de qual golem é. */
     public static final MenuType<net.thaumcraft.inventory.GolemMenu> GOLEM = Registry.register(
             BuiltInRegistries.MENU, Thaumcraft.id("golem"),

@@ -62,7 +62,8 @@
       "net.thaumcraft.test.WandAssemblyGameTest",
       "net.thaumcraft.test.WandGameTest",
       "net.thaumcraft.test.TaintFaunaGameTest",
-      "net.thaumcraft.test.EntityAspectsGameTest"
+      "net.thaumcraft.test.EntityAspectsGameTest",
+      "net.thaumcraft.test.TrunkGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",
@@ -108,7 +109,8 @@
       "net.thaumcraft.test.client.TaintClientTest",
       "net.thaumcraft.test.client.CommandClientTest",
       "net.thaumcraft.test.client.FidelityClientTest",
-      "net.thaumcraft.test.client.TaintFaunaClientTest"
+      "net.thaumcraft.test.client.TaintFaunaClientTest",
+      "net.thaumcraft.test.client.TrunkClientTest"
     ]
   }
 }

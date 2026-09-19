@@ -75,6 +75,14 @@ public final class TCEntities {
                     .eyeHeight(0.8f)
                     .clientTrackingRange(8));
 
+    /** O baú itinerante: o baú que pula atrás do dono. */
+    public static final EntityType<net.thaumcraft.entity.TravelingTrunkEntity> TRAVELING_TRUNK = register("traveling_trunk",
+            EntityType.Builder.<net.thaumcraft.entity.TravelingTrunkEntity>of(net.thaumcraft.entity.TravelingTrunkEntity::new, MobCategory.MISC)
+                    .sized(0.8f, 0.8f)
+                    .fireImmune()
+                    .clientTrackingRange(4)
+                    .updateInterval(3));
+
     /** A boia do golem pescador. */
     public static final EntityType<net.thaumcraft.entity.GolemBobberEntity> GOLEM_BOBBER = register("golem_bobber",
             EntityType.Builder.<net.thaumcraft.entity.GolemBobberEntity>of(net.thaumcraft.entity.GolemBobberEntity::new, MobCategory.MISC)
@@ -267,6 +275,7 @@ public final class TCEntities {
     public static void init() {
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(
                 GOLEM, net.thaumcraft.entity.GolemEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TRAVELING_TRUNK, net.thaumcraft.entity.TravelingTrunkEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(THAUMIC_SLIME, net.thaumcraft.entity.taint.ThaumicSlimeEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_SPIDER, net.thaumcraft.entity.taint.TaintSpiderEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINTACLE_SMALL, net.thaumcraft.entity.taint.TaintacleSmallEntity.attributes());

@@ -248,6 +248,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.FLIGHT, 25).add(Aspects.TRAVEL, 25),
                 Ingredient.of(net.minecraft.world.item.Items.LEATHER_BOOTS),
                 Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(net.minecraft.world.item.Items.FEATHER), Ingredient.of(net.minecraft.world.item.Items.COD))));
+        // TravelTrunk
+        ALL.add(new InfusionRecipe("TRAVELTRUNK", new ItemStack(TCItems.TRUNK_SPAWNER), 3,
+                new AspectList().add(Aspects.MOTION, 4).add(Aspects.SOUL, 4).add(Aspects.TRAVEL, 4).add(Aspects.VOID, 16),
+                Ingredient.of(TCBlocks.HUNGRY_CHEST.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCItems.GOLEM_PLACERS.get("wood")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()))));
         // ThaumiumFortressHelm
         ALL.add(new InfusionRecipe("ARMORFORTRESS", new ItemStack(TCItems.FORTRESS_HELMET), 3,
                 new AspectList().add(Aspects.METAL, 24).add(Aspects.ARMOR, 16).add(Aspects.MAGIC, 16),

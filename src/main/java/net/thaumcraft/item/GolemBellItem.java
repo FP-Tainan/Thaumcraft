@@ -142,11 +142,34 @@ public class GolemBellItem extends Item {
         return InteractionResult.SUCCESS;
     }
 
+    /**
+     * O mesmo para o baú itinerante: só o dono recolhe o da água; o item leva a melhoria (e, com a ordem, o que tem
+     * dentro); agachado, a melhoria cai por sorte e o que tem dentro sempre cai.
+     */
+    private static InteractionResult pickUpTrunk(Player player, Level level, net.thaumcraft.entity.TravelingTrunkEntity trunk) {
+        int upgrade = trunk.getUpgrade();
+        if (upgrade == 3 && !trunk.getOwnerName().equals(player.getName().getString())) return InteractionResult.PASS;
+        if (level.isClientSide()) {
+            trunk.spawnAnim();
+            return InteractionResult.SUCCESS;
+        }
+        ServerLevel server = (ServerLevel) level;
+        boolean sneak = player.isShiftKeyDown();
+        if (sneak && upgrade > -1 && level.getRandom().nextBoolean()) {
+            trunk.spawnAtLocation(server, new ItemStack(TCItems.GOLEM_UPGRADES.get(upgrade)), 0.5f);
+        }
+        trunk.spawnAtLocation(server, TrunkSpawnerItem.pickUp(trunk, sneak), 0.5f);
+        if (upgrade != 4 || sneak) trunk.inventory.dropAll();
+        trunk.playSound(net.thaumcraft.registry.TCSounds.ZAP.value(), 0.5f, 1.0f);
+        trunk.discard();
+        return InteractionResult.SUCCESS;
+    }
+
     /** O {@code onLeftClickEntity}: recolhe o golem (com tudo, ou agachado largando núcleo e melhorias). */
     public static InteractionResult pickUp(Player player, Level level, InteractionHand hand, Entity entity) {
-        if (!player.getItemInHand(hand).is(TCItems.GOLEM_BELL) || !(entity instanceof GolemEntity golem) || golem.isRemoved()) {
-            return InteractionResult.PASS;
-        }
+        if (!player.getItemInHand(hand).is(TCItems.GOLEM_BELL)) return InteractionResult.PASS;
+        if (entity instanceof net.thaumcraft.entity.TravelingTrunkEntity trunk && !trunk.isRemoved()) return pickUpTrunk(player, level, trunk);
+        if (!(entity instanceof GolemEntity golem) || golem.isRemoved()) return InteractionResult.PASS;
         if (level.isClientSide()) {
             golem.spawnAnim();
             return InteractionResult.SUCCESS;

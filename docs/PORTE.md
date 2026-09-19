@@ -397,6 +397,7 @@ descompilado do jar). O golem de dois núcleos com o sino de um baú só saiu in
   rachaduras conforme a vida, o que carrega nos braços, o balde (`bucket.obj`) com o líquido dentro, o jarro do
   alquimista, a vara do pescador. As marcas no mundo: a runa colorida em cada face, o bloco de ar aceso, a casa e a
   linha de escrita saindo da cabeça do golem.
+- **O baú itinerante** (`entity/TravelingTrunkEntity`, o `EntityTravelingTrunk` com o `InventoryTrunk`, o `ContainerTravelingTrunk`, o `GuiTravelingTrunk`, o `ModelTrunk`/`RenderTravelingTrunk` e o `ItemTrunkSpawner` com o desenho de baú): pula atrás do dono (parado e sem nada a fazer, fica), some e reaparece num anel em volta dele se fica a mais de vinte blocos, vai atrás dele para outros mundos, se remenda (de cinquenta em cinquenta tiques) e come comida; não sente fogo nem queda. Uma melhoria: ar (pula mais depressa), terra (quatro fileiras), fogo (morde quem feriu o dono, ficando zangado), água (nada o fere e só o dono abre e recolhe), ordem (o sino o recolhe com o que tem dentro) e entropia (suga o que está perto). A tela tem o botão de ficar e a vida; a receita é a infusão do original sobre o baú faminto. Testes: `TrunkGameTest` e `TrunkClientTest`.
 - **A algema** (`block/GolemFetterBlock`, o 9/10 do `BlockCosmeticSolid`): acende com redstone e desliga o golem em cima.
 - **Receitas**: as melhorias, os acessórios e a algema na bancada arcana (o gerador aprendeu a lã de cada cor, que
   saía branca), e o golem avançado na infusão (qualquer golem com o cérebro no jarro). O núcleo de lenhar espera o

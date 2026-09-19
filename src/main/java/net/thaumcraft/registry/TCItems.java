@@ -428,6 +428,10 @@ public final class TCItems {
         }
     }
 
+    /** O baú itinerante guardado. */
+    public static final Item TRUNK_SPAWNER = register("trunk_spawner", properties ->
+            new net.thaumcraft.item.TrunkSpawnerItem(properties.stacksTo(1)));
+
     /** O sino do golem: com ele se diz ao golem para onde levar o que junta. */
     public static final Item GOLEM_BELL = register("golem_bell", properties ->
             new net.thaumcraft.item.GolemBellItem(properties.stacksTo(1)));
@@ -765,7 +769,7 @@ public final class TCItems {
             "golem_upgrade_order", "golem_upgrade_entropy",
             "golem_decoration_tophat", "golem_decoration_glasses", "golem_decoration_bowtie", "golem_decoration_fez",
             "golem_decoration_dart", "golem_decoration_visor", "golem_decoration_armor", "golem_decoration_mace",
-            "golem_fetter",
+            "golem_fetter", "trunk_spawner",
             "arcane_stone", "arcane_stone_bricks", "arcane_stone_stairs", "arcane_stone_slab", "thaumium_block", "tallow_block",
             "amber_block", "amber_bricks",
             "paving_stone_travel", "paving_stone_warding",
