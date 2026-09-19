@@ -299,6 +299,10 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.client.render.AspectTint.register();
         // a tecla de trocar foco, com o menu radial, e a tela da bolsa de focos
         net.thaumcraft.client.FocusRadial.init();
+        // a Pressa nas botas: o empurrão é do lado de quem anda
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
+            if (minecraft.player != null && !minecraft.isPaused()) net.thaumcraft.event.Enchantments.haste(minecraft.player);
+        });
         // o arquiteto: a tecla G e a prévia da área
         net.thaumcraft.client.ArchitectKey.init();
         net.thaumcraft.client.render.ArchitectOverlay.init();

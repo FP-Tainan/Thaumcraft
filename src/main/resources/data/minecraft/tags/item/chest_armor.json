@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "thaumcraft:thaumium_chestplate",
+    "thaumcraft:void_chestplate",
+    "thaumcraft:robe_chestplate",
+    "thaumcraft:fortress_chestplate",
+    "thaumcraft:hover_harness"
+  ]
+}

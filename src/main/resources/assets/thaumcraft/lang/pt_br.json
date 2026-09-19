@@ -1303,5 +1303,7 @@
   "fluid.thaumcraft.purifying_fluid": "Fluido Purificante",
   "fluid.thaumcraft.liquid_death": "Morte Líquida",
   "death.attack.dissolve": "%1$s foi dissolvido",
-  "death.attack.dissolve.player": "%1$s foi dissolvido enquanto lutava contra %2$s"
+  "death.attack.dissolve.player": "%1$s foi dissolvido enquanto lutava contra %2$s",
+  "enchantment.thaumcraft.haste": "Pressa",
+  "enchantment.thaumcraft.repair": "Auto Reparo"
 }

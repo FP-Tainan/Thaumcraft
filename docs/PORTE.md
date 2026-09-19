@@ -1166,7 +1166,7 @@ Porte do `TileArcaneBore`, `TileArcaneBoreBase`, `ContainerArcaneBore`, `GuiArca
   (o bloco da vez e o som do que saiu chegam pelo `TCNetwork.BoreDig`, o `PacketBoreDig`).
 - **Tela** (`ArcaneBoreScreen`): as duas casas, o aviso de picareta por quebrar e a largura, a velocidade e as outras
   propriedades (os textos, que o original escreve em inglês fixo, foram para as línguas).
-- **Falta aqui**: o conserto da picareta com o encantamento Reparo (espera os encantamentos do Thaumcraft) e a
+- **Falta aqui**: a
   picareta do núcleo elemental dando radiestesia (espera as ferramentas elementais).
 - **Receitas** do jar: a base na bancada arcana, a broca na infusão (as peças 4 e 5 entraram no mapeador de itens).
 - **Testes**: `ArcaneBoreGameTest` (cavar e encher o baú, parada sem redstone/picareta, o que o foco dá, cair sem a
@@ -1212,3 +1212,29 @@ trechos `itemExpire` e `livingDrops` do `EventHandlerEntity` (descompilados do j
 - **Receitas** do jar: o spa (arcana), os sais e o balde de morte líquida (crisol).
 - **Testes**: `SpaGameTest` (purificante pelo spa, só o fluido, a proteção contra a dobra, a morte líquida, os sais na
   água) e `SpaClientTest`.
+
+## Encantamentos do Thaumcraft e infusão de encantamento
+
+Porte do `EnchantmentHaste`, `EnchantmentRepair`, do `updateSpeed`/`doRepair` do `EventHandlerEntity`, do
+`WandManager.consumeVisFromInventory`, do `InfusionEnchantmentRecipe` e do caminho de encantamento da
+`TileInfusionMatrix` (descompilados do jar).
+
+- **Dados** (`data/thaumcraft/enchantment`): Pressa (peso 3, até III, custo 15+9(n−1), botas e o arreio) e Reparo (peso
+  2, até II, custo 20+10(n−1), as coisas que o original marca `IRepairable` — a marca `thaumcraft:repairable` —, não
+  convive com Inquebrável). Os dois entram na mesa de encantamento, nos livros e nas trocas. As ferramentas e armaduras
+  do mod entraram nas marcas do jogo (`pickaxes`, `foot_armor`...), para aceitar encantamentos e servirem na broca.
+- **Pressa** (`event/Enchantments.haste`): andando para a frente, fora do voo, um empurrão de 1,5% por nível (metade no
+  ar, metade na água), do lado de quem anda. No arreio, cada nível dá 0,075 à velocidade do pairar.
+- **Reparo** (`event/Enchantments`): a cada dois segundos, cada coisa marcada, gasta, no inventário ou vestida (menos o
+  arreio no inventário), conserta um ponto por nível pagando em vis — a raiz do dobro de cada primário dela, vezes o
+  nível — de um amuleto de vis vestido ou de uma varinha (da última casa para a primeira). A broca arcana conserta a
+  picareta pela rede de vis, do mesmo jeito que o original.
+- **Infusão de encantamento** (`InfusionEnchantmentRecipe`, tabela `InfusionEnchantments` gerada por
+  `scratchpad/infusao-encantamentos.js` com as 24 receitas do jar): quando nenhuma receita de infusão fecha, a matriz
+  tenta subir um nível de encantamento da coisa do meio (que precisa aceitá-lo, não estar no máximo e ter só
+  encantamentos compatíveis). A essência cresce com o nível atual e um décimo por nível de outros encantamentos; a
+  instabilidade soma metade dos níveis; antes da essência, a matriz tira experiência (um terço do custo mínimo, vezes
+  1 + o nível atual) de quem estiver a dez blocos, um nível por vez, com um arranhão mágico; sem ninguém com
+  experiência, a essência às vezes aumenta.
+- **Pech**: os livros de Pressa e de Reparo voltaram à troca do pech mago.
+- **Testes**: `EnchantmentGameTest` (os dados, o Reparo pagando com a varinha, a infusão subindo Afiada).

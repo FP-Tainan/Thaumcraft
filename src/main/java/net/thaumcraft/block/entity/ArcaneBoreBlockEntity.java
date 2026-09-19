@@ -93,6 +93,9 @@ public class ArcaneBoreBlockEntity extends BaseContainerBlockEntity
     public int area;
     private int blockCount;
     private float speedyTime;
+    private long repairCounter;
+    private net.thaumcraft.api.aspects.AspectList repairCost = new net.thaumcraft.api.aspects.AspectList();
+    private net.thaumcraft.api.aspects.AspectList currentRepairVis = new net.thaumcraft.api.aspects.AspectList();
 
     public ArcaneBoreBlockEntity(BlockPos pos, BlockState state) {
         super(TCBlockEntities.ARCANE_BORE, pos, state);
@@ -189,6 +192,46 @@ public class ArcaneBoreBlockEntity extends BaseContainerBlockEntity
             this.dig();
         } else if (level.isClientSide()) {
             this.settle();
+        }
+        if (!level.isClientSide() && this.hasPickaxe) this.repairPickaxe();
+    }
+
+    /**
+     * O conserto da picareta com Reparo, pagando com a rede de vis: a cada dois segundos, se já juntou o preço, conserta
+     * um ponto por nível; a cada cinco tiques puxa da rede o que falta do preço.
+     */
+    private void repairPickaxe() {
+        ItemStack pick = this.pickaxe();
+        if (this.repairCounter++ % 40L == 0L && pick.isDamaged()) {
+            int lvl = Math.min(2, net.thaumcraft.registry.TCEnchantments.level(this.level, net.thaumcraft.registry.TCEnchantments.REPAIR, pick));
+            if (lvl > 0) {
+                if (pick.is(net.thaumcraft.event.Enchantments.REPAIRABLE)) {
+                    for (var e : net.thaumcraft.event.Enchantments.repairCost(pick, lvl).getAspects()) {
+                        this.repairCost.merge(e, net.thaumcraft.event.Enchantments.repairCost(pick, lvl).getAmount(e));
+                    }
+                    boolean doIt = this.repairCost.size() > 0;
+                    for (var a : this.repairCost.getAspects()) {
+                        if (this.currentRepairVis.getAmount(a) < this.repairCost.getAmount(a)) {
+                            doIt = false;
+                            break;
+                        }
+                    }
+                    if (doIt) {
+                        for (var a : this.repairCost.getAspects()) this.currentRepairVis.reduce(a, this.repairCost.getAmount(a));
+                        pick.setDamageValue(Math.max(0, pick.getDamageValue() - lvl));
+                        this.setChanged();
+                    }
+                } else {
+                    this.repairCost = new net.thaumcraft.api.aspects.AspectList();
+                }
+            }
+        }
+        if (this.repairCost.size() > 0 && this.repairCounter % 5L == 0L) {
+            for (var a : this.repairCost.getAspects()) {
+                if (this.currentRepairVis.getAmount(a) < this.repairCost.getAmount(a)) {
+                    this.currentRepairVis.add(a, VisNet.drainVis(this.level, this.worldPosition, a, this.repairCost.getAmount(a)));
+                }
+            }
         }
     }
 

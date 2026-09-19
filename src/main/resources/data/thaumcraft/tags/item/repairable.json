@@ -1,0 +1,31 @@
+{
+  "values": [
+    "thaumcraft:traveller_boots",
+    "thaumcraft:fortress_helmet",
+    "thaumcraft:fortress_chestplate",
+    "thaumcraft:fortress_leggings",
+    "thaumcraft:goggles",
+    "thaumcraft:hover_harness",
+    "thaumcraft:robe_chestplate",
+    "thaumcraft:robe_leggings",
+    "thaumcraft:robe_boots",
+    "thaumcraft:thaumium_helmet",
+    "thaumcraft:thaumium_chestplate",
+    "thaumcraft:thaumium_leggings",
+    "thaumcraft:thaumium_boots",
+    "thaumcraft:thaumium_pickaxe",
+    "thaumcraft:thaumium_axe",
+    "thaumcraft:thaumium_shovel",
+    "thaumcraft:thaumium_hoe",
+    "thaumcraft:thaumium_sword",
+    "thaumcraft:void_helmet",
+    "thaumcraft:void_chestplate",
+    "thaumcraft:void_leggings",
+    "thaumcraft:void_boots",
+    "thaumcraft:void_pickaxe",
+    "thaumcraft:void_axe",
+    "thaumcraft:void_shovel",
+    "thaumcraft:void_hoe",
+    "thaumcraft:void_sword"
+  ]
+}

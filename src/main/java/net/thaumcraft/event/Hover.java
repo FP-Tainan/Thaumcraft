@@ -156,9 +156,11 @@ public final class Hover {
         }
     }
 
-    /** O quanto o voo freia: 0,7, mais 0,21 com o cinturão, nunca acima de 1. */
+    /** O quanto o voo freia: 0,7, mais 0,075 por nível de Pressa no arreio, mais 0,21 com o cinturão, nunca acima de 1. */
     public static float speed(Player player) {
-        float mod = 0.7f;
+        int haste = net.thaumcraft.registry.TCEnchantments.level(player.level(), net.thaumcraft.registry.TCEnchantments.HASTE,
+                player.getItemBySlot(EquipmentSlot.CHEST));
+        float mod = 0.7f + 0.075f * haste;
         if (girdle(player)) mod += 0.21f;
         return Math.min(mod, 1.0f);
     }

@@ -27,8 +27,7 @@ import java.util.function.Function;
  * coisa (de um a cinco). As poções eram números de 1.7 (8201 força, 8194 velocidade, 8265 força longa, 8262 visão
  * noturna longa, 8193 regeneração, 8261 cura, 8225 regeneração II, 8229 cura II, 8270 invisibilidade longa).
  *
- * <p>Ficam de fora, até chegarem: as pepitas nativas de estanho, prata e chumbo (só existiam com outro mod) e os livros
- * de Pressa e de Reparo, os encantamentos do próprio Thaumcraft.
+ * <p>Ficam de fora as pepitas nativas de estanho, prata e chumbo (só existiam com outro mod).
  */
 public final class PechTrades {
     /** Uma coisa da tabela: quanto vale e como fazê-la. */
@@ -66,11 +65,13 @@ public final class PechTrades {
                 list.add(resource(2, "knowledge_fragment"));
                 list.add(potion(2, Potions.REGENERATION));
                 list.add(potion(2, Potions.HEALING));
+                list.add(book(3, net.thaumcraft.registry.TCEnchantments.HASTE));
                 list.add(item(3, Items.GOLDEN_APPLE));
                 list.add(potion(3, Potions.STRONG_REGENERATION));
                 list.add(potion(3, Potions.STRONG_HEALING));
                 for (var crystal : TCBlocks.CRYSTAL_CLUSTERS.values()) list.add(item(4, crystal));
                 list.add(item(5, Items.ENCHANTED_GOLDEN_APPLE));
+                list.add(book(5, net.thaumcraft.registry.TCEnchantments.REPAIR));
                 list.add(item(5, TCItems.FOCUS_POUCH));
                 list.add(item(5, TCItems.FOCI.get("pech")));
                 list.add(item(5, TCItems.VIS_STONE));

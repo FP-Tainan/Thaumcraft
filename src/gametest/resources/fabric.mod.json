@@ -20,6 +20,7 @@
       "net.thaumcraft.test.ArcaneBoreGameTest",
       "net.thaumcraft.test.WandPedestalGameTest",
       "net.thaumcraft.test.SpaGameTest",
+      "net.thaumcraft.test.EnchantmentGameTest",
       "net.thaumcraft.test.GolemGameTest",
       "net.thaumcraft.test.InfusionGameTest",
       "net.thaumcraft.test.JarDropGameTest",

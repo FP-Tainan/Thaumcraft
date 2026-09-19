@@ -73,6 +73,10 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
     private final List<ItemStack> owedItems = new ArrayList<>();
     private ItemStack result = ItemStack.EMPTY;
     private ItemStack middle = ItemStack.EMPTY;
+    /** A experiência que a infusão de encantamento ainda cobra de quem está perto (o {@code recipeXP}). */
+    private int xpOwed;
+    /** Depois de tirar experiência, o passo seguinte espera (o {@code countDelay} de 20). */
+    private boolean skipStep;
     /** Só de quem vê: quanto a matriz já se ergueu e girou (de 0 a 1), e há quantos tiques a infusão corre. */
     public float startUp;
     public int craftCount;
@@ -217,8 +221,24 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
 
         InfusionRecipe recipe = InfusionRecipes.find(centre.held(), parts);
         if (recipe == null) {
-            player.sendOverlayMessage(Component.translatable("tc.infusion.norecipe"));
-            return false;
+            // não sendo coisa nova, pode ser um encantamento subindo de nível
+            var enchant = net.thaumcraft.crafting.InfusionEnchantmentRecipe.find(parts, centre.held(), level, player);
+            if (enchant == null) {
+                player.sendOverlayMessage(Component.translatable("tc.infusion.norecipe"));
+                return false;
+            }
+            this.middle = centre.held().copy();
+            this.result = enchant.resultFor(this.middle, level);
+            this.recipeInstability = enchant.instabilityFor(this.middle);
+            this.instability = Math.max(0, this.symmetry) + this.recipeInstability;
+            this.owed = enchant.essentiaFor(this.middle, level);
+            this.xpOwed = enchant.xp(this.middle, level);
+            this.owedItems.clear();
+            this.owedItems.addAll(parts);
+            this.crafting = true;
+            level.playSound(null, pos, TCSounds.CRAFT_START.value(), SoundSource.BLOCKS, 0.5f, 1.0f);
+            this.sync();
+            return true;
         }
         if (!net.thaumcraft.research.ResearchManager.knows(player, recipe.research())) {
             player.sendOverlayMessage(Component.translatable("tc.infusion.unknown"));
@@ -230,6 +250,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         this.recipeInstability = recipe.instability();
         this.instability = Math.max(0, this.symmetry) + this.recipeInstability;
         this.owed = recipe.essentia().copy();
+        this.xpOwed = 0;
         this.owedItems.clear();
         this.owedItems.addAll(parts);
         this.crafting = true;
@@ -256,6 +277,16 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
 
         if (this.instability > 0 && level.getRandom().nextInt(500) <= this.instability) {
             this.misfire(level, pos);
+        }
+
+        if (this.skipStep) {
+            this.skipStep = false;
+            return;
+        }
+        // a infusão de encantamento cobra primeiro a experiência de quem está a até dez blocos
+        if (this.xpOwed > 0) {
+            this.drinkExperience(level, pos);
+            return;
         }
 
         if (!this.owed.isEmpty()) {
@@ -308,6 +339,33 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         this.middle = ItemStack.EMPTY;
         this.owedItems.clear();
         this.sync();
+    }
+
+    /**
+     * O pedaço de {@code craftCycle} do encantamento: um nível de um jogador por perto (que leva um arranhão mágico e
+     * ouve o chiado); sem ninguém com experiência, a essência às vezes aumenta e a instabilidade pode subir.
+     */
+    private void drinkExperience(Level level, BlockPos pos) {
+        if (!(level instanceof ServerLevel server)) return;
+        for (Player target : server.getEntitiesOfClass(Player.class, new net.minecraft.world.phys.AABB(pos).inflate(10.0))) {
+            if (target.experienceLevel <= 0) continue;
+            target.giveExperienceLevels(-1);
+            this.xpOwed--;
+            target.hurtServer(server, server.damageSources().magic(), level.getRandom().nextInt(2));
+            this.thread(level, pos, target.blockPosition().above(), 0x80FF80);
+            server.playSound(null, target.getX(), target.getY(), target.getZ(), net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
+                    SoundSource.PLAYERS, 1.0f, 2.0f + level.getRandom().nextFloat() * 0.4f);
+            this.skipStep = true;
+            this.sync();
+            return;
+        }
+        Aspect[] ess = this.owed.getAspects().toArray(new Aspect[0]);
+        if (ess.length > 0 && level.getRandom().nextInt(3) == 0) {
+            this.owed.add(ess[level.getRandom().nextInt(ess.length)], 1);
+            if (level.getRandom().nextInt(Math.max(1, 50 - this.recipeInstability * 2)) == 0) this.instability++;
+            if (this.instability > MAX_INSTABILITY) this.instability = MAX_INSTABILITY;
+            this.sync();
+        }
     }
 
     /** Onde nesta lista está uma coisa igual a esta? */
@@ -540,6 +598,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
     }
 
     private void stop() {
+        this.xpOwed = 0;
         this.active = false;
         this.crafting = false;
         this.instability = 0;
@@ -591,6 +650,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         this.symmetry = input.getIntOr("symmetry", 0);
         this.instability = input.getIntOr("instability", 0);
         this.recipeInstability = input.getIntOr("recipe_instability", 0);
+        this.xpOwed = input.getIntOr("recipe_xp", 0);
         this.owed = input.read("owed", AspectList.CODEC).orElseGet(AspectList::new);
         this.result = input.read("result", ItemStack.CODEC).orElse(ItemStack.EMPTY);
         this.middle = input.read("middle", ItemStack.CODEC).orElse(ItemStack.EMPTY);
@@ -606,6 +666,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         output.putInt("symmetry", this.symmetry);
         output.putInt("instability", this.instability);
         output.putInt("recipe_instability", this.recipeInstability);
+        output.putInt("recipe_xp", this.xpOwed);
         output.store("owed", AspectList.CODEC, this.owed);
         if (!this.result.isEmpty()) output.store("result", ItemStack.CODEC, this.result);
         if (!this.middle.isEmpty()) output.store("middle", ItemStack.CODEC, this.middle);
