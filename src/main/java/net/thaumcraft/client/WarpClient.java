@@ -72,10 +72,20 @@ public final class WarpClient {
             if (warp > 0) lines.add(net.minecraft.network.chat.Component.translatable("item.warping").append(" " + warp)
                     .withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
         });
-        // a pista de pesquisa (o PacketResearchComplete com arroba): o aviso verde e o som de aprender
+        // o PacketResearchComplete: a pista (com arroba) dá o aviso verde e o som de aprender; a pesquisa, a faixa e a faísca
         ClientPlayNetworking.registerGlobalReceiver(TCNetwork.ResearchComplete.TYPE, (payload, context) -> context.client().execute(() -> {
             var player = context.client().player;
-            if (player == null || !payload.key().startsWith("@")) return;
+            if (player == null) return;
+            if (!payload.key().startsWith("@")) {
+                // a pesquisa de verdade: a faixa de pesquisa completa, e a faísca no livro na casa e na aba dela
+                var research = net.thaumcraft.research.Researches.get(payload.key());
+                if (research != null && !research.is(net.thaumcraft.research.Research.Mark.VIRTUAL)) {
+                    ResearchPopup.queue(research);
+                    net.thaumcraft.client.gui.ThaumonomiconScreen.HIGHLIGHTED.add(research.key());
+                    net.thaumcraft.client.gui.ThaumonomiconScreen.HIGHLIGHTED.add(research.category());
+                }
+                return;
+            }
             PlayerNotifications.add("§a" + net.minecraft.network.chat.Component.translatable("tc.addclue").getString());
             player.playSound(TCSounds.LEARN.value(), 0.2f, 1.0f + player.getRandom().nextFloat() * 0.1f);
         }));

@@ -18,6 +18,10 @@ public final class TCComponents {
     public static final DataComponentType<String> WAND_CAP = register("wand_cap",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
+    /** O cetro (a marca "sceptre" do original): guarda metade a mais e gasta um décimo a menos, sem foco. */
+    public static final DataComponentType<net.minecraft.util.Unit> WAND_SCEPTRE = register("wand_sceptre",
+            builder -> builder.persistent(net.minecraft.util.Unit.CODEC).networkSynchronized(net.minecraft.network.codec.StreamCodec.unit(net.minecraft.util.Unit.INSTANCE)));
+
     /** O vis guardado, em centésimos — que é como o original conta. */
     public static final DataComponentType<AspectList> WAND_VIS = register("wand_vis",
             builder -> builder.persistent(AspectList.CODEC).networkSynchronized(AspectList.STREAM_CODEC));

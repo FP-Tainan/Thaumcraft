@@ -741,6 +741,7 @@ public class ThaumcraftClient implements ClientModInitializer {
                 0.3f + level.getRandom().nextFloat() * 0.7f, target.runes(), 0.03f);
         // a distorção na tela: a vinheta, a névoa e os filtros das poções; e as bolhas do sabão
         WarpClient.init();
+        ResearchPopup.init();
         // as ferramentas mágicas: faíscas, bolhas, a varredura de minérios da picareta e o redemoinho da espada
         net.thaumcraft.item.ToolFx.client = new net.thaumcraft.item.ToolFx.Client() {
             @Override

@@ -61,6 +61,33 @@ public class ResearchGameTest {
         helper.succeed();
     }
 
+    /**
+     * Toda página de receita do livro acha a sua receita nas tabelas do mod — tantas quantos nomes a página cita. Ficam
+     * de fora só os cetros (ainda por fazer) e as pesquisas dos metais que vinham de outros mods, que nem aparecem sem
+     * o lingote.
+     */
+    @GameTest
+    public void everyBookRecipeResolves(GameTestHelper helper) {
+        java.util.List<String> missing = new java.util.ArrayList<>();
+        int pages = 0;
+        for (Research research : Researches.ALL.values()) {
+            if (research.requires() != null || research.key().equals("SCEPTRE")) continue;
+            for (net.thaumcraft.research.Page page : research.pages()) {
+                if (!(page instanceof net.thaumcraft.research.Page.Recipe recipe)) continue;
+                pages++;
+                int wanted = 0;
+                for (String name : recipe.names()) {
+                    if (name.endsWith("*")) wanted += net.thaumcraft.api.aspects.Aspect.ASPECTS.size();
+                    else wanted++;
+                }
+                int found = net.thaumcraft.research.BookPages.resolve(recipe).size();
+                if (found != wanted) missing.add(research.key() + " " + recipe.kind() + " " + recipe.names() + " (" + found + "/" + wanted + ")");
+            }
+        }
+        if (!missing.isEmpty()) helper.fail(missing.size() + " de " + pages + " páginas sem receita: " + String.join("; ", missing));
+        helper.succeed();
+    }
+
     /** Duas pesquisas conferidas na mão contra o ConfigResearch da 4.2.3.5. */
     @GameTest
     public void spotChecksAgainstTheOriginal(GameTestHelper helper) {

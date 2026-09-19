@@ -61,6 +61,15 @@ public class WandItem extends Item {
         return found != null ? found : WandParts.rod("wood");
     }
 
+    /** Uma varinha (ou cetro) montada, como o livro a mostra. */
+    public static ItemStack bookStack(String cap, String rod, boolean sceptre) {
+        ItemStack stack = new ItemStack(net.thaumcraft.registry.TCItems.WAND);
+        stack.set(TCComponents.WAND_CAP, cap);
+        stack.set(TCComponents.WAND_ROD, rod);
+        if (sceptre) stack.set(TCComponents.WAND_SCEPTRE, net.minecraft.util.Unit.INSTANCE);
+        return stack;
+    }
+
     /** O {@code getFocusItem}: o foco preso, como item, com as melhorias dele; vazio se não houver. */
     public static ItemStack focusStack(ItemStack wand) {
         FocusItem focus = Focuses.on(wand);

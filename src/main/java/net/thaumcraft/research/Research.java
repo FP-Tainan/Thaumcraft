@@ -21,18 +21,21 @@ import java.util.List;
  * @param row          a linha no mapa
  * @param complexity   de um a três, o quanto ela é difícil
  * @param iconTexture  o desenho próprio dela, quando tem (caminho dentro dos recursos do mod)
- * @param iconItem     o item que a representa, quando o desenho é um item
+ * @param iconStack    o item que a representa, quando o desenho é um item
  * @param marks        as marcas do original: degrau, redonda, escondida, e assim por diante
  * @param parents      de quais pesquisas ela nasce
  * @param parentsHidden os pais que só aparecem depois de ela mesma aparecer
  * @param siblings     as irmãs, ligadas por linha mas sem exigência
- * @param pages        as páginas de texto, pelo nome que elas têm no idioma
+ * @param pages        as páginas: de texto (pelo nome no idioma) e de receita (pelo nome da receita no original)
  * @param warp         quanta distorção ela traz para quem a aprende
+ * @param requires     a etiqueta de lingote de que ela precisa para existir (os metais que vinham de outros mods: o
+ *                     {@code Config.foundXIngot} do original), ou nada
  */
 public record Research(String key, String category, AspectList tags, int column, int row, int complexity,
-                       String iconTexture, String iconItem, List<Mark> marks,
+                       String iconTexture, java.util.function.@org.jetbrains.annotations.Nullable Supplier<net.minecraft.world.item.ItemStack> iconStack,
+                       List<Mark> marks,
                        List<String> parents, List<String> parentsHidden, List<String> siblings,
-                       List<String> pages, int warp) {
+                       List<Page> pages, int warp, @org.jetbrains.annotations.Nullable String requires) {
 
     /** As marcas do original, que mandam em como a pesquisa aparece e em quando ela aparece. */
     public enum Mark {
@@ -63,6 +66,13 @@ public record Research(String key, String category, AspectList tags, int column,
     /** O nome que sai no idioma. */
     public Component name() {
         return Component.translatable("tc.research_name." + key);
+    }
+
+    /** Existe neste mundo? As dos metais de outros mods só com a etiqueta do lingote tendo algum item. */
+    public boolean present() {
+        if (this.requires == null) return true;
+        var tag = net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, Identifier.parse(this.requires));
+        return net.minecraft.core.registries.BuiltInRegistries.ITEM.getTagOrEmpty(tag).iterator().hasNext();
     }
 
     /** O desenho próprio dela, quando tem. */

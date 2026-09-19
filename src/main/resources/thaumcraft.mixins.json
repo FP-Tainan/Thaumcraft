@@ -21,7 +21,9 @@
   "client": [
     "ItemInHandRendererMixin",
     "GameRendererWarpMixin",
-    "FogRendererWarpMixin"
+    "FogRendererWarpMixin",
+    "GuiItemRenderStateMixin",
+    "GuiRendererTintMixin"
   ],
   "injectors": {
     "defaultRequire": 1

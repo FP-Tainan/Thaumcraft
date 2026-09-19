@@ -142,6 +142,11 @@ public final class PlayerKnowledge {
         return this.scanned.add(key);
     }
 
+    /** Tudo o que já foi examinado, pelas chaves do {@link ScanManager}. */
+    public java.util.Collection<String> scanned() {
+        return java.util.Collections.unmodifiableSet(this.scanned);
+    }
+
     public int scannedCount() {
         return this.scanned.size();
     }
