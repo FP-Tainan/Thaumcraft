@@ -73,8 +73,25 @@ public final class EldritchAltarSpawns {
         }
     }
 
-    /** O {@code spawnGuardian}: um guardião eldritch. Chega com o guardião. */
+    /** O {@code spawnGuardian}: um guardião eldritch de quatro a dez blocos do altar, preso a dezesseis dele. */
     static void guardian(ServerLevel level, BlockPos pos, EldritchAltarBlockEntity altar) {
+        var guardian = TCEntities.ELDRITCH_GUARDIAN.create(level, EntitySpawnReason.STRUCTURE);
+        if (guardian == null) return;
+        var random = level.getRandom();
+        int i1 = pos.getX() + Mth.nextInt(random, 4, 10) * Mth.nextInt(random, -1, 1);
+        int j1 = pos.getY() + Mth.nextInt(random, 0, 3) * Mth.nextInt(random, -1, 1);
+        int k1 = pos.getZ() + Mth.nextInt(random, 4, 10) * Mth.nextInt(random, -1, 1);
+        BlockPos floor = new BlockPos(i1, j1 - 1, k1);
+        if (!level.getBlockState(floor).isFaceSturdy(level, floor, net.minecraft.core.Direction.UP)) return;
+        guardian.setPos(i1, j1, k1);
+        if (net.thaumcraft.entity.eldritch.EldritchGuardianEntity.canSpawn(TCEntities.ELDRITCH_GUARDIAN, level, EntitySpawnReason.STRUCTURE,
+                guardian.blockPosition(), random)
+                && level.isUnobstructed(guardian) && level.noCollision(guardian) && !level.containsAnyLiquid(guardian.getBoundingBox())) {
+            guardian.finalizeSpawn(level, level.getCurrentDifficultyAt(guardian.blockPosition()), EntitySpawnReason.STRUCTURE, null);
+            guardian.spawnAnim();
+            guardian.setHomeTo(pos, 16);
+            level.addFreshEntity(guardian);
+        }
     }
 
     /** O {@code checkForMaze}. Chega com as Terras de Fora. */

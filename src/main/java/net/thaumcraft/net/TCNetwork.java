@@ -286,6 +286,25 @@ public final class TCNetwork {
         }
     }
 
+    /** O {@code PacketFXSonic}: o grito do guardião, visto a até trinta e dois blocos. */
+    public record Sonic(int source) implements CustomPacketPayload {
+        public static final Type<Sonic> TYPE = new Type<>(Thaumcraft.id("sonic"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, Sonic> CODEC = StreamCodec.composite(
+                ByteBufCodecs.VAR_INT, Sonic::source, Sonic::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static void sonic(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.Entity source) {
+        Sonic sonic = new Sonic(source.getId());
+        for (ServerPlayer near : net.fabricmc.fabric.api.networking.v1.PlayerLookup.around(level, source.position(), 32.0)) {
+            ServerPlayNetworking.send(near, sonic);
+        }
+    }
+
     public static void miscEvent(ServerPlayer player, int kind) {
         ServerPlayNetworking.send(player, new MiscEvent(kind));
     }
@@ -326,6 +345,7 @@ public final class TCNetwork {
         PayloadTypeRegistry.clientboundPlay().register(ResearchComplete.TYPE, ResearchComplete.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(Notice.TYPE, Notice.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockArc.TYPE, BlockArc.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(Sonic.TYPE, Sonic.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela
         ServerPlayNetworking.registerGlobalReceiver(ResearchRequest.TYPE, (payload, context) ->

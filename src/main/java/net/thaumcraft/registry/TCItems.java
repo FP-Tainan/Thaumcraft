@@ -869,6 +869,14 @@ public final class TCItems {
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.CULTIST_LEADER)));
     public static final Item CULTIST_PORTAL_SPAWN_EGG = register("cultist_portal_spawn_egg", properties ->
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.CULTIST_PORTAL)));
+    public static final Item ELDRITCH_CRAB_SPAWN_EGG = register("eldritch_crab_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.ELDRITCH_CRAB)));
+    public static final Item INHABITED_ZOMBIE_SPAWN_EGG = register("inhabited_zombie_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.INHABITED_ZOMBIE)));
+    public static final Item ELDRITCH_GUARDIAN_SPAWN_EGG = register("eldritch_guardian_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.ELDRITCH_GUARDIAN)));
+    public static final Item CRUSTED_OPENING = register("crusted_opening", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.CRUSTED_OPENING, properties.useBlockDescriptionPrefix()));
 
     public static final ResourceKey<CreativeModeTab> TAB_KEY =
             ResourceKey.create(Registries.CREATIVE_MODE_TAB, Thaumcraft.id("thaumcraft"));

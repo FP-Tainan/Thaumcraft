@@ -709,6 +709,12 @@ public final class TCBlocks {
             new net.thaumcraft.block.eldritch.EldritchInsetBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(4.0f, 100.0f)
                     .requiresCorrectToolForDrops().sound(SoundType.STONE).lightLevel(state -> 5).noOcclusion().noLootTable()));
 
+    /** A abertura incrustada (o 9 do BlockEldritch): luz quatro, dureza quinze; cospe caranguejos eldritch. */
+    public static final Block CRUSTED_OPENING = register("crusted_opening", properties ->
+            new net.thaumcraft.block.eldritch.CrabSpawnerBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(15.0f, 30.0f)
+                    .requiresCorrectToolForDrops().sound(SoundType.STONE).lightLevel(state -> 4).noLootTable()
+                    .isValidSpawn((s, l, p, t) -> false)));
+
     /** As urnas velhas e os caixotes abandonados, nas três raridades. */
     public static final java.util.List<Block> LOOT_URNS = new java.util.ArrayList<>();
     public static final java.util.List<Block> LOOT_CRATES = new java.util.ArrayList<>();

@@ -184,6 +184,20 @@ public final class TCEntities {
             EntityType.Builder.<net.thaumcraft.entity.GolemOrbEntity>of(net.thaumcraft.entity.GolemOrbEntity::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(20));
 
+    /** Os de dentro das Terras de Fora: o caranguejo, o zumbi habitado, o guardião e o orbe dele. */
+    public static final EntityType<net.thaumcraft.entity.eldritch.EldritchCrabEntity> ELDRITCH_CRAB = register("eldritch_crab",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.EldritchCrabEntity>of(net.thaumcraft.entity.eldritch.EldritchCrabEntity::new, MobCategory.MONSTER)
+                    .sized(0.8f, 0.6f).clientTrackingRange(8).updateInterval(3));
+    public static final EntityType<net.thaumcraft.entity.eldritch.InhabitedZombieEntity> INHABITED_ZOMBIE = register("inhabited_zombie",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.InhabitedZombieEntity>of(net.thaumcraft.entity.eldritch.InhabitedZombieEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.95f).eyeHeight(1.74f).passengerAttachments(2.0125f).ridingOffset(-0.7f).clientTrackingRange(8).updateInterval(3));
+    public static final EntityType<net.thaumcraft.entity.eldritch.EldritchGuardianEntity> ELDRITCH_GUARDIAN = register("eldritch_guardian",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.EldritchGuardianEntity>of(net.thaumcraft.entity.eldritch.EldritchGuardianEntity::new, MobCategory.MONSTER)
+                    .sized(0.8f, 2.25f).eyeHeight(2.1f).clientTrackingRange(8).updateInterval(3));
+    public static final EntityType<net.thaumcraft.entity.eldritch.EldritchOrbEntity> ELDRITCH_ORB = register("eldritch_orb",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.EldritchOrbEntity>of(net.thaumcraft.entity.eldritch.EldritchOrbEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
+
     /** A aranha da mente, o susto da distorção. */
     public static final EntityType<net.thaumcraft.entity.MindSpiderEntity> MIND_SPIDER = register("mind_spider",
             EntityType.Builder.<net.thaumcraft.entity.MindSpiderEntity>of(net.thaumcraft.entity.MindSpiderEntity::new, MobCategory.MONSTER)
@@ -335,6 +349,9 @@ public final class TCEntities {
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(CULTIST_CLERIC, net.thaumcraft.entity.eldritch.CultistClericEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(CULTIST_LEADER, net.thaumcraft.entity.eldritch.CultistLeaderEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(CULTIST_PORTAL, net.thaumcraft.entity.eldritch.CultistPortalEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(ELDRITCH_CRAB, net.thaumcraft.entity.eldritch.EldritchCrabEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(INHABITED_ZOMBIE, net.thaumcraft.entity.eldritch.InhabitedZombieEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(ELDRITCH_GUARDIAN, net.thaumcraft.entity.eldritch.EldritchGuardianEntity.attributes());
         net.thaumcraft.world.CreatureSpawns.init();
     }
 }

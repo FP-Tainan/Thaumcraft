@@ -67,6 +67,7 @@ public class Thaumcraft implements ModInitializer {
         net.thaumcraft.event.Dissolve.init();
         net.thaumcraft.event.Champions.init();
         net.thaumcraft.event.MobDrops.init();
+        net.thaumcraft.research.WarpEvents.guardianSpawner = net.thaumcraft.entity.eldritch.EldritchGuardianEntity::spawnForWarp;
         // os encantamentos: o Reparo com vis
         net.thaumcraft.event.Enchantments.init();
         net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntity(

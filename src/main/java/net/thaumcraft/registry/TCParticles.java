@@ -24,6 +24,11 @@ public final class TCParticles {
             BuiltInRegistries.PARTICLE_TYPE, Thaumcraft.id("vent"),
             FabricParticleTypes.complex(ColorParticleOption::codec, ColorParticleOption::streamCodec));
 
+    /** O mesmo vapor no dobro do tamanho: o que sai da abertura dos caranguejos ({@code drawVentParticles} com escala 2). */
+    public static final ParticleType<ColorParticleOption> VENT_LARGE = Registry.register(
+            BuiltInRegistries.PARTICLE_TYPE, Thaumcraft.id("vent_large"),
+            FabricParticleTypes.complex(ColorParticleOption::codec, ColorParticleOption::streamCodec));
+
     private TCParticles() {
     }
 

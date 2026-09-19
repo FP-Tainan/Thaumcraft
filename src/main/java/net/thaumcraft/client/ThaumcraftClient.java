@@ -101,6 +101,34 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.GOLEM_ORB,
                 net.thaumcraft.client.render.FocusOrbRenderers.GolemOrb::new);
         net.thaumcraft.entity.GolemOrbEntity.clientBurst = orb -> net.thaumcraft.client.NodeClient.burst(orb.level(), orb.position(), false);
+        // os de dentro das Terras de Fora: o caranguejo, o zumbi habitado, o guardião e o orbe dele
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.EldritchCrabRenderer.LAYER, net.thaumcraft.client.render.model.EldritchCrabModel::createLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.EldritchGuardianRenderer.LAYER, net.thaumcraft.client.render.model.EldritchGuardianModel::createLayer);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.ELDRITCH_CRAB,
+                net.thaumcraft.client.render.EldritchCrabRenderer::new);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.INHABITED_ZOMBIE,
+                net.thaumcraft.client.render.InhabitedZombieRenderer::new);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.ELDRITCH_GUARDIAN,
+                net.thaumcraft.client.render.EldritchGuardianRenderer::new);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.ELDRITCH_ORB,
+                net.thaumcraft.client.render.EldritchOrbRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(net.thaumcraft.registry.TCBlockEntities.CRAB_SPAWNER,
+                net.thaumcraft.client.render.CrabVentRenderer::new);
+        net.thaumcraft.entity.eldritch.EldritchGuardianEntity.GuardianFx.client = net.thaumcraft.client.fx.GuardianWisp::spawn;
+        net.thaumcraft.entity.eldritch.EldritchOrbEntity.clientBurst = orb -> {
+            var random = orb.level().getRandom();
+            for (int a = 0; a < 30; a++) {
+                float fx = (random.nextFloat() - random.nextFloat()) * 0.3f;
+                float fy = (random.nextFloat() - random.nextFloat()) * 0.3f;
+                float fz = (random.nextFloat() - random.nextFloat()) * 0.3f;
+                net.thaumcraft.client.fx.Wisp.fx3(orb.getX() + fx, orb.getY() + fy, orb.getZ() + fz,
+                        orb.getX() + fx * 8.0f, orb.getY() + fy * 8.0f, orb.getZ() + fz * 8.0f, 0.3f, 5, true, 0.02f);
+            }
+        };
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(net.thaumcraft.net.TCNetwork.Sonic.TYPE,
+                (payload, ctx) -> ctx.client().execute(() -> net.thaumcraft.client.fx.SonicFx.spawn(payload.source())));
         net.thaumcraft.client.ChampionClient.init();
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 net.thaumcraft.net.TCNetwork.BlockArc.TYPE, (payload, ctx) -> ctx.client().execute(() -> {
@@ -206,6 +234,8 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o vapor do cano que sangra, com os tufos de fumaça do próprio mod
         net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(
                 net.thaumcraft.registry.TCParticles.VENT, net.thaumcraft.client.particle.VentParticle.Provider::new);
+        net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(
+                net.thaumcraft.registry.TCParticles.VENT_LARGE, sprites -> new net.thaumcraft.client.particle.VentParticle.Provider(sprites, 2.0f));
 
         // o jarro mostra o que guarda: a névoa na cor do aspecto e, com rótulo, o símbolo dele na frente
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(

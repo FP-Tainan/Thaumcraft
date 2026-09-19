@@ -110,14 +110,16 @@ public final class Champions {
         WHITELIST.put(e -> e instanceof EnderMan, 0);
         WHITELIST.put(e -> e instanceof AbstractSkeleton, 0);
         WHITELIST.put(e -> e instanceof Witch, 1);
+        WHITELIST.put(e -> e instanceof net.thaumcraft.entity.eldritch.EldritchCrabEntity, 0);
         WHITELIST.put(e -> e instanceof net.thaumcraft.entity.taint.TaintacleEntity, 2);
         WHITELIST.put(e -> e instanceof net.thaumcraft.entity.WispEntity, 1);
+        WHITELIST.put(e -> e instanceof net.thaumcraft.entity.eldritch.InhabitedZombieEntity, 3);
         WHITELIST.put(e -> e instanceof net.thaumcraft.entity.PechEntity, 1);
         WHITELIST.put(e -> e instanceof net.thaumcraft.entity.eldritch.CultistEntity, 1);
         WHITELIST.put(e -> e instanceof Boss, 200);
     }
 
-    /** Mais um da lista: o caranguejo e o zumbi habitado chegam com as fatias deles. */
+    /** Mais um da lista (o {@code championWhiteList} que outros mods mandavam). */
     public static void whitelist(Predicate<LivingEntity> who, int bonus) {
         WHITELIST.put(who, bonus);
     }

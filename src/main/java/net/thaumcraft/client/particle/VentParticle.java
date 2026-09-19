@@ -19,8 +19,8 @@ import net.minecraft.util.RandomSource;
  * da velocidade a cada tique e sobe de leve. Atravessa bloco, como o original.
  */
 public class VentParticle extends SingleQuadParticle {
-    /** O tamanho cheio, onde o vapor some. */
-    private static final float FULL = 1.0f;
+    /** O tamanho cheio, onde o vapor some (o {@code psm} do original, que o {@code setScale} multiplica). */
+    private final float FULL;
     /** O alfa com que o cano pinta o vapor. */
     private static final float ALPHA = 0.4f;
 
@@ -29,11 +29,12 @@ public class VentParticle extends SingleQuadParticle {
     private float grown;
 
     protected VentParticle(ClientLevel level, double x, double y, double z, double dx, double dy, double dz,
-                           ColorParticleOption colour, SpriteSet sprites, RandomSource random) {
+                           ColorParticleOption colour, SpriteSet sprites, RandomSource random, float scale) {
         super(level, x, y, z, sprites.first());
+        this.FULL = scale;
         this.sprites = sprites;
         this.setSize(0.02f, 0.02f);
-        this.grown = random.nextFloat() * 0.1f + 0.05f;
+        this.grown = (random.nextFloat() * 0.1f + 0.05f) * scale;
         this.hasPhysics = false;
         this.lifetime = 200;
         this.setColor(colour.getRed(), colour.getGreen(), colour.getBlue());
@@ -87,15 +88,22 @@ public class VentParticle extends SingleQuadParticle {
     /** Quem cria o vapor a partir da partícula registrada. */
     public static class Provider implements ParticleProvider<ColorParticleOption> {
         private final SpriteSet sprites;
+        private final float scale;
 
         public Provider(SpriteSet sprites) {
+            this(sprites, 1.0f);
+        }
+
+        /** O vapor ampliado ({@code setScale}): o da abertura do caranguejo sai no dobro. */
+        public Provider(SpriteSet sprites, float scale) {
             this.sprites = sprites;
+            this.scale = scale;
         }
 
         @Override
         public VentParticle createParticle(ColorParticleOption colour, ClientLevel level, double x, double y, double z,
                                            double dx, double dy, double dz, RandomSource random) {
-            return new VentParticle(level, x, y, z, dx, dy, dz, colour, this.sprites, random);
+            return new VentParticle(level, x, y, z, dx, dy, dz, colour, this.sprites, random, this.scale);
         }
     }
 }

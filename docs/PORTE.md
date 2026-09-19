@@ -1553,3 +1553,26 @@ Descompilados do jar: `EntityCultist`, `EntityCultistKnight`, `EntityCultistCler
 - **Armaduras**: robe (1% de desconto, 1 de distorção), placa, pretor e botas, com os modelos do original gerados pelo
   `scratchpad/armadura-cultista.js` e as abas balançando com o passo.
 - **Testes**: `CultistGameTest`; tela: `CultistClientTest`.
+
+## Eldritch 6.3: o caranguejo, o zumbi habitado e o guardião
+
+Descompilados do jar: `EntityEldritchCrab`, `EntityInhabitedZombie`, `EntityEldritchGuardian`, `EntityEldritchOrb`,
+`TileEldritchCrabSpawner` (e o `BlockEldritch` número 9), `RenderEldritchCrab`, `RenderInhabitedZombie`,
+`RenderEldritchGuardian`, `RenderEldritchOrb`, `TileEldritchCrabSpawnerRenderer`, `ModelEldritchCrab`,
+`ModelEldritchGuardian`, `FXSonic`, `FXWispEG`, `FXVent`, `PacketFXSonic`, e os trechos do `ConfigEntities`, do
+`TileEldritchAltar.spawnGuardian` e do `WarpEvents.spawnGuardian`.
+
+- **Caranguejo eldritch**: vinte de vida, pula no alvo e monta na cabeça dele mordendo; de elmo (cinco de armadura, mais
+  lento) quebra o elmo na metade da vida; imune a veneno; artrópode; pérola do fim. Modelo gerado pelo
+  `scratchpad/modelo-entidade.js`, com a `craboverlay.png` acesa por cima.
+- **Zumbi habitado** ("Casca Cambaleante"): placa dos cavaleiros, trinta de vida, caça cultistas, não converte aldeão;
+  morto, estoura e solta um caranguejo de elmo. Só nasce sem outro a trinta e dois blocos.
+- **Guardião eldritch**: cinquenta de vida, orbe eldritch (fraqueza e dois terços do dano em volta) de um braço e do
+  outro, ou o grito (cone de ondulação, murchar e distorção); névoa escura dos pés; fora das Terras de Fora é um vulto
+  translúcido que some com a distância e traz a névoa aos que estão perto; nas Terras de Fora ganha um escudo que se
+  refaz. O altar do anel (tipo 1) e a névoa da distorção agora o chamam.
+- **Abertura incrustada** (`crusted_opening`): com alguém a dezesseis blocos e menos de seis caranguejos por perto, chia,
+  solta vapor e cospe um caranguejo sem elmo pela face virada; o respiradouro é o `crabvent.obj`. Quem a põe no mundo são
+  as salas das Terras de Fora (6.4).
+- Campeões: caranguejo (0) e zumbi habitado (3) entram na lista, como no original.
+- **Testes**: `EldritchCreatureGameTest`; tela: `EldritchCreatureClientTest`.

@@ -282,4 +282,7 @@ public final class TCBlockEntities {
     public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.EldritchCapBlockEntity> ELDRITCH_CAP =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("eldritch_capstone"),
                     new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.EldritchCapBlockEntity::new, java.util.Set.of(TCBlocks.ELDRITCH_CAPSTONE)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.CrabSpawnerBlockEntity> CRAB_SPAWNER =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("crab_spawner"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.CrabSpawnerBlockEntity::new, java.util.Set.of(TCBlocks.CRUSTED_OPENING)));
 }
