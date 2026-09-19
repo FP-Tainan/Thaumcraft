@@ -166,6 +166,24 @@ public final class TCEntities {
                     .clientTrackingRange(10)
                     .updateInterval(3));
 
+    /** O Culto Carmesim: o cavaleiro, o clérigo, o pretor e o portal. */
+    public static final EntityType<net.thaumcraft.entity.eldritch.CultistKnightEntity> CULTIST_KNIGHT = register("cultist_knight",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.CultistKnightEntity>of(net.thaumcraft.entity.eldritch.CultistKnightEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(4).updateInterval(3));
+    public static final EntityType<net.thaumcraft.entity.eldritch.CultistClericEntity> CULTIST_CLERIC = register("cultist_cleric",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.CultistClericEntity>of(net.thaumcraft.entity.eldritch.CultistClericEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(4).updateInterval(3));
+    public static final EntityType<net.thaumcraft.entity.eldritch.CultistLeaderEntity> CULTIST_LEADER = register("cultist_leader",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.CultistLeaderEntity>of(net.thaumcraft.entity.eldritch.CultistLeaderEntity::new, MobCategory.MONSTER)
+                    .sized(0.75f, 2.25f).eyeHeight(2.025f).clientTrackingRange(4).updateInterval(3));
+    public static final EntityType<net.thaumcraft.entity.eldritch.CultistPortalEntity> CULTIST_PORTAL = register("cultist_portal",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.CultistPortalEntity>of(net.thaumcraft.entity.eldritch.CultistPortalEntity::new, MobCategory.MONSTER)
+                    .sized(1.5f, 3.0f).fireImmune().clientTrackingRange(4).updateInterval(20));
+    /** O orbe que persegue o alvo, dos clérigos, do pretor e do golem eldritch. */
+    public static final EntityType<net.thaumcraft.entity.GolemOrbEntity> GOLEM_ORB = register("golem_orb",
+            EntityType.Builder.<net.thaumcraft.entity.GolemOrbEntity>of(net.thaumcraft.entity.GolemOrbEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(20));
+
     /** A aranha da mente, o susto da distorção. */
     public static final EntityType<net.thaumcraft.entity.MindSpiderEntity> MIND_SPIDER = register("mind_spider",
             EntityType.Builder.<net.thaumcraft.entity.MindSpiderEntity>of(net.thaumcraft.entity.MindSpiderEntity::new, MobCategory.MONSTER)
@@ -313,6 +331,10 @@ public final class TCEntities {
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addSpawn(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.includeByKey(net.thaumcraft.world.TCBiomes.TAINTED_LAND),
                 MobCategory.MONSTER, TAINTACLE, 1, 1, 1);
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(CULTIST_KNIGHT, net.thaumcraft.entity.eldritch.CultistKnightEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(CULTIST_CLERIC, net.thaumcraft.entity.eldritch.CultistClericEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(CULTIST_LEADER, net.thaumcraft.entity.eldritch.CultistLeaderEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(CULTIST_PORTAL, net.thaumcraft.entity.eldritch.CultistPortalEntity.attributes());
         net.thaumcraft.world.CreatureSpawns.init();
     }
 }

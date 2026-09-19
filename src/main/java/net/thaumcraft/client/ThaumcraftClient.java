@@ -60,6 +60,64 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.client.fx.ThaumFx.init();
         net.thaumcraft.client.fx.FocusEffects.init();
 
+        // o Culto Carmesim: o corpo, as armaduras de modelo próprio, o portal e o orbe
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.CultistRenderer.LAYER, net.thaumcraft.client.render.CultistRenderer::createLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(net.thaumcraft.client.render.CultistArmorRenderer.ROBE_INNER,
+                () -> net.thaumcraft.client.render.model.CultistRobeModel.createLayer(true));
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(net.thaumcraft.client.render.CultistArmorRenderer.ROBE_OUTER,
+                () -> net.thaumcraft.client.render.model.CultistRobeModel.createLayer(false));
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(net.thaumcraft.client.render.CultistArmorRenderer.PLATE_INNER,
+                () -> net.thaumcraft.client.render.model.CultistPlateModel.createLayer(true));
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(net.thaumcraft.client.render.CultistArmorRenderer.PLATE_OUTER,
+                () -> net.thaumcraft.client.render.model.CultistPlateModel.createLayer(false));
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(net.thaumcraft.client.render.CultistArmorRenderer.LEADER_INNER,
+                () -> net.thaumcraft.client.render.model.CultistLeaderModel.createLayer(true));
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(net.thaumcraft.client.render.CultistArmorRenderer.LEADER_OUTER,
+                () -> net.thaumcraft.client.render.model.CultistLeaderModel.createLayer(false));
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(context -> new net.thaumcraft.client.render.CultistArmorRenderer(context,
+                        Thaumcraft.id("textures/models/cultist_robe_armor.png"), net.thaumcraft.client.render.CultistArmorRenderer.ROBE_INNER,
+                        net.thaumcraft.client.render.CultistArmorRenderer.ROBE_OUTER, net.thaumcraft.client.render.CultistArmorRenderer::robeSway),
+                net.thaumcraft.registry.TCItems.CULTIST_ROBE_HELMET, net.thaumcraft.registry.TCItems.CULTIST_ROBE_CHESTPLATE,
+                net.thaumcraft.registry.TCItems.CULTIST_ROBE_LEGGINGS);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(context -> new net.thaumcraft.client.render.CultistArmorRenderer(context,
+                        Thaumcraft.id("textures/models/cultist_plate_armor.png"), net.thaumcraft.client.render.CultistArmorRenderer.PLATE_INNER,
+                        net.thaumcraft.client.render.CultistArmorRenderer.PLATE_OUTER, net.thaumcraft.client.render.CultistArmorRenderer::plateSway),
+                net.thaumcraft.registry.TCItems.CULTIST_PLATE_HELMET, net.thaumcraft.registry.TCItems.CULTIST_PLATE_CHESTPLATE,
+                net.thaumcraft.registry.TCItems.CULTIST_PLATE_LEGGINGS);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(context -> new net.thaumcraft.client.render.CultistArmorRenderer(context,
+                        Thaumcraft.id("textures/models/cultist_leader_armor.png"), net.thaumcraft.client.render.CultistArmorRenderer.LEADER_INNER,
+                        net.thaumcraft.client.render.CultistArmorRenderer.LEADER_OUTER, net.thaumcraft.client.render.CultistArmorRenderer::leaderSway),
+                net.thaumcraft.registry.TCItems.CULTIST_LEADER_HELMET, net.thaumcraft.registry.TCItems.CULTIST_LEADER_CHESTPLATE,
+                net.thaumcraft.registry.TCItems.CULTIST_LEADER_LEGGINGS);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.CULTIST_KNIGHT,
+                net.thaumcraft.client.render.CultistRenderer::new);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.CULTIST_CLERIC,
+                net.thaumcraft.client.render.CultistRenderer::new);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.CULTIST_LEADER,
+                net.thaumcraft.client.render.CultistRenderer::new);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.CULTIST_PORTAL,
+                net.thaumcraft.client.render.CultistPortalRenderer::new);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.GOLEM_ORB,
+                net.thaumcraft.client.render.FocusOrbRenderers.GolemOrb::new);
+        net.thaumcraft.entity.GolemOrbEntity.clientBurst = orb -> net.thaumcraft.client.NodeClient.burst(orb.level(), orb.position(), false);
+        net.thaumcraft.client.ChampionClient.init();
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.BlockArc.TYPE, (payload, ctx) -> ctx.client().execute(() -> {
+                    var level = ctx.client().level;
+                    if (level == null) return;
+                    var source = level.getEntity(payload.source());
+                    if (source == null) return;
+                    var random = level.getRandom();
+                    float r = 0.3f - random.nextFloat() * 0.1f, g = 0.0f, b = 0.5f + random.nextFloat() * 0.2f;
+                    if (source instanceof net.thaumcraft.entity.eldritch.CultistPortalEntity) {
+                        r = 0.5f + random.nextFloat() * 0.2f;
+                        b = 0.0f;
+                    }
+                    var pos = payload.pos();
+                    net.thaumcraft.client.fx.Arc.spawn(random, source.getX(), source.getBoundingBox().minY + source.getBbHeight() / 2.0f,
+                            source.getZ(), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, r, g, b, 0.5f);
+                }));
         // a armadura de fortaleza, com o modelo do ModelFortressArmor
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.client.render.FortressArmorRenderer.LAYER,

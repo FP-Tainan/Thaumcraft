@@ -1528,3 +1528,28 @@ pedaço de estruturas do `generateSurface`, `createRandomNodeAt` (o `eerie`), `C
 - **Faltam** (fatias seguintes): quem o altar chama (clérigos, cavaleiros, guardiões), o labirinto que o anel reserva e o
   portal (Terras de Fora).
 - **Testes**: `RuinsGameTest`; tela: `RuinsClientTest`.
+
+## Eldritch 6.2: o Culto Carmesim e os campeões
+
+Descompilados do jar: `EntityCultist`, `EntityCultistKnight`, `EntityCultistCleric`, `EntityCultistLeader`,
+`EntityCultistPortal`, `EntityThaumcraftBoss`, `EntityGolemOrb`, `AICultistHurtByTarget`, `AIAltarFocus`,
+`AILongRangeAttack`, `AIAttackOnCollide`, `RenderCultist`, `RenderCultistPortal`, `RenderElectricOrb`, `FXArc`,
+`PacketFXBlockArc`, `ItemCultistRobeArmor/PlateArmor/LeaderArmor/Boots`, `ModelRobe`, `ModelKnightArmor`,
+`ModelLeaderArmor`, `ChampionModifier` e os treze `ChampionMod*`, `EntityUtils.makeChampion` e os ganchos de campeão do
+`EventHandlerEntity`, do `EventHandlerRunic` e do `RenderEventHandler`.
+
+- **Campeões** (`event/Champions`): monstro da lista (zumbi, aranha, blaze, enderman, esqueleto, bruxa, tentáculo,
+  fogo-fátuo, pech, cultistas; chefes sempre) tem a chance do original de nascer campeão de um dos treze tipos: +30 de
+  vida, dano triplo, o nome do tipo, e o efeito (a cada tique, no golpe dado ou no levado); faíscas de cada tipo; morto
+  por alguém, experiência e sacola. O tipo mora num anexo sincronizado (no original, num atributo).
+- **Cultistas**: cavaleiro (placa, espada — raramente de táumio ou do vazio), clérigo (robe; orbe vermelho que persegue
+  ou três bolas de fogo; o ritual em volta do altar, boiando e ligado a ele por um fio), aliados entre si, chamando
+  ajuda; derrubam fragmento, semente do vazio, moeda e, raramente, os ritos carmesins. O altar do anel agora chama os
+  quatro clérigos e depois cavaleiros.
+- **Pretor** (chefe): barra de chefe, sempre campeão com o título ("Pretor Fertus, o Audaz"), cura, raiva com golpe
+  forte, troca de alvo pela raiva e reforço por jogador; lâmina carmesim.
+- **Portal carmesim**: finca os estandartes, espalha caixotes com arcos de faísca, solta levas de cultistas e o pretor;
+  morto, deixa a pérola primordial. Quem o abre é a fechadura das Terras de Fora (6.4).
+- **Armaduras**: robe (1% de desconto, 1 de distorção), placa, pretor e botas, com os modelos do original gerados pelo
+  `scratchpad/armadura-cultista.js` e as abas balançando com o passo.
+- **Testes**: `CultistGameTest`; tela: `CultistClientTest`.

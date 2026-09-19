@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "LivingEntityArmorMixin",
+    "LivingEntityChampionMixin",
     "PlayerRunicMixin",
     "PlayerHoverMixin",
     "OverworldBiomeBuilderMixin",

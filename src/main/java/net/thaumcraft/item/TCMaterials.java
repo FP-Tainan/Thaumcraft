@@ -85,6 +85,23 @@ public final class TCMaterials {
             net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
                     net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/thaumium")), FORTRESS_ASSET);
 
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> CULTIST_ASSET = assetKey("cultist");
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> CULTIST_BOOTS_ASSET = assetKey("cultist_boots");
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> CULTIST_LEADER_ASSET = assetKey("cultist_leader");
+
+    /** As armaduras do Culto Carmesim: o {@code ArmorMaterial.IRON} de então (2/6/5/2, 15, 9), consertadas com ferro. */
+    public static final ArmorMaterial CULTIST = iron(CULTIST_ASSET);
+    public static final ArmorMaterial CULTIST_BOOTS = iron(CULTIST_BOOTS_ASSET);
+    /** A armadura do pretor: a mesma conta da de fortaleza, mas consertada com ferro. */
+    public static final ArmorMaterial CULTIST_LEADER = new ArmorMaterial(40,
+            Map.of(ArmorType.BOOTS, 3, ArmorType.LEGGINGS, 6, ArmorType.CHESTPLATE, 7, ArmorType.HELMET, 3),
+            25, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f, net.minecraft.tags.ItemTags.REPAIRS_IRON_ARMOR, CULTIST_LEADER_ASSET);
+
+    private static ArmorMaterial iron(ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> asset) {
+        return new ArmorMaterial(15, Map.of(ArmorType.BOOTS, 2, ArmorType.LEGGINGS, 5, ArmorType.CHESTPLATE, 6, ArmorType.HELMET, 2),
+                9, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f, net.minecraft.tags.ItemTags.REPAIRS_IRON_ARMOR, asset);
+    }
+
     private static ArmorMaterial special(ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> asset, String repair) {
         return new ArmorMaterial(25,
                 Map.of(ArmorType.BOOTS, 1, ArmorType.LEGGINGS, 2, ArmorType.CHESTPLATE, 3, ArmorType.HELMET, 1),

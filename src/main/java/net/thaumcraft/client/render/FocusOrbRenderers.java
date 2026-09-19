@@ -31,6 +31,7 @@ public final class FocusOrbRenderers {
     public static class State extends EntityRenderState {
         int ticks;
         float partial;
+        boolean red;
     }
 
     private static void quad(PoseStack pose, SubmitNodeCollector collector, RenderType type, float u0, float u1, float v0, float v1,
@@ -74,6 +75,38 @@ public final class FocusOrbRenderers {
             float u0 = state.ticks % 4 / 16.0f, u1 = u0 + 0.0625f;
             float v0 = 0.8125f, v1 = v0 + 0.0625f;
             quad(pose, collector, AdditiveGlow.blended(PARTICLES2), u0, u1, v0, v1, 0.7f, 0xCCFFFFFF, camera);
+            super.submit(state, pose, collector, camera);
+        }
+    }
+
+    /**
+     * O orbe que persegue o alvo ({@code EntityGolemOrb}), com o mesmo {@code RenderElectricOrb} do choque: o azul na última
+     * linha da folha, o vermelho na de cima dela.
+     */
+    public static class GolemOrb extends EntityRenderer<net.thaumcraft.entity.GolemOrbEntity, State> {
+        public GolemOrb(EntityRendererProvider.Context context) {
+            super(context);
+            this.shadowRadius = 0.0f;
+        }
+
+        @Override
+        public State createRenderState() {
+            return new State();
+        }
+
+        @Override
+        public void extractRenderState(net.thaumcraft.entity.GolemOrbEntity entity, State state, float partial) {
+            super.extractRenderState(entity, state, partial);
+            state.ticks = entity.tickCount;
+            state.red = entity.isRed();
+        }
+
+        @Override
+        public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
+            float u0 = (1 + state.ticks % 6) / 8.0f, u1 = u0 + 0.125f;
+            float v0 = state.red ? 0.75f : 0.875f, v1 = v0 + 0.125f;
+            float bob = Mth.sin(state.ticks / 5.0f) * 0.2f + 0.2f;
+            quad(pose, collector, AdditiveGlow.of(Sparkle.PARTICLES), u0, u1, v0, v1, 1.0f + bob, 0xCCFFFFFF, camera);
             super.submit(state, pose, collector, camera);
         }
     }

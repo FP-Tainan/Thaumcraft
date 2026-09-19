@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public abstract class PlayerRunicMixin {
     @ModifyVariable(method = "actuallyHurt", at = @At("HEAD"), argsOnly = true)
     private float thaumcraft$runicShield(float damage, ServerLevel level, DamageSource source) {
-        return RunicShield.absorb((Player) (Object) this, source, damage);
+        float left = RunicShield.absorb((Player) (Object) this, source, damage);
+        return net.thaumcraft.event.Champions.hurt((Player) (Object) this, source, left);
     }
 }

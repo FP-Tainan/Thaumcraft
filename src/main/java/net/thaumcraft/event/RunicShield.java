@@ -97,6 +97,13 @@ public final class RunicShield {
         });
     }
 
+    /** O {@code PacketFXShield} para quem estiver perto: o clarão do escudo em quem apanhou (também nos monstros com escudo). */
+    public static void flash(net.minecraft.world.entity.LivingEntity entity, int target, double range) {
+        if (!(entity.level() instanceof ServerLevel level)) return;
+        Flash flash = new Flash(entity.getId(), target);
+        for (ServerPlayer near : PlayerLookup.around(level, entity.position(), range)) ServerPlayNetworking.send(near, flash);
+    }
+
     /** O {@code getFinalCharge}: as cargas da peça mais o endurecimento da infusão rúnica. */
     public static int finalCharge(ItemStack stack) {
         if (!isRunic(stack)) return 0;

@@ -267,6 +267,25 @@ public final class TCNetwork {
         ServerPlayNetworking.send(player, new Notice(key, arg == null ? "" : arg));
     }
 
+    /** O {@code PacketFXBlockArc}: o arco de faíscas de uma criatura até um bloco (roxo; vermelho, do portal carmesim). */
+    public record BlockArc(net.minecraft.core.BlockPos pos, int source) implements CustomPacketPayload {
+        public static final Type<BlockArc> TYPE = new Type<>(Thaumcraft.id("block_arc"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, BlockArc> CODEC = StreamCodec.composite(
+                net.minecraft.core.BlockPos.STREAM_CODEC, BlockArc::pos, ByteBufCodecs.VAR_INT, BlockArc::source, BlockArc::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static void blockArc(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos pos, net.minecraft.world.entity.Entity source) {
+        BlockArc arc = new BlockArc(pos, source.getId());
+        for (ServerPlayer near : net.fabricmc.fabric.api.networking.v1.PlayerLookup.around(level, source.position(), 32.0)) {
+            ServerPlayNetworking.send(near, arc);
+        }
+    }
+
     public static void miscEvent(ServerPlayer player, int kind) {
         ServerPlayNetworking.send(player, new MiscEvent(kind));
     }
@@ -306,6 +325,7 @@ public final class TCNetwork {
         PayloadTypeRegistry.clientboundPlay().register(BlockBubble.TYPE, BlockBubble.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(ResearchComplete.TYPE, ResearchComplete.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(Notice.TYPE, Notice.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(BlockArc.TYPE, BlockArc.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela
         ServerPlayNetworking.registerGlobalReceiver(ResearchRequest.TYPE, (payload, context) ->

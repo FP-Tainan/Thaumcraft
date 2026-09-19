@@ -39,6 +39,17 @@ public final class FloatyLine {
      */
     public static void submit(PoseStack pose, SubmitNodeCollector collector, Vec3 from, Vec3 to, int colour,
                               float grow, float speed, float width) {
+        submit(pose, collector, from, to, colour, grow, speed, width, AdditiveGlow.of(WISPY), -1.0f);
+    }
+
+    /**
+     * A mesma linha com outro jeito de pintar: o fio do ritual dos clérigos ({@code RenderCultist.drawFloatyLine}) mistura
+     * por transparência em vez de somar luz e tem o brilho fixo em oito décimos.
+     *
+     * @param fixedAlpha o brilho de toda a linha; negativo, o de sempre (zero nas pontas, cheio no meio)
+     */
+    public static void submit(PoseStack pose, SubmitNodeCollector collector, Vec3 from, Vec3 to, int colour,
+                              float grow, float speed, float width, net.minecraft.client.renderer.rendertype.RenderType type, float fixedAlpha) {
         double cx = from.x - to.x, cy = from.y - to.y, cz = from.z - to.z;
         float dist = (float) Math.sqrt(cx * cx + cy * cy + cz * cz);
         float length = Math.round(dist) * (QUALITY / 2.0f);
@@ -61,12 +72,12 @@ public final class FloatyLine {
             px[i] = dx * f2;
             py[i] = dy * f2;
             pz[i] = dz * f2;
-            alpha[i] = Math.max(0.0f, f3);
+            alpha[i] = fixedAlpha >= 0.0f ? fixedAlpha : Math.max(0.0f, f3);
             u[i] = (1.0f - f2) * dist - time * speed;
         }
 
         int rgb = colour & 0xFFFFFF;
-        collector.submitCustomGeometry(pose, AdditiveGlow.of(WISPY), (matrix, consumer) -> {
+        collector.submitCustomGeometry(pose, type, (matrix, consumer) -> {
             for (int i = 0; i < steps; i++) {
                 // a fita de pé
                 ribbon(matrix, consumer, rgb, px, py, pz, alpha, u, i, 0.0f, width);

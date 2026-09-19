@@ -829,6 +829,47 @@ public final class TCItems {
         }
     }
 
+    // ----------------------------------------------------------------- o Culto Carmesim
+
+    public static final Item CULTIST_ROBE_HELMET = register("cultist_robe_helmet", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.ROBE, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST,
+            net.minecraft.world.item.equipment.ArmorType.HELMET).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item CULTIST_ROBE_CHESTPLATE = register("cultist_robe_chestplate", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.ROBE, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST,
+            net.minecraft.world.item.equipment.ArmorType.CHESTPLATE).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item CULTIST_ROBE_LEGGINGS = register("cultist_robe_leggings", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.ROBE, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST,
+            net.minecraft.world.item.equipment.ArmorType.LEGGINGS).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item CULTIST_BOOTS = register("cultist_boots", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.BOOTS, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST_BOOTS,
+            net.minecraft.world.item.equipment.ArmorType.BOOTS).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item CULTIST_PLATE_HELMET = register("cultist_plate_helmet", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.PLATE, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST,
+            net.minecraft.world.item.equipment.ArmorType.HELMET).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item CULTIST_PLATE_CHESTPLATE = register("cultist_plate_chestplate", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.PLATE, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST,
+            net.minecraft.world.item.equipment.ArmorType.CHESTPLATE).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item CULTIST_PLATE_LEGGINGS = register("cultist_plate_leggings", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.PLATE, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST,
+            net.minecraft.world.item.equipment.ArmorType.LEGGINGS).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item CULTIST_LEADER_HELMET = register("cultist_leader_helmet", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.LEADER, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST_LEADER,
+            net.minecraft.world.item.equipment.ArmorType.HELMET).rarity(net.minecraft.world.item.Rarity.RARE)));
+    public static final Item CULTIST_LEADER_CHESTPLATE = register("cultist_leader_chestplate", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.LEADER, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST_LEADER,
+            net.minecraft.world.item.equipment.ArmorType.CHESTPLATE).rarity(net.minecraft.world.item.Rarity.RARE)));
+    public static final Item CULTIST_LEADER_LEGGINGS = register("cultist_leader_leggings", properties -> new net.thaumcraft.item.CultistArmorItem(
+            net.thaumcraft.item.CultistArmorItem.Kind.LEADER, properties.humanoidArmor(net.thaumcraft.item.TCMaterials.CULTIST_LEADER,
+            net.minecraft.world.item.equipment.ArmorType.LEGGINGS).rarity(net.minecraft.world.item.Rarity.RARE)));
+    public static final Item CULTIST_KNIGHT_SPAWN_EGG = register("cultist_knight_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.CULTIST_KNIGHT)));
+    public static final Item CULTIST_CLERIC_SPAWN_EGG = register("cultist_cleric_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.CULTIST_CLERIC)));
+    public static final Item CULTIST_LEADER_SPAWN_EGG = register("cultist_leader_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.CULTIST_LEADER)));
+    public static final Item CULTIST_PORTAL_SPAWN_EGG = register("cultist_portal_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.CULTIST_PORTAL)));
+
     public static final ResourceKey<CreativeModeTab> TAB_KEY =
             ResourceKey.create(Registries.CREATIVE_MODE_TAB, Thaumcraft.id("thaumcraft"));
 

@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
  * direção da mira. O espalhamento é o do jogo antigo: um sorteio de sino vezes 0,0075 vezes o espalhamento
  * pedido, em cada eixo — o jogo novo espalha mais que o dobro disso para o mesmo número.
  */
-final class Throw {
+public final class Throw {
     private Throw() {
     }
 
@@ -57,6 +57,16 @@ final class Throw {
         double mz = Mth.cos(yaw / 180.0f * (float) Math.PI) * Mth.cos(pitch / 180.0f * (float) Math.PI) * f;
         double my = -Mth.sin((pitch + pitchOffset) / 180.0f * (float) Math.PI) * f;
         projectile.setDeltaMovement(heading(projectile.getRandom(), mx, my, mz, velocity, 1.0f));
+    }
+
+    /** O {@code setThrowableHeading} do 1.7.10 num projétil já no ar. */
+    public static void shoot(Projectile projectile, double x, double y, double z, float velocity, float inaccuracy) {
+        projectile.setDeltaMovement(heading(projectile.getRandom(), x, y, z, velocity, inaccuracy));
+    }
+
+    /** O arremesso do construtor do {@code EntityThrowable}, para quem está fora deste pacote. */
+    public static void fromThrower(Projectile projectile, LivingEntity thrower, float velocity) {
+        aim(projectile, thrower, velocity);
     }
 
     /** O {@code setThrowableHeading} do 1.7.10. */

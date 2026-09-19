@@ -18,7 +18,7 @@ public final class Sparkle implements ThaumFx.Effect {
 
     private double x, y, z, prevX, prevY, prevZ;
     private double motionX, motionY, motionZ;
-    private final float red, green, blue;
+    private float red, green, blue;
     private final float scale;
     private final int maxAge;
     private final int multiplier;
@@ -34,6 +34,18 @@ public final class Sparkle implements ThaumFx.Effect {
         Sparkle sparkle = new Sparkle(random, x, y, z, size, colour, 6);
         sparkle.gravity = gravity;
         ThaumFx.add(sparkle);
+    }
+
+    /** A faísca com a cor dada ({@code setRBGColorF}), sem sorteio de nascer: a que fecha o arco de faíscas. */
+    public static void coloured(RandomSource random, double x, double y, double z, float size, int m, float r, float g, float b) {
+        ThaumFx.add(new Sparkle(random, x, y, z, size, -1, m, r, g, b));
+    }
+
+    private Sparkle(RandomSource random, double x, double y, double z, float size, int type, int m, float r, float g, float b) {
+        this(random, x, y, z, size, type, m);
+        this.red = r;
+        this.green = g;
+        this.blue = b;
     }
 
     private Sparkle(RandomSource random, double x, double y, double z, float size, int type, int m) {
