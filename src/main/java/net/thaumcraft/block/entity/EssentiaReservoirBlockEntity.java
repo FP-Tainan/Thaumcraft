@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
  * líquido vai mudando de cor, um aspecto guardado por segundo, e o vidro range de vez em quando, mais quanto mais
  * cheio.
  */
-public class EssentiaReservoirBlockEntity extends BlockEntity implements AspectContainer, EssentiaTransport, Wandable {
+public class EssentiaReservoirBlockEntity extends BlockEntity implements net.thaumcraft.api.aspects.AspectSource, EssentiaTransport, Wandable {
     public AspectList essentia = new AspectList();
     public final int maxAmount = 256;
     private int count;

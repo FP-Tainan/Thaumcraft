@@ -309,6 +309,12 @@
       "thaumcraft:wandfail"
     ]
   },
+  "whispers": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:whispers"
+    ]
+  },
   "wisp_dead": {
     "category": "player",
     "sounds": [

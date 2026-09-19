@@ -85,4 +85,26 @@ public class PedestalBlock extends BaseEntityBlock {
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new PedestalBlockEntity(pos, state);
     }
+
+    /** As faíscas do {@code receiveClientEvent} do {@code TilePedestal}, desenhadas por quem vê. */
+    public interface ClientEffects {
+        void sparkle(BlockPos pos, int colour, int count);
+    }
+
+    public static ClientEffects clientEffects;
+
+    /**
+     * Os eventos do {@code TilePedestal}: 11 é o ingrediente perdido na infusão (faíscas magenta) e 12 é a infusão pronta
+     * (faíscas de toda cor), um bloco acima do pedestal.
+     */
+    @Override
+    protected boolean triggerEvent(BlockState state, Level level, BlockPos pos, int id, int param) {
+        if (id != 11 && id != 12) return super.triggerEvent(state, level, pos, id, param);
+        if (level.isClientSide() && clientEffects != null) {
+            // o particleCount(5) e o particleCount(10) do original, com as partículas no máximo
+            int times = id == 11 ? 10 : 20;
+            for (int a = 0; a < times; a++) clientEffects.sparkle(pos.above(), id == 11 ? 0xC000C0 : -9999, 2);
+        }
+        return true;
+    }
 }

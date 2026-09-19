@@ -7,6 +7,9 @@ import net.thaumcraft.client.render.ScannerRenderer;
 
 /** A parte do mod que só existe na máquina de quem joga: as peças desenhadas e as telas. */
 public class ThaumcraftClient implements ClientModInitializer {
+    /** O {@code lastSound} do {@code PacketAspectPool}: um tinido a cada cem milissegundos, no máximo. */
+    private static long lastPoolSound;
+
     @Override
     public void onInitializeClient() {
         // o thaumômetro é peça de três dimensões, como no original: entra na lista do jogo junto do baú
@@ -519,17 +522,90 @@ public class ThaumcraftClient implements ClientModInitializer {
                     level.playLocalSound(payload.from().x, payload.from().y, payload.from().z, net.thaumcraft.registry.TCSounds.ZAP.value(),
                             net.minecraft.sounds.SoundSource.BLOCKS, 0.1f, 1.0f + level.getRandom().nextFloat() * 0.2f, false);
                 }));
+        // a matriz de infusão: as runas do pedestal, as migalhas que ela puxa, a experiência e os raios da instabilidade
+        net.thaumcraft.block.entity.InfusionMatrixBlockEntity.clientEffects = new net.thaumcraft.block.entity.InfusionMatrixBlockEntity.ClientEffects() {
+            @Override
+            public void runes(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pedestal, float r, float g, float b) {
+                net.thaumcraft.client.fx.BlockRunes.spawn(pedestal.getX(), pedestal.getY(), pedestal.getZ(), r, g, b, 25, -0.03f);
+            }
+
+            @Override
+            public void pedestal(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pedestal, net.minecraft.core.BlockPos matrix,
+                                 net.minecraft.world.item.ItemStack stack) {
+                if (level instanceof net.minecraft.client.multiplayer.ClientLevel client) {
+                    net.thaumcraft.client.fx.InfusionFx.fromPedestal(client, pedestal, matrix, stack);
+                }
+            }
+
+            @Override
+            public void experience(net.minecraft.world.level.Level level, net.minecraft.world.entity.Entity from, net.minecraft.core.BlockPos matrix) {
+                var random = level.getRandom();
+                for (int a = 0; a < 4; a++) {
+                    net.thaumcraft.client.fx.InfusionFx.experience(from.getX() + (random.nextFloat() - random.nextFloat()) * from.getBbWidth(),
+                            from.getBoundingBox().minY + random.nextFloat() * from.getBbHeight(),
+                            from.getZ() + (random.nextFloat() - random.nextFloat()) * from.getBbWidth(), matrix, random);
+                }
+            }
+
+            @Override
+            public void bolt(net.minecraft.world.phys.Vec3 from, net.minecraft.world.phys.Vec3 to) {
+                NodeClient.nodeBolt(from, to);
+            }
+        };
+        net.thaumcraft.block.PedestalBlock.clientEffects = (pos, colour, count) ->
+                net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX(), pos.getY(), pos.getZ(), colour, count);
+        // os avisos do canto: o PacketAspectDiscovery, o PacketAspectPool e o PacketWarpMessage
+        PlayerNotifications.init();
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
-                net.thaumcraft.net.TCNetwork.ScanSummary.TYPE, (payload, context) -> context.client().execute(() -> {
-                    java.util.List<net.minecraft.network.chat.Component> linhas = new java.util.ArrayList<>();
-                    for (int index = 0; index < payload.tags().size(); index++) {
-                        var aspect = net.thaumcraft.api.aspects.Aspect.of(payload.tags().get(index));
-                        if (aspect == null) continue;
-                        linhas.add(net.minecraft.network.chat.Component.translatable("tc.scan.gain",
-                                aspect.name(), payload.gained().get(index), payload.totals().get(index)));
+                net.thaumcraft.net.TCNetwork.AspectDiscovery.TYPE, (payload, context) -> context.client().execute(() -> {
+                    var aspect = net.thaumcraft.api.aspects.Aspect.of(payload.tag());
+                    var player = context.client().player;
+                    if (aspect == null || player == null) return;
+                    String text = net.minecraft.network.chat.Component.translatable("tc.addaspectdiscovery", aspect.name()).getString();
+                    PlayerNotifications.add("§6" + text, aspect);
+                    player.playSound(net.minecraft.sounds.SoundEvents.EXPERIENCE_ORB_PICKUP, 0.2f, 0.5f + player.getRandom().nextFloat() * 0.2f);
+                }));
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.AspectPool.TYPE, (payload, context) -> context.client().execute(() -> {
+                    var aspect = net.thaumcraft.api.aspects.Aspect.of(payload.tag());
+                    var player = context.client().player;
+                    if (aspect == null || player == null || payload.amount() <= 0) return;
+                    String text = net.minecraft.network.chat.Component.translatable("tc.addaspectpool", payload.amount(), aspect.name()).getString();
+                    PlayerNotifications.add(text, aspect);
+                    for (int a = 0; a < payload.amount(); a++) PlayerNotifications.addAspect(aspect);
+                    if (System.currentTimeMillis() > lastPoolSound) {
+                        player.playSound(net.minecraft.sounds.SoundEvents.EXPERIENCE_ORB_PICKUP, 0.1f, 0.9f + player.getRandom().nextFloat() * 0.2f);
+                        lastPoolSound = System.currentTimeMillis() + 100L;
                     }
-                    ThaumometerHud.showSummary(
-                            net.minecraft.network.chat.Component.literal(payload.name()), linhas);
+                }));
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.WarpMessage.TYPE, (payload, context) -> context.client().execute(() -> {
+                    var player = context.client().player;
+                    int data = payload.amount();
+                    if (player == null || data == 0) return;
+                    if (payload.kind() == net.thaumcraft.research.Warp.PERMANENT && data > 0) {
+                        player.playSound(net.thaumcraft.registry.TCSounds.WHISPERS.value(), 0.5f, 1.0f);
+                        PlayerNotifications.add(net.minecraft.network.chat.Component.translatable("tc.addwarp").getString());
+                    } else if (payload.kind() == net.thaumcraft.research.Warp.STICKY) {
+                        if (data > 0) player.playSound(net.thaumcraft.registry.TCSounds.WHISPERS.value(), 0.5f, 1.0f);
+                        PlayerNotifications.add(net.minecraft.network.chat.Component.translatable(
+                                data < 0 ? "tc.removewarpsticky" : "tc.addwarpsticky").getString());
+                    } else if (payload.kind() == net.thaumcraft.research.Warp.TEMPORARY && data > 0) {
+                        PlayerNotifications.add(net.minecraft.network.chat.Component.translatable("tc.addwarptemp").getString());
+                    }
+                }));
+        // a essência vindo pelo ar (o sourceFX do EssentiaHandler) e o que a matriz de infusão puxa (o dela)
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.EssentiaSource.TYPE, (payload, context) -> context.client().execute(() ->
+                        net.thaumcraft.client.fx.EssentiaTrail.source(payload.pos(), payload.source(), payload.colour())));
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.START_CLIENT_TICK.register(
+                net.thaumcraft.client.fx.EssentiaTrail::clientTick);
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                net.thaumcraft.net.TCNetwork.InfusionSource.TYPE, (payload, context) -> context.client().execute(() -> {
+                    var level = context.client().level;
+                    if (level != null && level.getBlockEntity(payload.pos()) instanceof net.thaumcraft.block.entity.InfusionMatrixBlockEntity matrix) {
+                        matrix.addSourceFx(payload.dx(), payload.dy(), payload.dz(), payload.entity());
+                    }
                 }));
     }
 

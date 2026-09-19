@@ -1,85 +1,124 @@
 package net.thaumcraft.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.Containers;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.thaumcraft.api.aspects.Aspect;
 import net.thaumcraft.api.aspects.AspectList;
 import net.thaumcraft.api.aspects.EssentiaSources;
+import net.thaumcraft.crafting.InfusionEnchantmentRecipe;
 import net.thaumcraft.crafting.InfusionRecipe;
 import net.thaumcraft.crafting.InfusionRecipes;
+import net.thaumcraft.net.TCNetwork;
 import net.thaumcraft.registry.TCBlockEntities;
 import net.thaumcraft.registry.TCBlocks;
+import net.thaumcraft.registry.TCEffects;
 import net.thaumcraft.registry.TCSounds;
+import net.thaumcraft.research.Warp;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * A matriz rúnica: onde a infusão acontece.
+ * A matriz rúnica: o {@code TileInfusionMatrix} da 4.2.3.5, onde a infusão acontece.
  *
- * <p>A construção é a do diagrama do altar do próprio original — o {@code InfusionAltar} do
- * {@code ConfigRecipes}. A matriz fica no ar; dois blocos abaixo dela vai um pedestal arcano, e nos
- * quatro cantos desse pedestal vão quatro blocos de pedra arcana. Sem isso, a matriz não liga.
+ * <p>A construção é a do diagrama do altar do original: a matriz no ar, um pedestal dois blocos abaixo dela e um pilar
+ * de infusão em cada canto desse pedestal. Ao toque da varinha, a matriz junta o que está no pedestal do meio com o que
+ * está nos pedestais em volta e procura uma receita (ou um encantamento) que o jogador conheça.
  *
- * <p>Ligada, ela recolhe os pedestais num raio de oito blocos e, ao toque da varinha, procura uma receita
- * que case com o que está no pedestal do meio e com o que está nos de fora. Achando, ela começa: de dez
- * em dez tiques puxa um ponto de essência de algum jarro ao alcance, e quando a essência acaba, consome
- * um ingrediente de cada pedestal. Terminado tudo, a coisa nova aparece no pedestal do meio.
+ * <p>Achando, ela trabalha de dez em dez tiques ({@code craftCycle}): primeiro cobra a experiência (se for encantamento),
+ * depois a essência, uma unidade por vez, dos jarros a até doze blocos — e quando falta, a instabilidade pode subir —,
+ * depois os ingredientes, um por um: cinco ciclos puxando as migalhas de cada pedestal até ele se esvaziar. Terminado
+ * tudo, a coisa nova aparece no pedestal do meio.
  *
- * <p>O que torna a infusão perigosa é a <strong>instabilidade</strong>. Ela é a soma de duas coisas: a
- * instabilidade natural da receita e a falta de <strong>simetria</strong> da construção. Cada pedestal
- * conta dois pontos, e mais um se tiver coisa em cima; o pedestal espelhado do outro lado da matriz
- * desconta a mesma coisa. Uma construção perfeitamente simétrica zera a conta — e é por isso que, no
- * Thaumcraft, as salas de infusão são desenhadas como mandalas.
- *
- * <p>A cada dez tiques, com um em quinhentos de chance por ponto de instabilidade, alguma coisa dá
- * errado: um raio, um susto, um ingrediente cuspido para longe, ou uma explosão.
+ * <p>A <strong>instabilidade</strong> é a da receita somada à falta de simetria da construção (pedestais sem par do
+ * outro lado, estabilizadores sem par). A cada ciclo há {@code instabilidade} chances em quinhentas de um dos vinte e um
+ * azares do original: cuspir ou destruir um ingrediente (às vezes com gosma ou gás de fluxo, ou uma explosão), raios,
+ * mácula e cansaço de vis em quem estiver perto, uma explosão na matriz ou distorção num jogador. Tirar a coisa do meio
+ * no meio do serviço também sorteia um azar, e a infusão para.
  */
 public class InfusionMatrixBlockEntity extends BlockEntity {
-    /** Até onde a matriz enxerga pedestal. */
-    private static final int PEDESTAL_REACH = 8;
-    /** Até onde ela bebe essência, os doze blocos do original. */
-    private static final int ESSENTIA_REACH = 12;
-    /** De quantos em quantos tiques ela dá um passo. */
-    private static final int STEP = 10;
-    /** O teto da instabilidade, como no original. */
-    private static final int MAX_INSTABILITY = 25;
+    /** O que o cliente desenha: as runas, as migalhas dos pedestais, a experiência e os raios da instabilidade. */
+    public interface ClientEffects {
+        void runes(Level level, BlockPos pedestal, float r, float g, float b);
 
+        void pedestal(Level level, BlockPos pedestal, BlockPos matrix, ItemStack stack);
+
+        void experience(Level level, Entity from, BlockPos matrix);
+
+        void bolt(Vec3 from, Vec3 to);
+    }
+
+    public static ClientEffects clientEffects;
+
+    /** Um fio do {@code sourceFX}: de onde a matriz puxa, por quantos tiques ainda, e a criatura (na experiência). */
+    private static final class SourceFx {
+        final BlockPos loc;
+        int ticks;
+        final int entity;
+
+        SourceFx(BlockPos loc, int ticks, int entity) {
+            this.loc = loc;
+            this.ticks = ticks;
+            this.entity = entity;
+        }
+    }
+
+    private final List<BlockPos> pedestals = new ArrayList<>();
     private boolean active;
     private boolean crafting;
+    private boolean checkSurroundings = true;
     private int symmetry;
     private int instability;
+    private AspectList recipeEssentia = new AspectList();
+    private final List<Ingredient> recipeIngredients = new ArrayList<>();
+    /** A saída da receita comum; na de encantamento, o encantamento que sobe um nível. */
+    private ItemStack recipeOutput = ItemStack.EMPTY;
+    @Nullable
+    private ResourceKey<Enchantment> recipeEnchantment;
+    @Nullable
+    private String recipePlayer;
+    private ItemStack recipeInput = ItemStack.EMPTY;
     private int recipeInstability;
+    private int recipeXP;
+    private int recipeType;
     private int count;
-    private AspectList owed = new AspectList();
-    private final List<ItemStack> owedItems = new ArrayList<>();
-    private ItemStack result = ItemStack.EMPTY;
-    private ItemStack middle = ItemStack.EMPTY;
-    /** A experiência que a infusão de encantamento ainda cobra de quem está perto (o {@code recipeXP}). */
-    private int xpOwed;
-    /** Depois de tirar experiência, o passo seguinte espera (o {@code countDelay} de 20). */
-    private boolean skipStep;
-    /** Só de quem vê: quanto a matriz já se ergueu e girou (de 0 a 1), e há quantos tiques a infusão corre. */
-    public float startUp;
+    private int countDelay = 10;
+    private int itemCount;
+    /** Só de quem vê. */
+    private final Map<String, SourceFx> sourceFX = new HashMap<>();
     public int craftCount;
+    public float startUp;
 
     public InfusionMatrixBlockEntity(BlockPos pos, BlockState state) {
         super(TCBlockEntities.INFUSION_MATRIX, pos, state);
@@ -87,23 +126,26 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, InfusionMatrixBlockEntity matrix) {
         matrix.count++;
+        if (matrix.checkSurroundings) {
+            matrix.checkSurroundings = false;
+            matrix.getSurroundings();
+        }
         if (level.isClientSide()) {
             matrix.doEffects(level, pos);
             return;
         }
-        // de tempos em tempos ela confere se a construção continua de pé
         if (matrix.count % (matrix.crafting ? 20 : 100) == 0 && !validLocation(level, pos)) {
-            matrix.stop();
+            matrix.active = false;
+            matrix.sync();
             return;
         }
-        if (matrix.active && matrix.crafting && matrix.count % STEP == 0) {
-            matrix.step(level, pos);
+        if (matrix.active && matrix.crafting && matrix.count % matrix.countDelay == 0) {
+            matrix.craftCycle((ServerLevel) level, pos);
+            matrix.setChanged();
         }
     }
 
-    /**
-     * O {@code validLocation} do original: pedestal dois blocos abaixo e um pilar de infusão em cada canto dele.
-     */
+    /** O {@code validLocation}: pedestal dois blocos abaixo e um pilar de infusão em cada canto dele. */
     public static boolean validLocation(Level level, BlockPos pos) {
         if (!(level.getBlockEntity(pos.below(2)) instanceof PedestalBlockEntity)) return false;
         for (int dx = -1; dx <= 1; dx += 2) {
@@ -115,35 +157,25 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
     }
 
     /**
-     * O toque da varinha: o {@code onWandRightClick} da {@code TileInfusionMatrix} e, se ela não quiser, o gatilho
-     * três da varinha, o {@code createInfusionAltar}. Ligada e parada, começa a infusão; desligada com os pilares
-     * de pé, liga; desligada sem eles, tenta erguer o altar.
+     * O toque da varinha: o {@code onWandRightClick} da matriz e, se ela não quiser, o gatilho três da varinha (o
+     * {@code createInfusionAltar}). Ligada e parada, começa a infusão; desligada com os pilares de pé, liga; desligada sem
+     * eles, tenta erguer o altar.
      */
     public boolean poke(Level level, BlockPos pos, Player player, ItemStack wand) {
         if (level.isClientSide()) return true;
-        if (this.active && !this.crafting) return this.start(level, pos, player);
+        if (this.active && !this.crafting) {
+            this.craftingStart(player);
+            return true;
+        }
         if (!this.active && validLocation(level, pos)) {
             this.active = true;
             this.sync();
             return true;
         }
         if (this.active) return true;
-        if (!fitsAltar(level, pos)) {
-            player.sendOverlayMessage(Component.translatable("tc.infusion.badplace"));
-            return false;
-        }
-        if (raiseAltar(level, pos, wand, player)) return true;
-        // a construção está certa; o que falta é vis na varinha
-        player.sendOverlayMessage(Component.translatable("tc.infusion.novis"));
-        level.playSound(null, pos, TCSounds.WAND_FAIL.value(), net.minecraft.sounds.SoundSource.PLAYERS, 0.5f, 1.0f);
-        return false;
+        return raiseAltar(level, pos, wand, player);
     }
 
-    /**
-     * O {@code fitInfusionAltar} e o {@code replaceInfusionAltar} do {@code WandManager}: com o pedestal no
-     * chão, tijolos de pedra arcana nos quatro cantos dele, pedra arcana em cima dos tijolos e o resto vazio, a
-     * varinha paga vinte e cinco de cada primário e os cantos viram pilares.
-     */
     /** O {@code fitInfusionAltar}: a construção de pedra, antes de virar altar. */
     public static boolean fitsAltar(Level level, BlockPos pos) {
         BlockPos floor = pos.below(2);
@@ -167,11 +199,12 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         return true;
     }
 
+    /** O {@code replaceInfusionAltar}: a varinha paga vinte e cinco de cada primário e os cantos viram pilares. */
     private boolean raiseAltar(Level level, BlockPos pos, ItemStack wand, Player player) {
         if (!fitsAltar(level, pos)) return false;
         BlockPos floor = pos.below(2);
-        net.thaumcraft.api.aspects.AspectList cost = new net.thaumcraft.api.aspects.AspectList();
-        for (net.thaumcraft.api.aspects.Aspect primal : net.thaumcraft.api.aspects.Aspects.primals()) cost.add(primal, 25);
+        AspectList cost = new AspectList();
+        for (Aspect primal : net.thaumcraft.api.aspects.Aspects.primals()) cost.add(primal, 25);
         if (!(wand.getItem() instanceof net.thaumcraft.item.WandItem) || !net.thaumcraft.item.WandItem.consume(wand, cost, true, player)) {
             return false;
         }
@@ -186,9 +219,9 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
                 level.sendBlockUpdated(base, pillar.getBlockState(), pillar.getBlockState(), 3);
             }
             // o evento de bloco um do original: brilho roxo e o pó dos tijolos, nas duas metades
-            if (level instanceof net.minecraft.server.level.ServerLevel server) {
+            if (level instanceof ServerLevel server) {
                 for (BlockPos at : new BlockPos[]{base, base.above()}) {
-                    net.thaumcraft.net.TCNetwork.blockSparkle(server, at, 0xB680FF);
+                    TCNetwork.blockSparkle(server, at, 0xB680FF);
                     server.levelEvent(2001, at, net.minecraft.world.level.block.Block.getId(
                             net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState()));
                 }
@@ -200,330 +233,328 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         return true;
     }
 
-    /** Procura a receita e começa. */
-    private boolean start(Level level, BlockPos pos, Player player) {
-        this.measure(level, pos);
-
-        PedestalBlockEntity centre = level.getBlockEntity(pos.below(2)) instanceof PedestalBlockEntity found
-                ? found : null;
-        if (centre == null || centre.held().isEmpty()) {
-            player.sendOverlayMessage(Component.translatable("tc.infusion.nocentre"));
-            return false;
-        }
-
-        List<BlockPos> around = this.pedestals(level, pos);
-        List<ItemStack> parts = new ArrayList<>();
-        for (BlockPos at : around) {
-            if (level.getBlockEntity(at) instanceof PedestalBlockEntity pedestal && !pedestal.held().isEmpty()) {
-                parts.add(pedestal.held().copy());
-            }
-        }
-
-        InfusionRecipe recipe = InfusionRecipes.find(centre.held(), parts);
-        if (recipe == null) {
-            // não sendo coisa nova, pode ser um encantamento subindo de nível
-            var enchant = net.thaumcraft.crafting.InfusionEnchantmentRecipe.find(parts, centre.held(), level, player);
-            if (enchant == null) {
-                player.sendOverlayMessage(Component.translatable("tc.infusion.norecipe"));
-                return false;
-            }
-            this.middle = centre.held().copy();
-            this.result = enchant.resultFor(this.middle, level);
-            this.recipeInstability = enchant.instabilityFor(this.middle);
-            this.instability = Math.max(0, this.symmetry) + this.recipeInstability;
-            this.owed = enchant.essentiaFor(this.middle, level);
-            this.xpOwed = enchant.xp(this.middle, level);
-            this.owedItems.clear();
-            this.owedItems.addAll(parts);
-            this.crafting = true;
-            level.playSound(null, pos, TCSounds.CRAFT_START.value(), SoundSource.BLOCKS, 0.5f, 1.0f);
+    /** O {@code craftingStart}: junta o que está nos pedestais e procura a receita, em silêncio se não achar. */
+    private void craftingStart(Player player) {
+        Level level = this.level;
+        BlockPos pos = this.worldPosition;
+        if (!validLocation(level, pos)) {
+            this.active = false;
             this.sync();
-            return true;
+            return;
         }
-        if (!net.thaumcraft.research.ResearchManager.knows(player, recipe.research())) {
-            player.sendOverlayMessage(Component.translatable("tc.infusion.unknown"));
-            return false;
+        this.getSurroundings();
+        this.recipeInput = ItemStack.EMPTY;
+        if (level.getBlockEntity(pos.below(2)) instanceof PedestalBlockEntity centre && !centre.held().isEmpty()) {
+            this.recipeInput = centre.held().copy();
         }
-
-        this.middle = centre.held().copy();
-        this.result = recipe.resultFor(this.middle);
-        this.recipeInstability = recipe.instability();
-        this.instability = Math.max(0, this.symmetry) + this.recipeInstability;
-        this.owed = recipe.essentia().copy();
-        this.xpOwed = 0;
-        this.owedItems.clear();
-        this.owedItems.addAll(parts);
+        if (this.recipeInput.isEmpty()) return;
+        List<ItemStack> components = new ArrayList<>();
+        for (BlockPos at : this.pedestals) {
+            if (level.getBlockEntity(at) instanceof PedestalBlockEntity ped && !ped.held().isEmpty()) components.add(ped.held().copy());
+        }
+        if (components.isEmpty()) return;
+        InfusionRecipe recipe = InfusionRecipes.find(this.recipeInput, components, player);
+        if (recipe != null) {
+            this.recipeType = 0;
+            this.recipeIngredients.clear();
+            this.recipeIngredients.addAll(recipe.components());
+            this.recipeOutput = recipe.resultFor(this.recipeInput);
+            this.recipeEnchantment = null;
+            this.recipeInstability = recipe.instability();
+            this.recipeEssentia = recipe.essentia().copy();
+            this.recipePlayer = player.getName().getString();
+        } else {
+            InfusionEnchantmentRecipe recipe2 = InfusionEnchantmentRecipe.find(components, this.recipeInput, level, player);
+            if (recipe2 == null) return;
+            this.recipeType = 1;
+            this.recipeIngredients.clear();
+            this.recipeIngredients.addAll(recipe2.components());
+            this.recipeOutput = ItemStack.EMPTY;
+            this.recipeEnchantment = recipe2.enchantment();
+            this.recipeInstability = recipe2.instabilityFor(this.recipeInput);
+            this.recipeEssentia = recipe2.essentiaFor(this.recipeInput, level);
+            this.recipeXP = recipe2.xp(this.recipeInput, level);
+        }
+        this.instability = this.symmetry + this.recipeInstability;
         this.crafting = true;
         level.playSound(null, pos, TCSounds.CRAFT_START.value(), SoundSource.BLOCKS, 0.5f, 1.0f);
         this.sync();
-        return true;
     }
 
-    /**
-     * Um passo da infusão.
-     *
-     * <p>Na ordem do original: primeiro o azar, depois a essência, depois os ingredientes, e por fim o
-     * resultado.
-     */
-    private void step(Level level, BlockPos pos) {
-        PedestalBlockEntity centre = level.getBlockEntity(pos.below(2)) instanceof PedestalBlockEntity found
-                ? found : null;
-        // tiraram a coisa do meio no meio do serviço: a infusão desanda
-        if (centre == null || !ItemStack.isSameItemSameComponents(centre.held(), this.middle)) {
-            this.misfire(level, pos);
-            this.stop();
+    /** A coisa do meio ainda é a mesma do começo? O {@code areItemStacksEqualForCrafting}, sem olhar o desgaste. */
+    private boolean sameInput(ItemStack held) {
+        if (held.isEmpty() || this.recipeInput.isEmpty()) return false;
+        ItemStack a = held.copyWithCount(1), b = this.recipeInput.copyWithCount(1);
+        a.remove(DataComponents.DAMAGE);
+        b.remove(DataComponents.DAMAGE);
+        return ItemStack.isSameItemSameComponents(a, b);
+    }
+
+    /** O {@code craftCycle}, passo a passo como no original. */
+    private void craftCycle(ServerLevel level, BlockPos pos) {
+        var random = level.getRandom();
+        boolean valid = level.getBlockEntity(pos.below(2)) instanceof PedestalBlockEntity ped && this.sameInput(ped.held());
+        if (!valid || this.instability > 0 && random.nextInt(500) <= this.instability) {
+            switch (random.nextInt(21)) {
+                case 0, 2, 10, 13 -> this.inEvEjectItem(level, 0);
+                case 1, 11 -> this.inEvEjectItem(level, 2);
+                case 3, 8, 14 -> this.inEvZap(level, false);
+                case 4, 15 -> this.inEvEjectItem(level, 5);
+                case 5, 16 -> this.inEvHarm(level, false);
+                case 6, 17 -> this.inEvEjectItem(level, 1);
+                case 7 -> this.inEvEjectItem(level, 4);
+                case 9 -> level.explode(null, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                        1.5f + random.nextFloat(), Level.ExplosionInteraction.NONE);
+                case 12 -> this.inEvZap(level, true);
+                case 18 -> this.inEvHarm(level, true);
+                case 19 -> this.inEvEjectItem(level, 3);
+                default -> this.inEvWarp(level);
+            }
+            if (valid) return;
+        }
+        if (!valid) {
+            this.instability = 0;
+            this.crafting = false;
+            this.recipeEssentia = new AspectList();
+            this.sync();
+            level.playSound(null, pos, TCSounds.CRAFT_FAIL.value(), SoundSource.BLOCKS, 1.0f, 0.6f);
             return;
         }
-
-        if (this.instability > 0 && level.getRandom().nextInt(500) <= this.instability) {
-            this.misfire(level, pos);
-        }
-
-        if (this.skipStep) {
-            this.skipStep = false;
+        if (this.recipeType == 1 && this.recipeXP > 0) {
+            List<Player> targets = level.getEntitiesOfClass(Player.class, new AABB(pos).inflate(10.0));
+            if (!targets.isEmpty()) {
+                for (Player target : targets) {
+                    if (target.experienceLevel <= 0) continue;
+                    target.giveExperienceLevels(-1);
+                    this.recipeXP--;
+                    target.hurtServer(level, level.damageSources().magic(), random.nextInt(2));
+                    TCNetwork.infusionSource(level, pos, 0, 0, 0, target.getId());
+                    level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.FIRE_EXTINGUISH,
+                            target.getSoundSource(), 1.0f, 2.0f + random.nextFloat() * 0.4f);
+                    this.countDelay = 20;
+                    return;
+                }
+                List<Aspect> ingEss = this.recipeEssentia.getAspects();
+                if (!ingEss.isEmpty() && random.nextInt(3) == 0) {
+                    this.recipeEssentia.add(ingEss.get(random.nextInt(ingEss.size())), 1);
+                    if (random.nextInt(Math.max(1, 50 - this.recipeInstability * 2)) == 0) this.instability++;
+                    if (this.instability > 25) this.instability = 25;
+                    this.sync();
+                }
+            }
             return;
         }
-        // a infusão de encantamento cobra primeiro a experiência de quem está a até dez blocos
-        if (this.xpOwed > 0) {
-            this.drinkExperience(level, pos);
-            return;
-        }
-
-        if (!this.owed.isEmpty()) {
-            for (Aspect aspect : this.owed.getAspects()) {
-                if (this.owed.getAmount(aspect) <= 0) continue;
-                BlockPos from = EssentiaSources.drain(level, pos, aspect, ESSENTIA_REACH);
-                if (from != null) {
-                    this.owed.remove(aspect, 1);
-                    this.thread(level, pos, from, aspect.color());
+        if (this.recipeType == 1 && this.recipeXP == 0) this.countDelay = 10;
+        if (this.recipeEssentia.visSize() > 0) {
+            for (Aspect aspect : this.recipeEssentia.getAspects()) {
+                if (this.recipeEssentia.getAmount(aspect) <= 0) continue;
+                if (EssentiaSources.drain(this, aspect, null, 12)) {
+                    this.recipeEssentia.reduce(aspect, 1);
                     this.sync();
                     return;
                 }
-                // faltou essência: a magia escapa e a instabilidade sobe
-                this.rattle(level, Math.max(1, 100 - this.recipeInstability * 3));
+                if (random.nextInt(Math.max(1, 100 - this.recipeInstability * 3)) == 0) this.instability++;
+                if (this.instability > 25) this.instability = 25;
                 this.sync();
-                return;
+            }
+            this.checkSurroundings = true;
+        } else if (this.recipeIngredients.isEmpty()) {
+            this.instability = 0;
+            this.crafting = false;
+            this.craftingFinish(level, pos);
+            this.recipeOutput = ItemStack.EMPTY;
+            this.recipeEnchantment = null;
+            this.sync();
+        } else {
+            for (int a = 0; a < this.recipeIngredients.size(); a++) {
+                Ingredient wanted = this.recipeIngredients.get(a);
+                for (BlockPos cc : this.pedestals) {
+                    if (!(level.getBlockEntity(cc) instanceof PedestalBlockEntity ped) || ped.held().isEmpty() || !wanted.test(ped.held())) continue;
+                    if (this.itemCount == 0) {
+                        this.itemCount = 5;
+                        TCNetwork.infusionSource(level, pos, pos.getX() - cc.getX(), pos.getY() - cc.getY(), pos.getZ() - cc.getZ(), 0);
+                    } else if (this.itemCount-- <= 1) {
+                        var remainder = ped.held().getItem().getCraftingRemainder();
+                        ped.hold(remainder == null ? ItemStack.EMPTY : remainder.create());
+                        this.recipeIngredients.remove(a);
+                    }
+                    return;
+                }
+                List<Aspect> ingEss = this.recipeEssentia.getAspects();
+                if (!ingEss.isEmpty() && random.nextInt(1 + a) == 0) {
+                    this.recipeEssentia.add(ingEss.get(random.nextInt(ingEss.size())), 1);
+                    if (random.nextInt(Math.max(1, 50 - this.recipeInstability * 2)) == 0) this.instability++;
+                    if (this.instability > 25) this.instability = 25;
+                    this.sync();
+                }
             }
         }
+    }
 
-        if (!this.owedItems.isEmpty()) {
-            for (BlockPos at : this.pedestals(level, pos)) {
-                if (!(level.getBlockEntity(at) instanceof PedestalBlockEntity pedestal)) continue;
-                ItemStack held = pedestal.held();
-                if (held.isEmpty()) continue;
-                int slot = this.indexOf(held);
-                if (slot < 0) continue;
-                this.owedItems.remove(slot);
-                pedestal.hold(ItemStack.EMPTY);
-                this.thread(level, pos, at, 0xB09CD9);
-                level.playSound(null, pos, TCSounds.CRAFT_START.value(), SoundSource.BLOCKS, 0.3f, 1.6f);
-                this.sync();
-                return;
+    /** Os raios: dano mágico de quatro a sete em uma criatura a até dez blocos (ou em todas). */
+    private void inEvZap(ServerLevel level, boolean all) {
+        BlockPos pos = this.worldPosition;
+        for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(10.0))) {
+            TCNetwork.blockZap(level, pos, Vec3.atCenterOf(pos),
+                    new Vec3(target.getX(), target.getY() + target.getBbHeight() / 2.0f, target.getZ()));
+            target.hurtServer(level, level.damageSources().magic(), 4 + level.getRandom().nextInt(4));
+            if (!all) break;
+        }
+    }
+
+    /** A mácula do fluxo (seis segundos) ou o cansaço de vis (dois minutos), em uma criatura perto ou em todas. */
+    private void inEvHarm(ServerLevel level, boolean all) {
+        for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, new AABB(this.worldPosition).inflate(10.0))) {
+            if (level.getRandom().nextBoolean()) {
+                target.addEffect(new MobEffectInstance(TCEffects.FLUX_TAINT, 120, 0, false, true));
+            } else {
+                target.addEffect(new MobEffectInstance(TCEffects.VIS_EXHAUST, 2400, 0, true, true));
             }
-            // os pedestais não têm mais o que a receita pedia
-            this.rattle(level, Math.max(1, 50 - this.recipeInstability * 2));
-            this.sync();
+            if (!all) break;
+        }
+    }
+
+    /** A distorção: num jogador perto, um em quatro de um ponto que gruda; senão, de um a cinco temporários. */
+    private void inEvWarp(ServerLevel level) {
+        List<Player> targets = level.getEntitiesOfClass(Player.class, new AABB(this.worldPosition).inflate(10.0));
+        if (targets.isEmpty()) return;
+        Player target = targets.get(level.getRandom().nextInt(targets.size()));
+        if (level.getRandom().nextFloat() < 0.25f) Warp.addSticky(target, 1);
+        else Warp.add(target, 1 + level.getRandom().nextInt(5), true);
+    }
+
+    /**
+     * Um ingrediente perdido, de um pedestal qualquer que tenha: 0 cai no chão; 1 cai e deixa gosma de fluxo; 2 cai e
+     * deixa gás de fluxo; 3 some com gosma; 4 some com gás; 5 cai com uma explosão.
+     */
+    private void inEvEjectItem(ServerLevel level, int type) {
+        for (int q = 0; q < 50 && !this.pedestals.isEmpty(); q++) {
+            BlockPos cc = this.pedestals.get(level.getRandom().nextInt(this.pedestals.size()));
+            if (!(level.getBlockEntity(cc) instanceof PedestalBlockEntity ped) || ped.held().isEmpty()) continue;
+            if (type >= 3 && type != 5) {
+                ped.hold(ItemStack.EMPTY);
+            } else {
+                Containers.dropContents(level, cc, ped);
+                ped.hold(ItemStack.EMPTY);
+            }
+            if (type == 1 || type == 3) {
+                level.setBlock(cc.above(), TCBlocks.FLUX_GOO.defaultBlockState(), 3);
+                level.playSound(null, cc, SoundEvents.GENERIC_SWIM, SoundSource.BLOCKS, 0.3f, 1.0f);
+            } else if (type == 2 || type == 4) {
+                level.setBlock(cc.above(), TCBlocks.FLUX_GAS.defaultBlockState(), 3);
+                level.playSound(null, cc, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.3f, 1.0f);
+            } else if (type == 5) {
+                level.explode(null, cc.getX() + 0.5f, cc.getY() + 0.5f, cc.getZ() + 0.5f, 1.0f, Level.ExplosionInteraction.NONE);
+            }
+            level.blockEvent(cc, level.getBlockState(cc).getBlock(), 11, 0);
+            TCNetwork.blockZap(level, this.worldPosition, Vec3.atCenterOf(this.worldPosition),
+                    new Vec3(cc.getX() + 0.5f, cc.getY() + 1.5f, cc.getZ() + 0.5f));
             return;
         }
+    }
 
-        // acabou: a coisa nova toma o lugar da velha no pedestal do meio
-        centre.hold(this.result.copy());
-        level.playSound(null, pos, TCSounds.LEARN.value(), SoundSource.BLOCKS, 0.8f, 1.0f);
-        if (level instanceof ServerLevel server) {
-            server.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                    60, 0.5, 0.5, 0.5, 0.15);
+    /** O {@code craftingFinish}: a coisa nova no pedestal do meio (ou o encantamento um nível acima), e o brilho. */
+    private void craftingFinish(ServerLevel level, BlockPos pos) {
+        if (!(level.getBlockEntity(pos.below(2)) instanceof PedestalBlockEntity ped)) return;
+        if (this.recipeType == 1 && this.recipeEnchantment != null) {
+            Holder<Enchantment> holder = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(this.recipeEnchantment).orElse(null);
+            ItemStack temp = ped.held().copy();
+            if (holder != null) EnchantmentHelper.updateEnchantments(temp, e -> e.set(holder, e.getLevel(holder) + 1));
+            ped.hold(temp);
+        } else if (!this.recipeOutput.isEmpty()) {
+            ped.hold(this.recipeOutput.copy());
         }
-        this.crafting = false;
-        this.instability = 0;
-        this.result = ItemStack.EMPTY;
-        this.middle = ItemStack.EMPTY;
-        this.owedItems.clear();
+        if (this.recipePlayer != null) {
+            ServerPlayer p = level.getServer().getPlayerList().getPlayerByName(this.recipePlayer);
+            if (p != null) ped.held().onCraftedBy(p, ped.held().getCount());
+        }
+        this.recipeEssentia = new AspectList();
         this.sync();
+        level.blockEvent(pos.below(2), level.getBlockState(pos.below(2)).getBlock(), 12, 0);
     }
 
     /**
-     * O pedaço de {@code craftCycle} do encantamento: um nível de um jogador por perto (que leva um arranhão mágico e
-     * ouve o chiado); sem ninguém com experiência, a essência às vezes aumenta e a instabilidade pode subir.
+     * O {@code getSurroundings}: os pedestais (a até oito blocos de lado e até dez abaixo, o primeiro de cada coluna) e
+     * os estabilizadores (cabeças e o que implementa o {@code IInfusionStabiliser}) a até doze, e a conta da simetria.
      */
-    private void drinkExperience(Level level, BlockPos pos) {
-        if (!(level instanceof ServerLevel server)) return;
-        for (Player target : server.getEntitiesOfClass(Player.class, new net.minecraft.world.phys.AABB(pos).inflate(10.0))) {
-            if (target.experienceLevel <= 0) continue;
-            target.giveExperienceLevels(-1);
-            this.xpOwed--;
-            target.hurtServer(server, server.damageSources().magic(), level.getRandom().nextInt(2));
-            this.thread(level, pos, target.blockPosition().above(), 0x80FF80);
-            server.playSound(null, target.getX(), target.getY(), target.getZ(), net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
-                    SoundSource.PLAYERS, 1.0f, 2.0f + level.getRandom().nextFloat() * 0.4f);
-            this.skipStep = true;
-            this.sync();
-            return;
-        }
-        Aspect[] ess = this.owed.getAspects().toArray(new Aspect[0]);
-        if (ess.length > 0 && level.getRandom().nextInt(3) == 0) {
-            this.owed.add(ess[level.getRandom().nextInt(ess.length)], 1);
-            if (level.getRandom().nextInt(Math.max(1, 50 - this.recipeInstability * 2)) == 0) this.instability++;
-            if (this.instability > MAX_INSTABILITY) this.instability = MAX_INSTABILITY;
-            this.sync();
-        }
-    }
-
-    /** Onde nesta lista está uma coisa igual a esta? */
-    private int indexOf(ItemStack wanted) {
-        for (int slot = 0; slot < this.owedItems.size(); slot++) {
-            if (ItemStack.isSameItem(this.owedItems.get(slot), wanted)) return slot;
-        }
-        return -1;
-    }
-
-    /** Um em {@code bound} de subir a instabilidade em um. */
-    private void rattle(Level level, int bound) {
-        if (level.getRandom().nextInt(bound) != 0) return;
-        this.instability = Math.min(MAX_INSTABILITY, this.instability + 1);
-    }
-
-    /**
-     * Alguma coisa deu errado.
-     *
-     * <p>O original sorteia entre vinte e um azares; aqui são cinco: cuspir um ingrediente, um raio, um
-     * susto em quem estiver perto, a explosão, e a mácula brotando no chão em volta. Os que faltam —
-     * criaturas do vazio, distorção da mente — chegam com as peças que faltam.
-     */
-    private void misfire(Level level, BlockPos pos) {
-        if (!(level instanceof ServerLevel server)) return;
-        switch (level.getRandom().nextInt(10)) {
-            case 0, 1, 2 -> this.spit(server, pos);
-            case 3, 4 -> this.zap(server, pos);
-            case 5, 6 -> this.scare(server, pos);
-            case 7, 8 -> this.taint(server, pos);
-            default -> {
-                server.explode(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                        1.5f + level.getRandom().nextFloat(), Level.ExplosionInteraction.NONE);
+    private void getSurroundings() {
+        Level level = this.level;
+        if (level == null) return;
+        BlockPos pos = this.worldPosition;
+        List<BlockPos> stuff = new ArrayList<>();
+        this.pedestals.clear();
+        for (int xx = -12; xx <= 12; xx++) {
+            for (int zz = -12; zz <= 12; zz++) {
+                boolean skip = false;
+                for (int yy = -5; yy <= 10; yy++) {
+                    if (xx == 0 && zz == 0) continue;
+                    BlockPos at = new BlockPos(pos.getX() + xx, pos.getY() - yy, pos.getZ() + zz);
+                    if (!level.isLoaded(at)) continue;
+                    if (!skip && yy > 0 && Math.abs(xx) <= 8 && Math.abs(zz) <= 8 && level.getBlockEntity(at) instanceof PedestalBlockEntity) {
+                        this.pedestals.add(at);
+                        skip = true;
+                    } else if (level.getBlockState(at).is(INFUSION_STABILIZERS)) {
+                        stuff.add(at);
+                    }
+                }
             }
         }
+        this.symmetry = 0;
+        for (BlockPos cc : this.pedestals) {
+            boolean items = false;
+            if (level.getBlockEntity(cc) instanceof PedestalBlockEntity ped) {
+                this.symmetry += 2;
+                if (!ped.held().isEmpty()) {
+                    this.symmetry++;
+                    items = true;
+                }
+            }
+            BlockPos mirror = new BlockPos(pos.getX() * 2 - cc.getX(), cc.getY(), pos.getZ() * 2 - cc.getZ());
+            if (level.getBlockEntity(mirror) instanceof PedestalBlockEntity twin) {
+                this.symmetry -= 2;
+                if (!twin.held().isEmpty() && items) this.symmetry--;
+            }
+        }
+        float sym = 0.0f;
+        for (BlockPos cc : stuff) {
+            if (level.getBlockState(cc).is(INFUSION_STABILIZERS)) sym += 0.1f;
+            BlockPos mirror = new BlockPos(pos.getX() * 2 - cc.getX(), cc.getY(), pos.getZ() * 2 - cc.getZ());
+            if (level.getBlockState(mirror).is(INFUSION_STABILIZERS)) sym -= 0.2f;
+        }
+        this.symmetry = (int) (this.symmetry + sym);
+    }
+
+    /** O que estabiliza a infusão: as cabeças (o {@code Blocks.skull}) e o que implementa o {@code IInfusionStabiliser}. */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> INFUSION_STABILIZERS =
+            net.minecraft.tags.TagKey.create(Registries.BLOCK, net.thaumcraft.Thaumcraft.id("infusion_stabilizers"));
+
+    /** O {@code PacketFXInfusionSource} chegando: o pedestal (ou a criatura) de que se puxa, por 60 ou 15 tiques. */
+    public void addSourceFx(int dx, int dy, int dz, int entity) {
+        if (this.level == null) return;
+        BlockPos loc = this.worldPosition.offset(-dx, -dy, -dz);
+        String key = loc.getX() + ":" + loc.getY() + ":" + loc.getZ() + ":" + entity;
+        int ticks = this.level.getBlockEntity(loc) instanceof PedestalBlockEntity ? 60 : 15;
+        SourceFx fx = this.sourceFX.get(key);
+        if (fx != null) fx.ticks = ticks;
+        else this.sourceFX.put(key, new SourceFx(loc, ticks, entity));
     }
 
     /**
-     * A mácula brota no chão em volta.
-     *
-     * <p>É o azar mais feio da infusão no original, e o mais demorado de consertar: a magia que escapa
-     * apodrece a terra, e dali ela se alastra sozinha. Só a Flor Etérea desfaz.
-     */
-    private void taint(ServerLevel level, BlockPos pos) {
-        // longe o bastante para não comer o próprio altar, e perto o bastante para dar trabalho
-        BlockPos seed = null;
-        for (int tries = 0; tries < 16 && seed == null; tries++) {
-            int away = 6 + level.getRandom().nextInt(5);
-            double angle = level.getRandom().nextDouble() * Math.PI * 2.0;
-            BlockPos at = pos.offset(
-                    (int) Math.round(Math.cos(angle) * away),
-                    -2 - level.getRandom().nextInt(3),
-                    (int) Math.round(Math.sin(angle) * away));
-            if (canRot(level, at)) seed = at;
-        }
-        if (seed == null) return;
-
-        // a mácula chega em punhado, e não em bloco solto: sozinha ela nunca pegaria, porque a regra do
-        // original pede vizinhos já maculados para ela avançar
-        int planted = 0;
-        for (int tries = 0; tries < 24 && planted < 5; tries++) {
-            BlockPos at = seed.offset(
-                    level.getRandom().nextInt(5) - 2, level.getRandom().nextInt(3) - 1,
-                    level.getRandom().nextInt(5) - 2);
-            if (!canRot(level, at)) continue;
-            level.setBlockAndUpdate(at, TCBlocks.TAINT_SOIL.defaultBlockState());
-            level.sendParticles(net.minecraft.core.particles.ParticleTypes.SCULK_SOUL,
-                    at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 8, 0.4, 0.2, 0.4, 0.02);
-            planted++;
-        }
-        if (planted > 0) {
-            level.playSound(null, seed, TCSounds.SPILL.value(), SoundSource.BLOCKS, 1.0f, 0.6f);
-        }
-    }
-
-    /** Aquele chão dá para apodrecer? Tem de ser bloco firme, com céu por cima, e fora do altar. */
-    private boolean canRot(ServerLevel level, BlockPos at) {
-        var there = level.getBlockState(at);
-        if (there.isAir() || !there.isSolidRender()) return false;
-        if (!level.getBlockState(at.above()).isAir()) return false;
-        // nada do altar vira mácula: a construção não pode se desmanchar sozinha
-        BlockPos matrix = this.getBlockPos();
-        return Math.abs(at.getX() - matrix.getX()) > 2 || Math.abs(at.getZ() - matrix.getZ()) > 2;
-    }
-
-    /** Um pedestal perde o que tinha: a coisa sai voando. */
-    private void spit(ServerLevel level, BlockPos pos) {
-        List<BlockPos> around = this.pedestals(level, pos);
-        if (around.isEmpty()) return;
-        BlockPos at = around.get(level.getRandom().nextInt(around.size()));
-        if (!(level.getBlockEntity(at) instanceof PedestalBlockEntity pedestal)) return;
-        ItemStack held = pedestal.held();
-        if (held.isEmpty()) return;
-        pedestal.hold(ItemStack.EMPTY);
-        ItemEntity thrown = new ItemEntity(level, at.getX() + 0.5, at.getY() + 1.2, at.getZ() + 0.5, held);
-        thrown.setDeltaMovement(
-                (level.getRandom().nextDouble() - 0.5) * 0.6,
-                0.35,
-                (level.getRandom().nextDouble() - 0.5) * 0.6);
-        level.addFreshEntity(thrown);
-        level.playSound(null, pos, TCSounds.CRAFT_FAIL.value(), SoundSource.BLOCKS, 0.7f, 1.0f);
-    }
-
-    /** Um raio cai perto da matriz. */
-    private void zap(ServerLevel level, BlockPos pos) {
-        BlockPos at = pos.offset(level.getRandom().nextInt(7) - 3, -2, level.getRandom().nextInt(7) - 3);
-        level.sendParticles(ParticleTypes.ELECTRIC_SPARK,
-                at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 30, 0.3, 0.8, 0.3, 0.3);
-        level.playSound(null, at, TCSounds.ZAP.value(), SoundSource.BLOCKS, 0.8f, 1.0f);
-        for (var living : level.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class,
-                new net.minecraft.world.phys.AABB(at).inflate(2.0))) {
-            living.hurtServer(level, level.damageSources().magic(), 3.0f);
-        }
-    }
-
-    /** Quem estiver por perto leva um susto e uma dor de cabeça. */
-    private void scare(ServerLevel level, BlockPos pos) {
-        for (Player nearby : level.players()) {
-            if (nearby.distanceToSqr(Vec3.atCenterOf(pos)) > 100.0) continue;
-            nearby.addEffect(new net.minecraft.world.effect.MobEffectInstance(
-                    net.minecraft.world.effect.MobEffects.NAUSEA, 200, 0));
-            nearby.hurtServer(level, level.damageSources().magic(), 2.0f);
-        }
-        level.playSound(null, pos, TCSounds.CRAFT_FAIL.value(), SoundSource.BLOCKS, 1.0f, 0.7f);
-    }
-
-    /** O fio de luz que liga a matriz a de onde a coisa veio. */
-    private void thread(Level level, BlockPos pos, BlockPos from, int colour) {
-        if (!(level instanceof ServerLevel server)) return;
-        Vec3 here = Vec3.atCenterOf(pos);
-        Vec3 there = Vec3.atCenterOf(from);
-        int steps = (int) Math.max(4, here.distanceTo(there) * 3);
-        for (int step = 0; step <= steps; step++) {
-            Vec3 at = there.lerp(here, step / (double) steps);
-            server.sendParticles(
-                    new net.minecraft.core.particles.DustParticleOptions(0xFF000000 | colour, 0.8f),
-                    at.x, at.y, at.z, 1, 0.04, 0.04, 0.04, 0.0);
-        }
-    }
-
-    /** As faíscas que a matriz solta enquanto trabalha. */
-    /**
-     * O {@code doEffects} do original, do lado de quem vê: os sons da infusão, as runas subindo do pedestal e o
-     * {@code startUp}, que sobe devagar quando a matriz liga e desce quando ela desliga.
+     * O {@code doEffects}, do lado de quem vê: os sons, as runas subindo do pedestal, o {@code startUp} (a matriz se
+     * erguendo quando liga), as migalhas de cada fonte e, com instabilidade, os raios em volta.
      */
     private void doEffects(Level level, BlockPos pos) {
         var random = level.getRandom();
         if (this.crafting) {
             if (this.craftCount == 0) {
-                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), TCSounds.INFUSER_START.value(),
-                        net.minecraft.sounds.SoundSource.BLOCKS, 0.5f, 1.0f, false);
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), TCSounds.INFUSER_START.value(), SoundSource.BLOCKS, 0.5f, 1.0f, false);
             } else if (this.craftCount % 65 == 0) {
-                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), TCSounds.INFUSER.value(),
-                        net.minecraft.sounds.SoundSource.BLOCKS, 0.5f, 1.0f, false);
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), TCSounds.INFUSER.value(), SoundSource.BLOCKS, 0.5f, 1.0f, false);
             }
             this.craftCount++;
-            net.thaumcraft.block.PavingStoneBlock.clientEffects.runes(pos.below(2), pos.getY() - 2,
-                    0.5f + random.nextFloat() * 0.2f, 0.1f, 0.7f + random.nextFloat() * 0.3f, 25, -0.03f);
+            if (clientEffects != null) {
+                clientEffects.runes(level, pos.below(2), 0.5f + random.nextFloat() * 0.2f, 0.1f, 0.7f + random.nextFloat() * 0.3f);
+            }
         } else if (this.craftCount > 0) {
             this.craftCount = Math.clamp(this.craftCount - 2, 0, 50);
         }
@@ -535,78 +566,28 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
             this.startUp -= this.startUp / 10.0f;
             if (this.startUp < 0.001) this.startUp = 0.0f;
         }
-    }
-
-    /**
-     * A conta da simetria.
-     *
-     * <p>Cada pedestal vale dois, e mais um se tiver coisa em cima; o pedestal espelhado do outro lado da
-     * matriz desconta o mesmo. Construção simétrica dá zero, que é o sonho de todo taumaturgo.
-     */
-    private void measure(Level level, BlockPos pos) {
-        this.symmetry = 0;
-        for (BlockPos at : this.pedestals(level, pos)) {
-            boolean loaded = level.getBlockEntity(at) instanceof PedestalBlockEntity pedestal
-                    && !pedestal.held().isEmpty();
-            this.symmetry += 2;
-            if (loaded) this.symmetry++;
-
-            BlockPos mirror = new BlockPos(
-                    pos.getX() * 2 - at.getX(), at.getY(), pos.getZ() * 2 - at.getZ());
-            if (level.getBlockEntity(mirror) instanceof PedestalBlockEntity twin) {
-                this.symmetry -= 2;
-                if (loaded && !twin.held().isEmpty()) this.symmetry--;
+        for (String key : this.sourceFX.keySet().toArray(new String[0])) {
+            SourceFx fx = this.sourceFX.get(key);
+            if (fx.ticks <= 0) {
+                this.sourceFX.remove(key);
+                continue;
             }
-        }
-        // os estabilizadores (cabeças e aglomerados de cristal, o IInfusionStabiliser): cada um tira um décimo, e o
-        // par espelhado tira mais dois décimos — a construção simétrica deles acalma a infusão
-        float sym = 0.0f;
-        for (int x = -12; x <= 12; x++) {
-            for (int z = -12; z <= 12; z++) {
-                if (x == 0 && z == 0) continue;
-                for (int y = -5; y <= 10; y++) {
-                    BlockPos at = pos.offset(x, -y, z);
-                    if (!level.isLoaded(at) || !level.getBlockState(at).is(INFUSION_STABILIZERS)) continue;
-                    sym += 0.1f;
-                    BlockPos mirror = new BlockPos(pos.getX() * 2 - at.getX(), at.getY(), pos.getZ() * 2 - at.getZ());
-                    if (level.getBlockState(mirror).is(INFUSION_STABILIZERS)) sym -= 0.2f;
-                }
+            if (fx.loc.equals(pos)) {
+                Entity from = level.getEntity(fx.entity);
+                if (from != null && clientEffects != null) clientEffects.experience(level, from, pos);
+            } else if (level.getBlockEntity(fx.loc) instanceof PedestalBlockEntity ped) {
+                if (!ped.held().isEmpty() && clientEffects != null) clientEffects.pedestal(level, fx.loc, pos, ped.held());
+            } else {
+                fx.ticks = 0;
             }
+            fx.ticks--;
         }
-        this.symmetry = (int) (this.symmetry + sym);
-    }
-
-    /** O que estabiliza a infusão: as cabeças (o {@code Blocks.skull}) e o que implementa o {@code IInfusionStabiliser}. */
-    public static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> INFUSION_STABILIZERS =
-            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.thaumcraft.Thaumcraft.id("infusion_stabilizers"));
-
-    /** Os pedestais de fora que a matriz enxerga — o do meio não conta. */
-    private List<BlockPos> pedestals(Level level, BlockPos pos) {
-        List<BlockPos> found = new ArrayList<>();
-        BlockPos centre = pos.below(2);
-        for (int x = -PEDESTAL_REACH; x <= PEDESTAL_REACH; x++) {
-            for (int z = -PEDESTAL_REACH; z <= PEDESTAL_REACH; z++) {
-                for (int y = -5; y <= 1; y++) {
-                    BlockPos at = pos.offset(x, y, z);
-                    if (at.equals(centre)) continue;
-                    if (!level.isLoaded(at)) continue;
-                    if (level.getBlockEntity(at) instanceof PedestalBlockEntity) found.add(at);
-                }
-            }
+        if (this.crafting && this.instability > 0 && random.nextInt(200) <= this.instability && clientEffects != null) {
+            clientEffects.bolt(new Vec3(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f),
+                    new Vec3(pos.getX() + 0.5f + (random.nextFloat() - random.nextFloat()) * 2.0f,
+                            pos.getY() + 0.5f + (random.nextFloat() - random.nextFloat()) * 2.0f,
+                            pos.getZ() + 0.5f + (random.nextFloat() - random.nextFloat()) * 2.0f));
         }
-        return found;
-    }
-
-    private void stop() {
-        this.xpOwed = 0;
-        this.active = false;
-        this.crafting = false;
-        this.instability = 0;
-        this.owed = new AspectList();
-        this.owedItems.clear();
-        this.result = ItemStack.EMPTY;
-        this.middle = ItemStack.EMPTY;
-        this.sync();
     }
 
     // ---- o que se mostra ----
@@ -627,12 +608,9 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         return this.symmetry;
     }
 
-    @Nullable
-    public Aspect nextAspect() {
-        for (Aspect aspect : this.owed.getAspects()) {
-            if (this.owed.getAmount(aspect) > 0) return aspect;
-        }
-        return null;
+    /** O {@code getAspects}: a essência que a infusão ainda cobra (é o que o thaumômetro e os óculos mostram). */
+    public AspectList getAspects() {
+        return this.recipeEssentia;
     }
 
     private void sync() {
@@ -647,15 +625,18 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         super.loadAdditional(input);
         this.active = input.getBooleanOr("active", false);
         this.crafting = input.getBooleanOr("crafting", false);
-        this.symmetry = input.getIntOr("symmetry", 0);
         this.instability = input.getIntOr("instability", 0);
-        this.recipeInstability = input.getIntOr("recipe_instability", 0);
-        this.xpOwed = input.getIntOr("recipe_xp", 0);
-        this.owed = input.read("owed", AspectList.CODEC).orElseGet(AspectList::new);
-        this.result = input.read("result", ItemStack.CODEC).orElse(ItemStack.EMPTY);
-        this.middle = input.read("middle", ItemStack.CODEC).orElse(ItemStack.EMPTY);
-        this.owedItems.clear();
-        this.owedItems.addAll(input.read("owed_items", ItemStack.CODEC.listOf()).orElseGet(List::of));
+        this.recipeEssentia = input.read("aspects", AspectList.CODEC).orElseGet(AspectList::new);
+        this.recipeIngredients.clear();
+        this.recipeIngredients.addAll(input.read("recipein", Ingredient.CODEC.listOf()).orElseGet(List::of));
+        this.recipeOutput = input.read("recipeout", ItemStack.CODEC).orElse(ItemStack.EMPTY);
+        this.recipeEnchantment = input.read("recipeenchant", ResourceKey.codec(Registries.ENCHANTMENT)).orElse(null);
+        this.recipeInput = input.read("recipeinput", ItemStack.CODEC).orElse(ItemStack.EMPTY);
+        this.recipeInstability = input.getIntOr("recipeinst", 0);
+        this.recipeType = input.getIntOr("recipetype", 0);
+        this.recipeXP = input.getIntOr("recipexp", 0);
+        String player = input.getStringOr("recipeplayer", "");
+        this.recipePlayer = player.isEmpty() ? null : player;
     }
 
     @Override
@@ -663,14 +644,16 @@ public class InfusionMatrixBlockEntity extends BlockEntity {
         super.saveAdditional(output);
         output.putBoolean("active", this.active);
         output.putBoolean("crafting", this.crafting);
-        output.putInt("symmetry", this.symmetry);
         output.putInt("instability", this.instability);
-        output.putInt("recipe_instability", this.recipeInstability);
-        output.putInt("recipe_xp", this.xpOwed);
-        output.store("owed", AspectList.CODEC, this.owed);
-        if (!this.result.isEmpty()) output.store("result", ItemStack.CODEC, this.result);
-        if (!this.middle.isEmpty()) output.store("middle", ItemStack.CODEC, this.middle);
-        output.store("owed_items", ItemStack.CODEC.listOf(), List.copyOf(this.owedItems));
+        output.store("aspects", AspectList.CODEC, this.recipeEssentia);
+        if (!this.recipeIngredients.isEmpty()) output.store("recipein", Ingredient.CODEC.listOf(), List.copyOf(this.recipeIngredients));
+        if (!this.recipeOutput.isEmpty()) output.store("recipeout", ItemStack.CODEC, this.recipeOutput);
+        if (this.recipeEnchantment != null) output.store("recipeenchant", ResourceKey.codec(Registries.ENCHANTMENT), this.recipeEnchantment);
+        if (!this.recipeInput.isEmpty()) output.store("recipeinput", ItemStack.CODEC, this.recipeInput);
+        output.putInt("recipeinst", this.recipeInstability);
+        output.putInt("recipetype", this.recipeType);
+        output.putInt("recipexp", this.recipeXP);
+        output.putString("recipeplayer", this.recipePlayer == null ? "" : this.recipePlayer);
     }
 
     @Override

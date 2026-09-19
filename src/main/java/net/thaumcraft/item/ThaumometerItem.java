@@ -114,16 +114,8 @@ public class ThaumometerItem extends Item {
         }
         player.level().playSound(null, player.blockPosition(), net.thaumcraft.registry.TCSounds.CAMERA_CLACK.value(),
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.6f, 1.0f);
-        if (!(player instanceof net.minecraft.server.level.ServerPlayer server)) return;
-        if (result.aspects().isEmpty()) {
-            player.sendOverlayMessage(result.message());
-            return;
-        }
-        // o resumo do canto da tela: o que entrou agora e quanto já se tem
-        java.util.List<String> tags = new java.util.ArrayList<>();
-        for (var aspect : result.aspects()) tags.add(aspect.tag());
-        net.thaumcraft.net.TCNetwork.send(server, new net.thaumcraft.net.TCNetwork.ScanSummary(
-                result.message().getString(), tags, result.gained(), result.totals()));
+        // os pontos ganhos aparecem nos avisos do canto (o ScanManager manda um por aspecto)
+        if (result.aspects().isEmpty()) player.sendOverlayMessage(result.message());
     }
 
     /** Uma marca do que está na mira agora, para saber se o jogador desviou o olhar. */

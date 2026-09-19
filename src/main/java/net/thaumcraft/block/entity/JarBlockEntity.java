@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>Com rótulo, o jarro passa a só aceitar aquele aspecto — e a puxar com o dobro da força, que é o
  * jeito do original de fazer um jarro rotulado ganhar de um sem rótulo na disputa pela mesma essência.
  */
-public class JarBlockEntity extends BlockEntity implements AspectContainer, EssentiaTransport {
+public class JarBlockEntity extends BlockEntity implements net.thaumcraft.api.aspects.AspectSource, EssentiaTransport {
     /** O que cabe num jarro, como no original. */
     public static final int CAPACITY = 64;
     /** A força com que um jarro sem rótulo puxa. */

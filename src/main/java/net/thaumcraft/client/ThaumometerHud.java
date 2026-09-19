@@ -26,20 +26,12 @@ import java.util.Map;
 /**
  * O visor do thaumômetro: com o aparelho erguido, o que está na mira aparece escrito por dentro da lente —
  * o nome em cima e os símbolos do que aquilo é feito embaixo, com a quantidade de cada um.
- *
- * <p>No canto de baixo, à direita, fica o resumo do último exame: o que foi aprendido e quantos pontos
- * entraram em cada aspecto, do jeito que o mod original mostra.
  */
 public final class ThaumometerHud {
     private static final net.minecraft.resources.Identifier UNKNOWN = Thaumcraft.id("textures/aspects/_unknown.png");
 
     /** Até onde a mira alcança: o mesmo do aparelho. */
     private static final double REACH = 16.0;
-
-    /** O resumo do último exame, que fica um pouco na tela e some. */
-    private static Component learned;
-    private static List<Component> gains = List.of();
-    private static int fade;
 
     private ThaumometerHud() {
     }
@@ -48,22 +40,11 @@ public final class ThaumometerHud {
         HudElementRegistry.addLast(Thaumcraft.id("thaumometer"), (graphics, tracker) -> draw(graphics));
     }
 
-    /** Chamado quando o servidor avisa que um exame terminou. */
-    public static void showSummary(Component title, List<Component> lines) {
-        learned = title;
-        gains = lines;
-        fade = 140;
-    }
-
     private static void draw(GuiGraphicsExtractor graphics) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         if (player == null || minecraft.level == null) return;
 
-        if (fade > 0) {
-            summary(graphics, minecraft);
-            fade--;
-        }
         if (!raised(player)) return;
 
         // o visor olha para o mesmo alvo que o exame vai pegar, e na mesma ordem: bicho, depois bloco
@@ -125,20 +106,6 @@ public final class ThaumometerHud {
             String amount = String.valueOf(entry.getValue());
             graphics.text(minecraft.font, amount, x + icon - minecraft.font.width(amount) + 2, y + icon - 4, 0xFFFFFFFF);
             index++;
-        }
-    }
-
-    /** O resumo do último exame, encostado no canto de baixo à direita. */
-    private static void summary(GuiGraphicsExtractor graphics, Minecraft minecraft) {
-        if (learned == null) return;
-        int alpha = Math.min(255, fade * 4) << 24;
-        int right = graphics.guiWidth() - 6;
-        int y = graphics.guiHeight() - 16 - gains.size() * 11;
-        graphics.text(minecraft.font, learned,
-                right - minecraft.font.width(learned), y, alpha | 0xE8D9A8);
-        for (Component line : gains) {
-            y += 11;
-            graphics.text(minecraft.font, line, right - minecraft.font.width(line), y, alpha | 0xC8F0C8);
         }
     }
 

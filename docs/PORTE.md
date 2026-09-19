@@ -84,9 +84,10 @@ Hoje o mod já se joga do começo ao meio, nesta ordem:
     com um toque; toca-se o sino no golem (para ligá-lo) e depois nas faces dos baús ou blocos onde ele deve buscar ou
     levar. O toque sem nada na mão abre a tela dele, onde se diz o que buscar e quanto.
 
-15. **Errar uma infusão** — quando a magia escapa, a mácula brota no chão em volta e começa a comer o
-    terreno. A Flor Etérea, feita no crisol a partir da folha-cintilante, é a única coisa que a faz
-    recuar.
+15. **Errar uma infusão** — construção sem simetria (pedestais e estabilizadores sem par do outro lado) faz a
+    instabilidade subir; a cada ciclo, com ela em quinhentos, um dos vinte e um azares do original: ingrediente cuspido
+    ou destruído (com gosma ou gás de fluxo, ou uma explosão), raios, mácula do fluxo ou cansaço de vis em quem estiver
+    perto, a explosão na matriz, ou distorção num jogador.
 
 O que ainda não tem caminho: as criaturas, o lado eldritch e os artifícios de vestir.
 
@@ -1388,3 +1389,33 @@ e dos efeitos `crucibleBoil`/`Froth`/`FrothDown`/`Bubble`, do `ItemEssence` (des
 - **Frasco**: como no original, enche-se no alambique e nos jarros (oito) e se despeja nos jarros — não no crisol.
 - **Testes**: `CrucibleGameTest` (o frasco no jarro, a pilha dissolvendo em partes, receita com e sem quem jogou, o
   transbordo e a decomposição, o fluxo ao quebrar).
+
+## Infusão fiel, distorção e avisos
+
+Refeito a partir do `TileInfusionMatrix`, do `EssentiaHandler`, do `FXEssentiaTrail`, dos `drawInfusionParticles`
+do `ClientProxy`, do `PlayerNotifications`/`REHNotifyHandler` e dos `addWarpToPlayer` (descompilados do jar).
+
+- **Ciclo** (`craftCycle`) de dez em dez tiques (vinte depois de beber um nível de experiência): azar, experiência (no
+  encantamento), essência (uma unidade por ciclo; faltando, uma chance em `100 - 3×instabilidade da receita` de subir a
+  instabilidade, e os pedestais são recontados), ingredientes (cinco ciclos puxando as migalhas de cada pedestal; o que
+  sobra no pedestal é o `getCraftingRemainder` do item; ingrediente em falta faz a essência crescer) e o fim, com as
+  faíscas de toda cor no pedestal do meio (evento de bloco 12). A receita só começa se o jogador conhece a pesquisa, e
+  a matriz não diz nada quando não acha receita (as mensagens de antes eram invenção).
+- **Os vinte e um azares** na proporção do original (`nextInt(21)`): 0/2/10/13 cospe um ingrediente; 1/11 cospe com gás
+  de fluxo; 6/17 com gosma; 19 some com gosma; 7 some com gás; 4/15 cospe com explosão; 3/8/14 raio numa criatura, 12
+  em todas (4 a 7 de dano mágico); 5/16 mácula do fluxo (seis segundos) ou cansaço de vis (dois minutos) numa criatura,
+  18 em todas; 9 explosão na matriz; 20 distorção num jogador perto (um em quatro de um ponto que gruda, senão 1 a 5
+  temporários). Tirar a coisa do meio sorteia um azar e para a infusão com o som de falha, mas a matriz segue ligada.
+- **Essência pelo ar**: só jarro, reservatório e espelho (`AspectSource`, o `IAspectSource`) dão; a lista de fontes fica
+  guardada por bloco que bebe e, sem nenhuma que dê, só se procura de novo cinco segundos depois. O fio é o
+  `FXEssentiaTrail` (a bolinha da cor do aspecto, subindo em espiral e batendo nos blocos) que o cliente solta por
+  quinze tiques a cada unidade. O espelho de essência passou a usar o mesmo caminho.
+- **Partículas**: migalhas do item (ou do bloco) voando do pedestal para a matriz, uma em três vira faísca roxa; a
+  faísca verde de quem paga com experiência; raios em volta da matriz com instabilidade.
+- **Distorção** guardada no jogador (permanente, que gruda, temporária e o contador), com os avisos e os sussurros. Os
+  eventos da distorção (poções, aranhas, névoa) chegam na fatia seguinte.
+- **Avisos do canto** (`client/PlayerNotifications`): as linhas em meia escala com o símbolo do aspecto, a faísca que
+  entra com a mais nova, os pontos de pesquisa voando até o livro. O exame e a mesa de pesquisa mandam o
+  `PacketAspectPool`/`PacketAspectDiscovery` como no original; o resumo inventado do visor do thaumômetro saiu.
+- **Testes**: `InfusionGameTest` (tirar o meio para a infusão, receita sem pesquisa, alambique não é fonte),
+  `WarpGameTest`; tela: `InfusionRunClientTest`.

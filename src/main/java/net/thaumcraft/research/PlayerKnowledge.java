@@ -29,6 +29,8 @@ public final class PlayerKnowledge {
     private final AspectList pool = new AspectList();
     private final Set<String> scanned = new LinkedHashSet<>();
     private final Set<String> research = new LinkedHashSet<>();
+    /** A distorção: a permanente, a que gruda (sai com o tempo, pelos sabões e pelo sais), a temporária e o contador. */
+    private int warpPerm, warpSticky, warpTemp, warpCounter;
 
     public PlayerKnowledge() {
     }
@@ -45,14 +47,28 @@ public final class PlayerKnowledge {
         copia.pool.add(this.pool);
         copia.scanned.addAll(this.scanned);
         copia.research.addAll(this.research);
+        copia.warpPerm = this.warpPerm;
+        copia.warpSticky = this.warpSticky;
+        copia.warpTemp = this.warpTemp;
+        copia.warpCounter = this.warpCounter;
         return copia;
     }
 
-    private PlayerKnowledge(List<String> discovered, AspectList pool, List<String> scanned, List<String> research) {
+    private PlayerKnowledge(List<String> discovered, AspectList pool, List<String> scanned, List<String> research, List<Integer> warp) {
         this.discovered.addAll(discovered);
         this.pool.add(pool);
         this.scanned.addAll(scanned);
         this.research.addAll(research);
+        if (warp.size() == 4) {
+            this.warpPerm = warp.get(0);
+            this.warpSticky = warp.get(1);
+            this.warpTemp = warp.get(2);
+            this.warpCounter = warp.get(3);
+        }
+    }
+
+    private List<Integer> warpAsList() {
+        return List.of(this.warpPerm, this.warpSticky, this.warpTemp, this.warpCounter);
     }
 
     // ------------------------------------------------------------ aspectos descobertos
@@ -144,6 +160,57 @@ public final class PlayerKnowledge {
         return new ArrayList<>(this.research);
     }
 
+    // ------------------------------------------------------------ distorção (os warp do original)
+
+    public int warpPerm() {
+        return this.warpPerm;
+    }
+
+    public int warpSticky() {
+        return this.warpSticky;
+    }
+
+    public int warpTemp() {
+        return this.warpTemp;
+    }
+
+    /** O {@code getWarpTotal}: as três somadas. */
+    public int warpTotal() {
+        return this.warpPerm + this.warpTemp + this.warpSticky;
+    }
+
+    public int warpCounter() {
+        return this.warpCounter;
+    }
+
+    public void setWarpCounter(int amount) {
+        this.warpCounter = amount;
+    }
+
+    public void addWarpPerm(int amount) {
+        this.warpPerm = Math.max(0, this.warpPerm + amount);
+    }
+
+    public void addWarpSticky(int amount) {
+        this.warpSticky = Math.max(0, this.warpSticky + amount);
+    }
+
+    public void addWarpTemp(int amount) {
+        this.warpTemp = Math.max(0, this.warpTemp + amount);
+    }
+
+    public void setWarpPerm(int amount) {
+        this.warpPerm = Math.max(0, amount);
+    }
+
+    public void setWarpSticky(int amount) {
+        this.warpSticky = Math.max(0, amount);
+    }
+
+    public void setWarpTemp(int amount) {
+        this.warpTemp = Math.max(0, amount);
+    }
+
     // ------------------------------------------------------------ guardar e mandar
 
     public static final Codec<PlayerKnowledge> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -151,11 +218,12 @@ public final class PlayerKnowledge {
             Codec.unboundedMap(Codec.STRING, Codec.INT).optionalFieldOf("pool", java.util.Map.of())
                     .forGetter(PlayerKnowledge::poolAsMap),
             Codec.STRING.listOf().optionalFieldOf("scanned", List.of()).forGetter(k -> new ArrayList<>(k.scanned)),
-            Codec.STRING.listOf().optionalFieldOf("research", List.of()).forGetter(k -> new ArrayList<>(k.research))
-    ).apply(instance, (discovered, pool, scanned, research) -> {
+            Codec.STRING.listOf().optionalFieldOf("research", List.of()).forGetter(k -> new ArrayList<>(k.research)),
+            Codec.INT.listOf().optionalFieldOf("warp", List.of()).forGetter(PlayerKnowledge::warpAsList)
+    ).apply(instance, (discovered, pool, scanned, research, warp) -> {
         AspectList list = new AspectList();
         pool.forEach((tag, amount) -> list.add(Aspect.of(tag), amount));
-        return new PlayerKnowledge(discovered, list, scanned, research);
+        return new PlayerKnowledge(discovered, list, scanned, research, warp);
     }));
 
     private java.util.Map<String, Integer> poolAsMap() {
@@ -170,10 +238,12 @@ public final class PlayerKnowledge {
                 AspectList.STREAM_CODEC.encode(buffer, knowledge.pool);
                 ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buffer, new ArrayList<>(knowledge.scanned));
                 ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buffer, new ArrayList<>(knowledge.research));
+                ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()).encode(buffer, knowledge.warpAsList());
             },
             buffer -> new PlayerKnowledge(
                     ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).decode(buffer),
                     AspectList.STREAM_CODEC.decode(buffer),
                     ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).decode(buffer),
-                    ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).decode(buffer)));
+                    ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).decode(buffer),
+                    ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()).decode(buffer)));
 }

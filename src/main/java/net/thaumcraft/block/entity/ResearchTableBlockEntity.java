@@ -208,7 +208,15 @@ public class ResearchTableBlockEntity extends BaseContainerBlockEntity
         if (knowledge.points(second) > 0) knowledge.spend(second, 1);
         else this.bonus.reduce(second, 1);
         Aspect combo = Aspects.combination(first, second);
-        if (combo != null) knowledge.award(combo, 1);
+        if (combo != null) {
+            // o checkAndSyncAspectKnowledge: o aviso do aspecto novo e do ponto que entrou
+            boolean known = knowledge.hasDiscovered(combo);
+            int given = knowledge.award(combo, 1);
+            if (player instanceof net.minecraft.server.level.ServerPlayer server) {
+                if (!known) net.thaumcraft.net.TCNetwork.aspectDiscovery(server, combo);
+                if (given > 0) net.thaumcraft.net.TCNetwork.aspectPool(server, combo, given, knowledge.points(combo));
+            }
+        }
         Knowledges.save(player, knowledge);
         this.setChanged();
         this.sync();

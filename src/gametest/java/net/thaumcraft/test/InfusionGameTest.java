@@ -171,4 +171,79 @@ public class InfusionGameTest {
             }
         });
     }
+
+    /** Monta o altar com os pilares de pé e o pedestal do meio segurando {@code middle}. */
+    private static InfusionMatrixBlockEntity altar(GameTestHelper helper, BlockPos matrixAt, ItemStack middle) {
+        helper.setBlock(matrixAt, TCBlocks.INFUSION_MATRIX);
+        helper.setBlock(matrixAt.below(2), TCBlocks.PEDESTAL);
+        for (int dx = -1; dx <= 1; dx += 2) {
+            for (int dz = -1; dz <= 1; dz += 2) {
+                helper.setBlock(matrixAt.offset(dx, -1, dz), TCBlocks.INFUSION_PILLAR_TOP);
+                helper.setBlock(matrixAt.offset(dx, -2, dz), TCBlocks.INFUSION_PILLAR);
+            }
+        }
+        helper.getBlockEntity(matrixAt.below(2), PedestalBlockEntity.class).hold(middle);
+        return helper.getBlockEntity(matrixAt, InfusionMatrixBlockEntity.class);
+    }
+
+    /**
+     * Tirando a coisa do meio no meio do serviço, o ciclo seguinte sorteia um azar e para a infusão — mas a matriz
+     * continua ligada, pronta para outra (o craftCycle com o centro inválido).
+     */
+    @GameTest(maxTicks = 100)
+    public void takingTheCentreAwayStopsTheInfusion(GameTestHelper helper) {
+        InfusionRecipe recipe = InfusionRecipes.ALL.getFirst();
+        BlockPos matrixAt = new BlockPos(4, 4, 4);
+        InfusionMatrixBlockEntity matrix = altar(helper, matrixAt, new ItemStack(recipe.central().items().iterator().next()));
+        int slot = 0;
+        for (var wanted : recipe.components()) {
+            BlockPos at = new BlockPos(7, 2, 2 + slot++ * 2);
+            helper.setBlock(at, TCBlocks.PEDESTAL);
+            helper.getBlockEntity(at, PedestalBlockEntity.class).hold(new ItemStack(wanted.items().iterator().next()));
+        }
+        var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.CREATIVE);
+        net.thaumcraft.research.Knowledges.of(player).completeResearch(recipe.research());
+        matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player, ItemStack.EMPTY);
+        matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player, ItemStack.EMPTY);
+        if (!matrix.isCrafting()) helper.fail("a infusão não começou");
+        helper.getBlockEntity(matrixAt.below(2), PedestalBlockEntity.class).hold(ItemStack.EMPTY);
+        helper.succeedWhen(() -> {
+            if (matrix.isCrafting()) helper.fail("sem a coisa do meio a infusão devia parar");
+            if (!matrix.isActive()) helper.fail("a matriz continua ligada");
+            if (matrix.instability() != 0) helper.fail("parada, a instabilidade zera");
+        });
+    }
+
+    /** Sem saber a pesquisa, a receita não começa (o findMatchingInfusionRecipe olha o que o jogador sabe). */
+    @GameTest
+    public void anUnknownRecipeDoesNotStart(GameTestHelper helper) {
+        InfusionRecipe recipe = InfusionRecipes.ALL.getFirst();
+        BlockPos matrixAt = new BlockPos(4, 4, 4);
+        InfusionMatrixBlockEntity matrix = altar(helper, matrixAt, new ItemStack(recipe.central().items().iterator().next()));
+        int slot = 0;
+        for (var wanted : recipe.components()) {
+            BlockPos at = new BlockPos(7, 2, 2 + slot++ * 2);
+            helper.setBlock(at, TCBlocks.PEDESTAL);
+            helper.getBlockEntity(at, PedestalBlockEntity.class).hold(new ItemStack(wanted.items().iterator().next()));
+        }
+        var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.CREATIVE);
+        matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player, ItemStack.EMPTY);
+        matrix.poke(helper.getLevel(), helper.absolutePos(matrixAt), player, ItemStack.EMPTY);
+        if (matrix.isCrafting()) helper.fail("sem a pesquisa, nada começa");
+        helper.succeed();
+    }
+
+    /** Só jarro, reservatório e espelho dão essência pelo ar; o alambique guarda, mas não dá. */
+    @GameTest
+    public void onlyJarsGiveEssentiaThroughTheAir(GameTestHelper helper) {
+        BlockPos matrixAt = new BlockPos(4, 4, 4);
+        InfusionMatrixBlockEntity matrix = altar(helper, matrixAt, ItemStack.EMPTY);
+        helper.setBlock(new BlockPos(1, 2, 1), TCBlocks.ALEMBIC);
+        var alembic = helper.getBlockEntity(new BlockPos(1, 2, 1), net.thaumcraft.block.entity.AlembicBlockEntity.class);
+        alembic.addToContainer(net.thaumcraft.api.aspects.Aspects.FIRE, 10);
+        if (net.thaumcraft.api.aspects.EssentiaSources.drain(matrix, net.thaumcraft.api.aspects.Aspects.FIRE, null, 12)) {
+            helper.fail("o alambique não é fonte");
+        }
+        helper.succeed();
+    }
 }

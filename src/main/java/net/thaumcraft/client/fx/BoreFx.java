@@ -181,7 +181,7 @@ public final class BoreFx {
         private double x, y, z, prevX, prevY, prevZ, mx, my, mz;
         private final double targetX, targetY, targetZ;
         private float scale;
-        private final float green;
+        private float red = 0.2f, green, blue = 0.2f;
         private int age;
         private final int maxAge;
 
@@ -203,6 +203,14 @@ public final class BoreFx {
             var viewer = Minecraft.getInstance().getCameraEntity();
             if (viewer != null && viewer.distanceToSqr(x, y, z) > 64.0 * 64.0) life = 0;
             this.maxAge = life;
+        }
+
+        /** O {@code setRBGColorF} que a infusão usa para pintar a faísca. */
+        Spark colour(float red, float green, float blue) {
+            this.red = red;
+            this.green = green;
+            this.blue = blue;
+            return this;
         }
 
         @Override
@@ -242,7 +250,7 @@ public final class BoreFx {
             float px = (float) (this.prevX + (this.x - this.prevX) * partial - view.camera().x);
             float py = (float) (this.prevY + (this.y - this.prevY) * partial - view.camera().y);
             float pz = (float) (this.prevZ + (this.z - this.prevZ) * partial - view.camera().z);
-            int colour = 0xFF000000 | (int) (0.2f * 255) << 16 | (int) (this.green * 255) << 8 | (int) (0.2f * 255);
+            int colour = 0xFF000000 | (int) (this.red * 255) << 16 | (int) (this.green * 255) << 8 | (int) (this.blue * 255);
             collector.submitCustomGeometry(pose, AdditiveGlow.of(Sparkle.PARTICLES),
                     (m, c) -> Sparkle.billboard(m, c, view, px, py, pz, s, u0, u1, v0, v1, colour));
         }

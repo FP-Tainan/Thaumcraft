@@ -31,14 +31,21 @@ public final class InfusionRecipes {
     public static void init() {
     }
 
-    /** A receita que este arranjo fecha, se houver alguma. */
-    public static InfusionRecipe find(ItemStack middle, List<ItemStack> around) {
+    /**
+     * O {@code findMatchingInfusionRecipe}: a receita que este arranjo fecha e que o jogador já pesquisou (nulo quer dizer
+     * qualquer um, para as provas e para o livro).
+     */
+    public static InfusionRecipe find(ItemStack middle, List<ItemStack> around, @org.jetbrains.annotations.Nullable net.minecraft.world.entity.player.Player player) {
         for (InfusionRecipe recipe : ALL) {
-            if (recipe.matches(middle, around)) return recipe;
+            if (recipe.matches(middle, around) && knows(player, recipe)) return recipe;
         }
         // o InfusionRunicAugmentRecipe, que o original põe depois de todas: monta-se para a peça do meio
         InfusionRecipe augment = RunicAugmentRecipe.forCentral(middle);
-        return augment != null && augment.matches(middle, around) ? augment : null;
+        return augment != null && augment.matches(middle, around) && knows(player, augment) ? augment : null;
+    }
+
+    private static boolean knows(@org.jetbrains.annotations.Nullable net.minecraft.world.entity.player.Player player, InfusionRecipe recipe) {
+        return player == null || recipe.research().isEmpty() || net.thaumcraft.research.ResearchManager.knows(player, recipe.research());
     }
 
     static {

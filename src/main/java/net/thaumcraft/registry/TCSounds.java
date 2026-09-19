@@ -114,6 +114,8 @@ public final class TCSounds {
     public static final Holder<SoundEvent> UPGRADE = register("upgrade");
     /** O lanca-dardos do golem. */
     public static final Holder<SoundEvent> GOLEM_IRON_SHOOT = register("golem_iron_shoot");
+    /** Os sussurros de quem ganha distorcao. */
+    public static final Holder<SoundEvent> WHISPERS = register("whispers");
 
     private TCSounds() {
     }

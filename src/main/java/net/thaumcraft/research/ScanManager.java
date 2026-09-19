@@ -141,8 +141,14 @@ public final class ScanManager {
         for (Map.Entry<Aspect, Integer> entry : aspects.entries()) {
             Aspect aspect = entry.getKey();
             // só a primeira vez rende ponto; depois o aparelho só mostra o que a coisa tem
+            boolean known = knowledge.hasDiscovered(aspect);
             int given = first ? knowledge.award(aspect, entry.getValue()) : 0;
             if (!first) knowledge.discover(aspect);
+            // os avisos do checkAndSyncAspectKnowledge: o aspecto novo e os pontos que entraram
+            if (player instanceof net.minecraft.server.level.ServerPlayer server) {
+                if (!known) net.thaumcraft.net.TCNetwork.aspectDiscovery(server, aspect);
+                if (given > 0) net.thaumcraft.net.TCNetwork.aspectPool(server, aspect, given, knowledge.points(aspect));
+            }
             if (given > 0) {
                 won.add(aspect);
                 gained.add(given);

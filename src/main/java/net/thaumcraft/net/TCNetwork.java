@@ -13,34 +13,6 @@ import java.util.List;
 
 /** As conversas entre o servidor e o cliente. */
 public final class TCNetwork {
-    /**
-     * Do servidor para quem examinou: o que ele acabou de aprender.
-     *
-     * <p>Cada aspecto vem com quanto entrou agora e quanto ele tem no total — os dois números que o mod
-     * original mostra no canto da tela.
-     */
-    public record ScanSummary(String name, List<String> tags, List<Integer> gained, List<Integer> totals)
-            implements CustomPacketPayload {
-        public static final Type<ScanSummary> TYPE = new Type<>(Thaumcraft.id("scan_summary"));
-        public static final StreamCodec<RegistryFriendlyByteBuf, ScanSummary> CODEC = StreamCodec.of(
-                (buffer, summary) -> {
-                    ByteBufCodecs.STRING_UTF8.encode(buffer, summary.name);
-                    ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buffer, summary.tags);
-                    ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()).encode(buffer, summary.gained);
-                    ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()).encode(buffer, summary.totals);
-                },
-                buffer -> new ScanSummary(
-                        ByteBufCodecs.STRING_UTF8.decode(buffer),
-                        ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).decode(buffer),
-                        ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()).decode(buffer),
-                        ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()).decode(buffer)));
-
-        @Override
-        public Type<? extends CustomPacketPayload> type() {
-            return TYPE;
-        }
-    }
-
     /** Do servidor para quem entra: a tabela de aspectos das coisas, que o servidor monta com as receitas. */
     public record ObjectAspectsSync(java.util.Map<net.minecraft.world.item.Item, net.thaumcraft.api.aspects.AspectList> table)
             implements CustomPacketPayload {
@@ -146,25 +118,125 @@ public final class TCNetwork {
         }
     }
 
+    /**
+     * O {@code PacketFXEssentiaSource}: a essência que sai de {@code source} pelo ar até {@code pos} (quem bebe). O
+     * cliente guarda o fio por quinze tiques e renova a cada unidade.
+     */
+    public record EssentiaSource(net.minecraft.core.BlockPos pos, net.minecraft.core.BlockPos source, int colour) implements CustomPacketPayload {
+        public static final Type<EssentiaSource> TYPE = new Type<>(Thaumcraft.id("essentia_source"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, EssentiaSource> CODEC = StreamCodec.composite(
+                net.minecraft.core.BlockPos.STREAM_CODEC, EssentiaSource::pos,
+                net.minecraft.core.BlockPos.STREAM_CODEC, EssentiaSource::source,
+                ByteBufCodecs.INT, EssentiaSource::colour,
+                EssentiaSource::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static void essentiaSource(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos pos,
+                                      net.minecraft.core.BlockPos source, int colour) {
+        for (ServerPlayer player : level.players()) {
+            if (player.blockPosition().closerThan(pos, 32.0)) ServerPlayNetworking.send(player, new EssentiaSource(pos, source, colour));
+        }
+    }
+
+    /**
+     * O {@code PacketFXInfusionSource}: de onde a matriz está puxando — um pedestal ({@code dx, dy, dz} dela até ele) ou,
+     * com os três zerados, a experiência de uma criatura ({@code entity}).
+     */
+    public record InfusionSource(net.minecraft.core.BlockPos pos, int dx, int dy, int dz, int entity) implements CustomPacketPayload {
+        public static final Type<InfusionSource> TYPE = new Type<>(Thaumcraft.id("infusion_source"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, InfusionSource> CODEC = StreamCodec.composite(
+                net.minecraft.core.BlockPos.STREAM_CODEC, InfusionSource::pos,
+                ByteBufCodecs.VAR_INT, InfusionSource::dx,
+                ByteBufCodecs.VAR_INT, InfusionSource::dy,
+                ByteBufCodecs.VAR_INT, InfusionSource::dz,
+                ByteBufCodecs.VAR_INT, InfusionSource::entity,
+                InfusionSource::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static void infusionSource(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos pos, int dx, int dy, int dz, int entity) {
+        for (ServerPlayer player : level.players()) {
+            if (player.blockPosition().closerThan(pos, 32.0)) ServerPlayNetworking.send(player, new InfusionSource(pos, dx, dy, dz, entity));
+        }
+    }
+
+    /** O {@code PacketAspectPool}: entraram {@code amount} pontos do aspecto, e agora são {@code total}. */
+    public record AspectPool(String tag, int amount, int total) implements CustomPacketPayload {
+        public static final Type<AspectPool> TYPE = new Type<>(Thaumcraft.id("aspect_pool"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, AspectPool> CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8, AspectPool::tag, ByteBufCodecs.VAR_INT, AspectPool::amount,
+                ByteBufCodecs.VAR_INT, AspectPool::total, AspectPool::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    /** O {@code PacketAspectDiscovery}: um aspecto descoberto agora. */
+    public record AspectDiscovery(String tag) implements CustomPacketPayload {
+        public static final Type<AspectDiscovery> TYPE = new Type<>(Thaumcraft.id("aspect_discovery"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, AspectDiscovery> CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8, AspectDiscovery::tag, AspectDiscovery::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    /** O {@code PacketWarpMessage}: a distorção mudou ({@code type} 0 permanente, 1 a que gruda, 2 temporária). */
+    public record WarpMessage(int kind, int amount) implements CustomPacketPayload {
+        public static final Type<WarpMessage> TYPE = new Type<>(Thaumcraft.id("warp_message"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, WarpMessage> CODEC = StreamCodec.composite(
+                ByteBufCodecs.VAR_INT, WarpMessage::kind, ByteBufCodecs.INT, WarpMessage::amount, WarpMessage::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static void aspectPool(ServerPlayer player, net.thaumcraft.api.aspects.Aspect aspect, int amount, int total) {
+        ServerPlayNetworking.send(player, new AspectPool(aspect.tag(), amount, total));
+    }
+
+    public static void aspectDiscovery(ServerPlayer player, net.thaumcraft.api.aspects.Aspect aspect) {
+        ServerPlayNetworking.send(player, new AspectDiscovery(aspect.tag()));
+    }
+
+    public static void warpMessage(ServerPlayer player, int kind, int amount) {
+        ServerPlayNetworking.send(player, new WarpMessage(kind, amount));
+    }
+
     private TCNetwork() {
     }
 
     public static void init() {
         ResearchTablePayloads.init();
-        PayloadTypeRegistry.clientboundPlay().register(ScanSummary.TYPE, ScanSummary.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockSparkle.TYPE, BlockSparkle.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BoreDig.TYPE, BoreDig.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BlockZap.TYPE, BlockZap.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(EntityZap.TYPE, EntityZap.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(ObjectAspectsSync.TYPE, ObjectAspectsSync.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(EssentiaSource.TYPE, EssentiaSource.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(InfusionSource.TYPE, InfusionSource.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(AspectPool.TYPE, AspectPool.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(AspectDiscovery.TYPE, AspectDiscovery.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(WarpMessage.TYPE, WarpMessage.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ResearchRequest.TYPE, ResearchRequest.STREAM_CODEC);
         // quem decide se a pesquisa se destranca é o servidor, nunca o livro aberto na tela
         ServerPlayNetworking.registerGlobalReceiver(ResearchRequest.TYPE, (payload, context) ->
                 context.server().execute(() ->
                         net.thaumcraft.research.ResearchManager.request(context.player(), payload.key())));
-    }
-
-    public static void send(ServerPlayer player, ScanSummary summary) {
-        ServerPlayNetworking.send(player, summary);
     }
 }

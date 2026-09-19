@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
  * essência para quem chama (a matriz de infusão e companhia): quando lhe pedem uma unidade, ele a tira dos
  * recipientes que estiverem à frente do par, a até oito blocos.
  */
-public class EssentiaMirrorBlockEntity extends LinkedMirrorBlockEntity implements AspectContainer {
+public class EssentiaMirrorBlockEntity extends LinkedMirrorBlockEntity implements net.thaumcraft.api.aspects.AspectSource {
     /** O {@code linkedFacing}: para onde o par olha; nulo até alguém precisar saber. */
     @Nullable
     public Direction linkedFacing;
@@ -64,11 +64,8 @@ public class EssentiaMirrorBlockEntity extends LinkedMirrorBlockEntity implement
         ServerLevel targetWorld = this.targetWorld();
         if (targetWorld == null) return false;
         if (this.linkedFacing == null) this.onRestored(targetWorld);
-        if (this.linkedFacing == null || !(targetWorld.getBlockEntity(this.linkPos()) instanceof EssentiaMirrorBlockEntity)) return false;
-        BlockPos from = EssentiaSources.drainFacing(targetWorld, this.linkPos(), aspect, this.linkedFacing, 8);
-        if (from == null) return false;
-        EssentiaSources.thread(targetWorld, this.linkPos(), from, aspect.color());
-        return true;
+        if (this.linkedFacing == null || !(targetWorld.getBlockEntity(this.linkPos()) instanceof EssentiaMirrorBlockEntity partner)) return false;
+        return EssentiaSources.drain(partner, aspect, this.linkedFacing, 8, true);
     }
 
     @Override
