@@ -339,5 +339,15 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.SENSES, 8).add(Aspects.DARKNESS, 8).add(Aspects.ELDRITCH, 8).add(Aspects.AURA, 8),
                 Ingredient.of(net.minecraft.world.item.Items.FLINT),
                 Arrays.asList(Ingredient.of(TCItems.NITOR), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCResources.get("knowledge_fragment")), Ingredient.of(TCItems.SHARDS.get("entropy")))));
+        // PrimalCrusher
+        ALL.add(new InfusionRecipe("PRIMALCRUSHER", new ItemStack(TCItems.PRIMAL_CRUSHER), 6,
+                new AspectList().add(Aspects.MINE, 24).add(Aspects.TOOL, 24).add(Aspects.ENTROPY, 16).add(Aspects.VOID, 16).add(Aspects.WEAPON, 16).add(Aspects.ELDRITCH, 16).add(Aspects.GREED, 16),
+                Ingredient.of(TCItems.PRIMORDIAL_PEARL),
+                Arrays.asList(Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCItems.GEAR.get("void_pickaxe")), Ingredient.of(TCItems.GEAR.get("void_shovel")), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCItems.ELEMENTAL_PICKAXE), Ingredient.of(TCItems.ELEMENTAL_SHOVEL))));
+        // EldritchEye
+        ALL.add(new InfusionRecipe("OCULUS", new ItemStack(TCItems.ELDRITCH_EYE), 5,
+                new AspectList().add(Aspects.ELDRITCH, 64).add(Aspects.VOID, 16).add(Aspects.DARKNESS, 16).add(Aspects.TRAVEL, 16),
+                Ingredient.of(net.minecraft.world.item.Items.ENDER_EYE),
+                Arrays.asList(Ingredient.of(TCResources.get("void_seed")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT))));
     }
 }

@@ -1,0 +1,175 @@
+{
+  "variants": {
+    "part=carved,sum=0": {
+      "model": "thaumcraft:block/obsidian_totem_carved_4321"
+    },
+    "part=base,sum=0": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=0": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=1": {
+      "model": "thaumcraft:block/obsidian_totem_carved_3214"
+    },
+    "part=base,sum=1": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=1": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=2": {
+      "model": "thaumcraft:block/obsidian_totem_carved_2143"
+    },
+    "part=base,sum=2": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=2": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=3": {
+      "model": "thaumcraft:block/obsidian_totem_carved_1432"
+    },
+    "part=base,sum=3": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=3": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=4": {
+      "model": "thaumcraft:block/obsidian_totem_carved_4321"
+    },
+    "part=base,sum=4": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=4": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=5": {
+      "model": "thaumcraft:block/obsidian_totem_carved_3212"
+    },
+    "part=base,sum=5": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=5": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=6": {
+      "model": "thaumcraft:block/obsidian_totem_carved_2123"
+    },
+    "part=base,sum=6": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=6": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=7": {
+      "model": "thaumcraft:block/obsidian_totem_carved_1234"
+    },
+    "part=base,sum=7": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=7": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=8": {
+      "model": "thaumcraft:block/obsidian_totem_carved_2341"
+    },
+    "part=base,sum=8": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=8": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=9": {
+      "model": "thaumcraft:block/obsidian_totem_carved_3412"
+    },
+    "part=base,sum=9": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=9": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=10": {
+      "model": "thaumcraft:block/obsidian_totem_carved_4123"
+    },
+    "part=base,sum=10": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=10": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=11": {
+      "model": "thaumcraft:block/obsidian_totem_carved_1234"
+    },
+    "part=base,sum=11": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=11": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=12": {
+      "model": "thaumcraft:block/obsidian_totem_carved_2341"
+    },
+    "part=base,sum=12": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=12": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=13": {
+      "model": "thaumcraft:block/obsidian_totem_carved_3412"
+    },
+    "part=base,sum=13": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=13": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=14": {
+      "model": "thaumcraft:block/obsidian_totem_carved_4123"
+    },
+    "part=base,sum=14": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=14": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=15": {
+      "model": "thaumcraft:block/obsidian_totem_carved_1234"
+    },
+    "part=base,sum=15": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=15": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=16": {
+      "model": "thaumcraft:block/obsidian_totem_carved_2341"
+    },
+    "part=base,sum=16": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=16": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=17": {
+      "model": "thaumcraft:block/obsidian_totem_carved_3412"
+    },
+    "part=base,sum=17": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=17": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    },
+    "part=carved,sum=18": {
+      "model": "thaumcraft:block/obsidian_totem_carved_4123"
+    },
+    "part=base,sum=18": {
+      "model": "thaumcraft:block/obsidian_totem_base"
+    },
+    "part=shaded,sum=18": {
+      "model": "thaumcraft:block/obsidian_totem_shaded"
+    }
+  }
+}

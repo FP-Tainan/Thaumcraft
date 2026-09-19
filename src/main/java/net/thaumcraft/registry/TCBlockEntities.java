@@ -10,7 +10,7 @@ import net.thaumcraft.block.entity.NodeBlockEntity;
 public final class TCBlockEntities {
     public static final BlockEntityType<NodeBlockEntity> NODE = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("node"),
-            new BlockEntityType<>(NodeBlockEntity::new, java.util.Set.of(TCBlocks.NODE, TCBlocks.SILVERWOOD_KNOT)));
+            new BlockEntityType<>(NodeBlockEntity::new, java.util.Set.of(TCBlocks.NODE, TCBlocks.SILVERWOOD_KNOT, TCBlocks.CHARGED_OBSIDIAN_TOTEM)));
 
     public static final BlockEntityType<net.thaumcraft.block.entity.CrucibleBlockEntity> CRUCIBLE = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("crucible"),
@@ -272,4 +272,14 @@ public final class TCBlockEntities {
 
     public static void init() {
     }
+
+    public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.EldritchAltarBlockEntity> ELDRITCH_ALTAR =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("eldritch_altar"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.EldritchAltarBlockEntity::new, java.util.Set.of(TCBlocks.ELDRITCH_ALTAR)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.EldritchObeliskBlockEntity> ELDRITCH_OBELISK =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("eldritch_obelisk"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.EldritchObeliskBlockEntity::new, java.util.Set.of(TCBlocks.ELDRITCH_OBELISK)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.eldritch.EldritchCapBlockEntity> ELDRITCH_CAP =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("eldritch_capstone"),
+                    new BlockEntityType<>(net.thaumcraft.block.entity.eldritch.EldritchCapBlockEntity::new, java.util.Set.of(TCBlocks.ELDRITCH_CAPSTONE)));
 }

@@ -774,6 +774,61 @@ public final class TCItems {
         }
     }
 
+    // ----------------------------------------------------------------- o eldritch e as ruínas do mundo
+
+    public static final Item ELDRITCH_EYE = register("eldritch_eye", properties -> new net.thaumcraft.item.EldritchObjectItem(
+            net.thaumcraft.item.EldritchObjectItem.Kind.EYE, properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item CRIMSON_RITES = register("crimson_rites", properties -> new net.thaumcraft.item.EldritchObjectItem(
+            net.thaumcraft.item.EldritchObjectItem.Kind.CRIMSON_RITES, properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item RUNED_TABLET = register("runed_tablet", properties -> new net.thaumcraft.item.EldritchObjectItem(
+            net.thaumcraft.item.EldritchObjectItem.Kind.RUNED_TABLET, properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
+    public static final Item PRIMORDIAL_PEARL = register("primordial_pearl", properties -> new net.thaumcraft.item.EldritchObjectItem(
+            net.thaumcraft.item.EldritchObjectItem.Kind.PRIMORDIAL_PEARL, properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC)));
+    public static final Item ELDRITCH_OBELISK_PLACER = register("eldritch_obelisk_placer", properties -> new net.thaumcraft.item.EldritchObjectItem(
+            net.thaumcraft.item.EldritchObjectItem.Kind.OBELISK_PLACER, properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
+    public static final Item OBSIDIAN_TOTEM = register("obsidian_totem", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.OBSIDIAN_TOTEM, properties.useBlockDescriptionPrefix()));
+    public static final Item OBSIDIAN_TILE = register("obsidian_tile", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.OBSIDIAN_TILE, properties.useBlockDescriptionPrefix()));
+    public static final Item CHARGED_OBSIDIAN_TOTEM = register("charged_obsidian_totem", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.CHARGED_OBSIDIAN_TOTEM, properties.useBlockDescriptionPrefix()));
+    public static final Item ANCIENT_STONE = register("ancient_stone", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ANCIENT_STONE, properties.useBlockDescriptionPrefix()));
+    public static final Item ANCIENT_ROCK = register("ancient_rock", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ANCIENT_ROCK, properties.useBlockDescriptionPrefix()));
+    public static final Item CRUSTED_STONE = register("crusted_stone", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.CRUSTED_STONE, properties.useBlockDescriptionPrefix()));
+    public static final Item ANCIENT_STONE_PEDESTAL = register("ancient_stone_pedestal", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ANCIENT_STONE_PEDESTAL, properties.useBlockDescriptionPrefix()));
+    public static final Item ANCIENT_STONE_STAIRS = register("ancient_stone_stairs", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ANCIENT_STONE_STAIRS, properties.useBlockDescriptionPrefix()));
+    public static final Item ANCIENT_STONE_SLAB = register("ancient_stone_slab", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ANCIENT_STONE_SLAB, properties.useBlockDescriptionPrefix()));
+    public static final Item GLOWING_CRUSTED_STONE = register("glowing_crusted_stone", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.GLOWING_CRUSTED_STONE, properties.useBlockDescriptionPrefix()));
+    public static final Item ANCIENT_STONE_NOSPAWN = registerHidden("ancient_stone_nospawn", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.ANCIENT_STONE_NOSPAWN, properties.useBlockDescriptionPrefix()));
+
+    /** As urnas e os caixotes: a raridade na cor do nome e no texto, como no BlockLootItem. */
+    public static final java.util.List<Item> LOOT_URNS = new java.util.ArrayList<>();
+    public static final java.util.List<Item> LOOT_CRATES = new java.util.ArrayList<>();
+
+    static {
+        net.minecraft.world.item.Rarity[] rarities = {net.minecraft.world.item.Rarity.COMMON, net.minecraft.world.item.Rarity.UNCOMMON,
+                net.minecraft.world.item.Rarity.RARE};
+        for (int r = 0; r < 3; r++) {
+            final int rarity = r;
+            LOOT_URNS.add(register(TCBlocks.LOOT_RARITIES[r] + "_loot_urn", properties -> new net.thaumcraft.item.LootBlockItem(
+                    TCBlocks.LOOT_URNS.get(rarity), properties.rarity(rarities[rarity]).useBlockDescriptionPrefix())));
+        }
+        for (int r = 0; r < 3; r++) {
+            final int rarity = r;
+            LOOT_CRATES.add(register(TCBlocks.LOOT_RARITIES[r] + "_loot_crate", properties -> new net.thaumcraft.item.LootBlockItem(
+                    TCBlocks.LOOT_CRATES.get(rarity), properties.rarity(rarities[rarity]).useBlockDescriptionPrefix())));
+        }
+    }
+
     public static final ResourceKey<CreativeModeTab> TAB_KEY =
             ResourceKey.create(Registries.CREATIVE_MODE_TAB, Thaumcraft.id("thaumcraft"));
 

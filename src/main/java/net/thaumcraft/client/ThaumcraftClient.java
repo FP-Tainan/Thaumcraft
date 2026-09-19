@@ -100,6 +100,15 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.FLUX_SCRUBBER, net.thaumcraft.client.render.FluxScrubberRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("flux_scrubber"), net.thaumcraft.client.render.FluxScrubberRenderer.Unbaked.CODEC);
+        // o anel eldritch: o altar e o capstone (a mesma peça, texturas diferentes) e o obelisco
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ELDRITCH_ALTAR, net.thaumcraft.client.render.EldritchCapRenderer.altar());
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ELDRITCH_CAP, net.thaumcraft.client.render.EldritchCapRenderer.cap());
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.ELDRITCH_OBELISK, net.thaumcraft.client.render.EldritchObeliskRenderer::new);
+        net.thaumcraft.block.entity.eldritch.EldritchObeliskBlockEntity.ObeliskFx.client = (level, x, y, z, target) ->
+                net.thaumcraft.client.fx.Wisp.fx4(x, y, z, target, 5, true, 1.0f);
         // o estandarte, no mundo e na mão
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.BANNER, net.thaumcraft.client.render.BannerRenderer::new);

@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "odd_x=false,odd_y=false,odd_z=false": {
+      "model": "thaumcraft:block/ancient_rock_000"
+    },
+    "odd_x=false,odd_y=false,odd_z=true": {
+      "model": "thaumcraft:block/ancient_rock_001"
+    },
+    "odd_x=false,odd_y=true,odd_z=false": {
+      "model": "thaumcraft:block/ancient_rock_010"
+    },
+    "odd_x=false,odd_y=true,odd_z=true": {
+      "model": "thaumcraft:block/ancient_rock_011"
+    },
+    "odd_x=true,odd_y=false,odd_z=false": {
+      "model": "thaumcraft:block/ancient_rock_100"
+    },
+    "odd_x=true,odd_y=false,odd_z=true": {
+      "model": "thaumcraft:block/ancient_rock_101"
+    },
+    "odd_x=true,odd_y=true,odd_z=false": {
+      "model": "thaumcraft:block/ancient_rock_110"
+    },
+    "odd_x=true,odd_y=true,odd_z=true": {
+      "model": "thaumcraft:block/ancient_rock_111"
+    }
+  }
+}

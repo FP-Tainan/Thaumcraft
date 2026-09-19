@@ -37,6 +37,23 @@
     "thaumcraft:recharge_focus",
     "thaumcraft:mnemonic_matrix",
     "thaumcraft:item_grate",
-    "thaumcraft:golem_fetter"
+    "thaumcraft:golem_fetter",
+    "thaumcraft:obsidian_totem",
+    "thaumcraft:charged_obsidian_totem",
+    "thaumcraft:obsidian_tile",
+    "thaumcraft:ancient_stone",
+    "thaumcraft:ancient_stone_nospawn",
+    "thaumcraft:ancient_rock",
+    "thaumcraft:crusted_stone",
+    "thaumcraft:ancient_stone_pedestal",
+    "thaumcraft:ancient_stone_stairs",
+    "thaumcraft:ancient_stone_slab",
+    "thaumcraft:eldritch_altar",
+    "thaumcraft:eldritch_obelisk",
+    "thaumcraft:eldritch_obelisk_upper",
+    "thaumcraft:eldritch_capstone",
+    "thaumcraft:glowing_crusted_stone",
+    "thaumcraft:glyphed_stone",
+    "thaumcraft:eldritch_deco"
   ]
 }

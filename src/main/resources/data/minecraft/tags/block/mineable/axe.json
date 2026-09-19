@@ -14,6 +14,9 @@
     "thaumcraft:bellows",
     "thaumcraft:deconstruction_table",
     "thaumcraft:arcane_pressure_plate",
-    "thaumcraft:arcane_ear"
+    "thaumcraft:arcane_ear",
+    "thaumcraft:common_loot_crate",
+    "thaumcraft:uncommon_loot_crate",
+    "thaumcraft:rare_loot_crate"
   ]
 }

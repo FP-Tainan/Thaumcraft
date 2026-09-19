@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "thaumcraft:common_loot_urn",
+    "thaumcraft:uncommon_loot_urn",
+    "thaumcraft:rare_loot_urn"
+  ]
+}

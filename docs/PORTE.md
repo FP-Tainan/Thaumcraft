@@ -1500,3 +1500,31 @@ conta de visibilidade do `GuiResearchBrowser`.
   conhecimento desconhecido; lida, vira a nota de uma pesquisa escondida (sorteada pela hora do mundo), ou, sem nenhuma,
   some e devolve de sete a nove fragmentos. As notas de pesquisa voltam a não empilhar, como no original.
 - **Testes**: `ClueGameTest`; tela: `ClueClientTest`.
+
+## Eldritch 6.1: ruínas do mundo, anel eldritch e blocos antigos
+
+Descompilados do jar: `BlockEldritch` (+`BlockEldritchRenderer`, `BlockEldritchItem`), `BlockCosmeticSolid` (0, 1, 8, 11–15),
+`BlockLoot` (+ renderers), `ItemEldritchObject`, `TileEldritchAltar/Obelisk/Cap` (+ `TileEldritchCapRenderer`,
+`TileEldritchObeliskRenderer`), `WorldGenEldritchRing`, `WorldGenMound`, `WorldGenHilltopStones`, `generateTotem` e o
+pedaço de estruturas do `generateSurface`, `createRandomNodeAt` (o `eerie`), `CustomStepSound`.
+
+- **Blocos**: totem de obsidiana (lados pela coluna: base, base sombreada, entalhes pela soma dos restos), totem carregado
+  (nó sombrio dentro; quebrado estoura e solta essências), ladrilho de obsidiana (4 de 4 obsidianas), pedra antiga (as
+  quatro figuras por face; aqui dezesseis combinações fixas sorteadas por bloco), rocha antiga (ladrilho 2×2 pela
+  paridade), pedra incrustada, pedestal, escada e laje; do `BlockEldritch`: altar, obelisco (pé e topo), capitel (só os
+  desenhistas; quebrado um, somem as peças vizinhas), pedra incrustada luminosa, pedra de glifos (deixa fragmento) e o
+  enfeite — estas três dois pixels para dentro nas faces soltas. Urnas e caixotes nas três raridades (derramam 1+r a
+  3+r coisas da tabela das sacolas).
+- **Itens**: olho eldritch (vai no altar; do terceiro em diante o altar chama guardiões), ritos carmesins (ensinam o
+  CRIMSON), tábua rúnica, pérola primordial (num nó: mexe na base, melhora o feitio, explode e cospe fluxo) e o colocador
+  de obelisco. As receitas que esperavam a pérola e o olho entraram (construto alquímico avançado, triturador, olho).
+- **Desenho**: o capitel e o altar com a peça `Cap` do `obelisk_cap.obj` (e os olhos em volta); o obelisco boiando com a
+  casca rendada, as pontas e o céu de estrelas por dentro (o shader do buraco portátil); de longe, o campo parado.
+- **Mundo** (`RuinsFeature`): uma tentativa por pedaço — túmulo 1/150 (os ~2450 blocos do original numa tabela gerada
+  pelo `scratchpad/tumulo.js`, urnas, baú às vezes com armadilha de TNT, geradores de esqueleto e zumbi), anel eldritch
+  1/66 (às vezes com estandartes e altar chamador), pedras do topo 1/40 (acima de 85, baú e gerador de fogo-fátuo),
+  cada um com nó sombrio; senão, totem 1/360. **Diferenças**: o canto do túmulo sorteia até a casa 13 do pedaço (a
+  geração de hoje não deixa escrever mais longe); o nó solto do mundo é outra etapa e não segura o totem.
+- **Faltam** (fatias seguintes): quem o altar chama (clérigos, cavaleiros, guardiões), o labirinto que o anel reserva e o
+  portal (Terras de Fora).
+- **Testes**: `RuinsGameTest`; tela: `RuinsClientTest`.

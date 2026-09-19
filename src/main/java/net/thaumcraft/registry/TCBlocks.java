@@ -647,6 +647,99 @@ public final class TCBlocks {
             new net.thaumcraft.block.GolemFetterBlock(properties.mapColor(MapColor.STONE).strength(2.0f, 10.0f)
                     .requiresCorrectToolForDrops().sound(SoundType.STONE)));
 
+    // ----------------------------------------------------------------- o eldritch e as ruínas do mundo
+
+    /** O totem de obsidiana (o BlockCosmeticSolid 0), com os lados conforme a coluna. */
+    public static final Block OBSIDIAN_TOTEM = register("obsidian_totem", properties ->
+            new net.thaumcraft.block.ObsidianTotemBlock(obsidianProperties(properties)));
+
+    /** O totem carregado (o 8): o topo dos totens do mundo, com um nó sombrio dentro. */
+    public static final Block CHARGED_OBSIDIAN_TOTEM = register("charged_obsidian_totem", properties ->
+            new net.thaumcraft.block.ChargedObsidianTotemBlock(obsidianProperties(properties)));
+
+    /** O ladrilho de obsidiana (o 1). */
+    public static final Block OBSIDIAN_TILE = register("obsidian_tile", properties -> new Block(obsidianProperties(properties)));
+
+    /** A pedra antiga (o 11), cada face com uma das quatro figuras. */
+    public static final Block ANCIENT_STONE = register("ancient_stone", properties -> new Block(ancientProperties(properties)));
+
+    /** A pedra antiga em que nada nasce (o 13): a mesma figura, usada por dentro das Terras de Fora. */
+    public static final Block ANCIENT_STONE_NOSPAWN = register("ancient_stone_nospawn", properties ->
+            new Block(ancientProperties(properties).isValidSpawn((s, l, p, t) -> false)));
+
+    /** A rocha antiga (o 12), em ladrilho de dois por dois. */
+    public static final Block ANCIENT_ROCK = register("ancient_rock", properties ->
+            new net.thaumcraft.block.eldritch.AncientRockBlock(ancientProperties(properties)));
+
+    /** A pedra incrustada (o 14), com luz quatro. */
+    public static final Block CRUSTED_STONE = register("crusted_stone", properties ->
+            new Block(ancientProperties(properties).lightLevel(state -> 4)));
+
+    /** O pedestal de pedra antiga (o 15). */
+    public static final Block ANCIENT_STONE_PEDESTAL = register("ancient_stone_pedestal", properties -> new Block(ancientProperties(properties)));
+
+    public static final Block ANCIENT_STONE_STAIRS = register("ancient_stone_stairs", properties ->
+            new net.minecraft.world.level.block.StairBlock(ANCIENT_STONE.defaultBlockState(), ancientProperties(properties)));
+
+    public static final Block ANCIENT_STONE_SLAB = register("ancient_stone_slab", properties ->
+            new net.minecraft.world.level.block.SlabBlock(ancientProperties(properties)));
+
+    /** As peças do anel eldritch (os números 0 a 3 do BlockEldritch): dureza cinquenta, só o desenhista as mostra. */
+    public static final Block ELDRITCH_ALTAR = register("eldritch_altar", properties ->
+            new net.thaumcraft.block.eldritch.EldritchStoneBlock(net.thaumcraft.block.eldritch.EldritchStoneBlock.Kind.ALTAR, ringProperties(properties)));
+    public static final Block ELDRITCH_OBELISK = register("eldritch_obelisk", properties ->
+            new net.thaumcraft.block.eldritch.EldritchStoneBlock(net.thaumcraft.block.eldritch.EldritchStoneBlock.Kind.OBELISK, ringProperties(properties)));
+    public static final Block ELDRITCH_OBELISK_UPPER = register("eldritch_obelisk_upper", properties ->
+            new net.thaumcraft.block.eldritch.EldritchStoneBlock(net.thaumcraft.block.eldritch.EldritchStoneBlock.Kind.OBELISK_UPPER, ringProperties(properties)));
+    public static final Block ELDRITCH_CAPSTONE = register("eldritch_capstone", properties ->
+            new net.thaumcraft.block.eldritch.EldritchStoneBlock(net.thaumcraft.block.eldritch.EldritchStoneBlock.Kind.CAPSTONE, ringProperties(properties)));
+
+    /** A pedra incrustada luminosa (o 4 do BlockEldritch): luz doze, dureza dois. */
+    public static final Block GLOWING_CRUSTED_STONE = register("glowing_crusted_stone", properties ->
+            new net.thaumcraft.block.eldritch.EldritchInsetBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(2.0f, 30.0f)
+                    .requiresCorrectToolForDrops().sound(SoundType.STONE).lightLevel(state -> 12).noOcclusion()));
+
+    /** A pedra de glifos (o 5): luz doze; quebrada, deixa um fragmento de conhecimento. */
+    public static final Block GLYPHED_STONE = register("glyphed_stone", properties ->
+            new net.thaumcraft.block.eldritch.EldritchInsetBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(2.0f, 30.0f)
+                    .requiresCorrectToolForDrops().sound(SoundType.STONE).lightLevel(state -> 12).noOcclusion()));
+
+    /** O enfeite eldritch (o 6): luz cinco, dureza quatro; não deixa nada. */
+    public static final Block ELDRITCH_DECO = register("eldritch_deco", properties ->
+            new net.thaumcraft.block.eldritch.EldritchInsetBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(4.0f, 100.0f)
+                    .requiresCorrectToolForDrops().sound(SoundType.STONE).lightLevel(state -> 5).noOcclusion().noLootTable()));
+
+    /** As urnas velhas e os caixotes abandonados, nas três raridades. */
+    public static final java.util.List<Block> LOOT_URNS = new java.util.ArrayList<>();
+    public static final java.util.List<Block> LOOT_CRATES = new java.util.ArrayList<>();
+    public static final String[] LOOT_RARITIES = {"common", "uncommon", "rare"};
+    private static final SoundType URN_SOUND = new SoundType(1.0f, 0.7f, TCSounds.URN_BREAK.value(),
+            net.minecraft.sounds.SoundEvents.STONE_STEP, TCSounds.URN_BREAK.value(), net.minecraft.sounds.SoundEvents.STONE_HIT,
+            net.minecraft.sounds.SoundEvents.STONE_FALL);
+
+    static {
+        for (int r = 0; r < 3; r++) {
+            final int rarity = r;
+            LOOT_URNS.add(register(LOOT_RARITIES[r] + "_loot_urn", properties -> new net.thaumcraft.block.eldritch.LootBlock(rarity, true,
+                    properties.mapColor(MapColor.CLAY).strength(0.15f, 0.0f).sound(URN_SOUND).noOcclusion())));
+            LOOT_CRATES.add(register(LOOT_RARITIES[r] + "_loot_crate", properties -> new net.thaumcraft.block.eldritch.LootBlock(rarity, false,
+                    properties.mapColor(MapColor.WOOD).strength(0.15f, 0.0f).sound(SoundType.WOOD).noOcclusion())));
+        }
+    }
+
+    private static BlockBehaviour.Properties obsidianProperties(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.COLOR_BLACK).strength(30.0f, 999.0f).requiresCorrectToolForDrops().sound(SoundType.STONE);
+    }
+
+    private static BlockBehaviour.Properties ancientProperties(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.STONE).strength(2.0f, 6.0f).requiresCorrectToolForDrops().sound(SoundType.STONE);
+    }
+
+    private static BlockBehaviour.Properties ringProperties(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.COLOR_BLACK).strength(50.0f, 12000.0f).sound(SoundType.STONE).lightLevel(state -> 8)
+                .noOcclusion().noLootTable().isValidSpawn((s, l, p, t) -> false);
+    }
+
     private TCBlocks() {
     }
 

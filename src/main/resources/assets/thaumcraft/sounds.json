@@ -37,10 +37,38 @@
       "thaumcraft:cameraticks"
     ]
   },
+  "chant": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:chant1",
+      "thaumcraft:chant2",
+      "thaumcraft:chant3"
+    ]
+  },
   "coins": {
     "category": "player",
     "sounds": [
       "thaumcraft:coins"
+    ]
+  },
+  "crab_claw": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:crabclaw"
+    ]
+  },
+  "crab_death": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:crabdeath"
+    ]
+  },
+  "crab_talk": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:crabtalk1",
+      "thaumcraft:crabtalk2",
+      "thaumcraft:crabtalk3"
     ]
   },
   "craft_fail": {
@@ -74,10 +102,41 @@
       "thaumcraft:doorfail"
     ]
   },
+  "eg_attack": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:egattack"
+    ]
+  },
+  "eg_death": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:egdeath"
+    ]
+  },
+  "eg_idle": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:egidle1",
+      "thaumcraft:egidle2"
+    ]
+  },
+  "eg_screech": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:egscreech"
+    ]
+  },
   "erase": {
     "category": "player",
     "sounds": [
       "thaumcraft:erase"
+    ]
+  },
+  "evil_portal": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:evilportal"
     ]
   },
   "fireloop": {
@@ -169,6 +228,12 @@
     "category": "player",
     "sounds": [
       "thaumcraft:learn"
+    ]
+  },
+  "monolith": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:monolith"
     ]
   },
   "page": {
@@ -312,6 +377,12 @@
     "category": "player",
     "sounds": [
       "thaumcraft:upgrade"
+    ]
+  },
+  "urn_break": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:urnbreak"
     ]
   },
   "wand": {

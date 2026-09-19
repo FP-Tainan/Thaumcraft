@@ -60,8 +60,7 @@ public final class ResearchTriggers {
         put("TINYHAMMER", List.of(), List.of(), List.of(Aspects.WEAPON));
         // ainda sem par por aqui: new ItemStack(ConfigBlocks.blockEldritch, 1, 5), new ItemStack(ConfigBlocks.blockEldritch, 1, 10)
         put("OUTERREV", List.of(), List.of(), List.of());
-        // ainda sem par por aqui: new ItemStack(ConfigItems.itemEldritchObject, 1, 3)
-        put("PRIMPEARL", List.of(), List.of(), List.of());
+        put("PRIMPEARL", List.of(s -> s.is(TCItems.PRIMORDIAL_PEARL)), List.of(), List.of());
         put("ROD_primal_staff", List.of(s -> s.is(TCItems.FOCI.get("primal"))), List.of("thaumcraft:primal_orb"), List.of());
     }
 }

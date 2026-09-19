@@ -80,6 +80,21 @@ public class NodeFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
+    /**
+     * O {@code createRandomNodeAt} com o tipo escolhido de antemão: o {@code eerie} das ruínas (totens, anel eldritch,
+     * túmulo, pedras do topo) faz sempre um nó sombrio. Num bloco vazio põe o nó; num bloco que já guarda um nó (o
+     * totem carregado), arruma o que está ali.
+     */
+    public static boolean createNodeAt(net.minecraft.world.level.LevelAccessor level, BlockPos pos, RandomSource random, NodeType forced) {
+        if (level.getBlockState(pos).isAir()) level.setBlock(pos, TCBlocks.NODE.defaultBlockState(), 2);
+        NodeModifier modifier = rollModifier(random);
+        NodeType type = taintedLand(level, pos, random, forced);
+        AspectList aspects = rollAspects(level, pos, random, type, false);
+        if (!(level.getBlockEntity(pos) instanceof NodeBlockEntity node)) return false;
+        node.setup(aspects, type, modifier);
+        return true;
+    }
+
     /** Na Terra Maculada, o nó que não é puro nasce maculado metade das vezes (o sorteio do original). */
     public static NodeType taintedLand(net.minecraft.world.level.LevelAccessor level, BlockPos pos, RandomSource random, NodeType type) {
         if (type != NodeType.PURE && level.getBiome(pos).is(TCBiomes.TAINTED_LAND) && random.nextBoolean()) return NodeType.TAINTED;

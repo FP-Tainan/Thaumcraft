@@ -124,6 +124,28 @@ public final class TCSounds {
     public static final Holder<SoundEvent> SWING = register("swing");
     /** O toque do ressonador no cano. */
     public static final Holder<SoundEvent> ALEMBIC_KNOCK = register("alembic_knock");
+    /** O obelisco do eldritch zumbindo. */
+    public static final Holder<SoundEvent> MONOLITH = register("monolith");
+    /** O guardiao eldritch rondando. */
+    public static final Holder<SoundEvent> EG_IDLE = register("eg_idle");
+    /** O guardiao eldritch atacando. */
+    public static final Holder<SoundEvent> EG_ATTACK = register("eg_attack");
+    /** O guardiao eldritch morrendo. */
+    public static final Holder<SoundEvent> EG_DEATH = register("eg_death");
+    /** O grito do guardiao eldritch. */
+    public static final Holder<SoundEvent> EG_SCREECH = register("eg_screech");
+    /** A pinca do caranguejo eldritch. */
+    public static final Holder<SoundEvent> CRAB_CLAW = register("crab_claw");
+    /** O caranguejo eldritch morrendo. */
+    public static final Holder<SoundEvent> CRAB_DEATH = register("crab_death");
+    /** O caranguejo eldritch estalando. */
+    public static final Holder<SoundEvent> CRAB_TALK = register("crab_talk");
+    /** O canto dos clerigos carmesins. */
+    public static final Holder<SoundEvent> CHANT = register("chant");
+    /** A urna velha se quebrando. */
+    public static final Holder<SoundEvent> URN_BREAK = register("urn_break");
+    /** O portal carmesim se abrindo. */
+    public static final Holder<SoundEvent> EVIL_PORTAL = register("evil_portal");
 
     private TCSounds() {
     }

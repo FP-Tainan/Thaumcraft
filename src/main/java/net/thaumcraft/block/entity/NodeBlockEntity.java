@@ -458,7 +458,7 @@ public class NodeBlockEntity extends BlockEntity {
     }
 
     /** O {@code setNodeVisBase}. */
-    private void setBase(Aspect aspect, int amount) {
+    public void setBase(Aspect aspect, int amount) {
         int have = this.base.getAmount(aspect);
         if (have < amount) this.base.add(aspect, amount - have);
         else this.base.remove(aspect, have - amount);
@@ -503,6 +503,12 @@ public class NodeBlockEntity extends BlockEntity {
     /** Quanto de vis o nó tem agora, somando tudo. */
     public int visSize() {
         return this.aspects.visSize();
+    }
+
+    /** O {@code setNodeModifier}. */
+    public void setModifier(NodeModifier modifier) {
+        this.modifier = modifier;
+        this.sync();
     }
 
     public void setup(AspectList base, NodeType type, NodeModifier modifier) {

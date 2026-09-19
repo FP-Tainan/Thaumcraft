@@ -57,7 +57,18 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> THAUM_ORES_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("thaum_ores"));
 
+    /** As ruínas do mundo de cima: túmulos, anéis eldritch, pedras do topo e totens de obsidiana. */
+    public static final Feature<NoneFeatureConfiguration> RUINS = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("ruins"), new net.thaumcraft.world.RuinsFeature(NoneFeatureConfiguration.CODEC));
+    public static final ResourceKey<PlacedFeature> RUINS_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("ruins"));
+
     public static void init() {
+        // as ruínas: uma tentativa por pedaço, como o generateSurface
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES,
+                RUINS_PLACED);
         // os minérios: cinábrio, âmbar e os veios de pedra infundida, de onde saem os fragmentos
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),

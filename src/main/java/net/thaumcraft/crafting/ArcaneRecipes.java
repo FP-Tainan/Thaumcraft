@@ -434,6 +434,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("DISTILESSENTIA", new ItemStack(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()),
                 Arrays.asList(Ingredient.of(TCBlocks.TUBE_VALVE.asItem()), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCResources.get("vis_filter")), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCResources.get("vis_filter")), Ingredient.of(TCBlocks.TUBE.asItem()), Ingredient.of(TCBlocks.TUBE_VALVE.asItem())),
                 new AspectList().add(Aspects.WATER, 5).add(Aspects.ORDER, 5)));
+        // AdvAlchemyConstruct
+        ALL.add(new ArcaneRecipe("ADVALCHEMYFURNACE", new ItemStack(TCBlocks.ADVANCED_ALCHEMICAL_CONSTRUCT.asItem(), 4),
+                Arrays.asList(Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()), Ingredient.of(TCItems.PRIMORDIAL_PEARL), Ingredient.of(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()), Ingredient.of(TCResources.get("void_ingot"))),
+                new AspectList().add(Aspects.WATER, 10).add(Aspects.ORDER, 30).add(Aspects.EARTH, 10)));
         // Centrifuge
         ALL.add(new ArcaneRecipe("CENTRIFUGE", new ItemStack(TCBlocks.CENTRIFUGE.asItem()),
                 Arrays.asList(null, Ingredient.of(TCBlocks.TUBE.asItem()), null, Ingredient.of(TCBlocks.ALEMBIC.asItem()), Ingredient.of(TCBlocks.ALCHEMICAL_CONSTRUCT.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.PISTON.asItem()), null, Ingredient.of(TCBlocks.TUBE.asItem()), null),

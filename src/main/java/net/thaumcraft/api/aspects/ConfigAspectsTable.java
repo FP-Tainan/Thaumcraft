@@ -337,6 +337,7 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:taint_crust", new AspectList().add(Aspects.TREE, 1).add(Aspects.TAINT, 3));
         r.item("thaumcraft:taint_soil", new AspectList().add(Aspects.EARTH, 1).add(Aspects.TAINT, 3));
         r.item("thaumcraft:taint_fibres", new AspectList().add(Aspects.LIFE, 1).add(Aspects.TAINT, 2));
+        r.item("thaumcraft:obsidian_totem", new AspectList().add(Aspects.EARTH, 4).add(Aspects.DARKNESS, 2).add(Aspects.ELDRITCH, 2));
         r.item("thaumcraft:greatwood_log", new AspectList().add(Aspects.TREE, 3).add(Aspects.MAGIC, 1));
         r.item("thaumcraft:silverwood_log", new AspectList().add(Aspects.TREE, 3).add(Aspects.MAGIC, 1).add(Aspects.ORDER, 1));
         r.item("thaumcraft:greatwood_leaves", new AspectList().add(Aspects.PLANT, 1));
@@ -380,6 +381,13 @@ final class ConfigAspectsTable {
         r.complex("thaumcraft:arcane_ear", new AspectList().add(Aspects.SENSES, 4));
         r.item("thaumcraft:apprentice_ring_air", new AspectList().add(Aspects.MAGIC, 5));
         r.item("thaumcraft:focus_pech", new AspectList().add(Aspects.MAGIC, 5).add(Aspects.POISON, 5).add(Aspects.ENTROPY, 5).add(Aspects.ELDRITCH, 5).add(Aspects.WEAPON, 5));
+        r.item("thaumcraft:eldritch_eye", new AspectList().add(Aspects.ELDRITCH, 5).add(Aspects.AURA, 3).add(Aspects.MAGIC, 3).add(Aspects.SENSES, 3).add(Aspects.SOUL, 3));
+        r.item("thaumcraft:crimson_rites", new AspectList().add(Aspects.MIND, 5).add(Aspects.MAGIC, 3).add(Aspects.ELDRITCH, 3).add(Aspects.SOUL, 3));
+        r.item("thaumcraft:runed_tablet", new AspectList().add(Aspects.TRAP, 4).add(Aspects.MIND, 4).add(Aspects.MECHANISM, 4));
+        r.item("thaumcraft:primordial_pearl", new AspectList().add(Aspects.AIR, 16).add(Aspects.EARTH, 16).add(Aspects.FIRE, 16).add(Aspects.WATER, 16).add(Aspects.ORDER, 16).add(Aspects.ENTROPY, 16));
+        r.item("thaumcraft:glowing_crusted_stone", new AspectList().add(Aspects.LIGHT, 1).add(Aspects.EARTH, 1).add(Aspects.ELDRITCH, 1));
+        r.item("thaumcraft:ancient_stone", new AspectList().add(Aspects.EARTH, 1).add(Aspects.ELDRITCH, 1));
+        r.item("thaumcraft:ancient_rock", new AspectList().add(Aspects.EARTH, 1).add(Aspects.ELDRITCH, 1));
     }
 
     static void blocks(ObjectAspects.Registrar r) {
@@ -388,6 +396,15 @@ final class ConfigAspectsTable {
         r.block("minecraft:lava", new AspectList().add(Aspects.FIRE, 3).add(Aspects.EARTH, 1));
         r.block("minecraft:nether_portal", new AspectList().add(Aspects.FIRE, 4).add(Aspects.TRAVEL, 4));
         r.block("minecraft:end_portal", new AspectList().add(Aspects.ELDRITCH, 4).add(Aspects.TRAVEL, 4));
+        r.block("thaumcraft:eldritch_altar", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:eldritch_obelisk", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:eldritch_obelisk_upper", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:eldritch_capstone", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:glyphed_stone", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:eldritch_deco", new AspectList().add(Aspects.VOID, 8).add(Aspects.ELDRITCH, 8).add(Aspects.SENSES, 4));
+        r.block("thaumcraft:eldritch_capstone", new AspectList().add(Aspects.VOID, 4).add(Aspects.ELDRITCH, 4));
+        r.block("thaumcraft:glyphed_stone", new AspectList().add(Aspects.MIND, 2).add(Aspects.EARTH, 1).add(Aspects.ELDRITCH, 1));
+        r.block("thaumcraft:eldritch_deco", new AspectList().add(Aspects.METAL, 2).add(Aspects.MECHANISM, 2).add(Aspects.ELDRITCH, 1));
     }
 
     /** O {@code AspectList.remove(aspecto, n)} do original: tira, e some com o que ficar em zero. */

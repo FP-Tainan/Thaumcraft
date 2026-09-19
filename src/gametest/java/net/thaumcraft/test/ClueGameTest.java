@@ -82,7 +82,9 @@ public class ClueGameTest {
         Knowledges.save(player, knowledge);
         String key = ScanManager.keyOf(bone);
         if (!ScanManager.scan(player, key, aspects, bone.getHoverName(), bone).scanned()) helper.fail("o osso devia ser lido");
-        if (!Knowledges.of(player).hasResearch("@BONEBOW")) helper.fail("examinar o osso devia dar a pista do arco");
+        // o osso bate no gatilho do arco; os aspectos dele (mortuus) batem no da morte líquida: sai uma das duas
+        var k = Knowledges.of(player);
+        if (!k.hasResearch("@BONEBOW") && !k.hasResearch("@LIQUIDDEATH")) helper.fail("examinar o osso devia dar uma pista");
         if (ScanManager.scan(player, key, aspects, bone.getHoverName(), bone).scanned()) helper.fail("examinou duas vezes a mesma coisa");
         helper.succeed();
     }

@@ -1,0 +1,196 @@
+{
+  "variants": {
+    "open_down=false,open_up=false,open_north=false,open_south=false,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_000000"
+    },
+    "open_down=true,open_up=false,open_north=false,open_south=false,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_100000"
+    },
+    "open_down=false,open_up=true,open_north=false,open_south=false,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_010000"
+    },
+    "open_down=true,open_up=true,open_north=false,open_south=false,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_110000"
+    },
+    "open_down=false,open_up=false,open_north=true,open_south=false,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_001000"
+    },
+    "open_down=true,open_up=false,open_north=true,open_south=false,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_101000"
+    },
+    "open_down=false,open_up=true,open_north=true,open_south=false,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_011000"
+    },
+    "open_down=true,open_up=true,open_north=true,open_south=false,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_111000"
+    },
+    "open_down=false,open_up=false,open_north=false,open_south=true,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_000100"
+    },
+    "open_down=true,open_up=false,open_north=false,open_south=true,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_100100"
+    },
+    "open_down=false,open_up=true,open_north=false,open_south=true,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_010100"
+    },
+    "open_down=true,open_up=true,open_north=false,open_south=true,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_110100"
+    },
+    "open_down=false,open_up=false,open_north=true,open_south=true,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_001100"
+    },
+    "open_down=true,open_up=false,open_north=true,open_south=true,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_101100"
+    },
+    "open_down=false,open_up=true,open_north=true,open_south=true,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_011100"
+    },
+    "open_down=true,open_up=true,open_north=true,open_south=true,open_west=false,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_111100"
+    },
+    "open_down=false,open_up=false,open_north=false,open_south=false,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_000010"
+    },
+    "open_down=true,open_up=false,open_north=false,open_south=false,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_100010"
+    },
+    "open_down=false,open_up=true,open_north=false,open_south=false,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_010010"
+    },
+    "open_down=true,open_up=true,open_north=false,open_south=false,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_110010"
+    },
+    "open_down=false,open_up=false,open_north=true,open_south=false,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_001010"
+    },
+    "open_down=true,open_up=false,open_north=true,open_south=false,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_101010"
+    },
+    "open_down=false,open_up=true,open_north=true,open_south=false,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_011010"
+    },
+    "open_down=true,open_up=true,open_north=true,open_south=false,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_111010"
+    },
+    "open_down=false,open_up=false,open_north=false,open_south=true,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_000110"
+    },
+    "open_down=true,open_up=false,open_north=false,open_south=true,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_100110"
+    },
+    "open_down=false,open_up=true,open_north=false,open_south=true,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_010110"
+    },
+    "open_down=true,open_up=true,open_north=false,open_south=true,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_110110"
+    },
+    "open_down=false,open_up=false,open_north=true,open_south=true,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_001110"
+    },
+    "open_down=true,open_up=false,open_north=true,open_south=true,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_101110"
+    },
+    "open_down=false,open_up=true,open_north=true,open_south=true,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_011110"
+    },
+    "open_down=true,open_up=true,open_north=true,open_south=true,open_west=true,open_east=false": {
+      "model": "thaumcraft:block/glyphed_stone_111110"
+    },
+    "open_down=false,open_up=false,open_north=false,open_south=false,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_000001"
+    },
+    "open_down=true,open_up=false,open_north=false,open_south=false,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_100001"
+    },
+    "open_down=false,open_up=true,open_north=false,open_south=false,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_010001"
+    },
+    "open_down=true,open_up=true,open_north=false,open_south=false,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_110001"
+    },
+    "open_down=false,open_up=false,open_north=true,open_south=false,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_001001"
+    },
+    "open_down=true,open_up=false,open_north=true,open_south=false,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_101001"
+    },
+    "open_down=false,open_up=true,open_north=true,open_south=false,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_011001"
+    },
+    "open_down=true,open_up=true,open_north=true,open_south=false,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_111001"
+    },
+    "open_down=false,open_up=false,open_north=false,open_south=true,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_000101"
+    },
+    "open_down=true,open_up=false,open_north=false,open_south=true,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_100101"
+    },
+    "open_down=false,open_up=true,open_north=false,open_south=true,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_010101"
+    },
+    "open_down=true,open_up=true,open_north=false,open_south=true,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_110101"
+    },
+    "open_down=false,open_up=false,open_north=true,open_south=true,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_001101"
+    },
+    "open_down=true,open_up=false,open_north=true,open_south=true,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_101101"
+    },
+    "open_down=false,open_up=true,open_north=true,open_south=true,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_011101"
+    },
+    "open_down=true,open_up=true,open_north=true,open_south=true,open_west=false,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_111101"
+    },
+    "open_down=false,open_up=false,open_north=false,open_south=false,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_000011"
+    },
+    "open_down=true,open_up=false,open_north=false,open_south=false,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_100011"
+    },
+    "open_down=false,open_up=true,open_north=false,open_south=false,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_010011"
+    },
+    "open_down=true,open_up=true,open_north=false,open_south=false,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_110011"
+    },
+    "open_down=false,open_up=false,open_north=true,open_south=false,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_001011"
+    },
+    "open_down=true,open_up=false,open_north=true,open_south=false,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_101011"
+    },
+    "open_down=false,open_up=true,open_north=true,open_south=false,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_011011"
+    },
+    "open_down=true,open_up=true,open_north=true,open_south=false,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_111011"
+    },
+    "open_down=false,open_up=false,open_north=false,open_south=true,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_000111"
+    },
+    "open_down=true,open_up=false,open_north=false,open_south=true,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_100111"
+    },
+    "open_down=false,open_up=true,open_north=false,open_south=true,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_010111"
+    },
+    "open_down=true,open_up=true,open_north=false,open_south=true,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_110111"
+    },
+    "open_down=false,open_up=false,open_north=true,open_south=true,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_001111"
+    },
+    "open_down=true,open_up=false,open_north=true,open_south=true,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_101111"
+    },
+    "open_down=false,open_up=true,open_north=true,open_south=true,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_011111"
+    },
+    "open_down=true,open_up=true,open_north=true,open_south=true,open_west=true,open_east=true": {
+      "model": "thaumcraft:block/glyphed_stone_111111"
+    }
+  }
+}
