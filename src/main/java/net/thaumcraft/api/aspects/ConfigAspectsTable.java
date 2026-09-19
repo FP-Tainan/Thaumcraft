@@ -340,6 +340,9 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:amber", new AspectList().add(Aspects.TRAP, 2).add(Aspects.CRYSTAL, 2));
         r.item("thaumcraft:knowledge_fragment", new AspectList().add(Aspects.MIND, 8));
         r.item("thaumcraft:gold_coin", new AspectList().add(Aspects.GREED, 1));
+        r.item("thaumcraft:loot_bag", new AspectList().add(Aspects.GREED, 8));
+        r.item("thaumcraft:loot_bag_uncommon", new AspectList().add(Aspects.GREED, 16));
+        r.item("thaumcraft:loot_bag_rare", new AspectList().add(Aspects.GREED, 32));
         r.item("thaumcraft:shard_air", new AspectList().add(Aspects.MAGIC, 1).add(Aspects.AIR, 2).add(Aspects.CRYSTAL, 1));
         r.item("thaumcraft:shard_fire", new AspectList().add(Aspects.MAGIC, 1).add(Aspects.FIRE, 2).add(Aspects.CRYSTAL, 1));
         r.item("thaumcraft:shard_water", new AspectList().add(Aspects.MAGIC, 1).add(Aspects.WATER, 2).add(Aspects.CRYSTAL, 1));
@@ -351,6 +354,7 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:thaumonomicon", r.copy("minecraft:bookshelf").add(Aspects.MAGIC, 2).merge(Aspects.MIND, 2));
         r.item("thaumcraft:phial", new AspectList().add(Aspects.VOID, 1));
         r.complex("thaumcraft:goggles", new AspectList().add(Aspects.SENSES, 4));
+        r.item("thaumcraft:apprentice_ring_air", new AspectList().add(Aspects.MAGIC, 5));
     }
 
     static void blocks(ObjectAspects.Registrar r) {

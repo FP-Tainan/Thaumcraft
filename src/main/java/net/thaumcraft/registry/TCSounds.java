@@ -76,6 +76,8 @@ public final class TCSounds {
     public static final Holder<SoundEvent> RUNIC_SHIELD_CHARGE = register("runic_shield_charge");
     /** O zumbido do arreio taumostatico pairando. */
     public static final Holder<SoundEvent> JACOBS = register("jacobs");
+    /** A sacola de tesouro aberta. */
+    public static final Holder<SoundEvent> COINS = register("coins");
 
     private TCSounds() {
     }

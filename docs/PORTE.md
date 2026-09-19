@@ -725,3 +725,24 @@ A mesma auditoria achou, nas receitas geradas:
 - `item/HoverGirdleItem` — o `ItemGirdleHover`: vai no cinto, tira um terço de bloco da queda por tique.
 - Os dois entram na etiqueta `runic_armor` e as receitas de infusão saem do gerador.
 - A tecla era um texto fixo no original; o nome do cinturão e a frase do voo interrompido foram traduzidos aqui.
+
+## Baús de masmorra e sacolas de tesouro (2026-09-18)
+
+- `item/LootBagItem` — o `ItemLootBag`: tesouro comum, incomum e raro (16 por pilha). Abrir espalha de 8 a 12 coisas
+  com o som `coins`; o `Utils.generateLoot` e o `genGear` vieram juntos: às vezes uma peça de armadura ou arma
+  (couro a vazio, conforme a sorte), um pouco gasta e às vezes encantada; o livro sai encantado.
+- `loot/ThaumLoot` é **gerado** por `scratchpad/saque.js` do `Config.initLoot` e do `Utils` descompilados: as três
+  tabelas com os pesos do original (moedas, diamante, esmeralda, ouro, pérola do End, fragmentos, peças comuns,
+  anéis de aprendiz, pedra de vis, anel rúnico menor, garrafas de experiência, maçãs douradas, livros, poções e a
+  estrela do Nether na rara), a tabela de peças do `genGear` e o que vai nos baús do mundo.
+- `loot/ChestLoot` — o `ChestGenHooks`: masmorra, templo da selva, pirâmide do deserto, mina abandonada, corredor,
+  cruzamento e biblioteca da fortaleza (esta com os fragmentos de conhecimento, 3 a 6, peso 20) e o ferreiro da vila
+  (táumio).
+- **Diferenças:**
+  - no 1.7.10 cada baú sorteava de uma lista só; aqui as coisas do Thaumcraft entram no primeiro sorteio de cada
+    tabela, com o mesmo peso e quantidade. O "villageBlacksmith" virou o armeiro da vila (`village_weaponsmith`).
+  - as poções do 1.7 eram metas (normal, forte, longa); no 26.2 nem toda poção tem a forte ou a longa — sem ela, fica
+    a comum.
+  - a pérola primordial (`itemEldritchObject` 3) da sacola rara fica para quando o Eldritch chegar.
+  - as sacolas também caíam dos monstros campeões, que ainda não existem aqui.
+- Os nomes das sacolas foram traduzidos aqui; o pt_BR do original não os tinha.

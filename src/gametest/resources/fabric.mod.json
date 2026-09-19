@@ -28,6 +28,7 @@
       "net.thaumcraft.test.AlchemyDevicesGameTest",
       "net.thaumcraft.test.LampsGameTest",
       "net.thaumcraft.test.EquipmentGameTest",
+      "net.thaumcraft.test.LootGameTest",
       "net.thaumcraft.test.ProgressionGameTest",
       "net.thaumcraft.test.RecipeGameTest",
       "net.thaumcraft.test.ResearchTableGameTest",

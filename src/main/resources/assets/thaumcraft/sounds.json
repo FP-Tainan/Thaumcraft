@@ -22,6 +22,12 @@
       "thaumcraft:cameraticks"
     ]
   },
+  "coins": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:coins"
+    ]
+  },
   "craft_fail": {
     "category": "player",
     "sounds": [

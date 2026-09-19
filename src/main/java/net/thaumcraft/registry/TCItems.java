@@ -157,6 +157,14 @@ public final class TCItems {
     public static final Item ROBE_LEGGINGS = robe("robe_leggings", net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
     public static final Item ROBE_BOOTS = robe("robe_boots", net.minecraft.world.item.equipment.ArmorType.BOOTS);
 
+    /** As sacolas de tesouro: comum, incomum e rara; dezesseis por pilha. */
+    public static final Item LOOT_BAG = register("loot_bag", properties ->
+            new net.thaumcraft.item.LootBagItem(0, properties.stacksTo(16)));
+    public static final Item LOOT_BAG_UNCOMMON = register("loot_bag_uncommon", properties ->
+            new net.thaumcraft.item.LootBagItem(1, properties.stacksTo(16).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item LOOT_BAG_RARE = register("loot_bag_rare", properties ->
+            new net.thaumcraft.item.LootBagItem(2, properties.stacksTo(16).rarity(net.minecraft.world.item.Rarity.RARE)));
+
     /** O arreio taumostático: voa com Potentia; 400 de durabilidade e conserta com ouro. */
     public static final Item HOVER_HARNESS = register("hover_harness", properties ->
             new net.thaumcraft.item.HoverHarnessItem(properties.humanoidArmor(net.thaumcraft.item.TCMaterials.HARNESS,
@@ -537,7 +545,7 @@ public final class TCItems {
             "shard_balanced", "salis_mundus", "phial", "crystal_essence",
             "thaumium_ingot", "thaumium_nugget", "void_ingot", "void_nugget", "quicksilver", "magic_tallow", "amber", "enchanted_fabric",
             "vis_filter", "knowledge_fragment", "mirrored_glass", "jar_label", "primal_charm", "gold_coin",
-            "alumentum", "nitor",
+            "alumentum", "nitor", "loot_bag", "loot_bag_uncommon", "loot_bag_rare",
             "thaumium_pickaxe", "thaumium_axe", "thaumium_shovel", "thaumium_hoe", "thaumium_sword",
             "thaumium_helmet", "thaumium_chestplate", "thaumium_leggings", "thaumium_boots",
             "void_pickaxe", "void_axe", "void_shovel", "void_hoe", "void_sword",
