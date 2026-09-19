@@ -875,6 +875,12 @@ public final class TCItems {
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.INHABITED_ZOMBIE)));
     public static final Item ELDRITCH_GUARDIAN_SPAWN_EGG = register("eldritch_guardian_spawn_egg", properties ->
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.ELDRITCH_GUARDIAN)));
+    public static final Item ELDRITCH_GOLEM_SPAWN_EGG = register("eldritch_golem_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.ELDRITCH_GOLEM)));
+    public static final Item ELDRITCH_WARDEN_SPAWN_EGG = register("eldritch_warden_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.ELDRITCH_WARDEN)));
+    public static final Item TAINTACLE_GIANT_SPAWN_EGG = register("taintacle_giant_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINTACLE_GIANT)));
     public static final Item CRUSTED_OPENING = register("crusted_opening", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.CRUSTED_OPENING, properties.useBlockDescriptionPrefix()));
     public static final Item ANCIENT_DOORWAY = registerHidden("ancient_doorway", properties ->

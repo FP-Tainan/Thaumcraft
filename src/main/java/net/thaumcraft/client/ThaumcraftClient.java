@@ -135,6 +135,58 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.block.eldritch.RunedStoneBlock.clientEffects = (level, x, y, z, r) ->
                 net.thaumcraft.client.fx.BlockRunes.spawn(x, y, z, 0.5f + r.nextFloat() * 0.5f, r.nextFloat() * 0.3f, 0.9f + r.nextFloat() * 0.1f,
                         16 + r.nextInt(4), 0.0f);
+        // os chefes das Terras de Fora
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.EldritchGolemRenderer.LAYER, net.thaumcraft.client.render.model.EldritchGolemModel::createLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.EldritchWardenRenderer.EYE, net.thaumcraft.client.render.EldritchWardenRenderer::createEyeLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.client.render.taint.TaintacleGiantRenderer.LAYER, () -> net.thaumcraft.client.render.taint.TaintOddModels.taintacle(14));
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.ELDRITCH_GOLEM,
+                net.thaumcraft.client.render.EldritchGolemRenderer::new);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.ELDRITCH_WARDEN,
+                net.thaumcraft.client.render.EldritchWardenRenderer::new);
+        net.minecraft.client.renderer.entity.EntityRenderers.register(net.thaumcraft.registry.TCEntities.TAINTACLE_GIANT,
+                net.thaumcraft.client.render.taint.TaintacleGiantRenderer::new);
+        net.thaumcraft.entity.eldritch.EldritchWardenEntity.clientFx = warden -> {
+            var r = warden.getRandom();
+            float x = (float) (warden.getX() + (r.nextFloat() - r.nextFloat()) * 0.2f);
+            float z = (float) (warden.getZ() + (r.nextFloat() - r.nextFloat()) * 0.2f);
+            net.thaumcraft.client.fx.GuardianWisp.spawn(warden, x, warden.getY() + 0.25 * warden.getBbHeight(), z);
+            if (warden.getSpawnTimer() > 0) {
+                float he = Math.max(1.0f, warden.getBbHeight() * ((150 - warden.getSpawnTimer()) / 150.0f));
+                for (int a = 0; a < 33; a++) {
+                    net.thaumcraft.client.fx.SmokeSpiral.spawn(warden.getX(), warden.getBoundingBox().minY + he / 2.0f, warden.getZ(), he,
+                            r.nextInt(360), net.minecraft.util.Mth.floor(warden.getBoundingBox().minY) - 1, 2232623, r);
+                }
+            }
+        };
+        net.thaumcraft.entity.eldritch.EldritchGolemEntity.clientFx = golem -> {
+            var r = golem.getRandom();
+            float f1 = net.minecraft.util.Mth.cos(-golem.yBodyRot * (float) (Math.PI / 180.0) - (float) Math.PI);
+            float f2 = net.minecraft.util.Mth.sin(-golem.yBodyRot * (float) (Math.PI / 180.0) - (float) Math.PI);
+            double vx = f2 * -1.0f, vz = f1 * -1.0f;
+            if (r.nextInt(20) == 0) {
+                float a = (r.nextFloat() - r.nextFloat()) / 2.0f, b = (r.nextFloat() - r.nextFloat()) / 2.0f;
+                int red = (int) ((0.65f + r.nextFloat() * 0.1f) * 255.0f);
+                net.thaumcraft.client.fx.Spark.spawn(new net.minecraft.world.phys.Vec3(golem.getX() + vx + a, golem.getY() + golem.getEyeHeight() - 0.25f,
+                        golem.getZ() + vz + b), 0.3f, 0xCC000000 | red << 16 | 0xFFFF, r);
+            }
+            golem.level().addParticle(net.minecraft.core.particles.ColorParticleOption.create(net.thaumcraft.registry.TCParticles.VENT_LARGE,
+                            0xFF000000 | 5592405), golem.getX() + vx * 0.66, golem.getY() + golem.getEyeHeight() - 0.75f, golem.getZ() + vz * 0.66,
+                    0.0, 0.001, 0.0);
+            if (golem.arcing > 0) {
+                net.thaumcraft.client.fx.Arc.spawn(r, golem.getX(), golem.getY() + golem.getBbHeight() / 2.0f, golem.getZ(), golem.ax + 0.5,
+                        golem.ay + 1, golem.az + 0.5, 0.65f + r.nextFloat() * 0.1f, 1.0f, 1.0f, 1.0f - golem.arcing / 10.0f);
+                golem.arcing--;
+            }
+        };
+        net.thaumcraft.block.eldritch.SappingFieldBlock.clientEffects = (level, pos, random) -> {
+            float h = random.nextFloat() * 0.33f;
+            int red = (int) ((0.3f - random.nextFloat() * 0.1f) * 255.0f), blue = (int) ((0.5f + random.nextFloat() * 0.2f) * 255.0f);
+            net.thaumcraft.client.fx.Spark.spawn(new net.minecraft.world.phys.Vec3(pos.getX() + random.nextFloat(),
+                    pos.getY() + 0.1515f + h / 2.0f, pos.getZ() + random.nextFloat()), 0.33f + h, 0xFF000000 | red << 16 | blue, random);
+        };
         net.thaumcraft.entity.eldritch.EldritchGuardianEntity.GuardianFx.client = net.thaumcraft.client.fx.GuardianWisp::spawn;
         net.thaumcraft.entity.eldritch.EldritchOrbEntity.clientBurst = orb -> {
             var random = orb.level().getRandom();

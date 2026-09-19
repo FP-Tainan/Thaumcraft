@@ -65,7 +65,9 @@ public class EldritchGuardianEntity extends Monster implements RangedAttackMob, 
                 .add(Attributes.FOLLOW_RANGE, 40.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.28)
                 .add(Attributes.ATTACK_DAMAGE, 7.0)
-                .add(Attributes.ARMOR, 4.0);
+                .add(Attributes.ARMOR, 4.0)
+                // o escudo das Terras de Fora, de metade da vida
+                .add(Attributes.MAX_ABSORPTION, 25.0);
     }
 
     @Override

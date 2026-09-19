@@ -316,6 +316,11 @@ public final class TCBlocks {
             new net.thaumcraft.block.SparkFieldBlock(properties.mapColor(MapColor.NONE).strength(100.0f, 30.0f).noCollision()
                     .replaceable().noLootTable().randomTicks().lightLevel(state -> 8).pushReaction(PushReaction.DESTROY)));
 
+    /** O campo sugador que o guardião-mor deixa: o número 11 do blockAiry. */
+    public static final Block SAPPING_FIELD = register("sapping_field", properties ->
+            new net.thaumcraft.block.eldritch.SappingFieldBlock(properties.mapColor(MapColor.NONE).strength(100.0f, 30.0f).noCollision()
+                    .replaceable().noLootTable().randomTicks().lightLevel(state -> 8).pushReaction(PushReaction.DESTROY)));
+
     /** O bloco de âmbar: o BlockCosmeticOpaque 0, translúcido. */
     public static final Block AMBER_BLOCK = register("amber_block", properties ->
             new net.thaumcraft.block.AmberBlock(properties.mapColor(MapColor.COLOR_ORANGE).strength(1.5f, 3.0f)

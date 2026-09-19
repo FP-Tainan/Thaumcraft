@@ -1607,3 +1607,21 @@ desenhistas deles, `EntityPermanentItem`, o `createOculus` do `WandManager`.
   culto ou mácula; o golem, o guardião-mor e o tentáculo gigante chegam na 6.5), a pedra rúnica (choque e distorção a
   três blocos; as runas de cada face sorteadas entre 24 modelos), os cristais estranhos (`vcrystal.obj`).
 - **Testes**: `OuterLandsGameTest`; tela: `OuterLandsClientTest` (entra pelo portal e fotografa a sala e um corredor).
+
+## Eldritch 6.5: os chefes
+
+Descompilados do jar: `EntityEldritchGolem`, `EntityEldritchWarden`, `EntityTaintacleGiant`, `RenderEldritchGolem`,
+`ModelEldritchGolem`, o ramo do guardião-mor do `RenderEldritchGuardian`/`ModelEldritchGuardian`, o `RenderTaintacle` de
+catorze gomos, os números 10 e 11 do `BlockAiry`, e o fim das salas de chefe do `TileEldritchLock`.
+
+- **Construto eldritch**: 250 de vida, seis de armadura, imune a fogo; esmaga urnas e caixotes e derruba o que é mole. O
+  golpe que o mataria arranca a cabeça numa explosão e não passa; sem cabeça, o pescoço solta vapor, faíscas e arcos até
+  o chão, o golpe empurra, e ele atira os orbes que perseguem em rajadas, recarregando por 7,5 s. Modelo gerado a 2,15×.
+- **Guardião-mor**: nome antigo sorteado ("Aphoom-Zhah, o Audaz"), 200 de vida e mais 132 de escudo que se refaz; sobe do
+  chão ao nascer; deixa o campo sugador por onde anda; sem escudo, volta para o meio da sala e, invulnerável, espalha
+  anéis de campo sugador; orbe eldritch ou grito (empurra, murcha, enfraquece, distorce). O olho do capuz aceso.
+- **Tentáculo gigante**: 125 de vida, nove de dano, nasce campeão, barra de chefe, raiva; o último a cair por perto deixa
+  a pérola primordial.
+- **Campo sugador** (`sapping_field`): quem não é eldritch anda devagar, cansa, enfraquece e às vezes murcha.
+- A fechadura agora chama os três (`BossSpawns`), cada chefe nascendo virado para ela.
+- **Testes**: `BossGameTest`; tela: `BossClientTest`.

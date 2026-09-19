@@ -66,6 +66,7 @@ public class Thaumcraft implements ModInitializer {
         // a morte líquida: o que a criatura dissolvida deixa, e o tanque do spa aberto aos canos (menos por cima)
         net.thaumcraft.event.Dissolve.init();
         net.thaumcraft.event.Champions.init();
+        net.thaumcraft.entity.eldritch.BossSpawns.init();
         net.thaumcraft.world.outer.Labyrinth.init();
         net.thaumcraft.event.MobDrops.init();
         net.thaumcraft.research.WarpEvents.guardianSpawner = net.thaumcraft.entity.eldritch.EldritchGuardianEntity::spawnForWarp;

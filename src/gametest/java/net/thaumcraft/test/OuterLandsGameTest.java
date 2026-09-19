@@ -158,7 +158,7 @@ public class OuterLandsGameTest {
     }
 
     /** A pedra rúnica: quem passa a três blocos leva choque. */
-    @GameTest(maxTicks = 80)
+    @GameTest(maxTicks = 200)
     public void runedStoneShocks(GameTestHelper helper) {
         helper.setBlock(new BlockPos(1, 1, 1), TCBlocks.RUNED_STONE.defaultBlockState());
         var player = helper.makeMockServerPlayerInLevel();

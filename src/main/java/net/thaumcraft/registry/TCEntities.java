@@ -198,6 +198,17 @@ public final class TCEntities {
             EntityType.Builder.<net.thaumcraft.entity.eldritch.EldritchOrbEntity>of(net.thaumcraft.entity.eldritch.EldritchOrbEntity::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
+    /** Os chefes das Terras de Fora: o construto eldritch, o guardião-mor e o tentáculo gigante. */
+    public static final EntityType<net.thaumcraft.entity.eldritch.EldritchGolemEntity> ELDRITCH_GOLEM = register("eldritch_golem",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.EldritchGolemEntity>of(net.thaumcraft.entity.eldritch.EldritchGolemEntity::new, MobCategory.MONSTER)
+                    .sized(1.75f, 3.5f).eyeHeight(3.0f).fireImmune().clientTrackingRange(8).updateInterval(3));
+    public static final EntityType<net.thaumcraft.entity.eldritch.EldritchWardenEntity> ELDRITCH_WARDEN = register("eldritch_warden",
+            EntityType.Builder.<net.thaumcraft.entity.eldritch.EldritchWardenEntity>of(net.thaumcraft.entity.eldritch.EldritchWardenEntity::new, MobCategory.MONSTER)
+                    .sized(1.5f, 3.5f).eyeHeight(3.1f).clientTrackingRange(8).updateInterval(3));
+    public static final EntityType<net.thaumcraft.entity.taint.TaintacleGiantEntity> TAINTACLE_GIANT = register("taintacle_giant",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintacleGiantEntity>of(net.thaumcraft.entity.taint.TaintacleGiantEntity::new, MobCategory.MONSTER)
+                    .sized(1.1f, 6.0f).clientTrackingRange(8).updateInterval(3));
+
     /** A aranha da mente, o susto da distorção. */
     public static final EntityType<net.thaumcraft.entity.MindSpiderEntity> MIND_SPIDER = register("mind_spider",
             EntityType.Builder.<net.thaumcraft.entity.MindSpiderEntity>of(net.thaumcraft.entity.MindSpiderEntity::new, MobCategory.MONSTER)
@@ -357,6 +368,9 @@ public final class TCEntities {
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(ELDRITCH_CRAB, net.thaumcraft.entity.eldritch.EldritchCrabEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(INHABITED_ZOMBIE, net.thaumcraft.entity.eldritch.InhabitedZombieEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(ELDRITCH_GUARDIAN, net.thaumcraft.entity.eldritch.EldritchGuardianEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(ELDRITCH_GOLEM, net.thaumcraft.entity.eldritch.EldritchGolemEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(ELDRITCH_WARDEN, net.thaumcraft.entity.eldritch.EldritchWardenEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINTACLE_GIANT, net.thaumcraft.entity.taint.TaintacleGiantEntity.attributes());
         net.thaumcraft.world.CreatureSpawns.init();
     }
 }
