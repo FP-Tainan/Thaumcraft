@@ -97,6 +97,21 @@ public final class TCBlocks {
                     .noOcclusion()
                     .sound(SoundType.GLASS)));
 
+    /** O jarro de cérebro e o nó no jarro, os números 1 e 2 do BlockJar. */
+    public static final Block BRAIN_JAR = register("brain_jar", properties ->
+            new net.thaumcraft.block.BrainJarBlock(properties
+                    .mapColor(MapColor.NONE)
+                    .strength(0.3f)
+                    .noOcclusion()
+                    .sound(SoundType.GLASS)));
+    public static final Block NODE_JAR = register("node_jar", properties ->
+            new net.thaumcraft.block.NodeJarBlock(properties
+                    .mapColor(MapColor.NONE)
+                    .strength(0.3f)
+                    .noOcclusion()
+                    .lightLevel(state -> 11)
+                    .sound(SoundType.GLASS)));
+
     /** O buraco do Buraco Portátil: some sozinho, devolvendo o bloco que estava ali. */
     /** O bloco protegido: inquebrável, com a cara e a luz do que estava ali. */
     public static final Block WARDED = register("warded", properties ->

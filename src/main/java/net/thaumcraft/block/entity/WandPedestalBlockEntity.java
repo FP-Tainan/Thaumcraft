@@ -142,7 +142,7 @@ public class WandPedestalBlockEntity extends BaseContainerBlockEntity implements
         if (this.level == null) return;
         for (int xx = -8; xx <= 8; xx++) for (int yy = -8; yy <= 8; yy++) for (int zz = -8; zz <= 8; zz++) {
             BlockPos at = this.worldPosition.offset(xx, yy, zz);
-            if (this.level.getBlockEntity(at) instanceof NodeBlockEntity) this.nodes.add(at);
+            if (this.level.getBlockEntity(at) instanceof NodeBlockEntity && !(this.level.getBlockEntity(at) instanceof NodeJarBlockEntity)) this.nodes.add(at);
         }
     }
 

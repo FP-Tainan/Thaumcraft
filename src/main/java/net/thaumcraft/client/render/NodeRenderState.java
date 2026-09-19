@@ -20,6 +20,8 @@ public class NodeRenderState extends BlockEntityRenderState {
     public float ticks;
     /** Um número fixo por nó, para que dois nós vizinhos não pisquem no mesmo compasso. */
     public int seed;
+    /** No jarro o nó fica um tanto mais baixo (o {@code glTranslatef(0, -0.1, 0)} do {@code TileJarRenderer}). */
+    public float yOffset;
 
     /** Uma varinha bebendo deste nó: de onde sai a linha, até onde já chegou, e a cor dela. */
     public record Drain(net.minecraft.world.phys.Vec3 from, net.minecraft.world.phys.Vec3 to, float grow,

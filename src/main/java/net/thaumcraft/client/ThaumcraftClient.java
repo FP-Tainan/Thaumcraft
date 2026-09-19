@@ -213,6 +213,16 @@ public class ThaumcraftClient implements ClientModInitializer {
         };
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.ARCANE_SPA,
                 net.thaumcraft.client.gui.ArcaneSpaScreen::new);
+        // os jarros especiais: o cérebro na salmoura e o nó preso (o desenhista do nó, um tanto mais baixo)
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.BRAIN_JAR, net.thaumcraft.client.render.SpecialJarRenderers.Brain::new);
+        registerNodeJar();
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("special_jar"), net.thaumcraft.client.render.SpecialJarRenderers.Unbaked.CODEC);
+        net.thaumcraft.block.NodeJarBlock.clientEffects = pos -> {
+            for (int yy = -1; yy < 3; yy++) for (int xx = -1; xx < 2; xx++) for (int zz = -1; zz < 2; zz++) {
+                net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX() + xx, pos.getY() + yy, pos.getZ() + zz, -9999, 5);
+            }
+        };
         // o pedestal de recarga: a varinha girando em cima e a linha até o nó de que bebe
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.WAND_PEDESTAL, net.thaumcraft.client.render.WandPedestalRenderer::new);
@@ -485,5 +495,13 @@ public class ThaumcraftClient implements ClientModInitializer {
                     ThaumometerHud.showSummary(
                             net.minecraft.network.chat.Component.literal(payload.name()), linhas);
                 }));
+    }
+
+    /** O nó no jarro usa o desenhista do nó: a peça dele é um nó de outro tipo. */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void registerNodeJar() {
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                (net.minecraft.world.level.block.entity.BlockEntityType) net.thaumcraft.registry.TCBlockEntities.NODE_JAR,
+                (net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider) net.thaumcraft.client.render.NodeRenderer::new);
     }
 }

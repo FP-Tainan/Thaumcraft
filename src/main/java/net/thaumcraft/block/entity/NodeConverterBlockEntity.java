@@ -45,7 +45,8 @@ public class NodeConverterBlockEntity extends BlockEntity {
         BlockPos below = pos.below();
         boolean server = !level.isClientSide();
 
-        if (this.status == 1 && server && this.count >= 1000 && level.getBlockEntity(below) instanceof NodeBlockEntity node) {
+        if (this.status == 1 && server && this.count >= 1000 && level.getBlockEntity(below) instanceof NodeBlockEntity node
+                && !(node instanceof NodeJarBlockEntity)) {
             AspectList base = node.baseAspects().copy();
             var type = node.type();
             var modifier = node.modifier();

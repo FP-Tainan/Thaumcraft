@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/jar",
+    "model": {
+      "type": "thaumcraft:special_jar",
+      "brain": false
+    }
+  }
+}

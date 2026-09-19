@@ -61,6 +61,12 @@ public final class WandTriggers {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
             if (net.thaumcraft.block.AdvancedAlchemicalFurnaceStructure.create(wand, player, level, pos)) return InteractionResult.SUCCESS;
         }
+        // uma caixa de vidro com tampa de lajes em volta de um nó: o jarro para nós (evento 4)
+        if (net.thaumcraft.block.NodeJarStructure.isTrigger(state) && player != null
+                && net.thaumcraft.research.ResearchManager.knows(player, "NODEJAR")) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            if (net.thaumcraft.block.NodeJarStructure.create(wand, player, level, pos)) return InteractionResult.SUCCESS;
+        }
         // a estante de livros vira o caderno de pesquisa
         if (state.is(Blocks.BOOKSHELF)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;

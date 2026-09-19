@@ -57,6 +57,7 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
         state.type = node.type();
         state.modifier = node.modifier();
         state.seed = Math.abs(node.getBlockPos().hashCode()) % FRAMES;
+        state.yOffset = node instanceof net.thaumcraft.block.entity.NodeJarBlockEntity ? -0.1f : 0.0f;
         Minecraft minecraft = Minecraft.getInstance();
         state.ticks = minecraft.player == null ? partial : minecraft.player.tickCount + partial;
         this.extractDrains(node, state, partial);
@@ -117,6 +118,11 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 
     /** As bolhas dos aspectos e o miolo branco: o {@code renderNode} do original. */
     static void drawWisps(NodeRenderState state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
+        drawWisps(state, pose, collector, camera.orientation);
+    }
+
+    /** O mesmo, com a bolha virada para onde se pedir (o jarro na mão desenha três planos fixos). */
+    static void drawWisps(NodeRenderState state, PoseStack pose, SubmitNodeCollector collector, org.joml.Quaternionfc orientation) {
         if (state.wisps.isEmpty()) return;
 
         float alpha = 1.0f;
@@ -135,8 +141,8 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
         float share = alpha / Math.max(1.0f, state.wisps.size() / 2.0f);
 
         pose.pushPose();
-        pose.translate(0.5, 0.5, 0.5);
-        pose.mulPose(camera.orientation);
+        pose.translate(0.5, 0.5 + state.yOffset, 0.5);
+        pose.mulPose(new org.joml.Quaternionf(orientation));
 
         int index = 0;
         for (NodeRenderState.Wisp wisp : state.wisps) {

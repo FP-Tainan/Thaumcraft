@@ -1,4 +1,13 @@
 {
+  "brain": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:brain1",
+      "thaumcraft:brain2",
+      "thaumcraft:brain3",
+      "thaumcraft:brain4"
+    ]
+  },
   "bubble": {
     "category": "player",
     "sounds": [

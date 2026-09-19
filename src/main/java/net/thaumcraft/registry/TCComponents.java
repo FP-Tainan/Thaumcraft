@@ -86,6 +86,11 @@ public final class TCComponents {
             builder -> builder.persistent(net.thaumcraft.item.JarContents.CODEC)
                     .networkSynchronized(net.thaumcraft.item.JarContents.STREAM_CODEC));
 
+    /** O nó guardado no jarro: aspectos, tipo e feitio. */
+    public static final DataComponentType<net.thaumcraft.item.JarredNode> JARRED_NODE = register("jarred_node",
+            builder -> builder.persistent(net.thaumcraft.item.JarredNode.CODEC)
+                    .networkSynchronized(net.thaumcraft.item.JarredNode.STREAM_CODEC));
+
     /** O que está escrito numa nota de pesquisa: a pesquisa e o tabuleiro de hexágonos. */
     public static final DataComponentType<net.thaumcraft.research.ResearchNote> RESEARCH_NOTE = register("research_note",
             builder -> builder.persistent(net.thaumcraft.research.ResearchNote.CODEC)

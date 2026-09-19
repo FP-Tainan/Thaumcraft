@@ -386,6 +386,11 @@ public final class TCItems {
     public static final Item JAR = register("jar", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.JAR, properties));
 
+    public static final Item BRAIN_JAR = register("brain_jar", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.BRAIN_JAR, properties.useBlockDescriptionPrefix()));
+    public static final Item NODE_JAR = registerHidden("node_jar", properties ->
+            new net.thaumcraft.item.NodeJarItem(TCBlocks.NODE_JAR, properties.useBlockDescriptionPrefix().stacksTo(1)));
+
     public static final Item JAR_VOID = register("jar_void", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.JAR_VOID, properties));
 

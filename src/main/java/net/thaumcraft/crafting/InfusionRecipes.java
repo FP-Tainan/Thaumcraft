@@ -127,6 +127,11 @@ public final class InfusionRecipes {
                 new AspectList().add(Aspects.AURA, 32).add(Aspects.MAGIC, 16).add(Aspects.ORDER, 16).add(Aspects.ENERGY, 16),
                 Ingredient.of(TCBlocks.NODE_STABILIZER.asItem()),
                 Arrays.asList(Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.ALUMENTUM), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()), Ingredient.of(TCItems.ALUMENTUM), Ingredient.of(net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK.asItem()))));
+        // JarBrain
+        ALL.add(new InfusionRecipe("JARBRAIN", new ItemStack(TCBlocks.BRAIN_JAR.asItem()), 4,
+                new AspectList().add(Aspects.MIND, 10).add(Aspects.SENSES, 10).add(Aspects.UNDEAD, 20),
+                Ingredient.of(TCBlocks.JAR.asItem()),
+                Arrays.asList(Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(net.minecraft.world.item.Items.SPIDER_EYE), Ingredient.of(net.minecraft.world.item.Items.WATER_BUCKET), Ingredient.of(net.minecraft.world.item.Items.SPIDER_EYE))));
         // Mirror
         ALL.add(new InfusionRecipe("MIRROR", new ItemStack(TCBlocks.MIRROR.asItem()), 1,
                 new AspectList().add(Aspects.TRAVEL, 8).add(Aspects.DARKNESS, 8).add(Aspects.EXCHANGE, 8),

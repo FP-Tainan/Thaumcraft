@@ -56,6 +56,13 @@ public final class TCBlockEntities {
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("wand_pedestal"),
             new BlockEntityType<>(net.thaumcraft.block.entity.WandPedestalBlockEntity::new, java.util.Set.of(TCBlocks.WAND_PEDESTAL)));
 
+    public static final BlockEntityType<net.thaumcraft.block.entity.BrainJarBlockEntity> BRAIN_JAR = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("brain_jar"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.BrainJarBlockEntity::new, java.util.Set.of(TCBlocks.BRAIN_JAR)));
+    public static final BlockEntityType<net.thaumcraft.block.entity.NodeJarBlockEntity> NODE_JAR = Registry.register(
+            BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("node_jar"),
+            new BlockEntityType<>(net.thaumcraft.block.entity.NodeJarBlockEntity::new, java.util.Set.of(TCBlocks.NODE_JAR)));
+
     public static final BlockEntityType<net.thaumcraft.block.entity.ArcaneSpaBlockEntity> ARCANE_SPA = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_spa"),
             new BlockEntityType<>(net.thaumcraft.block.entity.ArcaneSpaBlockEntity::new, java.util.Set.of(TCBlocks.ARCANE_SPA)));

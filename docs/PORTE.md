@@ -1238,3 +1238,23 @@ Porte do `EnchantmentHaste`, `EnchantmentRepair`, do `updateSpeed`/`doRepair` do
   experiência, a essência às vezes aumenta.
 - **Pech**: os livros de Pressa e de Reparo voltaram à troca do pech mago.
 - **Testes**: `EnchantmentGameTest` (os dados, o Reparo pagando com a varinha, a infusão subindo Afiada).
+
+## Jarro de cérebro e nó no jarro
+
+Porte do `TileJarBrain`, `TileJarNode`, `ItemJarNode`, `ModelBrain`, dos números 1 e 2 do `BlockJar`, do
+`renderBrain` do `TileJarRenderer`, do `ItemJarNodeRenderer` e do `createNodeJar`/`fitNodeJar`/`replaceNodeJar` do
+`WandManager` (descompilados do jar).
+
+- **Jarro de cérebro** (`BrainJarBlock`/`BrainJarBlockEntity`): o vidro do jarro com a salmoura (`jarbrine.png`) e o
+  `ModelBrain` (`brain2.png`), que vira devagar para a bolinha ou o jogador mais perto e sobe e desce. Puxa as bolinhas
+  de experiência a até seis blocos e as come (até 2000); o toque devolve até 64 ao acaso e o faz esperar dois segundos;
+  quebrado, devolve tudo. Suspira de vez em quando (`brain`), solta faíscas de feitiço quando cheio e o comparador lê o
+  quanto tem. Conta como estante para a mesa de encantar (o original valia 2; a marca do jogo de hoje vale 1).
+  Receita de infusão do jar.
+- **Nó no jarro** (`NodeJarBlock`/`NodeJarBlockEntity`, `NodeJarStructure`, gatilho quatro da varinha): uma caixa de
+  vidro de 3×3×3 com o nó no meio e tampa de lajes de madeira; a varinha no vidro (de uma das duas fileiras de cima),
+  com NODEJAR e 70 de cada primário, encolhe tudo num jarro com o nó — que três vezes em quatro enfraquece um passo.
+  Preso, o nó não se refaz nem faz nada (e o pedestal de recarga e o transdutor não o usam); luz 11; o desenhista do
+  nó o mostra um tanto mais baixo. A varinha quebra o vidro e o solta como estava. Quebrado, sai o item com o nó
+  (`thaumcraft:jarred_node`), que põe o jarro de volta e lista os aspectos na dica; na mão, o nó aparece em três planos.
+- **Testes**: `SpecialJarGameTest` (o cérebro come; a caixa vira jarro e a varinha solta) e `SpecialJarClientTest`.

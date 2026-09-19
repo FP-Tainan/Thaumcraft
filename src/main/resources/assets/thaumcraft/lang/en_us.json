@@ -1301,5 +1301,7 @@
   "death.attack.dissolve": "%1$s was dissolved",
   "death.attack.dissolve.player": "%1$s was dissolved whilst fighting %2$s",
   "enchantment.thaumcraft.haste": "Haste",
-  "enchantment.thaumcraft.repair": "Repair"
+  "enchantment.thaumcraft.repair": "Repair",
+  "block.thaumcraft.brain_jar": "Brain in a Jar",
+  "block.thaumcraft.node_jar": "Node in a Jar"
 }

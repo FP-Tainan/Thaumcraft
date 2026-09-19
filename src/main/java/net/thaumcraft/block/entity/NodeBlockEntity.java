@@ -70,6 +70,11 @@ public class NodeBlockEntity extends BlockEntity {
         super(TCBlockEntities.NODE, pos, state);
     }
 
+    /** Para o nó no jarro, que é um nó de outro tipo de peça. */
+    protected NodeBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
+
     /** Quantos tiques o nó espera entre um ponto e o próximo, sem a trava. Zero quer dizer que ele não se refaz. */
     public int regenerationInterval() {
         if (this.modifier == NodeModifier.BRIGHT) return REGEN_BRIGHT;
@@ -548,7 +553,7 @@ public class NodeBlockEntity extends BlockEntity {
         return this.shownColour;
     }
 
-    private void sync() {
+    protected void sync() {
         this.setChanged();
         if (this.level != null && !this.level.isClientSide()) {
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);

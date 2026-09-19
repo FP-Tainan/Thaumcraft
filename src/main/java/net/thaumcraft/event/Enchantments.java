@@ -82,7 +82,7 @@ public final class Enchantments {
         var inventory = player.getInventory();
         for (int a = 35; a >= 0; a--) {
             ItemStack item = inventory.getItem(a);
-            if (item.getItem() instanceof WandItem && WandItem.consume(item, cost, true, player)) return true;
+            if (item.getItem() instanceof WandItem && WandItem.consumeRaw(item, cost, true, player)) return true;
         }
         return false;
     }
