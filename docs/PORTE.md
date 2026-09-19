@@ -1104,3 +1104,22 @@ Porte do `FocusUpgradeType`, do `ItemFocusBasic` (postos, `getPossibleUpgradesBy
   tipo (o primeiro que pergunta define o de todos); aqui cada foco tem o seu.
 - **Testes**: `FocusUpgradeGameTest` (tabela, postos, regras, custos e esperas, frugal, a melhoria viajando com o foco,
   o choque de terra, o campo estático, a radiestesia) e `FocusUpgradeClientTest` (os orbes e o campo).
+
+## Manipulador focal
+
+Porte do `TileFocalManipulator`, `ContainerFocalManipulator`, `GuiFocalManipulator`, `TileFocalManipulatorRenderer` e do
+número 13 do `BlockStoneDevice` (descompilados do jar).
+
+- **Bloco** (`FocalManipulatorBlock`): a mesa do `ModelArcaneWorkbench` com a `wandtable.png` (a mesma peça especial da
+  bancada, no chão e na mão), pedra 3/25. Só abre para quem tem FOCALMANIPULATION ("Pesquisa requerida em falta!").
+  Receita arcana do jar (a laje de pedra arcana entrou no mapeador de itens).
+- **Mesa** (`FocalManipulatorBlockEntity`): a melhoria vai no primeiro posto vazio; custa `posto × 8` níveis de
+  experiência (mesmo no criativo é preciso tê-los; só não são cobrados) e 200 centésimos de cada aspecto da melhoria,
+  dobrando por posto, reduzidos a primários (`costOf`). A cada cinco tiques puxa até 100 de cada da rede de vis; no fim
+  aplica a melhoria (som `wand`). Tirar o foco no meio perde tudo (som `craftfail`). O foco gira em cima da mesa.
+- **Tela** (`FocalManipulatorScreen`): a `gui_wandtable.png` de 192×233; as melhorias postas em cima, as que cabem no
+  próximo posto embaixo (clicar escolhe/desescolhe), o custo em primários, a experiência (vermelha se falta), a barra
+  colorida do quanto falta puxar e as estrelinhas que correm da barra ao posto. Os textos de ajuda saem no quadro preso
+  à direita, como o `drawHoveringTextFixed`.
+- **Testes**: `FocalManipulatorGameTest` (custo por posto, experiência e postos, puxar da rede até a melhoria entrar) e
+  `FocalManipulatorClientTest` (a mesa trabalhando e a tela).

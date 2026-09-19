@@ -1273,5 +1273,10 @@
   "focus.upgrade.dowsing.text": "Esta melhoria dá ao foco de escavação uma pequena chance de minerar aglomerados nativos em vez de minérios comuns. Esses aglomerados costumam render o dobro de lingotes na fundição.",
   "block.thaumcraft.spark_field": "Campo Estático",
   "entity.thaumcraft.explosive_orb": "Bola de Fogo",
-  "entity.thaumcraft.shock_orb": "Orbe de Choque"
+  "entity.thaumcraft.shock_orb": "Orbe de Choque",
+  "block.thaumcraft.focal_manipulator": "Manipulador Focal",
+  "wandtable.text1": "Custo de Vis",
+  "wandtable.text2": "Custo de Experiência",
+  "wandtable.text3": "Começar Melhoria",
+  "tc.researchmissing": "Pesquisa requerida em falta!"
 }

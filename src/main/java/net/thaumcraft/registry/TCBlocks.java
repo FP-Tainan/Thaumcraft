@@ -505,6 +505,14 @@ public final class TCBlocks {
                     .noOcclusion()
                     .sound(SoundType.WOOD)));
 
+    /** O manipulador focal, onde os focos recebem melhorias. */
+    public static final Block FOCAL_MANIPULATOR = register("focal_manipulator", properties ->
+            new net.thaumcraft.block.FocalManipulatorBlock(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0f, 25.0f)
+                    .noOcclusion()
+                    .sound(SoundType.STONE)));
+
     /** A mesa de madeira do mod: vira bancada arcana com a varinha e mesa de pesquisa com a pena. */
     public static final Block TABLE = register("table", properties ->
             new net.thaumcraft.block.TableBlock(properties

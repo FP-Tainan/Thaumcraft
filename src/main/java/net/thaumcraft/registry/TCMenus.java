@@ -39,6 +39,12 @@ public final class TCMenus {
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("deconstruction_table"),
                     new MenuType<>(net.thaumcraft.inventory.DeconstructionTableMenu::new, FeatureFlags.VANILLA_SET));
 
+    /** O manipulador focal: a tela abre sabendo de qual é. */
+    public static final MenuType<net.thaumcraft.inventory.FocalManipulatorMenu> FOCAL_MANIPULATOR = Registry.register(
+            BuiltInRegistries.MENU, Thaumcraft.id("focal_manipulator"),
+            new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.FocalManipulatorMenu::new,
+                    net.minecraft.core.BlockPos.STREAM_CODEC));
+
     public static final MenuType<net.thaumcraft.inventory.AlchemicalFurnaceMenu> ALCHEMICAL_FURNACE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("alchemical_furnace"),
                     new MenuType<>(net.thaumcraft.inventory.AlchemicalFurnaceMenu::new,

@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/focal_manipulator",
+    "model": {
+      "type": "thaumcraft:workbench",
+      "texture": "thaumcraft:textures/models/wandtable.png"
+    }
+  }
+}

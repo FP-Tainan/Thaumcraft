@@ -78,6 +78,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("VISCHARGERELAY", new ItemStack(TCBlocks.WORKBENCH_CHARGER.asItem()),
                 Arrays.asList(null, Ingredient.of(TCBlocks.VIS_RELAY.asItem()), null, Ingredient.of(TCItems.WAND_RODS.get("greatwood")), null, Ingredient.of(TCItems.WAND_RODS.get("greatwood")), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), null, Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT)),
                 new AspectList().add(Aspects.FIRE, 16).add(Aspects.ORDER, 16).add(Aspects.AIR, 16)));
+        // FocalManipulator
+        ALL.add(new ArcaneRecipe("FOCALMANIPULATION", new ItemStack(TCBlocks.FOCAL_MANIPULATOR.asItem()),
+                Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.ARCANE_STONE_SLAB.asItem()), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(TCResources.get("primal_charm")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCBlocks.TABLE.asItem()), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT)),
+                new AspectList().add(Aspects.FIRE, 32).add(Aspects.AIR, 32).add(Aspects.ENTROPY, 32).add(Aspects.EARTH, 32).add(Aspects.WATER, 32).add(Aspects.ORDER, 32)));
         // ArcaneStone1
         ALL.add(new ArcaneRecipe("ARCANESTONE", new ItemStack(TCBlocks.BUILDING.get("arcane_stone").asItem(), 9),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(TCItems.SHARDS.values().toArray(new net.minecraft.world.item.Item[0])), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE), Ingredient.of(net.minecraft.world.item.Items.STONE)),

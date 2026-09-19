@@ -63,7 +63,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
     private static final int HEX_SIZE = 9;
 
     /** A luz que soma, textura e cor: o {@code glBlendFunc(SRC_ALPHA, ONE)} do destaque do hexágono. */
-    private static final RenderPipeline GUI_ADDITIVE = RenderPipelines.register(RenderPipeline.builder()
+    static final RenderPipeline GUI_ADDITIVE = RenderPipelines.register(RenderPipeline.builder()
             .withLocation(Thaumcraft.id("pipeline/gui_additive"))
             .withBindGroupLayout(BindGroupLayouts.GLOBALS)
             .withBindGroupLayout(BindGroupLayouts.MATRICES_PROJECTION)

@@ -1269,5 +1269,10 @@
   "focus.upgrade.dowsing.text": "This upgrade gives the excavation focus a small chance to mine native clusters instead of normal ores. These clusters usually give double the number of ingots when smelted.",
   "block.thaumcraft.spark_field": "Static Field",
   "entity.thaumcraft.explosive_orb": "Fireball",
-  "entity.thaumcraft.shock_orb": "Shock Orb"
+  "entity.thaumcraft.shock_orb": "Shock Orb",
+  "block.thaumcraft.focal_manipulator": "Focal Manipulator",
+  "wandtable.text1": "Vis Cost",
+  "wandtable.text2": "Experience Cost",
+  "wandtable.text3": "Start Upgrade",
+  "tc.researchmissing": "Missing required research!"
 }

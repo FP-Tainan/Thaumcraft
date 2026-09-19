@@ -187,6 +187,19 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.ETHEREAL_BLOOM, net.thaumcraft.client.render.EtherealBloomRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.DECONSTRUCTION_TABLE,
                 net.thaumcraft.client.gui.DeconstructionTableScreen::new);
+        // o manipulador focal: a mesa com o foco girando em cima, a tela e as estrelinhas de quando trabalha
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.registry.TCBlockEntities.FOCAL_MANIPULATOR, net.thaumcraft.client.render.FocalManipulatorRenderer::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.FOCAL_MANIPULATOR,
+                net.thaumcraft.client.gui.FocalManipulatorScreen::new);
+        net.thaumcraft.block.entity.FocalManipulatorBlockEntity.clientEffects = (level, pos) -> {
+            var r = level.getRandom();
+            net.thaumcraft.client.fx.ThaumFx.add(new net.thaumcraft.client.fx.GenericFx(
+                    pos.getX() + 0.5 + (r.nextFloat() - r.nextFloat()) * 0.3f, pos.getY() + 1.25 + (r.nextFloat() - r.nextFloat()) * 0.3f,
+                    pos.getZ() + 0.5 + (r.nextFloat() - r.nextFloat()) * 0.3f, 0.0, 0.0, 0.0, 0.5f + r.nextFloat() * 0.4f,
+                    1.0f - r.nextFloat() * 0.4f, 1.0f - r.nextFloat() * 0.4f, 0.8f, false, 112, 9, 1, 6 + r.nextInt(5), 0,
+                    0.7f + r.nextFloat() * 0.4f));
+        };
         // o fole, com o modelo do original, no chão e na mão
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.BELLOWS, net.thaumcraft.client.render.BellowsRenderer::new);

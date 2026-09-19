@@ -471,6 +471,9 @@ public final class TCItems {
     public static final Item DECONSTRUCTION_TABLE = register("deconstruction_table", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.DECONSTRUCTION_TABLE, properties.useBlockDescriptionPrefix()));
 
+    public static final Item FOCAL_MANIPULATOR = register("focal_manipulator", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.FOCAL_MANIPULATOR, properties.useBlockDescriptionPrefix()));
+
     /** O fole. */
     public static final Item BELLOWS = register("bellows", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.BELLOWS, properties.useBlockDescriptionPrefix()));
