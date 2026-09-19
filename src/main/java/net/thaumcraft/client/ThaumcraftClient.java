@@ -17,6 +17,35 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCEntities.FROST_SHARD, net.thaumcraft.client.render.FrostShardRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.EMBER, net.thaumcraft.client.render.EmberRenderer::new);
+        // os orbes das melhorias de foco: a bola de fogo e o choque de terra, com o rastro de fumaça e o clarão
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.EXPLOSIVE_ORB, net.thaumcraft.client.render.FocusOrbRenderers.Explosive::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.registry.TCEntities.SHOCK_ORB, net.thaumcraft.client.render.FocusOrbRenderers.Electric::new);
+        net.thaumcraft.entity.ExplosiveOrbEntity.clientTrail = orb -> {
+            var r = orb.getRandom();
+            net.thaumcraft.client.fx.ThaumFx.add(new net.thaumcraft.client.fx.GenericFx(
+                    orb.xo + (r.nextFloat() - r.nextFloat()) * 0.3f, orb.yo + (r.nextFloat() - r.nextFloat()) * 0.3f,
+                    orb.zo + (r.nextFloat() - r.nextFloat()) * 0.3f, 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.8f, false,
+                    151, 9, 1, 7 + r.nextInt(5), 0, 2.0f + r.nextFloat()));
+        };
+        net.thaumcraft.entity.ShockOrbEntity.clientBurst = orb ->
+                net.thaumcraft.client.fx.Burst.spawn(orb.position(), 3.0f, orb.getRandom());
+        net.thaumcraft.entity.FrostShardEntity.clientSparkle = (shard, frosty) -> {
+            var r = shard.getRandom();
+            float s = shard.getDamage() / 10.0f;
+            for (int a = 0; a < frosty; a++) {
+                net.thaumcraft.client.fx.Sparkle.spawn(r, shard.getX() - s + r.nextFloat() * s * 2.0f,
+                        shard.getY() - s + r.nextFloat() * s * 2.0f, shard.getZ() - s + r.nextFloat() * s * 2.0f, 0.4f, 6, 0.005f);
+            }
+        };
+        net.thaumcraft.block.SparkFieldBlock.clientEffects = (level, pos, random) -> {
+            float h = random.nextFloat() * 0.33f;
+            int red = (int) ((0.65f + random.nextFloat() * 0.1f) * 255.0f);
+            net.thaumcraft.client.fx.Spark.spawn(new net.minecraft.world.phys.Vec3(pos.getX() + random.nextFloat(),
+                    pos.getY() + 0.1515f + h / 2.0f, pos.getZ() + random.nextFloat()), 0.33f + h,
+                    0xCC000000 | red << 16 | 0xFFFF, random);
+        };
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.ASPECT_ORB, net.thaumcraft.client.render.AspectOrbRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(

@@ -25,6 +25,20 @@ public final class TCEntities {
                     .clientTrackingRange(4)
                     .updateInterval(10));
 
+    /** A bola de fogo do foco de fogo com a melhoria de mesmo nome. */
+    public static final EntityType<net.thaumcraft.entity.ExplosiveOrbEntity> EXPLOSIVE_ORB = register("explosive_orb",
+            EntityType.Builder.<net.thaumcraft.entity.ExplosiveOrbEntity>of(net.thaumcraft.entity.ExplosiveOrbEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .clientTrackingRange(4)
+                    .updateInterval(10));
+
+    /** O orbe do choque de terra, do foco de raio. */
+    public static final EntityType<net.thaumcraft.entity.ShockOrbEntity> SHOCK_ORB = register("shock_orb",
+            EntityType.Builder.<net.thaumcraft.entity.ShockOrbEntity>of(net.thaumcraft.entity.ShockOrbEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .clientTrackingRange(4)
+                    .updateInterval(10));
+
     /** A esfera do foco Primordial. */
     public static final EntityType<net.thaumcraft.entity.PrimalOrbEntity> PRIMAL_ORB = register("primal_orb",
             EntityType.Builder.<net.thaumcraft.entity.PrimalOrbEntity>of(net.thaumcraft.entity.PrimalOrbEntity::new, MobCategory.MISC)

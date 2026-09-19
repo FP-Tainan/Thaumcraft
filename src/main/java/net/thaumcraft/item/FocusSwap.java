@@ -89,7 +89,7 @@ public final class FocusSwap {
         for (ItemStack pouch : extraPouches.apply(player)) addPouch(foci, pouch);
         for (int a = 0; a < 36; a++) {
             ItemStack item = player.getInventory().getItem(a);
-            if (item.getItem() instanceof FocusItem focus) foci.put(focus.sortKey(), new Place(a, null, -1));
+            if (item.getItem() instanceof FocusItem focus) foci.put(focus.sortKey(item), new Place(a, null, -1));
             if (item.getItem() instanceof FocusPouchItem) addPouch(foci, item);
         }
         return foci;
@@ -98,7 +98,7 @@ public final class FocusSwap {
     private static void addPouch(TreeMap<String, Place> foci, ItemStack pouch) {
         NonNullList<ItemStack> inside = FocusPouchItem.contents(pouch);
         for (int q = 0; q < inside.size(); q++) {
-            if (inside.get(q).getItem() instanceof FocusItem focus) foci.put(focus.sortKey(), new Place(-1, pouch, q));
+            if (inside.get(q).getItem() instanceof FocusItem focus) foci.put(focus.sortKey(inside.get(q)), new Place(-1, pouch, q));
         }
     }
 
@@ -129,14 +129,21 @@ public final class FocusSwap {
             }
             if (!(item.getItem() instanceof FocusItem chosen)) return;
             player.level().playSound(null, player.blockPosition(), TCSounds.CAMERA_TICKS.value(), SoundSource.PLAYERS, 0.3f, 1.0f);
-            if (had != null && giveBack(player, had, pouches)) {
+            if (had != null && giveBack(player, wand, pouches)) {
                 wand.remove(TCComponents.WAND_FOCUS);
+                wand.remove(TCComponents.FOCUS_UPGRADES);
                 had = null;
             }
-            if (had == null) wand.set(TCComponents.WAND_FOCUS, chosen.type());
+            if (had == null) {
+                // o foco entra com as melhorias dele
+                wand.set(TCComponents.WAND_FOCUS, chosen.type());
+                var upgrades = item.get(TCComponents.FOCUS_UPGRADES);
+                if (upgrades != null) wand.set(TCComponents.FOCUS_UPGRADES, upgrades);
+            }
             else if (!addToPouch(item, pouches)) player.getInventory().add(item);
-        } else if (had != null && giveBack(player, had, pouches)) {
+        } else if (had != null && giveBack(player, wand, pouches)) {
             wand.remove(TCComponents.WAND_FOCUS);
+            wand.remove(TCComponents.FOCUS_UPGRADES);
             player.level().playSound(null, player.blockPosition(), TCSounds.CAMERA_TICKS.value(), SoundSource.PLAYERS, 0.3f, 0.9f);
         }
         player.getInventory().setChanged();
@@ -144,10 +151,9 @@ public final class FocusSwap {
     }
 
     /** O foco que estava preso volta para a primeira bolsa com espaço ou para o inventário. */
-    private static boolean giveBack(Player player, String type, List<ItemStack> pouches) {
-        Item item = Focuses.byType(type);
-        if (item == null) return true;
-        ItemStack focus = new ItemStack(item);
+    private static boolean giveBack(Player player, ItemStack wand, List<ItemStack> pouches) {
+        ItemStack focus = WandItem.focusStack(wand);
+        if (focus.isEmpty()) return true;
         return addToPouch(focus, pouches) || player.getInventory().add(focus);
     }
 

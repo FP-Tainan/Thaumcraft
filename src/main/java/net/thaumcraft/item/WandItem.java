@@ -61,6 +61,67 @@ public class WandItem extends Item {
         return found != null ? found : WandParts.rod("wood");
     }
 
+    /** O {@code getFocusItem}: o foco preso, como item, com as melhorias dele; vazio se não houver. */
+    public static ItemStack focusStack(ItemStack wand) {
+        FocusItem focus = Focuses.on(wand);
+        if (focus == null) return ItemStack.EMPTY;
+        ItemStack out = new ItemStack(focus);
+        var upgrades = wand.get(TCComponents.FOCUS_UPGRADES);
+        if (upgrades != null) out.set(TCComponents.FOCUS_UPGRADES, upgrades);
+        return out;
+    }
+
+    /** O {@code getFocusPotency}: a potência do foco, mais um no bastão primordial (o das runas). */
+    public static int focusPotency(ItemStack wand) {
+        ItemStack focus = focusStack(wand);
+        return focus.isEmpty() ? 0 : FocusItem.level(focus, FocusUpgradeTable.POTENCY) + (rod(wand).runes() ? 1 : 0);
+    }
+
+    public static int focusTreasure(ItemStack wand) {
+        return FocusItem.level(focusStack(wand), FocusUpgradeTable.TREASURE);
+    }
+
+    public static int focusFrugal(ItemStack wand) {
+        return FocusItem.level(focusStack(wand), FocusUpgradeTable.FRUGAL);
+    }
+
+    public static int focusEnlarge(ItemStack wand) {
+        return FocusItem.level(focusStack(wand), FocusUpgradeTable.ENLARGE);
+    }
+
+    public static int focusExtend(ItemStack wand) {
+        return FocusItem.level(focusStack(wand), FocusUpgradeTable.EXTEND);
+    }
+
+    // o WandManager.setCooldown do original: a espera entre usos do foco, por criatura e por lado
+    private static final java.util.Map<Integer, Long> COOLDOWN_CLIENT = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final java.util.Map<Integer, Long> COOLDOWN_SERVER = new java.util.concurrent.ConcurrentHashMap<>();
+
+    public static boolean isOnCooldown(net.minecraft.world.entity.LivingEntity entity) {
+        var map = entity.level().isClientSide() ? COOLDOWN_CLIENT : COOLDOWN_SERVER;
+        Long until = map.get(entity.getId());
+        return until != null && until > System.currentTimeMillis();
+    }
+
+    public static void setCooldown(net.minecraft.world.entity.LivingEntity entity, int millis) {
+        if (millis == 0) {
+            COOLDOWN_CLIENT.remove(entity.getId());
+            COOLDOWN_SERVER.remove(entity.getId());
+        } else {
+            (entity.level().isClientSide() ? COOLDOWN_CLIENT : COOLDOWN_SERVER).put(entity.getId(), System.currentTimeMillis() + millis);
+        }
+    }
+
+    /**
+     * O tiro único do {@code onItemRightClick}: só fora da espera, que começa já ao disparar; o servidor age.
+     * Diz se o foco saiu.
+     */
+    public static boolean cast(Level level, Player player, ItemStack wand, FocusItem focus) {
+        if (isOnCooldown(player)) return false;
+        setCooldown(player, focus.cooldown(focusStack(wand)));
+        return level.isClientSide() || net.thaumcraft.item.Focuses.tick(level, player, wand, focus);
+    }
+
     public static WandParts.Cap cap(ItemStack stack) {
         WandParts.Cap found = WandParts.cap(capTag(stack));
         return found != null ? found : WandParts.cap("iron");
@@ -112,12 +173,25 @@ public class WandItem extends Item {
     }
 
     public static boolean consumeRaw(ItemStack stack, AspectList cost, boolean reallyDoIt, @org.jetbrains.annotations.Nullable Player player) {
+        return consumeRaw(stack, cost, reallyDoIt, player, 0.0f);
+    }
+
+    /**
+     * O que o foco gasta: o mesmo, com o desconto das melhorias frugais do foco preso (um décimo por nível), que o
+     * original só dá fora da fabricação.
+     */
+    public static boolean consumeFocus(ItemStack stack, AspectList cost, boolean reallyDoIt, @org.jetbrains.annotations.Nullable Player player) {
+        return consumeRaw(stack, cost, reallyDoIt, player, focusFrugal(stack) / 10.0f);
+    }
+
+    private static boolean consumeRaw(ItemStack stack, AspectList cost, boolean reallyDoIt, @org.jetbrains.annotations.Nullable Player player,
+                                      float discount) {
         AspectList list = vis(stack);
         WandParts.Cap cap = cap(stack);
         AspectList real = new AspectList();
         for (Aspect aspect : cost.getAspects()) {
             // cada ponteira cobra o seu tanto, e as de cobre e prata cobram menos de uns aspectos
-            int needed = Math.max(1, (int) (cost.getAmount(aspect) * modifier(stack, player, aspect)));
+            int needed = Math.max(1, (int) (cost.getAmount(aspect) * Math.max(0.1f, modifier(stack, player, aspect) - discount)));
             if (list.getAmount(aspect) < needed) return false;
             real.add(aspect, needed);
         }
@@ -135,6 +209,11 @@ public class WandItem extends Item {
         float modifier = cap(stack).discount(aspect);
         if (player != null) modifier -= totalVisDiscount(player, aspect);
         return Math.max(modifier, 0.1f);
+    }
+
+    /** O {@code getConsumptionModifier} fora da fabricação: o mesmo, menos um décimo por melhoria frugal do foco. */
+    public static float focusModifier(ItemStack stack, @org.jetbrains.annotations.Nullable Player player, Aspect aspect) {
+        return Math.max(0.1f, modifier(stack, player, aspect) - focusFrugal(stack) / 10.0f);
     }
 
     /**
@@ -203,12 +282,15 @@ public class WandItem extends Item {
         }
         FocusItem held = net.thaumcraft.item.Focuses.on(stack);
         if (held != null) {
-            if (!held.isContinuous()) {
-                // tiro único: sai de uma vez, sem segurar
-                if (!level.isClientSide()) net.thaumcraft.item.Focuses.tick(level, player, stack, held);
+            ItemStack focusStack = focusStack(stack);
+            if (!held.isContinuous(focusStack)) {
+                // tiro único: sai de uma vez, sem segurar, e só depois da espera do foco (o setCooldown do original)
+                cast(level, player, stack, held);
                 player.swing(hand);
                 return InteractionResult.SUCCESS;
             }
+            // o jato: o original zera a espera ao começar, e o primeiro tique já sai
+            setCooldown(player, -1);
             player.startUsingItem(hand);
             return InteractionResult.CONSUME;
         }
@@ -263,7 +345,10 @@ public class WandItem extends Item {
         }
         FocusItem focus = net.thaumcraft.item.Focuses.on(stack);
         if (focus != null) {
-            // dos dois lados, como o onUsingFocusTick do original: o servidor age, quem vê desenha
+            // dos dois lados, como o onUsingFocusTick do original: o servidor age, quem vê desenha — um golpe por espera
+            // do foco (o raio, a cada 250 ms)
+            if (isOnCooldown(player)) return;
+            setCooldown(player, focus.cooldown(focusStack(stack)));
             if (!net.thaumcraft.item.Focuses.tick(level, player, stack, focus)) player.stopUsingItem();
             return;
         }

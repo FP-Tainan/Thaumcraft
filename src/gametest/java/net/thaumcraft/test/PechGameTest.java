@@ -87,8 +87,8 @@ public class PechGameTest {
         wand.set(TCComponents.WAND_VIS, vis);
         FocusItem focus = Focuses.on(wand);
         if (focus == null) throw helper.assertionException("o foco dos pechs devia estar registrado");
-        if (!Focuses.tick(helper.getLevel(), player, wand, focus)) helper.fail("o foco atira");
-        if (Focuses.tick(helper.getLevel(), player, wand, focus)) helper.fail("quatro por segundo, não mais");
+        if (!net.thaumcraft.item.WandItem.cast(helper.getLevel(), player, wand, focus)) helper.fail("o foco atira");
+        if (net.thaumcraft.item.WandItem.cast(helper.getLevel(), player, wand, focus)) helper.fail("quatro por segundo, não mais");
         AspectList left = wand.get(TCComponents.WAND_VIS);
         // terra, perditio e aqua dez cada (onze com a ponteira de ferro)
         if (2500 - left.getAmount(Aspects.EARTH) != 11) helper.fail("terra: " + (2500 - left.getAmount(Aspects.EARTH)));

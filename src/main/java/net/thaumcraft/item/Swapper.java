@@ -68,7 +68,8 @@ public final class Swapper {
         ItemStack wand = player.getInventory().getItem(task.slot);
         FocusItem focus = wand.getItem() instanceof WandItem ? Focuses.on(wand) : null;
         if (focus == null || !level.mayInteract(player, task.pos) || here.getBlock().asItem() == task.target) return false;
-        if (!WandItem.consumeRaw(wand, focus.cost(), false, player)) return false;
+        ItemStack focusStack = WandItem.focusStack(wand);
+        if (!WandItem.consumeFocus(wand, focus.cost(focusStack), false, player)) return false;
         if (!(task.target instanceof BlockItem blockItem)) return false;
         int slot = -1;
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
@@ -83,11 +84,13 @@ public final class Swapper {
 
         if (!creative) {
             player.getInventory().removeItem(slot, 1);
-            List<ItemStack> drops = Block.getDrops(here, level, task.pos, level.getBlockEntity(task.pos), player, ItemStack.EMPTY);
+            // o bloco tirado sai com a sorte do tesouro, ou inteiro com o toque de seda
+            ItemStack tool = Focuses.harvestTool(level, WandItem.focusTreasure(wand), FocusItem.isUpgradedWith(focusStack, FocusUpgradeTable.SILKTOUCH));
+            List<ItemStack> drops = Block.getDrops(here, level, task.pos, level.getBlockEntity(task.pos), player, tool);
             for (ItemStack drop : drops) {
                 if (!player.getInventory().add(drop)) Block.popResource(level, task.pos, drop);
             }
-            WandItem.consumeRaw(wand, focus.cost(), true, player);
+            WandItem.consumeFocus(wand, focus.cost(focusStack), true, player);
         }
         level.setBlock(task.pos, blockItem.getBlock().defaultBlockState(), Block.UPDATE_ALL);
         TCNetwork.blockSparkle(level, task.pos, SPARKLE);

@@ -1075,3 +1075,32 @@ Fonte: `TileThaumatorium`, `TileThaumatoriumTop`, `ContainerThaumatorium`, `GuiT
   não segura item nenhum, e a diferença só aparece com a grade fechada em cima de um item.
 - **Testes**: `ThaumatoriumGameTest` (os números das receitas, a formação, puxar do reservatório e fazer alumentum, a
   matriz, a metade de cima, desmontar, a grade) e `ThaumatoriumClientTest` (o bloco e a tela).
+
+## Melhorias de foco
+
+Porte do `FocusUpgradeType`, do `ItemFocusBasic` (postos, `getPossibleUpgradesByRank`, `canApplyUpgrade`,
+`applyUpgrade`, `getVisCost`, `getActivationCooldown`), das melhorias usadas por cada foco (`ItemFocusFire`, `Frost`,
+`Shock`, `Excavation`, `PortableHole`, `Trade`, `Pech`, `HellBat`, `Primal`), do `WandManager.setCooldown`, do
+`EntityExplosiveOrb`, `EntityShockOrb`, `RenderExplosiveOrb`, `RenderElectricOrb` e do número 10 do `BlockAiry`
+(descompilados do jar).
+
+- **Tabela** (`FocusUpgradeTable`, gerada por `scratchpad/melhorias-foco.js`): as 21 melhorias com número, ícone
+  (`textures/foci/`) e aspectos, e o que cabe em cada um dos cinco postos de cada foco. No foco, os cinco postos ficam
+  em `thaumcraft:focus_upgrades` (-1 = vazio); preso na varinha, a cópia vai junto e volta com ele.
+- **Regras** (`FocusItem.canApply`): fogo alquímico só uma vez na bola de fogo; o raio só amplia com relâmpago em cadeia
+  ou choque de terra; a proteção só amplia com arquiteto; morcegos vampiros pedem a pesquisa VAMPBAT.
+- **Custo, espera e jeito de disparar** mudam como no original (bola de fogo 66 Ignis + 33 Perditio, 1 s, tiro único;
+  jato de fogo; estilhaços e rocha de gelo; relâmpago em cadeia; choque de terra 75 Aer + 25 Terra, 1 s; toque suave e
+  radiestesia na escavação; beladona no Pech; bombas e diabos nos morcegos). Frugal tira 10% por nível; potência,
+  tesouro, ampliar e prolongar entram em cada foco como no original (a haste com runas dá +1 de potência).
+- **Espera**: a do original, por criatura e em milissegundos (`WandItem.isOnCooldown/setCooldown/cast`); o jato zera a
+  espera ao começar.
+- **Radiestesia** (`SpecialMining`, gerada por `scratchpad/mineracao-especial.js` do `Config`): o minério (e o bruto de
+  hoje) às vezes sai como aglomerado nativo.
+- **Bola de fogo** (`ExplosiveOrbEntity`) e **choque de terra** (`ShockOrbEntity`), com os desenhistas do original
+  (`FocusOrbRenderers`); o choque deixa **campos estáticos** (`SparkFieldBlock`): invisíveis, sem colisão, 1–2 de dano
+  mágico e lentidão para quem passa, somem sozinhos.
+- O custo do original para toque suave/radiestesia fica numa variável da classe, dividida entre todos os focos do mesmo
+  tipo (o primeiro que pergunta define o de todos); aqui cada foco tem o seu.
+- **Testes**: `FocusUpgradeGameTest` (tabela, postos, regras, custos e esperas, frugal, a melhoria viajando com o foco,
+  o choque de terra, o campo estático, a radiestesia) e `FocusUpgradeClientTest` (os orbes e o campo).

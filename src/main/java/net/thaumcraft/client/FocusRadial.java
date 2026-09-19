@@ -145,10 +145,10 @@ public final class FocusRadial {
         ItemStack tooltip = null;
         String had = wand.get(TCComponents.WAND_FOCUS);
         if (had != null) {
-            Item item = Focuses.byType(had);
-            if (item != null) {
-                graphics.item(new ItemStack(item), -8, -8);
-                if (Math.abs(mouseX - cx) <= 10 && Math.abs(mouseY - cy) <= 10) tooltip = new ItemStack(item);
+            ItemStack held = net.thaumcraft.item.WandItem.focusStack(wand);
+            if (!held.isEmpty()) {
+                graphics.item(held, -8, -8);
+                if (Math.abs(mouseX - cx) <= 10 && Math.abs(mouseY - cy) <= 10) tooltip = held;
             }
         }
 

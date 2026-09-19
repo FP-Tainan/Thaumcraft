@@ -101,7 +101,7 @@ public final class WandHud {
             graphics.blit(RenderPipelines.GUI_TEXTURED, HUD, -8, -3, 72, 0, 16, 42, SHEET, SHEET);
 
             int shift = 0;
-            if (focus != null && focus.cost().getAmount(aspect) > 0) {
+            if (focus != null && focus.cost(WandItem.focusStack(stack)).getAmount(aspect) > 0) {
                 graphics.blit(RenderPipelines.GUI_TEXTURED, HUD, -4, -8, 136, 0, 8, 8, SHEET, SHEET);
                 shift = 8;
             }
@@ -116,8 +116,8 @@ public final class WandHud {
                 pose.pushMatrix();
                 pose.rotate((float) Math.toRadians(-90.0f));
                 graphics.text(minecraft.font, Integer.toString(amount / WandItem.VIS_UNIT), -32, -4, 0xFFFFFFFF);
-                if (focus != null && focus.cost().getAmount(aspect) > 0) {
-                    float each = focus.cost().getAmount(aspect) * WandItem.modifier(stack, player, aspect) / 100.0f;
+                if (focus != null && focus.cost(WandItem.focusStack(stack)).getAmount(aspect) > 0) {
+                    float each = focus.cost(WandItem.focusStack(stack)).getAmount(aspect) * WandItem.focusModifier(stack, player, aspect) / 100.0f;
                     graphics.text(minecraft.font, new java.text.DecimalFormat("#######.##").format(each),
                             8, -4, 0xFFFFFFFF);
                 }

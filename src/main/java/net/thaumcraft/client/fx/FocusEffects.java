@@ -168,7 +168,8 @@ public final class FocusEffects {
 
         Focuses.Dig dig = DIGS.computeIfAbsent(player.getId(), id -> new Focuses.Dig());
         BlockPos was = dig.pos;
-        Focuses.Dig.Step step = dig.advance(level, mop instanceof BlockHitResult block ? block : null, true);
+        Focuses.Dig.Step step = dig.advance(level, mop instanceof BlockHitResult block ? block : null, true,
+                net.thaumcraft.item.WandItem.focusPotency(wand));
         if (step.progress() >= 0 && step.pos() != null) {
             level.destroyBlockProgress(player.getId(), step.pos(), step.progress());
         } else if (was != null && !was.equals(dig.pos)) {

@@ -36,7 +36,7 @@ public class EmberRenderer extends EntityRenderer<EmberEntity, EmberRenderer.Sta
     @Override
     public void extractRenderState(EmberEntity entity, State state, float partial) {
         super.extractRenderState(entity, state, partial);
-        state.life = (float) entity.tickCount / EmberEntity.DURATION;
+        state.life = (float) entity.tickCount / entity.duration();
     }
 
     @Override

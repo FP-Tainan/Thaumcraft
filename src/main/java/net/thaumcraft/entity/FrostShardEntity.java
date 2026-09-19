@@ -34,9 +34,19 @@ import net.thaumcraft.registry.TCItems;
 public class FrostShardEntity extends ThrowableProjectile {
     private static final EntityDataAccessor<Float> DAMAGE =
             SynchedEntityData.defineId(FrostShardEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Integer> FROSTY =
+            SynchedEntityData.defineId(FrostShardEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> FRAGILE =
+            SynchedEntityData.defineId(FrostShardEntity.class, EntityDataSerializers.BOOLEAN);
 
-    private double bounce = 0.5;
-    private int bounceLimit = 3;
+    /** O quanto volta de cada batida: meio, ou 0,8 no pedregulho de gelo. */
+    public double bounce = 0.5;
+    /** Quantas batidas aguenta: três, ou seis no pedregulho. */
+    public int bounceLimit = 3;
+
+    /** As faíscas do gelo alquímico, do lado de quem vê. */
+    public static java.util.function.BiConsumer<FrostShardEntity, Integer> clientSparkle = (shard, frosty) -> {
+    };
 
     public FrostShardEntity(EntityType<? extends FrostShardEntity> type, Level level) {
         super(type, level);
@@ -52,6 +62,8 @@ public class FrostShardEntity extends ThrowableProjectile {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         builder.define(DAMAGE, 0.0f);
+        builder.define(FROSTY, 0);
+        builder.define(FRAGILE, false);
     }
 
     public void setDamage(float damage) {
@@ -62,14 +74,33 @@ public class FrostShardEntity extends ThrowableProjectile {
         return this.entityData.get(DAMAGE);
     }
 
+    /** O {@code frosty}: os níveis de gelo alquímico, que deixam lentidão em quem é atingido. */
+    public void setFrosty(int frosty) {
+        this.entityData.set(FROSTY, frosty);
+    }
+
+    public int getFrosty() {
+        return this.entityData.get(FROSTY);
+    }
+
+    /** O {@code fragile}: os estilhaços do tiro espalhado, que caem menos e se partem no primeiro alvo. */
+    public void setFragile(boolean fragile) {
+        this.entityData.set(FRAGILE, fragile);
+    }
+
+    public boolean isFragile() {
+        return this.entityData.get(FRAGILE);
+    }
+
     @Override
     protected double getDefaultGravity() {
-        return 0.05;
+        return this.isFragile() ? 0.015 : 0.05;
     }
 
     @Override
     public void tick() {
         super.tick();
+        if (this.level().isClientSide() && this.getFrosty() > 0) clientSparkle.accept(this, this.getFrosty());
         // a esfera vira para onde voa, devagar: um quinto do caminho por tique
         Vec3 motion = this.getDeltaMovement();
         double horizontal = motion.horizontalDistance();
@@ -99,7 +130,20 @@ public class FrostShardEntity extends ThrowableProjectile {
             mz *= 0.66;
             this.shatter(level, frost(), (int) this.getDamage());
             if (level instanceof ServerLevel server) {
+                Vec3 before = target.getDeltaMovement();
                 target.hurtServer(server, this.damageSources().thrown(this, this.getOwner()), this.getDamage());
+                if (target instanceof LivingEntity living && this.getFrosty() > 0) {
+                    living.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.SLOWNESS, 200, this.getFrosty() - 1));
+                }
+                if (this.isFragile()) {
+                    // o estilhaço se parte, e o alvo nem fica invulnerável nem é empurrado de verdade
+                    target.invulnerableTime = 0;
+                    this.discard();
+                    level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 0.3f,
+                            1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
+                    Vec3 after = target.getDeltaMovement();
+                    target.setDeltaMovement(before.add(after.subtract(before).scale(0.1)));
+                }
             }
         } else if (hit instanceof BlockHitResult blockHit && hit.getType() == HitResult.Type.BLOCK) {
             var face = blockHit.getDirection();

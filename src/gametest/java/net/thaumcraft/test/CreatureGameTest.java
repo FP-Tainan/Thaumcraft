@@ -110,8 +110,8 @@ public class CreatureGameTest {
         wand.set(TCComponents.WAND_VIS, vis);
         FocusItem focus = Focuses.on(wand);
         if (focus == null) throw helper.assertionException("o foco dos Nove Infernos devia estar registrado");
-        if (!Focuses.tick(helper.getLevel(), player, wand, focus)) helper.fail("com a vaca na mira, o foco solta um morcego");
-        if (Focuses.tick(helper.getLevel(), player, wand, focus)) helper.fail("um por segundo");
+        if (!net.thaumcraft.item.WandItem.cast(helper.getLevel(), player, wand, focus)) helper.fail("com a vaca na mira, o foco solta um morcego");
+        if (net.thaumcraft.item.WandItem.cast(helper.getLevel(), player, wand, focus)) helper.fail("um por segundo");
         AspectList left = wand.get(TCComponents.WAND_VIS);
         // a ponteira de ferro cobra dez por cento a mais
         if (2500 - left.getAmount(Aspects.FIRE) != 220) helper.fail("ignis 200: " + (2500 - left.getAmount(Aspects.FIRE)));

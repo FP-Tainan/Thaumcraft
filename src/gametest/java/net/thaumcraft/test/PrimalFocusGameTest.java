@@ -52,9 +52,9 @@ public class PrimalFocusGameTest {
 
         FocusItem focus = Focuses.on(wand);
         if (focus == null) throw helper.assertionException("o foco primordial devia estar registrado");
-        if (!Focuses.tick(helper.getLevel(), player, wand, focus)) helper.fail("com vis de sobra, o foco atira");
+        if (!net.thaumcraft.item.WandItem.cast(helper.getLevel(), player, wand, focus)) helper.fail("com vis de sobra, o foco atira");
         // meio segundo de espera entre um tiro e outro
-        if (Focuses.tick(helper.getLevel(), player, wand, focus)) helper.fail("o segundo tiro tem de esperar");
+        if (net.thaumcraft.item.WandItem.cast(helper.getLevel(), player, wand, focus)) helper.fail("o segundo tiro tem de esperar");
         AspectList left = wand.get(TCComponents.WAND_VIS);
         for (Aspect primal : Aspects.primals()) {
             int spent = 2500 - left.getAmount(primal);

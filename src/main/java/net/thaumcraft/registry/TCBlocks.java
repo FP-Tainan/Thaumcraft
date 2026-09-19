@@ -272,6 +272,11 @@ public final class TCBlocks {
             new net.thaumcraft.block.ItemGrateBlock(properties.mapColor(MapColor.METAL).strength(3.0f, 10.2f)
                     .sound(SoundType.METAL).noOcclusion().isRedstoneConductor((s, l, p) -> false)));
 
+    /** O campo de faísca que o choque de terra espalha: o número 10 do blockAiry. */
+    public static final Block SPARK_FIELD = register("spark_field", properties ->
+            new net.thaumcraft.block.SparkFieldBlock(properties.mapColor(MapColor.NONE).strength(100.0f, 30.0f).noCollision()
+                    .replaceable().noLootTable().randomTicks().lightLevel(state -> 8).pushReaction(PushReaction.DESTROY)));
+
     /** O bloco de âmbar: o BlockCosmeticOpaque 0, translúcido. */
     public static final Block AMBER_BLOCK = register("amber_block", properties ->
             new net.thaumcraft.block.AmberBlock(properties.mapColor(MapColor.COLOR_ORANGE).strength(1.5f, 3.0f)

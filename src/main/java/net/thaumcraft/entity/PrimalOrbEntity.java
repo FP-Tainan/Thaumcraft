@@ -39,14 +39,24 @@ public class PrimalOrbEntity extends net.minecraft.world.entity.projectile.Throw
     };
 
     private int count;
+    /** O {@code seeker}: com a melhoria buscadora, persegue a criatura mais perto (menos quem lançou). */
+    private boolean seeker;
+    /** O {@code oi}: quem lançou, que a buscadora não persegue. */
+    private int oi;
 
     public PrimalOrbEntity(EntityType<? extends PrimalOrbEntity> type, Level level) {
         super(type, level);
     }
 
     public PrimalOrbEntity(Level level, LivingEntity thrower) {
+        this(level, thrower, false);
+    }
+
+    public PrimalOrbEntity(Level level, LivingEntity thrower, boolean seeker) {
         super(TCEntities.PRIMAL_ORB, level);
         this.setOwner(thrower);
+        this.seeker = seeker;
+        this.oi = thrower.getId();
         Throw.once(this, thrower, 0.5f);
     }
 
@@ -66,8 +76,31 @@ public class PrimalOrbEntity extends net.minecraft.world.entity.projectile.Throw
         // depois de um segundo, vaga: um empurrãozinho sorteado por tique
         Random rr = new Random(this.getId() + this.count);
         if (this.tickCount > 20) {
-            this.setDeltaMovement(this.getDeltaMovement().add((rr.nextFloat() - rr.nextFloat()) * 0.01f,
-                    (rr.nextFloat() - rr.nextFloat()) * 0.01f, (rr.nextFloat() - rr.nextFloat()) * 0.01f));
+            if (!this.seeker) {
+                this.setDeltaMovement(this.getDeltaMovement().add((rr.nextFloat() - rr.nextFloat()) * 0.01f,
+                        (rr.nextFloat() - rr.nextFloat()) * 0.01f, (rr.nextFloat() - rr.nextFloat()) * 0.01f));
+            } else {
+                // a buscadora vai atrás da criatura mais perto a até dezesseis blocos; o original divide pela distância
+                // ao quadrado, e aqui também
+                double d = Double.MAX_VALUE;
+                net.minecraft.world.entity.Entity t = null;
+                for (LivingEntity e : this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(16.0), e -> true)) {
+                    if (e.getId() == this.oi || e.isRemoved()) continue;
+                    double dd = this.distanceToSqr(e);
+                    if (dd < d) {
+                        d = dd;
+                        t = e;
+                    }
+                }
+                if (t != null) {
+                    double dx = (t.getX() - this.getX()) / d;
+                    double dy = (t.getBoundingBox().minY + t.getBbHeight() * 0.9 - this.getY()) / d;
+                    double dz = (t.getZ() - this.getZ()) / d;
+                    var m = this.getDeltaMovement().add(dx * 0.2, dy * 0.2, dz * 0.2);
+                    this.setDeltaMovement(net.minecraft.util.Mth.clamp(m.x, -0.2, 0.2), net.minecraft.util.Mth.clamp(m.y, -0.2, 0.2),
+                            net.minecraft.util.Mth.clamp(m.z, -0.2, 0.2));
+                }
+            }
         }
         super.tick();
         if (this.tickCount > 5000) this.discard();

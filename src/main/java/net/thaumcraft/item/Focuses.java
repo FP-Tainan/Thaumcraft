@@ -22,6 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.thaumcraft.api.aspects.AspectList;
 import net.thaumcraft.entity.EmberEntity;
 import net.thaumcraft.entity.FrostShardEntity;
 import net.thaumcraft.registry.TCComponents;
@@ -89,7 +90,8 @@ public final class Focuses {
      */
     public static boolean tick(Level level, Player player, ItemStack wand, FocusItem focus) {
         // o original sempre confere antes, sem gastar; quem gasta é cada foco, na hora dele
-        if (!WandItem.consumeRaw(wand, focus.cost(), false, player)) return false;
+        ItemStack fs = WandItem.focusStack(wand);
+        if (!WandItem.consumeFocus(wand, focus.cost(fs), false, player)) return false;
         if (level.isClientSide()) {
             clientEffects.tick(level, player, wand, focus);
             return true;
@@ -101,7 +103,7 @@ public final class Focuses {
             case "shock" -> shock(level, player, wand, focus);
             case "portable_hole" -> portableHole(level, player, wand, focus);
             case "trade" -> trade(level, player, wand, focus);
-            case "primal" -> primal(level, player, wand);
+            case "primal" -> primal(level, player, wand, focus);
             case "warding" -> warding(level, player, wand, focus);
             case "hellbat" -> hellbat(level, player, wand, focus);
             case "pech" -> pechBlast(level, player, wand, focus);
@@ -144,15 +146,41 @@ public final class Focuses {
 
     // ----------------------------------------------------------------- fogo
 
+    /**
+     * O {@code ItemFocusFire}. Com a bola de fogo, um tiro só: o orbe explosivo, mais forte com a potência e pondo fogo
+     * com o fogo alquímico. Sem ela, o jato: a cada tique, duas brasas mais uma por potência, espalhadas (quase
+     * nada com o raio de fogo), cada uma com 2 de dano mais a potência — o raio de fogo as faz mais fortes e mais
+     * duradouras —, e com o fogo alquímico acendendo o que tocam.
+     */
     private static boolean breatheFire(Level level, Player player, ItemStack wand, FocusItem focus) {
+        ItemStack fs = WandItem.focusStack(wand);
+        int potency = WandItem.focusPotency(wand);
+        if (FocusItem.isUpgradedWith(fs, FocusUpgradeTable.FIREBALL)) {
+            if (!WandItem.consumeFocus(wand, focus.cost(fs), true, player)) return false;
+            net.thaumcraft.entity.ExplosiveOrbEntity orb = new net.thaumcraft.entity.ExplosiveOrbEntity(level, player);
+            orb.strength += potency * 0.4f;
+            orb.onFire = FocusItem.isUpgradedWith(fs, FocusUpgradeTable.ALCHEMISTSFIRE);
+            level.addFreshEntity(orb);
+            level.levelEvent(null, net.minecraft.world.level.block.LevelEvent.SOUND_GHAST_FIREBALL, player.blockPosition(), 0);
+            return true;
+        }
         long now = System.currentTimeMillis();
         if (FIRE_SOUND.getOrDefault(player.getUUID(), 0L) < now) {
             level.playSound(null, player, TCSounds.FIRELOOP.value(), SoundSource.PLAYERS, 0.33f, 2.0f);
             FIRE_SOUND.put(player.getUUID(), now + 500L);
         }
-        if (!WandItem.consumeRaw(wand, focus.cost(), true, player)) return false;
-        for (int a = 0; a < 2; a++) {
-            EmberEntity ember = new EmberEntity(level, player, 15.0f);
+        if (!WandItem.consumeFocus(wand, focus.cost(fs), true, player)) return false;
+        boolean beam = FocusItem.isUpgradedWith(fs, FocusUpgradeTable.FIREBEAM);
+        float scatter = beam ? 0.25f : 15.0f;
+        for (int a = 0; a < 2 + potency; a++) {
+            EmberEntity ember = new EmberEntity(level, player, scatter);
+            ember.damage = 2 + potency;
+            if (beam) {
+                ember.damage += 0.5f;
+                ember.damage *= 1.5f;
+                ember.setDuration(30);
+            }
+            ember.firey = FocusItem.level(fs, FocusUpgradeTable.ALCHEMISTSFIRE);
             ember.setPos(ember.position().add(ember.getDeltaMovement()));
             level.addFreshEntity(ember);
         }
@@ -161,33 +189,103 @@ public final class Focuses {
 
     // ----------------------------------------------------------------- gelo
 
+    /**
+     * O {@code ItemFocusFrost}: a esfera de 3 de dano mais 1,5 por potência; com o tiro espalhado, cinco estilhaços
+     * frágeis mais dois por potência, de 1 de dano; com o pedregulho, uma esfera de 4 mais 2 por potência, que quica
+     * mais e mais vezes. O gelo alquímico deixa lentidão em quem é atingido.
+     */
     private static boolean shootFrost(Level level, Player player, ItemStack wand, FocusItem focus) {
-        if (!WandItem.consumeRaw(wand, focus.cost(), true, player)) return false;
-        FrostShardEntity shard = new FrostShardEntity(level, player, 1.0f);
-        shard.setDamage(3.0f);
-        level.addFreshEntity(shard);
-        level.playSound(null, shard, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.4f,
-                1.0f + level.getRandom().nextFloat() * 0.1f);
+        ItemStack fs = WandItem.focusStack(wand);
+        if (!WandItem.consumeFocus(wand, focus.cost(fs), true, player)) return false;
+        int potency = WandItem.focusPotency(wand);
+        int frosty = FocusItem.level(fs, FocusUpgradeTable.ALCHEMISTSFROST);
+        FrostShardEntity shard = null;
+        if (FocusItem.isUpgradedWith(fs, FocusUpgradeTable.SCATTERSHOT)) {
+            for (int a = 0; a < 5 + potency * 2; a++) {
+                shard = new FrostShardEntity(level, player, 8.0f);
+                shard.setDamage(1.0f);
+                shard.setFragile(true);
+                shard.setFrosty(frosty);
+                level.addFreshEntity(shard);
+            }
+        } else if (FocusItem.isUpgradedWith(fs, FocusUpgradeTable.ICEBOULDER)) {
+            shard = new FrostShardEntity(level, player, 1.0f);
+            shard.setDamage(4 + potency * 2);
+            shard.bounce = 0.8;
+            shard.bounceLimit = 6;
+            shard.setFrosty(frosty);
+            level.addFreshEntity(shard);
+        } else {
+            shard = new FrostShardEntity(level, player, 1.0f);
+            shard.setDamage((float) (3.0 + potency * 1.5));
+            shard.setFrosty(frosty);
+            level.addFreshEntity(shard);
+        }
+        level.playSound(null, shard, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.4f, 1.0f + level.getRandom().nextFloat() * 0.1f);
         return true;
     }
 
     // ----------------------------------------------------------------- raio
 
+    /**
+     * O {@code ItemFocusShock}. Com o choque de terra, um tiro só: o orbe que estoura na área (mais larga com a
+     * ampliação) e deixa campos de faísca. Sem ele, o raio contínuo, um golpe a cada 250 ms (500 com o relâmpago em
+     * cadeia): 4 de dano mais a potência na criatura apontada a até 20 blocos (6 com a cadeia), e a cadeia pula para
+     * as criaturas mais perto, duas por nível mais duas por ampliação, com 4 mais a potência em cada.
+     */
     private static boolean shock(Level level, Player player, ItemStack wand, FocusItem focus) {
-        if (!WandItem.consumeRaw(wand, focus.cost(), true, player)) return false;
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), TCSounds.SHOCK.value(),
-                SoundSource.PLAYERS, 0.25f, 1.0f);
+        ItemStack fs = WandItem.focusStack(wand);
+        int potency = WandItem.focusPotency(wand);
+        if (FocusItem.isUpgradedWith(fs, FocusUpgradeTable.EARTHSHOCK)) {
+            if (!WandItem.consumeFocus(wand, focus.cost(fs), true, player)) return false;
+            net.thaumcraft.entity.ShockOrbEntity orb = new net.thaumcraft.entity.ShockOrbEntity(level, player);
+            orb.area += FocusItem.level(fs, FocusUpgradeTable.ENLARGE) * 2;
+            orb.damage = (int) (orb.damage + potency * 1.33);
+            level.addFreshEntity(orb);
+            level.playSound(null, orb, TCSounds.ZAP.value(), SoundSource.PLAYERS, 1.0f,
+                    1.0f + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.2f);
+            return true;
+        }
+        if (!WandItem.consumeFocus(wand, focus.cost(fs), true, player)) return false;
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), TCSounds.SHOCK.value(), SoundSource.PLAYERS, 0.25f, 1.0f);
         Entity pointed = pointedEntity(level, player, 20.0);
-        boolean pvp = !(pointed instanceof Player) || (level instanceof ServerLevel server && server.isPvpAllowed());
-        if (pointed instanceof LivingEntity && pvp) {
-            pointed.hurt(level.damageSources().playerAttack(player), SHOCK_DAMAGE);
+        if (!(pointed instanceof LivingEntity) || !mayHurt(level, pointed)) return true;
+        int cl = FocusItem.level(fs, FocusUpgradeTable.CHAINLIGHTNING) * 2;
+        pointed.hurt(level.damageSources().playerAttack(player), (cl > 0 ? 6 : 4) + potency);
+        if (cl > 0 && level instanceof ServerLevel server) {
+            cl += FocusItem.level(fs, FocusUpgradeTable.ENLARGE) * 2;
+            LivingEntity center = (LivingEntity) pointed;
+            java.util.List<Integer> targets = new java.util.ArrayList<>();
+            targets.add(pointed.getId());
+            while (cl > 0) {
+                cl--;
+                double d = Double.MAX_VALUE;
+                Entity closest = null;
+                for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, new AABB(center.position(), center.position()).inflate(8.0), e -> e != player)) {
+                    if (targets.contains(e.getId()) || !mayHurt(level, e)) continue;
+                    double dd = e.distanceToSqr(center);
+                    if (dd < d) {
+                        closest = e;
+                        d = dd;
+                    }
+                }
+                if (closest != null) {
+                    net.thaumcraft.net.TCNetwork.entityZap(server, center, closest);
+                    targets.add(closest.getId());
+                    closest.hurt(level.damageSources().playerAttack(player), 4 + potency);
+                    center = (LivingEntity) closest;
+                }
+            }
         }
         return true;
     }
 
-    // ----------------------------------------------------------------- primordial
+    /** Jogador só apanha com o PvP ligado. */
+    private static boolean mayHurt(Level level, Entity target) {
+        return !(target instanceof Player) || level instanceof ServerLevel server && server.isPvpAllowed();
+    }
 
-    private static final Map<UUID, Long> PRIMAL_COOLDOWN = new HashMap<>();
+    // ----------------------------------------------------------------- primordial
 
     /**
      * O {@code getVisCost} do {@code ItemFocusPrimal}: de 50 a 250 centésimos de cada primário, sorteados por
@@ -210,13 +308,12 @@ public final class Focuses {
         return cost;
     }
 
-    /** O {@code ItemFocusPrimal}: meio segundo de espera entre tiros, e a esfera sai com o som do gelo. */
-    private static boolean primal(Level level, Player player, ItemStack wand) {
-        long now = System.currentTimeMillis();
-        if (PRIMAL_COOLDOWN.getOrDefault(player.getUUID(), 0L) > now) return false;
-        if (!WandItem.consumeRaw(wand, primalCost(now), true, player)) return false;
-        PRIMAL_COOLDOWN.put(player.getUUID(), now + 500L);
-        net.thaumcraft.entity.PrimalOrbEntity orb = new net.thaumcraft.entity.PrimalOrbEntity(level, player);
+    /** O {@code ItemFocusPrimal}: a esfera sai com o som do gelo; com a buscadora, persegue quem estiver perto. */
+    private static boolean primal(Level level, Player player, ItemStack wand, FocusItem focus) {
+        ItemStack fs = WandItem.focusStack(wand);
+        if (!WandItem.consumeFocus(wand, primalCost(System.currentTimeMillis()), true, player)) return false;
+        net.thaumcraft.entity.PrimalOrbEntity orb = new net.thaumcraft.entity.PrimalOrbEntity(level, player,
+                FocusItem.isUpgradedWith(fs, FocusUpgradeTable.SEEKER));
         level.addFreshEntity(orb);
         level.playSound(null, orb, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.3f,
                 0.8f + level.getRandom().nextFloat() * 0.1f);
@@ -225,15 +322,12 @@ public final class Focuses {
 
     // ----------------------------------------------------------------- pechs
 
-    private static final Map<UUID, Long> PECH_COOLDOWN = new HashMap<>();
-
-    /** O {@code ItemFocusPech}: a rajada do pech, de quem segura a varinha; quatro por segundo. */
+    /** O {@code ItemFocusPech}: a rajada do pech, de quem segura a varinha, com a potência, a extensão e a beladona. */
     private static boolean pechBlast(Level level, Player player, ItemStack wand, FocusItem focus) {
-        long now = System.currentTimeMillis();
-        if (PECH_COOLDOWN.getOrDefault(player.getUUID(), 0L) > now) return false;
-        if (!WandItem.consumeRaw(wand, focus.cost(), true, player)) return false;
-        PECH_COOLDOWN.put(player.getUUID(), now + 250L);
-        net.thaumcraft.entity.PechBlastEntity blast = new net.thaumcraft.entity.PechBlastEntity(level, player, 0, 0, false);
+        ItemStack fs = WandItem.focusStack(wand);
+        if (!WandItem.consumeFocus(wand, focus.cost(fs), true, player)) return false;
+        net.thaumcraft.entity.PechBlastEntity blast = new net.thaumcraft.entity.PechBlastEntity(level, player,
+                WandItem.focusPotency(wand), WandItem.focusExtend(wand), FocusItem.isUpgradedWith(fs, FocusUpgradeTable.NIGHTSHADE));
         level.addFreshEntity(blast);
         level.playSound(null, blast, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.4f, 1.0f + level.getRandom().nextFloat() * 0.1f);
         return true;
@@ -241,19 +335,14 @@ public final class Focuses {
 
     // ----------------------------------------------------------------- nove infernos
 
-    private static final Map<UUID, Long> HELLBAT_COOLDOWN = new HashMap<>();
-
     /**
      * O {@code ItemFocusHellbat}: um morcego de fogo invocado sai da mão e vai atrás da criatura na mira, a até 32
      * blocos. Sem criatura na mira, nada acontece; um por segundo.
      */
     private static boolean hellbat(Level level, Player player, ItemStack wand, FocusItem focus) {
-        long now = System.currentTimeMillis();
-        if (HELLBAT_COOLDOWN.getOrDefault(player.getUUID(), 0L) > now) return false;
         Entity pointed = pointedEntity(level, player, 32.0, net.thaumcraft.entity.FireBatEntity.class);
         if (!(pointed instanceof LivingEntity target)) return false;
         if (target instanceof Player && !(level instanceof ServerLevel server && server.isPvpAllowed())) return false;
-        HELLBAT_COOLDOWN.put(player.getUUID(), now + 1000L);
         double yaw = player.getYRot() / 180.0f * (float) Math.PI;
         Vec3 look = player.getViewVector(1.0f);
         double px = player.getX() - Math.cos(yaw) * 0.16f + look.x * 0.5;
@@ -264,10 +353,17 @@ public final class Focuses {
         if (bat == null) return false;
         bat.snapTo(px, py + bat.getBbHeight(), pz, player.getYRot(), 0.0f);
         bat.setTarget(target);
-        bat.owner = player;
+        ItemStack fs = WandItem.focusStack(wand);
+        bat.damBonus = WandItem.focusPotency(wand);
         bat.setIsSummoned(true);
         bat.setIsBatHanging(false);
-        if (WandItem.consumeRaw(wand, focus.cost(), true, player) && level.addFreshEntity(bat)) {
+        if (FocusItem.isUpgradedWith(fs, FocusUpgradeTable.DEVILBATS)) bat.setIsDevil(true);
+        if (FocusItem.isUpgradedWith(fs, FocusUpgradeTable.BATBOMBS)) bat.setIsExplosive(true);
+        if (FocusItem.isUpgradedWith(fs, FocusUpgradeTable.VAMPIREBATS)) {
+            bat.owner = player;
+            bat.setIsVampire(true);
+        }
+        if (WandItem.consumeFocus(wand, focus.cost(fs), true, player) && level.addFreshEntity(bat)) {
             level.levelEvent(net.minecraft.world.level.block.LevelEvent.PARTICLES_MOBBLOCK_SPAWN, BlockPos.containing(px, py, pz), 0);
             level.playSound(null, bat, TCSounds.ICE.value(), SoundSource.PLAYERS, 0.2f, 0.95f + level.getRandom().nextFloat() * 0.1f);
         } else {
@@ -304,7 +400,7 @@ public final class Focuses {
         int owner = wardOwner(player);
         boolean changed = false;
         if (tile == null && state.isSolidRender()) {
-            if (WandItem.consumeRaw(wand, focus.cost(), true, player)) {
+            if (WandItem.consumeFocus(wand, focus.cost(WandItem.focusStack(wand)), true, player)) {
                 int light = state.getLightEmission();
                 level.setBlock(pos, net.thaumcraft.registry.TCBlocks.WARDED.defaultBlockState()
                         .setValue(net.thaumcraft.block.WardedBlock.LIGHT, light), Block.UPDATE_ALL);
@@ -339,7 +435,8 @@ public final class Focuses {
         Direction face = block.getDirection();
         int distance = 0;
         BlockPos at = start;
-        for (; distance < 33; distance++) {
+        int maxdis = 33 + WandItem.focusEnlarge(wand) * 8;
+        for (; distance < maxdis; distance++) {
             BlockState state = level.getBlockState(at);
             if (state.is(Blocks.BEDROCK) || state.is(net.thaumcraft.registry.TCBlocks.HOLE) || state.isAir()
                     || state.getDestroySpeed(level, at) < 0.0f) {
@@ -348,13 +445,15 @@ public final class Focuses {
             at = at.relative(face.getOpposite());
         }
         // o custo é o de um bloco vezes a profundidade (o merge do original fica com o maior)
-        net.thaumcraft.api.aspects.AspectList cost = focus.cost();
+        net.thaumcraft.api.aspects.AspectList cost = focus.cost(WandItem.focusStack(wand));
         for (net.thaumcraft.api.aspects.Aspect aspect : cost.getAspects()) {
             cost.merge(aspect, cost.getAmount(aspect) * distance);
         }
-        if (WandItem.consumeRaw(wand, cost, true, player)) {
+        if (WandItem.consumeFocus(wand, cost, true, player)) {
+            // a extensão: mais três segundos por nível
+            int di = FocusItem.level(WandItem.focusStack(wand), FocusUpgradeTable.EXTEND);
             net.thaumcraft.block.entity.HoleBlockEntity.createHole(level, start, face.get3DDataValue(), distance + 1,
-                    net.thaumcraft.block.entity.HoleBlockEntity.DURATION);
+                    (short) (net.thaumcraft.block.entity.HoleBlockEntity.DURATION + 60 * di));
         }
         level.playSound(null, start, net.minecraft.sounds.SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0f, 1.0f);
         return true;
@@ -380,7 +479,7 @@ public final class Focuses {
         }
         Item picked = picked(wand);
         if (picked != null && level.getBlockEntity(pos) == null && level instanceof ServerLevel server) {
-            Swapper.add(server, pos, state, picked, 3, player, player.getInventory().getSelectedSlot());
+            Swapper.add(server, pos, state, picked, 3 + WandItem.focusEnlarge(wand), player, player.getInventory().getSelectedSlot());
         }
         return true;
     }
@@ -412,6 +511,11 @@ public final class Focuses {
 
     // ----------------------------------------------------------------- escavação
 
+    /**
+     * O {@code ItemFocusExcavation}: o feixe rói o bloco na mira, mais depressa com a potência; quebrado, cai com a
+     * sorte do tesouro ou com o toque de seda, refinado com a radiestesia, e a ampliação quebra também um vizinho
+     * igual por nível.
+     */
     private static boolean excavate(Level level, Player player, ItemStack wand, FocusItem focus) {
         HitResult mop = targetBlock(level, player);
         long now = System.currentTimeMillis();
@@ -428,22 +532,68 @@ public final class Focuses {
         BlockHitResult block = mop instanceof BlockHitResult b && b.getType() == HitResult.Type.BLOCK
                 && level.mayInteract(player, b.getBlockPos()) ? b : null;
         Dig dig = DIGS.computeIfAbsent(player.getUUID(), id -> new Dig());
-        Dig.Step step = dig.advance(level, block, false);
-        if (step.breakNow() && WandItem.consumeRaw(wand, focus.cost(), true, player)) {
-            breakBlock((ServerLevel) level, player, step.pos());
+        ItemStack fs = WandItem.focusStack(wand);
+        AspectList cost = focus.cost(fs);
+        Dig.Step step = dig.advance(level, block, false, WandItem.focusPotency(wand));
+        if (step.breakNow() && WandItem.consumeFocus(wand, cost, true, player)) {
+            ServerLevel server = (ServerLevel) level;
+            BlockState state = level.getBlockState(step.pos());
+            if (excavateBlock(server, player, wand, step.pos())) {
+                for (int a = 0; a < WandItem.focusEnlarge(wand); a++) {
+                    if (WandItem.consumeFocus(wand, cost, false, player) && breakNeighbour(server, player, wand, step.pos(), state)) {
+                        WandItem.consumeFocus(wand, cost, true, player);
+                    }
+                }
+            }
             dig.reset();
         }
         return true;
     }
 
-    /** O {@code excavate} do original: quebra com o que o bloco daria, e a experiência dele. */
-    private static void breakBlock(ServerLevel level, Player player, BlockPos pos) {
+    /** A ferramenta de mentira com que o foco colhe: a sorte e o toque de seda das melhorias. */
+    public static ItemStack harvestTool(ServerLevel level, int fortune, boolean silk) {
+        ItemStack tool = new ItemStack(net.minecraft.world.item.Items.STICK);
+        var enchantments = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+        if (fortune > 0) tool.enchant(enchantments.getOrThrow(net.minecraft.world.item.enchantment.Enchantments.FORTUNE), fortune);
+        if (silk) tool.enchant(enchantments.getOrThrow(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH), 1);
+        return tool;
+    }
+
+    /**
+     * O {@code excavate} do original: quebra com o que o bloco daria com a sorte (ou a seda) do foco e a experiência
+     * dele; com a radiestesia, o minério às vezes cai como aglomerado nativo (o {@code harvestEvent}), com a chance
+     * de 20% mais 7,5% por tesouro.
+     */
+    private static boolean excavateBlock(ServerLevel level, Player player, ItemStack wand, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
         var entity = level.getBlockEntity(pos);
-        if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, state, entity)) return;
-        state.spawnAfterBreak(level, pos, ItemStack.EMPTY, true);
-        level.destroyBlock(pos, true, player);
+        if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, state, entity)) return false;
+        ItemStack fs = WandItem.focusStack(wand);
+        int fortune = WandItem.focusTreasure(wand);
+        ItemStack tool = harvestTool(level, fortune, FocusItem.isUpgradedWith(fs, FocusUpgradeTable.SILKTOUCH));
+        java.util.List<ItemStack> drops = Block.getDrops(state, level, pos, entity, player, tool);
+        if (FocusItem.isUpgradedWith(fs, FocusUpgradeTable.DOWSING)) {
+            float chance = 0.2f + fortune * 0.075f;
+            drops.replaceAll(is -> net.thaumcraft.crafting.SpecialMining.refine(is, chance, level.getRandom()));
+        }
+        for (ItemStack drop : drops) Block.popResource(level, pos, drop);
+        state.spawnAfterBreak(level, pos, tool, true);
+        level.removeBlock(pos, false);
+        level.levelEvent(net.minecraft.world.level.block.LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state));
         PlayerBlockBreakEvents.AFTER.invoker().afterBlockBreak(level, player, pos, state, entity);
+        return true;
+    }
+
+    /** O {@code breakNeighbour}: um vizinho igual, sorteando a ordem dos seis lados. */
+    private static boolean breakNeighbour(ServerLevel level, Player player, ItemStack wand, BlockPos pos, BlockState state) {
+        java.util.List<Direction> directions = new java.util.ArrayList<>(java.util.List.of(Direction.DOWN, Direction.UP, Direction.NORTH,
+                Direction.SOUTH, Direction.EAST, Direction.WEST));
+        net.minecraft.util.Util.shuffle(directions, level.getRandom());
+        for (Direction dir : directions) {
+            BlockPos next = pos.relative(dir);
+            if (level.getBlockState(next) == state && excavateBlock(level, player, wand, next)) return true;
+        }
+        return false;
     }
 
     /**
@@ -468,6 +618,11 @@ public final class Focuses {
         }
 
         public Step advance(Level level, BlockHitResult hit, boolean client) {
+            return this.advance(level, hit, client, 0);
+        }
+
+        /** Com a potência do foco: cinco centésimos mais um décimo por nível, ou 0,25 mais 0,25 em pedra, terra e areia. */
+        public Step advance(Level level, BlockHitResult hit, boolean client, int potency) {
             if (hit == null || hit.getType() != HitResult.Type.BLOCK) {
                 this.reset();
                 return new Step(null, -1, false);
@@ -476,8 +631,8 @@ public final class Focuses {
             BlockState state = level.getBlockState(at);
             float hardness = state.getDestroySpeed(level, at);
             if (hardness < 0.0f) return new Step(null, -1, false);
-            float speed = 0.05f;
-            if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) || state.is(BlockTags.MINEABLE_WITH_SHOVEL)) speed = 0.25f;
+            float speed = 0.05f + potency * 0.1f;
+            if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) || state.is(BlockTags.MINEABLE_WITH_SHOVEL)) speed = 0.25f + potency * 0.25f;
             if (state.is(Blocks.OBSIDIAN)) speed *= 3.0f;
 
             if (!at.equals(this.pos)) {

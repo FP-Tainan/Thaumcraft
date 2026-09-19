@@ -26,6 +26,14 @@ public final class TCComponents {
     public static final DataComponentType<String> WAND_FOCUS = register("wand_focus",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
+    /**
+     * As melhorias de um foco: o {@code upgrade} da 4.2.3.5, cinco postos com o número do tipo (−1 vazio). A varinha
+     * guarda também as do foco preso nela, para devolvê-lo igual.
+     */
+    public static final DataComponentType<java.util.List<Short>> FOCUS_UPGRADES = register("focus_upgrades",
+            builder -> builder.persistent(Codec.SHORT.listOf())
+                    .networkSynchronized(ByteBufCodecs.SHORT.apply(ByteBufCodecs.list())));
+
     /** O bloco que o foco de Troca Equivalente escolheu, guardado na varinha pelo id do item dele. */
     public static final DataComponentType<String> WAND_PICKED = register("wand_picked",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
