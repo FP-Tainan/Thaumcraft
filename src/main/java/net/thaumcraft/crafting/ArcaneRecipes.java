@@ -234,6 +234,10 @@ public final class ArcaneRecipes {
         ALL.add(new ArcaneRecipe("CAP_copper", new ItemStack(TCItems.WAND_CAPS.get("copper")),
                 Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), null, Ingredient.of(net.minecraft.world.item.Items.COPPER_NUGGET), null, null, null),
                 new AspectList().add(Aspects.ORDER, WandParts.cap("copper").craftCost()).add(Aspects.FIRE, WandParts.cap("copper").craftCost()).add(Aspects.AIR, WandParts.cap("copper").craftCost())));
+        // WandCapSilverInert
+        ALL.add(new ArcaneRecipe("CAP_silver", new ItemStack(TCItems.INERT_CAPS.get("silver")),
+                Arrays.asList(Ingredient.of(TCResources.get("silver_nugget")), Ingredient.of(TCResources.get("silver_nugget")), Ingredient.of(TCResources.get("silver_nugget")), Ingredient.of(TCResources.get("silver_nugget")), null, Ingredient.of(TCResources.get("silver_nugget")), null, null, null),
+                new AspectList().add(Aspects.ORDER, WandParts.cap("silver").craftCost()).add(Aspects.FIRE, WandParts.cap("silver").craftCost()).add(Aspects.AIR, WandParts.cap("silver").craftCost())));
         // WandCapThaumiumInert
         ALL.add(new ArcaneRecipe("CAP_thaumium", new ItemStack(TCItems.INERT_CAPS.get("thaumium")),
                 Arrays.asList(Ingredient.of(TCResources.get("thaumium_nugget")), Ingredient.of(TCResources.get("thaumium_nugget")), Ingredient.of(TCResources.get("thaumium_nugget")), Ingredient.of(TCResources.get("thaumium_nugget")), null, Ingredient.of(TCResources.get("thaumium_nugget")), null, null, null),
