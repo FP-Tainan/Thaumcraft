@@ -36,6 +36,8 @@ public final class TCResources {
             "salis_mundus",
             "primal_charm",
             "void_ingot",
+            "tainted_goo",
+            "taint_tendril",
             "gold_coin",
             "thaumium_nugget",
             "void_nugget",

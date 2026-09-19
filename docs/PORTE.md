@@ -1302,3 +1302,36 @@ Porte do `BlockTaint`, `BlockTaintFibres`, `BlockTaintFibreRenderer`, `EntityFal
 - **Bancada**: bloco de carne, de taumium e de sebo (e de volta, menos a carne).
 - **Testes**: `TaintGameTest` (solo e crosta fora do bioma, a crosta caindo e presa por tronco, fibras nascendo e
   morrendo, o derrame, a gosma caindo sem se multiplicar, a flor devolvendo o bioma) e `TaintClientTest`.
+
+## Fauna da mácula
+
+Porte do `EntityTaintChicken`, `Cow`, `Pig`, `Sheep` (com o `AIConvertGrass`), `Creeper` (com o `AICreeperSwell`),
+`Villager`, `EntityTaintSpider`, `EntityThaumicSlime`, `EntityTaintSpore`, `EntityTaintSporeSwarmer`,
+`EntityTaintSwarm`, `EntityTaintacle`, `EntityTaintacleSmall`, `EntityBottleTaint`/`ItemBottleTaint`, dos
+desenhistas e modelos (`RenderTaint*`, `ModelTaintSheep1/2`, `ModelTaintSpore`, `ModelTaintSporeSwarmer`,
+`ModelTaintacle`/`ModelRendererTaintacle`), do `FXSwarm` e dos efeitos `splooshFX`, `taintsplosionFX`,
+`slimeJumpFX` e `tentacleAriseFX` (descompilados do jar; os modelos de bicho vêm do jar do 1.7.10, porque as peles do
+mod são desenhadas para eles).
+
+- **Bichos maculados** (`entity.taint`): vida, dano, armadura e velocidade do original; caçam jogador, aldeão e
+  (os de quatro patas e a galinha) bichos; voz grossa (tom 0,7) e o respingo roxo nos primeiros tiques. A galinha pula
+  e cai devagar; a ovelha macula o capim que come (fibra e bioma) e dá lã roxa na tosquia; o creeper maculado estoura
+  com força 1,5, dá fluxo da mácula a seis blocos e macula o chão; o aldeão abre portas e pode deixar moeda.
+- **Conversão** (`TaintConversion`, no começo do `LivingDeathEvent`): quem morre com o fluxo da mácula volta como a
+  versão maculada (creeper, ovelha, vaca/cogumelo, porco, galinha, aldeão) ou como slime taumático de 1 a 7; nesse caso
+  não há orbes de aspecto.
+- **Slime taumático**: tamanho até cem (vida = tamanho), pula atrás do jogador (três vezes mais depressa), cospe um
+  slime pequeno de longe e encolhe, junta-se a outro slime sem jogador por perto, cresce comendo a gosma de fluxo e se
+  divide ao morrer. Nasce da gosma (pequeno com 3 a 6 quanta, maior cheia).
+- **Esporo e enxameador**: o talo de esporos solta o esporo (que cresce até dez e estoura em aranhas da mácula ao
+  toque, ferido ou sem o talo); a crosta com ar em cima solta o enxameador (um por 16 blocos), que solta enxames a cada
+  25 s com jogador perto. Fora da Terra Maculada, murcham. As mosquinhas (`SwarmFx`) voam em volta, zumbindo.
+- **Enxame**: voa como morcego, pica sem empurrar (fraqueza), vagueia pela Terra Maculada.
+- **Tentáculos**: brotam só na película de fibra ou no solo maculado da Terra Maculada (peso 1, nenhum outro a 24
+  blocos), não saem do lugar, apertam de perto (dano de tentáculo) e fazem brotar o pequeno aos pés de quem está longe
+  ou os fere de longe. Desenho: gomos 12% menores a cada um, a bolinha e a cabeça acesas, brotando do chão.
+- **Garrafa de mácula** (crisol: frasco cheio + 8 Vitium + 8 Praecantatio): arremessada, dá fluxo da mácula a cinco
+  blocos e macula o chão.
+- **Matérias**: gosma maculada e ramo de mácula (o que a fauna deixa).
+- **Testes**: `TaintFaunaGameTest` (conversão, slime do zumbi, esporo estourando e segurando no talo, slime crescendo e
+  se dividindo, o que a vaca deixa) e `TaintFaunaClientTest`.

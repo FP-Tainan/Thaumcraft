@@ -17,7 +17,10 @@ public final class AspectOrbs {
     }
 
     public static void init() {
-        ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> drop(entity));
+        // o original é um se-senão: quem vira maculado não solta orbes
+        ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
+            if (!TaintConversion.convert(entity)) drop(entity);
+        });
     }
 
     public static void drop(LivingEntity entity) {

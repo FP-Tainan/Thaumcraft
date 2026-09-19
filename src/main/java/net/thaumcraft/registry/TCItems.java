@@ -247,6 +247,36 @@ public final class TCItems {
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.FIREBAT)));
     public static final Item PECH_SPAWN_EGG = register("pech_spawn_egg", properties ->
             new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.PECH)));
+    public static final Item THAUMIC_SLIME_SPAWN_EGG = register("thaumic_slime_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.THAUMIC_SLIME)));
+    public static final Item TAINT_SPIDER_SPAWN_EGG = register("taint_spider_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_SPIDER)));
+    public static final Item TAINTACLE_SPAWN_EGG = register("taintacle_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINTACLE)));
+    public static final Item TAINTACLE_SMALL_SPAWN_EGG = register("taintacle_small_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINTACLE_SMALL)));
+    public static final Item TAINT_SPORE_SPAWN_EGG = register("taint_spore_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_SPORE)));
+    public static final Item TAINT_SPORE_SWARMER_SPAWN_EGG = register("taint_spore_swarmer_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_SPORE_SWARMER)));
+    public static final Item TAINT_SWARM_SPAWN_EGG = register("taint_swarm_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_SWARM)));
+    public static final Item TAINT_CHICKEN_SPAWN_EGG = register("taint_chicken_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_CHICKEN)));
+    public static final Item TAINT_COW_SPAWN_EGG = register("taint_cow_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_COW)));
+    public static final Item TAINT_CREEPER_SPAWN_EGG = register("taint_creeper_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_CREEPER)));
+    public static final Item TAINT_PIG_SPAWN_EGG = register("taint_pig_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_PIG)));
+    public static final Item TAINT_SHEEP_SPAWN_EGG = register("taint_sheep_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_SHEEP)));
+    public static final Item TAINT_VILLAGER_SPAWN_EGG = register("taint_villager_spawn_egg", properties ->
+            new net.minecraft.world.item.SpawnEggItem(properties.spawnEgg(TCEntities.TAINT_VILLAGER)));
+
+    /** A garrafa de mácula, de oito em oito, que se arremessa. */
+    public static final Item BOTTLE_TAINT = register("bottle_taint", properties ->
+            new net.thaumcraft.item.BottleTaintItem(properties.stacksTo(8)));
 
     /** O arreio taumostático: voa com Potentia; 400 de durabilidade e conserta com ouro. */
     public static final Item HOVER_HARNESS = register("hover_harness", properties ->

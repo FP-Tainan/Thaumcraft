@@ -55,8 +55,9 @@ public class FluxGooBlock extends FluxBlock {
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effects, boolean past) {
         int md = state.getValue(LEVEL);
-        if (slimeGrowth.test(entity, md)) {
-            if (level.getRandom().nextBoolean() && !level.isClientSide()) {
+        if (entity instanceof net.thaumcraft.entity.taint.ThaumicSlimeEntity slime) {
+            if (!level.isClientSide() && slime.getSize() < md && level.getRandom().nextBoolean()) {
+                slime.setSize(slime.getSize() + 1);
                 if (md > 1) level.setBlockAndUpdate(pos, state.setValue(LEVEL, md - 1));
                 else level.removeBlock(pos, false);
             }
@@ -69,14 +70,14 @@ public class FluxGooBlock extends FluxBlock {
         }
     }
 
-    /** O slime taumático crescendo na gosma (as criaturas da mácula ligam isto): devolve se comeu. */
-    public static java.util.function.BiPredicate<Entity, Integer> slimeGrowth = (entity, md) -> false;
-
     /** O slime taumático que nasce da gosma, do tamanho dado. */
-    public static java.util.function.BiConsumer<ServerLevel, BlockPos> spawnSlimeSmall = (level, pos) -> {
-    };
-    public static java.util.function.BiConsumer<ServerLevel, BlockPos> spawnSlimeBig = (level, pos) -> {
-    };
+    private static void spawnSlime(ServerLevel level, BlockPos pos, int size) {
+        var slime = new net.thaumcraft.entity.taint.ThaumicSlimeEntity(net.thaumcraft.registry.TCEntities.THAUMIC_SLIME, level);
+        slime.snapTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.0f, 0.0f);
+        slime.setSize(size);
+        level.addFreshEntity(slime);
+        slime.playSound(TCSounds.GORE.value(), 1.0f, 1.0f);
+    }
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand) {
@@ -84,13 +85,11 @@ public class FluxGooBlock extends FluxBlock {
         boolean airAbove = level.isEmptyBlock(pos.above());
         if (meta >= 2 && meta < 6 && airAbove && rand.nextInt(25) == 0) {
             level.removeBlock(pos, false);
-            spawnSlimeSmall.accept(level, pos);
-            level.playSound(null, pos, TCSounds.GORE.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
+            spawnSlime(level, pos, 1);
         } else if (meta >= 6 && airAbove) {
             if (rand.nextInt(25) == 0) {
                 level.removeBlock(pos, false);
-                spawnSlimeBig.accept(level, pos);
-                level.playSound(null, pos, TCSounds.GORE.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
+                spawnSlime(level, pos, 2);
             } else if (rand.nextInt(50) == 0) {
                 // o biome_taint_from_flux do original, ligado por padrão
                 BiomePainter.paint(level, pos, TCBiomes.TAINTED_LAND);

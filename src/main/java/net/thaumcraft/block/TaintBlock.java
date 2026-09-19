@@ -90,8 +90,14 @@ public class TaintBlock extends Block {
             TaintFibreBlock.spreadFibres(level, target);
             if (crust) {
                 if (level.isEmptyBlock(pos.above()) && random.nextInt(200) == 0) {
-                    if (sporeSwarmer.test(level, pos)) {
+                    // um enxameador por vez a dezesseis blocos
+                    if (level.getEntitiesOfClass(net.thaumcraft.entity.taint.TaintSporeSwarmerEntity.class,
+                            new net.minecraft.world.phys.AABB(pos).inflate(16.0)).isEmpty()) {
                         level.removeBlock(pos, false);
+                        var spore = new net.thaumcraft.entity.taint.TaintSporeSwarmerEntity(net.thaumcraft.registry.TCEntities.TAINT_SPORE_SWARMER, level);
+                        spore.snapTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.0f, 0.0f);
+                        level.addFreshEntity(spore);
+                        spore.playSound(TCSounds.ROOTS.value(), 0.1f, 0.9f + level.getRandom().nextFloat() * 0.2f);
                     }
                 } else {
                     boolean doIt = level.getBlockState(pos.above()).getBlock() instanceof TaintBlock;
@@ -112,12 +118,6 @@ public class TaintBlock extends Block {
             level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
         }
     }
-
-    /**
-     * O enxameador de esporos que a crosta solta (as criaturas da mácula ligam isto): devolve se nasceu — e então a
-     * crosta some. Só nasce se não houver outro a dezesseis blocos.
-     */
-    public static java.util.function.BiPredicate<ServerLevel, BlockPos> sporeSwarmer = (level, pos) -> false;
 
     /** O {@code canFallBelow}: sem tronco por perto, cai no ar, no fogo, nas fibras, no que se substitui e em fluido. */
     public static boolean canFallBelow(LevelReader level, BlockPos pos) {

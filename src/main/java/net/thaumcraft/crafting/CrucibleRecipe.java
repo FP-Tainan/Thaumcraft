@@ -20,7 +20,7 @@ public record CrucibleRecipe(String research, ItemStack result, net.minecraft.wo
 
     /** Esta água e esta coisa fecham esta receita? */
     public boolean matches(AspectList inside, ItemStack thrown) {
-        if (!thrown.is(this.catalyst)) return false;
+        if (!this.catalystMatches(thrown)) return false;
         for (Aspect aspect : this.cost.getAspects()) {
             if (inside.getAmount(aspect) < this.cost.getAmount(aspect)) return false;
         }
@@ -50,7 +50,9 @@ public record CrucibleRecipe(String research, ItemStack result, net.minecraft.wo
 
     /** O {@code catalystMatches}. */
     public boolean catalystMatches(ItemStack stack) {
-        return !stack.isEmpty() && stack.is(this.catalyst);
+        if (stack.isEmpty() || !stack.is(this.catalyst)) return false;
+        // o frasco como catalisador é o frasco cheio (o itemEssence 1 do original), de qualquer essência
+        return this.catalyst != net.thaumcraft.registry.TCItems.PHIAL || net.thaumcraft.item.PhialItem.aspectOf(stack) != null;
     }
 
     /** O que sobra na água depois de a receita cobrar o que lhe é devido. */

@@ -100,6 +100,14 @@ public final class TCSounds {
     public static final Holder<SoundEvent> GORE = register("gore");
     /** O suspiro do cerebro no jarro. */
     public static final Holder<SoundEvent> BRAIN = register("brain");
+    /** O zumbido do enxame da macula. */
+    public static final Holder<SoundEvent> SWARM = register("swarm");
+    /** A picada do enxame da macula. */
+    public static final Holder<SoundEvent> SWARMATTACK = register("swarmattack");
+    /** O tentaculo da macula. */
+    public static final Holder<SoundEvent> TENTACLE = register("tentacle");
+    /** As mosquinhas em volta do esporo. */
+    public static final Holder<SoundEvent> FLY = register("fly");
     /** O reservatorio de essencia rangendo de cheio. */
     public static final Holder<SoundEvent> CREAK = register("creak");
 

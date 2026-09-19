@@ -390,6 +390,7 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlocks.TAINT_SOIL,
                 net.thaumcraft.registry.TCBlocks.TAINT_FIBRES);
         net.thaumcraft.client.render.TaintFibreModel.init();
+        TaintClient.init();
         net.thaumcraft.client.render.FluxModel.init();
         // as bolhas da gosma de fluxo: o FXBubble na cor de sempre (rosa), quase transparente, na altura da gosma
         net.thaumcraft.block.FluxGooBlock.clientEffects = (level, pos, meta) -> {

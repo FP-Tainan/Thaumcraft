@@ -103,6 +103,42 @@ public final class TaintFx {
                 0.7f, 0.0f, 1.0f, 0.4f, (int) (66.0f / (random.nextFloat() * 0.9f + 0.1f))));
     }
 
+    /** O {@code splooshFX}: um pedaço roxo em volta de quem acabou de virar maculado (ou do esporo que estoura). */
+    public static void sploosh(Entity e) {
+        if (!(e.level() instanceof ClientLevel level)) return;
+        var random = level.getRandom();
+        float f = random.nextFloat() * (float) Math.PI * 2.0f;
+        float f1 = random.nextFloat() * 0.5f + 0.5f;
+        float f2 = Mth.sin(f) * 2.0f * 0.5f * f1;
+        float f3 = Mth.cos(f) * 2.0f * 0.5f * f1;
+        boolean light = random.nextBoolean();
+        Minecraft.getInstance().particleEngine.add(new Breaking(level, e.getX() + f2, e.getY() + random.nextFloat() * e.getBbHeight(),
+                e.getZ() + f3, light ? 0.6f : 0.3f, 0.0f, 0.3f, light ? 0.4f : 0.6f, (int) (66.0f / (random.nextFloat() * 0.9f + 0.1f))));
+    }
+
+    /** O {@code tentacleAriseFX}: o tentáculo rompendo o chão — pedaços roxos e do bloco embaixo. */
+    public static void tentacleArise(Entity e) {
+        if (!(e.level() instanceof ClientLevel level)) return;
+        var random = level.getRandom();
+        BlockPos below = BlockPos.containing(e.getX(), e.getY(), e.getZ()).below();
+        BlockState ground = level.getBlockState(below);
+        float h = e.getBbHeight();
+        for (int j = 0; j < 2.0f * h; j++) {
+            float f = random.nextFloat() * (float) Math.PI * h;
+            float f1 = random.nextFloat() * 0.5f + 0.5f;
+            float f2 = Mth.sin(f) * h * 0.25f * f1;
+            float f3 = Mth.cos(f) * h * 0.25f * f1;
+            Minecraft.getInstance().particleEngine.add(new Breaking(level, e.getX() + f2, e.getY(), e.getZ() + f3, 0.4f, 0.0f, 0.4f, 0.5f,
+                    (int) (66.0f / (random.nextFloat() * 0.9f + 0.1f))));
+            if (!ground.isAir()) {
+                f = random.nextFloat() * (float) Math.PI * h;
+                f1 = random.nextFloat() * 0.5f + 0.5f;
+                level.addParticle(new net.minecraft.core.particles.BlockParticleOption(net.minecraft.core.particles.ParticleTypes.BLOCK, ground),
+                        e.getX() + Mth.sin(f) * h * 0.25f * f1, e.getY(), e.getZ() + Mth.cos(f) * h * 0.25f * f1, 0.0, 0.0, 0.0);
+            }
+        }
+    }
+
     /** O {@code taintsplosionFX}: pedaços roxos voando para todo lado de quem estourou. */
     public static void taintsplosion(Entity e) {
         if (!(e.level() instanceof ClientLevel level)) return;

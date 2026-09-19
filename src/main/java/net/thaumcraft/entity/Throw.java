@@ -32,11 +32,20 @@ final class Throw {
         aim(projectile, thrower, velocity);
     }
 
+    /** O mesmo, com o {@code func_70183_g}: o tanto que a mira sobe (negativo) ou desce, em graus. */
+    static void once(Projectile projectile, LivingEntity thrower, float velocity, float pitchOffset) {
+        aim(projectile, thrower, velocity, pitchOffset);
+    }
+
     private static void aim(Projectile projectile, LivingEntity thrower) {
         aim(projectile, thrower, 1.5f);
     }
 
     private static void aim(Projectile projectile, LivingEntity thrower, float velocity) {
+        aim(projectile, thrower, velocity, 0.0f);
+    }
+
+    private static void aim(Projectile projectile, LivingEntity thrower, float velocity, float pitchOffset) {
         float yaw = thrower.getYRot(), pitch = thrower.getXRot();
         double x = thrower.getX() - Mth.cos(yaw / 180.0f * (float) Math.PI) * 0.16f;
         double y = thrower.getEyeY() - 0.1;
@@ -46,7 +55,7 @@ final class Throw {
         float f = 0.4f;
         double mx = -Mth.sin(yaw / 180.0f * (float) Math.PI) * Mth.cos(pitch / 180.0f * (float) Math.PI) * f;
         double mz = Mth.cos(yaw / 180.0f * (float) Math.PI) * Mth.cos(pitch / 180.0f * (float) Math.PI) * f;
-        double my = -Mth.sin(pitch / 180.0f * (float) Math.PI) * f;
+        double my = -Mth.sin((pitch + pitchOffset) / 180.0f * (float) Math.PI) * f;
         projectile.setDeltaMovement(heading(projectile.getRandom(), mx, my, mz, velocity, 1.0f));
     }
 

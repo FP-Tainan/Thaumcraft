@@ -136,17 +136,14 @@ public class TaintFibreBlock extends Block {
         }
         if (md == 3 && random.nextInt(10) == 0 && level.isEmptyBlock(pos.above())) {
             level.setBlockAndUpdate(pos, state.setValue(KIND, 4));
-            spawnSpore.accept(level, pos);
-        } else if (md == 4 && !hasSpore.test(level, pos)) {
+            var spore = new net.thaumcraft.entity.taint.TaintSporeEntity(net.thaumcraft.registry.TCEntities.TAINT_SPORE, level);
+            spore.snapTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0.0f, 0.0f);
+            level.addFreshEntity(spore);
+        } else if (md == 4 && level.getEntitiesOfClass(net.thaumcraft.entity.taint.TaintSporeEntity.class,
+                new net.minecraft.world.phys.AABB(pos.above())).isEmpty()) {
             level.setBlockAndUpdate(pos, state.setValue(KIND, 3));
         }
     }
-
-    /** O esporo da mácula que o talo solta (as criaturas da mácula ligam isto). */
-    public static java.util.function.BiConsumer<ServerLevel, BlockPos> spawnSpore = (level, pos) -> {
-    };
-    /** Ainda há esporo em cima do talo? */
-    public static java.util.function.BiPredicate<ServerLevel, BlockPos> hasSpore = (level, pos) -> false;
 
     /** O material {@code gourd} de então: abóbora e melancia. */
     private static boolean gourd(BlockState state) {

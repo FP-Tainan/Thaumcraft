@@ -98,6 +98,8 @@ public final class CrucibleRecipes {
                 new AspectList().add(Aspects.MAGIC, 16).add(Aspects.PLANT, 16).add(Aspects.HEAL, 16).add(Aspects.TAINT, 8)));
         ALL.add(new CrucibleRecipe("LIQUIDDEATH", new ItemStack(TCItems.BUCKET_DEATH), net.minecraft.world.item.Items.GLASS_BOTTLE,
                 new AspectList().add(Aspects.DEATH, 32).add(Aspects.POISON, 32).add(Aspects.ENTROPY, 32)));
+        ALL.add(new CrucibleRecipe("BOTTLETAINT", new ItemStack(TCItems.BOTTLE_TAINT), TCItems.PHIAL,
+                new AspectList().add(Aspects.TAINT, 8).add(Aspects.MAGIC, 8)));
         ALL.add(new CrucibleRecipe("GOLEMSTRAW", new ItemStack(TCItems.GOLEM_PLACERS.get("straw")), net.minecraft.world.level.block.Blocks.HAY_BLOCK.asItem(),
                 new AspectList().add(Aspects.MAN, 4).add(Aspects.MOTION, 4).add(Aspects.SOUL, 4)));
         ALL.add(new CrucibleRecipe("GOLEMWOOD", new ItemStack(TCItems.GOLEM_PLACERS.get("wood")), TCBlocks.GREATWOOD_LOG.asItem(),

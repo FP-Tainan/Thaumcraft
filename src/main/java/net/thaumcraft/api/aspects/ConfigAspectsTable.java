@@ -352,6 +352,8 @@ final class ConfigAspectsTable {
         r.item("thaumcraft:zombie_brain", new AspectList().add(Aspects.FLESH, 2).add(Aspects.MIND, 4).add(Aspects.UNDEAD, 2));
         r.item("thaumcraft:amber", new AspectList().add(Aspects.TRAP, 2).add(Aspects.CRYSTAL, 2));
         r.item("thaumcraft:knowledge_fragment", new AspectList().add(Aspects.MIND, 8));
+        r.item("thaumcraft:tainted_goo", new AspectList().add(Aspects.TAINT, 3).add(Aspects.SLIME, 1));
+        r.item("thaumcraft:taint_tendril", new AspectList().add(Aspects.TAINT, 2).add(Aspects.GREED, 1).add(Aspects.HUNGER, 1));
         r.item("thaumcraft:gold_coin", new AspectList().add(Aspects.GREED, 1));
         r.item("thaumcraft:loot_bag", new AspectList().add(Aspects.GREED, 8));
         r.item("thaumcraft:loot_bag_uncommon", new AspectList().add(Aspects.GREED, 16));

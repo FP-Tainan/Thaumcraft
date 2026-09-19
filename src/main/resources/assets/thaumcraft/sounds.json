@@ -80,6 +80,13 @@
       "thaumcraft:fireloop"
     ]
   },
+  "fly": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:fly1",
+      "thaumcraft:fly2"
+    ]
+  },
   "gore": {
     "category": "player",
     "sounds": [
@@ -245,6 +252,28 @@
     "sounds": [
       "thaumcraft:squeek1",
       "thaumcraft:squeek2"
+    ]
+  },
+  "swarm": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:swarm1",
+      "thaumcraft:swarm2",
+      "thaumcraft:swarm3"
+    ]
+  },
+  "swarmattack": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:swarmattack"
+    ]
+  },
+  "tentacle": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:tentacle1",
+      "thaumcraft:tentacle2",
+      "thaumcraft:tentacle3"
     ]
   },
   "tool": {

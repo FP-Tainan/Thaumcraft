@@ -129,6 +129,109 @@ public final class TCEntities {
                     .clientTrackingRange(4)
                     .updateInterval(10));
 
+    /** O slime taumático, que nasce da gosma de fluxo. */
+    public static final EntityType<net.thaumcraft.entity.taint.ThaumicSlimeEntity> THAUMIC_SLIME = register("thaumic_slime",
+            EntityType.Builder.<net.thaumcraft.entity.taint.ThaumicSlimeEntity>of(net.thaumcraft.entity.taint.ThaumicSlimeEntity::new, MobCategory.MONSTER)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** A aranha da mácula, que sai do esporo. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintSpiderEntity> TAINT_SPIDER = register("taint_spider",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintSpiderEntity>of(net.thaumcraft.entity.taint.TaintSpiderEntity::new, MobCategory.MONSTER)
+                    .sized(0.4f, 0.3f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** O tentáculo da mácula. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintacleEntity> TAINTACLE = register("taintacle",
+            net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType.Builder.createMob(
+                            net.thaumcraft.entity.taint.TaintacleEntity::new, MobCategory.MONSTER, mob -> mob
+                                    .defaultAttributes(net.thaumcraft.entity.taint.TaintacleEntity::attributes)
+                                    .spawnPlacement(net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                                            net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                                            net.thaumcraft.entity.taint.TaintacleEntity::checkSpawn))
+                    .sized(0.66f, 3f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** O tentáculo pequeno que o grande faz brotar. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintacleSmallEntity> TAINTACLE_SMALL = register("taintacle_small",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintacleSmallEntity>of(net.thaumcraft.entity.taint.TaintacleSmallEntity::new, MobCategory.MONSTER)
+                    .sized(0.22f, 1f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** O esporo em cima do talo. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintSporeEntity> TAINT_SPORE = register("taint_spore",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintSporeEntity>of(net.thaumcraft.entity.taint.TaintSporeEntity::new, MobCategory.MONSTER)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(10)
+                    .updateInterval(20));
+
+    /** O enxameador de esporos que a crosta solta. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintSporeSwarmerEntity> TAINT_SPORE_SWARMER = register("taint_spore_swarmer",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintSporeSwarmerEntity>of(net.thaumcraft.entity.taint.TaintSporeSwarmerEntity::new, MobCategory.MONSTER)
+                    .sized(1f, 1f)
+                    .clientTrackingRange(10)
+                    .updateInterval(20));
+
+    /** O enxame da mácula. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintSwarmEntity> TAINT_SWARM = register("taint_swarm",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintSwarmEntity>of(net.thaumcraft.entity.taint.TaintSwarmEntity::new, MobCategory.MONSTER)
+                    .sized(2f, 2f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** A galinha maculada. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintChickenEntity> TAINT_CHICKEN = register("taint_chicken",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintChickenEntity>of(net.thaumcraft.entity.taint.TaintChickenEntity::new, MobCategory.MONSTER)
+                    .sized(0.5f, 0.8f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** A vaca maculada. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintCowEntity> TAINT_COW = register("taint_cow",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintCowEntity>of(net.thaumcraft.entity.taint.TaintCowEntity::new, MobCategory.MONSTER)
+                    .sized(0.9f, 1.3f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** O creeper maculado. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintCreeperEntity> TAINT_CREEPER = register("taint_creeper",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintCreeperEntity>of(net.thaumcraft.entity.taint.TaintCreeperEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** O porco maculado. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintPigEntity> TAINT_PIG = register("taint_pig",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintPigEntity>of(net.thaumcraft.entity.taint.TaintPigEntity::new, MobCategory.MONSTER)
+                    .sized(0.9f, 0.9f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** A ovelha maculada. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintSheepEntity> TAINT_SHEEP = register("taint_sheep",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintSheepEntity>of(net.thaumcraft.entity.taint.TaintSheepEntity::new, MobCategory.MONSTER)
+                    .sized(0.9f, 1.3f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** O aldeão maculado. */
+    public static final EntityType<net.thaumcraft.entity.taint.TaintVillagerEntity> TAINT_VILLAGER = register("taint_villager",
+            EntityType.Builder.<net.thaumcraft.entity.taint.TaintVillagerEntity>of(net.thaumcraft.entity.taint.TaintVillagerEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f)
+                    .clientTrackingRange(10)
+                    .updateInterval(3));
+
+    /** A garrafa de mácula arremessada. */
+    public static final EntityType<net.thaumcraft.entity.BottleTaintEntity> BOTTLE_TAINT = register("bottle_taint",
+            EntityType.Builder.<net.thaumcraft.entity.BottleTaintEntity>of(net.thaumcraft.entity.BottleTaintEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .clientTrackingRange(4)
+                    .updateInterval(10));
+
     private TCEntities() {
     }
 
@@ -142,6 +245,21 @@ public final class TCEntities {
     public static void init() {
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(
                 GOLEM, net.thaumcraft.entity.GolemEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(THAUMIC_SLIME, net.thaumcraft.entity.taint.ThaumicSlimeEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_SPIDER, net.thaumcraft.entity.taint.TaintSpiderEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINTACLE_SMALL, net.thaumcraft.entity.taint.TaintacleSmallEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_SPORE, net.thaumcraft.entity.taint.TaintSporeEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_SPORE_SWARMER, net.thaumcraft.entity.taint.TaintSporeSwarmerEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_SWARM, net.thaumcraft.entity.taint.TaintSwarmEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_CHICKEN, net.thaumcraft.entity.taint.TaintChickenEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_COW, net.thaumcraft.entity.taint.TaintCowEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_CREEPER, net.thaumcraft.entity.taint.TaintCreeperEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_PIG, net.thaumcraft.entity.taint.TaintPigEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_SHEEP, net.thaumcraft.entity.taint.TaintSheepEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(TAINT_VILLAGER, net.thaumcraft.entity.taint.TaintVillagerEntity.attributes());
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addSpawn(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.includeByKey(net.thaumcraft.world.TCBiomes.TAINTED_LAND),
+                MobCategory.MONSTER, TAINTACLE, 1, 1, 1);
         net.thaumcraft.world.CreatureSpawns.init();
     }
 }
