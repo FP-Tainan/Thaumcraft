@@ -1,5 +1,5 @@
 {
   "textures": {
-    "particle": "thaumcraft:textures/misc/nodes"
+    "particle": "thaumcraft:block/node"
   }
 }

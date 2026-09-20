@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "thaumcraft:models/vcrystal"
+    "layer0": "thaumcraft:models/vcrystal",
+    "particle": "thaumcraft:block/strange_crystal"
   }
 }

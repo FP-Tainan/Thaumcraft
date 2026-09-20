@@ -48,6 +48,13 @@ public class CrucibleClientTest implements FabricClientGameTest {
             singleplayer.getServer().runCommand("execute as @p at @s run tp @s ~ ~2 ~ 0 70");
             context.waitTicks(10);
             context.takeScreenshot("crisol_de_cima");
+
+            // com os óculos, a essência dissolvida aparece boiando em cima do caldeirão
+            singleplayer.getServer().runCommand("item replace entity @p armor.head with thaumcraft:goggles");
+            // de pé ao lado do caldeirão outra vez, olhando para ele
+            singleplayer.getServer().runCommand("execute as @p at @s run tp @s ~ ~ ~ 0 25");
+            context.waitTicks(30);
+            context.takeScreenshot("crisol_com_oculos");
             context.runOnClient(minecraft -> {
                 var pos = minecraft.player.blockPosition().offset(0, 1, 3);
                 var be = minecraft.level.getBlockEntity(pos);

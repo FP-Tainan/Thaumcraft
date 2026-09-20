@@ -31,10 +31,10 @@ import org.jetbrains.annotations.Nullable;
  * desenhistas das entidades de bloco. Quebrada uma, as outras peças a até três blocos de lado e dois de altura somem, e
  * há um estouro que não quebra nada; nenhuma deixa nada.
  */
-public class EldritchStoneBlock extends BaseEntityBlock {
+public class EldritchStoneBlock extends BaseEntityBlock implements EldritchRingPiece {
     public static final MapCodec<EldritchStoneBlock> CODEC = simpleCodec(p -> new EldritchStoneBlock(Kind.ALTAR, p));
 
-    public enum Kind { ALTAR, OBELISK, OBELISK_UPPER, CAPSTONE }
+    public enum Kind { ALTAR, OBELISK, CAPSTONE }
 
     public final Kind kind;
 
@@ -60,7 +60,6 @@ public class EldritchStoneBlock extends BaseEntityBlock {
             case ALTAR -> new EldritchAltarBlockEntity(pos, state);
             case OBELISK -> new EldritchObeliskBlockEntity(pos, state);
             case CAPSTONE -> new EldritchCapBlockEntity(pos, state);
-            case OBELISK_UPPER -> null;
         };
     }
 
@@ -101,9 +100,6 @@ public class EldritchStoneBlock extends BaseEntityBlock {
     @Override
     protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean moved) {
         super.affectNeighborsAfterRemoval(state, level, pos, moved);
-        for (BlockPos at : BlockPos.betweenClosed(pos.offset(-3, -2, -3), pos.offset(3, 2, 3))) {
-            if (level.getBlockState(at).getBlock() instanceof EldritchStoneBlock) level.removeBlock(at, false);
-        }
-        level.explode(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1.0f, false, Level.ExplosionInteraction.NONE);
+        EldritchRingPiece.breakRing(level, pos);
     }
 }

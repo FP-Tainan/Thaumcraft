@@ -695,7 +695,7 @@ public final class TCBlocks {
     public static final Block ELDRITCH_OBELISK = register("eldritch_obelisk", properties ->
             new net.thaumcraft.block.eldritch.EldritchStoneBlock(net.thaumcraft.block.eldritch.EldritchStoneBlock.Kind.OBELISK, ringProperties(properties)));
     public static final Block ELDRITCH_OBELISK_UPPER = register("eldritch_obelisk_upper", properties ->
-            new net.thaumcraft.block.eldritch.EldritchStoneBlock(net.thaumcraft.block.eldritch.EldritchStoneBlock.Kind.OBELISK_UPPER, ringProperties(properties)));
+            new net.thaumcraft.block.eldritch.EldritchObeliskTopBlock(ringProperties(properties)));
     public static final Block ELDRITCH_CAPSTONE = register("eldritch_capstone", properties ->
             new net.thaumcraft.block.eldritch.EldritchStoneBlock(net.thaumcraft.block.eldritch.EldritchStoneBlock.Kind.CAPSTONE, ringProperties(properties)));
 

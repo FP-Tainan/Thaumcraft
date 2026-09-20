@@ -48,7 +48,7 @@ import java.util.List;
  * sossegados um aspecto composto se desfaz num dos seus componentes (um primordial escapa como fluxo), bebendo 2 mB.
  * Quem entra fervendo se queima. A varinha, agachado, despeja tudo — como quebrar o crisol.
  */
-public class CrucibleBlockEntity extends BlockEntity implements Wandable {
+public class CrucibleBlockEntity extends BlockEntity implements Wandable, net.thaumcraft.api.aspects.AspectContainer {
     /** O quanto ele chega a esquentar. */
     public static final int MAX_HEAT = 200;
     /** Acima disto a água ferve. */
@@ -378,6 +378,42 @@ public class CrucibleBlockEntity extends BlockEntity implements Wandable {
 
     public int heat() {
         return this.heat;
+    }
+
+    // ------------------------------------------------------------------------------------------------ o que ele guarda
+
+    /**
+     * O {@code IAspectContainer} do {@code TileCrucible}: o caldeirão diz o que tem dentro — é assim que os Óculos da
+     * Revelação mostram a essência dissolvida —, mas não deixa ninguém pôr nem tirar por cano, como no original.
+     */
+    @Override
+    public AspectList getAspects() {
+        return this.aspects;
+    }
+
+    @Override
+    public boolean doesContainerAccept(net.thaumcraft.api.aspects.Aspect aspect) {
+        return true;
+    }
+
+    @Override
+    public int addToContainer(net.thaumcraft.api.aspects.Aspect aspect, int amount) {
+        return 0;
+    }
+
+    @Override
+    public boolean takeFromContainer(net.thaumcraft.api.aspects.Aspect aspect, int amount) {
+        return false;
+    }
+
+    @Override
+    public boolean doesContainerContainAmount(net.thaumcraft.api.aspects.Aspect aspect, int amount) {
+        return false;
+    }
+
+    @Override
+    public int containerContains(net.thaumcraft.api.aspects.Aspect aspect) {
+        return 0;
     }
 
     public AspectList aspects() {

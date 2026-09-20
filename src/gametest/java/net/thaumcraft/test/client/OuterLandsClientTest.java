@@ -72,6 +72,24 @@ public class OuterLandsClientTest implements FabricClientGameTest {
                 singleplayer.getConnection().waitForChunksRender();
                 context.takeScreenshot("terras-de-fora-corredor");
             }
+            // e a volta: entrando no mesmo portal por dentro, o jogador tem de sair no mundo de cima, ao lado do portal
+            server.runCommand("execute in thaumcraft:outer run tp @p " + (p.getX() + 0.5) + " " + p.getY() + " " + (p.getZ() + 0.5));
+            context.waitTicks(120);
+            boolean back = server.computeOnServer(s -> !OuterLands.is(s.getPlayerList().getPlayers().getFirst().level()));
+            if (!back) throw new AssertionError("o portal devia trazer de volta ao mundo de cima");
+            singleplayer.getConnection().waitForChunksRender();
+            context.takeScreenshot("terras-de-fora-de-volta");
+            // e não pode largar quem volta dentro da pedra
+            server.runOnServer(s -> {
+                var player = s.getPlayerList().getPlayers().getFirst();
+                var level = player.level();
+                var where = player.blockPosition();
+                if (level.getBlockState(where).isSuffocating(level, where) || level.getBlockState(where.above()).isSuffocating(level, where.above())) {
+                    throw new AssertionError("a volta largou o jogador dentro de bloco em " + where);
+                }
+                double dist = Math.sqrt(where.distSqr(gatePos));
+                if (dist > 8.0) throw new AssertionError("a volta devia ser ao lado do portal, saiu a " + dist + " blocos");
+            });
         }
     }
 }
