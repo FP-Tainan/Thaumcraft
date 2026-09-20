@@ -65,6 +65,25 @@ public final class MaleficiumItems {
     public static final Item SALIS_AEVUM = register("salis_aevum", properties ->
             new SalisItem(SalisItem.Kind.AEVUM, properties.rarity(Rarity.EPIC)));
 
+    // ------------------------------------------------------------------ o que vem dos blocos
+
+    /** As bagas da beladona: comem-se e matam. */
+    public static final Item NIGHTSHADE_BERRIES = register("nightshade_berries", properties ->
+            new NightshadeBerriesItem(properties.rarity(Rarity.UNCOMMON)
+                    .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(0).saturationModifier(0.0f)
+                            .alwaysEdible().build())));
+
+    /** O adubo que torce a muda de madeira-prata em muda distorcida. */
+    public static final Item WARP_FERTILIZER = register("warp_fertilizer", properties ->
+            new WarpFertilizerItem(properties.rarity(Rarity.UNCOMMON)));
+
+    public static final Item WARPWOOD_LOG = blockItem(MaleficiumBlocks.WARPWOOD_LOG);
+    public static final Item WARPWOOD_KNOT = blockItem(MaleficiumBlocks.WARPWOOD_KNOT);
+    public static final Item WARPWOOD_PLANKS = blockItem(MaleficiumBlocks.WARPWOOD_PLANKS);
+    public static final Item WARPWOOD_LEAVES = blockItem(MaleficiumBlocks.WARPWOOD_LEAVES);
+    public static final Item WARPWOOD_SAPLING = blockItem(MaleficiumBlocks.WARPWOOD_SAPLING);
+    public static final Item NIGHTSHADE_BUSH = blockItem(MaleficiumBlocks.NIGHTSHADE_BUSH);
+
     private MaleficiumItems() {
     }
 
@@ -75,6 +94,12 @@ public final class MaleficiumItems {
     /** O que a aba do ramo mostra, na ordem. */
     public static List<Item> shown() {
         return List.copyOf(ORDER);
+    }
+
+    /** O item de um bloco do ramo, com o nome do bloco. */
+    private static Item blockItem(net.minecraft.world.level.block.Block block) {
+        String name = BuiltInRegistries.BLOCK.getKey(block).getPath();
+        return register(name, properties -> new net.minecraft.world.item.BlockItem(block, properties.useBlockDescriptionPrefix()));
     }
 
     private static Item register(String name, Rarity rarity) {

@@ -42,6 +42,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                         shard.getY() - s + r.nextFloat() * s * 2.0f, shard.getZ() - s + r.nextFloat() * s * 2.0f, 0.4f, 6, 0.005f);
             }
         };
+        // os efeitos do Maleficium (o Tainted Magic)
+        net.thaumcraft.maleficium.client.MaleficiumFx.init();
         net.thaumcraft.block.SparkFieldBlock.clientEffects = (level, pos, random) -> {
             float h = random.nextFloat() * 0.33f;
             int red = (int) ((0.65f + random.nextFloat() * 0.1f) * 255.0f);

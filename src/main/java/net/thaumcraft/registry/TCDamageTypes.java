@@ -18,6 +18,9 @@ public final class TCDamageTypes {
     /** O {@code tentacle}: o aperto do tentáculo da mácula. */
     public static final ResourceKey<DamageType> TENTACLE = ResourceKey.create(Registries.DAMAGE_TYPE, Thaumcraft.id("tentacle"));
 
+    /** O {@code nightshade} do Maleficium: o veneno da beladona. */
+    public static final ResourceKey<DamageType> NIGHTSHADE = ResourceKey.create(Registries.DAMAGE_TYPE, Thaumcraft.id("nightshade"));
+
     private TCDamageTypes() {
     }
 
@@ -27,6 +30,10 @@ public final class TCDamageTypes {
 
     public static DamageSource taint(Level level) {
         return new DamageSource(level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(TAINT));
+    }
+
+    public static DamageSource nightshade(Level level) {
+        return new DamageSource(level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(NIGHTSHADE));
     }
 
     public static DamageSource tentacle(net.minecraft.world.entity.LivingEntity attacker) {

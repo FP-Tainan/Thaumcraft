@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "thaumcraft:warpwood_log"
+  ],
+  "result": {
+    "id": "thaumcraft:warpwood_planks",
+    "count": 4
+  }
+}

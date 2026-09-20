@@ -28,6 +28,7 @@ public final class Maleficium {
     }
 
     public static void init() {
+        MaleficiumBlocks.init();
         MaleficiumItems.init();
         research();
         Thaumcraft.LOGGER.info("Maleficium: {} coisas", MaleficiumItems.count());

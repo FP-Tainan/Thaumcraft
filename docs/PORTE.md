@@ -1780,6 +1780,25 @@ da do mod, como o original a tinha.
 - **Aspectos**: o Tainted Magic não anota nenhum, nem no original — quem os deduz das receitas é o Thaumcraft.
 - Testes: `MaleficiumGameTest`; tela: `MaleficiumClientTest`.
 
-**Falta**: os blocos (a árvore distorcida, a beladona, o Lumos), equipamentos, ferramentas, focos, criaturas, a
-árvore que nasce no mundo e o resto da árvore de pesquisa — que, quando as coisas existirem, passa a ser **gerada**
-do `ResearchRegistry` do original, como as tabelas do Thaumcraft.
+### Fatia 2 — a madeira distorcida, a beladona e o Lumos
+
+- **A árvore distorcida inteira**: tora, tábuas, folhas e muda, mais o **nó** do tronco — que no original era a mesma
+  tora com outro número e aqui é bloco à parte, duro como obsidiana e cheio de sementes do vazio (de uma a cinco).
+  Quebrá-lo solta fogos-fátuos e o estalo de receita falhada, como no original.
+- **A árvore** (`WarpwoodTree`): o `WorldGenWarpwoodTree` conta por conta — tronco em cruz de cinco por cinco, entre
+  sete e onze de altura, copa em bola achatada, nós aqui e ali (nunca dois seguidos) e um pé de beladona ao pé dela.
+  Ela não nasce sozinha no mundo, nem no original: vem da muda.
+- **O adubo da distorção** (`WarpFertilizerItem`): posto numa muda de madeira-prata, torce-a em muda distorcida — é
+  por aí que a árvore entra no mundo.
+- **A beladona**: fere e envenena quem passa por dentro dela, dá de uma a três bagas e sai inteira com tesoura. As
+  bagas matam quem as come, como no original (o dano `nightshade`, que agora é um tipo de dano do mod).
+- **O Lumos**: a luzinha que o foco e o anel deixam pelo caminho — ilumina como tocha, não atrapalha, solta faíscas de
+  vez em quando e estala como gelo ao se quebrar. O `TileLumos` do original só existia para as faíscas; aqui elas
+  saem do próprio bloco, sem entidade de bloco.
+- **Diferença do jogo de hoje**: o chão que segura a árvore é perguntado pela etiqueta de vegetação
+  (`minecraft:supports_vegetation`), e não pela de terra — no 26.2 a grama não está nesta última, e o original
+  perguntava pelo `canSustainPlant`.
+- Testes: `MaleficiumGameTest` (blocos, árvore, adubo, Lumos); tela: `MaleficiumTreeClientTest`.
+
+**Falta**: equipamentos, ferramentas, focos, criaturas e o resto da árvore de pesquisa — que, quando as coisas
+existirem, passa a ser **gerada** do `ResearchRegistry` do original, como as tabelas do Thaumcraft.

@@ -143,7 +143,8 @@
       "net.thaumcraft.test.client.NamesClientTest",
       "net.thaumcraft.test.client.AspectHoverClientTest",
       "net.thaumcraft.test.client.TravellerBootsClientTest",
-      "net.thaumcraft.test.client.MaleficiumClientTest"
+      "net.thaumcraft.test.client.MaleficiumClientTest",
+      "net.thaumcraft.test.client.MaleficiumTreeClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"
