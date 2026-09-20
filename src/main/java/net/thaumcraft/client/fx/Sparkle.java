@@ -36,6 +36,20 @@ public final class Sparkle implements ThaumFx.Effect {
         ThaumFx.add(sparkle);
     }
 
+    /**
+     * A faísca com tudo escolhido: o construtor do {@code FXSparkle} do original, com o empurrão e a gravidade
+     * postos à mão. É por aqui que um mod de fora faz as faíscas dele.
+     */
+    public static void custom(RandomSource random, double x, double y, double z, float size, int type, int multiplier,
+                              float gravity, double motionX, double motionY, double motionZ) {
+        Sparkle sparkle = new Sparkle(random, x, y, z, size, type, multiplier);
+        sparkle.gravity = gravity;
+        sparkle.motionX = motionX;
+        sparkle.motionY = motionY;
+        sparkle.motionZ = motionZ;
+        ThaumFx.add(sparkle);
+    }
+
     /** A faísca com a cor dada ({@code setRBGColorF}), sem sorteio de nascer: a que fecha o arco de faíscas. */
     public static void coloured(RandomSource random, double x, double y, double z, float size, int m, float r, float g, float b) {
         ThaumFx.add(new Sparkle(random, x, y, z, size, -1, m, r, g, b));

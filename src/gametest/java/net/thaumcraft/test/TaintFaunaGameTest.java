@@ -29,7 +29,7 @@ public class TaintFaunaGameTest {
         cow.addEffect(new MobEffectInstance(TCEffects.FLUX_TAINT, 200, 0));
         cow.kill(helper.getLevel());
         helper.succeedWhen(() -> {
-            if (helper.getLevel().getEntities(TCEntities.TAINT_COW, e -> true).isEmpty()) helper.fail("a vaca devia ter voltado maculada");
+            if (helper.getEntities(TCEntities.TAINT_COW).isEmpty()) helper.fail("a vaca devia ter voltado maculada");
         });
     }
 
@@ -41,7 +41,7 @@ public class TaintFaunaGameTest {
         int esperado = (int) (1.0f + Math.min(zombie.getMaxHealth() / 10.0f, 6.0f));
         zombie.kill(helper.getLevel());
         helper.succeedWhen(() -> {
-            var slimes = helper.getLevel().getEntities(TCEntities.THAUMIC_SLIME, e -> true);
+            var slimes = helper.getEntities(TCEntities.THAUMIC_SLIME);
             if (slimes.isEmpty()) helper.fail("o zumbi devia ter virado slime taumático");
             if (slimes.getFirst().getSize() != esperado) {
                 helper.fail("o slime devia ter tamanho " + esperado + ", tem " + slimes.getFirst().getSize());
@@ -56,7 +56,7 @@ public class TaintFaunaGameTest {
         spore.setSporeSize(9);
         helper.succeedWhen(() -> {
             if (spore.isAlive()) helper.fail("o esporo sem talo devia ter estourado");
-            if (helper.getLevel().getEntities(TCEntities.TAINT_SPIDER, e -> true).isEmpty()) helper.fail("devia ter saído aranha");
+            if (helper.getEntities(TCEntities.TAINT_SPIDER).isEmpty()) helper.fail("devia ter saído aranha");
         });
     }
 
@@ -94,7 +94,7 @@ public class TaintFaunaGameTest {
         slime.setSize(9);
         slime.kill(helper.getLevel());
         helper.succeedWhen(() -> {
-            long small = helper.getLevel().getEntities(TCEntities.THAUMIC_SLIME, e -> e.isAlive() && e.getSize() == 1).size();
+            long small = helper.getEntities(TCEntities.THAUMIC_SLIME).stream().filter(e -> e.isAlive() && e.getSize() == 1).count();
             if (small < 3) helper.fail("o slime de 9 devia se dividir em três (" + small + ")");
         });
     }
@@ -104,7 +104,7 @@ public class TaintFaunaGameTest {
         TaintCowEntity cow = helper.spawn(TCEntities.TAINT_COW, new BlockPos(2, 2, 2));
         cow.kill(helper.getLevel());
         helper.succeedWhen(() -> {
-            var items = helper.getLevel().getEntities(EntityTypes.ITEM, e -> true);
+            var items = helper.getEntities(EntityTypes.ITEM);
             boolean found = items.stream().anyMatch(i -> i.getItem().is(net.thaumcraft.registry.TCResources.get("tainted_goo"))
                     || i.getItem().is(net.thaumcraft.registry.TCResources.get("taint_tendril")));
             if (!found) helper.fail("a vaca maculada devia deixar gosma ou ramo");
