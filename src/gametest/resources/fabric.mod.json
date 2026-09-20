@@ -80,6 +80,7 @@
       "net.thaumcraft.test.LangGameTest",
       "net.thaumcraft.test.AddonApiGameTest",
       "net.thaumcraft.test.MaleficiumBladesGameTest",
+      "net.thaumcraft.test.NamesGameTest",
       "net.thaumcraft.test.MaleficiumGameTest",
       "net.thaumcraft.test.MaleficiumGearGameTest"
     ],
@@ -146,6 +147,7 @@
       "net.thaumcraft.test.client.AspectHoverClientTest",
       "net.thaumcraft.test.client.TravellerBootsClientTest",
       "net.thaumcraft.test.client.MaleficiumBladeClientTest",
+      "net.thaumcraft.test.client.MaleficiumEntityClientTest",
       "net.thaumcraft.test.client.MaleficiumClientTest",
       "net.thaumcraft.test.client.MaleficiumTreeClientTest"
     ],

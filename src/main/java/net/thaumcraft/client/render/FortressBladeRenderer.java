@@ -19,16 +19,17 @@ import java.util.function.Consumer;
  * As Lâminas de Fortaleza na mão e no inventário: o {@code RenderItemKatana}, o {@code ModelKatana} e o
  * {@code ModelSaya} do Tainted Magic 8.1.1.
  *
- * <p>A lâmina sai da bainha desenhada ao lado dela, e, quando a lâmina tem inscrição, as runas do
- * {@code script.png} correm pelo fio, piscando na cor que o original lhes dá.
+ * <p>Na mão e na casa do inventário vai só a lâmina, como uma espada; a bainha fica na cintura de quem a carrega
+ * ({@code HipSheathLayer}). Quando a lâmina tem inscrição, as runas do {@code script.png} correm pelo fio, piscando
+ * na cor que o original lhes dá.
  */
 public class FortressBladeRenderer {
     private static final float UNIT = 1.0f / 16.0f;
 
     // as caixas do ModelKatana e do ModelSaya, já com o ponto de giro (0, −40, 0) somado
     private static final float[] BLADE = BoxMesh.join(
-            // a lâmina, que no original encolhe três quartos em cada lado
-            BoxMesh.box(-0.25f, -39.25f, -1.25f, 0.5f, 46.5f, 2.5f, 0, 0, 32, 64),
+            // a lâmina: a caixa do original, que é o que faz a textura cair no lugar
+            BoxMesh.box(-0.5f, -40.0f, -2.0f, 1, 48, 4, 0, 0, 32, 64),
             // a guarda e o punho
             BoxMesh.box(-2.5f, -40.0f, -3.5f, 5, 1, 7, 0, 52, 32, 64),
             BoxMesh.box(-1.0f, -52.0f, -1.5f, 2, 12, 3, 22, 0, 32, 64));
@@ -94,11 +95,6 @@ public class FortressBladeRenderer {
             pose.mulPose(Axis.XP.rotationDegrees(180.0f));
             pose.scale(0.45f, 0.45f, 0.45f);
             pose.translate(0.0f, 22.0f * UNIT, 0.0f);
-            // a bainha fica atrás, um pouco de lado, como no original
-            pose.pushPose();
-            pose.translate(4.5f * UNIT, 0.0f, 0.0f);
-            box(pose, collector, this.texture, SHEATH, light, overlay);
-            pose.popPose();
             box(pose, collector, this.texture, BLADE, light, overlay);
             if (Boolean.TRUE.equals(inscribed)) runes(pose, collector, light, overlay);
             pose.popPose();

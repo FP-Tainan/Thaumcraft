@@ -46,10 +46,16 @@ public class EldritchOrbRenderer extends EntityRenderer<EldritchOrbEntity, Eldri
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
-        float spin = state.age / 80.0f;
-        float grow = Math.min(state.age, 10) / 10.0f;
+        draw(pose, collector, camera, state.id, state.age);
+        super.submit(state, pose, collector, camera);
+    }
+
+    /** O desenho em si, que o orbe de matéria escura do Maleficium também usa. */
+    public static void draw(PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera, int id, int age) {
+        float spin = age / 80.0f;
+        float grow = Math.min(age, 10) / 10.0f;
         pose.pushPose();
-        Random rays = new Random(state.id);
+        Random rays = new Random(id);
         for (int i = 0; i < 12; i++) {
             pose.mulPose(Axis.XP.rotationDegrees(rays.nextFloat() * 360.0f));
             pose.mulPose(Axis.YP.rotationDegrees(rays.nextFloat() * 360.0f));
@@ -70,8 +76,9 @@ public class EldritchOrbRenderer extends EntityRenderer<EldritchOrbEntity, Eldri
         }
         pose.popPose();
 
-        float u0 = state.age % 13 / 16.0f, u1 = u0 + 0.0624375f;
+        float u0 = age % 13 / 16.0f, u1 = u0 + 0.0624375f;
         float v0 = 0.1875f, v1 = v0 + 0.0624375f;
+        pose.pushPose();
         pose.pushPose();
         pose.mulPose(camera.orientation);
         collector.submitCustomGeometry(pose, AdditiveGlow.blended(Sparkle.PARTICLES), (matrix, consumer) -> {
@@ -81,7 +88,7 @@ public class EldritchOrbRenderer extends EntityRenderer<EldritchOrbEntity, Eldri
             corner(matrix, consumer, -0.5f, 0.5f, u0, v0);
         });
         pose.popPose();
-        super.submit(state, pose, collector, camera);
+        pose.popPose();
     }
 
     private static void ray(PoseStack.Pose matrix, com.mojang.blaze3d.vertex.VertexConsumer buffer, float[] a, float[] b) {
