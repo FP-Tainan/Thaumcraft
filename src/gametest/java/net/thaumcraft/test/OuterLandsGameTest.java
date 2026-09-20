@@ -117,6 +117,25 @@ public class OuterLandsGameTest {
         helper.succeed();
     }
 
+    /**
+     * A parte da sala do chefe sem saída: o original escrevia a porta na origem do mundo quando a casa não tinha lado
+     * nenhum aberto, e hoje isso derruba a construção do mundo ("Requested chunk unavailable"). Aqui ela não escreve nada.
+     */
+    @GameTest(maxTicks = 40)
+    public void bossRoomWithoutDoorwayKeepsAwayFromTheOrigin(GameTestHelper helper) {
+        var level = helper.getLevel();
+        BlockPos origin = helper.absolutePos(BlockPos.ZERO);
+        int cx = (origin.getX() >> 4) + 6, cz = origin.getZ() >> 4;
+        var antes = level.getBlockState(new BlockPos(0, MazeFeature.FLOOR + 2, 0));
+        // parte de cima à esquerda da sala do chefe, sem norte, sul, leste nem oeste
+        Cell cell = new Cell((short) (2 << 8));
+        MazeFeature.generate(new MazeWorld(level, level.getRandom()), cx, cz, cell);
+        if (!level.getBlockState(new BlockPos(0, MazeFeature.FLOOR + 2, 0)).equals(antes)) {
+            helper.fail("a sala do chefe mexeu na origem do mundo");
+        }
+        helper.succeed();
+    }
+
     /** A sala da chave: a tábua rúnica boiando em cima do capitel, com os guardiões em volta. */
     @GameTest(maxTicks = 40)
     public void keyRoom(GameTestHelper helper) {

@@ -58,6 +58,8 @@ public class MazeFeature extends Feature<NoneFeatureConfiguration> {
             for (int z = cz * 16 - 1; z <= cz * 16 + 16; z++) {
                 for (int y = FLOOR - 1; y <= FLOOR + 14; y++) {
                     pos.set(x, y, z);
+                    // a beirada dos vizinhos só se lê se o chunk estiver ao alcance de quem constrói
+                    if (w.level instanceof net.minecraft.server.level.WorldGenRegion && !w.level.hasChunk(x >> 4, z >> 4)) continue;
                     BlockState state = w.level.getBlockState(pos);
                     if (!state.is(TCBlocks.ELDRITCH_NOTHING)) continue;
                     boolean exposed = EldritchNothingBlock.exposed(w.level, pos);

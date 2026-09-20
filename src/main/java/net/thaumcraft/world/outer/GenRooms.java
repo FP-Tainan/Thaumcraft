@@ -67,6 +67,8 @@ final class GenRooms extends GenCommon {
                     zz = z + 5 + a;
                     dir = Direction.WEST;
                 }
+                // a parte da sala que não tem saída não tem portal nenhum: o original escrevia na origem do mundo
+                if (dir == null) continue;
                 switch (PAT_DOORWAY[a][b]) {
                     case 1 -> {
                         placeBlock(w, xx, y + 2 + b, zz, 16, cell);

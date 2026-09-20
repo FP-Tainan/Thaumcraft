@@ -30,16 +30,30 @@ public final class MazeWorld {
     /** Onde podem ir enfeites, aberturas de caranguejo e urnas: as listas do {@code GenCommon}, uma por construção. */
     final java.util.List<BlockPos> decoCommon = new java.util.ArrayList<>(), crabSpawner = new java.util.ArrayList<>(), decoUrn = new java.util.ArrayList<>();
 
+    /** Está construindo o chunk agora? Aí o mundo só deixa tocar no pedaço em construção e nos vizinhos dele. */
+    private final boolean generating;
+
     public MazeWorld(WorldGenLevel level, RandomSource rand) {
         this.level = level;
         this.rand = rand;
+        this.generating = level instanceof net.minecraft.server.level.WorldGenRegion;
     }
 
     private BlockPos at(int x, int y, int z) {
         return this.cursor.set(x, y, z);
     }
 
+    /**
+     * O chunk está ao alcance de quem está construindo? O mundo de hoje só deixa ler e escrever no pedaço em construção
+     * e nos vizinhos dele; passar disso derruba o jogo, enquanto o de 1.7 só devolvia ar. Aqui a resposta é a de então.
+     */
+    private boolean reachable(int x, int z) {
+        // num mundo já construído tudo está ao alcance (o chunk se carrega sozinho); a cerca é só na construção
+        return !this.generating || this.level.hasChunk(x >> 4, z >> 4);
+    }
+
     public BlockState get(int x, int y, int z) {
+        if (!this.reachable(x, z)) return net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
         return this.level.getBlockState(this.at(x, y, z));
     }
 
@@ -53,16 +67,19 @@ public final class MazeWorld {
     }
 
     public void set(int x, int y, int z, BlockState state) {
+        if (!this.reachable(x, z)) return;
         this.level.setBlock(new BlockPos(x, y, z), state, Block.UPDATE_CLIENTS);
     }
 
     @Nullable
     public BlockEntity blockEntity(int x, int y, int z) {
+        if (!this.reachable(x, z)) return null;
         return this.level.getBlockEntity(new BlockPos(x, y, z));
     }
 
     /** O {@code isBlockNormalCube} do 1.7: bloco que tapa a vista e é cheio. */
     public boolean opaque(int x, int y, int z) {
+        if (!this.reachable(x, z)) return false;
         BlockPos pos = new BlockPos(x, y, z);
         BlockState state = this.level.getBlockState(pos);
         return state.isSolidRender();

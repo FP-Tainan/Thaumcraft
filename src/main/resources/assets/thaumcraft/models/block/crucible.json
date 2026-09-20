@@ -1,9 +1,10 @@
 {
   "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
   "textures": {
     "particle": "thaumcraft:block/crucible3",
     "side": "thaumcraft:block/crucible3",
-    "top": "thaumcraft:block/crucible3",
+    "rim": "thaumcraft:block/crucible1",
     "bottom": "thaumcraft:block/crucible2",
     "inside": "thaumcraft:block/crucible5",
     "floor": "thaumcraft:block/crucible6"
@@ -17,7 +18,7 @@
       ],
       "to": [
         16,
-        3,
+        16,
         16
       ],
       "faces": {
@@ -26,8 +27,7 @@
           "cullface": "down"
         },
         "up": {
-          "texture": "#floor",
-          "shade": false
+          "texture": "#rim"
         },
         "north": {
           "texture": "#side",
@@ -50,7 +50,29 @@
     {
       "from": [
         0,
-        3,
+        4,
+        0
+      ],
+      "to": [
+        16,
+        4,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#floor",
+          "shade": false
+        },
+        "down": {
+          "texture": "#floor",
+          "shade": false
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        4,
         0
       ],
       "to": [
@@ -59,22 +81,6 @@
         16
       ],
       "faces": {
-        "up": {
-          "texture": "#top",
-          "shade": false
-        },
-        "north": {
-          "texture": "#side",
-          "cullface": "north"
-        },
-        "south": {
-          "texture": "#side",
-          "cullface": "south"
-        },
-        "west": {
-          "texture": "#side",
-          "cullface": "west"
-        },
         "east": {
           "texture": "#inside",
           "shade": false
@@ -84,57 +90,33 @@
     {
       "from": [
         14,
-        3,
+        4,
         0
       ],
       "to": [
-        16,
+        14,
         16,
         16
       ],
       "faces": {
-        "up": {
-          "texture": "#top",
-          "shade": false
-        },
-        "north": {
-          "texture": "#side",
-          "cullface": "north"
-        },
-        "south": {
-          "texture": "#side",
-          "cullface": "south"
-        },
         "west": {
           "texture": "#inside",
           "shade": false
-        },
-        "east": {
-          "texture": "#side",
-          "cullface": "east"
         }
       }
     },
     {
       "from": [
-        2,
-        3,
-        0
+        0,
+        4,
+        2
       ],
       "to": [
-        14,
+        16,
         16,
         2
       ],
       "faces": {
-        "up": {
-          "texture": "#top",
-          "shade": false
-        },
-        "north": {
-          "texture": "#side",
-          "cullface": "north"
-        },
         "south": {
           "texture": "#inside",
           "shade": false
@@ -143,27 +125,19 @@
     },
     {
       "from": [
-        2,
-        3,
+        0,
+        4,
         14
       ],
       "to": [
-        14,
         16,
-        16
+        16,
+        14
       ],
       "faces": {
-        "up": {
-          "texture": "#top",
-          "shade": false
-        },
         "north": {
           "texture": "#inside",
           "shade": false
-        },
-        "south": {
-          "texture": "#side",
-          "cullface": "south"
         }
       }
     }
