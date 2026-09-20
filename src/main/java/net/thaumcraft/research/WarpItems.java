@@ -24,6 +24,12 @@ public final class WarpItems {
         return stack.isEmpty() ? 0 : WARP.getOrDefault(stack.getItem(), 0);
     }
 
+    /** A distorção que um mod de fora põe numa coisa dele: o {@code ThaumcraftApi.addWarpToItem}. */
+    public static void register(net.minecraft.world.item.Item item, int amount) {
+        if (WARP.isEmpty()) fill();
+        WARP.put(item, amount);
+    }
+
     private static void fill() {
         WARP.put(TCItems.FOCI.get("hellbat"), 1);
         WARP.put(TCItems.SINISTER_STONE, 1);

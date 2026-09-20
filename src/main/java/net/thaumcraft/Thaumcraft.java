@@ -111,6 +111,9 @@ public class Thaumcraft implements ModInitializer {
         net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register(
                 (handler, sender, server) -> ResearchManager.grantStarters(handler.getPlayer()));
         // de que cada coisa é feita: a tabela se monta com as receitas do servidor, e vai para quem entra
+        // o que os mods de fora deixaram para montar tarde (receitas, que carregam itens) entra antes da dedução
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(
+                server -> net.thaumcraft.api.ThaumcraftApi.runSetup());
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(ObjectAspects::rebuild);
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, resources, success) -> {
             ObjectAspects.rebuild(server);

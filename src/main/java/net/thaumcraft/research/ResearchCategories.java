@@ -44,6 +44,19 @@ public final class ResearchCategories {
         ALL.put(key, new Category(key, Thaumcraft.id("textures/" + icon), Thaumcraft.id("textures/" + background)));
     }
 
+    /**
+     * Abre uma aba nova no livro, para um mod de fora: o {@code ResearchCategories.registerCategory} do original. O
+     * nome sai do idioma, pela chave {@code tc.research_category.<chave>}; o desenho e o pergaminho de fundo são do
+     * próprio mod.
+     */
+    public static void register(String key, Identifier icon, Identifier background) {
+        ALL.put(key, new Category(key, icon, background));
+    }
+
+    /** Só para garantir que as abas do mod já estejam no lugar antes de um mod de fora abrir a dele. */
+    public static void init() {
+    }
+
     /** As abas que este jogador pode ver agora. */
     public static List<Category> visible(PlayerKnowledge knowledge) {
         return ALL.values().stream()

@@ -193,8 +193,8 @@ public class ThaumonomiconScreen extends Screen {
         }
         int count = 0;
         for (ResearchCategories.Category category : ResearchCategories.visible(this.knowledge)) {
-            int mposx = mx - (var4 - 24);
-            int mposy = my - (var5 + count * CELL);
+            int mposx = mx - (var4 + tabColumn(count));
+            int mposy = my - (var5 + tabRow(count));
             if (mposx >= 0 && mposx < 24 && mposy >= 0 && mposy < 24) {
                 graphics.text(this.font, category.name(), mx, my - 8, 0xFFFFFFFF, true);
             }
@@ -327,18 +327,34 @@ public class ThaumonomiconScreen extends Screen {
             boolean selected = category.key().equals(selectedCategory);
             int s1 = selected ? 0 : 24;
             int s2 = selected ? 0 : 8;
-            graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, var8 - 24, var9 + count * CELL, 152 + s1, 232, 24, 24, 256, 256);
+            int tabX = var8 + tabColumn(count);
+            int tabY = var9 + tabRow(count);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, tabX, tabY, 152 + s1, 232, 24, 24, 256, 256);
             if (HIGHLIGHTED.contains(category.key())) {
                 int px = (int) (16L * (t % 16L));
-                graphics.blit(RenderPipelines.GUI_TEXTURED, PARTICLES, var8 - 27 + s2, var9 - 4 + count * CELL, px, 80, 16, 16, 256, 256);
+                graphics.blit(RenderPipelines.GUI_TEXTURED, PARTICLES, tabX - 3 + s2, tabY - 4, px, 80, 16, 16, 256, 256);
             }
-            graphics.blit(RenderPipelines.GUI_TEXTURED, category.icon(), var8 - 19 + s2, var9 + 4 + count * CELL, 0, 0, 16, 16, 16, 16);
-            if (!selected) graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, var8 - 24, var9 + count * CELL, 200, 232, 24, 24, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, category.icon(), tabX + 5 + s2, tabY + 4, 0, 0, 16, 16, 16, 16);
+            if (!selected) graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, tabX, tabY, 200, 232, 24, 24, 256, 256);
             count++;
         }
         graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, var8, var9, 0, 0, PANE_WIDTH, PANE_HEIGHT, 256, 256);
 
         if (this.currentHighlight != null) this.drawHighlight(graphics, mx, my);
+    }
+
+    /**
+     * Onde fica a aba de número n. O original punha todas numa fileira só descendo a lombada; com os mods de fora
+     * elas passam de oito e cairiam fora do livro, então a nona começa outra coluna, mais para a esquerda.
+     */
+    private static final int TABS_PER_COLUMN = PANE_HEIGHT / CELL - 1;
+
+    private static int tabColumn(int index) {
+        return -24 * (1 + index / TABS_PER_COLUMN);
+    }
+
+    private static int tabRow(int index) {
+        return index % TABS_PER_COLUMN * CELL;
     }
 
     private static int grey(float level) {
@@ -550,8 +566,8 @@ public class ThaumonomiconScreen extends Screen {
             int var5 = this.top();
             int count = 0;
             for (ResearchCategories.Category category : ResearchCategories.visible(this.knowledge)) {
-                int mposx = (int) event.x() - (var4 - 24);
-                int mposy = (int) event.y() - (var5 + count * CELL);
+                int mposx = (int) event.x() - (var4 + tabColumn(count));
+                int mposy = (int) event.y() - (var5 + tabRow(count));
                 if (mposx >= 0 && mposx < 24 && mposy >= 0 && mposy < 24) {
                     selectedCategory = category.key();
                     this.updateResearch();

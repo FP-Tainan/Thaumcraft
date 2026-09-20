@@ -1740,3 +1740,22 @@ aspecto nenhum, e por isso nem o thaumômetro nem a alquimia enxergavam essas co
 - **Fora do inventário, o botão do livro de receitas** (`InventoryRecipeBookMixin`): não é coisa do mod, é do jogo, mas
   quem joga pediu para tirá-lo — nunca usa o guia, e sem ele o inventário fica limpo. Só sai do inventário do jogador;
   na bancada e nas fornalhas continua onde sempre esteve. Era ele que ficava bem no meio da fileira das bijuterias.
+
+## A porta dos mods de fora (2026-09-20)
+
+O Thaumcraft 4 nunca foi um mod sozinho: Forbidden Magic, Tainted Magic, Magia Naturalis, Necromancy e companhia
+entravam todos pelo `ThaumcraftApi`. Para que o mesmo valha aqui, a porta foi aberta:
+
+- **`net.thaumcraft.api.ThaumcraftApi`**: abre aba no Thaumonomicon (`category`), põe pesquisa na árvore (`research`,
+  com construtor fluente em `Research.of`), dá nome a uma receita para as páginas a citarem (`bookRecipe`), registra
+  receita de crisol, de bancada arcana e de infusão, anota de que as coisas do mod são feitas (`aspects`) e a
+  distorção que elas trazem (`warp`).
+- **`onSetup`**: ao carregar um mod o jogo ainda não terminou de montar os itens (`Components not bound yet`), então
+  toda receita — que carrega `ItemStack` — vai para uma fila que roda quando o mundo abre, logo antes de o Thaumcraft
+  deduzir os aspectos das receitas. É o mesmo lugar em que as tabelas do próprio mod se montam.
+- **Páginas**: `Page.text`, `Page.arcane`, `Page.crucible`, `Page.infusion`, `Page.compound` e companhia; uma página
+  pode citar a própria receita que o mod registrou, e não só a pesquisa mais a saída como a tabela gerada faz.
+- **Abas demais**: o original punha as abas numa fileira só descendo a lombada, e com cinco addons elas cairiam fora
+  do livro. A nona começa outra coluna, mais para fora.
+- **Guarda**: `net.thaumcraft.test.addon.TestAddon` é um mod de mentira que carrega junto com os testes e entra por
+  essa porta; `AddonApiGameTest` confere que tudo o que ele registrou chegou onde devia.

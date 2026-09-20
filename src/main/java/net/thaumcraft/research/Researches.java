@@ -29,6 +29,19 @@ public final class Researches {
         ALL.put(research.key(), research);
     }
 
+    /**
+     * Põe no livro uma pesquisa que não é do Thaumcraft: é por aqui que um mod de fora entra na árvore, como os
+     * addons entravam pelo {@code ResearchItem.registerResearchItem} do original. A tabela do mod já está montada
+     * quando isto é chamado, então a pesquisa nova entra no fim, sem mexer na ordem do original.
+     */
+    public static void register(Research research) {
+        add(research);
+    }
+
+    /** Só para garantir que a tabela do mod já esteja montada antes de um mod de fora mexer nela. */
+    public static void init() {
+    }
+
     /** Tudo o que está numa categoria, na ordem do original. */
     public static List<Research> of(String category) {
         List<Research> found = new ArrayList<>();

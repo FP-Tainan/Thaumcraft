@@ -48,4 +48,51 @@ public sealed interface Page {
         /** O aumento rúnico, a infusão que endurece o escudo (as {@code InfusionRunicAugmentRecipe}). */
         RUNIC
     }
+
+    // ------------------------------------------------------------------ atalhos para quem escreve um mod de fora
+
+    /** Uma página de texto, pelo nome dela no idioma. */
+    static Page text(String key) {
+        return new Text(key);
+    }
+
+    /** Um texto que só aparece para quem já sabe aquela pesquisa. */
+    static Page concealed(String research, String key) {
+        return new Concealed(research, key);
+    }
+
+    /** Uma página com receitas da bancada comum, pelos nomes que elas têm no livro. */
+    static Page crafting(String... names) {
+        return new Recipe(Kind.CRAFTING, List.of(names));
+    }
+
+    /** Uma página com receitas da bancada arcana. */
+    static Page arcane(String... names) {
+        return new Recipe(Kind.ARCANE, List.of(names));
+    }
+
+    /** Uma página com receitas de crisol. */
+    static Page crucible(String... names) {
+        return new Recipe(Kind.CRUCIBLE, List.of(names));
+    }
+
+    /** Uma página com receitas de infusão. */
+    static Page infusion(String... names) {
+        return new Recipe(Kind.INFUSION, List.of(names));
+    }
+
+    /** Uma página com encantamentos por infusão. */
+    static Page enchantment(String... names) {
+        return new Recipe(Kind.ENCHANTMENT, List.of(names));
+    }
+
+    /** Uma página com a montagem de uma estrutura. */
+    static Page compound(String... names) {
+        return new Recipe(Kind.COMPOUND, List.of(names));
+    }
+
+    /** Uma página de fornalha: o que entra e o que sai. */
+    static Page smelting(Supplier<ItemStack> input, Supplier<ItemStack> output) {
+        return new Smelting(input, output);
+    }
 }

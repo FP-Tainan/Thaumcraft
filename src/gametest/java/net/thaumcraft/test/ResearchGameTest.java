@@ -9,6 +9,7 @@ import net.thaumcraft.research.ResearchManager;
 import net.thaumcraft.research.Researches;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,12 +19,14 @@ import java.util.Map;
  * alguém mexer na tabela na mão e ela sair do lugar, a compilação quebra antes de virar jogo.
  */
 public class ResearchGameTest {
-    /** Os números que o original tem: duzentas e uma pesquisas, seis abas, e a conta de cada aba. */
+    /**
+     * Os números que o original tem: duzentas e uma pesquisas, seis abas, e a conta de cada aba.
+     *
+     * <p>Conta-se por aba, e não a tabela inteira: desde que a porta dos mods de fora existe, a árvore pode ter
+     * pesquisas que não são do Thaumcraft — o que não pode é faltar ou sobrar nas abas dele.
+     */
     @GameTest
     public void theTreeCameFromTheOriginal(GameTestHelper helper) {
-        if (Researches.ALL.size() != 201) {
-            helper.fail("a árvore tem " + Researches.ALL.size() + " pesquisas; o original tem 201");
-        }
         Map<String, Integer> expected = new HashMap<>();
         expected.put("BASICS", 19);
         expected.put("THAUMATURGY", 42);
@@ -37,7 +40,9 @@ public class ResearchGameTest {
                 helper.fail(entry.getKey() + " tem " + found + " pesquisas, devia ter " + entry.getValue());
             }
         }
-        if (ResearchCategories.ALL.size() != 6) helper.fail("o original tem seis abas");
+        for (String key : List.of("BASICS", "THAUMATURGY", "ALCHEMY", "ARTIFICE", "GOLEMANCY", "ELDRITCH")) {
+            if (ResearchCategories.get(key) == null) helper.fail("sumiu a aba " + key + " do original");
+        }
         helper.succeed();
     }
 

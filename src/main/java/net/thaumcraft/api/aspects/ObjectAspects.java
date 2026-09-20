@@ -51,6 +51,8 @@ public final class ObjectAspects {
     private static final Map<Block, AspectList> BLOCKS = new HashMap<>();
     /** O que o original anotava e este Minecraft não tem mais; fica registrado para não sumir calado. */
     private static final List<String> MISSING = new ArrayList<>();
+    /** O que os mods de fora querem anotar: chamados toda vez que a tabela é montada. */
+    private static final List<java.util.function.Consumer<Registrar>> HOOKS = new ArrayList<>();
 
     private ObjectAspects() {
     }
@@ -138,6 +140,8 @@ public final class ObjectAspects {
         ConfigAspectsTable.register(registrar);
         // e o que o jogo ganhou depois da 1.7.10
         NewItemsAspectsTable.register(registrar);
+        // e o que os mods de fora anotam das coisas deles, antes da dedução pelas receitas
+        for (java.util.function.Consumer<Registrar> hook : HOOKS) hook.accept(registrar);
         ConfigAspectsTable.blocks(registrar);
         for (Item item : BuiltInRegistries.ITEM) {
             if (item != Items.AIR) generate(item, new ArrayList<>());
@@ -306,6 +310,15 @@ public final class ObjectAspects {
     // ----------------------------------------------------------------- as anotações do ConfigAspects
 
     /** Quem recebe as anotações da tabela gerada, na ordem do original. */
+    /**
+     * Um mod de fora diz aqui de que as coisas dele são feitas — o {@code registerObjectTag} do
+     * {@code ThaumcraftApi}. Chama-se isto uma vez, ao carregar o mod; a anotação vale em toda montagem da tabela,
+     * inclusive quando o mundo recarrega.
+     */
+    public static void onRegister(java.util.function.Consumer<Registrar> hook) {
+        HOOKS.add(hook);
+    }
+
     public static final class Registrar {
         private Registrar() {
         }
