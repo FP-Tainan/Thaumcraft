@@ -1813,6 +1813,22 @@ da do mod, como o original a tinha.
   mesa; e o punhal ganhou a pesquisa dele, com a receita arcana.
 - Testes: as ferramentas (uso, dano e conserto), a enxada dos dois lados e o punhal que tira sangue.
 
-**Falta**: a lâmina primordial (que espera o Fragmento da Criação), equipamentos, focos, criaturas e o resto da
-árvore de pesquisa — que, quando as coisas existirem, passa a ser **gerada** do `ResearchRegistry` do original,
-como as tabelas do Thaumcraft.
+### Fatia 4 — as peças de varinha, e a tabela passa a ser gerada
+
+- **A haste de madeira distorcida e o núcleo de bastão dela**: guardam duzentos e cinquenta e quinhentos de cada vis
+  e se enchem sozinhos conforme a **distorção permanente** de quem os carrega — dez mil tiques divididos pela
+  distorção, como o `WandHandler` do original. Quem está protegido da distorção não ganha nada.
+- **As quatro pontas**: metal das sombras (desconta trinta e cinco por cento do vis), pano encantado, pano carmesim e
+  pano de sombra.
+- **A porta das varinhas** no Thaumcraft: `WandParts.registerRod`, `registerCap` e `onRodTick` — este último é o
+  `IWandRodOnUpdate` do original, e é o que deixa uma haste de fora fazer o que a de madeira distorcida faz.
+- **A tabela do ramo passou a ser gerada** (`scratchpad/mal-tabela.js`), lendo o `ResearchRegistry` e o
+  `RecipeRegistry` do jar: vinte pesquisas e trinta e quatro receitas, com as posições, os aspectos, as marcas, os
+  pais e a distorção do original. O que ainda não tem item por aqui fica no relatório do gerador, para as fatias
+  seguintes. Os textos do livro saem do idioma do jar (`scratchpad/mal-lang.js`) e o português é escrito à mão.
+- Entre elas entrou a **Criação**, as seis páginas em que o Tainted Magic conta de onde veio tudo — os Eldritch
+  partindo o universo em dois, o Vazio de um lado e o Mundo de Cima do outro, as Pérolas Primordiais seladas nas
+  Terras de Fora. É o texto que mais conversa com a lore de quem joga.
+
+**Falta**: equipamentos (óculos, botas, faixa, armaduras de fortaleza), as katanas, os focos e as criaturas, o
+desmontador táumico, a lâmina primordial e o que mais depende deles.

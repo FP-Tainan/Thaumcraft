@@ -87,6 +87,40 @@ public final class WandParts {
         CAPS.put(tag, new Cap(tag, discount, craftCost, special, specialDiscount, ingot));
     }
 
+    /**
+     * Uma ponta de varinha de fora do mod: o {@code new WandCap(...)} do original.
+     *
+     * @param discount o quanto ela cobra do vis de sempre (0,8 é vinte por cento mais barata)
+     */
+    public static Cap registerCap(String tag, float discount, int craftCost) {
+        Cap made = new Cap(tag, discount, craftCost, java.util.List.of(), 0f, null);
+        CAPS.put(tag, made);
+        return made;
+    }
+
+    /** Uma haste de varinha, ou um núcleo de bastão, de fora do mod: o {@code new WandRod(...)} do original. */
+    public static Rod registerRod(String tag, int capacity, int craftCost, boolean staff, boolean glowing, boolean runes) {
+        Rod made = new Rod(tag, capacity, craftCost, null, false, staff, glowing, runes);
+        (staff ? STAFF_RODS : RODS).put(tag, made);
+        return made;
+    }
+
+    /** O que uma haste faz a cada tique na mão de quem a carrega: o {@code IWandRodOnUpdate} do original. */
+    public interface RodTick {
+        void tick(net.minecraft.world.item.ItemStack wand, net.minecraft.world.entity.player.Player player);
+    }
+
+    private static final Map<String, RodTick> ROD_TICKS = new LinkedHashMap<>();
+
+    /** Pendura um tique numa haste (a chave é a mesma do registro, com {@code _staff} para os núcleos). */
+    public static void onRodTick(String tag, RodTick handler) {
+        ROD_TICKS.put(tag, handler);
+    }
+
+    public static RodTick rodTick(String tag) {
+        return ROD_TICKS.get(tag);
+    }
+
     private static void rod(String tag, int capacity, int craftCost, Aspect primal, boolean anyPrimal,
                             boolean staff, boolean glowing, boolean runes) {
         Rod made = new Rod(tag, capacity, craftCost, primal, anyPrimal, staff, glowing, runes);

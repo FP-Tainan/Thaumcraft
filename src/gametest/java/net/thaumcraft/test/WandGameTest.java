@@ -17,9 +17,16 @@ public class WandGameTest {
     /** As peças e os números delas vieram do original. */
     @GameTest
     public void partsCameFromTheOriginal(GameTestHelper helper) {
-        if (WandParts.CAPS.size() != 6) helper.fail("o original tem seis pontas, contando as de cobre e prata");
-        if (WandParts.RODS.size() != 9) helper.fail("o original tem nove hastes de varinha");
-        if (WandParts.STAFF_RODS.size() != 9) helper.fail("o original tem nove hastes de bastão");
+        // as seis pontas e as nove hastes do original têm de continuar todas lá; um ramo de fora pode acrescentar
+        for (String tag : new String[]{"iron", "gold", "thaumium", "void", "copper", "silver"}) {
+            if (WandParts.cap(tag) == null) helper.fail("sumiu a ponta de " + tag);
+        }
+        for (String tag : new String[]{"wood", "greatwood", "obsidian", "blaze", "ice", "quartz", "bone", "reed", "silverwood"}) {
+            if (WandParts.RODS.get(tag) == null) helper.fail("sumiu a haste de " + tag);
+            if (tag.equals("wood")) continue;
+            if (WandParts.STAFF_RODS.get(tag) == null) helper.fail("sumiu o núcleo de bastão de " + tag);
+        }
+        if (WandParts.STAFF_RODS.get("primal") == null) helper.fail("sumiu o núcleo de bastão primordial");
 
         // conferidas na mão contra o Thaumcraft.java da 4.2.3.5
         if (WandParts.rod("wood").capacity() != 25) helper.fail("a haste de madeira guarda vinte e cinco");

@@ -65,6 +65,18 @@ public final class MaleficiumItems {
     public static final Item SALIS_AEVUM = register("salis_aevum", properties ->
             new SalisItem(SalisItem.Kind.AEVUM, properties.rarity(Rarity.EPIC)));
 
+    // ------------------------------------------------------------------ as peças de varinha
+
+    /** A haste de madeira distorcida e o núcleo de bastão dela. */
+    public static final Item WAND_ROD_WARPWOOD = register("wand_rod_warpwood", Rarity.UNCOMMON);
+    public static final Item STAFF_ROD_WARPWOOD = register("staff_rod_warpwood", Rarity.RARE);
+
+    /** As quatro pontas: metal das sombras e os três panos. */
+    public static final Item WAND_CAP_SHADOWMETAL = register("wand_cap_shadowmetal", Rarity.RARE);
+    public static final Item WAND_CAP_CLOTH = register("wand_cap_cloth", Rarity.UNCOMMON);
+    public static final Item WAND_CAP_CRIMSONCLOTH = register("wand_cap_crimsoncloth", Rarity.UNCOMMON);
+    public static final Item WAND_CAP_SHADOWCLOTH = register("wand_cap_shadowcloth", Rarity.UNCOMMON);
+
     // ------------------------------------------------------------------ as lâminas e as ferramentas
 
     /** O frasco de sangue carmesim, que o punhal oco tira de quem apanha. */

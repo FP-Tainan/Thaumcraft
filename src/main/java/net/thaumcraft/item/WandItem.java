@@ -467,6 +467,10 @@ public class WandItem extends Item {
         WandParts.Rod rod = rod(stack);
         int limit = maxVis(stack) / SELF_FILL_SHARE;
 
+        // o que a haste de um mod de fora faz por conta dela
+        WandParts.RodTick custom = WandParts.rodTick(rodTag(stack));
+        if (custom != null) custom.tick(stack, player);
+
         if (rod.primal() != null) {
             // a haste do aspecto recolhe um ponto a cada dez segundos, enquanto estiver por baixo do décimo
             if (player.tickCount % 200 == 0 && vis(stack, rod.primal()) < limit) {
