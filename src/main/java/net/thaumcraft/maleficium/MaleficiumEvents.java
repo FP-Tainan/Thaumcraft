@@ -33,6 +33,21 @@ public final class MaleficiumEvents {
     private static void tick(ServerPlayer player) {
         flight(player);
         sash(player);
+        voidTouched(player);
+    }
+
+    /**
+     * O {@code repairItems} do original: tudo o que o frasco de sangue do vazio tocou se conserta sozinho, um ponto
+     * por segundo, esteja onde estiver no inventário.
+     */
+    private static void voidTouched(ServerPlayer player) {
+        if (player.tickCount % 20 != 0) return;
+        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
+            ItemStack stack = player.getInventory().getItem(slot);
+            if (!stack.isDamaged()) continue;
+            if (!Boolean.TRUE.equals(stack.get(net.thaumcraft.registry.TCComponents.VOID_TOUCHED))) continue;
+            stack.setDamageValue(stack.getDamageValue() - 1);
+        }
     }
 
     /**
@@ -76,6 +91,11 @@ public final class MaleficiumEvents {
         boolean has = jump.getModifier(SASH_JUMP.id()) != null;
         if (on && !has) jump.addTransientModifier(SASH_JUMP);
         if (!on && has) jump.removeModifier(SASH_JUMP.id());
+    }
+
+    /** O mesmo tique, para os testes chamarem sem servidor. */
+    public static void tickForTest(ServerPlayer player) {
+        tick(player);
     }
 
     /** O tique das botas, do lado de quem joga: o empurrão para a frente vale no cliente. */

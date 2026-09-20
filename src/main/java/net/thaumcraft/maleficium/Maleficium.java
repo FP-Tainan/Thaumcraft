@@ -27,6 +27,7 @@ public final class Maleficium {
         MaleficiumWands.init();
         MaleficiumFoci.init();
         MaleficiumEvents.init();
+        VoidBloodRecipe.init();
         research();
         Thaumcraft.LOGGER.info("Maleficium: {} coisas", MaleficiumItems.count());
     }

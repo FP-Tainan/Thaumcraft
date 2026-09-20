@@ -153,6 +153,31 @@ public final class TCComponents {
             builder -> builder.persistent(net.thaumcraft.research.ResearchNote.CODEC)
                     .networkSynchronized(net.thaumcraft.research.ResearchNote.STREAM_CODEC));
 
+    /** A armadura tocada pelo vazio, do frasco de sangue do Maleficium: conserta-se sozinha. */
+    public static final DataComponentType<Boolean> VOID_TOUCHED = register("void_touched",
+            builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
+    /** O modo do desmontador táumico (0 normal, 1 devagar, 2 depressa, 3 desligado). */
+    public static final DataComponentType<Integer> DISASSEMBLER_MODE = register("disassembler_mode",
+            builder -> builder.persistent(Codec.intRange(0, 3)).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** A carga de entropia guardada no desmontador, em centésimos, como no original. */
+    public static final DataComponentType<Integer> DISASSEMBLER_CHARGE = register("disassembler_charge",
+            builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** A inscrição gravada numa lâmina de fortaleza (0 demônio, 1 espírito, 2 deusa). */
+    public static final DataComponentType<Integer> KATANA_INSCRIPTION = register("katana_inscription",
+            builder -> builder.persistent(Codec.intRange(0, 2)).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** O descanso da lâmina de fortaleza depois de um golpe de inscrição, em tiques. */
+    public static final DataComponentType<Integer> KATANA_COOLDOWN = register("katana_cooldown",
+            builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** Onde a chave do portão celeste está presa: o mundo e o lugar. */
+    public static final DataComponentType<net.minecraft.core.GlobalPos> GATE_KEY_TARGET = register("gate_key_target",
+            builder -> builder.persistent(net.minecraft.core.GlobalPos.CODEC)
+                    .networkSynchronized(net.minecraft.core.GlobalPos.STREAM_CODEC));
+
     private TCComponents() {
     }
 

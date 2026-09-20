@@ -65,6 +65,17 @@ public final class MaleficiumItems {
     public static final Item SALIS_AEVUM = register("salis_aevum", properties ->
             new SalisItem(SalisItem.Kind.AEVUM, properties.rarity(Rarity.EPIC)));
 
+    // ------------------------------------------------------------------ o sangue e o cogumelo
+
+    /** O frasco de sangue infundido com o vazio: na mesa, ele toca uma peça de armadura. */
+    public static final Item VOID_BLOOD = register("void_blood", properties ->
+            new Item(properties.rarity(Rarity.RARE).craftRemainder(net.thaumcraft.registry.TCItems.PHIAL)));
+
+    /** O cogumelo mágico: come-se depressa e ensina um ponto de um primário. */
+    public static final Item MAGIC_FUNGUAR = register("magic_funguar", properties ->
+            new MagicFunguarItem(properties.rarity(Rarity.UNCOMMON)
+                    .food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(3).saturationModifier(0.2f).build())));
+
     // ------------------------------------------------------------------ os focos
 
     /** Os seis focos do ramo; eles também entram no mapa de focos do Thaumcraft, pelo nome do tipo. */
@@ -136,6 +147,10 @@ public final class MaleficiumItems {
     public static final Item FLYTE_CHARM = register("flyte_charm", properties ->
             new FlyteCharmItem(properties.stacksTo(1).rarity(Rarity.EPIC)));
 
+    /** A Chave do Portão Celeste: prende-se a um lugar e leva de volta a ele. */
+    public static final Item GATE_KEY = register("gate_key", properties ->
+            new GateKeyItem(properties.stacksTo(1).rarity(Rarity.EPIC)));
+
     // ------------------------------------------------------------------ as peças de varinha
 
     /** A haste de madeira distorcida e o núcleo de bastão dela. */
@@ -169,6 +184,19 @@ public final class MaleficiumItems {
             new ShadowmetalHoeItem(properties.hoe(MaleficiumMaterials.SHADOW, -3.0f, 0.0f).rarity(Rarity.UNCOMMON)));
     public static final Item SHADOWMETAL_SWORD = register("shadowmetal_sword", properties ->
             new Item(properties.sword(MaleficiumMaterials.SHADOW, 3.0f, -2.4f).rarity(Rarity.UNCOMMON)));
+
+    /** O Desmontador Táumico: bebe entropia e cava com ela. */
+    public static final Item THAUMIC_DISASSEMBLER = register("thaumic_disassembler", properties ->
+            new ThaumicDisassemblerItem(properties.stacksTo(1).rarity(Rarity.UNCOMMON)));
+
+    /** A Lâmina Primordial. */
+    public static final Item PRIMAL_BLADE = register("primal_blade", properties ->
+            new PrimalBladeItem(properties.sword(MaleficiumMaterials.PRIMAL, 0.0f, -2.4f).rarity(Rarity.EPIC)));
+
+    /** As três Lâminas de Fortaleza, com os danos do original. */
+    public static final Item THAUMIUM_FORTRESS_BLADE = blade("thaumium_fortress_blade", 0, 14.25f, Rarity.UNCOMMON);
+    public static final Item VOIDMETAL_FORTRESS_BLADE = blade("voidmetal_fortress_blade", 1, 17.5f, Rarity.RARE);
+    public static final Item SHADOWMETAL_FORTRESS_BLADE = blade("shadowmetal_fortress_blade", 2, 20.75f, Rarity.EPIC);
 
     // ------------------------------------------------------------------ o que vem dos blocos
 
@@ -207,10 +235,24 @@ public final class MaleficiumItems {
         return register(name, properties -> new net.minecraft.world.item.BlockItem(block, properties.useBlockDescriptionPrefix()));
     }
 
+    /** Uma lâmina de fortaleza: sem uso que gaste, com o dano do subtipo dela no braço. */
+    private static Item blade(String name, int tier, float damage, Rarity rarity) {
+        return register(name, properties -> new FortressBladeItem(properties.stacksTo(1).rarity(rarity)
+                .component(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,
+                        net.minecraft.world.item.component.ItemAttributeModifiers.builder()
+                                .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,
+                                        new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                                                Item.BASE_ATTACK_DAMAGE_ID, damage,
+                                                net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),
+                                        net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
+                                .build()),
+                tier, damage));
+    }
+
     /** Uma peça de armadura de fortaleza, com o desconto de vis e a distorção dela. */
     private static Item fortress(String name, net.minecraft.world.item.equipment.ArmorMaterial material,
                                  net.minecraft.world.item.equipment.ArmorType type, int discount, int warp) {
-        return register(name, properties -> new MaleficiumGear(discount, warp, true,
+        return register(name, properties -> new MaleficiumFortressGear(discount, warp,
                 properties.humanoidArmor(material, type).rarity(Rarity.EPIC)));
     }
 

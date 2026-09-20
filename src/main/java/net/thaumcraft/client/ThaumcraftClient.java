@@ -222,6 +222,16 @@ public class ThaumcraftClient implements ClientModInitializer {
                     net.thaumcraft.client.fx.Arc.spawn(random, source.getX(), source.getBoundingBox().minY + source.getBbHeight() / 2.0f,
                             source.getZ(), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, r, g, b, 0.5f);
                 }));
+        // a bainha da lâmina de fortaleza na cintura de quem a carrega
+        net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback.EVENT.register(
+                (type, renderer, helper, context) -> {
+                    if (type != net.minecraft.world.entity.EntityTypes.PLAYER) return;
+                    @SuppressWarnings("unchecked")
+                    var avatar = (net.minecraft.client.renderer.entity.LivingEntityRenderer<?,
+                            net.minecraft.client.renderer.entity.state.AvatarRenderState,
+                            net.minecraft.client.model.player.PlayerModel>) renderer;
+                    helper.register(new net.thaumcraft.maleficium.client.HipSheathLayer(avatar));
+                });
         // a armadura de fortaleza, com o modelo do ModelFortressArmor
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.client.render.FortressArmorRenderer.LAYER,
@@ -229,6 +239,19 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(net.thaumcraft.client.render.FortressArmorRenderer::new,
                 net.thaumcraft.registry.TCItems.FORTRESS_HELMET, net.thaumcraft.registry.TCItems.FORTRESS_CHESTPLATE,
                 net.thaumcraft.registry.TCItems.FORTRESS_LEGGINGS);
+        // as duas do Maleficium: o mesmo modelo, com a folha de cada uma
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(
+                context -> new net.thaumcraft.client.render.FortressArmorRenderer(context,
+                        Thaumcraft.id("textures/models/void_fortress_armor.png")),
+                net.thaumcraft.maleficium.MaleficiumItems.VOID_FORTRESS_HELMET,
+                net.thaumcraft.maleficium.MaleficiumItems.VOID_FORTRESS_CHESTPLATE,
+                net.thaumcraft.maleficium.MaleficiumItems.VOID_FORTRESS_LEGGINGS);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(
+                context -> new net.thaumcraft.client.render.FortressArmorRenderer(context,
+                        Thaumcraft.id("textures/models/shadow_fortress_armor.png")),
+                net.thaumcraft.maleficium.MaleficiumItems.SHADOW_FORTRESS_HELMET,
+                net.thaumcraft.maleficium.MaleficiumItems.SHADOW_FORTRESS_CHESTPLATE,
+                net.thaumcraft.maleficium.MaleficiumItems.SHADOW_FORTRESS_LEGGINGS);
         // o arreio taumostático, com o ModelHoverHarness
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.client.render.HoverHarnessRenderer.LAYER,
@@ -422,6 +445,7 @@ public class ThaumcraftClient implements ClientModInitializer {
         registerNodeJar();
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("special_jar"), net.thaumcraft.client.render.SpecialJarRenderers.Unbaked.CODEC);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("research_table"), net.thaumcraft.client.render.ResearchTableRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("fortress_blade"), net.thaumcraft.client.render.FortressBladeRenderer.Unbaked.CODEC);
         net.thaumcraft.block.NodeJarBlock.clientEffects = pos -> {
             for (int yy = -1; yy < 3; yy++) for (int xx = -1; xx < 2; xx++) for (int zz = -1; zz < 2; zz++) {
                 net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX() + xx, pos.getY() + yy, pos.getZ() + zz, -9999, 5);

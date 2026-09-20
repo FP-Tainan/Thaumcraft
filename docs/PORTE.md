@@ -1844,8 +1844,7 @@ da do mod, como o original a tinha.
   amuleto de voo**, que troca aer de uma varinha do inventário por voo, e plana quando se agacha caindo.
 - Tudo com os números do original, conferidos por teste: desconto de vis, distorção, degrau e pulo.
 
-**Falta**: as katanas, os focos e as criaturas, o desmontador táumico, a lâmina primordial, a chave do portão, o
-funguar e o sangue do vazio.
+
 
 ### Fatia 6 — os focos, as melhorias e as três criaturas
 
@@ -1860,3 +1859,41 @@ funguar e o sangue do vazio.
   quando a varinha aponta) e `net.thaumcraft.api.FocusUpgrades` (melhorias e postos de fora, que a mesa de foco e o
   livro passam a consultar junto com os do mod).
 - Os dois sons do original (a onda de choque e a lasca) entraram no `sounds.json` do Thaumcraft.
+
+### Fatia 7 — as lâminas de fortaleza e o resto
+
+Esta fecha o Maleficium: o que restava do Tainted Magic 8.1.1 entrou todo.
+
+- **As três Lâminas de Fortaleza** (táumio, metal do vazio e metal das sombras): no original eram três subtipos de um
+  item só, e aqui são três itens, com os danos do original (14,25, 17,5 e 20,75) e a distorção de cada metal (zero,
+  três e sete). Não gastam uso. Segurando o clique direito por um segundo e soltando, sai o golpe carregado — uma vez
+  e meia o dano, e de dez em dez vezes duas e meia. A de metal do vazio enfraquece quem ela acerta; a de metal das
+  sombras enfraquece e dá fome.
+- **As três inscrições** (Demônio Furioso, Espírito Vingativo e Deusa Benevolente): infusões que gravam a marca na
+  própria lâmina do meio, e que servem para as três. Com uma delas, o golpe carregado vira bola de fogo, onda de
+  choque ou cura — e a lâmina descansa sete segundos. Agachado, sai o golpe carregado de sempre.
+- **O desenho das lâminas** (`FortressBladeRenderer`): o `ModelKatana` e o `ModelSaya` do original, caixa por caixa,
+  com a bainha ao lado da lâmina e, quando ela é inscrita, as vinte e oito runas do `script.png` correndo pelo fio.
+  A bainha aparece também na cintura de quem a carrega (`HipSheathLayer`), como o `IRenderInventoryItem` fazia.
+- **O Medidor Rúnico** (`MaleficiumHud`): as dezesseis runas por cima da barra, que enchem enquanto o golpe carrega e
+  esvaziam ao contrário enquanto a lâmina descansa.
+- **O Desmontador Táumico**: não gasta uso — bebe cem centésimos de entropia por segundo das varinhas do inventário,
+  até cinquenta mil, e queima essa carga para cavar (vinte, oito ou cento e vinte e oito, conforme o modo), para
+  lavrar a terra em volta e para bater (vinte de dano). Agachado, o clique direito passa de modo em modo.
+- **A Lâmina Primordial**: fere como nada mais, põe a definhar e a enfraquecer, conserta-se sozinha e, com o clique
+  direito seguro, abre o redemoinho que puxa tudo num raio de quinze blocos.
+- **A Chave do Portão Celeste**: prende-se a um lugar (uma vez só, e ganha uma cor sua) e leva de volta a ele depois
+  de dois segundos de clique direito, desde que seja no mesmo mundo e o lugar esteja desimpedido.
+- **O Frasco de Sangue Infundido com o Vazio**: na mesa comum, com uma peça de armadura qualquer, devolve a peça
+  `tocada pelo vazio` — que dali em diante se conserta sozinha, esteja onde estiver no inventário.
+- **O Cogumelo Mágico**: come-se depressa, cura, apressa e ensina um ponto de pesquisa de um primário sorteado.
+- **A Forja Carmesim Avançada**, que faltava por causa do ícone: as três peças do Pretor Carmesim, que o ramo faz a
+  partir das do Cavaleiro.
+- **As armaduras de fortaleza do ramo passaram a usar o modelo de fortaleza do Thaumcraft**, com a folha de textura
+  de cada uma, como no original — e por isso aceitam também as máscaras e os óculos por infusão.
+- A tabela gerada fechou em **quarenta e oito pesquisas e setenta e nove receitas**, sem nada adiado: o gerador passou
+  a entender o ícone pedido pelo nome (`ItemApi.getItem`), os subtipos da katana, o coringa de metadado das coisas do
+  próprio Tainted Magic e as infusões que mudam a coisa do meio.
+- Testes: o sangue do vazio (receita, conserto e uma vez só), os modos e a bebida de entropia do desmontador, os
+  números das três lâminas, o que cada inscrição faz no golpe, a infusão que grava a inscrição, a chave que se prende
+  e a lâmina primordial. Trezentos e quarenta e um ao todo, todos passando.

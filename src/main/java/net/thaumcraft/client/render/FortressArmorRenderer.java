@@ -31,11 +31,18 @@ public class FortressArmorRenderer implements ArmorRenderer {
     private static final Identifier TEXTURE = Thaumcraft.id("textures/models/fortress_armor.png");
 
     private final Model helmet, chest, legs;
+    private final Identifier texture;
 
     public FortressArmorRenderer(EntityRendererProvider.Context context) {
+        this(context, TEXTURE);
+    }
+
+    /** As armaduras de fortaleza do Maleficium são a mesma coisa noutra folha. */
+    public FortressArmorRenderer(EntityRendererProvider.Context context, Identifier texture) {
         this.helmet = new Model(context.bakeLayer(LAYER), EquipmentSlot.HEAD);
         this.chest = new Model(context.bakeLayer(LAYER), EquipmentSlot.CHEST);
         this.legs = new Model(context.bakeLayer(LAYER), EquipmentSlot.LEGS);
+        this.texture = texture;
     }
 
     @Override
@@ -48,7 +55,7 @@ public class FortressArmorRenderer implements ArmorRenderer {
             default -> null;
         };
         if (model == null) return;
-        collector.submitModel(model, state, pose, RenderTypes.armorCutoutNoCull(TEXTURE), light, OverlayTexture.NO_OVERLAY, -1, null, 0, null);
+        collector.submitModel(model, state, pose, RenderTypes.armorCutoutNoCull(this.texture), light, OverlayTexture.NO_OVERLAY, -1, null, 0, null);
         if (stack.hasFoil()) {
             collector.submitModel(model, state, pose, RenderTypes.armorEntityGlint(), light, OverlayTexture.NO_OVERLAY, -1, null, 0, null);
         }

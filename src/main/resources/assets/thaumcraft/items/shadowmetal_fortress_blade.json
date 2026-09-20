@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:item/fortress_blade_base",
+    "model": {
+      "type": "thaumcraft:fortress_blade",
+      "metal": "shadowmetal"
+    }
+  }
+}

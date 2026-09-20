@@ -3,6 +3,7 @@ package net.thaumcraft.maleficium.client;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
+import net.thaumcraft.client.fx.LightningBolt;
 import net.thaumcraft.client.fx.Sparkle;
 import net.thaumcraft.client.fx.Wisp;
 import net.thaumcraft.maleficium.LumosBlock;
@@ -19,6 +20,9 @@ public final class MaleficiumFx {
         WarpwoodKnotBlock.clientEffects = MaleficiumFx::knotBurst;
         LumosBlock.clientEffects = MaleficiumFx::lumos;
         net.thaumcraft.maleficium.WarpFertilizerItem.clientEffects = MaleficiumFx::twist;
+        net.thaumcraft.maleficium.GateKeyItem.clientEffects = MaleficiumFx::gateSparkle;
+        net.thaumcraft.maleficium.FortressBladeItem.clientEffects = new BladeEffects();
+        MaleficiumHud.init();
     }
 
     /** O {@code addDestroyEffects} do nó: quinze fogos-fátuos saindo dele devagar. */
@@ -42,6 +46,50 @@ public final class MaleficiumFx {
             double z = pos.getZ() + 0.5 + (random.nextDouble() - random.nextDouble()) * 0.5;
             Wisp.fx3(x, y, z, x + (x - pos.getX() - 0.5) * 0.5, y, z + (z - pos.getZ() - 0.5) * 0.5,
                     0.25f + random.nextFloat() * 0.25f, 5, false, 0.01f);
+        }
+    }
+
+    /** O {@code sparkle} da chave do portão: faíscas subindo do lugar a que ela se prendeu. */
+    private static void gateSparkle(Level level, double x, double y, double z) {
+        RandomSource random = level.getRandom();
+        Sparkle.custom(random, x + 0.33f * random.nextGaussian(), y + 0.5 + random.nextFloat(),
+                z + 0.33f * random.nextGaussian(), 1.75f, 6, 3 + random.nextInt(3), 0.1f, 0.0, 0.0, 0.0);
+    }
+
+    /**
+     * Os dois efeitos das lâminas de fortaleza inscritas: a cura da Deusa Benevolente, com fogos-fátuos e
+     * faíscas em volta de quem se curou, e o raio do Espírito Vingativo em cada um que a onda de choque pega.
+     */
+    static class BladeEffects implements net.thaumcraft.maleficium.FortressBladeItem.Effects {
+        @Override
+        public void heal(Level level, net.minecraft.world.entity.player.Player player) {
+            RandomSource random = level.getRandom();
+            for (int a = 0; a < 18; a++) {
+                double x = player.getX() + random.nextGaussian() * 0.25;
+                double y = player.getBoundingBox().minY + 1.0 + random.nextGaussian() * 0.5;
+                double z = player.getZ() + random.nextGaussian() * 0.25;
+                Wisp.fx2(x, y, z, 0.25f + random.nextFloat() * 0.25f, 3, true, 0.02f);
+                Sparkle.spawn(random, x, y, z, 1.0f, 5, 0.0f);
+            }
+        }
+
+        @Override
+        public void shockwave(Level level, net.minecraft.world.entity.player.Player player,
+                              net.minecraft.world.entity.Entity target) {
+            RandomSource random = level.getRandom();
+            for (int a = 0; a < 5; a++) {
+                Sparkle.spawn(random, target.getX() + (random.nextFloat() - random.nextFloat()) * 0.6f,
+                        target.getY() + (random.nextFloat() - random.nextFloat()) * 0.6f,
+                        target.getZ() + (random.nextFloat() - random.nextFloat()) * 0.6f,
+                        2.0f + random.nextFloat(), 2, 0.05f + random.nextFloat() * 0.05f);
+            }
+            LightningBolt bolt = new LightningBolt(player.getX(), player.getEyeY(), player.getZ(),
+                    target.getX(), target.getBoundingBox().minY + target.getBbHeight() / 2.0f, target.getZ(),
+                    random.nextLong(), 4, 0.5f, 8);
+            bolt.defaultFractal();
+            bolt.setType(2);
+            bolt.setWidth(0.125f);
+            bolt.finalizeBolt();
         }
     }
 

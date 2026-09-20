@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "thaumcraft:item/gate_key"
+    "layer0": "thaumcraft:item/gate_key",
+    "layer1": "thaumcraft:item/gate_key_overlay"
   }
 }
