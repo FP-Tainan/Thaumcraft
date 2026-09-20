@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:shadowmetal_ingot"
+  ],
+  "result": {
+    "id": "thaumcraft:shadowmetal_nugget",
+    "count": 9
+  }
+}

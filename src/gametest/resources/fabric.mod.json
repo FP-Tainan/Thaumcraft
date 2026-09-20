@@ -78,7 +78,8 @@
       "net.thaumcraft.test.TravellerBootsGameTest",
       "net.thaumcraft.test.BaublesInventoryGameTest",
       "net.thaumcraft.test.LangGameTest",
-      "net.thaumcraft.test.AddonApiGameTest"
+      "net.thaumcraft.test.AddonApiGameTest",
+      "net.thaumcraft.test.MaleficiumGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",
@@ -141,7 +142,8 @@
       "net.thaumcraft.test.client.ArcaneBenchClientTest",
       "net.thaumcraft.test.client.NamesClientTest",
       "net.thaumcraft.test.client.AspectHoverClientTest",
-      "net.thaumcraft.test.client.TravellerBootsClientTest"
+      "net.thaumcraft.test.client.TravellerBootsClientTest",
+      "net.thaumcraft.test.client.MaleficiumClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

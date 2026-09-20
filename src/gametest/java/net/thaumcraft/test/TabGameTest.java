@@ -15,12 +15,14 @@ public class TabGameTest {
         var tab = BuiltInRegistries.CREATIVE_MODE_TAB.getValue(net.thaumcraft.registry.TCItems.TAB_KEY);
         if (tab == null) helper.fail("faltou a aba do mod");
 
-        // tudo o que o mod registrou como item de mão; o que é peça de dentro do maquinário não conta
+        // tudo o que o mod registrou como item de mão; o que é peça de dentro do maquinário não conta, e o que
+        // é do Maleficium mora na aba dele
         int ours = 0;
         for (Item item : BuiltInRegistries.ITEM) {
             var id = BuiltInRegistries.ITEM.getKey(item);
             if (id == null || !id.getNamespace().equals(Thaumcraft.MOD_ID)) continue;
             if (net.thaumcraft.registry.TCItems.HIDDEN.contains(item)) continue;
+            if (net.thaumcraft.maleficium.MaleficiumItems.shown().contains(item)) continue;
             ours++;
         }
         if (ours < 60) helper.fail("o mod devia ter mais itens que isso: " + ours);
@@ -42,6 +44,18 @@ public class TabGameTest {
         // e a prateleira não pode citar nada que não exista
         for (Item item : shown) {
             if (BuiltInRegistries.ITEM.getKey(item) == null) helper.fail("item sem nome na aba");
+        }
+        helper.succeed();
+    }
+
+    /** E o Maleficium tem a aba dele, com tudo o que o ramo registra. */
+    @GameTest
+    public void theMaleficiumHasItsOwnTab(GameTestHelper helper) {
+        var tab = BuiltInRegistries.CREATIVE_MODE_TAB.getValue(net.thaumcraft.maleficium.MaleficiumItems.TAB_KEY);
+        if (tab == null) helper.fail("faltou a aba do Maleficium");
+        var shown = net.thaumcraft.maleficium.MaleficiumItems.shown();
+        if (shown.size() != net.thaumcraft.maleficium.MaleficiumItems.count()) {
+            helper.fail("a aba do Maleficium mostra " + shown.size() + " de " + net.thaumcraft.maleficium.MaleficiumItems.count());
         }
         helper.succeed();
     }

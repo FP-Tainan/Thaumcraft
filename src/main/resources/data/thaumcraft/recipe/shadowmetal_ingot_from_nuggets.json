@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": "thaumcraft:shadowmetal_nugget"
+  },
+  "result": {
+    "id": "thaumcraft:shadowmetal_ingot",
+    "count": 1
+  }
+}

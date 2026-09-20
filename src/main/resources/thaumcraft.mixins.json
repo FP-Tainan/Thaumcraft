@@ -17,7 +17,8 @@
     "BlockDropsMiningMixin",
     "AbstractArrowDamageMixin",
     "AbstractArrowAccessor",
-    "InventoryMenuBaublesMixin"
+    "InventoryMenuBaublesMixin",
+    "ItemEntitySalisMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",
@@ -27,7 +28,8 @@
     "GuiRendererTintMixin",
     "ContainerScreenHoverMixin",
     "InventoryScreenBaublesMixin",
-    "InventoryRecipeBookMixin"
+    "InventoryRecipeBookMixin",
+    "ItemEntitySalisFxMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1759,3 +1759,27 @@ entravam todos pelo `ThaumcraftApi`. Para que o mesmo valha aqui, a porta foi ab
   do livro. A nona começa outra coluna, mais para fora.
 - **Guarda**: `net.thaumcraft.test.addon.TestAddon` é um mod de mentira que carrega junto com os testes e entra por
   essa porta; `AddonApiGameTest` confere que tudo o que ele registrou chegou onde devia.
+
+## Maleficium — o Tainted Magic dentro do Thaumcraft (2026-09-20)
+
+O Tainted Magic 8.1.1, de Yulife, era um mod à parte que entrava pelo `ThaumcraftApi`. Aqui ele vai **no mesmo jar**,
+a pedido de quem joga, mas continua entrando pela mesma porta — o ramo é uma aba própria no Thaumonomicon, e o nome
+dela é o da lore de quem joga: **Maleficium**, onde o original dizia *Obscura*. O código fica em
+`net.thaumcraft.maleficium`, as figuras e os idiomas no espaço de nome do Thaumcraft, e a aba do criativo é separada
+da do mod, como o original a tinha.
+
+### Fatia 1 — a matéria-prima
+
+- **Os doze subtipos do `ItemMaterial` viraram doze itens**, com os mesmos nomes e as mesmas figuras: o Minecraft de
+  hoje não tem subtipo. O mesmo vale para os dois sais do `ItemSalis`.
+- **Os sais** (`SalisItem` + `ItemEntitySalisMixin`): largados no chão duram cem tiques e se gastam, virando o tempo
+  (Tempestas) ou o dia (Aevum). O original fazia isso no `onEntityItemUpdate`, que o jogo de hoje não tem mais — daí
+  o mixin. As faíscas são as do original, pela faísca do próprio Thaumcraft (`Sparkle.custom`).
+- **A aba e as três primeiras pesquisas** (`MALEFICIUM`, `SHADOWMETAL`, `UNBALANCEDSHARDS`), com as três receitas de
+  crisol que elas mostram: o ferro que vira metal das sombras e os dois fragmentos desequilibrados.
+- **Aspectos**: o Tainted Magic não anota nenhum, nem no original — quem os deduz das receitas é o Thaumcraft.
+- Testes: `MaleficiumGameTest`; tela: `MaleficiumClientTest`.
+
+**Falta**: os blocos (a árvore distorcida, a beladona, o Lumos), equipamentos, ferramentas, focos, criaturas, a
+árvore que nasce no mundo e o resto da árvore de pesquisa — que, quando as coisas existirem, passa a ser **gerada**
+do `ResearchRegistry` do original, como as tabelas do Thaumcraft.
