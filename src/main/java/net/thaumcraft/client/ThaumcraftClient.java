@@ -419,6 +419,7 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.registry.TCBlockEntities.BRAIN_JAR, net.thaumcraft.client.render.SpecialJarRenderers.Brain::new);
         registerNodeJar();
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("special_jar"), net.thaumcraft.client.render.SpecialJarRenderers.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("research_table"), net.thaumcraft.client.render.ResearchTableRenderer.Unbaked.CODEC);
         net.thaumcraft.block.NodeJarBlock.clientEffects = pos -> {
             for (int yy = -1; yy < 3; yy++) for (int xx = -1; xx < 2; xx++) for (int zz = -1; zz < 2; zz++) {
                 net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX() + xx, pos.getY() + yy, pos.getZ() + zz, -9999, 5);

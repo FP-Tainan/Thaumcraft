@@ -12,28 +12,19 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * O desenho das quatro casas de bijuteria dentro do inventário de sempre: o quadro e o desenho apagado de cada casa
  * saem da mesma folha do Baubles 1.0.1.10 ({@code expanded_inventory.png}), recortados de onde ficavam no inventário
  * expandido — amuleto em cima, anel no meio, cinto embaixo.
  *
- * <p>Vai no fim do fundo, antes dos itens, senão o quadro cobriria a peça vestida. O botão do livro de receitas,
- * que morava bem no meio desta fileira, sobe para a coluna vazia entre o quadro do jogador e a grade de fabricação.
+ * <p>Vai no fim do fundo, antes dos itens, senão o quadro cobriria a peça vestida. Quem morava bem no meio desta
+ * fileira era o botão do livro de receitas, que saiu do inventário a pedido de quem joga ({@link InventoryRecipeBookMixin}).
  */
 @Mixin(InventoryScreen.class)
 public abstract class InventoryScreenBaublesMixin {
     @org.spongepowered.asm.mixin.Unique
     private static final Identifier THAUMCRAFT$SHEET = Thaumcraft.id("textures/gui/expanded_inventory.png");
-
-    /** O botão do livro de receitas sai da fileira das bijuterias e vai para a coluna vazia ao lado da grade. */
-    @Inject(method = "getRecipeBookButtonPosition", at = @At("HEAD"), cancellable = true)
-    private void thaumcraft$moveRecipeButton(CallbackInfoReturnable<net.minecraft.client.gui.navigation.ScreenPosition> info) {
-        info.setReturnValue(new net.minecraft.client.gui.navigation.ScreenPosition(
-                ((ContainerScreenHoverMixin) this).thaumcraft$leftPos() + 77,
-                ((ContainerScreenHoverMixin) this).thaumcraft$topPos() + 42));
-    }
 
     @Inject(method = "extractBackground", at = @At("RETURN"))
     private void thaumcraft$baubleSlots(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partial, CallbackInfo info) {

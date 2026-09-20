@@ -26,7 +26,8 @@
     "GuiItemRenderStateMixin",
     "GuiRendererTintMixin",
     "ContainerScreenHoverMixin",
-    "InventoryScreenBaublesMixin"
+    "InventoryScreenBaublesMixin",
+    "InventoryRecipeBookMixin"
   ],
   "injectors": {
     "defaultRequire": 1

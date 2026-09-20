@@ -165,4 +165,71 @@ public class ResearchTableRenderer implements BlockEntityRenderer<ResearchTableB
     public boolean shouldRenderOffScreen() {
         return true;
     }
+
+    /**
+     * A mesa na mão e no inventário — e, por tabela, no Thaumonomicon: o mesmo corpo, as mesmas folhas e a mesma pena
+     * do bloco. Como a mesa tem dois blocos de comprimento, ela encolhe e recua meio bloco para caber inteira na casa,
+     * que é o que o original faz no {@code ItemBlockSpecialRenderer}.
+     */
+    public record Item() implements net.minecraft.client.renderer.special.SpecialModelRenderer<net.minecraft.util.Unit> {
+        @Override
+        public void submit(@org.jetbrains.annotations.Nullable net.minecraft.util.Unit ignored, PoseStack pose,
+                           SubmitNodeCollector collector, int light, int overlay, boolean foil, int tint) {
+            pose.pushPose();
+            pose.translate(0.5f, 1.0f, 0.5f);
+            pose.mulPose(Axis.XP.rotationDegrees(180.0f));
+            pose.scale(0.6f, 0.6f, 0.6f);
+            pose.translate(-0.5f, 0.0f, 0.0f);
+            box(pose, collector, TABLE, BODY, light, overlay, 0xFFFFFFFF, false);
+            box(pose, collector, TABLE, INKWELL, light, overlay, 0xFFFFFFFF, true);
+            pose.pushPose();
+            pose.mulPose(Axis.YP.rotationDegrees(-90.0f));
+            pose.mulPose(Axis.XP.rotationDegrees(180.0f));
+            pose.translate(-0.17f, 0.1f, -0.15f);
+            pose.mulPose(Axis.YP.rotationDegrees(15.0f));
+            pose.scale(0.5f, 0.5f, 0.5f);
+            collector.submitCustomGeometry(pose, RenderTypes.entityCutout(QUILL), (matrix, consumer) ->
+                    ExtrudedSprite.draw(matrix, consumer, 16, 0.025f, light, overlay, 0xFFFFFFFF));
+            pose.popPose();
+            for (int a = 0; a < 6; a++) {
+                pose.pushPose();
+                pose.translate(0.1f, -0.01f - a * 0.015f, 0.35f);
+                pose.mulPose(Axis.XN.rotationDegrees(90.0f));
+                pose.mulPose(Axis.ZP.rotationDegrees(15 + a % 3 * 2));
+                pose.scale(0.5f, 0.6f, 0.6f);
+                collector.submitCustomGeometry(pose, RenderTypes.entityTranslucent(PARCHMENT),
+                        (matrix, consumer) -> sheet(matrix, consumer, light, overlay));
+                pose.popPose();
+            }
+            pose.popPose();
+        }
+
+        @Override
+        public void getExtents(java.util.function.Consumer<org.joml.Vector3fc> extents) {
+            extents.accept(new org.joml.Vector3f(0.0f, 0.0f, 0.0f));
+            extents.accept(new org.joml.Vector3f(1.0f, 1.0f, 1.0f));
+        }
+
+        @Override
+        public net.minecraft.util.Unit extractArgument(net.minecraft.world.item.ItemStack stack) {
+            return net.minecraft.util.Unit.INSTANCE;
+        }
+    }
+
+    /** O que o arquivo do item declara: nada além de ser a mesa de pesquisa. */
+    public record Unbaked() implements net.minecraft.client.renderer.special.SpecialModelRenderer.Unbaked<net.minecraft.util.Unit> {
+        public static final com.mojang.serialization.MapCodec<Unbaked> CODEC =
+                com.mojang.serialization.MapCodec.unit(new Unbaked());
+
+        @Override
+        public net.minecraft.client.renderer.special.SpecialModelRenderer<net.minecraft.util.Unit> bake(
+                net.minecraft.client.renderer.special.SpecialModelRenderer.BakingContext context) {
+            return new Item();
+        }
+
+        @Override
+        public com.mojang.serialization.MapCodec<Unbaked> type() {
+            return CODEC;
+        }
+    }
 }

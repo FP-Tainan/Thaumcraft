@@ -205,13 +205,51 @@ public class ResearchGameTest {
                 // o item existe, mas tem desenho? no jogo de hoje todo item precisa do seu arquivo em items/
                 var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(research.iconStack().get().getItem());
                 String modelo = "assets/" + id.getNamespace() + "/items/" + id.getPath() + ".json";
-                if (id.getNamespace().equals("thaumcraft")
-                        && ResearchGameTest.class.getClassLoader().getResource(modelo) == null) {
-                    sem.add(research.key() + " -> " + modelo);
+                if (id.getNamespace().equals("thaumcraft")) {
+                    if (ResearchGameTest.class.getClassLoader().getResource(modelo) == null) {
+                        sem.add(research.key() + " -> " + modelo);
+                    } else if (!desenhaAlgo(modelo)) {
+                        sem.add(research.key() + " -> " + modelo + " (não desenha nada)");
+                    }
                 }
             }
         }
         if (!sem.isEmpty()) helper.fail(sem.size() + " pesquisas sem desenho: " + String.join(", ", sem));
         helper.succeed();
+    }
+
+    /**
+     * O arquivo do item desenha alguma coisa? Um modelo comum só desenha se ele, ou algum pai dele, tiver peças
+     * ({@code elements}) ou a folha achatada de sempre ({@code layer0}) — foi assim que a mesa de pesquisa saiu em
+     * branco, apontando para um modelo que só o bloco desenhava. O que é especial ({@code minecraft:special}) tem
+     * quem o desenhe em Java, e aqui se aceita.
+     */
+    private static boolean desenhaAlgo(String modelo) {
+        var json = leJson(modelo);
+        if (json == null) return true;
+        var raiz = json.getAsJsonObject("model");
+        if (raiz == null) return true;
+        String tipo = raiz.has("type") ? raiz.get("type").getAsString() : "";
+        if (!tipo.equals("minecraft:model")) return true;
+        String alvo = raiz.get("model").getAsString();
+        for (int volta = 0; volta < 8 && alvo != null; volta++) {
+            var id = net.minecraft.resources.Identifier.parse(alvo);
+            var peca = leJson("assets/" + id.getNamespace() + "/models/" + id.getPath() + ".json");
+            if (peca == null) return true;
+            if (peca.has("elements") && !peca.getAsJsonArray("elements").isEmpty()) return true;
+            if (peca.has("textures") && peca.getAsJsonObject("textures").has("layer0")) return true;
+            alvo = peca.has("parent") ? peca.get("parent").getAsString() : null;
+        }
+        return false;
+    }
+
+    private static com.google.gson.JsonObject leJson(String caminho) {
+        try (var stream = ResearchGameTest.class.getClassLoader().getResourceAsStream(caminho)) {
+            if (stream == null) return null;
+            return com.google.gson.JsonParser.parseReader(
+                    new java.io.InputStreamReader(stream, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (Exception erro) {
+            return null;
+        }
     }
 }

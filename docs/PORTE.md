@@ -1725,3 +1725,18 @@ aspecto nenhum, e por isso nem o thaumômetro nem a alquimia enxergavam essas co
 - **Português**: os 130 textos que o pt_BR do original deixara em inglês (a descrição dos aspectos, os sussurros da
   distorção, os avisos de dobra, as peças do vazio, os núcleos de golem) entraram por `scratchpad/traducoes.js`. Ficam
   em inglês só os dezenove nomes próprios e formatos que o original também não traduz.
+
+## O livro em português de verdade, e o inventário sem o guia de receitas (2026-09-20)
+
+- **As sessenta e uma páginas que faltavam**: o pt_BR que veio com o 4.2.3.5 era um trabalho pela metade — havia
+  pesquisa com a primeira página em português e a segunda em inglês, cortando no meio da frase (a do Pech). Todas
+  entraram por `scratchpad/traducoes-livro.js`, com as marcas do livro intactas (`<BR>`, `<LINE>`, `<IMG>`, os `§` de
+  cor e grifo). Guarda: `LangGameTest`, que passa palavra por palavra pelo arquivo inteiro.
+- **Os pontos sem desenho do Thaumonomicon**: o jarro com nodo e o jarro de cérebro desenhavam só o que ia dentro — o
+  vidro ficava de fora, porque um modelo `minecraft:special` não desenha o modelo de base, só chama quem o desenha em
+  Java; agora são `minecraft:composite` (o vidro mais o que vai dentro). A mesa de pesquisa ganhou o seu
+  `SpecialModelRenderer`, com o mesmo corpo, as mesmas folhas e a mesma pena do bloco, encolhido para caber na casa.
+  `ResearchGameTest.everyResearchHasAnIcon` agora também confere se o modelo apontado desenha alguma coisa.
+- **Fora do inventário, o botão do livro de receitas** (`InventoryRecipeBookMixin`): não é coisa do mod, é do jogo, mas
+  quem joga pediu para tirá-lo — nunca usa o guia, e sem ele o inventário fica limpo. Só sai do inventário do jogador;
+  na bancada e nas fornalhas continua onde sempre esteve. Era ele que ficava bem no meio da fileira das bijuterias.
