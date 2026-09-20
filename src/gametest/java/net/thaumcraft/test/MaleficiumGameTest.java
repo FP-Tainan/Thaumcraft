@@ -184,6 +184,75 @@ public class MaleficiumGameTest {
         });
     }
 
+    /** As ferramentas de metal das sombras: duras de gastar e afiadas como o original as fez. */
+    @GameTest
+    public void theShadowMetalToolsFollowTheOriginal(GameTestHelper helper) {
+        for (var item : new net.minecraft.world.item.Item[]{MaleficiumItems.SHADOWMETAL_PICKAXE,
+                MaleficiumItems.SHADOWMETAL_AXE, MaleficiumItems.SHADOWMETAL_SHOVEL,
+                MaleficiumItems.SHADOWMETAL_HOE, MaleficiumItems.SHADOWMETAL_SWORD}) {
+            ItemStack stack = new ItemStack(item);
+            if (stack.getMaxDamage() != 2500) helper.fail(item + " devia aguentar 2500 usos, aguenta " + stack.getMaxDamage());
+            var conserto = stack.get(net.minecraft.core.component.DataComponents.REPAIRABLE);
+            if (conserto == null) helper.fail(item + " devia se consertar com o lingote do metal das sombras");
+        }
+        // a lâmina dá dez de dano, como os quatro mais seis do original
+        ItemStack sword = new ItemStack(MaleficiumItems.SHADOWMETAL_SWORD);
+        double dano = 1.0;
+        for (var entry : sword.getOrDefault(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,
+                net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY).modifiers()) {
+            if (entry.attribute().is(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE.unwrapKey().orElseThrow())) {
+                dano += entry.modifier().amount();
+            }
+        }
+        if (Math.abs(dano - 10.0) > 0.001) helper.fail("a lâmina devia dar dez de dano; dá " + dano);
+        helper.succeed();
+    }
+
+    /** A enxada de metal das sombras vira a terra dos dois lados: ara e desara. */
+    @GameTest
+    public void theShadowMetalHoeTurnsTheGroundBothWays(GameTestHelper helper) {
+        BlockPos at = new BlockPos(1, 1, 1);
+        helper.setBlock(at, net.minecraft.world.level.block.Blocks.DIRT);
+        var player = helper.makeMockServerPlayerInLevel();
+        ItemStack hoe = new ItemStack(MaleficiumItems.SHADOWMETAL_HOE);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, hoe);
+        use(helper, player, hoe, at);
+        if (!helper.getBlockState(at).is(net.minecraft.world.level.block.Blocks.FARMLAND)) {
+            helper.fail("a terra devia ter sido arada; é " + helper.getBlockState(at));
+        }
+        use(helper, player, hoe, at);
+        if (!helper.getBlockState(at).is(net.minecraft.world.level.block.Blocks.DIRT)) {
+            helper.fail("a terra arada devia ter voltado a ser terra; é " + helper.getBlockState(at));
+        }
+        helper.succeed();
+    }
+
+    /** O punhal oco enche de sangue o frasco vazio de quem golpeia. */
+    @GameTest
+    public void theHollowDaggerFillsAPhialWithBlood(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.getInventory().add(new ItemStack(net.thaumcraft.registry.TCItems.PHIAL));
+        var alvo = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(2, 2, 2));
+        ItemStack dagger = new ItemStack(MaleficiumItems.HOLLOW_DAGGER);
+        ((net.thaumcraft.maleficium.HollowDaggerItem) MaleficiumItems.HOLLOW_DAGGER).hurtEnemy(dagger, alvo, player);
+        boolean sangue = false;
+        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
+            if (player.getInventory().getItem(slot).is(MaleficiumItems.CRIMSON_BLOOD)) sangue = true;
+            if (player.getInventory().getItem(slot).is(net.thaumcraft.registry.TCItems.PHIAL)) {
+                helper.fail("o frasco vazio devia ter virado sangue");
+            }
+        }
+        if (!sangue) helper.fail("o punhal devia ter enchido um frasco de sangue");
+        helper.succeed();
+    }
+
+    private static void use(GameTestHelper helper, net.minecraft.server.level.ServerPlayer player, ItemStack stack, BlockPos at) {
+        var absolute = helper.absolutePos(at);
+        var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(absolute),
+                net.minecraft.core.Direction.UP, absolute, false);
+        stack.useOn(new net.minecraft.world.item.context.UseOnContext(player, net.minecraft.world.InteractionHand.MAIN_HAND, hit));
+    }
+
     private static ItemEntity drop(GameTestHelper helper, net.minecraft.world.item.Item salis) {
         Vec3 at = helper.absoluteVec(Vec3.atBottomCenterOf(new BlockPos(1, 2, 1)));
         ItemEntity item = new ItemEntity(helper.getLevel(), at.x, at.y, at.z, new ItemStack(salis));

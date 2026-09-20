@@ -1800,5 +1800,19 @@ da do mod, como o original a tinha.
   perguntava pelo `canSustainPlant`.
 - Testes: `MaleficiumGameTest` (blocos, árvore, adubo, Lumos); tela: `MaleficiumTreeClientTest`.
 
-**Falta**: equipamentos, ferramentas, focos, criaturas e o resto da árvore de pesquisa — que, quando as coisas
-existirem, passa a ser **gerada** do `ResearchRegistry` do original, como as tabelas do Thaumcraft.
+### Fatia 3 — o metal das sombras e o punhal oco
+
+- **As cinco ferramentas de metal das sombras**, com os números do `TMMaterials`: dois mil e quinhentos usos,
+  velocidade dezessete, trinta de encantabilidade. A lâmina dá os mesmos dez de dano do original (quatro da espada
+  mais seis do metal), e todas se consertam com o lingote, pela etiqueta `c:ingots/shadowmetal`.
+- **A enxada vira a terra dos dois lados** (`ShadowmetalHoeItem`): terra e grama viram terra arada, e terra arada
+  volta a ser terra. O original desliga a aração de sempre para fazer isso.
+- **O punhal oco** (`HollowDaggerItem`): feito de haste de osso na bancada arcana, quase não fere — mas, ao golpear,
+  enche de sangue carmesim o primeiro frasco vazio do inventário de quem bate.
+- **As páginas do livro**: a pesquisa do metal das sombras passou a mostrar, depois do crisol, as cinco receitas de
+  mesa; e o punhal ganhou a pesquisa dele, com a receita arcana.
+- Testes: as ferramentas (uso, dano e conserto), a enxada dos dois lados e o punhal que tira sangue.
+
+**Falta**: a lâmina primordial (que espera o Fragmento da Criação), equipamentos, focos, criaturas e o resto da
+árvore de pesquisa — que, quando as coisas existirem, passa a ser **gerada** do `ResearchRegistry` do original,
+como as tabelas do Thaumcraft.

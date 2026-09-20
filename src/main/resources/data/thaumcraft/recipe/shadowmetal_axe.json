@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "AA",
+    "AB",
+    " B"
+  ],
+  "key": {
+    "A": "thaumcraft:shadowmetal_ingot",
+    "B": "minecraft:stick"
+  },
+  "result": {
+    "id": "thaumcraft:shadowmetal_axe",
+    "count": 1
+  }
+}

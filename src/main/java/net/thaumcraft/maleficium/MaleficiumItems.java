@@ -65,6 +65,28 @@ public final class MaleficiumItems {
     public static final Item SALIS_AEVUM = register("salis_aevum", properties ->
             new SalisItem(SalisItem.Kind.AEVUM, properties.rarity(Rarity.EPIC)));
 
+    // ------------------------------------------------------------------ as lâminas e as ferramentas
+
+    /** O frasco de sangue carmesim, que o punhal oco tira de quem apanha. */
+    public static final Item CRIMSON_BLOOD = register("crimson_blood", Rarity.UNCOMMON);
+
+    /** O punhal oco: quase não fere, mas tira sangue. */
+    public static final Item HOLLOW_DAGGER = register("hollow_dagger", properties ->
+            new HollowDaggerItem(properties.sword(MaleficiumMaterials.HOLLOW, 3.0f, -2.4f)
+                    .rarity(Rarity.UNCOMMON)));
+
+    /** As cinco ferramentas de metal das sombras. */
+    public static final Item SHADOWMETAL_PICKAXE = register("shadowmetal_pickaxe", properties ->
+            new Item(properties.pickaxe(MaleficiumMaterials.SHADOW, 1.0f, -2.8f).rarity(Rarity.UNCOMMON)));
+    public static final Item SHADOWMETAL_AXE = register("shadowmetal_axe", properties ->
+            new Item(properties.axe(MaleficiumMaterials.SHADOW, 5.0f, -3.0f).rarity(Rarity.UNCOMMON)));
+    public static final Item SHADOWMETAL_SHOVEL = register("shadowmetal_shovel", properties ->
+            new Item(properties.shovel(MaleficiumMaterials.SHADOW, 1.5f, -3.0f).rarity(Rarity.UNCOMMON)));
+    public static final Item SHADOWMETAL_HOE = register("shadowmetal_hoe", properties ->
+            new ShadowmetalHoeItem(properties.hoe(MaleficiumMaterials.SHADOW, -3.0f, 0.0f).rarity(Rarity.UNCOMMON)));
+    public static final Item SHADOWMETAL_SWORD = register("shadowmetal_sword", properties ->
+            new Item(properties.sword(MaleficiumMaterials.SHADOW, 3.0f, -2.4f).rarity(Rarity.UNCOMMON)));
+
     // ------------------------------------------------------------------ o que vem dos blocos
 
     /** As bagas da beladona: comem-se e matam. */

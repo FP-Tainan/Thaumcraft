@@ -31,6 +31,11 @@ public class MaleficiumClientTest implements FabricClientGameTest {
             });
             context.waitTicks(20);
             context.takeScreenshot("pagina_metal_das_sombras");
+            // e a página das ferramentas, que o livro monta da receita de mesa
+            context.runOnClient(minecraft ->
+                    minecraft.setScreenAndShow(new ResearchPageScreen(new ThaumonomiconScreen(), Researches.get("SHADOWMETAL"), 2)));
+            context.waitTicks(20);
+            context.takeScreenshot("pagina_ferramentas");
         }
     }
 }
