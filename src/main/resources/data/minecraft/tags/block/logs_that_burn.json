@@ -2,6 +2,8 @@
   "values": [
     "thaumcraft:greatwood_log",
     "thaumcraft:silverwood_log",
-    "thaumcraft:silverwood_knot"
+    "thaumcraft:silverwood_knot",
+    "thaumcraft:warpwood_log",
+    "thaumcraft:warpwood_knot"
   ]
 }

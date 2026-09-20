@@ -29,6 +29,8 @@ public class HipSheathLayer extends RenderLayer<AvatarRenderState, PlayerModel> 
                        float yRot, float xRot) {
         Player player = Minecraft.getInstance().player;
         if (player == null || player.getId() != state.id) return;
+        // o original não desenha nada em quem está invisível
+        if (player.hasEffect(net.minecraft.world.effect.MobEffects.INVISIBILITY)) return;
         ItemStack carried = ItemStack.EMPTY;
         for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
             ItemStack stack = player.getInventory().getItem(slot);
