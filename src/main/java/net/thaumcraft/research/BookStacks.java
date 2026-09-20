@@ -30,6 +30,6 @@ public final class BookStacks {
 
     /** A mesa de pesquisa (o {@code blockTable} 1). */
     public static ItemStack researchTable() {
-        return new ItemStack(net.thaumcraft.registry.TCBlocks.RESEARCH_TABLE.asItem());
+        return new ItemStack(net.thaumcraft.registry.TCItems.RESEARCH_TABLE);
     }
 }

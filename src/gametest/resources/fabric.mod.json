@@ -74,7 +74,9 @@
       "net.thaumcraft.test.ToolsGameTest",
       "net.thaumcraft.test.ArcaneBenchGameTest",
       "net.thaumcraft.test.CrucibleCraftGameTest",
-      "net.thaumcraft.test.VanillaAspectsGameTest"
+      "net.thaumcraft.test.VanillaAspectsGameTest",
+      "net.thaumcraft.test.TravellerBootsGameTest",
+      "net.thaumcraft.test.BaublesInventoryGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",
@@ -136,7 +138,9 @@
       "net.thaumcraft.test.client.SceptreClientTest",
       "net.thaumcraft.test.client.ArcaneBenchClientTest",
       "net.thaumcraft.test.client.NamesClientTest",
-      "net.thaumcraft.test.client.AspectHoverClientTest"
+      "net.thaumcraft.test.client.AspectHoverClientTest",
+      "net.thaumcraft.test.client.TravellerBootsClientTest",
+      "net.thaumcraft.test.client.TmpInvClientTest"
     ]
   }
 }

@@ -37,12 +37,15 @@ public class TaintFaunaGameTest {
     public void zombieDiesAsSlime(GameTestHelper helper) {
         var zombie = helper.spawn(EntityTypes.ZOMBIE, new BlockPos(2, 2, 2));
         zombie.addEffect(new MobEffectInstance(TCEffects.FLUX_TAINT, 200, 0));
+        // o tamanho sai da vida de quem morreu, e o zumbi nasce com um tanto de vida a mais, sorteado
+        int esperado = (int) (1.0f + Math.min(zombie.getMaxHealth() / 10.0f, 6.0f));
         zombie.kill(helper.getLevel());
         helper.succeedWhen(() -> {
             var slimes = helper.getLevel().getEntities(TCEntities.THAUMIC_SLIME, e -> true);
             if (slimes.isEmpty()) helper.fail("o zumbi devia ter virado slime taumático");
-            // vida 20: um mais dois
-            if (slimes.getFirst().getSize() != 3) helper.fail("o slime devia ter tamanho 3, tem " + slimes.getFirst().getSize());
+            if (slimes.getFirst().getSize() != esperado) {
+                helper.fail("o slime devia ter tamanho " + esperado + ", tem " + slimes.getFirst().getSize());
+            }
         });
     }
 

@@ -524,8 +524,6 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.client.HoverClient.init();
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.HOVER_HARNESS,
                 net.thaumcraft.client.gui.HoverHarnessScreen::new);
-        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.BAUBLES,
-                net.thaumcraft.client.gui.BaublesScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.FOCUS_POUCH,
                 net.thaumcraft.client.gui.FocusPouchScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.HAND_MIRROR,

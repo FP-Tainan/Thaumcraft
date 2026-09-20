@@ -40,7 +40,7 @@ public class RunicClientTest implements FabricClientGameTest {
             context.takeScreenshot("escudo_runico_clarao");
             context.runOnClient(c -> c.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON));
             context.waitTicks(10);
-            context.getInput().pressKey(net.thaumcraft.client.BaublesClient.KEY);
+            context.getInput().pressKey(options -> options.keyInventory);
             context.waitTicks(20);
             context.takeScreenshot("escudo_runico_baubles");
         }

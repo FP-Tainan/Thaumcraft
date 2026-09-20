@@ -16,6 +16,9 @@ import org.jetbrains.annotations.Nullable;
  * <p>Andando para a frente, empurram mais cinco centésimos e meio por tique no chão (um quarto disso na água) e dão
  * mais controle no ar; sobem degraus de um bloco inteiro (um modificador do próprio item, já que o jogo de hoje
  * guarda o degrau num atributo) e tiram um quarto de bloco da queda a cada tique.
+ *
+ * <p>Fora do original, a pedido de quem joga: a força de pulo sobe de 0,42 para 0,70, o que dá pouco mais de três
+ * blocos de altura — o bastante para subir num paredão de três sem escada.
  */
 public class TravellerBootsItem extends Item {
     public TravellerBootsItem(Properties properties) {

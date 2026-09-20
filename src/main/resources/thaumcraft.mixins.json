@@ -16,7 +16,8 @@
     "ItemStackWarpMixin",
     "BlockDropsMiningMixin",
     "AbstractArrowDamageMixin",
-    "AbstractArrowAccessor"
+    "AbstractArrowAccessor",
+    "InventoryMenuBaublesMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",
@@ -24,7 +25,8 @@
     "FogRendererWarpMixin",
     "GuiItemRenderStateMixin",
     "GuiRendererTintMixin",
-    "ContainerScreenHoverMixin"
+    "ContainerScreenHoverMixin",
+    "InventoryScreenBaublesMixin"
   ],
   "injectors": {
     "defaultRequire": 1

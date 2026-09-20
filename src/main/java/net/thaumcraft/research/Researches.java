@@ -940,7 +940,7 @@ public final class Researches {
                         new Page.Text("tc.research_page.CENTRIFUGE.3"),
                         new Page.Recipe(Page.Kind.ARCANE, List.of("TubeBuffer"))), 0, null));
         add(new Research("THAUMATORIUM", "ALCHEMY", new AspectList().add(Aspects.WATER, 3).add(Aspects.MAGIC, 6).add(Aspects.EXCHANGE, 3).add(Aspects.CRAFT, 3), 10, -2, 3,
-                "textures/blocks/alchemyblock.png", null, List.of(Research.Mark.CONCEALED),
+                "textures/block/alchemyblock.png", null, List.of(Research.Mark.CONCEALED),
                 List.of("CENTRIFUGE"), List.of(), List.of(),
                 List.of(
                         new Page.Text("tc.research_page.THAUMATORIUM.1"),

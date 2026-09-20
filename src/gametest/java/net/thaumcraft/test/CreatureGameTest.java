@@ -30,7 +30,9 @@ public class CreatureGameTest {
     @GameTest
     public void theAngryZombieIsTougher(GameTestHelper helper) {
         var zombie = helper.spawn(TCEntities.BRAINY_ZOMBIE, new BlockPos(1, 1, 1));
-        if (zombie.getMaxHealth() != 25.0f) helper.fail("o zumbi zangado tem 25 de vida: " + zombie.getMaxHealth());
+        // a vida de base, sem o tanto sorteado que todo zumbi ganha ao nascer
+        double vida = zombie.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).getBaseValue();
+        if (vida != 25.0) helper.fail("o zumbi zangado tem 25 de vida: " + vida);
         if (zombie.getAttributeValue(Attributes.ATTACK_DAMAGE) != 5.0) helper.fail("e morde com cinco");
         if (zombie.getArmorValue() < 3) helper.fail("e tem três de armadura a mais: " + zombie.getArmorValue());
         if (zombie.getAttributeValue(Attributes.SPAWN_REINFORCEMENTS_CHANCE) != 0.0) helper.fail("e não chama reforços");

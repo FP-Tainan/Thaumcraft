@@ -10,4 +10,10 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface ContainerScreenHoverMixin {
     @Accessor("hoveredSlot")
     Slot thaumcraft$hoveredSlot();
+
+    @Accessor("leftPos")
+    int thaumcraft$leftPos();
+
+    @Accessor("topPos")
+    int thaumcraft$topPos();
 }

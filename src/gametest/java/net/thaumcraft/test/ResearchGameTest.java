@@ -185,4 +185,33 @@ public class ResearchGameTest {
         }
         helper.succeed();
     }
+
+    /**
+     * Nenhum ponto do mapa sem desenho: ou a pesquisa tem a figura dela nos recursos do mod, ou tem um item que a
+     * represente. Foi o que escapou uma vez, com as figuras ainda no lugar da 1.7.10 ({@code textures/blocks/}).
+     */
+    @GameTest
+    public void everyResearchHasAnIcon(GameTestHelper helper) {
+        java.util.List<String> sem = new java.util.ArrayList<>();
+        for (var research : net.thaumcraft.research.Researches.ALL.values()) {
+            if (research.is(net.thaumcraft.research.Research.Mark.VIRTUAL)) continue;
+            var icone = research.icon();
+            if (icone != null) {
+                String caminho = "assets/" + icone.getNamespace() + "/" + icone.getPath();
+                if (ResearchGameTest.class.getClassLoader().getResource(caminho) == null) sem.add(research.key() + " -> " + caminho);
+            } else if (research.iconStack() == null || research.iconStack().get().isEmpty()) {
+                sem.add(research.key() + " (sem figura e sem item)");
+            } else {
+                // o item existe, mas tem desenho? no jogo de hoje todo item precisa do seu arquivo em items/
+                var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(research.iconStack().get().getItem());
+                String modelo = "assets/" + id.getNamespace() + "/items/" + id.getPath() + ".json";
+                if (id.getNamespace().equals("thaumcraft")
+                        && ResearchGameTest.class.getClassLoader().getResource(modelo) == null) {
+                    sem.add(research.key() + " -> " + modelo);
+                }
+            }
+        }
+        if (!sem.isEmpty()) helper.fail(sem.size() + " pesquisas sem desenho: " + String.join(", ", sem));
+        helper.succeed();
+    }
 }

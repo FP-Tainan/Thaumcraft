@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.thaumcraft.baubles.Baubles;
 import net.thaumcraft.registry.TCItems;
 
-/** O inventário de sempre com o botão do Baubles, e o inventário expandido com amuleto, anel e cinto vestidos. */
+/** As quatro casas de bijuteria dentro do inventário de sempre, com amuleto, anel e cinto vestidos. */
 public class BaublesClientTest implements FabricClientGameTest {
     @Override
     public void runTest(ClientGameTestContext context) {
@@ -28,11 +28,6 @@ public class BaublesClientTest implements FabricClientGameTest {
             });
             context.waitTicks(10);
             context.getInput().pressKey(options -> options.keyInventory);
-            context.waitTicks(10);
-            context.takeScreenshot("inventario_com_botao_baubles");
-            context.getInput().pressKey(options -> options.keyInventory);
-            context.waitTicks(10);
-            context.getInput().pressKey(net.thaumcraft.client.BaublesClient.KEY);
             context.waitTicks(20);
             context.takeScreenshot("inventario_baubles");
         }

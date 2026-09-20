@@ -366,7 +366,7 @@ public final class TCItems {
     public static final Item HOVER_GIRDLE = register("hover_girdle", properties ->
             new net.thaumcraft.item.HoverGirdleItem(properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)));
 
-    /** As botas do viajante: correm mais, sobem um bloco e amortecem a queda. */
+    /** As botas do viajante: correm mais, sobem um bloco, pulam três e amortecem a queda. */
     public static final Item TRAVELLER_BOOTS = register("traveller_boots", properties ->
             new net.thaumcraft.item.TravellerBootsItem(properties
                     .humanoidArmor(net.thaumcraft.item.TCMaterials.TRAVELLER, net.minecraft.world.item.equipment.ArmorType.BOOTS)
@@ -375,6 +375,11 @@ public final class TCItems {
                             net.thaumcraft.item.TCMaterials.TRAVELLER.createAttributes(net.minecraft.world.item.equipment.ArmorType.BOOTS)
                                     .withModifierAdded(net.minecraft.world.entity.ai.attributes.Attributes.STEP_HEIGHT,
                                             new net.minecraft.world.entity.ai.attributes.AttributeModifier(Thaumcraft.id("traveller_step"), 0.4,
+                                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),
+                                            net.minecraft.world.entity.EquipmentSlotGroup.FEET)
+                                    // o pulo alto de três blocos, a pedido de quem joga: o original só dava o degrau
+                                    .withModifierAdded(net.minecraft.world.entity.ai.attributes.Attributes.JUMP_STRENGTH,
+                                            new net.minecraft.world.entity.ai.attributes.AttributeModifier(Thaumcraft.id("traveller_jump"), 0.28,
                                                     net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),
                                             net.minecraft.world.entity.EquipmentSlotGroup.FEET))));
 
@@ -735,6 +740,13 @@ public final class TCItems {
     /** A mesa de madeira do mod. */
     public static final Item TABLE = register("table", properties ->
             new net.minecraft.world.item.BlockItem(TCBlocks.TABLE, properties.useBlockDescriptionPrefix()));
+
+    /**
+     * A mesa de pesquisa. Não fica na aba nem se fabrica — nasce da mesa com as ferramentas de escrita —, mas o item
+     * existe, como no original, porque é ele que dá a cara da pesquisa no Thaumonomicon.
+     */
+    public static final Item RESEARCH_TABLE = registerHidden("research_table", properties ->
+            new net.minecraft.world.item.BlockItem(TCBlocks.RESEARCH_TABLE, properties.useBlockDescriptionPrefix()));
 
     /** As ferramentas de escrita: pena e tinteiro, com tinta para cem riscos. */
     public static final Item SCRIBING_TOOLS = register("scribing_tools", properties ->

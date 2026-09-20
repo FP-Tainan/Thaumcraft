@@ -1705,3 +1705,23 @@ aspecto nenhum, e por isso nem o thaumômetro nem a alquimia enxergavam essas co
   uma casa de qualquer tela, os símbolos do que aquilo é feito aparecem em fileira acima do cursor, cada um no disco do
   original, com a quantidade; o aspecto que quem joga ainda não descobriu sai como interrogação, e o item que ainda não
   foi examinado não mostra nada. Tela: `AspectHoverClientTest`.
+
+## As bijuterias no inventário de sempre, e o pulo do viajante (2026-09-20)
+
+- **As quatro casas no inventário do jogo** (`InventoryMenuBaublesMixin`, `InventoryScreenBaublesMixin`): amuleto, dois
+  anéis e cinto entram no fim da lista de casas do `InventoryMenu`, na fileira ao lado da mão de apoio. O quadro e o
+  desenho apagado de cada uma saem da mesma folha do Baubles 1.0.1.10 (`expanded_inventory.png`), recortados de onde
+  ficavam no inventário expandido. Agachar com a peça na mão veste; o que não aceita sair não sai.
+  - **Fora do original, a pedido de quem joga**: saíram o inventário expandido, a tecla B e o botãozinho que alternava
+    as duas telas (`BaublesMenu`, `BaublesScreen`, o pacote `Open`). O botão do livro de receitas, que morava bem no
+    meio da fileira nova, subiu para a coluna vazia entre o quadro do jogador e a grade de fabricação.
+  - Testes: `BaublesInventoryGameTest`, tela `BaublesClientTest`.
+- **O pulo alto das botas do viajante**: também a pedido de quem joga, a força de pulo vai de 0,42 para 0,70 — pouco
+  mais de três blocos de altura. O original só dava o degrau de um bloco, que continua. Testes:
+  `TravellerBootsGameTest` (o degrau e a conta do pulo), `TravellerBootsClientTest` (anda, sobe e pula no mundo).
+- **Nenhum ponto do livro sem desenho**: a mesa de pesquisa ganhou o item que já tinha no original (escondido da aba,
+  como lá: nasce da mesa com as ferramentas de escrita), que é o que dá a cara da pesquisa `RESTABLE`. Guarda:
+  `ResearchGameTest.everyResearchHasAnIcon`, que confere figura, item e modelo de todas.
+- **Português**: os 130 textos que o pt_BR do original deixara em inglês (a descrição dos aspectos, os sussurros da
+  distorção, os avisos de dobra, as peças do vazio, os núcleos de golem) entraram por `scratchpad/traducoes.js`. Ficam
+  em inglês só os dezenove nomes próprios e formatos que o original também não traduz.

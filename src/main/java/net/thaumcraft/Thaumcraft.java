@@ -60,7 +60,7 @@ public class Thaumcraft implements ModInitializer {
         net.thaumcraft.event.FortressMasks.init();
         net.thaumcraft.item.FocusSwap.init();
         net.thaumcraft.item.Architect.init();
-        net.thaumcraft.baubles.BaublesNetwork.init();
+        net.thaumcraft.baubles.BaublesEvents.init();
         net.thaumcraft.event.RunicShield.init();
         net.thaumcraft.event.Hover.init();
         net.thaumcraft.loot.ChestLoot.init();
