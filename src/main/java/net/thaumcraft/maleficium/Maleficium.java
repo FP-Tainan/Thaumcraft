@@ -21,9 +21,11 @@ public final class Maleficium {
     }
 
     public static void init() {
+        net.thaumcraft.maleficium.entity.MaleficiumEntities.init();
         MaleficiumBlocks.init();
         MaleficiumItems.init();
         MaleficiumWands.init();
+        MaleficiumFoci.init();
         MaleficiumEvents.init();
         research();
         Thaumcraft.LOGGER.info("Maleficium: {} coisas", MaleficiumItems.count());

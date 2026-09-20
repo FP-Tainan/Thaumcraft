@@ -317,11 +317,23 @@
       "thaumcraft:runicshieldeffect"
     ]
   },
+  "shard": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:shard"
+    ]
+  },
   "shock": {
     "category": "player",
     "sounds": [
       "thaumcraft:shock1",
       "thaumcraft:shock2"
+    ]
+  },
+  "shockwave": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:shockwave"
     ]
   },
   "spill": {

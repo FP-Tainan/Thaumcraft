@@ -70,8 +70,8 @@ public class FocusItem extends Item {
 
     /** O {@code getPossibleUpgradesByRank}. */
     public List<Type> possibleByRank(ItemStack focusStack, int rank) {
-        var ranks = FocusUpgradeTable.RANKS.get(this.type);
-        return ranks == null || rank < 1 || rank > 5 ? List.of() : ranks.get(rank - 1);
+        var ranks = net.thaumcraft.api.FocusUpgrades.ranksOf(this.type);
+        return ranks.isEmpty() || rank < 1 || rank > 5 ? List.of() : ranks.get(rank - 1);
     }
 
     /** O {@code canApplyUpgrade}: as restrições que cada foco do original põe. */
@@ -244,7 +244,7 @@ public class FocusItem extends Item {
         Map<Short, Integer> map = new LinkedHashMap<>();
         for (short id : upgrades(focusStack)) if (id >= 0) map.merge(id, 1, Integer::sum);
         for (var entry : map.entrySet()) {
-            Type type = FocusUpgradeTable.BY_ID.get(entry.getKey());
+            Type type = net.thaumcraft.api.FocusUpgrades.byId(entry.getKey());
             if (type == null) continue;
             Component name = Component.translatable("focus.upgrade." + type.name() + ".name");
             if (entry.getValue() > 1) name = name.copy().append(" ").append(Component.translatable("enchantment.level." + entry.getValue()));

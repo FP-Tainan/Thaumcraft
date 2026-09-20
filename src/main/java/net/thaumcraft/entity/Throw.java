@@ -69,6 +69,13 @@ public final class Throw {
         aim(projectile, thrower, velocity);
     }
 
+    /** O mesmo, com o espalhamento do {@code setThrowableHeading}: é o que a névoa de difusão usa. */
+    public static void fromThrower(Projectile projectile, LivingEntity thrower, float velocity, float scatter) {
+        aim(projectile, thrower, velocity);
+        shoot(projectile, projectile.getDeltaMovement().x, projectile.getDeltaMovement().y,
+                projectile.getDeltaMovement().z, velocity, scatter);
+    }
+
     /** O {@code setThrowableHeading} do 1.7.10. */
     private static Vec3 heading(RandomSource random, double x, double y, double z, float velocity, float inaccuracy) {
         double length = Math.sqrt(x * x + y * y + z * z);

@@ -313,6 +313,95 @@ public final class MaleficiumTable {
                 .pages(Page.text("tc.research_page.VOIDGOGGLES.1"), Page.infusion("ItemVoidmetalGoggles"))
                 .register();
 
+        ThaumcraftApi.research("ELDRITCHFOCUS", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.ELDRITCH, 22).add(Aspects.ENTROPY, 14).add(Aspects.AIR, 4).add(Aspects.DARKNESS, 6))
+                .at(5, -5)
+                .complexity(3)
+                .icon(() -> new ItemStack(MaleficiumItems.FOCUS_DARK_MATTER))
+                .parents("ELDRITCHMAJOR")
+                .hiddenParents("INFUSION", "OUTERREV")
+                .special()
+                .concealed()
+                .warp(7)
+                .pages(Page.text("tc.research_page.ELDRITCHFOCUS.1"), Page.infusion("ItemFocusDarkMatter"))
+                .register();
+
+        ThaumcraftApi.research("DIFFUSIONUPGRADE", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAGIC, 4).add(Aspects.DARKNESS, 8).add(Aspects.WEAPON, 8).add(Aspects.ELDRITCH, 10))
+                .at(6, -4)
+                .icon("thaumcraft:textures/foci/diffusion.png")
+                .parents("ELDRITCHFOCUS")
+                .hiddenParents("FOCALMANIPULATION")
+                .secondary()
+                .concealed()
+                .warp(2)
+                .pages(Page.text("tc.research_page.DIFFUSIONUPGRADE.1"))
+                .register();
+
+        ThaumcraftApi.research("MACEFOCUS", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.ENTROPY, 10).add(Aspects.EARTH, 4).add(Aspects.WEAPON, 6).add(Aspects.MAGIC, 8))
+                .at(7, 3)
+                .complexity(2)
+                .icon(() -> new ItemStack(MaleficiumItems.FOCUS_MAGE_MACE))
+                .hiddenParents("INFUSION", "THAUMIUM", "FOCUSFIRE")
+                .concealed()
+                .pages(Page.text("tc.research_page.MACEFOCUS.1"), Page.infusion("ItemFocusMageMace"))
+                .register();
+
+        ThaumcraftApi.research("FOCUSSHOCKWAVE", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAGIC, 20).add(Aspects.ENTROPY, 12).add(Aspects.AIR, 6).add(Aspects.MOTION, 12))
+                .at(7, 2)
+                .icon(() -> new ItemStack(MaleficiumItems.FOCUS_SHOCKWAVE))
+                .hiddenParents("INFUSION", "FOCUSSHOCK")
+                .secondary()
+                .concealed()
+                .pages(Page.text("tc.research_page.FOCUSSHOCKWAVE.1"), Page.infusion("ItemFocusShockwave"))
+                .register();
+
+        ThaumcraftApi.research("FOCUSSHARD", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.CRYSTAL, 2).add(Aspects.MAGIC, 4).add(Aspects.MOTION, 6))
+                .at(6, 1)
+                .icon(() -> new ItemStack(MaleficiumItems.FOCUS_VIS_SHARD))
+                .parents("UNBALANCEDSHARDS")
+                .hiddenParents("FOCUSFIRE")
+                .secondary()
+                .concealed()
+                .pages(Page.text("tc.research_page.FOCUSSHARD.1"), Page.arcane("ItemFocusVisShard"))
+                .register();
+
+        ThaumcraftApi.research("TAINTFOCUS", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.TAINT, 4).add(Aspects.LIFE, 4).add(Aspects.MOTION, 4))
+                .at(5, 2)
+                .complexity(3)
+                .icon(() -> new ItemStack(MaleficiumItems.FOCUS_TAINT_SWARM))
+                .parents("FOCUSSHARD")
+                .hiddenParents("INFUSION", "INFUSION", "BOTTLETAINT")
+                .concealed()
+                .warp(3)
+                .pages(Page.text("tc.research_page.TAINTFOCUS.1"), Page.infusion("ItemFocusTaintSwarm"))
+                .register();
+
+        ThaumcraftApi.research("FOCUSLUMOS", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.FIRE, 16).add(Aspects.LIGHT, 24).add(Aspects.ENERGY, 8))
+                .at(5, 3)
+                .icon(() -> new ItemStack(MaleficiumItems.FOCUS_LUMOS))
+                .hiddenParents("FOCUSFIRE")
+                .secondary()
+                .concealed()
+                .pages(Page.text("tc.research_page.FOCUSLUMOS.1"), Page.arcane("ItemFocusLumos"))
+                .register();
+
+        ThaumcraftApi.research("LUMOSRING", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.ARMOR, 16).add(Aspects.AURA, 12).add(Aspects.LIGHT, 24).add(Aspects.ENERGY, 8))
+                .at(6, 4)
+                .complexity(2)
+                .icon(() -> new ItemStack(MaleficiumItems.LUMOS_RING))
+                .parents("FOCUSLUMOS")
+                .hiddenParents("INFUSION", "RUNICARMOR")
+                .concealed()
+                .pages(Page.text("tc.research_page.LUMOSRING.1"), Page.infusion("ItemLumosRing"))
+                .register();
+
         ThaumcraftApi.research("FLYTECHARM", Maleficium.CATEGORY)
                 .aspects(new AspectList().add(Aspects.FLIGHT, 15).add(Aspects.AIR, 20).add(Aspects.SENSES, 8).add(Aspects.MAGIC, 12))
                 .at(13, -4)
@@ -338,6 +427,14 @@ public final class MaleficiumTable {
                 2, 3, java.util.List.of(java.util.List.of(new ItemStack(MaleficiumItems.SHADOWMETAL_INGOT)), java.util.List.of(new ItemStack(MaleficiumItems.SHADOWMETAL_INGOT)), java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)), java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)))));
         ThaumcraftApi.bookRecipe("ItemShadowmetalSword", ThaumcraftApi.crafting(() -> new ItemStack(MaleficiumItems.SHADOWMETAL_SWORD),
                 1, 3, java.util.List.of(java.util.List.of(new ItemStack(MaleficiumItems.SHADOWMETAL_INGOT)), java.util.List.of(new ItemStack(MaleficiumItems.SHADOWMETAL_INGOT)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)))));
+        ThaumcraftApi.bookRecipe("ItemFocusShockwave", ThaumcraftApi.infusion("FOCUSSHOCKWAVE",
+                new ItemStack(MaleficiumItems.FOCUS_SHOCKWAVE), 6, new AspectList().add(Aspects.AIR, 35).add(Aspects.MOTION, 42).add(Aspects.ENERGY, 42).add(Aspects.MAGIC, 16),
+                Ingredient.of(TCItems.FOCI.get("shock")),
+                java.util.List.of(Ingredient.of(net.minecraft.world.level.block.Blocks.TNT.asItem()), Ingredient.of(net.minecraft.world.item.Items.GUNPOWDER), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.level.block.Blocks.TNT.asItem()), Ingredient.of(net.minecraft.world.item.Items.GUNPOWDER), Ingredient.of(TCItems.SHARDS.get("air")))));
+        ThaumcraftApi.bookRecipe("ItemFocusMageMace", ThaumcraftApi.infusion("MACEFOCUS",
+                new ItemStack(MaleficiumItems.FOCUS_MAGE_MACE), 3, new AspectList().add(Aspects.WEAPON, 32).add(Aspects.METAL, 8).add(Aspects.ENTROPY, 18).add(Aspects.MAGIC, 26),
+                Ingredient.of(net.minecraft.world.level.block.Blocks.IRON_BLOCK.asItem()),
+                java.util.List.of(Ingredient.of(net.minecraft.world.item.Items.IRON_SWORD), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(net.minecraft.world.item.Items.IRON_SWORD), Ingredient.of(net.minecraft.world.item.Items.QUARTZ), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(net.minecraft.world.item.Items.QUARTZ))));
         ThaumcraftApi.bookRecipe("ItemVoidwalkerSash", ThaumcraftApi.infusion("VOIDSASH",
                 new ItemStack(MaleficiumItems.VOIDWALKER_SASH), 7, new AspectList().add(Aspects.VOID, 56).add(Aspects.MAGIC, 40).add(Aspects.ARMOR, 76).add(Aspects.TRAVEL, 16).add(Aspects.FLIGHT, 10),
                 Ingredient.of(TCItems.RUNIC_GIRDLE),
@@ -370,6 +467,14 @@ public final class MaleficiumTable {
                 new ItemStack(MaleficiumItems.WAND_CAP_SHADOWMETAL), 8, new AspectList().add(Aspects.ELDRITCH, 55).add(Aspects.DARKNESS, 47).add(Aspects.MAGIC, 52).add(Aspects.METAL, 45).add(Aspects.VOID, 55),
                 Ingredient.of(TCItems.WAND_CAPS.get("void")),
                 java.util.List.of(Ingredient.of(MaleficiumItems.WARPED_SHARD), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.PRIMORDIAL_NODULE), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT))));
+        ThaumcraftApi.bookRecipe("ItemFocusTaintSwarm", ThaumcraftApi.infusion("TAINTFOCUS",
+                new ItemStack(MaleficiumItems.FOCUS_TAINT_SWARM), 4, new AspectList().add(Aspects.TAINT, 45).add(Aspects.LIFE, 24).add(Aspects.MOTION, 24).add(Aspects.MAGIC, 16).add(Aspects.DEATH, 37),
+                Ingredient.of(MaleficiumItems.FOCUS_VIS_SHARD),
+                java.util.List.of(Ingredient.of(TCResources.get("tainted_goo")), Ingredient.of(MaleficiumItems.TAINTED_SHARD), Ingredient.of(TCItems.BOTTLE_TAINT), Ingredient.of(MaleficiumItems.TAINTED_SHARD), Ingredient.of(TCResources.get("tainted_goo")), Ingredient.of(MaleficiumItems.TAINTED_SHARD), Ingredient.of(TCItems.BOTTLE_TAINT), Ingredient.of(MaleficiumItems.TAINTED_SHARD))));
+        ThaumcraftApi.bookRecipe("ItemFocusDarkMatter", ThaumcraftApi.infusion("ELDRITCHFOCUS",
+                new ItemStack(MaleficiumItems.FOCUS_DARK_MATTER), 6, new AspectList().add(Aspects.ELDRITCH, 64).add(Aspects.DARKNESS, 32).add(Aspects.MAGIC, 32).add(Aspects.DEATH, 32).add(Aspects.VOID, 32),
+                Ingredient.of(TCItems.FOCI.get("portable_hole")),
+                java.util.List.of(Ingredient.of(TCItems.PRIMORDIAL_PEARL), Ingredient.of(MaleficiumItems.WARPED_SHARD), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.WARPED_SHARD), Ingredient.of(TCItems.BUCKET_DEATH), Ingredient.of(MaleficiumItems.WARPED_SHARD), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.WARPED_SHARD))));
         ThaumcraftApi.bookRecipe("ItemMaterial:7", ThaumcraftApi.infusion("KNIGHTROBES",
                 new ItemStack(MaleficiumItems.CRIMSON_PLATING, 9), 2, new AspectList().add(Aspects.HUNGER, 4).add(Aspects.METAL, 8).add(Aspects.MAGIC, 6),
                 Ingredient.of(net.minecraft.world.level.block.Blocks.IRON_BLOCK.asItem()),
@@ -406,6 +511,10 @@ public final class MaleficiumTable {
                 new ItemStack(MaleficiumItems.VOIDMETAL_GOGGLES), 5, new AspectList().add(Aspects.VOID, 40).add(Aspects.SENSES, 35).add(Aspects.ARMOR, 20),
                 Ingredient.of(MaleficiumItems.WARPED_GOGGLES),
                 java.util.List.of(Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("quicksilver_drop")))));
+        ThaumcraftApi.bookRecipe("ItemLumosRing", ThaumcraftApi.infusion("LUMOSRING",
+                new ItemStack(MaleficiumItems.LUMOS_RING), 1, new AspectList().add(Aspects.LIGHT, 35).add(Aspects.SENSES, 25).add(Aspects.AURA, 10),
+                Ingredient.of(TCItems.MUNDANE_RING),
+                java.util.List.of(Ingredient.of(MaleficiumItems.FOCUS_LUMOS), Ingredient.of(TCResources.get("amber")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(TCResources.get("amber")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT))));
         ThaumcraftApi.bookRecipe("ItemMaterial:2", ThaumcraftApi.arcaneShapeless("CRIMSONROBES",
                 new ItemStack(MaleficiumItems.CRIMSON_CLOTH), new AspectList().add(Aspects.FIRE, 5).add(Aspects.ENTROPY, 5),
                 java.util.List.of(Ingredient.of(MaleficiumItems.CRIMSON_BLOOD), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET))));
@@ -451,6 +560,12 @@ public final class MaleficiumTable {
         ThaumcraftApi.bookRecipe("ItemWandCap:3", ThaumcraftApi.arcane("CAP_shadowcloth",
                 new ItemStack(MaleficiumItems.WAND_CAP_SHADOWCLOTH), new AspectList().add(Aspects.EARTH, 55).add(Aspects.FIRE, 55).add(Aspects.ENTROPY, 55).add(Aspects.ORDER, 55),
                 java.util.Arrays.asList(Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(TCResources.get("salis_mundus")), Ingredient.of(MaleficiumItems.SHADOW_CLOTH))));
+        ThaumcraftApi.bookRecipe("ItemFocusVisShard", ThaumcraftApi.arcane("FOCUSSHARD",
+                new ItemStack(MaleficiumItems.FOCUS_VIS_SHARD), new AspectList().add(Aspects.AIR, 46).add(Aspects.ENTROPY, 38).add(Aspects.ORDER, 22),
+                java.util.Arrays.asList(Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.WISP_ESSENCE), Ingredient.of(MaleficiumItems.TAINTED_SHARD), Ingredient.of(TCItems.WISP_ESSENCE), Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(TCItems.WISP_ESSENCE), Ingredient.of(MaleficiumItems.TAINTED_SHARD), Ingredient.of(TCItems.WISP_ESSENCE), Ingredient.of(TCItems.SHARD_BALANCED))));
+        ThaumcraftApi.bookRecipe("ItemFocusLumos", ThaumcraftApi.arcane("FOCUSLUMOS",
+                new ItemStack(MaleficiumItems.FOCUS_LUMOS), new AspectList().add(Aspects.AIR, 52).add(Aspects.FIRE, 56).add(Aspects.ORDER, 28),
+                java.util.Arrays.asList(Ingredient.of(TCItems.NITOR), Ingredient.of(net.minecraft.world.item.Items.GLOWSTONE_DUST), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.GLOWSTONE_DUST), Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(net.minecraft.world.item.Items.GLOWSTONE_DUST), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.GLOWSTONE_DUST), Ingredient.of(TCItems.NITOR))));
         ThaumcraftApi.bookRecipe("ItemMaterial:9", ThaumcraftApi.arcaneShapeless("BREAKPEARL",
                 new ItemStack(MaleficiumItems.PRIMORDIAL_NODULE, 3), new AspectList().add(Aspects.ENTROPY, 25),
                 java.util.List.of(Ingredient.of(TCItems.PRIMORDIAL_PEARL))));

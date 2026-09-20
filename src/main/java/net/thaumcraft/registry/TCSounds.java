@@ -36,6 +36,10 @@ public final class TCSounds {
     public static final Holder<SoundEvent> ICE = register("ice");
     /** O raio do foco de choque. */
     public static final Holder<SoundEvent> SHOCK = register("shock");
+    /** A lasca de vis do Maleficium, voando e acertando. */
+    public static final Holder<SoundEvent> SHARD = register("shard");
+    /** A onda de choque do Maleficium. */
+    public static final Holder<SoundEvent> SHOCKWAVE = register("shockwave");
     /** O estalo do raio ao acertar. */
     public static final Holder<SoundEvent> ZAP = register("zap");
     /** O thaumometro medindo. */

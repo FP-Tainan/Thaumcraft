@@ -65,6 +65,16 @@ public final class MaleficiumItems {
     public static final Item SALIS_AEVUM = register("salis_aevum", properties ->
             new SalisItem(SalisItem.Kind.AEVUM, properties.rarity(Rarity.EPIC)));
 
+    // ------------------------------------------------------------------ os focos
+
+    /** Os seis focos do ramo; eles também entram no mapa de focos do Thaumcraft, pelo nome do tipo. */
+    public static final Item FOCUS_TAINT_SWARM = focus("focus_taint_swarm", "taint_swarm", MaleficiumFoci.COST_TAINT_SWARM);
+    public static final Item FOCUS_DARK_MATTER = focus("focus_dark_matter", "dark_matter", MaleficiumFoci.COST_DARK_MATTER);
+    public static final Item FOCUS_SHOCKWAVE = focus("focus_shockwave", "shockwave", MaleficiumFoci.COST_SHOCKWAVE);
+    public static final Item FOCUS_VIS_SHARD = focus("focus_vis_shard", "vis_shard", MaleficiumFoci.COST_VIS_SHARD);
+    public static final Item FOCUS_LUMOS = focus("focus_lumos", "lumos", MaleficiumFoci.COST_LUMOS);
+    public static final Item FOCUS_MAGE_MACE = focus("focus_mage_mace", "mage_mace", MaleficiumFoci.COST_MAGE_MACE);
+
     // ------------------------------------------------------------------ as roupas e as bijuterias
 
     /** Os óculos distorcidos: revelam, distorcem um, e consertam-se com metal das sombras. */
@@ -202,6 +212,14 @@ public final class MaleficiumItems {
                                  net.minecraft.world.item.equipment.ArmorType type, int discount, int warp) {
         return register(name, properties -> new MaleficiumGear(discount, warp, true,
                 properties.humanoidArmor(material, type).rarity(Rarity.EPIC)));
+    }
+
+    /** Um foco do ramo: entra na aba e no mapa de focos do Thaumcraft. */
+    private static Item focus(String name, String type, net.thaumcraft.api.aspects.AspectList cost) {
+        Item item = register(name, properties ->
+                new net.thaumcraft.item.FocusItem(properties.stacksTo(1).rarity(Rarity.RARE), type, cost, false));
+        net.thaumcraft.registry.TCItems.FOCI.put(type, item);
+        return item;
     }
 
     private static Item register(String name, Rarity rarity) {

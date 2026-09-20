@@ -1846,3 +1846,17 @@ da do mod, como o original a tinha.
 
 **Falta**: as katanas, os focos e as criaturas, o desmontador táumico, a lâmina primordial, a chave do portão, o
 funguar e o sangue do vazio.
+
+### Fatia 6 — os focos, as melhorias e as três criaturas
+
+- **Seis focos**: enxame de mácula (chama um enxame do Thaumcraft atrás de quem a varinha aponta), matéria escura
+  (esfera destrutiva, ou névoa contínua com a difusão), onda de choque (empurra tudo num raio de quinze blocos e
+  machuca quem está a menos de sete), lasca de vis (persegue o alvo, quica nas paredes), Lumos (põe a luzinha) e a
+  maça do mago (pesa na varinha e vira arma de perto).
+- **Cinco melhorias** que só esses focos aceitam: sanidade, anticorpo, corrosiva, persistente e difusão — com os
+  aspectos, os ícones e os postos do original.
+- **Três criaturas**: a bola de matéria escura, a névoa e a lasca que persegue.
+- **Duas portas novas no Thaumcraft**, porque o ramo precisava delas: `Focuses.register` (o que um foco de fora faz
+  quando a varinha aponta) e `net.thaumcraft.api.FocusUpgrades` (melhorias e postos de fora, que a mesa de foco e o
+  livro passam a consultar junto com os do mod).
+- Os dois sons do original (a onda de choque e a lasca) entraram no `sounds.json` do Thaumcraft.

@@ -107,8 +107,24 @@ public final class Focuses {
             case "warding" -> warding(level, player, wand, focus);
             case "hellbat" -> hellbat(level, player, wand, focus);
             case "pech" -> pechBlast(level, player, wand, focus);
-            default -> false;
+            // os focos de um ramo de fora, que se registram aqui
+            default -> {
+                Cast extra = EXTRA.get(focus.type());
+                yield extra != null && extra.cast(level, player, wand, focus);
+            }
         };
+    }
+
+    /** O que um foco de fora faz quando a varinha aponta: o {@code onFocusRightClick} do original. */
+    public interface Cast {
+        boolean cast(Level level, Player player, ItemStack wand, FocusItem focus);
+    }
+
+    private static final Map<String, Cast> EXTRA = new HashMap<>();
+
+    /** Registra o que um foco de fora faz. A chave é o mesmo nome que o foco diz em {@code type()}. */
+    public static void register(String type, Cast cast) {
+        EXTRA.put(type, cast);
     }
 
     /** Quando o botão solta, a escavação esquece o bloco que estava roendo. */

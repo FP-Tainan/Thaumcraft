@@ -173,7 +173,7 @@ public class FocalManipulatorScreen extends AbstractContainerScreen<FocalManipul
         this.rank = 1;
         int fu = 0;
         while (this.rank <= 5 && s[this.rank - 1] != -1) {
-            FocusUpgradeTable.Type type = FocusUpgradeTable.BY_ID.get(s[this.rank - 1]);
+            FocusUpgradeTable.Type type = net.thaumcraft.api.FocusUpgrades.byId(s[this.rank - 1]);
             if (type != null) this.upgrades.add(type);
             fu++;
             this.rank++;

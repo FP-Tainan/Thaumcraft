@@ -101,7 +101,7 @@ public class FocalManipulatorBlockEntity extends BaseContainerBlockEntity
                 }
                 if (table.aspects.visSize() <= 0 && !focus.isEmpty()) {
                     complete = true;
-                    FocusUpgradeTable.Type type = FocusUpgradeTable.BY_ID.get((short) table.upgrade);
+                    FocusUpgradeTable.Type type = net.thaumcraft.api.FocusUpgrades.byId((short) table.upgrade);
                     if (type != null) FocusItem.apply(focus, type, table.rank);
                     level.playSound(null, pos, TCSounds.WAND.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
                 }
@@ -123,7 +123,7 @@ public class FocalManipulatorBlockEntity extends BaseContainerBlockEntity
         int xp = this.rank * XP_MULT;
         if (player.experienceLevel < xp) return false;
         List<FocusUpgradeTable.Type> possible = focus.possibleByRank(stack, this.rank);
-        FocusUpgradeTable.Type type = FocusUpgradeTable.BY_ID.get((short) id);
+        FocusUpgradeTable.Type type = net.thaumcraft.api.FocusUpgrades.byId((short) id);
         if (type == null || !possible.contains(type) || !focus.canApply(stack, player, type, this.rank)) return false;
         this.aspects = costOf(type, this.rank);
         this.size = this.aspects.visSize();
