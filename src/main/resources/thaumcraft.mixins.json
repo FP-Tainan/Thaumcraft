@@ -23,7 +23,8 @@
     "GameRendererWarpMixin",
     "FogRendererWarpMixin",
     "GuiItemRenderStateMixin",
-    "GuiRendererTintMixin"
+    "GuiRendererTintMixin",
+    "ContainerScreenHoverMixin"
   ],
   "injectors": {
     "defaultRequire": 1

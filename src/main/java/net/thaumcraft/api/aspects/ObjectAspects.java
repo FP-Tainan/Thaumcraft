@@ -136,6 +136,8 @@ public final class ObjectAspects {
 
         Registrar registrar = new Registrar();
         ConfigAspectsTable.register(registrar);
+        // e o que o jogo ganhou depois da 1.7.10
+        NewItemsAspectsTable.register(registrar);
         ConfigAspectsTable.blocks(registrar);
         for (Item item : BuiltInRegistries.ITEM) {
             if (item != Items.AIR) generate(item, new ArrayList<>());
@@ -327,6 +329,20 @@ public final class ObjectAspects {
         public void tag(String id, AspectList aspects) {
             TagKey<Item> key = TagKey.create(Registries.ITEM, Identifier.parse(id));
             for (Holder<Item> holder : BuiltInRegistries.ITEM.getTagOrEmpty(key)) building.put(holder.value(), aspects.copy());
+        }
+
+        /** A anotação que só vale se aquilo ainda não tiver uma: serve para tapar buracos sem mexer no que o original diz. */
+        public void itemIfAbsent(String id, AspectList aspects) {
+            Item item = find(id);
+            if (item != null && !building.containsKey(item)) building.put(item, aspects.copy());
+        }
+
+        /** O mesmo por marca: cada coisa da marca que ainda não tem anotação ganha esta. */
+        public void tagIfAbsent(String id, AspectList aspects) {
+            TagKey<Item> key = TagKey.create(Registries.ITEM, Identifier.parse(id));
+            for (Holder<Item> holder : BuiltInRegistries.ITEM.getTagOrEmpty(key)) {
+                if (!building.containsKey(holder.value())) building.put(holder.value(), aspects.copy());
+            }
         }
 
         /** Um bloco que não vira item (a água, a lava, o fogo, os portais). */

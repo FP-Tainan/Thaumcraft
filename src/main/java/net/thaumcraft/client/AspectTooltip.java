@@ -55,41 +55,50 @@ public final class AspectTooltip {
                     : Component.translatable("tc.aspect.unknown")).withStyle(ChatFormatting.DARK_PURPLE));
         });
 
-        ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            if (minecraft.player == null) return;
-            // o gesto do original: só aparece enquanto se segura o agachar
-            boolean crouching = com.mojang.blaze3d.platform.InputConstants.isKeyDown(
-                            minecraft.getWindow(), org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT)
-                    || com.mojang.blaze3d.platform.InputConstants.isKeyDown(
-                            minecraft.getWindow(), org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT_SHIFT);
-            if (!crouching) return;
-
-            AspectList aspects = ObjectAspects.of(stack);
-            if (aspects.isEmpty()) return;
-
-            PlayerKnowledge knowledge = Knowledges.of(minecraft.player);
-            StringBuilder known = new StringBuilder();
-            int unknown = 0;
-            for (Aspect aspect : aspects.getAspectsSortedAmount()) {
-                if (!knowledge.hasDiscovered(aspect)) {
-                    unknown++;
-                    continue;
-                }
-                if (!known.isEmpty()) known.append("  ");
-                known.append(aspect.name().getString()).append(' ').append(aspects.getAmount(aspect));
-            }
-
-            if (!known.isEmpty()) {
-                // cada aspecto na cor dele seria o ideal; numa linha só, a cor do mais forte serve de tom
-                Aspect strongest = aspects.getAspectsSortedAmount().get(0);
-                lines.add(Component.literal(known.toString())
-                        .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(strongest.color()))));
-            }
-            if (unknown > 0) {
-                lines.add(Component.translatable("tc.tooltip.unknown", unknown)
-                        .withStyle(ChatFormatting.DARK_GRAY));
-            }
+        // o gesto do original: agachando sobre uma casa de qualquer tela, os símbolos do que aquilo é feito
+        net.fabricmc.fabric.api.client.screen.v1.ScreenEvents.AFTER_INIT.register((client, screen, width, height) -> {
+            if (!(screen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?> container)) return;
+            net.fabricmc.fabric.api.client.screen.v1.ScreenEvents.afterExtract(screen)
+                    .register((self, graphics, mouseX, mouseY, partial) -> aspectsOnCursor(container, graphics, mouseX, mouseY));
         });
     }
+
+    /** O {@code renderAspectsInGui} do {@code ClientTickEventsFML}: uma fileira de símbolos acima e à direita do cursor. */
+    private static void aspectsOnCursor(net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?> screen,
+                                        net.minecraft.client.gui.GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player == null) return;
+        boolean shift = com.mojang.blaze3d.platform.InputConstants.isKeyDown(minecraft.getWindow(), org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT)
+                || com.mojang.blaze3d.platform.InputConstants.isKeyDown(minecraft.getWindow(), org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT_SHIFT);
+        if (!shift) return;
+        var slot = ((net.thaumcraft.mixin.ContainerScreenHoverMixin) screen).thaumcraft$hoveredSlot();
+        if (slot == null || !slot.hasItem()) return;
+        net.minecraft.world.item.ItemStack stack = slot.getItem();
+        PlayerKnowledge knowledge = Knowledges.of(minecraft.player);
+        // como no original, só se lê o que já foi examinado com o thaumômetro
+        if (!knowledge.hasScanned(net.thaumcraft.research.ScanManager.keyOf(stack))) return;
+        AspectList aspects = ObjectAspects.of(stack);
+        if (aspects.isEmpty()) return;
+        int ticks = minecraft.player.tickCount;
+        int index = 0;
+        for (Aspect aspect : aspects.getAspectsSortedAmount()) {
+            int x = mouseX + 9 + index * 18;
+            int y = mouseY - 34;
+            var pose = graphics.pose();
+            pose.pushMatrix();
+            pose.translate(x - 2, y - 2);
+            pose.scale(1.25f, 1.25f);
+            graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, BACK, 0, 0, 0, 0, 16, 16, 16, 16);
+            pose.popMatrix();
+            if (knowledge.hasDiscovered(aspect)) {
+                net.thaumcraft.client.gui.AspectTags.draw(graphics, minecraft.font, x, y, aspect, aspects.getAmount(aspect), 0, 1.0f, false, ticks);
+            } else {
+                graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, UNKNOWN, x, y, 0, 0, 16, 16, 16, 16);
+            }
+            index++;
+        }
+    }
+
+    private static final net.minecraft.resources.Identifier BACK = net.thaumcraft.Thaumcraft.id("textures/aspects/_back.png");
+    private static final net.minecraft.resources.Identifier UNKNOWN = net.thaumcraft.Thaumcraft.id("textures/aspects/_unknown.png");
 }

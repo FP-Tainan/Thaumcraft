@@ -1688,3 +1688,20 @@ aglomerados nativos, crisol `PureX`/`TransX` com catalisador por etiqueta, miner
 infernal, fundição do aglomerado no primeiro lingote da etiqueta (`thaumcraft:tag_smelting`), lingote ↔ nove pepitas, a
 ponta de prata inerte. Sem mod que traga o lingote, as receitas nem carregam e as pesquisas não aparecem. Teste:
 `CrucibleGameTest.otherMetalsGoByTags`.
+
+## Os aspectos do jogo de hoje e o gesto do agachar (2026-09-19)
+
+O Thaumcraft original só conhecia o Minecraft de 2014: tudo o que veio depois — pedra-profunda, cobre que envelhece,
+ametista, corais, sculk, as plantas do Nether novo, as câmaras de provação, o enxofre e o cinábrio da 26.2 — não tinha
+aspecto nenhum, e por isso nem o thaumômetro nem a alquimia enxergavam essas coisas.
+
+- **`NewItemsAspectsTable`** (gerada por `scratchpad/aspectos-novos.js`): 373 anotações, só das **bases** — o que sai de
+  receita herda do que entra, como o próprio mod deduz. Os valores seguem o tom do original (matéria-prima de um a três,
+  coisa rara de quatro a seis). Onde a conta do original zera por render muito (três pedras dão seis lajes), as famílias
+  de construção ganham um mínimo pela marca, que é o mesmo remendo que o original fazia com o dicionário de minérios.
+- **Sem aspecto, de propósito**: as peças de criador (blocos de comando, barreira, luz, estrutura, bastão de depuração) e
+  os ovos de nascimento, como no original. Teste: `VanillaAspectsGameTest` passa por todo item do jogo.
+- **O gesto do agachar** (`AspectTooltip`): o `renderAspectsInGui` do `ClientTickEventsFML` — segurando o agachar sobre
+  uma casa de qualquer tela, os símbolos do que aquilo é feito aparecem em fileira acima do cursor, cada um no disco do
+  original, com a quantidade; o aspecto que quem joga ainda não descobriu sai como interrogação, e o item que ainda não
+  foi examinado não mostra nada. Tela: `AspectHoverClientTest`.
