@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "thaumcraft:shadow_fortress"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "thaumcraft:shadow_fortress"
+      }
+    ]
+  }
+}

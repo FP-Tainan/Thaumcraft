@@ -12,6 +12,11 @@ import net.thaumcraft.registry.TCItems;
  * thaumômetro na mão ou com os Óculos da Revelação no rosto. Sem isso, um nó é só ar.
  */
 public final class Revealing {
+    /** A etiqueta por onde um mod de fora diz que o elmo dele também revela. */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> REVEALING =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                    net.thaumcraft.Thaumcraft.id("revealing"));
+
     private Revealing() {
     }
 
@@ -23,7 +28,7 @@ public final class Revealing {
         ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
         // o elmo de fortaleza com os óculos embutidos também revela (o showNodes do ItemFortressArmor)
         // e o capuz do manto do vazio (o showNodes do ItemVoidRobeArmor)
-        return head.is(TCItems.GOGGLES) || head.is(TCItems.VOID_ROBE_HELMET)
+        return head.is(TCItems.GOGGLES) || head.is(TCItems.VOID_ROBE_HELMET) || head.is(REVEALING)
                 || Boolean.TRUE.equals(head.get(net.thaumcraft.registry.TCComponents.FORTRESS_GOGGLES));
     }
 }

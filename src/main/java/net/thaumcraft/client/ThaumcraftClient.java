@@ -540,6 +540,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                     && player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET).getItem() instanceof net.thaumcraft.item.TravellerBootsItem) {
                 net.thaumcraft.item.TravellerBootsItem.tickWorn(player);
             }
+            // e as do caminhante do vazio, do Maleficium
+            if (player != null && !client.isPaused()) net.thaumcraft.maleficium.MaleficiumEvents.clientTick(player);
         });
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.HUNGRY_CHEST, net.thaumcraft.client.render.HungryChestRenderer::new);

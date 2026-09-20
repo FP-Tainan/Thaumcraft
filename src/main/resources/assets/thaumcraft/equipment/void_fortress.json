@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "thaumcraft:void_fortress"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "thaumcraft:void_fortress"
+      }
+    ]
+  }
+}

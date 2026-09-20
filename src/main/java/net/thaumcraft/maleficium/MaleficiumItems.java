@@ -65,6 +65,67 @@ public final class MaleficiumItems {
     public static final Item SALIS_AEVUM = register("salis_aevum", properties ->
             new SalisItem(SalisItem.Kind.AEVUM, properties.rarity(Rarity.EPIC)));
 
+    // ------------------------------------------------------------------ as roupas e as bijuterias
+
+    /** Os óculos distorcidos: revelam, distorcem um, e consertam-se com metal das sombras. */
+    public static final Item WARPED_GOGGLES = register("warped_goggles", properties ->
+            new MaleficiumGear(0, 1, false, properties
+                    .humanoidArmor(MaleficiumArmor.WARPED, net.minecraft.world.item.equipment.ArmorType.HELMET)
+                    .rarity(Rarity.RARE)));
+
+    /** Os óculos de metal do vazio: revelam, descontam doze por cento, distorcem cinco e consertam-se sozinhos. */
+    public static final Item VOIDMETAL_GOGGLES = register("voidmetal_goggles", properties ->
+            new MaleficiumGear(12, 5, true, properties
+                    .humanoidArmor(MaleficiumArmor.VOIDMETAL_GOGGLES, net.minecraft.world.item.equipment.ArmorType.HELMET)
+                    .rarity(Rarity.RARE)));
+
+    /** As botas do caminhante do vazio. */
+    public static final Item VOIDWALKER_BOOTS = register("voidwalker_boots", properties ->
+            new VoidwalkerBootsItem(properties
+                    .humanoidArmor(MaleficiumArmor.VOIDWALKER, net.minecraft.world.item.equipment.ArmorType.BOOTS)
+                    .rarity(Rarity.EPIC)
+                    .component(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,
+                            MaleficiumArmor.VOIDWALKER.createAttributes(net.minecraft.world.item.equipment.ArmorType.BOOTS)
+                                    // o degrau de um bloco e o pulo um quarto mais alto do original
+                                    .withModifierAdded(net.minecraft.world.entity.ai.attributes.Attributes.STEP_HEIGHT,
+                                            new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                                                    net.thaumcraft.Thaumcraft.id("voidwalker_step"), 0.4,
+                                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),
+                                            net.minecraft.world.entity.EquipmentSlotGroup.FEET)
+                                    .withModifierAdded(net.minecraft.world.entity.ai.attributes.Attributes.JUMP_STRENGTH,
+                                            new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                                                    net.thaumcraft.Thaumcraft.id("voidwalker_jump"), 0.25,
+                                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL),
+                                            net.minecraft.world.entity.EquipmentSlotGroup.FEET))));
+
+    /** A faixa do caminhante do vazio, que vai na casa do cinto. */
+    public static final Item VOIDWALKER_SASH = register("voidwalker_sash", properties ->
+            new MaleficiumBaubles.VoidwalkerSashItem(properties.stacksTo(1).rarity(Rarity.EPIC)));
+
+    /** A armadura de fortaleza do vazio. */
+    public static final Item VOID_FORTRESS_HELMET = fortress("void_fortress_helmet", MaleficiumArmor.VOID_FORTRESS,
+            net.minecraft.world.item.equipment.ArmorType.HELMET, 5, 3);
+    public static final Item VOID_FORTRESS_CHESTPLATE = fortress("void_fortress_chestplate", MaleficiumArmor.VOID_FORTRESS,
+            net.minecraft.world.item.equipment.ArmorType.CHESTPLATE, 5, 3);
+    public static final Item VOID_FORTRESS_LEGGINGS = fortress("void_fortress_leggings", MaleficiumArmor.VOID_FORTRESS,
+            net.minecraft.world.item.equipment.ArmorType.LEGGINGS, 5, 3);
+
+    /** E a das sombras, que aguenta dez vezes mais pancada. */
+    public static final Item SHADOW_FORTRESS_HELMET = fortress("shadow_fortress_helmet", MaleficiumArmor.SHADOW_FORTRESS,
+            net.minecraft.world.item.equipment.ArmorType.HELMET, 5, 5);
+    public static final Item SHADOW_FORTRESS_CHESTPLATE = fortress("shadow_fortress_chestplate", MaleficiumArmor.SHADOW_FORTRESS,
+            net.minecraft.world.item.equipment.ArmorType.CHESTPLATE, 5, 5);
+    public static final Item SHADOW_FORTRESS_LEGGINGS = fortress("shadow_fortress_leggings", MaleficiumArmor.SHADOW_FORTRESS,
+            net.minecraft.world.item.equipment.ArmorType.LEGGINGS, 5, 5);
+
+    /** O anel de Lumos: vestido, enxerga-se no escuro. */
+    public static final Item LUMOS_RING = register("lumos_ring", properties ->
+            new MaleficiumBaubles.LumosRingItem(properties.stacksTo(1).rarity(Rarity.UNCOMMON)));
+
+    /** O amuleto de voo, que troca vis por altura. */
+    public static final Item FLYTE_CHARM = register("flyte_charm", properties ->
+            new FlyteCharmItem(properties.stacksTo(1).rarity(Rarity.EPIC)));
+
     // ------------------------------------------------------------------ as peças de varinha
 
     /** A haste de madeira distorcida e o núcleo de bastão dela. */
@@ -134,6 +195,13 @@ public final class MaleficiumItems {
     private static Item blockItem(net.minecraft.world.level.block.Block block) {
         String name = BuiltInRegistries.BLOCK.getKey(block).getPath();
         return register(name, properties -> new net.minecraft.world.item.BlockItem(block, properties.useBlockDescriptionPrefix()));
+    }
+
+    /** Uma peça de armadura de fortaleza, com o desconto de vis e a distorção dela. */
+    private static Item fortress(String name, net.minecraft.world.item.equipment.ArmorMaterial material,
+                                 net.minecraft.world.item.equipment.ArmorType type, int discount, int warp) {
+        return register(name, properties -> new MaleficiumGear(discount, warp, true,
+                properties.humanoidArmor(material, type).rarity(Rarity.EPIC)));
     }
 
     private static Item register(String name, Rarity rarity) {

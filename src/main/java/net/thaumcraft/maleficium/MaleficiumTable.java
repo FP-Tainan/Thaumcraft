@@ -120,6 +120,30 @@ public final class MaleficiumTable {
                 .pages(Page.text("tc.research_page.CRIMSONROBES.1"), Page.arcane("ItemMaterial:2"), Page.arcane("ItemHelmetCultistRobe"), Page.arcane("ItemChestCultistRobe"), Page.arcane("ItemLegsCultistRobe"), Page.arcane("ItemBootsCultist"))
                 .register();
 
+        ThaumcraftApi.research("VOIDFORTRESS", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.ARMOR, 5).add(Aspects.ELDRITCH, 3).add(Aspects.DARKNESS, 3).add(Aspects.VOID, 5))
+                .at(8, -9)
+                .complexity(2)
+                .icon(() -> new ItemStack(MaleficiumItems.VOID_FORTRESS_HELMET))
+                .parents("ELDRITCHMAJOR")
+                .hiddenParents("INFUSION", "ARMORVOIDFORTRESS", "ARMORFORTRESS")
+                .concealed()
+                .warp(2)
+                .pages(Page.text("tc.research_page.VOIDFORTRESS.1"), Page.infusion("ItemVoidFortressHelmet"), Page.infusion("ItemVoidFortressChestplate"), Page.infusion("ItemVoidFortressLeggings"))
+                .register();
+
+        ThaumcraftApi.research("WARPEDGOGGLES", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.ARMOR, 4).add(Aspects.ELDRITCH, 4).add(Aspects.DARKNESS, 4).add(Aspects.ARMOR, 4))
+                .at(2, 4)
+                .complexity(1)
+                .icon(() -> new ItemStack(MaleficiumItems.WARPED_GOGGLES))
+                .parents("SHADOWMETAL")
+                .hiddenParents("INFUSION", "MALEFICIUM", "GOGGLES")
+                .secondary()
+                .concealed()
+                .pages(Page.text("tc.research_page.WARPEDGOGGLES.1"), Page.infusion("ItemWarpedGoggles"))
+                .register();
+
         ThaumcraftApi.research("KNIGHTROBES", Maleficium.CATEGORY)
                 .aspects(new AspectList().add(Aspects.CLOTH, 4).add(Aspects.DARKNESS, 4).add(Aspects.ARMOR, 4))
                 .at(-4, -2)
@@ -129,6 +153,18 @@ public final class MaleficiumTable {
                 .hiddenParents("INFUSION", "ELDRITCHMINOR")
                 .concealed()
                 .pages(Page.text("tc.research_page.KNIGHTROBES.1"), Page.infusion("ItemMaterial:7"), Page.arcane("ItemHelmetCultistPlate"), Page.arcane("ItemChestCultistPlate"), Page.arcane("ItemLegsCultistPlate"))
+                .register();
+
+        ThaumcraftApi.research("VOIDWALKERBOOTS", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAGIC, 4).add(Aspects.DARKNESS, 8).add(Aspects.ARMOR, 8).add(Aspects.ELDRITCH, 8))
+                .at(4, -8)
+                .complexity(3)
+                .icon(() -> new ItemStack(MaleficiumItems.VOIDWALKER_BOOTS))
+                .parents("ELDRITCHMAJOR")
+                .hiddenParents("INFUSION", "PRIMPEARL", "BOOTSTRAVELLER", "SHADOWCLOTH", "ARMORVOIDFORTRESS")
+                .concealed()
+                .warp(4)
+                .pages(Page.text("tc.research_page.VOIDWALKERBOOTS.1"), Page.infusion("ItemVoidwalkerBoots"))
                 .register();
 
         ThaumcraftApi.research("BREAKPEARL", Maleficium.CATEGORY)
@@ -187,6 +223,18 @@ public final class MaleficiumTable {
                 .pages(Page.text("tc.research_page.TIMESALT.1"), Page.infusion("ItemSalis:1"))
                 .register();
 
+        ThaumcraftApi.research("VOIDSASH", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.VOID, 4).add(Aspects.METAL, 8).add(Aspects.ARMOR, 4))
+                .at(3, -9)
+                .icon(() -> new ItemStack(MaleficiumItems.VOIDWALKER_SASH))
+                .parents("VOIDWALKERBOOTS")
+                .hiddenParents("INFUSION", "PRIMPEARL")
+                .secondary()
+                .concealed()
+                .warp(3)
+                .pages(Page.text("tc.research_page.VOIDSASH.1"), Page.infusion("ItemVoidwalkerSash"))
+                .register();
+
         ThaumcraftApi.research("VISHROOMCRAFT", Maleficium.CATEGORY)
                 .aspects(new AspectList().add(Aspects.MAGIC, 4).add(Aspects.CRAFT, 2).add(Aspects.PLANT, 3))
                 .at(3, -3)
@@ -206,6 +254,18 @@ public final class MaleficiumTable {
                 .hiddenParents("ENCHFABRIC", "ESSENTIACRYSTAL", "ELDRITCHMINOR")
                 .warp(2)
                 .pages(Page.text("tc.research_page.HOLLOWDAGGER.1"), Page.arcane("ItemHollowDagger"))
+                .register();
+
+        ThaumcraftApi.research("SHADOWFORTRESS", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.METAL, 4).add(Aspects.DARKNESS, 8).add(Aspects.ARMOR, 8).add(Aspects.VOID, 2))
+                .at(0, 3)
+                .complexity(3)
+                .icon(() -> new ItemStack(MaleficiumItems.SHADOW_FORTRESS_HELMET))
+                .parents("SHADOWMETAL")
+                .hiddenParents("INFUSION", "VOIDFORTRESS", "ELDRITCHMAJOR", "UNBALANCEDSHARDS")
+                .concealed()
+                .warp(3)
+                .pages(Page.text("tc.research_page.SHADOWFORTRESS.1"), Page.infusion("ItemShadowFortressHelmet"), Page.infusion("ItemShadowFortressChestplate"), Page.infusion("ItemShadowFortressLeggings"))
                 .register();
 
         ThaumcraftApi.research("CAP_cloth", Maleficium.CATEGORY)
@@ -241,6 +301,29 @@ public final class MaleficiumTable {
                 .pages(Page.text("tc.research_page.CAP_shadowcloth.1"), Page.arcane("ItemWandCap:3"))
                 .register();
 
+        ThaumcraftApi.research("VOIDGOGGLES", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.VOID, 8).add(Aspects.DARKNESS, 4).add(Aspects.MAGIC, 6).add(Aspects.SENSES, 12))
+                .at(3, 3)
+                .icon(() -> new ItemStack(MaleficiumItems.VOIDMETAL_GOGGLES))
+                .parents("WARPEDGOGGLES")
+                .hiddenParents("INFUSION", "VOIDMETAL")
+                .secondary()
+                .concealed()
+                .warp(2)
+                .pages(Page.text("tc.research_page.VOIDGOGGLES.1"), Page.infusion("ItemVoidmetalGoggles"))
+                .register();
+
+        ThaumcraftApi.research("FLYTECHARM", Maleficium.CATEGORY)
+                .aspects(new AspectList().add(Aspects.FLIGHT, 15).add(Aspects.AIR, 20).add(Aspects.SENSES, 8).add(Aspects.MAGIC, 12))
+                .at(13, -4)
+                .complexity(3)
+                .icon(() -> new ItemStack(MaleficiumItems.FLYTE_CHARM))
+                .parents("CREATION")
+                .hiddenParents("INFUSION", "VOIDSASH", "PRIMALARROW")
+                .concealed()
+                .pages(Page.text("tc.research_page.FLYTECHARM.1"), Page.infusion("ItemFlyteCharm"))
+                .register();
+
     }
 
     /** As receitas: carregam itens, então só se montam quando o mundo abre. */
@@ -255,6 +338,10 @@ public final class MaleficiumTable {
                 2, 3, java.util.List.of(java.util.List.of(new ItemStack(MaleficiumItems.SHADOWMETAL_INGOT)), java.util.List.of(new ItemStack(MaleficiumItems.SHADOWMETAL_INGOT)), java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)), java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)))));
         ThaumcraftApi.bookRecipe("ItemShadowmetalSword", ThaumcraftApi.crafting(() -> new ItemStack(MaleficiumItems.SHADOWMETAL_SWORD),
                 1, 3, java.util.List.of(java.util.List.of(new ItemStack(MaleficiumItems.SHADOWMETAL_INGOT)), java.util.List.of(new ItemStack(MaleficiumItems.SHADOWMETAL_INGOT)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)))));
+        ThaumcraftApi.bookRecipe("ItemVoidwalkerSash", ThaumcraftApi.infusion("VOIDSASH",
+                new ItemStack(MaleficiumItems.VOIDWALKER_SASH), 7, new AspectList().add(Aspects.VOID, 56).add(Aspects.MAGIC, 40).add(Aspects.ARMOR, 76).add(Aspects.TRAVEL, 16).add(Aspects.FLIGHT, 10),
+                Ingredient.of(TCItems.RUNIC_GIRDLE),
+                java.util.List.of(Ingredient.of(MaleficiumItems.PRIMORDIAL_MOTE), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT))));
         ThaumcraftApi.bookRecipe("ItemMaterial:5", ThaumcraftApi.infusion("CREATIONSHARD",
                 new ItemStack(MaleficiumItems.CREATION_SHARD), 8, new AspectList().add(Aspects.AIR, 55).add(Aspects.FIRE, 55).add(Aspects.WATER, 55).add(Aspects.EARTH, 55).add(Aspects.ORDER, 55).add(Aspects.ENTROPY, 55),
                 Ingredient.of(TCItems.SHARD_BALANCED),
@@ -263,6 +350,22 @@ public final class MaleficiumTable {
                 new ItemStack(MaleficiumItems.WAND_ROD_WARPWOOD), 8, new AspectList().add(Aspects.ELDRITCH, 65).add(Aspects.DARKNESS, 30).add(Aspects.TREE, 12).add(Aspects.MAGIC, 45).add(Aspects.AURA, 35),
                 Ingredient.of(MaleficiumBlocks.WARPWOOD_LOG.asItem()),
                 java.util.List.of(Ingredient.of(MaleficiumItems.PRIMORDIAL_NODULE), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.WARPED_SHARD), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.WARPED_SHARD), Ingredient.of(TCResources.get("void_ingot")))));
+        ThaumcraftApi.bookRecipe("ItemVoidFortressHelmet", ThaumcraftApi.infusion("VOIDFORTRESS",
+                new ItemStack(MaleficiumItems.VOID_FORTRESS_HELMET), 6, new AspectList().add(Aspects.METAL, 24).add(Aspects.ARMOR, 16).add(Aspects.MAGIC, 8).add(Aspects.ELDRITCH, 16).add(Aspects.VOID, 16),
+                Ingredient.of(TCItems.GEAR.get("void_helmet")),
+                java.util.List.of(Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.EMERALD))));
+        ThaumcraftApi.bookRecipe("ItemVoidFortressChestplate", ThaumcraftApi.infusion("VOIDFORTRESS",
+                new ItemStack(MaleficiumItems.VOID_FORTRESS_CHESTPLATE), 6, new AspectList().add(Aspects.METAL, 24).add(Aspects.ARMOR, 24).add(Aspects.MAGIC, 8).add(Aspects.ELDRITCH, 16).add(Aspects.VOID, 24),
+                Ingredient.of(TCItems.GEAR.get("void_chestplate")),
+                java.util.List.of(Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER))));
+        ThaumcraftApi.bookRecipe("ItemVoidFortressLeggings", ThaumcraftApi.infusion("VOIDFORTRESS",
+                new ItemStack(MaleficiumItems.VOID_FORTRESS_LEGGINGS), 6, new AspectList().add(Aspects.METAL, 24).add(Aspects.ARMOR, 20).add(Aspects.MAGIC, 8).add(Aspects.ELDRITCH, 16).add(Aspects.VOID, 20),
+                Ingredient.of(TCItems.GEAR.get("void_leggings")),
+                java.util.List.of(Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER))));
+        ThaumcraftApi.bookRecipe("ItemWarpedGoggles", ThaumcraftApi.infusion("WARPEDGOGGLES",
+                new ItemStack(MaleficiumItems.WARPED_GOGGLES), 3, new AspectList().add(Aspects.ELDRITCH, 35).add(Aspects.DARKNESS, 12).add(Aspects.MAGIC, 16).add(Aspects.ARMOR, 8),
+                Ingredient.of(TCItems.GOGGLES),
+                java.util.List.of(Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(TCResources.get("quicksilver_drop")))));
         ThaumcraftApi.bookRecipe("ItemWandCap:0", ThaumcraftApi.infusion("CAP_shadowmetal",
                 new ItemStack(MaleficiumItems.WAND_CAP_SHADOWMETAL), 8, new AspectList().add(Aspects.ELDRITCH, 55).add(Aspects.DARKNESS, 47).add(Aspects.MAGIC, 52).add(Aspects.METAL, 45).add(Aspects.VOID, 55),
                 Ingredient.of(TCItems.WAND_CAPS.get("void")),
@@ -271,6 +374,10 @@ public final class MaleficiumTable {
                 new ItemStack(MaleficiumItems.CRIMSON_PLATING, 9), 2, new AspectList().add(Aspects.HUNGER, 4).add(Aspects.METAL, 8).add(Aspects.MAGIC, 6),
                 Ingredient.of(net.minecraft.world.level.block.Blocks.IRON_BLOCK.asItem()),
                 java.util.List.of(Ingredient.of(MaleficiumItems.CRIMSON_BLOOD), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(MaleficiumItems.CRIMSON_BLOOD), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(MaleficiumItems.CRIMSON_BLOOD), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(MaleficiumItems.CRIMSON_BLOOD), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET))));
+        ThaumcraftApi.bookRecipe("ItemVoidwalkerBoots", ThaumcraftApi.infusion("VOIDWALKERBOOTS",
+                new ItemStack(MaleficiumItems.VOIDWALKER_BOOTS), 8, new AspectList().add(Aspects.DARKNESS, 42).add(Aspects.VOID, 56).add(Aspects.ELDRITCH, 38).add(Aspects.ARMOR, 60).add(Aspects.TRAVEL, 45),
+                Ingredient.of(TCItems.TRAVELLER_BOOTS),
+                java.util.List.of(Ingredient.of(MaleficiumItems.PRIMORDIAL_MOTE), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCItems.ELDRITCH_EYE), Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.SHADOW_CLOTH), Ingredient.of(TCResources.get("void_ingot")))));
         ThaumcraftApi.bookRecipe("ItemSalis:0", ThaumcraftApi.infusion("SKYSALT",
                 new ItemStack(MaleficiumItems.SALIS_TEMPESTAS, 3), 7, new AspectList().add(Aspects.AURA, 20).add(Aspects.WEATHER, 30).add(Aspects.WATER, 30),
                 Ingredient.of(TCResources.get("salis_mundus")),
@@ -279,6 +386,26 @@ public final class MaleficiumTable {
                 new ItemStack(MaleficiumItems.SALIS_AEVUM, 3), 7, new AspectList().add(Aspects.AURA, 20).add(Aspects.LIGHT, 30).add(Aspects.DARKNESS, 30),
                 Ingredient.of(TCResources.get("salis_mundus")),
                 java.util.List.of(Ingredient.of(MaleficiumItems.CREATION_FRAGMENT), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET))));
+        ThaumcraftApi.bookRecipe("ItemShadowFortressHelmet", ThaumcraftApi.infusion("SHADOWFORTRESS",
+                new ItemStack(MaleficiumItems.SHADOW_FORTRESS_HELMET), 7, new AspectList().add(Aspects.METAL, 28).add(Aspects.ARMOR, 20).add(Aspects.MAGIC, 12).add(Aspects.DARKNESS, 30).add(Aspects.VOID, 22),
+                Ingredient.of(TCItems.GEAR.get("void_helmet")),
+                java.util.List.of(Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.EMERALD))));
+        ThaumcraftApi.bookRecipe("ItemShadowFortressChestplate", ThaumcraftApi.infusion("SHADOWFORTRESS",
+                new ItemStack(MaleficiumItems.SHADOW_FORTRESS_CHESTPLATE), 7, new AspectList().add(Aspects.METAL, 38).add(Aspects.ARMOR, 26).add(Aspects.MAGIC, 18).add(Aspects.DARKNESS, 34).add(Aspects.VOID, 26),
+                Ingredient.of(TCItems.GEAR.get("void_chestplate")),
+                java.util.List.of(Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER))));
+        ThaumcraftApi.bookRecipe("ItemShadowFortressLeggings", ThaumcraftApi.infusion("SHADOWFORTRESS",
+                new ItemStack(MaleficiumItems.SHADOW_FORTRESS_LEGGINGS), 7, new AspectList().add(Aspects.METAL, 32).add(Aspects.ARMOR, 24).add(Aspects.MAGIC, 16).add(Aspects.DARKNESS, 32).add(Aspects.VOID, 24),
+                Ingredient.of(TCItems.GEAR.get("void_leggings")),
+                java.util.List.of(Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(MaleficiumItems.SHADOWMETAL_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER))));
+        ThaumcraftApi.bookRecipe("ItemFlyteCharm", ThaumcraftApi.infusion("FLYTECHARM",
+                new ItemStack(MaleficiumItems.FLYTE_CHARM), 7, new AspectList().add(Aspects.FLIGHT, 86).add(Aspects.AURA, 56).add(Aspects.SENSES, 25).add(Aspects.MAGIC, 48).add(Aspects.ENERGY, 65),
+                Ingredient.of(TCItems.PRIMAL_ARROWS.get("air")),
+                java.util.List.of(Ingredient.of(MaleficiumItems.CREATION_SHARD), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.FEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT))));
+        ThaumcraftApi.bookRecipe("ItemVoidmetalGoggles", ThaumcraftApi.infusion("VOIDGOGGLES",
+                new ItemStack(MaleficiumItems.VOIDMETAL_GOGGLES), 5, new AspectList().add(Aspects.VOID, 40).add(Aspects.SENSES, 35).add(Aspects.ARMOR, 20),
+                Ingredient.of(MaleficiumItems.WARPED_GOGGLES),
+                java.util.List.of(Ingredient.of(TCResources.get("void_ingot")), Ingredient.of(TCResources.get("quicksilver_drop")))));
         ThaumcraftApi.bookRecipe("ItemMaterial:2", ThaumcraftApi.arcaneShapeless("CRIMSONROBES",
                 new ItemStack(MaleficiumItems.CRIMSON_CLOTH), new AspectList().add(Aspects.FIRE, 5).add(Aspects.ENTROPY, 5),
                 java.util.List.of(Ingredient.of(MaleficiumItems.CRIMSON_BLOOD), Ingredient.of(TCResources.get("enchanted_fabric")), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET))));

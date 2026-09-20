@@ -77,6 +77,10 @@ public final class TCComponents {
     public static final DataComponentType<Integer> RUNIC_HARDEN = register("runic_harden",
             builder -> builder.persistent(Codec.intRange(0, 127)).networkSynchronized(ByteBufCodecs.VAR_INT));
 
+    /** O empurrão da faixa do caminhante do vazio, que se liga e desliga (o {@code mode} do Tainted Magic). */
+    public static final DataComponentType<Boolean> SASH_SPEED = register("sash_speed",
+            builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
     /** O jarro de Potentia preso no arreio taumostático (o {@code jar} do original). */
     public static final DataComponentType<net.minecraft.world.item.ItemStack> HARNESS_JAR = register("harness_jar",
             builder -> builder.persistent(net.minecraft.world.item.ItemStack.CODEC)

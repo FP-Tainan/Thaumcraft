@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "thaumcraft:voidmetal_goggles"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "thaumcraft:voidmetal_goggles"
+      }
+    ]
+  }
+}

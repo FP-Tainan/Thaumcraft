@@ -1830,5 +1830,19 @@ da do mod, como o original a tinha.
   partindo o universo em dois, o Vazio de um lado e o Mundo de Cima do outro, as Pérolas Primordiais seladas nas
   Terras de Fora. É o texto que mais conversa com a lore de quem joga.
 
-**Falta**: equipamentos (óculos, botas, faixa, armaduras de fortaleza), as katanas, os focos e as criaturas, o
-desmontador táumico, a lâmina primordial e o que mais depende deles.
+### Fatia 5 — as roupas e as bijuterias
+
+- **Os dois óculos** (distorcidos e de metal do vazio): revelam o que está por trás do mundo, como os do Thaumcraft.
+  Para isso o `Revealing` do mod ganhou a etiqueta `thaumcraft:revealing`, por onde um ramo de fora diz que o elmo
+  dele também revela.
+- **As botas do caminhante do vazio**: empurrão de doze centésimos por tique (o dobro com a faixa ligada), degrau de
+  um bloco, pulo um quarto mais alto, queda amortecida acima de três blocos, cinco por cento de desconto de vis,
+  conserto sozinho e cinco de distorção.
+- **A faixa do caminhante**: bijuteria de cinto, vinte de escudo rúnico, dois de distorção, e o empurrão que se liga
+  e desliga agachando com ela na mão — ligada, ainda dá cinco por cento de pulo.
+- **As duas armaduras de fortaleza** (vazio e sombras), **o anel de Lumos** (visão noturna enquanto vestido) e **o
+  amuleto de voo**, que troca aer de uma varinha do inventário por voo, e plana quando se agacha caindo.
+- Tudo com os números do original, conferidos por teste: desconto de vis, distorção, degrau e pulo.
+
+**Falta**: as katanas, os focos e as criaturas, o desmontador táumico, a lâmina primordial, a chave do portão, o
+funguar e o sangue do vazio.

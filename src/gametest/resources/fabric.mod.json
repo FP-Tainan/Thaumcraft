@@ -79,7 +79,8 @@
       "net.thaumcraft.test.BaublesInventoryGameTest",
       "net.thaumcraft.test.LangGameTest",
       "net.thaumcraft.test.AddonApiGameTest",
-      "net.thaumcraft.test.MaleficiumGameTest"
+      "net.thaumcraft.test.MaleficiumGameTest",
+      "net.thaumcraft.test.MaleficiumGearGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.LookClientTest",
