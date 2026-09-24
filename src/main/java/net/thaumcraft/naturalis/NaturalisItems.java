@@ -44,6 +44,18 @@ public final class NaturalisItems {
     public static final Item ELEMENTAL_SICKLE = register("elemental_sickle", properties ->
             new SickleItem(properties.sword(TCMaterials.ELEMENTAL, 3.0f, -2.4f).rarity(Rarity.RARE), 9, 2, true));
 
+    // ------------------------------------------------------------------ os óculos
+
+    /** Os Óculos: revelam os nós, descontam seis por cento e dizem o que é o bloco da mira. */
+    public static final Item SPECTACLES = register("spectacles", properties ->
+            new SpectaclesItem(properties.humanoidArmor(NaturalisMaterials.SPECTACLES,
+                    net.minecraft.world.item.equipment.ArmorType.HELMET).rarity(Rarity.EPIC)));
+
+    /** Os Óculos de Cristal Escuro: revelam, descontam mais em Perditio e não deixam cegar. */
+    public static final Item DARK_CRYSTAL_GOGGLES = register("dark_crystal_goggles", properties ->
+            new DarkCrystalGogglesItem(properties.humanoidArmor(NaturalisMaterials.DARK_CRYSTAL,
+                    net.minecraft.world.item.equipment.ArmorType.HELMET).rarity(Rarity.RARE)));
+
     // ------------------------------------------------------------------ a madeira arcana
 
     /** Os sete feitios da madeira arcana, na ordem em que o original os listava. */

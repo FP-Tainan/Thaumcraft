@@ -1,6 +1,8 @@
 {
   "values": [
     "thaumcraft:warped_goggles",
-    "thaumcraft:voidmetal_goggles"
+    "thaumcraft:voidmetal_goggles",
+    "thaumcraft:spectacles",
+    "thaumcraft:dark_crystal_goggles"
   ]
 }

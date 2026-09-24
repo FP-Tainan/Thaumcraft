@@ -96,6 +96,27 @@ public class NaturalisGameTest {
         helper.succeed();
     }
 
+    /** Os dois óculos revelam os nós e descontam o que o original dizia. */
+    @GameTest
+    public void theGogglesRevealAndDiscount(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        for (var item : new net.minecraft.world.item.Item[]{NaturalisItems.SPECTACLES, NaturalisItems.DARK_CRYSTAL_GOGGLES}) {
+            player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, new ItemStack(item));
+            if (!net.thaumcraft.item.Revealing.can(player)) helper.fail(item + " devia revelar os nós");
+        }
+        player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, ItemStack.EMPTY);
+        var oculos = (net.thaumcraft.api.wands.VisDiscountGear) NaturalisItems.SPECTACLES;
+        if (oculos.visDiscount(new ItemStack(NaturalisItems.SPECTACLES), player, null) != 6) {
+            helper.fail("os Óculos descontam seis por cento");
+        }
+        var escuros = (net.thaumcraft.api.wands.VisDiscountGear) NaturalisItems.DARK_CRYSTAL_GOGGLES;
+        ItemStack stack = new ItemStack(NaturalisItems.DARK_CRYSTAL_GOGGLES);
+        if (escuros.visDiscount(stack, player, null) != 5) helper.fail("os de cristal escuro descontam cinco");
+        int perditio = escuros.visDiscount(stack, player, net.thaumcraft.api.aspects.Aspects.ENTROPY);
+        if (perditio != 7 && perditio != 9) helper.fail("em Perditio eles descontam sete ou nove; descontam " + perditio);
+        helper.succeed();
+    }
+
     /** A foice do vazio distorce quem a carrega, como no original. */
     @GameTest
     public void theVoidSickleWarps(GameTestHelper helper) {

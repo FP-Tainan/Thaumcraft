@@ -29,7 +29,8 @@
     "ContainerScreenHoverMixin",
     "InventoryScreenBaublesMixin",
     "InventoryRecipeBookMixin",
-    "ItemEntitySalisFxMixin"
+    "ItemEntitySalisFxMixin",
+    "LivingEntityRendererInvisibleMixin"
   ],
   "injectors": {
     "defaultRequire": 1
