@@ -37,6 +37,15 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_CARPENTRY.1"), Page.crafting("GreatwoodOrn"), Page.crafting("PlankSilverwood"), Page.crafting("GreatwoodGoldOrn1"), Page.crafting("GreatwoodGoldOrn2"), Page.crafting("GreatwoodGoldTrim"))
                 .register();
 
+        ThaumcraftApi.research("MN_RESEARCH_LOG", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MIND, 3).add(Aspects.VOID, 3).add(Aspects.ORDER, 3))
+                .at(-1, -2)
+                .icon(() -> new ItemStack(NaturalisItems.RESEARCH_LOG))
+                .hiddenParents("DECONSTRUCTOR")
+                .round()
+                .pages(Page.text("tc.research_page.MN_RESEARCH_LOG.1"), Page.crafting("ResearchLog"))
+                .register();
+
         ThaumcraftApi.research("MN_SPECTACLES", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.SENSES, 3).add(Aspects.AURA, 3).add(Aspects.MAGIC, 3))
                 .at(-6, 0)
@@ -86,6 +95,9 @@ public final class NaturalisTable {
                 3, 3, java.util.List.of(java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)))));
         ThaumcraftApi.bookRecipe("GreatwoodGoldOrn2", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.GREATWOOD_GOLD_ORNAMENT_2.asItem(), 4),
                 3, 3, java.util.List.of(java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_INGOT)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)))));
+        ThaumcraftApi.bookRecipe("ResearchLog", ThaumcraftApi.arcane("MN_RESEARCH_LOG",
+                new ItemStack(NaturalisItems.RESEARCH_LOG), new AspectList().add(Aspects.ORDER, 20).add(Aspects.ENTROPY, 20).add(Aspects.AIR, 20).add(Aspects.EARTH, 20).add(Aspects.FIRE, 20).add(Aspects.WATER, 20),
+                java.util.Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.BOOK), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.SHARDS.get("entropy")))));
         ThaumcraftApi.bookRecipe("Spectacles", ThaumcraftApi.arcane("MN_SPECTACLES",
                 new ItemStack(NaturalisItems.SPECTACLES), new AspectList().add(Aspects.ORDER, 5).add(Aspects.ENTROPY, 5).add(Aspects.AIR, 5).add(Aspects.EARTH, 5).add(Aspects.FIRE, 5).add(Aspects.WATER, 5),
                 java.util.Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.THAUMOMETER), Ingredient.of(TCItems.GOGGLES), Ingredient.of(TCItems.THAUMOMETER))));

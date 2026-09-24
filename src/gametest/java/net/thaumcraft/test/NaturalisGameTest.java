@@ -117,6 +117,24 @@ public class NaturalisGameTest {
         helper.succeed();
     }
 
+    /** O diário anota o que a mesa de decomposição está tirando e depois despeja no conhecimento. */
+    @GameTest
+    public void theResearchLogKeepsPoints(GameTestHelper helper) {
+        ItemStack diario = new ItemStack(NaturalisItems.RESEARCH_LOG);
+        var anotado = net.thaumcraft.naturalis.ResearchLogItem.notes(diario);
+        if (anotado.size() != 0) helper.fail("o diário começa vazio");
+        var lista = new net.thaumcraft.api.aspects.AspectList().add(net.thaumcraft.api.aspects.Aspects.AIR, 3);
+        diario.set(net.thaumcraft.registry.TCComponents.RESEARCH_LOG, lista);
+        var player = helper.makeMockServerPlayerInLevel();
+        int antes = net.thaumcraft.research.Knowledges.of(player).points(net.thaumcraft.api.aspects.Aspects.AIR);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, diario);
+        diario.getItem().use(helper.getLevel(), player, net.minecraft.world.InteractionHand.MAIN_HAND);
+        int depois = net.thaumcraft.research.Knowledges.of(player).points(net.thaumcraft.api.aspects.Aspects.AIR);
+        if (depois != antes + 3) helper.fail("o diário devia ter passado três de Aer; passou " + (depois - antes));
+        if (net.thaumcraft.naturalis.ResearchLogItem.notes(diario).size() != 0) helper.fail("e devia ficar em branco");
+        helper.succeed();
+    }
+
     /** A foice do vazio distorce quem a carrega, como no original. */
     @GameTest
     public void theVoidSickleWarps(GameTestHelper helper) {

@@ -178,6 +178,10 @@ public final class TCComponents {
             builder -> builder.persistent(net.minecraft.core.GlobalPos.CODEC)
                     .networkSynchronized(net.minecraft.core.GlobalPos.STREAM_CODEC));
 
+    /** O que o Diário de Pesquisa do Magia Naturalis tem anotado. */
+    public static final DataComponentType<AspectList> RESEARCH_LOG = register("research_log",
+            builder -> builder.persistent(AspectList.CODEC).networkSynchronized(AspectList.STREAM_CODEC));
+
     private TCComponents() {
     }
 

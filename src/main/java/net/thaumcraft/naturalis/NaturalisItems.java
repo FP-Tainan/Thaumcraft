@@ -44,6 +44,12 @@ public final class NaturalisItems {
     public static final Item ELEMENTAL_SICKLE = register("elemental_sickle", properties ->
             new SickleItem(properties.sword(TCMaterials.ELEMENTAL, 3.0f, -2.4f).rarity(Rarity.RARE), 9, 2, true));
 
+    // ------------------------------------------------------------------ o diário
+
+    /** O Diário de Pesquisa: anota pontos na mesa de decomposição e despeja-os depois. */
+    public static final Item RESEARCH_LOG = register("research_log", properties ->
+            new ResearchLogItem(properties.stacksTo(1).rarity(Rarity.UNCOMMON)));
+
     // ------------------------------------------------------------------ os óculos
 
     /** Os Óculos: revelam os nós, descontam seis por cento e dizem o que é o bloco da mira. */
