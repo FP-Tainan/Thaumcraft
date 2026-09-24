@@ -34,8 +34,21 @@ public class MaleficiumBladeClientTest implements FabricClientGameTest {
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
             context.waitTicks(5);
             // e a bainha na cintura, de costas
+            // a lâmina na mão, de trás e de frente, que é como quem joga se vê
             context.runOnClient(minecraft -> {
-                minecraft.options.setCameraType(net.minecraft.client.CameraType.THIRD_PERSON_FRONT);
+                minecraft.options.setCameraType(net.minecraft.client.CameraType.THIRD_PERSON_BACK);
+                if (minecraft.player != null) minecraft.player.getInventory().setSelectedSlot(0);
+            });
+            context.waitTicks(20);
+            context.takeScreenshot("lamina_na_mao_de_tras");
+            // e uma solta no chão, onde o jeito de desenhar é o mais simples de todos
+            server.runCommand("summon item ~ ~1 ~2 {Item:{id:\"thaumcraft:shadowmetal_fortress_blade\",count:1}}");
+            context.waitTicks(20);
+            context.takeScreenshot("lamina_no_chao");
+            context.runOnClient(minecraft -> minecraft.options.setCameraType(net.minecraft.client.CameraType.THIRD_PERSON_FRONT));
+            context.waitTicks(20);
+            context.takeScreenshot("lamina_na_mao_de_frente");
+            context.runOnClient(minecraft -> {
                 if (minecraft.player != null) minecraft.player.getInventory().setSelectedSlot(4);
             });
             context.waitTicks(20);

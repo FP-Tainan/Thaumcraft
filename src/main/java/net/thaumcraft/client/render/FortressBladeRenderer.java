@@ -102,9 +102,7 @@ public class FortressBladeRenderer {
             pose.pushPose();
             pose.translate(0.5f, 0.5f, 0.5f);
             pose.mulPose(Axis.XP.rotationDegrees(180.0f));
-            // de lado a lâmina é só o fio: quem a segura vê a face larga
-            pose.mulPose(Axis.YP.rotationDegrees(90.0f));
-            pose.scale(0.45f, 0.45f, 0.45f);
+            pose.scale(0.38f, 0.38f, 0.38f);
             pose.translate(0.0f, 22.0f * UNIT, 0.0f);
             // a lâmina do modelo é fina demais para o tamanho que ela tem na mão: engrossa sem esticar
             pose.scale(THICK_X, LONG_Y, THICK_Z);
@@ -163,8 +161,9 @@ public class FortressBladeRenderer {
 
         @Override
         public void getExtents(Consumer<org.joml.Vector3fc> extents) {
-            extents.accept(new org.joml.Vector3f(-0.5f, -0.5f, -0.5f));
-            extents.accept(new org.joml.Vector3f(1.5f, 1.5f, 1.5f));
+            // a caixa tem de caber a lâmina inteira em qualquer jeito de segurar, ou ela sai cortada
+            extents.accept(new org.joml.Vector3f(-2.0f, -2.0f, -2.0f));
+            extents.accept(new org.joml.Vector3f(3.0f, 3.0f, 3.0f));
         }
 
         @Override
