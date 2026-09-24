@@ -49,6 +49,10 @@ public final class NaturalisItems {
     /** O Foco de Construção: levanta uma forma de blocos a partir da face mirada. */
     public static final Item BUILDER_FOCUS = focus("builder_focus", "build", BuilderFocus.COST);
 
+    /** A Bolsa de Focos do Fim: mostra o baú do fim de quem a veste. */
+    public static final Item ENDER_POUCH = register("focus_ender_pouch", properties ->
+            new EnderPouchItem(properties.stacksTo(1).rarity(Rarity.EPIC)));
+
     // ------------------------------------------------------------------ as pedras alquímicas
 
     /** A Pedra do Catalisador Fenomorfo, que troca um bloco pelo próximo da família dele. */

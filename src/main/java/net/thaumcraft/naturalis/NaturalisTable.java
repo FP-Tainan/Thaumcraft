@@ -85,6 +85,16 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_QUICKSILVER_STONE.1"), Page.crafting("StoneQuick"))
                 .register();
 
+        ThaumcraftApi.research("MN_ENDER_POUCH", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.ELDRITCH, 3).add(Aspects.VOID, 3))
+                .at(6, 3)
+                .complexity(2)
+                .icon(() -> new ItemStack(NaturalisItems.ENDER_POUCH))
+                .parents("FOCUSPOUCH")
+                .round()
+                .pages(Page.text("tc.research_page.MN_ENDER_POUCH.1"), Page.crafting("EnderPouch"))
+                .register();
+
         ThaumcraftApi.research("MN_SICKLES", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TOOL, 3).add(Aspects.CROP, 3).add(Aspects.HARVEST, 3))
                 .at(-4, 3)
@@ -127,6 +137,10 @@ public final class NaturalisTable {
                 new ItemStack(NaturalisItems.BUILDER_FOCUS), 5, new AspectList().add(Aspects.CRAFT, 32).add(Aspects.TOOL, 16).add(Aspects.EXCHANGE, 8).add(Aspects.MECHANISM, 3),
                 Ingredient.of(TCItems.FOCI.get("trade")),
                 java.util.List.of(Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.ELEMENTAL_SHOVEL), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()))));
+        ThaumcraftApi.bookRecipe("EnderPouch", ThaumcraftApi.infusion("MN_ENDER_POUCH",
+                new ItemStack(NaturalisItems.ENDER_POUCH), 1, new AspectList().add(Aspects.ELDRITCH, 8).add(Aspects.VOID, 8).add(Aspects.TRAVEL, 8).add(Aspects.EXCHANGE, 3),
+                Ingredient.of(TCItems.FOCUS_POUCH),
+                java.util.List.of(Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL), Ingredient.of(net.minecraft.world.level.block.Blocks.ENDER_CHEST.asItem()), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL))));
         ThaumcraftApi.bookRecipe("StonePheno", ThaumcraftApi.infusion("MN_MUTATION_STONE",
                 new ItemStack(NaturalisItems.MUTATION_STONE), 2, new AspectList().add(Aspects.EXCHANGE, 32),
                 Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()),
