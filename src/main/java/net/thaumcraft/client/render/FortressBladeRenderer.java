@@ -32,15 +32,29 @@ public class FortressBladeRenderer {
             BoxMesh.box(-0.5f, -40.0f, -2.0f, 1, 48, 4, 0, 0, 32, 64),
             // a guarda e o punho
             BoxMesh.box(-2.5f, -40.0f, -3.5f, 5, 1, 7, 0, 52, 32, 64),
-            BoxMesh.box(-1.0f, -52.0f, -1.5f, 2, 12, 3, 22, 0, 32, 64),
+            // o punho, que no original é curto demais para o tamanho da lâmina
+            BoxMesh.box(-1.0f, -58.0f, -1.5f, 2, 18, 3, 22, 0, 32, 64),
             // a ponta — o kissaki: as costas da lâmina recuam de degrau em degrau e o fio segue reto até o bico
-            BoxMesh.box(-0.5f, 8.0f, -2.0f, 1, 4, 3.2f, 0, 0, 32, 64),
-            BoxMesh.box(-0.5f, 12.0f, -2.0f, 1, 3, 2.4f, 0, 0, 32, 64),
-            BoxMesh.box(-0.5f, 15.0f, -2.0f, 1, 2.5f, 1.6f, 0, 0, 32, 64),
-            BoxMesh.box(-0.5f, 17.5f, -2.0f, 1, 2, 0.8f, 0, 0, 32, 64));
+            taper());
     private static final float[] SHEATH = BoxMesh.box(-1.0f, -39.5f, -2.0f, 2, 48, 4, 10, 0, 32, 64);
     /** Onde fica o punho no modelo: é por ali que a mão pega, e por isso ele é a origem. */
-    private static final float GRIP = 46.0f;
+    private static final float GRIP = 49.0f;
+
+    /**
+     * O afunilamento da ponta: seis degraus curtos, cada um um pouco mais estreito que o anterior. São muitos e
+     * pequenos de propósito — com poucos e grandes a ponta sai serrilhada.
+     */
+    private static float[] taper() {
+        float[][] parts = new float[6][];
+        float y = 8.0f;
+        float width = 3.5f;
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = BoxMesh.box(-0.5f, y, -2.0f, 1, 2.0f, width, 0, 0, 32, 64);
+            y += 1.8f;
+            width -= 0.55f;
+        }
+        return BoxMesh.join(parts);
+    }
 
     /**
      * O corpo da lâmina: o modelo do original é fino e comprido demais para o tamanho que a lâmina tem na mão de
