@@ -95,6 +95,11 @@ public final class NaturalisItems {
     public static final Item ARCANE_CHEST_SILVERWOOD = register("arcane_chest_silverwood", properties ->
             new ArcaneChestItem(NaturalisBlocks.ARCANE_CHEST_SILVERWOOD, properties.useBlockDescriptionPrefix()));
 
+    /** O Geo-Pilone e o Amostrador de Bioma, que diz a ele que terra escrever. */
+    public static final Item GEO_PYLON = blockItem(NaturalisBlocks.GEO_PYLON);
+    public static final Item BIOME_SAMPLER = register("biome_sampler", properties ->
+            new BiomeSamplerItem(properties.stacksTo(1).rarity(Rarity.UNCOMMON)));
+
     /** A Mesa de Transcrição, para levar na mão. */
     public static final Item TRANSCRIBING_TABLE = blockItem(NaturalisBlocks.TRANSCRIBING_TABLE);
 

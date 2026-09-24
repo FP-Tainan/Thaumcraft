@@ -63,6 +63,16 @@ public final class NaturalisBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<net.thaumcraft.block.entity.BannerBlockEntity>(
                             NaturalisBannerBlockEntity::new, java.util.Set.of(BANNER)));
 
+    /** O Geo-Pilone: reescreve a terra num círculo de oito blocos em volta. */
+    public static final Block GEO_PYLON = register("geo_pylon", properties ->
+            new GeoPylonBlock(properties.mapColor(net.minecraft.world.level.material.MapColor.STONE)
+                    .strength(2.5f, 10.0f).sound(SoundType.STONE).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<GeoPylonBlockEntity> GEO_PYLON_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("geo_pylon"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(GeoPylonBlockEntity::new,
+                            java.util.Set.of(GEO_PYLON)));
+
     /** A Mesa de Transcrição: a mesa arcana que copia o que as mesas de decomposição em volta tiram. */
     public static final Block TRANSCRIBING_TABLE = register("transcribing_table", properties ->
             new TranscribingTableBlock(properties.mapColor(net.minecraft.world.level.material.MapColor.WOOD)

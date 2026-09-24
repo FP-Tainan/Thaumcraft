@@ -209,6 +209,14 @@ public final class TCComponents {
                     .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.fromCodec(
                             net.thaumcraft.naturalis.ArcaneKeyItem.Bond.CODEC)));
 
+    /** A terra que o Amostrador de Bioma guardou: o nome dela, a cor da folhagem e o que ela cobraria. */
+    public static final DataComponentType<String> SAMPLED_BIOME = register("sampled_biome",
+            builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+    public static final DataComponentType<Integer> SAMPLED_COLOUR = register("sampled_colour",
+            builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.INT));
+    public static final DataComponentType<AspectList> SAMPLED_COST = register("sampled_cost",
+            builder -> builder.persistent(AspectList.CODEC).networkSynchronized(AspectList.STREAM_CODEC));
+
     private TCComponents() {
     }
 

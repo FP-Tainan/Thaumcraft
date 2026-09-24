@@ -337,4 +337,95 @@ public class NaturalisGameTest {
         if (!transcricao.getItem(0).isEmpty()) helper.fail("e a casa de cima devia ter ficado vazia");
         helper.succeed();
     }
+
+    /** O Geo-Pilone só trabalha em cima do vão e dos três totens de obsidiana. */
+    @GameTest
+    public void theGeoPylonNeedsItsTotem(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(1, 5, 1);
+        helper.setBlock(pos, net.thaumcraft.naturalis.NaturalisBlocks.GEO_PYLON);
+        if (net.thaumcraft.naturalis.GeoPylonBlockEntity.standing(helper.getLevel(), helper.absolutePos(pos))) {
+            helper.fail("sem os totens ele não devia estar de pé");
+        }
+        for (int i = 1; i <= 3; i++) {
+            helper.setBlock(pos.below(1 + i), net.thaumcraft.registry.TCBlocks.OBSIDIAN_TOTEM);
+        }
+        if (!net.thaumcraft.naturalis.GeoPylonBlockEntity.standing(helper.getLevel(), helper.absolutePos(pos))) {
+            helper.fail("com o vão e os três totens ele devia estar de pé");
+        }
+        // e um bloco no vão derruba a conta de novo
+        helper.setBlock(pos.below(), net.minecraft.world.level.block.Blocks.STONE);
+        if (net.thaumcraft.naturalis.GeoPylonBlockEntity.standing(helper.getLevel(), helper.absolutePos(pos))) {
+            helper.fail("com o vão tapado ele não está de pé");
+        }
+        helper.succeed();
+    }
+
+    /** O amostrador guarda a terra do lugar e a passa ao pilone; a terra cobra o que ela carrega de aura. */
+    @GameTest
+    public void theBiomeSamplerAttunesThePylon(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        BlockPos pos = new BlockPos(1, 2, 1);
+        helper.setBlock(pos, net.thaumcraft.naturalis.NaturalisBlocks.GEO_PYLON);
+        var pylon = helper.getBlockEntity(pos, net.thaumcraft.naturalis.GeoPylonBlockEntity.class);
+        ItemStack amostrador = new ItemStack(NaturalisItems.BIOME_SAMPLER);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, amostrador);
+
+        // agachado, ele anota a terra daqui
+        player.setShiftKeyDown(true);
+        BlockPos chao = helper.absolutePos(pos.below());
+        amostrador.getItem().useOn(new net.minecraft.world.item.context.UseOnContext(helper.getLevel(), player,
+                net.minecraft.world.InteractionHand.MAIN_HAND, amostrador,
+                new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(chao),
+                        net.minecraft.core.Direction.UP, chao, false)));
+        var terra = net.thaumcraft.naturalis.BiomeSamplerItem.sampled(amostrador);
+        if (terra == null) helper.fail("o amostrador devia ter guardado a terra daqui");
+        var conta = amostrador.get(net.thaumcraft.registry.TCComponents.SAMPLED_COST);
+        if (conta == null) helper.fail("e o que ela cobraria");
+
+        // de pé, ele afina o pilone
+        player.setShiftKeyDown(false);
+        BlockPos mundo = helper.absolutePos(pos);
+        amostrador.getItem().useOn(new net.minecraft.world.item.context.UseOnContext(helper.getLevel(), player,
+                net.minecraft.world.InteractionHand.MAIN_HAND, amostrador,
+                new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(mundo),
+                        net.minecraft.core.Direction.UP, mundo, false)));
+        if (pylon.target() != terra) helper.fail("o pilone devia estar afinado à terra do amostrador");
+        helper.succeed();
+    }
+
+    /** A varinha liga e desliga o pilone. */
+    @GameTest
+    public void theWandTogglesThePylon(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        BlockPos pos = new BlockPos(1, 2, 1);
+        helper.setBlock(pos, net.thaumcraft.naturalis.NaturalisBlocks.GEO_PYLON);
+        var pylon = helper.getBlockEntity(pos, net.thaumcraft.naturalis.GeoPylonBlockEntity.class);
+        if (!pylon.idle()) helper.fail("ele nasce parado");
+        pylon.onWand(helper.getLevel(), new ItemStack(net.thaumcraft.registry.TCItems.WAND), player,
+                helper.absolutePos(pos), net.minecraft.core.Direction.UP);
+        if (pylon.idle()) helper.fail("a varinha devia tê-lo ligado");
+        pylon.onWand(helper.getLevel(), new ItemStack(net.thaumcraft.registry.TCItems.WAND), player,
+                helper.absolutePos(pos), net.minecraft.core.Direction.UP);
+        if (!pylon.idle()) helper.fail("e desligado de novo");
+        helper.succeed();
+    }
+
+    /** A Pedra do Catalisador troca o bloco na bancada e não se gasta. */
+    @GameTest
+    public void theMutationStoneSurvivesTheCraft(GameTestHelper helper) {
+        var pares = net.thaumcraft.crafting.MutationRecipe.pairs();
+        if (pares.size() != 38) helper.fail("o original tem 38 trocas; há " + pares.size());
+        var entrada = net.minecraft.world.item.crafting.CraftingInput.of(2, 1, java.util.List.of(
+                new ItemStack(NaturalisItems.MUTATION_STONE),
+                new ItemStack(net.minecraft.world.item.Items.WOOL.white())));
+        var receita = net.thaumcraft.crafting.MutationRecipe.INSTANCE;
+        if (!receita.matches(entrada, helper.getLevel())) helper.fail("a pedra devia trocar a lã branca");
+        ItemStack saida = receita.assemble(entrada);
+        if (!saida.is(net.minecraft.world.item.Items.WOOL.black())) {
+            helper.fail("a lã branca devia virar preta; virou " + saida);
+        }
+        var sobra = receita.getRemainingItems(entrada);
+        if (!sobra.get(0).is(NaturalisItems.MUTATION_STONE)) helper.fail("a pedra devia voltar para a bancada");
+        helper.succeed();
+    }
 }

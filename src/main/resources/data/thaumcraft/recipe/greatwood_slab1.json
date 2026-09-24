@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": "thaumcraft:greatwood_planks_horizontal"
+  },
+  "result": {
+    "id": "thaumcraft:greatwood_slab",
+    "count": 6
+  }
+}

@@ -3,6 +3,7 @@ package net.thaumcraft.naturalis;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.thaumcraft.api.ThaumcraftApi;
+import net.thaumcraft.crafting.MutationRecipe;
 import net.thaumcraft.api.aspects.AspectList;
 import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.registry.TCBlocks;
@@ -102,6 +103,16 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_CONSTRUCTION_FOCUS.1"), Page.crafting("ConstructionFocus"))
                 .register();
 
+        ThaumcraftApi.research("MN_MUTATION_STONE", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAGIC, 3).add(Aspects.EXCHANGE, 4).add(Aspects.EARTH, 2))
+                .at(4, -3)
+                .complexity(2)
+                .icon(() -> new ItemStack(NaturalisItems.MUTATION_STONE))
+                .parents("FOCUSTRADE", "CRUCIBLE")
+                .secondary()
+                .pages(Page.text("tc.research_page.MN_MUTATION_STONE.1"), Page.crafting("StonePheno"), Page.crafting("WoodConversion1", "WoodConversion2", "WoodConversion3", "WoodConversion4", "WoodConversion5", "WoodConversion6"), Page.crafting("ColorConversion1", "ColorConversion2", "ColorConversion3", "ColorConversion4", "ColorConversion5", "ColorConversion6", "ColorConversion7", "ColorConversion8", "ColorConversion9", "ColorConversion10", "ColorConversion11", "ColorConversion12", "ColorConversion13", "ColorConversion14", "ColorConversion15", "ColorConversion16", "ColorConversion17", "ColorConversion18", "ColorConversion19", "ColorConversion20", "ColorConversion21", "ColorConversion22", "ColorConversion23", "ColorConversion24", "ColorConversion25", "ColorConversion26", "ColorConversion27", "ColorConversion28", "ColorConversion29", "ColorConversion30", "ColorConversion31", "ColorConversion32"))
+                .register();
+
         ThaumcraftApi.research("MN_QUICKSILVER_STONE", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.SENSES, 3).add(Aspects.EXCHANGE, 4).add(Aspects.AURA, 2))
                 .at(6, -1)
@@ -140,6 +151,66 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_SICKLES.1"), Page.crafting("ThaumiumSickle"), Page.crafting("VoidSickle"))
                 .register();
 
+        ThaumcraftApi.research("MN_SICKLE_OF_ABUNDANCE", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.TOOL, 3).add(Aspects.CROP, 3).add(Aspects.HARVEST, 3).add(Aspects.GREED, 6))
+                .at(-5, 5)
+                .complexity(2)
+                .icon(() -> new ItemStack(NaturalisItems.ELEMENTAL_SICKLE))
+                .parents("MN_SICKLES")
+                .hiddenParents("INFUSION")
+                .pages(Page.text("tc.research_page.MN_SICKLE_OF_ABUNDANCE.1"), Page.crafting("ElementalSickle"))
+                .register();
+
+        ThaumcraftApi.research("MN_GEO_OCCULTISM", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.AURA, 4).add(Aspects.EXCHANGE, 3).add(Aspects.WEATHER, 3).add(Aspects.MAGIC, 6).add(Aspects.EARTH, 2).add(Aspects.AIR, 2))
+                .at(0, -5)
+                .icon(() -> new ItemStack(NaturalisBlocks.GEO_PYLON.asItem()))
+                .hiddenParents("INFUSION", "MN_MUTATION_STONE")
+                .pages(Page.crafting("GeoPylon"), Page.crafting("BiomeReport"))
+                .register();
+
+    }
+
+    /** As trocas da Pedra do Catalisador Fenomorfo, que a bancada faz sem gastar a pedra. */
+    public static void mutations() {
+        MutationRecipe.add(TCBlocks.GREATWOOD_PLANKS.asItem(), NaturalisBlocks.GREATWOOD_PLANKS_HORIZONTAL.asItem());
+        MutationRecipe.add(NaturalisBlocks.GREATWOOD_PLANKS_HORIZONTAL.asItem(), NaturalisBlocks.GREATWOOD_ORNAMENT.asItem());
+        MutationRecipe.add(TCBlocks.SILVERWOOD_PLANKS.asItem(), NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem());
+        MutationRecipe.add(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem(), NaturalisBlocks.SILVERWOOD_PLANKS_VERTICAL.asItem());
+        MutationRecipe.add(NaturalisBlocks.GREATWOOD_ORNAMENT.asItem(), TCBlocks.GREATWOOD_PLANKS.asItem());
+        MutationRecipe.add(NaturalisBlocks.SILVERWOOD_PLANKS_VERTICAL.asItem(), TCBlocks.SILVERWOOD_PLANKS.asItem());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.black(), net.minecraft.world.item.Items.DYED_TERRACOTTA.white());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.red(), net.minecraft.world.item.Items.DYED_TERRACOTTA.orange());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.green(), net.minecraft.world.item.Items.DYED_TERRACOTTA.magenta());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.brown(), net.minecraft.world.item.Items.DYED_TERRACOTTA.lightBlue());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.blue(), net.minecraft.world.item.Items.DYED_TERRACOTTA.yellow());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.purple(), net.minecraft.world.item.Items.DYED_TERRACOTTA.lime());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.cyan(), net.minecraft.world.item.Items.DYED_TERRACOTTA.pink());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.lightGray(), net.minecraft.world.item.Items.DYED_TERRACOTTA.gray());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.gray(), net.minecraft.world.item.Items.DYED_TERRACOTTA.lightGray());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.pink(), net.minecraft.world.item.Items.DYED_TERRACOTTA.cyan());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.lime(), net.minecraft.world.item.Items.DYED_TERRACOTTA.purple());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.yellow(), net.minecraft.world.item.Items.DYED_TERRACOTTA.blue());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.lightBlue(), net.minecraft.world.item.Items.DYED_TERRACOTTA.brown());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.magenta(), net.minecraft.world.item.Items.DYED_TERRACOTTA.green());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.orange(), net.minecraft.world.item.Items.DYED_TERRACOTTA.red());
+        MutationRecipe.add(net.minecraft.world.item.Items.DYED_TERRACOTTA.white(), net.minecraft.world.item.Items.DYED_TERRACOTTA.black());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.white(), net.minecraft.world.item.Items.WOOL.black());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.orange(), net.minecraft.world.item.Items.WOOL.red());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.magenta(), net.minecraft.world.item.Items.WOOL.green());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.lightBlue(), net.minecraft.world.item.Items.WOOL.brown());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.yellow(), net.minecraft.world.item.Items.WOOL.blue());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.lime(), net.minecraft.world.item.Items.WOOL.purple());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.pink(), net.minecraft.world.item.Items.WOOL.cyan());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.gray(), net.minecraft.world.item.Items.WOOL.lightGray());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.lightGray(), net.minecraft.world.item.Items.WOOL.gray());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.cyan(), net.minecraft.world.item.Items.WOOL.pink());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.purple(), net.minecraft.world.item.Items.WOOL.lime());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.blue(), net.minecraft.world.item.Items.WOOL.yellow());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.brown(), net.minecraft.world.item.Items.WOOL.lightBlue());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.green(), net.minecraft.world.item.Items.WOOL.magenta());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.red(), net.minecraft.world.item.Items.WOOL.orange());
+        MutationRecipe.add(net.minecraft.world.item.Items.WOOL.black(), net.minecraft.world.item.Items.WOOL.white());
     }
 
     /** As receitas: carregam itens, então só se montam quando o mundo abre. */
@@ -148,6 +219,14 @@ public final class NaturalisTable {
                 3, 3, java.util.List.of(java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(TCResources.get("thaumium_ingot"))), java.util.List.<ItemStack>of(), java.util.List.<ItemStack>of(), java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(TCResources.get("thaumium_ingot"))), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)), java.util.List.of(new ItemStack(TCResources.get("thaumium_ingot"))), java.util.List.<ItemStack>of())));
         ThaumcraftApi.bookRecipe("VoidSickle", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisItems.VOID_SICKLE),
                 3, 3, java.util.List.of(java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(TCResources.get("void_ingot"))), java.util.List.<ItemStack>of(), java.util.List.<ItemStack>of(), java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(TCResources.get("void_ingot"))), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)), java.util.List.of(new ItemStack(TCResources.get("void_ingot"))), java.util.List.<ItemStack>of())));
+        ThaumcraftApi.bookRecipe("GreatwoodSlab1", ThaumcraftApi.crafting(() -> new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6),
+                3, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisBlocks.GREATWOOD_PLANKS_HORIZONTAL.asItem())), java.util.List.of(new ItemStack(NaturalisBlocks.GREATWOOD_PLANKS_HORIZONTAL.asItem())), java.util.List.of(new ItemStack(NaturalisBlocks.GREATWOOD_PLANKS_HORIZONTAL.asItem())))));
+        ThaumcraftApi.bookRecipe("GreatwoodSlab2", ThaumcraftApi.crafting(() -> new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6),
+                3, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisBlocks.GREATWOOD_ORNAMENT.asItem())), java.util.List.of(new ItemStack(NaturalisBlocks.GREATWOOD_ORNAMENT.asItem())), java.util.List.of(new ItemStack(NaturalisBlocks.GREATWOOD_ORNAMENT.asItem())))));
+        ThaumcraftApi.bookRecipe("SilverwoodSlab1", ThaumcraftApi.crafting(() -> new ItemStack(TCBlocks.SILVERWOOD_SLAB.asItem(), 6),
+                3, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem())), java.util.List.of(new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem())), java.util.List.of(new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem())))));
+        ThaumcraftApi.bookRecipe("SilverwoodSlab2", ThaumcraftApi.crafting(() -> new ItemStack(TCBlocks.SILVERWOOD_SLAB.asItem(), 6),
+                3, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_VERTICAL.asItem())), java.util.List.of(new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_VERTICAL.asItem())), java.util.List.of(new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_VERTICAL.asItem())))));
         ThaumcraftApi.bookRecipe("PlankSilverwood", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem()),
                 1, 2, java.util.List.of(java.util.List.of(new ItemStack(TCBlocks.SILVERWOOD_SLAB.asItem(), 6)), java.util.List.of(new ItemStack(TCBlocks.SILVERWOOD_SLAB.asItem(), 6)))));
         ThaumcraftApi.bookRecipe("GreatwoodOrn", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.GREATWOOD_ORNAMENT.asItem()),
@@ -158,6 +237,85 @@ public final class NaturalisTable {
                 3, 3, java.util.List.of(java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)))));
         ThaumcraftApi.bookRecipe("GreatwoodGoldOrn2", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.GREATWOOD_GOLD_ORNAMENT_2.asItem(), 4),
                 3, 3, java.util.List.of(java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_INGOT)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)))));
+        ThaumcraftApi.bookRecipe("WoodConversion1", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.GREATWOOD_PLANKS_HORIZONTAL.asItem()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())))));
+        ThaumcraftApi.bookRecipe("WoodConversion2", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.GREATWOOD_ORNAMENT.asItem()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(NaturalisBlocks.GREATWOOD_PLANKS_HORIZONTAL.asItem())))));
+        ThaumcraftApi.bookRecipe("WoodConversion3", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(TCBlocks.SILVERWOOD_PLANKS.asItem())))));
+        ThaumcraftApi.bookRecipe("WoodConversion4", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_VERTICAL.asItem()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem())))));
+        ThaumcraftApi.bookRecipe("WoodConversion5", ThaumcraftApi.crafting(() -> new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(NaturalisBlocks.GREATWOOD_ORNAMENT.asItem())))));
+        ThaumcraftApi.bookRecipe("WoodConversion6", ThaumcraftApi.crafting(() -> new ItemStack(TCBlocks.SILVERWOOD_PLANKS.asItem()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_VERTICAL.asItem())))));
+        ThaumcraftApi.bookRecipe("ColorConversion1", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.white()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.black())))));
+        ThaumcraftApi.bookRecipe("ColorConversion2", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.orange()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.red())))));
+        ThaumcraftApi.bookRecipe("ColorConversion3", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.magenta()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.green())))));
+        ThaumcraftApi.bookRecipe("ColorConversion4", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.lightBlue()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.brown())))));
+        ThaumcraftApi.bookRecipe("ColorConversion5", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.yellow()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.blue())))));
+        ThaumcraftApi.bookRecipe("ColorConversion6", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.lime()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.purple())))));
+        ThaumcraftApi.bookRecipe("ColorConversion7", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.pink()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.cyan())))));
+        ThaumcraftApi.bookRecipe("ColorConversion8", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.gray()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.lightGray())))));
+        ThaumcraftApi.bookRecipe("ColorConversion9", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.lightGray()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.gray())))));
+        ThaumcraftApi.bookRecipe("ColorConversion10", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.cyan()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.pink())))));
+        ThaumcraftApi.bookRecipe("ColorConversion11", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.purple()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.lime())))));
+        ThaumcraftApi.bookRecipe("ColorConversion12", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.blue()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.yellow())))));
+        ThaumcraftApi.bookRecipe("ColorConversion13", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.brown()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.lightBlue())))));
+        ThaumcraftApi.bookRecipe("ColorConversion14", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.green()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.magenta())))));
+        ThaumcraftApi.bookRecipe("ColorConversion15", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.red()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.orange())))));
+        ThaumcraftApi.bookRecipe("ColorConversion16", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.black()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.DYED_TERRACOTTA.white())))));
+        ThaumcraftApi.bookRecipe("ColorConversion17", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.black()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.white())))));
+        ThaumcraftApi.bookRecipe("ColorConversion18", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.red()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.orange())))));
+        ThaumcraftApi.bookRecipe("ColorConversion19", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.green()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.magenta())))));
+        ThaumcraftApi.bookRecipe("ColorConversion20", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.brown()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.lightBlue())))));
+        ThaumcraftApi.bookRecipe("ColorConversion21", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.blue()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.yellow())))));
+        ThaumcraftApi.bookRecipe("ColorConversion22", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.purple()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.lime())))));
+        ThaumcraftApi.bookRecipe("ColorConversion23", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.cyan()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.pink())))));
+        ThaumcraftApi.bookRecipe("ColorConversion24", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.lightGray()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.gray())))));
+        ThaumcraftApi.bookRecipe("ColorConversion25", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.gray()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.lightGray())))));
+        ThaumcraftApi.bookRecipe("ColorConversion26", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.pink()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.cyan())))));
+        ThaumcraftApi.bookRecipe("ColorConversion27", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.lime()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.purple())))));
+        ThaumcraftApi.bookRecipe("ColorConversion28", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.yellow()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.blue())))));
+        ThaumcraftApi.bookRecipe("ColorConversion29", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.lightBlue()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.brown())))));
+        ThaumcraftApi.bookRecipe("ColorConversion30", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.magenta()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.green())))));
+        ThaumcraftApi.bookRecipe("ColorConversion31", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.orange()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.red())))));
+        ThaumcraftApi.bookRecipe("ColorConversion32", ThaumcraftApi.crafting(() -> new ItemStack(net.minecraft.world.item.Items.WOOL.white()),
+                2, 1, java.util.List.of(java.util.List.of(new ItemStack(NaturalisItems.MUTATION_STONE)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.black())))));
+        ThaumcraftApi.bookRecipe("BiomeReport", ThaumcraftApi.arcane("MN_GEO_OCCULTISM",
+                new ItemStack(NaturalisItems.BIOME_SAMPLER), new AspectList().add(Aspects.ORDER, 4).add(Aspects.ENTROPY, 2).add(Aspects.AIR, 2).add(Aspects.EARTH, 4).add(Aspects.FIRE, 2).add(Aspects.WATER, 2),
+                java.util.Arrays.asList(null, Ingredient.of(net.minecraft.world.item.Items.STRING), null, Ingredient.of(TCItems.THAUMOMETER), Ingredient.of(net.minecraft.world.item.Items.BOOK), Ingredient.of(TCItems.SCRIBING_TOOLS), null, Ingredient.of(net.minecraft.world.item.Items.STRING), null)));
         ThaumcraftApi.bookRecipe("ResearchLog", ThaumcraftApi.arcane("MN_RESEARCH_LOG",
                 new ItemStack(NaturalisItems.RESEARCH_LOG), new AspectList().add(Aspects.ORDER, 20).add(Aspects.ENTROPY, 20).add(Aspects.AIR, 20).add(Aspects.EARTH, 20).add(Aspects.FIRE, 20).add(Aspects.WATER, 20),
                 java.util.Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.BOOK), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.SHARDS.get("entropy")))));
@@ -179,10 +337,18 @@ public final class NaturalisTable {
         ThaumcraftApi.bookRecipe("ArcaneChest2", ThaumcraftApi.arcane("MN_ARCANE_CHEST",
                 new ItemStack(NaturalisBlocks.ARCANE_CHEST_SILVERWOOD.asItem()), new AspectList().add(Aspects.WATER, 20).add(Aspects.ORDER, 15).add(Aspects.EARTH, 15).add(Aspects.FIRE, 10),
                 java.util.Arrays.asList(Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.CHEST.asItem()), Ingredient.of(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem()), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem()), Ingredient.of(TCResources.get("thaumium_ingot")))));
+        ThaumcraftApi.bookRecipe("GeoPylon", ThaumcraftApi.infusion("MN_GEO_OCCULTISM",
+                new ItemStack(NaturalisBlocks.GEO_PYLON.asItem()), 8, new AspectList().add(Aspects.WEATHER, 9).add(Aspects.AURA, 16).add(Aspects.EXCHANGE, 8).add(Aspects.MECHANISM, 12),
+                Ingredient.of(TCBlocks.VIS_RELAY.asItem()),
+                java.util.List.of(Ingredient.of(TCItems.FOCI.get("trade")), Ingredient.of(NaturalisItems.MUTATION_STONE), Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARDS.get("entropy")))));
         ThaumcraftApi.bookRecipe("DarkGoggles", ThaumcraftApi.infusion("MN_DARK_GOGGLES",
                 new ItemStack(NaturalisItems.DARK_CRYSTAL_GOGGLES), 3, new AspectList().add(Aspects.SENSES, 32).add(Aspects.ARMOR, 16).add(Aspects.DARKNESS, 32),
                 Ingredient.of(TCItems.GOGGLES),
                 java.util.List.of(Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(net.minecraft.world.item.Items.SPIDER_EYE), Ingredient.of(net.minecraft.world.item.Items.SPIDER_EYE), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCItems.ZOMBIE_BRAIN))));
+        ThaumcraftApi.bookRecipe("ElementalSickle", ThaumcraftApi.infusion("MN_SICKLE_OF_ABUNDANCE",
+                new ItemStack(NaturalisItems.ELEMENTAL_SICKLE), 1, new AspectList().add(Aspects.GREED, 32).add(Aspects.CROP, 16).add(Aspects.HARVEST, 24).add(Aspects.TOOL, 8),
+                Ingredient.of(NaturalisItems.THAUMIUM_SICKLE),
+                java.util.List.of(Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(net.minecraft.world.item.Items.WHEAT_SEEDS), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(net.minecraft.world.item.Items.ENCHANTED_BOOK))));
         ThaumcraftApi.bookRecipe("ConstructionFocus", ThaumcraftApi.infusion("MN_CONSTRUCTION_FOCUS",
                 new ItemStack(NaturalisItems.BUILDER_FOCUS), 5, new AspectList().add(Aspects.CRAFT, 32).add(Aspects.TOOL, 16).add(Aspects.EXCHANGE, 8).add(Aspects.MECHANISM, 3),
                 Ingredient.of(TCItems.FOCI.get("trade")),

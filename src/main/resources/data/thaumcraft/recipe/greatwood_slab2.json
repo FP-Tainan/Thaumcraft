@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": "thaumcraft:greatwood_ornament"
+  },
+  "result": {
+    "id": "thaumcraft:greatwood_slab",
+    "count": 6
+  }
+}

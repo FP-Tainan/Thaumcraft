@@ -92,18 +92,22 @@ public class MaleficiumGameTest {
         });
     }
 
+    /**
+     * O sal do tempo vira o relógio do mundo. O teste não olha se ficou claro ou escuro — a chuva de outro teste
+     * também escurece o dia, e os testes dividem o mesmo mundo; olha o que o sal faz: o relógio pula para o marco
+     * do amanhecer ou para o do anoitecer.
+     */
     @GameTest(maxTicks = 160)
     public void theAevumTurnsTheDay(GameTestHelper helper) {
         var level = helper.getLevel();
-        // o relógio começa no amanhecer, de propósito: assim os cem tiques do sal não caem no anoitecer sozinhos
-        level.dimensionType().defaultClock().ifPresent(clock ->
-                level.clockManager().moveToTimeMarker(clock, net.minecraft.world.clock.ClockTimeMarkers.DAY));
-        if (!level.isBrightOutside()) helper.fail("o relógio devia ter ido para o dia");
         ItemEntity item = drop(helper, MaleficiumItems.SALIS_AEVUM);
         helper.runAfterDelay(SalisItem.LIFE + 20, () -> {
             if (!item.isRemoved()) helper.fail("o sal devia ter se gastado");
             long hora = level.getOverworldClockTime() % 24000L;
-            if (hora < 13000L || hora >= 23000L) helper.fail("o dia devia ter virado para a noite; são " + hora);
+            // o marco fica onde o sal o pôs, mais os vinte tiques que esperamos depois
+            boolean amanheceu = hora >= 1000L && hora < 1200L;
+            boolean anoiteceu = hora >= 13000L && hora < 13200L;
+            if (!amanheceu && !anoiteceu) helper.fail("o relógio devia ter pulado para um marco; são " + hora);
             helper.succeed();
         });
     }

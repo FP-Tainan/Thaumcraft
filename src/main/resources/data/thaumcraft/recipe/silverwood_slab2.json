@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": "thaumcraft:silverwood_planks_vertical"
+  },
+  "result": {
+    "id": "thaumcraft:silverwood_slab",
+    "count": 6
+  }
+}

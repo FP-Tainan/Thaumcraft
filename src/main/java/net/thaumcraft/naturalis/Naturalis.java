@@ -36,5 +36,6 @@ public final class Naturalis {
         NaturalisTable.research();
         // as receitas carregam itens, então só se montam quando o mundo abre
         ThaumcraftApi.onSetup(NaturalisTable::recipes);
+        NaturalisTable.mutations();
     }
 }
