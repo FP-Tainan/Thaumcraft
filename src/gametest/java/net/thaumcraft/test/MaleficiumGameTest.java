@@ -95,13 +95,15 @@ public class MaleficiumGameTest {
     @GameTest(maxTicks = 160)
     public void theAevumTurnsTheDay(GameTestHelper helper) {
         var level = helper.getLevel();
-        boolean bright = level.isBrightOutside();
+        // o relógio começa no amanhecer, de propósito: assim os cem tiques do sal não caem no anoitecer sozinhos
+        level.dimensionType().defaultClock().ifPresent(clock ->
+                level.clockManager().moveToTimeMarker(clock, net.minecraft.world.clock.ClockTimeMarkers.DAY));
+        if (!level.isBrightOutside()) helper.fail("o relógio devia ter ido para o dia");
         ItemEntity item = drop(helper, MaleficiumItems.SALIS_AEVUM);
         helper.runAfterDelay(SalisItem.LIFE + 20, () -> {
             if (!item.isRemoved()) helper.fail("o sal devia ter se gastado");
             long hora = level.getOverworldClockTime() % 24000L;
-            boolean noite = hora >= 13000L && hora < 23000L;
-            if (bright != noite) helper.fail("o dia devia ter virado; são " + hora + " e estava claro: " + bright);
+            if (hora < 13000L || hora >= 23000L) helper.fail("o dia devia ter virado para a noite; são " + hora);
             helper.succeed();
         });
     }

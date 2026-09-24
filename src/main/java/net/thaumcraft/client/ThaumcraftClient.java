@@ -48,6 +48,11 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.naturalis.client.NaturalisHud.init();
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.ARCANE_CHEST,
                 net.thaumcraft.client.gui.ArcaneChestScreen::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.TRANSCRIBING_TABLE,
+                net.thaumcraft.client.gui.TranscribingTableScreen::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.naturalis.NaturalisBlocks.TRANSCRIBING_TABLE_ENTITY,
+                net.thaumcraft.naturalis.client.TranscribingTableRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.naturalis.client.ArcaneChestRenderer.LAYER,
                 net.minecraft.client.model.object.chest.ChestModel::createSingleBodyLayer);

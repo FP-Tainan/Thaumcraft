@@ -85,6 +85,13 @@ public class DeconstructionTableBlockEntity extends BaseContainerBlockEntity imp
         return this.aspect;
     }
 
+    /** Alguém levou o primário que ela tinha tirado: o {@code table.aspect = null} do original. */
+    public void takeAspect() {
+        this.aspect = null;
+        this.setChanged();
+        if (this.level != null) this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+    }
+
     public ContainerData data() {
         return this.data;
     }

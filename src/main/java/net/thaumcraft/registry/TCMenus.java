@@ -13,6 +13,11 @@ public final class TCMenus {
             BuiltInRegistries.MENU, Thaumcraft.id("arcane_workbench"),
             new MenuType<>(ArcaneWorkbenchMenu::new, FeatureFlags.VANILLA_SET));
 
+    /** A Mesa de Transcrição do Magia Naturalis. */
+    public static final MenuType<net.thaumcraft.inventory.TranscribingTableMenu> TRANSCRIBING_TABLE =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("transcribing_table"),
+                    new MenuType<>(net.thaumcraft.inventory.TranscribingTableMenu::new, FeatureFlags.VANILLA_SET));
+
     /** O Baú Arcano do Magia Naturalis, que tem duas grades. */
     public static final MenuType<net.thaumcraft.inventory.ArcaneChestMenu> ARCANE_CHEST =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("arcane_chest"),

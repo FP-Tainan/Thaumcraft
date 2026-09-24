@@ -278,4 +278,63 @@ public class NaturalisGameTest {
         if (!bau.mayOpen(convidado)) helper.fail("o convidado devia ter entrado na lista do baú");
         helper.succeed();
     }
+
+    /** A mesa de transcrição copia para o diário o primário que a mesa de decomposição ao lado tirou. */
+    @GameTest
+    public void theTranscribingTableCopiesTheAspect(GameTestHelper helper) {
+        BlockPos mesa = new BlockPos(1, 2, 1);
+        BlockPos decon = mesa.offset(2, 0, 0);
+        helper.setBlock(mesa, net.thaumcraft.naturalis.NaturalisBlocks.TRANSCRIBING_TABLE);
+        helper.setBlock(decon, net.thaumcraft.registry.TCBlocks.DECONSTRUCTION_TABLE);
+        var transcricao = helper.getBlockEntity(mesa, net.thaumcraft.naturalis.TranscribingTableBlockEntity.class);
+        var decomposicao = helper.getBlockEntity(decon, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.class);
+        ItemStack diario = new ItemStack(NaturalisItems.RESEARCH_LOG);
+        transcricao.setItem(0, diario);
+        decomposicao.data().set(1, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.indexOf(
+                net.thaumcraft.api.aspects.Aspects.AIR));
+        if (decomposicao.aspect() != net.thaumcraft.api.aspects.Aspects.AIR) {
+            helper.fail("a mesa de decomposição devia estar com o primário do ar");
+        }
+        // ela olha um dos quatro lugares em cruz por vez; vinte voltas dão de sobra para cair neste
+        for (int volta = 0; volta < 20 && decomposicao.aspect() != null; volta++) {
+            transcricao.data().set(0, 1);
+            net.thaumcraft.naturalis.TranscribingTableBlockEntity.tick(helper.getLevel(), helper.absolutePos(mesa),
+                    helper.getBlockState(mesa), transcricao);
+        }
+        if (decomposicao.aspect() != null) helper.fail("a mesa devia ter levado o primário");
+        if (net.thaumcraft.naturalis.ResearchLogItem.notes(transcricao.getItem(0))
+                .getAmount(net.thaumcraft.api.aspects.Aspects.AIR) != 1) {
+            helper.fail("o diário devia ter um ponto de ar anotado");
+        }
+        helper.succeed();
+    }
+
+    /** E o diário cheio desce sozinho para a casa de baixo. */
+    @GameTest
+    public void theFullLogMovesToTheOutputSlot(GameTestHelper helper) {
+        BlockPos mesa = new BlockPos(1, 2, 1);
+        BlockPos decon = mesa.offset(0, 0, 2);
+        helper.setBlock(mesa, net.thaumcraft.naturalis.NaturalisBlocks.TRANSCRIBING_TABLE);
+        helper.setBlock(decon, net.thaumcraft.registry.TCBlocks.DECONSTRUCTION_TABLE);
+        var transcricao = helper.getBlockEntity(mesa, net.thaumcraft.naturalis.TranscribingTableBlockEntity.class);
+        var decomposicao = helper.getBlockEntity(decon, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.class);
+        ItemStack diario = new ItemStack(NaturalisItems.RESEARCH_LOG);
+        var cheio = new net.thaumcraft.api.aspects.AspectList();
+        for (var primal : net.thaumcraft.api.aspects.Aspects.primals()) {
+            cheio.add(primal, net.thaumcraft.naturalis.TranscribingTableBlockEntity.FULL);
+        }
+        diario.set(net.thaumcraft.registry.TCComponents.RESEARCH_LOG, cheio);
+        if (!net.thaumcraft.naturalis.TranscribingTableBlockEntity.full(diario)) helper.fail("este diário está cheio");
+        transcricao.setItem(0, diario);
+        decomposicao.data().set(1, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.indexOf(
+                net.thaumcraft.api.aspects.Aspects.EARTH));
+        for (int volta = 0; volta < 40 && transcricao.getItem(1).isEmpty(); volta++) {
+            transcricao.data().set(0, 1);
+            net.thaumcraft.naturalis.TranscribingTableBlockEntity.tick(helper.getLevel(), helper.absolutePos(mesa),
+                    helper.getBlockState(mesa), transcricao);
+        }
+        if (transcricao.getItem(1).isEmpty()) helper.fail("o diário cheio devia ter descido para a casa de baixo");
+        if (!transcricao.getItem(0).isEmpty()) helper.fail("e a casa de cima devia ter ficado vazia");
+        helper.succeed();
+    }
 }

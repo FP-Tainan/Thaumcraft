@@ -63,6 +63,16 @@ public final class NaturalisBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<net.thaumcraft.block.entity.BannerBlockEntity>(
                             NaturalisBannerBlockEntity::new, java.util.Set.of(BANNER)));
 
+    /** A Mesa de Transcrição: a mesa arcana que copia o que as mesas de decomposição em volta tiram. */
+    public static final Block TRANSCRIBING_TABLE = register("transcribing_table", properties ->
+            new TranscribingTableBlock(properties.mapColor(net.minecraft.world.level.material.MapColor.WOOD)
+                    .strength(2.5f, 10.0f).sound(SoundType.WOOD).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<TranscribingTableBlockEntity> TRANSCRIBING_TABLE_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("transcribing_table"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(TranscribingTableBlockEntity::new,
+                            java.util.Set.of(TRANSCRIBING_TABLE)));
+
     /** Os dois Baús Arcanos: o de madeira-grande e o de prateada. */
     public static final Block ARCANE_CHEST_GREATWOOD = register("arcane_chest_greatwood", properties ->
             new ArcaneChestBlock(properties.mapColor(net.minecraft.world.level.material.MapColor.WOOD)

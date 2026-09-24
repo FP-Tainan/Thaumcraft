@@ -95,6 +95,9 @@ public final class NaturalisItems {
     public static final Item ARCANE_CHEST_SILVERWOOD = register("arcane_chest_silverwood", properties ->
             new ArcaneChestItem(NaturalisBlocks.ARCANE_CHEST_SILVERWOOD, properties.useBlockDescriptionPrefix()));
 
+    /** A Mesa de Transcrição, para levar na mão. */
+    public static final Item TRANSCRIBING_TABLE = blockItem(NaturalisBlocks.TRANSCRIBING_TABLE);
+
     /** As duas chaves de táumio: a que abre e a que dá entrada aos outros. */
     public static final Item KEY_OF_UNRAVELING = register("key_of_unraveling", properties ->
             new ArcaneKeyItem(0, properties.stacksTo(1).rarity(Rarity.UNCOMMON)));

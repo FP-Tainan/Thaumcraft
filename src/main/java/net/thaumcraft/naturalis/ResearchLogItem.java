@@ -42,6 +42,19 @@ public class ResearchLogItem extends Item {
         stack.set(TCComponents.RESEARCH_LOG, list);
     }
 
+    /**
+     * O {@code addResearchPoint} do original: anota um ponto de um primário, até sessenta e quatro. Devolve
+     * {@code false} se o diário já estava cheio daquele aspecto — é assim que a mesa sabe que ele acabou.
+     */
+    public static boolean note(ItemStack stack, Aspect aspect) {
+        if (aspect == null || !Aspects.primals().contains(aspect)) return false;
+        AspectList list = notes(stack).copy();
+        if (list.getAmount(aspect) >= 64) return false;
+        list.add(aspect, 1);
+        notes(stack, list);
+        return true;
+    }
+
     /** O {@code onItemUse}: agachado numa mesa de decomposição, anota um ponto do aspecto dela. */
     @Override
     public InteractionResult useOn(UseOnContext context) {
@@ -53,12 +66,9 @@ public class ResearchLogItem extends Item {
         }
         Aspect aspect = table.aspect();
         if (aspect == null || !Aspects.primals().contains(aspect)) return InteractionResult.PASS;
-        if (!level.isClientSide()) {
-            ItemStack stack = context.getItemInHand();
-            AspectList list = notes(stack).copy();
-            list.add(aspect, 1);
-            notes(stack, list);
-        }
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
+        if (!note(context.getItemInHand(), aspect)) return InteractionResult.PASS;
+        table.takeAspect();
         return InteractionResult.SUCCESS;
     }
 
