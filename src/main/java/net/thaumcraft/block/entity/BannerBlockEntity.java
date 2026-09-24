@@ -32,6 +32,11 @@ public class BannerBlockEntity extends BlockEntity {
         super(TCBlockEntities.BANNER, pos, state);
     }
 
+    /** Para os ramos de fora, que têm o mesmo estandarte com outra figura. */
+    protected BannerBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
+
     public byte getFacing() {
         return this.facing;
     }

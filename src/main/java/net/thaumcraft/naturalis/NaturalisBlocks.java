@@ -52,6 +52,17 @@ public final class NaturalisBlocks {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("prison_jar"),
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(PrisonJarBlockEntity::new, java.util.Set.of(PRISON_JAR)));
 
+    /** O Estandarte do Magia Naturalis: o estandarte do Thaumcraft com a figura do ramo. */
+    public static final Block BANNER = register("naturalis_banner", properties ->
+            new net.thaumcraft.block.BannerBlock(properties
+                    .mapColor(net.minecraft.world.level.material.MapColor.WOOD)
+                    .strength(2.5f, 10.0f).sound(SoundType.WOOD).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<net.thaumcraft.block.entity.BannerBlockEntity> BANNER_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("naturalis_banner"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<net.thaumcraft.block.entity.BannerBlockEntity>(
+                            NaturalisBannerBlockEntity::new, java.util.Set.of(BANNER)));
+
     private NaturalisBlocks() {
     }
 

@@ -85,6 +85,10 @@ public final class NaturalisItems {
     public static final Item PRISON_JAR = register("prison_jar", properties ->
             new PrisonJarItem(NaturalisBlocks.PRISON_JAR, properties.stacksTo(1).useBlockDescriptionPrefix()));
 
+    /** O Estandarte do ramo, que marca presença. */
+    public static final Item BANNER = register("naturalis_banner", properties ->
+            new net.thaumcraft.item.BannerItem(NaturalisBlocks.BANNER, properties.useBlockDescriptionPrefix()));
+
     // ------------------------------------------------------------------ a madeira arcana
 
     /** Os sete feitios da madeira arcana, na ordem em que o original os listava. */

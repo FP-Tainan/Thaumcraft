@@ -53,6 +53,8 @@ public class BannerRenderer implements BlockEntityRenderer<BannerBlockEntity, Ba
         boolean wall;
         float wave;
         boolean inWorld = true;
+        /** A folha do pano, quando o estandarte é de um ramo de fora. */
+        @Nullable Identifier sheet;
     }
 
     /** As peças do {@code ModelBanner} (folha de 128 por 64). */
@@ -99,6 +101,7 @@ public class BannerRenderer implements BlockEntityRenderer<BannerBlockEntity, Ba
         long k = banner.getLevel() == null ? 0L : banner.getLevel().getGameTime();
         var p = banner.getBlockPos();
         state.wave = p.getX() * 7 + p.getY() * 9 + p.getZ() * 13 + (float) k + partial;
+        state.sheet = banner instanceof net.thaumcraft.block.entity.BannerSheeted folha ? folha.bannerSheet() : null;
     }
 
     @Override
@@ -116,7 +119,8 @@ public class BannerRenderer implements BlockEntityRenderer<BannerBlockEntity, Ba
             pose.mulPose(Axis.YP.rotationDegrees(180.0f));
             pose.mulPose(Axis.YP.rotationDegrees(state.facing * 360 / 16.0f));
         }
-        var type = RenderTypes.entityCutoutCull(state.aspect == null && state.color == -1 ? CULTIST : BLANK);
+        var type = RenderTypes.entityCutoutCull(state.sheet != null ? state.sheet
+                : (state.aspect == null && state.color == -1 ? CULTIST : BLANK));
         if (!state.wall) {
             collector.submitModelPart(parts.pole, pose, type, light, OverlayTexture.NO_OVERLAY, null, -1, null);
         } else {
@@ -150,6 +154,12 @@ public class BannerRenderer implements BlockEntityRenderer<BannerBlockEntity, Ba
     /** O {@code ItemBannerRenderer}: o mesmo estandarte, de pé, parado. */
     public static class Item implements SpecialModelRenderer<State> {
         private final Parts parts = new Parts();
+        /** A folha do ramo de fora, quando o estandarte é de um deles. */
+        private final @Nullable Identifier sheet;
+
+        public Item(@Nullable Identifier sheet) {
+            this.sheet = sheet;
+        }
 
         @Override
         public void submit(@Nullable State state, PoseStack pose, SubmitNodeCollector collector, int light, int overlay, boolean foil, int tint) {
@@ -174,16 +184,19 @@ public class BannerRenderer implements BlockEntityRenderer<BannerBlockEntity, Ba
             state.color = color == null ? -1 : color;
             String as = stack.get(TCComponents.BANNER_ASPECT);
             state.aspect = as == null || as.isEmpty() ? null : Aspect.of(as);
+            state.sheet = this.sheet;
             return state;
         }
     }
 
-    public record Unbaked() implements SpecialModelRenderer.Unbaked<State> {
-        public static final MapCodec<Unbaked> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.point(new Unbaked()));
+    public record Unbaked(java.util.Optional<Identifier> sheet) implements SpecialModelRenderer.Unbaked<State> {
+        public static final MapCodec<Unbaked> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Identifier.CODEC.optionalFieldOf("sheet").forGetter(Unbaked::sheet)
+        ).apply(instance, Unbaked::new));
 
         @Override
         public SpecialModelRenderer<State> bake(SpecialModelRenderer.BakingContext context) {
-            return new Item();
+            return new Item(this.sheet.orElse(null));
         }
 
         @Override

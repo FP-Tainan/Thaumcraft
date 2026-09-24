@@ -302,6 +302,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.registry.TCBlockEntities.BANNER, net.thaumcraft.client.render.BannerRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("banner"), net.thaumcraft.client.render.BannerRenderer.Unbaked.CODEC);
+        // e o do Magia Naturalis, que é o mesmo estandarte com a figura do ramo
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.naturalis.NaturalisBlocks.BANNER_ENTITY, net.thaumcraft.client.render.BannerRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.GOLEM,
                 net.thaumcraft.client.render.GolemRenderer::new);
