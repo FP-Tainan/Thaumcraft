@@ -67,6 +67,24 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_DARK_GOGGLES.1"), Page.crafting("DarkGoggles"))
                 .register();
 
+        ThaumcraftApi.research("MN_ARCANE_KEYS", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.TOOL, 4).add(Aspects.MIND, 3).add(Aspects.MECHANISM, 3))
+                .at(-4, -3)
+                .complexity(3)
+                .icon(() -> new ItemStack(NaturalisItems.KEY_OF_UNRAVELING))
+                .parents("WARDEDARCANA")
+                .pages(Page.text("tc.research_page.MN_ARCANE_KEYS.1"), Page.crafting("ThaumiumKey1"), Page.text("tc.research_page.MN_ARCANE_KEYS.2"), Page.crafting("ThaumiumKey2"))
+                .register();
+
+        ThaumcraftApi.research("MN_ARCANE_CHEST", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.VOID, 4).add(Aspects.MIND, 3).add(Aspects.MECHANISM, 3).add(Aspects.ARMOR, 3))
+                .at(-7, -3)
+                .complexity(3)
+                .icon(() -> new ItemStack(NaturalisBlocks.ARCANE_CHEST_GREATWOOD.asItem()))
+                .parents("WARDEDARCANA")
+                .pages(Page.text("tc.research_page.MN_ARCANE_CHEST.1"), Page.crafting("ArcaneChest1"), Page.crafting("ArcaneChest2"))
+                .register();
+
         ThaumcraftApi.research("MN_CONSTRUCTION_FOCUS", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.MAGIC, 3).add(Aspects.CRAFT, 6).add(Aspects.ORDER, 2).add(Aspects.EARTH, 2))
                 .at(4, -5)
@@ -135,9 +153,21 @@ public final class NaturalisTable {
         ThaumcraftApi.bookRecipe("ResearchLog", ThaumcraftApi.arcane("MN_RESEARCH_LOG",
                 new ItemStack(NaturalisItems.RESEARCH_LOG), new AspectList().add(Aspects.ORDER, 20).add(Aspects.ENTROPY, 20).add(Aspects.AIR, 20).add(Aspects.EARTH, 20).add(Aspects.FIRE, 20).add(Aspects.WATER, 20),
                 java.util.Arrays.asList(Ingredient.of(TCItems.SHARDS.get("air")), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.SHARDS.get("fire")), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.BOOK), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(TCItems.SHARDS.get("entropy")))));
+        ThaumcraftApi.bookRecipe("ThaumiumKey1", ThaumcraftApi.arcane("MN_ARCANE_KEYS",
+                new ItemStack(NaturalisItems.KEY_OF_UNRAVELING, 2), new AspectList().add(Aspects.ORDER, 2).add(Aspects.ENTROPY, 2).add(Aspects.AIR, 2).add(Aspects.EARTH, 2).add(Aspects.FIRE, 2).add(Aspects.WATER, 2),
+                java.util.Arrays.asList(Ingredient.of(TCResources.get("thaumium_nugget")), Ingredient.of(net.minecraft.world.item.Items.IRON_NUGGET), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_nugget")), null, null)));
+        ThaumcraftApi.bookRecipe("ThaumiumKey2", ThaumcraftApi.arcane("MN_ARCANE_KEYS",
+                new ItemStack(NaturalisItems.KEY_OF_ENDORSING, 2), new AspectList().add(Aspects.ORDER, 2).add(Aspects.ENTROPY, 2).add(Aspects.AIR, 2).add(Aspects.EARTH, 2).add(Aspects.FIRE, 2).add(Aspects.WATER, 2),
+                java.util.Arrays.asList(Ingredient.of(TCResources.get("thaumium_nugget")), Ingredient.of(net.minecraft.world.item.Items.GOLD_NUGGET), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCResources.get("thaumium_nugget")), null, null)));
         ThaumcraftApi.bookRecipe("Spectacles", ThaumcraftApi.arcane("MN_SPECTACLES",
                 new ItemStack(NaturalisItems.SPECTACLES), new AspectList().add(Aspects.ORDER, 5).add(Aspects.ENTROPY, 5).add(Aspects.AIR, 5).add(Aspects.EARTH, 5).add(Aspects.FIRE, 5).add(Aspects.WATER, 5),
                 java.util.Arrays.asList(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.LEATHER), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.THAUMOMETER), Ingredient.of(TCItems.GOGGLES), Ingredient.of(TCItems.THAUMOMETER))));
+        ThaumcraftApi.bookRecipe("ArcaneChest1", ThaumcraftApi.arcane("MN_ARCANE_CHEST",
+                new ItemStack(NaturalisBlocks.ARCANE_CHEST_GREATWOOD.asItem()), new AspectList().add(Aspects.WATER, 20).add(Aspects.ORDER, 15).add(Aspects.EARTH, 15).add(Aspects.FIRE, 10),
+                java.util.Arrays.asList(Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.CHEST.asItem()), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCBlocks.GREATWOOD_PLANKS.asItem()), Ingredient.of(TCResources.get("thaumium_ingot")))));
+        ThaumcraftApi.bookRecipe("ArcaneChest2", ThaumcraftApi.arcane("MN_ARCANE_CHEST",
+                new ItemStack(NaturalisBlocks.ARCANE_CHEST_SILVERWOOD.asItem()), new AspectList().add(Aspects.WATER, 20).add(Aspects.ORDER, 15).add(Aspects.EARTH, 15).add(Aspects.FIRE, 10),
+                java.util.Arrays.asList(Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.CHEST.asItem()), Ingredient.of(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem()), Ingredient.of(TCResources.get("thaumium_ingot")), Ingredient.of(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem()), Ingredient.of(TCResources.get("thaumium_ingot")))));
         ThaumcraftApi.bookRecipe("DarkGoggles", ThaumcraftApi.infusion("MN_DARK_GOGGLES",
                 new ItemStack(NaturalisItems.DARK_CRYSTAL_GOGGLES), 3, new AspectList().add(Aspects.SENSES, 32).add(Aspects.ARMOR, 16).add(Aspects.DARKNESS, 32),
                 Ingredient.of(TCItems.GOGGLES),

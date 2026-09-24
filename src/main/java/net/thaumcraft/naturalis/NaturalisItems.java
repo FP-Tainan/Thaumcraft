@@ -89,6 +89,18 @@ public final class NaturalisItems {
     public static final Item BANNER = register("naturalis_banner", properties ->
             new net.thaumcraft.item.BannerItem(NaturalisBlocks.BANNER, properties.useBlockDescriptionPrefix()));
 
+    /** Os dois Baús Arcanos. */
+    public static final Item ARCANE_CHEST_GREATWOOD = register("arcane_chest_greatwood", properties ->
+            new ArcaneChestItem(NaturalisBlocks.ARCANE_CHEST_GREATWOOD, properties.useBlockDescriptionPrefix()));
+    public static final Item ARCANE_CHEST_SILVERWOOD = register("arcane_chest_silverwood", properties ->
+            new ArcaneChestItem(NaturalisBlocks.ARCANE_CHEST_SILVERWOOD, properties.useBlockDescriptionPrefix()));
+
+    /** As duas chaves de táumio: a que abre e a que dá entrada aos outros. */
+    public static final Item KEY_OF_UNRAVELING = register("key_of_unraveling", properties ->
+            new ArcaneKeyItem(0, properties.stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final Item KEY_OF_ENDORSING = register("key_of_endorsing", properties ->
+            new ArcaneKeyItem(1, properties.stacksTo(1).rarity(Rarity.UNCOMMON)));
+
     // ------------------------------------------------------------------ a madeira arcana
 
     /** Os sete feitios da madeira arcana, na ordem em que o original os listava. */

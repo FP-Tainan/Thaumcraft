@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/arcane_chest_greatwood"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/arcane_chest_greatwood",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/arcane_chest_greatwood",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/arcane_chest_greatwood",
+      "y": 90
+    }
+  }
+}

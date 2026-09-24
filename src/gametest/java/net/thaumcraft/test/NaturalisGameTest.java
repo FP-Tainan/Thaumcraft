@@ -84,7 +84,10 @@ public class NaturalisGameTest {
     @GameTest
     public void theArcaneWoodIsAllThere(GameTestHelper helper) {
         var madeiras = net.thaumcraft.naturalis.NaturalisBlocks.shown().stream()
-                .filter(b -> net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(b).getPath().contains("wood")).toList();
+                .filter(b -> {
+                    String nome = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(b).getPath();
+                    return nome.contains("wood") && !nome.contains("chest");
+                }).toList();
         if (madeiras.size() != 7) helper.fail("o original tem sete feitios de madeira arcana; há " + madeiras.size());
         for (var bloco : madeiras) {
             var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(bloco);
@@ -200,6 +203,79 @@ public class NaturalisGameTest {
         ItemStack stack = new ItemStack(NaturalisItems.VOID_SICKLE);
         int warp = NaturalisItems.VOID_SICKLE instanceof WarpEvents.WarpingGear gear ? gear.getWarp(stack, player) : -1;
         if (warp != 1) helper.fail("a foice do vazio distorce um; distorce " + warp);
+        helper.succeed();
+    }
+
+    /** O baú arcano é do primeiro que o põe, e só ele abre. */
+    @GameTest
+    public void theArcaneChestBelongsToWhoPlacedIt(GameTestHelper helper) {
+        var dono = helper.makeMockServerPlayerInLevel();
+        var outro = helper.makeMockServerPlayerInLevel();
+        BlockPos pos = new BlockPos(1, 2, 1);
+        helper.setBlock(pos, net.thaumcraft.naturalis.NaturalisBlocks.ARCANE_CHEST_GREATWOOD);
+        var bau = helper.getBlockEntity(pos, net.thaumcraft.naturalis.ArcaneChestBlockEntity.class);
+        if (bau.getContainerSize() != 54) helper.fail("o de madeira-grande guarda 54; guarda " + bau.getContainerSize());
+        bau.claim(dono);
+        if (!bau.mayOpen(dono)) helper.fail("o dono abre o próprio baú");
+        outro.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        if (bau.mayOpen(outro)) helper.fail("quem não é dono não abre");
+        if (!bau.allow(outro.getUUID(), (byte) 0)) helper.fail("a chave devia dar entrada");
+        if (!bau.mayOpen(outro)) helper.fail("com a chave ele abre");
+        if (bau.mayBreak(outro)) helper.fail("mas com a chave simples ele não quebra o baú");
+        helper.succeed();
+    }
+
+    /** O de madeira-prateada é maior, e a varinha encolhe o baú com tudo dentro. */
+    @GameTest
+    public void theWandShrinksTheChest(GameTestHelper helper) {
+        var dono = helper.makeMockServerPlayerInLevel();
+        BlockPos pos = new BlockPos(1, 2, 1);
+        helper.setBlock(pos, net.thaumcraft.naturalis.NaturalisBlocks.ARCANE_CHEST_SILVERWOOD);
+        var bau = helper.getBlockEntity(pos, net.thaumcraft.naturalis.ArcaneChestBlockEntity.class);
+        if (bau.getContainerSize() != 77) helper.fail("o de prateada guarda 77; guarda " + bau.getContainerSize());
+        bau.claim(dono);
+        bau.setItem(0, new ItemStack(net.minecraft.world.item.Items.DIAMOND, 5));
+        BlockPos mundo = helper.absolutePos(pos);
+        bau.onWand(helper.getLevel(), new ItemStack(net.thaumcraft.registry.TCItems.WAND), dono, mundo,
+                net.minecraft.core.Direction.UP);
+        if (!helper.getLevel().getBlockState(mundo).isAir()) helper.fail("o baú devia ter sumido do lugar");
+        var caidos = helper.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                new net.minecraft.world.phys.AABB(mundo).inflate(2.0));
+        var encolhido = caidos.stream().map(net.minecraft.world.entity.item.ItemEntity::getItem)
+                .filter(i -> i.is(net.thaumcraft.naturalis.NaturalisItems.ARCANE_CHEST_SILVERWOOD)).findFirst();
+        if (encolhido.isEmpty()) {
+            helper.fail("o baú encolhido devia ter caído no chão");
+            return;
+        }
+        var guardado = encolhido.get().get(net.minecraft.core.component.DataComponents.CONTAINER);
+        if (guardado == null || guardado.nonEmptyItemCopyStream().findFirst().isEmpty()) {
+            helper.fail("o baú encolhido devia levar os diamantes junto");
+        }
+        helper.succeed();
+    }
+
+    /** A chave do endosso junta gente e põe todo mundo na lista do baú de uma vez. */
+    @GameTest
+    public void theKeyOfEndorsingCarriesAList(GameTestHelper helper) {
+        var dono = helper.makeMockServerPlayerInLevel();
+        var convidado = helper.makeMockServerPlayerInLevel();
+        BlockPos pos = new BlockPos(1, 2, 1);
+        helper.setBlock(pos, net.thaumcraft.naturalis.NaturalisBlocks.ARCANE_CHEST_GREATWOOD);
+        var bau = helper.getBlockEntity(pos, net.thaumcraft.naturalis.ArcaneChestBlockEntity.class);
+        bau.claim(dono);
+        ItemStack chave = new ItemStack(net.thaumcraft.naturalis.NaturalisItems.KEY_OF_ENDORSING);
+        dono.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, chave);
+        net.thaumcraft.naturalis.ArcaneKeyItem.bind(dono, helper.getLevel(),
+                net.minecraft.world.InteractionHand.MAIN_HAND, convidado, null);
+        if (net.thaumcraft.naturalis.ArcaneKeyItem.bond(chave).endorsed().size() != 1) {
+            helper.fail("a chave devia ter anotado o convidado");
+        }
+        chave.getItem().useOn(new net.minecraft.world.item.context.UseOnContext(helper.getLevel(), dono,
+                net.minecraft.world.InteractionHand.MAIN_HAND, chave,
+                new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(pos)),
+                        net.minecraft.core.Direction.UP, helper.absolutePos(pos), false)));
+        convidado.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        if (!bau.mayOpen(convidado)) helper.fail("o convidado devia ter entrado na lista do baú");
         helper.succeed();
     }
 }

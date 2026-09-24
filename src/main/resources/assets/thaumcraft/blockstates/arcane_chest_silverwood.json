@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/arcane_chest_silverwood"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/arcane_chest_silverwood",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/arcane_chest_silverwood",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/arcane_chest_silverwood",
+      "y": 90
+    }
+  }
+}

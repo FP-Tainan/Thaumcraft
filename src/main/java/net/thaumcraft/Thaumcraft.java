@@ -105,6 +105,8 @@ public class Thaumcraft implements ModInitializer {
         net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents.BEFORE.register(
                 (level, player, pos, state, be) -> !net.thaumcraft.item.ElementalAxeItem.fell(level, player, pos, state, be));
         net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(net.thaumcraft.item.ElementalSwordItem::sweep);
+        // e as chaves do Magia Naturalis, que se ligam a quem elas batem
+        net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(net.thaumcraft.naturalis.ArcaneKeyItem::bind);
 
         // o comando de teste, para destrancar a pesquisa sem ter de jogar tudo de novo
         net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register(

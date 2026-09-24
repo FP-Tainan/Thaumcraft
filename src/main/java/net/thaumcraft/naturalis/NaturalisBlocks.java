@@ -63,6 +63,22 @@ public final class NaturalisBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<net.thaumcraft.block.entity.BannerBlockEntity>(
                             NaturalisBannerBlockEntity::new, java.util.Set.of(BANNER)));
 
+    /** Os dois Baús Arcanos: o de madeira-grande e o de prateada. */
+    public static final Block ARCANE_CHEST_GREATWOOD = register("arcane_chest_greatwood", properties ->
+            new ArcaneChestBlock(properties.mapColor(net.minecraft.world.level.material.MapColor.WOOD)
+                    .strength(3.0f, 15.0f).sound(SoundType.WOOD).noOcclusion(), ArcaneChestBlock.Kind.GREATWOOD));
+    public static final Block ARCANE_CHEST_SILVERWOOD = register("arcane_chest_silverwood", properties ->
+            new ArcaneChestBlock(properties.mapColor(net.minecraft.world.level.material.MapColor.WOOD)
+                    .strength(3.0f, 15.0f).sound(SoundType.WOOD).noOcclusion(), ArcaneChestBlock.Kind.SILVERWOOD));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<ArcaneChestBlockEntity> ARCANE_CHEST_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("arcane_chest"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>((pos, state) ->
+                            new ArcaneChestBlockEntity(NaturalisBlocks.ARCANE_CHEST_ENTITY,
+                                    state.getBlock() instanceof ArcaneChestBlock chest ? chest.kind() : ArcaneChestBlock.Kind.GREATWOOD,
+                                    pos, state),
+                            java.util.Set.of(ARCANE_CHEST_GREATWOOD, ARCANE_CHEST_SILVERWOOD)));
+
     private NaturalisBlocks() {
     }
 

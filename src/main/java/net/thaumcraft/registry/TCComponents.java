@@ -195,6 +195,20 @@ public final class TCComponents {
             builder -> builder.persistent(net.minecraft.nbt.CompoundTag.CODEC)
                     .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.COMPOUND_TAG));
 
+    /** Quem podia abrir o Baú Arcano encolhido, com o nível de cada um. */
+    public static final DataComponentType<java.util.List<net.thaumcraft.naturalis.ArcaneChestBlockEntity.Access>> CHEST_ACCESS =
+            register("chest_access", builder -> builder
+                    .persistent(net.thaumcraft.naturalis.ArcaneChestItem.ACCESS_CODEC)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.fromCodec(
+                            net.thaumcraft.naturalis.ArcaneChestItem.ACCESS_CODEC)));
+
+    /** O que uma chave de táumio do Magia Naturalis guarda: forjador, alma ligada e a lista que ela carrega. */
+    public static final DataComponentType<net.thaumcraft.naturalis.ArcaneKeyItem.Bond> ARCANE_KEY =
+            register("arcane_key", builder -> builder
+                    .persistent(net.thaumcraft.naturalis.ArcaneKeyItem.Bond.CODEC)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.fromCodec(
+                            net.thaumcraft.naturalis.ArcaneKeyItem.Bond.CODEC)));
+
     private TCComponents() {
     }
 

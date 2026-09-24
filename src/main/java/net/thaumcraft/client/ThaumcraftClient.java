@@ -46,6 +46,13 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.thaumcraft.maleficium.client.MaleficiumFx.init();
         net.thaumcraft.maleficium.client.MaleficiumEntityRenderers.init();
         net.thaumcraft.naturalis.client.NaturalisHud.init();
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.ARCANE_CHEST,
+                net.thaumcraft.client.gui.ArcaneChestScreen::new);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.naturalis.client.ArcaneChestRenderer.LAYER,
+                net.minecraft.client.model.object.chest.ChestModel::createSingleBodyLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.naturalis.NaturalisBlocks.ARCANE_CHEST_ENTITY, net.thaumcraft.naturalis.client.ArcaneChestRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.naturalis.NaturalisBlocks.PRISON_JAR_ENTITY, net.thaumcraft.naturalis.client.PrisonJarRenderer::new);
         net.thaumcraft.block.SparkFieldBlock.clientEffects = (level, pos, random) -> {
