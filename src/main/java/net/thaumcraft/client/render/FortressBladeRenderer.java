@@ -39,7 +39,7 @@ public class FortressBladeRenderer {
      * O corpo da lâmina: o modelo do original é fino e comprido demais para o tamanho que a lâmina tem na mão de
      * hoje — parecia um espeto. Ela engrossa quase o dobro e encurta um quinto, que é a silhueta de katana.
      */
-    private static final float THICK_X = 1.8f, LONG_Y = 0.8f, THICK_Z = 1.6f;
+    private static final float THICK_X = 1.8f, LONG_Y = 1.05f, THICK_Z = 1.6f;
 
     /** O desenho das runas que correm pelo fio da lâmina inscrita. */
     private static final Identifier SCRIPT = Identifier.withDefaultNamespace("textures/misc/script.png");
@@ -101,8 +101,8 @@ public class FortressBladeRenderer {
                            SubmitNodeCollector collector, int light, int overlay, boolean foil, int tint) {
             pose.pushPose();
             pose.translate(0.5f, 0.5f, 0.5f);
-            pose.mulPose(Axis.XP.rotationDegrees(180.0f));
-            pose.scale(0.38f, 0.38f, 0.38f);
+            // sem virar de cabeça para baixo: o punho embaixo e a ponta para cima
+            pose.scale(0.42f, 0.42f, 0.42f);
             pose.translate(0.0f, 22.0f * UNIT, 0.0f);
             // a lâmina do modelo é fina demais para o tamanho que ela tem na mão: engrossa sem esticar
             pose.scale(THICK_X, LONG_Y, THICK_Z);
