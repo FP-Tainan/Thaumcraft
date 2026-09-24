@@ -67,6 +67,15 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_DARK_GOGGLES.1"), Page.crafting("DarkGoggles"))
                 .register();
 
+        ThaumcraftApi.research("MN_QUICKSILVER_STONE", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.SENSES, 3).add(Aspects.EXCHANGE, 4).add(Aspects.AURA, 2))
+                .at(6, -1)
+                .complexity(2)
+                .icon(() -> new ItemStack(NaturalisItems.QUICKSILVER_STONE))
+                .parents("CRUCIBLE")
+                .pages(Page.text("tc.research_page.MN_QUICKSILVER_STONE.1"), Page.crafting("StoneQuick"))
+                .register();
+
         ThaumcraftApi.research("MN_SICKLES", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TOOL, 3).add(Aspects.CROP, 3).add(Aspects.HARVEST, 3))
                 .at(-4, 3)
@@ -105,5 +114,13 @@ public final class NaturalisTable {
                 new ItemStack(NaturalisItems.DARK_CRYSTAL_GOGGLES), 3, new AspectList().add(Aspects.SENSES, 32).add(Aspects.ARMOR, 16).add(Aspects.DARKNESS, 32),
                 Ingredient.of(TCItems.GOGGLES),
                 java.util.List.of(Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(net.minecraft.world.item.Items.SPIDER_EYE), Ingredient.of(net.minecraft.world.item.Items.SPIDER_EYE), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(TCItems.ZOMBIE_BRAIN))));
+        ThaumcraftApi.bookRecipe("StonePheno", ThaumcraftApi.infusion("MN_MUTATION_STONE",
+                new ItemStack(NaturalisItems.MUTATION_STONE), 2, new AspectList().add(Aspects.EXCHANGE, 32),
+                Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()),
+                java.util.List.of(Ingredient.of(net.minecraft.world.item.Items.EMERALD), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()))));
+        ThaumcraftApi.bookRecipe("StoneQuick", ThaumcraftApi.infusion("MN_QUICKSILVER_STONE",
+                new ItemStack(NaturalisItems.QUICKSILVER_STONE), 2, new AspectList().add(Aspects.EXCHANGE, 16).add(Aspects.WATER, 16).add(Aspects.MAGIC, 8).add(Aspects.FLESH, 6),
+                Ingredient.of(TCResources.get("quicksilver")),
+                java.util.List.of(Ingredient.of(net.minecraft.world.item.Items.GLOWSTONE_DUST), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(net.minecraft.world.item.Items.GLOWSTONE_DUST), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()))));
     }
 }

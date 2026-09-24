@@ -135,6 +135,26 @@ public class NaturalisGameTest {
         helper.succeed();
     }
 
+    /** A pedra do catalisador troca o bloco pelo próximo da família dele. */
+    @GameTest
+    public void theCatalystStoneCyclesBlocks(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        BlockPos pos = new BlockPos(1, 2, 1);
+        helper.setBlock(pos, Blocks.WOOL.white());
+        ItemStack pedra = new ItemStack(NaturalisItems.MUTATION_STONE);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, pedra);
+        var alvo = helper.absolutePos(pos);
+        var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(alvo),
+                net.minecraft.core.Direction.UP, alvo, false);
+        pedra.getItem().useOn(new net.minecraft.world.item.context.UseOnContext(player,
+                net.minecraft.world.InteractionHand.MAIN_HAND, hit));
+        if (helper.getLevel().getBlockState(alvo).is(Blocks.WOOL.white())) helper.fail("a lã devia ter mudado de cor");
+        if (!net.thaumcraft.naturalis.AlchemicalStoneItem.morphs(Blocks.STONE_BRICKS.defaultBlockState())) {
+            helper.fail("o tijolo de pedra é de mudar");
+        }
+        helper.succeed();
+    }
+
     /** A foice do vazio distorce quem a carrega, como no original. */
     @GameTest
     public void theVoidSickleWarps(GameTestHelper helper) {

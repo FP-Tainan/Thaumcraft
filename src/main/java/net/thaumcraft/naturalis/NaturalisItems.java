@@ -44,6 +44,16 @@ public final class NaturalisItems {
     public static final Item ELEMENTAL_SICKLE = register("elemental_sickle", properties ->
             new SickleItem(properties.sword(TCMaterials.ELEMENTAL, 3.0f, -2.4f).rarity(Rarity.RARE), 9, 2, true));
 
+    // ------------------------------------------------------------------ as pedras alquímicas
+
+    /** A Pedra do Catalisador Fenomorfo, que troca um bloco pelo próximo da família dele. */
+    public static final Item MUTATION_STONE = register("mutation_stone", properties ->
+            new AlchemicalStoneItem(properties.stacksTo(1).rarity(Rarity.RARE)));
+
+    /** E a Pedra do Alquimista de Mercúrio, que sobe um degrau nos efeitos de quem a usa. */
+    public static final Item QUICKSILVER_STONE = register("quicksilver_stone", properties ->
+            new QuicksilverStoneItem(properties.stacksTo(1).rarity(Rarity.RARE)));
+
     // ------------------------------------------------------------------ o diário
 
     /** O Diário de Pesquisa: anota pontos na mesa de decomposição e despeja-os depois. */
