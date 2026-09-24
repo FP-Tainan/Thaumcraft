@@ -32,15 +32,15 @@ public class FortressBladeRenderer {
             BoxMesh.box(-0.5f, -40.0f, -2.0f, 1, 48, 4, 0, 0, 32, 64),
             // a guarda e o punho
             BoxMesh.box(-2.5f, -40.0f, -3.5f, 5, 1, 7, 0, 52, 32, 64),
-            BoxMesh.box(-1.0f, -52.0f, -1.5f, 2, 12, 3, 22, 0, 32, 64));
+            BoxMesh.box(-1.0f, -52.0f, -1.5f, 2, 12, 3, 22, 0, 32, 64),
+            // a ponta — o kissaki: as costas da lâmina recuam de degrau em degrau e o fio segue reto até o bico
+            BoxMesh.box(-0.5f, 8.0f, -2.0f, 1, 4, 3.2f, 0, 0, 32, 64),
+            BoxMesh.box(-0.5f, 12.0f, -2.0f, 1, 3, 2.4f, 0, 0, 32, 64),
+            BoxMesh.box(-0.5f, 15.0f, -2.0f, 1, 2.5f, 1.6f, 0, 0, 32, 64),
+            BoxMesh.box(-0.5f, 17.5f, -2.0f, 1, 2, 0.8f, 0, 0, 32, 64));
     private static final float[] SHEATH = BoxMesh.box(-1.0f, -39.5f, -2.0f, 2, 48, 4, 10, 0, 32, 64);
-    /** A ponta da lâmina — o kissaki —, que é o que faz uma katana parecer uma katana. */
-    private static final float[] TIP = BoxMesh.box(-0.5f, 0.0f, -2.0f, 1, 7, 4, 0, 0, 32, 64);
-
     /** Onde fica o punho no modelo: é por ali que a mão pega, e por isso ele é a origem. */
     private static final float GRIP = 46.0f;
-    /** Onde a lâmina acaba e a ponta começa. */
-    private static final float BLADE_END = 8.0f;
 
     /**
      * O corpo da lâmina: o modelo do original é fino e comprido demais para o tamanho que a lâmina tem na mão de
@@ -115,17 +115,7 @@ public class FortressBladeRenderer {
             // e a mão segura pelo punho, não pelo meio da lâmina
             pose.translate(0.0f, GRIP * UNIT, 0.0f);
             box(pose, collector, this.texture, BLADE, light, overlay);
-            tip(pose, collector, this.texture, light, overlay);
             if (Boolean.TRUE.equals(inscribed)) runes(pose, collector, light, overlay);
-            pose.popPose();
-        }
-
-        /** A ponta: a última lasca da lâmina, virada de viés, que é o corte da katana. */
-        static void tip(PoseStack pose, SubmitNodeCollector collector, Identifier texture, int light, int overlay) {
-            pose.pushPose();
-            pose.translate(0.0f, (BLADE_END - 0.5f) * UNIT, 0.0f);
-            pose.mulPose(Axis.ZP.rotationDegrees(-22.0f));
-            box(pose, collector, texture, TIP, light, overlay);
             pose.popPose();
         }
 
