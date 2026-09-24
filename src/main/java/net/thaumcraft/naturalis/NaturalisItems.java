@@ -44,6 +44,11 @@ public final class NaturalisItems {
     public static final Item ELEMENTAL_SICKLE = register("elemental_sickle", properties ->
             new SickleItem(properties.sword(TCMaterials.ELEMENTAL, 3.0f, -2.4f).rarity(Rarity.RARE), 9, 2, true));
 
+    // ------------------------------------------------------------------ os focos
+
+    /** O Foco de Construção: levanta uma forma de blocos a partir da face mirada. */
+    public static final Item BUILDER_FOCUS = focus("builder_focus", "build", BuilderFocus.COST);
+
     // ------------------------------------------------------------------ as pedras alquímicas
 
     /** A Pedra do Catalisador Fenomorfo, que troca um bloco pelo próximo da família dele. */
@@ -93,6 +98,14 @@ public final class NaturalisItems {
     /** O que a aba do ramo mostra, na ordem. */
     public static List<Item> shown() {
         return List.copyOf(ORDER);
+    }
+
+    /** Um foco do ramo: entra na aba e no mapa de focos do Thaumcraft. */
+    private static Item focus(String name, String type, net.thaumcraft.api.aspects.AspectList cost) {
+        Item item = register(name, properties ->
+                new net.thaumcraft.item.FocusItem(properties.stacksTo(1).rarity(Rarity.RARE), type, cost, false));
+        net.thaumcraft.registry.TCItems.FOCI.put(type, item);
+        return item;
     }
 
     /** O item de um bloco do ramo, com o nome do bloco. */

@@ -182,6 +182,14 @@ public final class TCComponents {
     public static final DataComponentType<AspectList> RESEARCH_LOG = register("research_log",
             builder -> builder.persistent(AspectList.CODEC).networkSynchronized(AspectList.STREAM_CODEC));
 
+    /** O que o Foco de Construção do Magia Naturalis está construindo: forma, tamanho e bloco. */
+    public static final DataComponentType<Integer> BUILDER_SHAPE = register("builder_shape",
+            builder -> builder.persistent(Codec.intRange(0, 3)).networkSynchronized(ByteBufCodecs.VAR_INT));
+    public static final DataComponentType<Integer> BUILDER_SIZE = register("builder_size",
+            builder -> builder.persistent(Codec.intRange(1, 32)).networkSynchronized(ByteBufCodecs.VAR_INT));
+    public static final DataComponentType<String> BUILDER_BLOCK = register("builder_block",
+            builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+
     private TCComponents() {
     }
 

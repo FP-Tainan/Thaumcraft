@@ -155,6 +155,23 @@ public class NaturalisGameTest {
         helper.succeed();
     }
 
+    /** O foco de construção entra no mapa de focos e guarda forma, tamanho e bloco. */
+    @GameTest
+    public void theBuilderFocusKeepsItsShape(GameTestHelper helper) {
+        if (net.thaumcraft.registry.TCItems.FOCI.get("build") != NaturalisItems.BUILDER_FOCUS) {
+            helper.fail("o foco de construção devia estar no mapa de focos do Thaumcraft");
+        }
+        ItemStack foco = new ItemStack(NaturalisItems.BUILDER_FOCUS);
+        if (net.thaumcraft.naturalis.BuilderFocus.shape(foco) != net.thaumcraft.naturalis.BuilderFocus.Shape.CUBE) {
+            helper.fail("ele começa no cubo");
+        }
+        if (net.thaumcraft.naturalis.BuilderFocus.size(foco) != 1) helper.fail("e no tamanho um");
+        if (net.thaumcraft.naturalis.BuilderFocus.maxSize(foco) != 4) {
+            helper.fail("sem Ampliação ele vai até quatro; vai até " + net.thaumcraft.naturalis.BuilderFocus.maxSize(foco));
+        }
+        helper.succeed();
+    }
+
     /** A foice do vazio distorce quem a carrega, como no original. */
     @GameTest
     public void theVoidSickleWarps(GameTestHelper helper) {
