@@ -35,6 +35,12 @@ public class FortressBladeRenderer {
             BoxMesh.box(-1.0f, -52.0f, -1.5f, 2, 12, 3, 22, 0, 32, 64));
     private static final float[] SHEATH = BoxMesh.box(-1.0f, -39.5f, -2.0f, 2, 48, 4, 10, 0, 32, 64);
 
+    /**
+     * O corpo da lâmina: o modelo do original é fino e comprido demais para o tamanho que a lâmina tem na mão de
+     * hoje — parecia um espeto. Ela engrossa quase o dobro e encurta um quinto, que é a silhueta de katana.
+     */
+    private static final float THICK_X = 1.8f, LONG_Y = 0.8f, THICK_Z = 1.6f;
+
     /** O desenho das runas que correm pelo fio da lâmina inscrita. */
     private static final Identifier SCRIPT = Identifier.withDefaultNamespace("textures/misc/script.png");
 
@@ -54,8 +60,11 @@ public class FortressBladeRenderer {
                               int light, boolean bladeInHand) {
         Identifier folha = texture(metalOf(stack));
         pose.pushPose();
+        // de lado a bainha é só o fio dela: mostra-se a face larga, como a lâmina
+        pose.mulPose(Axis.YP.rotationDegrees(90.0f));
         pose.scale(0.45f, 0.45f, 0.45f);
         pose.translate(0.0f, 22.0f * UNIT, 0.0f);
+        pose.scale(THICK_X, LONG_Y, THICK_Z);
         Blade.box(pose, collector, folha, SHEATH, light, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);
         if (!bladeInHand) Blade.box(pose, collector, folha, BLADE, light, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);
         pose.popPose();
@@ -93,8 +102,12 @@ public class FortressBladeRenderer {
             pose.pushPose();
             pose.translate(0.5f, 0.5f, 0.5f);
             pose.mulPose(Axis.XP.rotationDegrees(180.0f));
+            // de lado a lâmina é só o fio: quem a segura vê a face larga
+            pose.mulPose(Axis.YP.rotationDegrees(90.0f));
             pose.scale(0.45f, 0.45f, 0.45f);
             pose.translate(0.0f, 22.0f * UNIT, 0.0f);
+            // a lâmina do modelo é fina demais para o tamanho que ela tem na mão: engrossa sem esticar
+            pose.scale(THICK_X, LONG_Y, THICK_Z);
             box(pose, collector, this.texture, BLADE, light, overlay);
             if (Boolean.TRUE.equals(inscribed)) runes(pose, collector, light, overlay);
             pose.popPose();

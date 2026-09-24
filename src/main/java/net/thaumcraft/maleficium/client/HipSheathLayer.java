@@ -44,10 +44,11 @@ public class HipSheathLayer extends RenderLayer<AvatarRenderState, PlayerModel> 
         pose.pushPose();
         this.getParentModel().body.translateAndRotate(pose);
         // na cintura, do lado esquerdo, com a ponta para trás — o mesmo jeito do original
-        pose.translate(0.2f, 0.6f, 0.15f);
-        pose.mulPose(Axis.XP.rotationDegrees(55.0f));
+        pose.translate(0.22f, 0.55f, 0.1f);
+        pose.mulPose(Axis.XP.rotationDegrees(70.0f));
+        pose.mulPose(Axis.ZP.rotationDegrees(20.0f));
         pose.mulPose(Axis.YP.rotationDegrees(180.0f));
-        pose.scale(0.5f, 0.5f, 0.5f);
+        pose.scale(0.75f, 0.75f, 0.75f);
         FortressBladeRenderer.sheath(pose, collector, carried, light, inHand);
         pose.popPose();
     }
