@@ -81,6 +81,10 @@ public final class NaturalisItems {
             new DarkCrystalGogglesItem(properties.humanoidArmor(NaturalisMaterials.DARK_CRYSTAL,
                     net.minecraft.world.item.equipment.ArmorType.HELMET).rarity(Rarity.RARE)));
 
+    /** O Bicho num Jarro, que guarda a criatura que clicar. */
+    public static final Item PRISON_JAR = register("prison_jar", properties ->
+            new PrisonJarItem(NaturalisBlocks.PRISON_JAR, properties.stacksTo(1).useBlockDescriptionPrefix()));
+
     // ------------------------------------------------------------------ a madeira arcana
 
     /** Os sete feitios da madeira arcana, na ordem em que o original os listava. */

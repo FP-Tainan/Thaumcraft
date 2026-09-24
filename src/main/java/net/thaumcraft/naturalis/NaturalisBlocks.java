@@ -42,6 +42,16 @@ public final class NaturalisBlocks {
     /** A cercadura de ouro, que só tem o desenho nos lados. */
     public static final Block GREATWOOD_GOLD_TRIM = wood("greatwood_gold_trim");
 
+    /** O Bicho num Jarro: guarda uma criatura viva inteira. */
+    public static final Block PRISON_JAR = register("prison_jar", properties -> new PrisonJarBlock(properties
+            .mapColor(net.minecraft.world.level.material.MapColor.NONE)
+            .strength(0.3f).sound(SoundType.GLASS).lightLevel(state -> 10).noOcclusion()));
+
+    /** A entidade de bloco do jarro. */
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<PrisonJarBlockEntity> PRISON_JAR_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("prison_jar"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(PrisonJarBlockEntity::new, java.util.Set.of(PRISON_JAR)));
+
     private NaturalisBlocks() {
     }
 

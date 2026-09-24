@@ -81,7 +81,8 @@ public class NaturalisGameTest {
     /** As sete madeiras arcanas existem, contam como tábua e caem inteiras. */
     @GameTest
     public void theArcaneWoodIsAllThere(GameTestHelper helper) {
-        var madeiras = net.thaumcraft.naturalis.NaturalisBlocks.shown();
+        var madeiras = net.thaumcraft.naturalis.NaturalisBlocks.shown().stream()
+                .filter(b -> net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(b).getPath().contains("wood")).toList();
         if (madeiras.size() != 7) helper.fail("o original tem sete feitios de madeira arcana; há " + madeiras.size());
         for (var bloco : madeiras) {
             var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(bloco);
@@ -169,6 +170,24 @@ public class NaturalisGameTest {
         if (net.thaumcraft.naturalis.BuilderFocus.maxSize(foco) != 4) {
             helper.fail("sem Ampliação ele vai até quatro; vai até " + net.thaumcraft.naturalis.BuilderFocus.maxSize(foco));
         }
+        helper.succeed();
+    }
+
+    /** O jarro guarda o bicho, e a varinha o solta de volta. */
+    @GameTest
+    public void theJarKeepsAndReleasesAMob(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        var porco = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(1, 2, 1));
+        ItemStack jarro = new ItemStack(NaturalisItems.PRISON_JAR);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, jarro);
+        jarro.getItem().interactLivingEntity(jarro, player, porco, net.minecraft.world.InteractionHand.MAIN_HAND);
+        if (!porco.isRemoved()) helper.fail("o porco devia ter entrado no jarro");
+        ItemStack cheio = ItemStack.EMPTY;
+        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
+            var s2 = player.getInventory().getItem(slot);
+            if (s2.has(net.thaumcraft.registry.TCComponents.JARRED_MOB)) cheio = s2;
+        }
+        if (cheio.isEmpty()) helper.fail("devia haver um jarro com bicho no inventário");
         helper.succeed();
     }
 

@@ -190,6 +190,11 @@ public final class TCComponents {
     public static final DataComponentType<String> BUILDER_BLOCK = register("builder_block",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
+    /** O bicho que o jarro do Magia Naturalis guarda, do jeito que ele estava. */
+    public static final DataComponentType<net.minecraft.nbt.CompoundTag> JARRED_MOB = register("jarred_mob",
+            builder -> builder.persistent(net.minecraft.nbt.CompoundTag.CODEC)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.COMPOUND_TAG));
+
     private TCComponents() {
     }
 

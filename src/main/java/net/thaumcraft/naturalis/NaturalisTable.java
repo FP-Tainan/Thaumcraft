@@ -95,6 +95,15 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_ENDER_POUCH.1"), Page.crafting("EnderPouch"))
                 .register();
 
+        ThaumcraftApi.research("MN_PRISON_JAR", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.TRAP, 6).add(Aspects.GREED, 3).add(Aspects.EXCHANGE, 3).add(Aspects.MOTION, 3))
+                .at(-1, 4)
+                .complexity(3)
+                .icon(() -> new ItemStack(NaturalisBlocks.PRISON_JAR.asItem()))
+                .hiddenParents("JARLABEL")
+                .pages(Page.text("tc.research_page.MN_PRISON_JAR.1"), Page.crafting("JarPrison"))
+                .register();
+
         ThaumcraftApi.research("MN_SICKLES", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TOOL, 3).add(Aspects.CROP, 3).add(Aspects.HARVEST, 3))
                 .at(-4, 3)
@@ -141,6 +150,10 @@ public final class NaturalisTable {
                 new ItemStack(NaturalisItems.ENDER_POUCH), 1, new AspectList().add(Aspects.ELDRITCH, 8).add(Aspects.VOID, 8).add(Aspects.TRAVEL, 8).add(Aspects.EXCHANGE, 3),
                 Ingredient.of(TCItems.FOCUS_POUCH),
                 java.util.List.of(Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL), Ingredient.of(net.minecraft.world.level.block.Blocks.ENDER_CHEST.asItem()), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL))));
+        ThaumcraftApi.bookRecipe("JarPrison", ThaumcraftApi.infusion("MN_PRISON_JAR",
+                new ItemStack(NaturalisBlocks.PRISON_JAR.asItem()), 2, new AspectList().add(Aspects.ELDRITCH, 8).add(Aspects.VOID, 8).add(Aspects.ARMOR, 8).add(Aspects.EXCHANGE, 8),
+                Ingredient.of(TCBlocks.JAR.asItem()),
+                java.util.List.of(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL), Ingredient.of(net.minecraft.world.item.Items.LEAD), Ingredient.of(net.minecraft.world.item.Items.ENDER_PEARL))));
         ThaumcraftApi.bookRecipe("StonePheno", ThaumcraftApi.infusion("MN_MUTATION_STONE",
                 new ItemStack(NaturalisItems.MUTATION_STONE), 2, new AspectList().add(Aspects.EXCHANGE, 32),
                 Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()),
