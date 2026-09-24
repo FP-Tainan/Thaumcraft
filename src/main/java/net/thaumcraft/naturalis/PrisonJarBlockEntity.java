@@ -22,6 +22,8 @@ import org.jetbrains.annotations.Nullable;
  */
 public class PrisonJarBlockEntity extends BlockEntity implements net.thaumcraft.api.wands.Wandable {
     private @Nullable CompoundTag stored;
+    /** A criatura já montada, do lado de quem vê: o desenhista a guarda aqui para não refazê-la a cada quadro. */
+    public @Nullable net.minecraft.world.entity.Entity clientEntity;
 
     public PrisonJarBlockEntity(BlockPos pos, BlockState state) {
         super(NaturalisBlocks.PRISON_JAR_ENTITY, pos, state);
@@ -37,6 +39,7 @@ public class PrisonJarBlockEntity extends BlockEntity implements net.thaumcraft.
 
     public void setStored(@Nullable CompoundTag tag) {
         this.stored = tag == null ? null : tag.copy();
+        this.clientEntity = null;
         this.setChanged();
         if (this.level != null) this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
     }

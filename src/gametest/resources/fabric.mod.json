@@ -150,7 +150,8 @@
       "net.thaumcraft.test.client.MaleficiumBladeClientTest",
       "net.thaumcraft.test.client.MaleficiumEntityClientTest",
       "net.thaumcraft.test.client.MaleficiumClientTest",
-      "net.thaumcraft.test.client.MaleficiumTreeClientTest"
+      "net.thaumcraft.test.client.MaleficiumTreeClientTest",
+      "net.thaumcraft.test.client.NaturalisClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

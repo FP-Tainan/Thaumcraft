@@ -27,6 +27,8 @@ public class NaturalisGameTest {
         else if (!sickles.category().equals(net.thaumcraft.naturalis.Naturalis.CATEGORY)) {
             helper.fail("as foices deviam estar na aba do ramo; estão em " + sickles.category());
         }
+        int quantas = Researches.of(net.thaumcraft.naturalis.Naturalis.CATEGORY).size();
+        if (quantas < 10) helper.fail("a aba do ramo devia ter as dez pesquisas geradas; tem " + quantas);
         helper.succeed();
     }
 
