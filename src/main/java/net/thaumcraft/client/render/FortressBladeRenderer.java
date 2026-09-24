@@ -35,25 +35,40 @@ public class FortressBladeRenderer {
             // o punho, que no original é curto demais para o tamanho da lâmina
             BoxMesh.box(-1.0f, -58.0f, -1.5f, 2, 18, 3, 22, 0, 32, 64),
             // a ponta — o kissaki: as costas da lâmina recuam de degrau em degrau e o fio segue reto até o bico
-            taper());
+            point());
     private static final float[] SHEATH = BoxMesh.box(-1.0f, -39.5f, -2.0f, 2, 48, 4, 10, 0, 32, 64);
     /** Onde fica o punho no modelo: é por ali que a mão pega, e por isso ele é a origem. */
-    private static final float GRIP = 49.0f;
+    private static final float GRIP = 44.0f;
 
     /**
-     * O afunilamento da ponta: seis degraus curtos, cada um um pouco mais estreito que o anterior. São muitos e
-     * pequenos de propósito — com poucos e grandes a ponta sai serrilhada.
+     * A ponta — o kissaki.
+     *
+     * <p>Não é caixa: caixa em degraus sai serrilhada e caixa de viés sai com cara de gancho. São quatro faces
+     * desenhadas à mão — o fio segue reto e as costas descem em diagonal até o bico —, cada uma também do avesso,
+     * para a ponta ter os dois lados. A folha vem do meio da lâmina, onde é metal inteiro.
      */
-    private static float[] taper() {
-        float[][] parts = new float[6][];
-        float y = 8.0f;
-        float width = 3.5f;
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = BoxMesh.box(-0.5f, y, -2.0f, 1, 2.0f, width, 0, 0, 32, 64);
-            y += 1.8f;
-            width -= 0.55f;
+    private static float[] point() {
+        float u0 = 1.0f / 32.0f, u1 = 4.0f / 32.0f, v0 = 24.0f / 64.0f, v1 = 30.0f / 64.0f;
+        float base = 8.0f, tip = 20.0f;
+        float edge = -2.0f, back = 2.0f, atTip = -1.0f;
+        float left = -0.5f, right = 0.5f;
+        float[][] faces = {
+                // as duas faces largas, que é onde a diagonal da ponta aparece
+                {left, base, edge, u0, v1, left, base, back, u1, v1, left, tip, atTip, u1, v0, left, tip, edge, u0, v0},
+                {right, base, edge, u0, v1, right, base, back, u1, v1, right, tip, atTip, u1, v0, right, tip, edge, u0, v0},
+                // as costas, de viés, e o fio, reto
+                {left, base, back, u0, v1, right, base, back, u1, v1, right, tip, atTip, u1, v0, left, tip, atTip, u0, v0},
+                {left, base, edge, u0, v1, right, base, edge, u1, v1, right, tip, edge, u1, v0, left, tip, edge, u0, v0},
+        };
+        float[] mesh = new float[faces.length * 40];
+        for (int i = 0; i < faces.length; i++) {
+            System.arraycopy(faces[i], 0, mesh, i * 40, 20);
+            // a mesma face do avesso, para ela aparecer dos dois lados
+            for (int corner = 0; corner < 4; corner++) {
+                System.arraycopy(faces[i], (3 - corner) * 5, mesh, i * 40 + 20 + corner * 5, 5);
+            }
         }
-        return BoxMesh.join(parts);
+        return mesh;
     }
 
     /**
