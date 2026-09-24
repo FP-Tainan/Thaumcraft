@@ -78,6 +78,24 @@ public class NaturalisGameTest {
         helper.succeed();
     }
 
+    /** As sete madeiras arcanas existem, contam como tábua e caem inteiras. */
+    @GameTest
+    public void theArcaneWoodIsAllThere(GameTestHelper helper) {
+        var madeiras = net.thaumcraft.naturalis.NaturalisBlocks.shown();
+        if (madeiras.size() != 7) helper.fail("o original tem sete feitios de madeira arcana; há " + madeiras.size());
+        for (var bloco : madeiras) {
+            var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(bloco);
+            if (!net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(id)) {
+                helper.fail(id + " devia ter item de bloco");
+            }
+        }
+        for (var nome : new String[]{"greatwood_planks_horizontal", "silverwood_planks_horizontal", "silverwood_planks_vertical"}) {
+            var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.thaumcraft.Thaumcraft.id(nome));
+            if (!new ItemStack(item).is(net.minecraft.tags.ItemTags.PLANKS)) helper.fail(nome + " devia contar como tábua");
+        }
+        helper.succeed();
+    }
+
     /** A foice do vazio distorce quem a carrega, como no original. */
     @GameTest
     public void theVoidSickleWarps(GameTestHelper helper) {

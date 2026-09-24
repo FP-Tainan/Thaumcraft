@@ -2,6 +2,9 @@
   "values": [
     "thaumcraft:greatwood_planks",
     "thaumcraft:silverwood_planks",
-    "thaumcraft:warpwood_planks"
+    "thaumcraft:warpwood_planks",
+    "thaumcraft:greatwood_planks_horizontal",
+    "thaumcraft:silverwood_planks_horizontal",
+    "thaumcraft:silverwood_planks_vertical"
   ]
 }

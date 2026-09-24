@@ -44,6 +44,17 @@ public final class NaturalisItems {
     public static final Item ELEMENTAL_SICKLE = register("elemental_sickle", properties ->
             new SickleItem(properties.sword(TCMaterials.ELEMENTAL, 3.0f, -2.4f).rarity(Rarity.RARE), 9, 2, true));
 
+    // ------------------------------------------------------------------ a madeira arcana
+
+    /** Os sete feitios da madeira arcana, na ordem em que o original os listava. */
+    public static final Item GREATWOOD_PLANKS_HORIZONTAL = blockItem(NaturalisBlocks.GREATWOOD_PLANKS_HORIZONTAL);
+    public static final Item GREATWOOD_ORNAMENT = blockItem(NaturalisBlocks.GREATWOOD_ORNAMENT);
+    public static final Item SILVERWOOD_PLANKS_HORIZONTAL = blockItem(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL);
+    public static final Item SILVERWOOD_PLANKS_VERTICAL = blockItem(NaturalisBlocks.SILVERWOOD_PLANKS_VERTICAL);
+    public static final Item GREATWOOD_GOLD_ORNAMENT = blockItem(NaturalisBlocks.GREATWOOD_GOLD_ORNAMENT);
+    public static final Item GREATWOOD_GOLD_ORNAMENT_2 = blockItem(NaturalisBlocks.GREATWOOD_GOLD_ORNAMENT_2);
+    public static final Item GREATWOOD_GOLD_TRIM = blockItem(NaturalisBlocks.GREATWOOD_GOLD_TRIM);
+
     private NaturalisItems() {
     }
 
@@ -54,6 +65,12 @@ public final class NaturalisItems {
     /** O que a aba do ramo mostra, na ordem. */
     public static List<Item> shown() {
         return List.copyOf(ORDER);
+    }
+
+    /** O item de um bloco do ramo, com o nome do bloco. */
+    private static Item blockItem(net.minecraft.world.level.block.Block block) {
+        String name = BuiltInRegistries.BLOCK.getKey(block).getPath();
+        return register(name, properties -> new net.minecraft.world.item.BlockItem(block, properties.useBlockDescriptionPrefix()));
     }
 
     private static Item register(String name, Function<Item.Properties, Item> factory) {

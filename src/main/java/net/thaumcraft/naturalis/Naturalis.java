@@ -21,6 +21,7 @@ public final class Naturalis {
     }
 
     public static void init() {
+        NaturalisBlocks.init();
         NaturalisItems.init();
         research();
         Thaumcraft.LOGGER.info("Magia Naturalis: {} coisas", NaturalisItems.count());

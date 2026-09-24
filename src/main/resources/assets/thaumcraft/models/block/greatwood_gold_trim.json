@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "thaumcraft:block/greatwood_planks",
+    "side": "thaumcraft:block/greatwood_gold_trim"
+  }
+}

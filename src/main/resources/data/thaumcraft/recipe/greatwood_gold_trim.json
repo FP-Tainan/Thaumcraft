@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "AAA",
+    "BBB",
+    "AAA"
+  ],
+  "key": {
+    "A": "thaumcraft:greatwood_slab",
+    "B": "minecraft:gold_nugget"
+  },
+  "result": {
+    "id": "thaumcraft:greatwood_gold_trim",
+    "count": 3
+  }
+}

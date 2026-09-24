@@ -5,6 +5,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.thaumcraft.api.ThaumcraftApi;
 import net.thaumcraft.api.aspects.AspectList;
 import net.thaumcraft.api.aspects.Aspects;
+import net.thaumcraft.registry.TCBlocks;
 import net.thaumcraft.registry.TCItems;
 import net.thaumcraft.registry.TCResources;
 import net.thaumcraft.research.Page;
@@ -28,6 +29,14 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_INTRO.1"))
                 .register();
 
+        ThaumcraftApi.research("MN_CARPENTRY", Naturalis.CATEGORY)
+                .at(-2, 2)
+                .icon(() -> new ItemStack(NaturalisBlocks.GREATWOOD_GOLD_ORNAMENT.asItem()))
+                .round()
+                .auto()
+                .pages(Page.text("tc.research_page.MN_CARPENTRY.1"), Page.crafting("GreatwoodOrn"), Page.crafting("PlankSilverwood"), Page.crafting("GreatwoodGoldOrn1"), Page.crafting("GreatwoodGoldOrn2"), Page.crafting("GreatwoodGoldTrim"))
+                .register();
+
         ThaumcraftApi.research("MN_SICKLES", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TOOL, 3).add(Aspects.CROP, 3).add(Aspects.HARVEST, 3))
                 .at(-4, 3)
@@ -46,5 +55,15 @@ public final class NaturalisTable {
                 3, 3, java.util.List.of(java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(TCResources.get("thaumium_ingot"))), java.util.List.<ItemStack>of(), java.util.List.<ItemStack>of(), java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(TCResources.get("thaumium_ingot"))), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)), java.util.List.of(new ItemStack(TCResources.get("thaumium_ingot"))), java.util.List.<ItemStack>of())));
         ThaumcraftApi.bookRecipe("VoidSickle", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisItems.VOID_SICKLE),
                 3, 3, java.util.List.of(java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(TCResources.get("void_ingot"))), java.util.List.<ItemStack>of(), java.util.List.<ItemStack>of(), java.util.List.<ItemStack>of(), java.util.List.of(new ItemStack(TCResources.get("void_ingot"))), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.STICK)), java.util.List.of(new ItemStack(TCResources.get("void_ingot"))), java.util.List.<ItemStack>of())));
+        ThaumcraftApi.bookRecipe("PlankSilverwood", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.SILVERWOOD_PLANKS_HORIZONTAL.asItem()),
+                1, 2, java.util.List.of(java.util.List.of(new ItemStack(TCBlocks.SILVERWOOD_SLAB.asItem(), 6)), java.util.List.of(new ItemStack(TCBlocks.SILVERWOOD_SLAB.asItem(), 6)))));
+        ThaumcraftApi.bookRecipe("GreatwoodOrn", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.GREATWOOD_ORNAMENT.asItem()),
+                1, 2, java.util.List.of(java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6)))));
+        ThaumcraftApi.bookRecipe("GreatwoodGoldTrim", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.GREATWOOD_GOLD_TRIM.asItem(), 3),
+                3, 3, java.util.List.of(java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_SLAB.asItem(), 6)))));
+        ThaumcraftApi.bookRecipe("GreatwoodGoldOrn1", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.GREATWOOD_GOLD_ORNAMENT.asItem(), 4),
+                3, 3, java.util.List.of(java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)))));
+        ThaumcraftApi.bookRecipe("GreatwoodGoldOrn2", ThaumcraftApi.crafting(() -> new ItemStack(NaturalisBlocks.GREATWOOD_GOLD_ORNAMENT_2.asItem(), 4),
+                3, 3, java.util.List.of(java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_INGOT)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)), java.util.List.of(new ItemStack(TCBlocks.GREATWOOD_PLANKS.asItem())), java.util.List.of(new ItemStack(net.minecraft.world.item.Items.GOLD_NUGGET)))));
     }
 }

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:gold_nugget",
+    "B": "thaumcraft:greatwood_planks",
+    "C": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "thaumcraft:greatwood_gold_ornament_2",
+    "count": 4
+  }
+}
