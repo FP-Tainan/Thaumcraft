@@ -1962,5 +1962,12 @@ como dados do jogo, e não só como página de livro.
 - Bijuteria de cinto que não guarda nada por si: o que ela mostra é o baú do fim de quem a carrega, e os focos que
   estiverem lá ficam ao alcance da varinha.
 
-**Falta**: o baú arcano e as chaves, o jarro-prisão, a mesa de transcrição, o estandarte, o geo-pylon com o
-amostrador de bioma, o foco do revenant e as três criaturas (o criador de mácula, o baú maligno e o revenant feroz).
+### Fatia 8 — o Bicho num Jarro
+
+- O jarro guarda uma criatura viva inteira: clicado nela, ela entra do jeito que estava, e a dica do jarro diz quem
+  está lá dentro. Posto no mundo, ele leva o bicho junto; quebrado, o bicho volta para o item; e uma batida de
+  varinha quebra o vidro e solta quem estava preso. Gente e os dois chefes não cabem em jarro, como no original.
+- O desenho é o do original: a criatura flutua no meio do vidro, encolhida para caber, girando devagar.
+
+**Falta**: o baú arcano e as chaves, a mesa de transcrição, o estandarte, o geo-pylon com o amostrador de bioma, o
+foco do revenant e as três criaturas (o criador de mácula, o baú maligno e o revenant feroz).
