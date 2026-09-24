@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " A ",
+    "  A",
+    "BA "
+  ],
+  "key": {
+    "A": "#c:ingots/void",
+    "B": "minecraft:stick"
+  },
+  "result": {
+    "id": "thaumcraft:void_sickle",
+    "count": 1
+  }
+}

@@ -23,6 +23,7 @@ public class TabGameTest {
             if (id == null || !id.getNamespace().equals(Thaumcraft.MOD_ID)) continue;
             if (net.thaumcraft.registry.TCItems.HIDDEN.contains(item)) continue;
             if (net.thaumcraft.maleficium.MaleficiumItems.shown().contains(item)) continue;
+            if (net.thaumcraft.naturalis.NaturalisItems.shown().contains(item)) continue;
             ours++;
         }
         if (ours < 60) helper.fail("o mod devia ter mais itens que isso: " + ours);
@@ -44,6 +45,17 @@ public class TabGameTest {
         // e a prateleira não pode citar nada que não exista
         for (Item item : shown) {
             if (BuiltInRegistries.ITEM.getKey(item) == null) helper.fail("item sem nome na aba");
+        }
+        helper.succeed();
+    }
+
+    /** E o Magia Naturalis tem a dele. */
+    @GameTest
+    public void theNaturalisHasItsOwnTab(GameTestHelper helper) {
+        var tab = BuiltInRegistries.CREATIVE_MODE_TAB.getValue(net.thaumcraft.naturalis.NaturalisItems.TAB_KEY);
+        if (tab == null) helper.fail("faltou a aba do Magia Naturalis");
+        if (net.thaumcraft.naturalis.NaturalisItems.shown().size() != net.thaumcraft.naturalis.NaturalisItems.count()) {
+            helper.fail("a aba do ramo devia mostrar tudo o que ele registra");
         }
         helper.succeed();
     }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " A ",
+    "  A",
+    "BA "
+  ],
+  "key": {
+    "A": "#c:ingots/thaumium",
+    "B": "minecraft:stick"
+  },
+  "result": {
+    "id": "thaumcraft:thaumium_sickle",
+    "count": 1
+  }
+}
