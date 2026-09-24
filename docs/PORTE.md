@@ -1897,3 +1897,70 @@ Esta fecha o Maleficium: o que restava do Tainted Magic 8.1.1 entrou todo.
 - Testes: o sangue do vazio (receita, conserto e uma vez só), os modos e a bebida de entropia do desmontador, os
   números das três lâminas, o que cada inscrição faz no golpe, a infusão que grava a inscrição, a chave que se prende
   e a lâmina primordial. Trezentos e quarenta e um ao todo, todos passando.
+
+
+## O Magia Naturalis
+
+O segundo ramo de fora: o **Magia Naturalis 0.5.0**, de elenterius (111 classes), que a lore de quem joga chama de
+Thaumaturgia Aplicada — o caminho que amplia a thaumaturgia de sempre sem apodrecer. A lore mantém o nome do
+original, então o ramo se chama assim mesmo.
+
+Como o Maleficium, ele mora no mesmo jar, com figuras e textos no espaço de nome `thaumcraft`, aba própria no
+criativo e no Thaumonomicon, e entra pelo `ThaumcraftApi`. As chaves de pesquisa dele levam o prefixo `MN_`, que
+é a tradução do espaço de nome que o original usa.
+
+A tabela também é gerada (`scratchpad/mn-tabela.js`, com `mn-itens.js` e `mn-lang.js`), lendo o `MNResearch` e o
+`MNRecipes` do jar. O gerador aprendeu três coisas que o do Maleficium não precisava: acompanhar as variáveis
+`aspects` e `recipe` que o original reaproveita entre receitas, resolver os *proxies* (pesquisas do Thaumcraft
+copiadas para dentro da aba do ramo, que aqui viram a própria pesquisa do Thaumcraft) e escrever as receitas de mesa
+como dados do jogo, e não só como página de livro.
+
+### Fatia 1 — o ramo e as três foices
+
+- A aba do ramo, o ícone e o fundo da aba do livro, tudo do original.
+- **As três foices** — a de táumio, a do vazio e a da Abundância — com a ceifa em área: elas levam junto tudo o que
+  for igual e estiver encostado, até onde cada uma alcança (duas, quatro e nove). A da Abundância colhe para o
+  inventário e faz cair três vezes; a do vazio enfraquece quem ela acerta, conserta-se sozinha e distorce um.
+  Agachado, a foice corta um bloco só.
+
+### Fatia 2 — a madeira arcana
+
+- **Os sete feitios** da madeira arcana, que no original eram um bloco só com o feitio no metadado: tábua deitada de
+  madeira-grande e de prateada, tábua em pé de prateada, dois ornamentos, os de ouro e a cercadura, que só tem o
+  desenho nos lados. Contam como tábua, como o dicionário de minérios do original dizia.
+
+### Fatia 3 — os dois óculos
+
+- **Os Óculos** e os **Óculos de Cristal Escuro**: revelam os nós e descontam vis — seis por cento os primeiros,
+  cinco os segundos, e sete de Perditio, ou nove enquanto é dia.
+- Os de cristal escuro não deixam ficar cego e mostram o contorno de quem está invisível (o `IRevealInvisible`); os
+  Óculos escrevem no meio da tela o que é o nó para o qual se olha (o `renderSpectaclesHUD`).
+
+### Fatia 4 — o Diário de Pesquisa
+
+- Agachado numa Mesa de Decomposição, ele anota um ponto do aspecto que ela está tirando; o clique comum despeja
+  tudo o que estiver anotado no caderno de quem o carrega, e o diário volta a ficar em branco.
+
+### Fatia 5 — as duas pedras alquímicas
+
+- **A Pedra do Catalisador Fenomorfo** troca um bloco pelo próximo da família dele — a lã muda de cor, o tijolo de
+  pedra fica musgoso, a tábua vira a de outra madeira — e, agachado, deita ou levanta o que tiver eixo.
+- **A Pedra do Alquimista de Mercúrio** sobe um degrau em cada efeito de quem a usa, cobrando um pó de brilho por
+  efeito e cortando o tempo deles; sem pó, ou no terceiro degrau, ela castiga. Quem não descobriu Permutatio não
+  consegue usá-la.
+
+### Fatia 6 — o Foco de Construção
+
+- Levanta uma forma de blocos a partir da face mirada — cubo, plano, plano estendido ou esfera —, cobrando cinco de
+  Ordo por bloco e tirando os blocos do inventário; o alcance cresce três por posto de Ampliação.
+- O original trocava forma, tamanho e bloco por teclas próprias. Aqui isso se faz agachado, para não inventar tecla
+  nova: o clique no ar passa o tamanho, e o clique num bloco troca a forma e marca aquele bloco como o de construir.
+  A página do livro diz isso.
+
+### Fatia 7 — a Bolsa de Focos do Fim
+
+- Bijuteria de cinto que não guarda nada por si: o que ela mostra é o baú do fim de quem a carrega, e os focos que
+  estiverem lá ficam ao alcance da varinha.
+
+**Falta**: o baú arcano e as chaves, o jarro-prisão, a mesa de transcrição, o estandarte, o geo-pylon com o
+amostrador de bioma, o foco do revenant e as três criaturas (o criador de mácula, o baú maligno e o revenant feroz).
