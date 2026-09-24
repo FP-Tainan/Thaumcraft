@@ -31,6 +31,7 @@ public class MaleficiumBladeClientTest implements FabricClientGameTest {
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(
                     new net.minecraft.client.gui.screens.inventory.InventoryScreen(minecraft.player)));
             context.waitTicks(20);
+            context.takeScreenshot("laminas_no_inventario");
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
             context.waitTicks(5);
             // e a bainha na cintura, de costas
