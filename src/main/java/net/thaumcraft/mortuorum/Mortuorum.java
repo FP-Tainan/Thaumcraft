@@ -18,10 +18,12 @@ public final class Mortuorum {
     }
 
     public static void init() {
+        MortuorumSounds.init();
         MortuorumFluids.init();
         MortuorumBlocks.init();
         MortuorumEntities.init();
         MortuorumItems.init();
+        MortuorumEvents.init();
         Thaumcraft.LOGGER.info("Ars Mortuorum: {} coisas, {} peças de corpo",
                 MortuorumItems.count(), MortuorumItems.PARTS.size());
     }

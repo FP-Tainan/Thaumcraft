@@ -230,10 +230,28 @@
       "thaumcraft:learn"
     ]
   },
+  "minion_spawn": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:minion_spawn"
+    ]
+  },
   "monolith": {
     "category": "player",
     "sounds": [
       "thaumcraft:monolith"
+    ]
+  },
+  "nightcrawler_howl": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:nightcrawler_howl"
+    ]
+  },
+  "nightcrawler_scream": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:nightcrawler_scream"
     ]
   },
   "page": {
@@ -368,6 +386,12 @@
     "sounds": [
       "thaumcraft:swing1",
       "thaumcraft:swing2"
+    ]
+  },
+  "tear": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:tear"
     ]
   },
   "tentacle": {

@@ -73,6 +73,45 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.mortuorum.MortuorumEntities.MINION,
                 net.thaumcraft.mortuorum.client.MinionRenderer::new);
+        // e as outras criaturas do ramo
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.mortuorum.client.CreatureRenderers.NIGHT_CRAWLER,
+                net.thaumcraft.mortuorum.client.CreatureModels::nightCrawler);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.mortuorum.client.CreatureRenderers.TEDDY,
+                net.thaumcraft.mortuorum.client.CreatureModels::teddy);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.mortuorum.client.CreatureRenderers.ISAAC_HEAD,
+                net.thaumcraft.mortuorum.client.CreatureModels::isaacHead);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.mortuorum.client.CreatureRenderers.ISAAC,
+                () -> net.thaumcraft.mortuorum.client.CreatureRenderers.isaacLayer(false));
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.mortuorum.client.CreatureRenderers.ISAAC_SEVERED,
+                () -> net.thaumcraft.mortuorum.client.CreatureRenderers.isaacLayer(true));
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.mortuorum.MortuorumEntities.NIGHT_CRAWLER,
+                net.thaumcraft.mortuorum.client.CreatureRenderers.NightCrawler::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.mortuorum.MortuorumEntities.TEDDY,
+                net.thaumcraft.mortuorum.client.CreatureRenderers.Teddy::new);
+        for (var isaac : java.util.Map.of(
+                net.thaumcraft.mortuorum.MortuorumEntities.ISAAC_NORMAL, net.thaumcraft.mortuorum.IsaacEntity.Kind.NORMAL,
+                net.thaumcraft.mortuorum.MortuorumEntities.ISAAC_BLOOD, net.thaumcraft.mortuorum.IsaacEntity.Kind.BLOOD,
+                net.thaumcraft.mortuorum.MortuorumEntities.ISAAC_BODY, net.thaumcraft.mortuorum.IsaacEntity.Kind.BODY).entrySet()) {
+            var feitio = isaac.getValue();
+            net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(isaac.getKey(),
+                    contexto -> new net.thaumcraft.mortuorum.client.CreatureRenderers.Isaac(contexto, feitio));
+        }
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.mortuorum.MortuorumEntities.ISAAC_HEAD,
+                net.thaumcraft.mortuorum.client.CreatureRenderers.IsaacHead::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.mortuorum.MortuorumEntities.TEAR,
+                net.thaumcraft.mortuorum.client.TearRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.mortuorum.MortuorumEntities.TEAR_BLOOD,
+                net.thaumcraft.mortuorum.client.TearRenderer::new);
         // o sangue: a figura da água, tingida do vermelho do original, e o pingo de onde está pendurado
         net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderingRegistry.register(
                 net.thaumcraft.mortuorum.MortuorumFluids.BLOOD, net.thaumcraft.mortuorum.MortuorumFluids.BLOOD_FLOWING,

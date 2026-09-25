@@ -111,6 +111,9 @@ public final class MortuorumItems {
     public static final Item SCYTHE_BONE_ITEM = register("scythe_bone", properties ->
             new ScytheItem(properties.sword(SCYTHE_BONE, 3.0f, -2.4f)));
 
+    /** O Coração de Alma, que chama um dos três de quem nasce do ramo. */
+    public static final Item SOUL_HEART = register("soul_heart", properties -> new SoulHeartItem(properties));
+
     /** O Necronomicon, que não se lê: ele levanta o altar de três pedras. */
     public static final Item NECRONOMICON = register("necronomicon", properties ->
             new NecronomiconItem(properties.stacksTo(1)));

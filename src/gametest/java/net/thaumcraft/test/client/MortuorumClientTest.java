@@ -97,6 +97,36 @@ public class MortuorumClientTest implements FabricClientGameTest {
             context.getInput().pressKey(options -> options.keyInventory);
             context.waitTicks(10);
             context.takeScreenshot("mortuorum_inventario");
+            context.getInput().pressKey(options -> options.keyInventory);
+            context.waitTicks(5);
+
+            // e as outras criaturas do ramo, em fila
+            server.runCommand("tp @p ~ ~ ~20 180 5");
+            server.runOnServer(s -> {
+                var player = s.getPlayerList().getPlayers().getFirst();
+                var level = (net.minecraft.server.level.ServerLevel) player.level();
+                BlockPos fila = player.blockPosition().north(7);
+                var tipos = java.util.List.of(
+                        net.thaumcraft.mortuorum.MortuorumEntities.NIGHT_CRAWLER,
+                        net.thaumcraft.mortuorum.MortuorumEntities.TEDDY,
+                        net.thaumcraft.mortuorum.MortuorumEntities.ISAAC_NORMAL,
+                        net.thaumcraft.mortuorum.MortuorumEntities.ISAAC_BLOOD,
+                        net.thaumcraft.mortuorum.MortuorumEntities.ISAAC_BODY,
+                        net.thaumcraft.mortuorum.MortuorumEntities.ISAAC_HEAD);
+                for (int i = 0; i < tipos.size(); i++) {
+                    var bicho = tipos.get(i).create(level, EntitySpawnReason.COMMAND);
+                    if (bicho == null) continue;
+                    BlockPos onde = fila.east(i * 2 - 5);
+                    bicho.snapTo(onde.getX() + 0.5, onde.getY(), onde.getZ() + 0.5, 0.0f, 0.0f);
+                    bicho.setNoAi(true);
+                    bicho.setYHeadRot(0.0f);
+                    bicho.yBodyRot = 0.0f;
+                    level.addFreshEntity(bicho);
+                }
+                player.getInventory().setItem(0, new ItemStack(MortuorumItems.SOUL_HEART));
+            });
+            context.waitTicks(40);
+            context.takeScreenshot("mortuorum_criaturas");
         }
     }
 }
