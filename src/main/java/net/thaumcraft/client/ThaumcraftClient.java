@@ -80,6 +80,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.naturalis.NaturalisEntities.EVIL_TRUNK,
                 net.thaumcraft.naturalis.client.EvilTrunkRenderer::new);
+net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("evil_trunk"),
+                net.thaumcraft.naturalis.client.EvilTrunkItemRenderer.Unbaked.CODEC);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.EVIL_TRUNK,
                 net.thaumcraft.client.gui.EvilTrunkScreen::new);
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(

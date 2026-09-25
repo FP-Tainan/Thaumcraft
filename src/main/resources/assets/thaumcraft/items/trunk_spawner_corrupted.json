@@ -1,6 +1,10 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "thaumcraft:item/trunk_spawner_corrupted"
+    "type": "minecraft:special",
+    "base": "thaumcraft:item/trunk_spawner_corrupted",
+    "model": {
+      "type": "thaumcraft:evil_trunk",
+      "kind": "corrupted"
+    }
   }
 }

@@ -1,6 +1,10 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "thaumcraft:item/trunk_spawner_tainted"
+    "type": "minecraft:special",
+    "base": "thaumcraft:item/trunk_spawner_tainted",
+    "model": {
+      "type": "thaumcraft:evil_trunk",
+      "kind": "tainted"
+    }
   }
 }
