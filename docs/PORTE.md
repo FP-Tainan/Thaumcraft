@@ -2034,3 +2034,58 @@ como dados do jogo, e não só como página de livro.
 **Desvios declarados**: a Foice da Abundância pede um livro encantado qualquer, porque hoje um ingrediente não sabe
 olhar encantamento; e a troca de terra usa o `fillbiome` do jogo, que é o que existe hoje no lugar do
 `setBiomeAt` de então.
+
+## O Forbidden Magic (2026-09-24)
+
+O terceiro ramo de fora: o **Forbidden Magic 0.575**, de SpitefulFox (92 classes), que na lore de quem joga fica
+com o próprio nome — magia humana proibida, e não coisa dos Ancestrais: os sete pecados, o Nether e o que os
+thaumaturgos inventaram de pior. O código mora em `net.thaumcraft.forbidden`, as figuras e os textos no espaço de
+nome `thaumcraft`, e as chaves de pesquisa levam o prefixo `FM_`.
+
+O que depende de outros mods — Blood Magic, Botania, Ars Magica, EE3, Twilight Forest, Thaumic Tinkerer — fica de
+fora, como o próprio original o punha atrás de `Loader.isModLoaded`.
+
+### A porta dos aspectos
+
+Para um ramo de fora criar aspecto novo e somar aspecto ao que já existe, a porta cresceu:
+
+- `ThaumcraftApi.aspect(nome, cor, pai, mãe, mistura)`, que é o construtor público do `Aspect` que os addons do
+  original usavam;
+- `ObjectAspects.Registrar.add` e `.blockAdd`, que somam ao que a coisa já tem — o `getObjectAspects`, somar, e
+  registrar de volta;
+- `EntityAspects.onRegister`, com `add(criatura, variante, aspectos)`, que é o `scanEntities` que os addons
+  percorriam.
+
+O teste da tabela de aspectos passou a contar os quarenta e oito que o **próprio Thaumcraft** declara (os campos da
+classe `Aspects`), e não tudo o que estiver na tabela, que agora recebe os dos ramos.
+
+### Fatia 1 — os sete aspectos sombrios
+
+- **infernus** (fogo + magia), **ira** (arma + fogo), **gula** (fome + vazio), **invidia** (sentidos + fome),
+  **superbia** (voo + vazio), **desidia** (armadilha + alma) e **luxuria** (carne + fome), com a cor e a mistura do
+  original.
+- E o que eles somam: dezenove coisas do jogo (a pedra do Nether, a estrela, o bolo, a dinamite, a cama...), seis
+  anotações inteiras e quinze criaturas — o creeper carregado levando mais ira que o comum, como lá.
+- Tudo sai de `scratchpad/fm-aspectos.js`, que lê o `DarkAspects` do jar.
+
+### Fatia 2 — os oito fragmentos dos pecados
+
+- Os sete do `ItemDeadlyShard` — ira, inveja, mácula, soberba, luxúria, preguiça e avareza — e o da gula, que se
+  come, com a aba do ramo no criativo.
+- E de onde eles vêm, do `FMEventHandler`, tudo no Nether: a **Preguiça** de quem morre sozinho; a **Ira** de quem
+  morre por arma forte (a chance cresce com o dano, com os encantamentos de briga e com a Potência do foco da
+  varinha); a **Soberba** dos chefes; a **Avareza** de quem caça com pilhagem ou foco de tesouro; a **Inveja** do
+  porco-zumbi que nasceu com um na mão (um em cada cento e setenta e cinco); e a **Gula** de quem come no Nether.
+- Quem come é o `LivingEntityEatMixin`, porque o jogo não anuncia isso por evento.
+
+### Fatia 3 — a árvore maculada
+
+- O tronco, as tábuas, as folhas, a muda, a pedra maculada e os tijolos dela, com a árvore do
+  `WorldGenTaintedTree` — o carvalho de então, feito de madeira maculada, que só cresce onde couber inteira.
+- As folhas caem a muda e, uma vez em vinte ao apodrecer, um **Fruto Maculado**: ele enche a barriga, mas gruda um
+  ponto de distorção, meio minuto de mácula e de fome e, quatro vezes em dez, a taumarreia.
+- E o **carvão maculado**, que sai do tronco na fornalha.
+
+**Falta**: as ferramentas (pás, picaretas, machados, o garfo, as morfas), as peças de varinha (hastes e coifas
+sombrias), o foco do piscar, o bolo arcano, a flor de tinta, a gaiola da ira, as bijuterias, os oito encantamentos
+sombrios, as duas poções e a tabela de pesquisas e receitas.
