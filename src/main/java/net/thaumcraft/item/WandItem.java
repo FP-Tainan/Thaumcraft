@@ -143,7 +143,8 @@ public class WandItem extends Item {
     public static boolean cast(Level level, Player player, ItemStack wand, FocusItem focus) {
         if (isOnCooldown(player)) return false;
         setCooldown(player, focus.cooldown(focusStack(wand)));
-        return level.isClientSide() || net.thaumcraft.item.Focuses.tick(level, player, wand, focus);
+        // dos dois lados, como o onFocusRightClick do original: o servidor age, quem vê desenha
+        return net.thaumcraft.item.Focuses.tick(level, player, wand, focus);
     }
 
     public static WandParts.Cap cap(ItemStack stack) {
@@ -499,7 +500,7 @@ public class WandItem extends Item {
         String focus = stack.get(TCComponents.WAND_FOCUS);
         if (focus == null) return name;
         return Component.translatable("item.thaumcraft.wand.focused", name,
-                Component.translatable("item.thaumcraft.focus." + focus));
+                FocusItem.nameOf(focus));
     }
 
     public boolean isStaff() {

@@ -94,6 +94,9 @@ public final class Focuses {
         if (!WandItem.consumeFocus(wand, focus.cost(fs), false, player)) return false;
         if (level.isClientSide()) {
             clientEffects.tick(level, player, wand, focus);
+            // e o que um ramo de fora desenha, que é a metade isRemote do foco dele
+            Cast desenha = EXTRA_CLIENT.get(focus.type());
+            if (desenha != null) desenha.cast(level, player, wand, focus);
             return true;
         }
         return switch (focus.type()) {
@@ -121,10 +124,16 @@ public final class Focuses {
     }
 
     private static final Map<String, Cast> EXTRA = new HashMap<>();
+    private static final Map<String, Cast> EXTRA_CLIENT = new HashMap<>();
 
     /** Registra o que um foco de fora faz. A chave é o mesmo nome que o foco diz em {@code type()}. */
     public static void register(String type, Cast cast) {
         EXTRA.put(type, cast);
+    }
+
+    /** E o que ele desenha do lado de quem vê, que o cliente pendura ao abrir. */
+    public static void registerClient(String type, Cast cast) {
+        EXTRA_CLIENT.put(type, cast);
     }
 
     /** Quando o botão solta, a escavação esquece o bloco que estava roendo. */

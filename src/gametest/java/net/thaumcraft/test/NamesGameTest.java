@@ -43,8 +43,10 @@ public class NamesGameTest {
         for (Item item : BuiltInRegistries.ITEM) {
             var id = BuiltInRegistries.ITEM.getKey(item);
             if (!id.getNamespace().equals("thaumcraft")) continue;
-            String chave = new ItemStack(item).getItem().getDescriptionId();
-            confere(en, pt, chave, faltando);
+            ItemStack stack = new ItemStack(item);
+            confere(en, pt, item.getDescriptionId(), faltando);
+            // e o nome que a dica mostra, que pode ser montado por um getName() próprio
+            for (String chave : chavesDe(stack.getHoverName())) confere(en, pt, chave, faltando);
         }
         for (Block block : BuiltInRegistries.BLOCK) {
             var id = BuiltInRegistries.BLOCK.getKey(block);
@@ -108,6 +110,26 @@ public class NamesGameTest {
             helper.fail(faltando.size() + " sem texto no livro: " + String.join(", ", faltando));
         }
         helper.succeed();
+    }
+
+    /**
+     * As chaves de idioma que um texto usa, inclusive as dos pedaços que ele encaixa dentro de si: é por aqui que a
+     * dica de um foco de ramo de fora deixa de passar com a chave na cara.
+     */
+    private static List<String> chavesDe(net.minecraft.network.chat.Component texto) {
+        List<String> chaves = new ArrayList<>();
+        junta(texto, chaves);
+        return chaves;
+    }
+
+    private static void junta(net.minecraft.network.chat.Component texto, List<String> chaves) {
+        if (texto.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents conteudo) {
+            chaves.add(conteudo.getKey());
+            for (Object argumento : conteudo.getArgs()) {
+                if (argumento instanceof net.minecraft.network.chat.Component dentro) junta(dentro, chaves);
+            }
+        }
+        for (var irmao : texto.getSiblings()) junta(irmao, chaves);
     }
 
     /** O mod de mentira que os testes registram para provar a porta de fora não tem idioma, e nem precisa. */

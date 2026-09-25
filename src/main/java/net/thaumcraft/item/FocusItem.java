@@ -219,9 +219,14 @@ public class FocusItem extends Item {
         return this.sortKey(new ItemStack(this));
     }
 
-    @Override
-    public Component getName(ItemStack stack) {
-        return Component.translatable("item.thaumcraft.focus." + this.type);
+    /**
+     * O nome do foco de um tipo, que é o nome do próprio item: assim um ramo de fora ganha nome amigável só de
+     * registrar o item, sem precisar de uma chave de idioma à parte.
+     */
+    public static Component nameOf(String type) {
+        Item item = net.thaumcraft.registry.TCItems.FOCI.get(type);
+        return item == null ? Component.translatable("item.thaumcraft.focus." + type)
+                : Component.translatable(item.getDescriptionId());
     }
 
     /** O {@code addInformation}: o custo (por uso ou por tique) e as melhorias, com o nível em romano. */

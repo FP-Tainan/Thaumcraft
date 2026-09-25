@@ -48,7 +48,7 @@ public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, Nito
     private static final int LONGEST_LIFE = 52;
 
     /** Um dos dois jatos do {@code TileNitor}. */
-    private record Jet(int oneIn, float scale, int colour, float spread, float gravity, int salt) {
+    public record Jet(int oneIn, float scale, int colour, float spread, float gravity, int salt) {
     }
 
     /**
@@ -61,6 +61,15 @@ public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, Nito
     private static final Jet[] JETS = {
             new Jet(5, 0.5f, 4, 0.2f, -0.025f, 0),
             new Jet(7, 0.25f, 1, 0.1f, -0.02f, 1),
+    };
+
+    /** Uma cor que o {@code FXWisp} não tem: o branco que o Lumos do Maleficium acende, a pedido de quem joga. */
+    public static final int WHITE = -1;
+
+    /** Os jatos dessa chama branca, iguais aos do Nitor em tudo menos na cor. */
+    public static final Jet[] WHITE_JETS = {
+            new Jet(5, 0.5f, WHITE, 0.2f, -0.025f, 0),
+            new Jet(7, 0.25f, WHITE, 0.1f, -0.02f, 1),
     };
 
     /** O que o desenhista precisa saber do Nitor neste quadro. */
@@ -89,23 +98,29 @@ public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, Nito
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
+        flame(state, pose, collector, camera, JETS);
+    }
+
+    /** A mesma chama, com os jatos que se pedir: é por aqui que o Lumos acende a dele. */
+    public static void flame(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera,
+                             Jet[] jets) {
         pose.pushPose();
         pose.translate(0.5f, 0.5f, 0.5f);
-        for (Jet jet : JETS) {
+        for (Jet jet : jets) {
             // cada tique dos últimos cinquenta e poucos pode ter parido um facho que ainda está no ar
             for (int back = 0; back <= LONGEST_LIFE; back++) {
                 long born = state.tick - back;
                 int seed = mix(state.seed, born, jet.salt());
                 if (noise(seed) * jet.oneIn() >= 1.0f) continue;
-                this.wisp(state, pose, collector, camera, jet, seed, back + state.partial);
+                wisp(state, pose, collector, camera, jet, seed, back + state.partial);
             }
         }
         pose.popPose();
     }
 
     /** Um facho, com a idade que ele tem agora. */
-    private void wisp(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera,
-                      Jet jet, int seed, float age) {
+    private static void wisp(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera,
+                             Jet jet, int seed, float age) {
         int life = (int) (36.0 / (noise(seed + 1) * 0.3 + 0.7));
         if (age >= life) return;
 
@@ -157,7 +172,9 @@ public class NitorRenderer implements BlockEntityRenderer<NitorBlockEntity, Nito
      */
     private static int colour(int index, int seed) {
         float r, g, b;
-        if (index == 4) {
+        if (index == WHITE) {
+            r = g = b = 0.75f + noise(seed) * 0.25f;
+        } else if (index == 4) {
             r = 0.7f + noise(seed) * 0.3f;
             g = 0.2f;
             b = 0.2f;

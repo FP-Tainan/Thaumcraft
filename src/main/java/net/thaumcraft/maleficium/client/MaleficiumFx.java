@@ -16,13 +16,69 @@ public final class MaleficiumFx {
     private MaleficiumFx() {
     }
 
+    /** Os efeitos das lâminas de fortaleza, que a onda de choque do foco também usa. */
+    private static final BladeEffects LAMINAS = new BladeEffects();
+
     public static void init() {
         WarpwoodKnotBlock.clientEffects = MaleficiumFx::knotBurst;
         LumosBlock.clientEffects = MaleficiumFx::lumos;
         net.thaumcraft.maleficium.WarpFertilizerItem.clientEffects = MaleficiumFx::twist;
         net.thaumcraft.maleficium.GateKeyItem.clientEffects = MaleficiumFx::gateSparkle;
-        net.thaumcraft.maleficium.FortressBladeItem.clientEffects = new BladeEffects();
+        net.thaumcraft.maleficium.FortressBladeItem.clientEffects = LAMINAS;
         MaleficiumHud.init();
+        net.thaumcraft.item.Focuses.registerClient("shockwave", MaleficiumFx::shockwaveFx);
+        net.thaumcraft.item.Focuses.registerClient("vis_shard", MaleficiumFx::visShardFx);
+        net.thaumcraft.item.Focuses.registerClient("lumos", MaleficiumFx::lumosFx);
+    }
+
+    /** A onda de choque: um raio do peito de quem lançou até cada um que ela pega, e faíscas em volta deles. */
+    private static boolean shockwaveFx(Level level, net.minecraft.world.entity.player.Player player,
+                                       net.minecraft.world.item.ItemStack wand, net.thaumcraft.item.FocusItem focus) {
+        double alcance = 15.0 + net.thaumcraft.item.FocusItem.level(
+                net.thaumcraft.item.WandItem.focusStack(wand), net.thaumcraft.item.FocusUpgradeTable.ENLARGE);
+        for (var alvo : level.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class,
+                player.getBoundingBox().inflate(alcance),
+                e -> e != player && e.isAlive() && !e.isInvulnerable())) {
+            LAMINAS.shockwave(level, player, alvo);
+        }
+        return true;
+    }
+
+    /** A lasca de vis: dezoito faíscas de onde ela sai. */
+    private static boolean visShardFx(Level level, net.minecraft.world.entity.player.Player player,
+                                      net.minecraft.world.item.ItemStack wand, net.thaumcraft.item.FocusItem focus) {
+        if (!(net.thaumcraft.item.Focuses.pointedEntity(level, player, 32.0)
+                instanceof net.minecraft.world.entity.LivingEntity)) {
+            return false;
+        }
+        RandomSource random = level.getRandom();
+        var olhar = player.getLookAngle();
+        double x = player.getX() + olhar.x / 2.0;
+        double y = player.getEyeY() + olhar.y / 2.0;
+        double z = player.getZ() + olhar.z / 2.0;
+        for (int a = 0; a < 18; a++) {
+            Sparkle.custom(random, x + random.nextFloat(), y + random.nextFloat(), z + random.nextFloat(),
+                    1.75f, 0, 3 + random.nextInt(3), 0.1f, 0.0, 0.0, 0.0);
+        }
+        return true;
+    }
+
+    /** O Lumos: nove faíscas no lugar em que a luz acendeu. */
+    private static boolean lumosFx(Level level, net.minecraft.world.entity.player.Player player,
+                                   net.minecraft.world.item.ItemStack wand, net.thaumcraft.item.FocusItem focus) {
+        var mira = net.thaumcraft.item.Focuses.targetBlock(level, player);
+        if (!(mira instanceof net.minecraft.world.phys.BlockHitResult hit)
+                || hit.getType() != net.minecraft.world.phys.HitResult.Type.BLOCK) {
+            return false;
+        }
+        BlockPos pos = hit.getBlockPos();
+        if (!level.getBlockState(pos).canBeReplaced()) pos = pos.relative(hit.getDirection());
+        RandomSource random = level.getRandom();
+        for (int a = 0; a < 9; a++) {
+            Sparkle.custom(random, pos.getX() + random.nextFloat(), pos.getY() + random.nextFloat(),
+                    pos.getZ() + random.nextFloat(), 1.75f, 6, 3 + random.nextInt(3), 0.1f, 0.0, 0.0, 0.0);
+        }
+        return true;
     }
 
     /** O {@code addDestroyEffects} do nó: quinze fogos-fátuos saindo dele devagar. */

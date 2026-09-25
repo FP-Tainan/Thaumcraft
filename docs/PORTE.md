@@ -2089,3 +2089,53 @@ classe `Aspects`), e não tudo o que estiver na tabela, que agora recebe os dos 
 **Falta**: as ferramentas (pás, picaretas, machados, o garfo, as morfas), as peças de varinha (hastes e coifas
 sombrias), o foco do piscar, o bolo arcano, a flor de tinta, a gaiola da ira, as bijuterias, os oito encantamentos
 sombrios, as duas poções e a tabela de pesquisas e receitas.
+
+## Quatro consertos do que quem joga viu (2026-09-25)
+
+### Os focos sem nome
+
+O `FocusItem` montava o nome na hora, `item.thaumcraft.focus.<tipo>`, e só os dez focos do Thaumcraft tinham essa
+chave: os seis do Maleficium e os dois do Magia Naturalis apareciam com a chave na cara. Agora o nome de um foco é
+o nome do **próprio item** — um foco de ramo de fora ganha nome amigável só de se registrar, sem chave à parte —, e
+as dez chaves repetidas saíram dos dois idiomas.
+
+O `NamesGameTest` passou a conferir o **nome que a dica mostra**, e não só a chave crua do item, andando pelos
+pedaços do texto: é assim que um `getName()` que monta chave na hora deixa de passar despercebido.
+
+### O Baú Maligno no ar
+
+O `CorruptedTrunkModel` do original faz um `glTranslatef(-0.5F, 0.5F, -0.5F)` antes de desenhar, porque as peças
+dele são medidas a partir do canto do bloco e não em volta dos pés do bicho. Sem isso o baú ficava meio bloco no ar
+e meio bloco de lado — era o que parecia pele quebrada. O `scale` do desenhista faz esse mesmo empurrão, que em
+26.2 cai no mesmo lugar do `preRenderCallback` de então.
+
+Os baús arcanos, esses, estavam certos: postos lado a lado com um baú do jogo, saem iguais, com a folha de
+madeira-grande e a de prateada no lugar.
+
+### O bicho grande demais no jarro
+
+Eram dois males. O primeiro derrubava o jogo: o bicho do jarro nunca entrou no mundo, e o desenhista do jogo pede
+o **id** dele para escolher o modelo do que ele tem na mão — sem id, estoura. O gerador de monstros do jogo passa
+por isso dando um id de mentira (`-1`) ao mostruário dele, e o jarro passou a fazer o mesmo.
+
+O segundo era o tamanho: o `TileJarPrisonRenderer` encolhe o bicho a um valor fixo, `0,21875`, e o vira para quem
+chega a menos de quatro blocos e meio; de longe ele roda devagar. A porta daqui encolhia conforme o tamanho do
+bicho, e um porco saía mais que o dobro do que cabia. Agora é o número do original.
+
+O `SkinClientTest` põe um porco dentro de um jarro, e é ele que segura os dois: se o id voltar a faltar, o teste
+de tela derruba o cliente.
+
+### Os focos que não desenhavam nada
+
+O tiro único da varinha — o `cast` — voltava cedo do lado de quem vê, e por isso os focos de ramo de fora nunca
+desenhavam coisa alguma. Agora ele corre dos dois lados, como o `onFocusRightClick` do original, e o `Focuses`
+ganhou uma porta (`registerClient`) para cada ramo pendurar a metade `isRemote` do foco dele. O Maleficium
+pendurou as três que faltavam:
+
+- a **onda de choque**, com um raio do peito de quem lançou até cada um que ela pega, e cinco faíscas em volta;
+- a **lasca de vis**, com dezoito faíscas de onde ela sai;
+- e o **Lumos**, com as nove faíscas do lugar em que a luz acendeu.
+
+**Desvio pedido**: no original o Lumos é uma luz invisível que solta uma faísca a cada quinze tiques, e quase não
+se acha. A pedido de quem joga ele acende agora também um **Nitor branco** — a mesma chama do Nitor, com os mesmos
+jatos, só que branca. O resto do Lumos continua igual: as faíscas, o som de gelo ao quebrar e a luz que ele dá.

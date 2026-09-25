@@ -56,6 +56,12 @@ public final class MaleficiumBlocks {
             new LumosBlock(properties.mapColor(MapColor.NONE).noCollision().instabreak().noLootTable()
                     .lightLevel(state -> 15).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY)));
 
+    /** A entidade de bloco do Lumos, que só existe para a chama ter onde se pendurar. */
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<LumosBlockEntity> LUMOS_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("lumos"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(LumosBlockEntity::new,
+                            java.util.Set.of(LUMOS)));
+
     private MaleficiumBlocks() {
     }
 

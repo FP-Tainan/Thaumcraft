@@ -24,6 +24,9 @@ import org.jetbrains.annotations.Nullable;
  * encolhido para caber, e gira devagar virando-se para quem olha.
  */
 public class PrisonJarRenderer implements BlockEntityRenderer<PrisonJarBlockEntity, PrisonJarRenderer.State> {
+    /** O {@code ENTITY_SCALE} do original: o bicho cabe no vidro encolhido a pouco mais de um quinto. */
+    public static final float ESCALA = 0.21875f;
+
     public static class State extends BlockEntityRenderState {
         @Nullable Entity entity;
         float spin;
@@ -42,7 +45,15 @@ public class PrisonJarRenderer implements BlockEntityRenderer<PrisonJarBlockEnti
                                    net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay crumbling) {
         BlockEntityRenderState.extractBase(jar, state, crumbling);
         state.entity = cached(jar);
-        state.spin = (System.currentTimeMillis() % 7200L) / 20.0f;
+        // de perto o bicho vira-se para quem olha; de longe ele roda devagar, como no original
+        var pos = jar.getBlockPos();
+        if (camera.distanceTo(Vec3.atLowerCornerOf(pos)) < 4.5) {
+            double dx = camera.x - (pos.getX() + 0.5);
+            double dz = camera.z - (pos.getZ() + 0.5);
+            state.spin = -((float) (Math.atan2(dz, dx) * 180.0 / Math.PI) - 90.0f);
+        } else {
+            state.spin = (System.currentTimeMillis() % 7200L) / 20.0f;
+        }
     }
 
     /** A criatura desenhada, feita uma vez só a partir do que o jarro guarda. */
@@ -51,8 +62,13 @@ public class PrisonJarRenderer implements BlockEntityRenderer<PrisonJarBlockEnti
         CompoundTag guardado = jar.stored();
         var level = Minecraft.getInstance().level;
         if (guardado == null || level == null) return null;
+        // o id de mentira do mostruário do gerador de monstros: sem ele o desenhista estoura ao pedir o id de um
+        // bicho que nunca entrou no mundo
         jar.clientEntity = EntityType.loadEntityRecursive(guardado, level,
-                new EntitySpawnRequest(EntitySpawnReason.TRIGGERED, true), entity -> entity);
+                new EntitySpawnRequest(EntitySpawnReason.TRIGGERED, true), entity -> {
+                    entity.setId(-1);
+                    return entity;
+                });
         return jar.clientEntity;
     }
 
@@ -60,13 +76,10 @@ public class PrisonJarRenderer implements BlockEntityRenderer<PrisonJarBlockEnti
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
         Entity entity = state.entity;
         if (entity == null) return;
-        // o bicho cabe no jarro encolhendo conforme o tamanho dele
-        float maior = Math.max(entity.getBbHeight(), entity.getBbWidth());
-        float escala = Math.min(0.5f, 0.5f / maior);
         pose.pushPose();
-        pose.translate(0.5f, 0.15f, 0.5f);
-        pose.mulPose(Axis.YP.rotationDegrees(state.spin * 8.0f));
-        pose.scale(escala, escala, escala);
+        pose.translate(0.5f, 0.1f, 0.5f);
+        pose.mulPose(Axis.YP.rotationDegrees(state.spin));
+        pose.scale(ESCALA, ESCALA, ESCALA);
         @SuppressWarnings("unchecked")
         EntityRenderer<Entity, EntityRenderState> renderer =
                 (EntityRenderer<Entity, EntityRenderState>) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);

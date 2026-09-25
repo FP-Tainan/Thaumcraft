@@ -153,7 +153,8 @@
       "net.thaumcraft.test.client.MaleficiumClientTest",
       "net.thaumcraft.test.client.MaleficiumTreeClientTest",
       "net.thaumcraft.test.client.NaturalisClientTest",
-      "net.thaumcraft.test.client.NaturalisWorldClientTest"
+      "net.thaumcraft.test.client.NaturalisWorldClientTest",
+      "net.thaumcraft.test.client.SkinClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

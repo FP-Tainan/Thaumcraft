@@ -6,7 +6,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -18,7 +21,7 @@ import net.minecraft.world.phys.shapes.Shapes;
  * <p>Uma luzinha que o foco e o anel de Lumos deixam pelo caminho — não se pega, não atrapalha, ilumina como uma
  * tocha e solta faíscas de vez em quando. Quebrada, estala como gelo e se desfaz em nove faíscas.
  */
-public class LumosBlock extends Block {
+public class LumosBlock extends BaseEntityBlock {
     public static final MapCodec<LumosBlock> CODEC = simpleCodec(LumosBlock::new);
 
     /** Os efeitos do lado de quem vê, que o cliente pendura aqui ao abrir. */
@@ -36,6 +39,20 @@ public class LumosBlock extends Block {
     @Override
     public MapCodec<LumosBlock> codec() {
         return CODEC;
+    }
+
+    /**
+     * O bloco em si não se desenha — no original a textura dele é {@code thaumcraft:blank}. O que se vê é a chama
+     * branca que o {@code LumosRenderer} acende.
+     */
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.INVISIBLE;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new LumosBlockEntity(pos, state);
     }
 
     @Override

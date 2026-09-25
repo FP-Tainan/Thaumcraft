@@ -56,6 +56,15 @@ public class EvilTrunkRenderer extends MobRenderer<EvilTrunkEntity, EvilTrunkRen
         this.model = this.models.get(state.kind);
     }
 
+    /**
+     * O {@code GL11.glTranslatef(-0.5F, 0.5F, -0.5F)} que o modelo do original faz antes de desenhar: as peças do
+     * baú são medidas a partir do canto do bloco, e sem isto ele fica meio bloco no ar e meio bloco de lado.
+     */
+    @Override
+    protected void scale(State state, com.mojang.blaze3d.vertex.PoseStack pose) {
+        pose.translate(-0.5f, 0.5f, -0.5f);
+    }
+
     @Override
     public Identifier getTextureLocation(State state) {
         return SKINS.get(state.kind);
