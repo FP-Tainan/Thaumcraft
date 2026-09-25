@@ -26,6 +26,11 @@ public final class Forbidden {
         ForbiddenItems.init();
         ForbiddenFoci.init();
         ForbiddenWands.init();
+        // a aba do ramo no livro, com a figura e o fundo do original
+        net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
+                Thaumcraft.id("textures/misc/r_forbidden.png"),
+                Thaumcraft.id("textures/gui/gui_forbidden_researchback.png"));
+        ForbiddenTable.research();
         // as receitas pedem itens prontos, e por isso esperam a montagem acabar
         net.thaumcraft.api.ThaumcraftApi.onSetup(ForbiddenTable::recipes);
         events();

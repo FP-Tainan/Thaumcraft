@@ -2273,3 +2273,23 @@ Desídia ela trabalha devagar, como no original.
 
 A tabela de que essência cada bicho é feito é a do original (`spawnerMobs`), com os quarenta e dois bichos dele
 traduzidos para os nomes de hoje — e quem não está nela pede cobiça.
+
+### Fatia 12 — a árvore, as receitas e o livro
+
+A aba do ramo no Thaumonomicon, com a figura e o fundo do original, e as **trinta pesquisas** dele nas mesmas
+casas, com os mesmos custos de aspecto, os mesmos pais e as mesmas marcas (as redondas, as escondidas, as
+secundárias). As chaves levam o prefixo `FM_`, e os pais que são do próprio Thaumcraft continuam com o nome que
+têm lá.
+
+As **vinte e cinco receitas** que fecham com o que já existe: as ferramentas, as camaleão, o bolo, as flores, o
+foco do piscar, as duas hastes, a gaiola, o cristal, as estrelas, as esmeraldas e os oito encantamentos — estes
+últimos por infusão na própria peça, que é o `addInfusionEnchantmentRecipe` do original. Quem lê uma página de
+receita de encantamento de um ramo de fora agora a acha: o `BookPages` passou a aceitar a receita crua, como já
+fazia com as de crisol e de infusão.
+
+E o livro inteiro em **inglês e português**: trinta nomes, trinta subtítulos e trinta e cinco páginas de texto.
+
+**Fica de fora** do ramo, por depender de outros mods: o Rapieira de Sangue, os poços de sangue e vínculo e o Orbe
+Divino (Blood Magic), as hastes e pontas de Botania, Ars Magica, Witchery e Equivalent Exchange, o Matadragões
+(Draconic Evolution) e as duas poções, que só vêm desses. Também ficam de fora as duas peças de brincadeira feitas
+de bedrock e de bloco de comando.

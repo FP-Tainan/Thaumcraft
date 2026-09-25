@@ -68,6 +68,7 @@ public final class BookPages {
         if (entry instanceof BookRecipes.Crafting || entry instanceof BookRecipes.Compound) return entry;
         // um mod de fora registra a própria receita com o nome, em vez de dizer pesquisa e saída
         if (entry instanceof CrucibleRecipe || entry instanceof InfusionRecipe) return entry;
+        if (entry instanceof InfusionEnchantmentRecipe) return entry;
         // os cetros de exemplo já vêm montados (a receita de verdade é a da bancada, que monta qualquer cetro)
         if (entry instanceof ArcaneRecipe arcane) return arcane;
         if (entry instanceof BookRecipes.Enchant enchant) {

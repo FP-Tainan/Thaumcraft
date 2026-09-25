@@ -10,6 +10,7 @@ import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.registry.TCBlocks;
 import net.thaumcraft.registry.TCItems;
 import net.thaumcraft.registry.TCResources;
+import net.thaumcraft.research.Page;
 
 import java.util.List;
 
@@ -34,6 +35,341 @@ public final class ForbiddenTable {
     /** Um aspecto do ramo, pelo nome. */
     private static net.thaumcraft.api.aspects.Aspect dark(String name) {
         return ForbiddenAspects.ASPECTS.get(name);
+    }
+
+    /** A árvore do ramo: o {@code ForbiddenResearch} do original, com as posições e os custos dele. */
+    public static void research() {
+        ThaumcraftApi.research("FM_NETHERSHARDS", Forbidden.CATEGORY)
+                .at(-8, -5)
+                .icon(() -> new ItemStack(ForbiddenItems.SHARDS.get("wrath")))
+                .stub()
+                .round()
+                .auto()
+                .pages(Page.text("tc.research_page.FM_NETHERSHARDS.1"),
+                        Page.text("tc.research_page.FM_NETHERSHARDS.2"),
+                        Page.text("tc.research_page.FM_NETHERSHARDS.3"))
+                .register();
+
+        ThaumcraftApi.research("FM_SCHOOLS", Forbidden.CATEGORY)
+                .at(-1, 1)
+                .icon(() -> new ItemStack(net.minecraft.world.level.block.Blocks.ENCHANTING_TABLE))
+                .stub()
+                .round()
+                .pages(Page.text("tc.research_page.FM_SCHOOLS.1"))
+                .register();
+
+        ThaumcraftApi.research("FM_HELLFIRE", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.FIRE, 3).add(dark("infernus"), 4).add(Aspects.TRAVEL, 2))
+                .at(-8, -8)
+                .complexity(1)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.FIRE_CHARGE))
+                .parents("FM_NETHERSHARDS")
+                .round()
+                .hidden()
+                .pages(Page.text("tc.research_page.FM_HELLFIRE.1"))
+                .register();
+
+        ThaumcraftApi.research("FM_ROD_profane", Forbidden.CATEGORY)
+                .at(-9, -8)
+                .icon(() -> new ItemStack(ForbiddenItems.WAND_ROD_PROFANE))
+                .round()
+                .hidden()
+                .pages(Page.text("tc.research_page.FM_ROD_profane.1"))
+                .register();
+
+        ThaumcraftApi.research("FM_CRYSTALWELL", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.MIND, 3).add(Aspects.CRYSTAL, 2).add(Aspects.MAGIC, 1))
+                .at(-2, -8)
+                .complexity(1)
+                .icon(() -> new ItemStack(ForbiddenItems.CRYSTALWELL))
+                .parents("RESEARCH")
+                .pages(Page.text("tc.research_page.FM_CRYSTALWELL.1"),
+                        Page.arcane("ItemCrystalwell"))
+                .register();
+
+        ThaumcraftApi.research("FM_PRIMEWELL", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.MIND, 3).add(Aspects.ELDRITCH, 6).add(Aspects.CRAFT, 1))
+                .at(2, -8)
+                .complexity(1)
+                .icon(() -> new ItemStack(ForbiddenItems.PRIMEWELL))
+                .parents("PRIMPEARL")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_PRIMEWELL.1"),
+                        Page.arcane("ItemPrimewell"))
+                .register();
+
+        ThaumcraftApi.research("FM_BLACKFLOWER", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.PLANT, 3).add(Aspects.SENSES, 2).add(Aspects.DARKNESS, 4))
+                .at(-2, -6)
+                .complexity(1)
+                .icon(() -> new ItemStack(ForbiddenItems.INK_FLOWER))
+                .pages(Page.text("tc.research_page.FM_BLACKFLOWER.1"),
+                        Page.crucible("BlockUmbralBush"),
+                        Page.crafting("ItemBlackInk"))
+                .register();
+
+        ThaumcraftApi.research("FM_RIDINGCROP", Forbidden.CATEGORY)
+                .at(0, -8)
+                .icon(() -> new ItemStack(ForbiddenItems.RIDING_CROP))
+                .stub()
+                .round()
+                .pages(Page.text("tc.research_page.FM_RIDINGCROP.1"),
+                        Page.crafting("ItemRidingCrop"))
+                .register();
+
+        ThaumcraftApi.research("FM_SKULLAXE", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.WEAPON, 3).add(dark("ira"), 4).add(dark("infernus"), 1))
+                .at(-11, -7)
+                .complexity(2)
+                .icon(() -> new ItemStack(ForbiddenItems.SKULLTAKER_AXE))
+                .parents("FM_NETHERSHARDS", "THAUMIUM", "INFUSION")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_SKULLAXE.1"),
+                        Page.infusion("ItemSkullAxe"))
+                .register();
+
+        ThaumcraftApi.research("FM_SUBCOLLAR", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.AURA, 3).add(dark("luxuria"), 8).add(Aspects.MAGIC, 3).add(Aspects.TRAP, 6).add(Aspects.FLESH, 4))
+                .at(-11, -5)
+                .complexity(2)
+                .icon(() -> new ItemStack(ForbiddenItems.COLLAR))
+                .parents("FM_NETHERSHARDS", "VISAMULET", "INFUSION")
+                .hidden()
+                .pages(Page.text("tc.research_page.FM_SUBCOLLAR.1"),
+                        Page.infusion("ItemSubCollar"))
+                .register();
+
+        ThaumcraftApi.research("FM_RINGFOOD", Forbidden.CATEGORY)
+                .aspects(aspects().add(dark("gula"), 4).add(Aspects.HUNGER, 3).add(Aspects.LIFE, 2))
+                .at(-11, -6)
+                .complexity(2)
+                .icon(() -> new ItemStack(ForbiddenItems.NUTRITION_RING))
+                .parents("FM_NETHERSHARDS")
+                .pages(Page.text("tc.research_page.FM_RINGFOOD.1"),
+                        Page.arcane("ItemRingFood"))
+                .register();
+
+        ThaumcraftApi.research("FM_ARCANECAKE", Forbidden.CATEGORY)
+                .aspects(aspects().add(dark("gula"), 6).add(Aspects.HUNGER, 3).add(Aspects.CRAFT, 2))
+                .at(-12, -6)
+                .complexity(2)
+                .icon(() -> new ItemStack(ForbiddenItems.ARCANE_CAKE))
+                .parents("FM_NETHERSHARDS", "INFUSION")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_ARCANECAKE.1"),
+                        Page.infusion("ItemArcaneCake"))
+                .register();
+
+        ThaumcraftApi.research("FM_FOCUSBLINK", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.TRAVEL, 3).add(Aspects.ENTROPY, 3).add(dark("infernus"), 3).add(dark("desidia"), 6))
+                .at(-11, -3)
+                .complexity(2)
+                .icon(() -> new ItemStack(ForbiddenItems.FOCUS_BLINK))
+                .parents("FM_NETHERSHARDS", "INFUSION")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_FOCUSBLINK.1"),
+                        Page.infusion("ItemFocusBlink"))
+                .register();
+
+        ThaumcraftApi.research("FM_MORPHTOOLS", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.TOOL, 2).add(dark("invidia"), 3).add(Aspects.EXCHANGE, 2))
+                .at(-9, -3)
+                .complexity(4)
+                .icon(() -> new ItemStack(ForbiddenItems.CHAMELEON_PICKAXE))
+                .parents("FM_NETHERSHARDS")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_MORPHTOOLS.1"),
+                        Page.infusion("ItemMorphPickaxe"),
+                        Page.infusion("ItemMorphSword"),
+                        Page.infusion("ItemMorphShovel"),
+                        Page.infusion("ItemMorphAxe"))
+                .register();
+
+        ThaumcraftApi.research("FM_ROD_infernal", Forbidden.CATEGORY)
+                .aspects(aspects().add(dark("infernus"), 4).add(Aspects.FIRE, 3).add(Aspects.TOOL, 1))
+                .at(-11, -4)
+                .complexity(3)
+                .icon(() -> new ItemStack(ForbiddenItems.WAND_ROD_INFERNAL))
+                .parents("ROD_silverwood", "INFUSION", "FM_NETHERSHARDS")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_ROD_infernal.1"),
+                        Page.infusion("ItemWandRodInfernal"))
+                .register();
+
+        ThaumcraftApi.research("FM_FORK", Forbidden.CATEGORY)
+                .aspects(aspects().add(dark("infernus"), 3).add(Aspects.MECHANISM, 1).add(Aspects.TOOL, 1))
+                .at(-6, -7)
+                .icon(() -> new ItemStack(ForbiddenItems.DIABOLIST_FORK))
+                .parents("INFUSION", "FM_NETHERSHARDS", "THAUMIUM")
+                .secondary()
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_FORK.1"),
+                        Page.infusion("ItemFork"))
+                .register();
+
+        ThaumcraftApi.research("FM_WRATHCAGE", Forbidden.CATEGORY)
+                .aspects(aspects().add(dark("ira"), 5).add(Aspects.MECHANISM, 3).add(Aspects.BEAST, 2))
+                .at(-6, -9)
+                .complexity(4)
+                .icon(() -> new ItemStack(ForbiddenItems.WRATH_CAGE))
+                .parents("FM_FORK")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_WRATHCAGE.1"),
+                        Page.text("tc.research_page.FM_WRATHCAGE.2"),
+                        Page.text("tc.research_page.FM_WRATHCAGE.3"),
+                        Page.infusion("BlockWrathCage"),
+                        Page.crucible("ItemMobCrystal"))
+                .register();
+
+        ThaumcraftApi.research("FM_TAINTSHOVEL", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.CRYSTAL, 3).add(Aspects.TAINT, 2).add(Aspects.TOOL, 1))
+                .at(-8, 1)
+                .complexity(2)
+                .icon(() -> new ItemStack(ForbiddenItems.PURIFIER_SHOVEL))
+                .parents("THAUMIUM", "INFUSION", "ETHEREALBLOOM")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_TAINTSHOVEL.1"),
+                        Page.text("tc.research_page.FM_TAINTSHOVEL.2"),
+                        Page.infusion("ItemTaintShovel"))
+                .register();
+
+        ThaumcraftApi.research("FM_TAINTPICK", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.TOOL, 2).add(Aspects.TAINT, 4).add(Aspects.ENTROPY, 3))
+                .at(-10, 1)
+                .complexity(2)
+                .icon(() -> new ItemStack(ForbiddenItems.DISTORTION_PICKAXE))
+                .parents("FM_TAINTSHOVEL")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_TAINTPICK.1"),
+                        Page.infusion("ItemTaintPickaxe"))
+                .register();
+
+        ThaumcraftApi.research("FM_ROD_tainted", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.MAGIC, 4).add(Aspects.TAINT, 5).add(Aspects.TOOL, 2))
+                .at(-8, 3)
+                .complexity(3)
+                .icon(() -> new ItemStack(ForbiddenItems.WAND_ROD_TAINTED))
+                .parents("ROD_silverwood", "FM_TAINTSHOVEL", "INFUSION")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_ROD_tainted.1"),
+                        Page.infusion("ItemWandRodTainted"))
+                .register();
+
+        ThaumcraftApi.research("FM_TAINTTREE", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.TREE, 4).add(Aspects.TAINT, 6).add(Aspects.POISON, 2).add(Aspects.PLANT, 3))
+                .at(-11, 3)
+                .complexity(3)
+                .icon(() -> new ItemStack(ForbiddenItems.TAINT_SAPLING))
+                .parents("THAUMIUM", "INFUSION", "ETHEREALBLOOM")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_TAINTTREE.1"),
+                        Page.crucible("BlockTaintSapling"),
+                        Page.crafting("BlockTaintPlanks"))
+                .register();
+
+        ThaumcraftApi.research("FM_TAINTSTONE", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.EARTH, 4).add(Aspects.TAINT, 6).add(Aspects.ORDER, 2))
+                .at(-10, 3)
+                .complexity(2)
+                .icon(() -> new ItemStack(ForbiddenItems.TAINT_STONE_BRICKS))
+                .parents("THAUMIUM", "INFUSION", "ETHEREALBLOOM")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_TAINTSTONE.1"),
+                        Page.arcane("BlockTaintStone"),
+                        Page.crafting("BlockTaintBricks"))
+                .register();
+
+        ThaumcraftApi.research("FM_WRATH", Forbidden.CATEGORY)
+                .aspects(aspects().add(dark("ira"), 16).add(Aspects.WEAPON, 20).add(Aspects.MAGIC, 10))
+                .at(-6, -3)
+                .complexity(4)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.ENCHANTED_BOOK))
+                .parents("FM_NETHERSHARDS", "INFUSIONENCHANTMENT")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_WRATH.1"),
+                        Page.enchantment("EnchantmentWrath"))
+                .register();
+
+        ThaumcraftApi.research("FM_GREEDY", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.MAGIC, 2).add(Aspects.WEAPON, 1).add(Aspects.GREED, 3))
+                .at(-6, -5)
+                .complexity(2)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.ENCHANTED_BOOK))
+                .parents("FM_NETHERSHARDS", "INFUSIONENCHANTMENT")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_GREEDY.1"),
+                        Page.enchantment("EnchantmentGreedy"))
+                .register();
+
+        ThaumcraftApi.research("FM_CORRUPTING", Forbidden.CATEGORY)
+                .aspects(aspects().add(dark("infernus"), 5).add(Aspects.CRYSTAL, 2).add(Aspects.EXCHANGE, 1))
+                .at(-6, -4)
+                .complexity(1)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.ENCHANTED_BOOK))
+                .parents("FM_NETHERSHARDS", "INFUSIONENCHANTMENT")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_CORRUPTING.1"),
+                        Page.enchantment("EnchantmentCorrupting"))
+                .register();
+
+        ThaumcraftApi.research("FM_CONSUMING", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.VOID, 4).add(Aspects.ENTROPY, 3).add(Aspects.MAGIC, 2))
+                .at(-4, -8)
+                .complexity(1)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.ENCHANTED_BOOK))
+                .parents("INFUSIONENCHANTMENT")
+                .secondary()
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_CONSUMING.1"),
+                        Page.enchantment("EnchantmentConsuming"))
+                .register();
+
+        ThaumcraftApi.research("FM_EDUCATIONAL", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.MIND, 5).add(Aspects.WEAPON, 1).add(Aspects.MAGIC, 3))
+                .at(-4, -7)
+                .complexity(2)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.ENCHANTED_BOOK))
+                .parents("INFUSIONENCHANTMENT")
+                .secondary()
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_EDUCATIONAL.1"),
+                        Page.enchantment("EnchantmentEducational"))
+                .register();
+
+        ThaumcraftApi.research("FM_CLUSTER", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.METAL, 1).add(Aspects.FIRE, 4).add(dark("invidia"), 3))
+                .at(-10, -1)
+                .complexity(3)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.ENCHANTED_BOOK))
+                .parents("FM_MORPHTOOLS", "ELEMENTALPICK")
+                .secondary()
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_CLUSTER.1"),
+                        Page.enchantment("EnchantmentCluster"))
+                .register();
+
+        ThaumcraftApi.research("FM_IMPACT", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.ENTROPY, 8).add(Aspects.TOOL, 10).add(Aspects.MINE, 16).add(dark("invidia"), 10))
+                .at(-9, -1)
+                .complexity(3)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.ENCHANTED_BOOK))
+                .parents("FM_MORPHTOOLS", "ELEMENTALSHOVEL")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_IMPACT.1"),
+                        Page.enchantment("EnchantmentImpact"))
+                .register();
+
+        ThaumcraftApi.research("FM_VOIDTOUCHED", Forbidden.CATEGORY)
+                .aspects(aspects().add(Aspects.ELDRITCH, 16).add(Aspects.TOOL, 10).add(Aspects.CRAFT, 8).add(dark("invidia"), 32))
+                .at(-8, -1)
+                .complexity(4)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.ENCHANTED_BOOK))
+                .parents("FM_MORPHTOOLS", "VOIDMETAL")
+                .concealed()
+                .pages(Page.text("tc.research_page.FM_VOIDTOUCHED.1"),
+                        Page.enchantment("EnchantmentVoidtouched"))
+                .register();
+
     }
 
     public static void recipes() {
