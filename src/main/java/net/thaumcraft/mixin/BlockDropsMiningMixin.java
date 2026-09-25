@@ -33,7 +33,10 @@ public abstract class BlockDropsMiningMixin {
             at = @At("RETURN"))
     private static void thaumcraft$specialMining(BlockState state, ServerLevel level, BlockPos pos, BlockEntity be, Entity entity, ItemInstance tool,
                                                  CallbackInfoReturnable<List<ItemStack>> info) {
-        if (!(tool instanceof ItemStack held) || !(held.getItem() instanceof ElementalPickaxeItem || held.getItem() instanceof PrimalCrusherItem)) return;
+        if (!(tool instanceof ItemStack held)) return;
+        // os encantamentos sombrios do Forbidden Magic mexem no que cai, e não dependem da ferramenta
+        net.thaumcraft.forbidden.ForbiddenEnchantments.onBlockDrops(info.getReturnValue(), level, pos, held);
+        if (!(held.getItem() instanceof ElementalPickaxeItem || held.getItem() instanceof PrimalCrusherItem)) return;
         if (entity == null) return;
         var fortune = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(Enchantments.FORTUNE);
         int level_ = fortune.map(h -> EnchantmentHelper.getItemEnchantmentLevel(h, held)).orElse(0);

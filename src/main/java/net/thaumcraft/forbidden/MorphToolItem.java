@@ -85,6 +85,56 @@ public class MorphToolItem extends Item {
                 List.of(EYE_COLOURS[phase])));
     }
 
+    /**
+     * O <b>Impacto</b>: a picareta e a pá camaleão quebram três por três na face em que bateram, gastando um
+     * ponto de vida por bloco e pulando o que a ferramenta não sabe quebrar.
+     */
+    @Override
+    public boolean mineBlock(ItemStack stack, Level level, net.minecraft.world.level.block.state.BlockState state,
+                             net.minecraft.core.BlockPos pos, net.minecraft.world.entity.LivingEntity miner) {
+        boolean gastou = super.mineBlock(stack, level, state, pos, miner);
+        if (!(level instanceof net.minecraft.server.level.ServerLevel server)
+                || !(miner instanceof net.minecraft.server.level.ServerPlayer player)) {
+            return gastou;
+        }
+        if (ForbiddenEnchantments.level(ForbiddenEnchantments.IMPACT, stack, level) <= 0) return gastou;
+        if (!stack.isCorrectToolForDrops(state)) return gastou;
+
+        // o plano de três por três é o da face que quem cava estava olhando
+        net.minecraft.core.Direction face = net.minecraft.core.Direction.orderedByNearest(player)[0];
+        for (int a = -1; a <= 1; a++) {
+            for (int b = -1; b <= 1; b++) {
+                if (a == 0 && b == 0) continue;
+                net.minecraft.core.BlockPos perto = switch (face.getAxis()) {
+                    case Y -> pos.offset(a, 0, b);
+                    case Z -> pos.offset(a, b, 0);
+                    case X -> pos.offset(0, b, a);
+                };
+                var outro = level.getBlockState(perto);
+                if (outro.isAir() || outro.getDestroySpeed(level, perto) < 0.0f) continue;
+                if (!stack.isCorrectToolForDrops(outro)) continue;
+                if (!player.getAbilities().instabuild) {
+                    stack.hurtAndBreak(1, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+                }
+                server.destroyBlock(perto, true, player);
+            }
+        }
+        return gastou;
+    }
+
+    /**
+     * A <b>Tocada pelo Vazio</b>: a ferramenta se conserta sozinha, um ponto a cada dez tiques, e custa um ponto
+     * de distorção a quem a carrega — o {@code onUpdate} e o {@code getWarp} do original.
+     */
+    @Override
+    public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level,
+                              net.minecraft.world.entity.Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
+        super.inventoryTick(stack, level, entity, slot);
+        if (entity == null || entity.tickCount % 10 != 0 || !stack.isDamaged()) return;
+        if (ForbiddenEnchantments.level(ForbiddenEnchantments.VOIDTOUCHED, stack, level) <= 0) return;
+        stack.setDamageValue(stack.getDamageValue() - 1);
+    }
+
     /** Em que cara a ferramenta está. */
     public static int phase(ItemStack stack) {
         return stack.getOrDefault(TCComponents.MORPH_PHASE, 0);

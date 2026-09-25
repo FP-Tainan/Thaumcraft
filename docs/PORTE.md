@@ -2240,3 +2240,25 @@ comando — ficaram de fora, como o resto do que só existe em modo criativo.
 - O **Anel da Nutrição**, que rende dois de fome e dois de saturação a mais em cada garfada.
 - E a **Coleira do Pacto**, um amuleto de vis do tamanho do grande que converte a dor de quem a veste em vis —
   três centésimos por ponto de dano, seis se quem bate estiver de chicote.
+
+### Fatia 10 — os oito encantamentos sombrios
+
+Em 26.2 os encantamentos são dados, e não classes: cada um é um arquivo com o que ele encanta, o que custa e
+quanto sobe. Só a **Ira** entra na mesa de encantamento (é a única que o original deixa), e ela é inteira de
+dados — um e um quarto de dano por nível, pelo efeito `minecraft:damage`. As outras sete se põem por livro e o
+que fazem está no `ForbiddenEnchantments`:
+
+- **Aglomerante** (até IV), na picareta camaleão: sem Fortuna, o minério vira aglomerado nativo, vinte por cento
+  mais sete e meio por nível;
+- **Capitalista**: sem Pilhagem, o aldeão larga uma esmeralda e o monstro, três vezes em trinta e cinco, uma
+  pepita;
+- **Consumidora**: come o lixo que cai (terra, areia, cascalho, pedregulho e pedra do Nether);
+- **Educativa** (até V): sem Pilhagem, quem morre dá três vezes mais experiência por nível;
+- **Corruptora**: uma vez em três, os fragmentos de cristal saem como fragmentos de pecado;
+- **Tocada pelo Vazio**: a ferramenta camaleão se conserta um ponto a cada dez tiques;
+- **Impacto**: a picareta e a pá camaleão quebram três por três, no plano da face de quem cava.
+
+As três que mexem no que o bloco larga entram pelo mesmo mixin que já servia à picareta elemental.
+
+**Fica de fora**: as duas poções do original (o Selo de Sangue e a Praga do Dragão), porque quem as aplica é o
+Rapieira de Sangue do Blood Magic e o Matadragões, que só faz o que faz com o Draconic Evolution instalado.

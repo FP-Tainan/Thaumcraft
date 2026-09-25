@@ -598,4 +598,86 @@ public class ForbiddenGameTest {
         }
         helper.succeed();
     }
+
+    /** Os oito encantamentos sombrios existem, e só a Ira aparece na mesa. */
+    @GameTest
+    public void theEightDarkEnchantmentsExist(GameTestHelper helper) {
+        var registro = helper.getLevel().registryAccess()
+                .lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+        String[] nomes = {"cluster", "wrath", "greedy", "consuming", "educational", "corrupting", "voidtouched", "impact"};
+        for (String nome : nomes) {
+            var chave = net.minecraft.resources.ResourceKey.create(
+                    net.minecraft.core.registries.Registries.ENCHANTMENT, net.thaumcraft.Thaumcraft.id(nome));
+            if (registro.get(chave).isEmpty()) helper.fail("falta o encantamento " + nome);
+        }
+        var ira = registro.getOrThrow(net.thaumcraft.forbidden.ForbiddenEnchantments.WRATH);
+        if (!ira.is(net.minecraft.tags.EnchantmentTags.IN_ENCHANTING_TABLE)) {
+            helper.fail("a Ira é a única que a mesa dá");
+        }
+        var aglomerante = registro.getOrThrow(net.thaumcraft.forbidden.ForbiddenEnchantments.CLUSTER);
+        if (aglomerante.is(net.minecraft.tags.EnchantmentTags.IN_ENCHANTING_TABLE)) {
+            helper.fail("a Aglomerante só se põe por livro");
+        }
+        if (aglomerante.value().getMaxLevel() != 4) helper.fail("a Aglomerante vai até quatro");
+        helper.succeed();
+    }
+
+    /** A Consumidora come o lixo que o bloco larga. */
+    @GameTest
+    public void theConsumingEnchantmentEatsTrash(GameTestHelper helper) {
+        var registro = helper.getLevel().registryAccess()
+                .lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+        ItemStack picareta = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.CHAMELEON_PICKAXE);
+        picareta.enchant(registro.getOrThrow(net.thaumcraft.forbidden.ForbiddenEnchantments.CONSUMING), 1);
+
+        var quedas = new java.util.ArrayList<ItemStack>(java.util.List.of(
+                new ItemStack(net.minecraft.world.item.Items.COBBLESTONE),
+                new ItemStack(net.minecraft.world.item.Items.DIAMOND)));
+        net.thaumcraft.forbidden.ForbiddenEnchantments.onBlockDrops(quedas, helper.getLevel(),
+                helper.absolutePos(new BlockPos(1, 2, 1)), picareta);
+        if (quedas.size() != 1 || !quedas.get(0).is(net.minecraft.world.item.Items.DIAMOND)) {
+            helper.fail("ela devia ter comido o pedregulho e deixado o diamante");
+        }
+        helper.succeed();
+    }
+
+    /** A Corruptora torce os fragmentos de cristal em fragmentos de pecado. */
+    @GameTest
+    public void theCorruptingEnchantmentTwistsShards(GameTestHelper helper) {
+        var registro = helper.getLevel().registryAccess()
+                .lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+        ItemStack picareta = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.CHAMELEON_PICKAXE);
+        picareta.enchant(registro.getOrThrow(net.thaumcraft.forbidden.ForbiddenEnchantments.CORRUPTING), 1);
+
+        boolean torceu = false;
+        for (int volta = 0; volta < 60 && !torceu; volta++) {
+            var quedas = new java.util.ArrayList<ItemStack>(java.util.List.of(
+                    new ItemStack(net.thaumcraft.registry.TCItems.SHARDS.get("air"))));
+            net.thaumcraft.forbidden.ForbiddenEnchantments.onBlockDrops(quedas, helper.getLevel(),
+                    helper.absolutePos(new BlockPos(1, 2, 1)), picareta);
+            torceu = quedas.stream().anyMatch(drop ->
+                    net.thaumcraft.forbidden.ForbiddenItems.SHARDS.containsValue(drop.getItem())
+                            || drop.is(net.thaumcraft.forbidden.ForbiddenItems.GLUTTONY_SHARD));
+        }
+        if (!torceu) helper.fail("uma vez em três ela devia torcer o fragmento");
+        helper.succeed();
+    }
+
+    /** A Tocada pelo Vazio conserta a ferramenta camaleão sozinha. */
+    @GameTest
+    public void theVoidtouchedEnchantmentRepairs(GameTestHelper helper) {
+        var registro = helper.getLevel().registryAccess()
+                .lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+        var player = helper.makeMockServerPlayerInLevel();
+        ItemStack espada = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.CHAMELEON_SWORD);
+        espada.enchant(registro.getOrThrow(net.thaumcraft.forbidden.ForbiddenEnchantments.VOIDTOUCHED), 1);
+        espada.setDamageValue(50);
+        player.tickCount = 10;
+        espada.getItem().inventoryTick(espada, helper.getLevel(), player,
+                net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+        if (espada.getDamageValue() != 49) {
+            helper.fail("ela devia se consertar um ponto; está em " + espada.getDamageValue());
+        }
+        helper.succeed();
+    }
 }

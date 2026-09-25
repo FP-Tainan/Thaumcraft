@@ -40,6 +40,7 @@ public final class ForbiddenDrops {
         if (!(dead.level() instanceof ServerLevel serverLevel)) return;
         // o machado decepa em qualquer lugar; o resto é só no Nether
         beheading(dead, source);
+        if (source.getEntity() instanceof Player quemMatou) ForbiddenEnchantments.onKill(dead, quemMatou);
         if (!inTheNether(serverLevel)) return;
         ServerLevel level = serverLevel;
         var random = level.getRandom();
