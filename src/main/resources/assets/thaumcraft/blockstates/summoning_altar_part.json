@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "thaumcraft:block/summoning_altar" },
+    "facing=south": { "model": "thaumcraft:block/summoning_altar" },
+    "facing=west": { "model": "thaumcraft:block/summoning_altar" },
+    "facing=east": { "model": "thaumcraft:block/summoning_altar" }
+  }
+}

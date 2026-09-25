@@ -24,6 +24,11 @@ public final class TCMenus {
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("sewing"),
                     new MenuType<>(net.thaumcraft.mortuorum.SewingMenu::new, FeatureFlags.VANILLA_SET));
 
+    /** O Altar de Invocação do Ars Mortuorum. */
+    public static final MenuType<net.thaumcraft.mortuorum.SummoningAltarMenu> SUMMONING_ALTAR =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("summoning_altar"),
+                    new MenuType<>(net.thaumcraft.mortuorum.SummoningAltarMenu::new, FeatureFlags.VANILLA_SET));
+
     /** A Mesa de Transcrição do Magia Naturalis. */
     public static final MenuType<net.thaumcraft.inventory.TranscribingTableMenu> TRANSCRIBING_TABLE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("transcribing_table"),

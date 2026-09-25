@@ -19,6 +19,7 @@ public final class Mortuorum {
 
     public static void init() {
         MortuorumBlocks.init();
+        MortuorumEntities.init();
         MortuorumItems.init();
         Thaumcraft.LOGGER.info("Ars Mortuorum: {} coisas, {} peças de corpo",
                 MortuorumItems.count(), MortuorumItems.PARTS.size());

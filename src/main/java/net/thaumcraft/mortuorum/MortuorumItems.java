@@ -88,6 +88,11 @@ public final class MortuorumItems {
             new net.minecraft.world.item.BlockItem(MortuorumBlocks.SEWING_MACHINE,
                     properties.useBlockDescriptionPrefix()));
 
+    /** E o item do Altar de Invocação. */
+    public static final Item SUMMONING_ALTAR = register("summoning_altar", properties ->
+            new net.minecraft.world.item.BlockItem(MortuorumBlocks.SUMMONING_ALTAR,
+                    properties.useBlockDescriptionPrefix()));
+
     private MortuorumItems() {
     }
 

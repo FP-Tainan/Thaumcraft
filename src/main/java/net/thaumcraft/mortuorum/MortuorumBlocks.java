@@ -24,6 +24,21 @@ public final class MortuorumBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(SewingMachineBlockEntity::new,
                             java.util.Set.of(SEWING_MACHINE)));
 
+    /** O Altar de Invocação, onde as peças viram lacaio. */
+    public static final Block SUMMONING_ALTAR = register("summoning_altar", properties ->
+            new SummoningAltarBlock(properties.mapColor(MapColor.STONE).strength(3.0f).sound(SoundType.STONE)
+                    .noOcclusion()));
+
+    /** A mesa comprida do altar: os dois blocos que ele ocupa ao lado. */
+    public static final Block SUMMONING_ALTAR_PART = register("summoning_altar_part", properties ->
+            new SummoningAltarPartBlock(properties.mapColor(MapColor.STONE).strength(3.0f).sound(SoundType.STONE)
+                    .noOcclusion().noLootTable()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<SummoningAltarBlockEntity> SUMMONING_ALTAR_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("summoning_altar"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(SummoningAltarBlockEntity::new,
+                            java.util.Set.of(SUMMONING_ALTAR)));
+
     private MortuorumBlocks() {
     }
 

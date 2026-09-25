@@ -53,6 +53,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.client.gui.TranscribingTableScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.SEWING,
                 net.thaumcraft.client.gui.SewingScreen::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.SUMMONING_ALTAR,
+                net.thaumcraft.client.gui.SummoningAltarScreen::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.mortuorum.MortuorumBlocks.SUMMONING_ALTAR_ENTITY,
+                net.thaumcraft.mortuorum.client.SummoningAltarRenderer::new);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("summoning_altar"),
+                net.thaumcraft.mortuorum.client.SummoningAltarItemRenderer.Unbaked.CODEC);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.naturalis.NaturalisBlocks.TRANSCRIBING_TABLE_ENTITY,
                 net.thaumcraft.naturalis.client.TranscribingTableRenderer::new);
