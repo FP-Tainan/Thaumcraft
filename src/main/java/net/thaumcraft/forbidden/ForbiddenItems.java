@@ -55,6 +55,22 @@ public final class ForbiddenItems {
             new Item(properties.rarity(Rarity.UNCOMMON).food(new FoodProperties.Builder()
                     .nutrition(2).saturationModifier(0.1f).alwaysEdible().build())));
 
+    /** O Fruto Maculado: enche a barriga e cobra caro. */
+    public static final Item TAINT_FRUIT = register("taint_fruit", properties ->
+            new TaintedFruitItem(properties.food(new FoodProperties.Builder()
+                    .nutrition(4).saturationModifier(0.8f).alwaysEdible().build())));
+
+    /** O carvão maculado, que sai do tronco na fornalha. */
+    public static final Item TAINT_COAL = register("taint_coal", properties -> new Item(properties));
+
+    /** E os itens dos blocos do ramo, na ordem em que os blocos nascem. */
+    public static final Item TAINT_LOG = blockItem(ForbiddenBlocks.TAINT_LOG);
+    public static final Item TAINT_PLANKS = blockItem(ForbiddenBlocks.TAINT_PLANKS);
+    public static final Item TAINT_LEAVES = blockItem(ForbiddenBlocks.TAINT_LEAVES);
+    public static final Item TAINT_SAPLING = blockItem(ForbiddenBlocks.TAINT_SAPLING);
+    public static final Item TAINT_STONE = blockItem(ForbiddenBlocks.TAINT_STONE);
+    public static final Item TAINT_STONE_BRICKS = blockItem(ForbiddenBlocks.TAINT_STONE_BRICKS);
+
     private ForbiddenItems() {
     }
 
@@ -65,6 +81,12 @@ public final class ForbiddenItems {
     /** O que a aba do ramo mostra, na ordem. */
     public static List<Item> shown() {
         return List.copyOf(ORDER);
+    }
+
+    /** O item de um bloco do ramo, com o nome do bloco. */
+    private static Item blockItem(net.minecraft.world.level.block.Block block) {
+        String name = BuiltInRegistries.BLOCK.getKey(block).getPath();
+        return register(name, properties -> new net.minecraft.world.item.BlockItem(block, properties.useBlockDescriptionPrefix()));
     }
 
     private static Item register(String name, Function<Item.Properties, Item> factory) {

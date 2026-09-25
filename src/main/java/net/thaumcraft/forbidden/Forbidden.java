@@ -22,6 +22,7 @@ public final class Forbidden {
 
     public static void init() {
         ForbiddenAspects.init();
+        ForbiddenBlocks.init();
         ForbiddenItems.init();
         events();
         Thaumcraft.LOGGER.info("Forbidden Magic: {} aspectos sombrios, {} coisas",

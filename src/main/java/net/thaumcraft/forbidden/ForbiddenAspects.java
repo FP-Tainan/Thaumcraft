@@ -67,6 +67,12 @@ public final class ForbiddenAspects {
             r.item("thaumcraft:gluttony_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(ASPECTS.get("gula"), 2).add(Aspects.CRYSTAL, 1));
             r.item("thaumcraft:sloth_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(ASPECTS.get("desidia"), 2).add(Aspects.CRYSTAL, 1));
             r.item("thaumcraft:greed_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(Aspects.GREED, 2).add(Aspects.CRYSTAL, 1));
+            r.item("thaumcraft:taint_fruit", new AspectList().add(Aspects.TAINT, 2).add(Aspects.POISON, 1));
+            r.item("thaumcraft:taint_coal", new AspectList().add(Aspects.TAINT, 2).add(Aspects.ENTROPY, 2));
+            r.item("thaumcraft:taint_leaves", new AspectList().add(Aspects.TAINT, 1).add(Aspects.PLANT, 1));
+            r.item("thaumcraft:taint_log", new AspectList().add(Aspects.TAINT, 1).add(Aspects.TREE, 3));
+            r.item("thaumcraft:taint_planks", new AspectList().add(Aspects.TREE, 1));
+            r.item("thaumcraft:taint_stone_bricks", new AspectList().add(Aspects.EARTH, 1));
         });
 
         // e às criaturas

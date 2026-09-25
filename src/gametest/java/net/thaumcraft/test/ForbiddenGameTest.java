@@ -127,4 +127,44 @@ public class ForbiddenGameTest {
         if (!caidos.isEmpty()) helper.fail("fora do Nether não cai fragmento nenhum");
         helper.succeed();
     }
+
+    /** A muda maculada vira árvore: tronco maculado em pé e folhas maculadas em volta. */
+    @GameTest
+    public void theTaintedSaplingGrowsATree(GameTestHelper helper) {
+        BlockPos pos = new BlockPos(2, 2, 2);
+        helper.setBlock(pos.below(), net.minecraft.world.level.block.Blocks.DIRT);
+        helper.setBlock(pos, net.thaumcraft.forbidden.ForbiddenBlocks.TAINT_SAPLING);
+        var muda = (net.thaumcraft.forbidden.TaintedSaplingBlock) net.thaumcraft.forbidden.ForbiddenBlocks.TAINT_SAPLING;
+        BlockPos mundo = helper.absolutePos(pos);
+        boolean cresceu = false;
+        for (int volta = 0; volta < 20 && !cresceu; volta++) {
+            cresceu = muda.grow(helper.getLevel(), mundo, helper.getLevel().getBlockState(mundo),
+                    helper.getLevel().getRandom());
+        }
+        if (!cresceu) helper.fail("a muda devia ter virado árvore");
+        if (!helper.getLevel().getBlockState(mundo).is(net.thaumcraft.forbidden.ForbiddenBlocks.TAINT_LOG)) {
+            helper.fail("o pé da árvore é tronco maculado");
+        }
+        int folhas = 0;
+        for (var estado : helper.getLevel().getBlockStates(
+                new net.minecraft.world.phys.AABB(mundo).inflate(4.0)).toList()) {
+            if (estado.is(net.thaumcraft.forbidden.ForbiddenBlocks.TAINT_LEAVES)) folhas++;
+        }
+        if (folhas < 5) helper.fail("a copa devia ter folhas maculadas; achei " + folhas);
+        helper.succeed();
+    }
+
+    /** O Fruto Maculado alimenta, mas distorce quem o come. */
+    @GameTest
+    public void theTaintedFruitWarps(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        ItemStack fruto = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.TAINT_FRUIT);
+        if (fruto.get(net.minecraft.core.component.DataComponents.FOOD) == null) helper.fail("o fruto é comida");
+        int antes = net.thaumcraft.research.Knowledges.of(player).warpSticky();
+        fruto.getItem().finishUsingItem(fruto, helper.getLevel(), player);
+        int depois = net.thaumcraft.research.Knowledges.of(player).warpSticky();
+        if (depois != antes + 1) helper.fail("ele gruda um de distorção; foi de " + antes + " para " + depois);
+        if (!player.hasEffect(net.thaumcraft.registry.TCEffects.FLUX_TAINT)) helper.fail("e deixa a mácula");
+        helper.succeed();
+    }
 }
