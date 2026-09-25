@@ -63,6 +63,11 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> RUINS_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("ruins"));
 
+    /** O gerador do Limbo: terra de tecido desfiado sobre um chão de tecido eterno. */
+    public static final com.mojang.serialization.MapCodec<net.thaumcraft.shattered.LimboChunkGenerator> LIMBO_GENERATOR =
+            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("limbo"),
+                    net.thaumcraft.shattered.LimboChunkGenerator.CODEC);
+
     /** O altar antigo do Crimson Warfare: um disco de pedra arcana com o pedestal no meio. */
     public static final Feature<NoneFeatureConfiguration> ANCIENT_ALTAR = Registry.register(BuiltInRegistries.FEATURE,
             Thaumcraft.id("ancient_altar"), new net.thaumcraft.crimson.AncientAltarFeature(NoneFeatureConfiguration.CODEC));

@@ -16,6 +16,69 @@ import net.thaumcraft.world.DynamicDimensions;
 
 /** Os Reinos Fragmentados: os tecidos e o que eles fazem. */
 public class ShatteredGameTest {
+    /** O Limbo abre-se, tem chão de tecido eterno e terra de tecido desfiado por cima. */
+    @GameTest
+    public void theLimboIsMadeOfFabric(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        var limbo = ShatteredRealms.limbo(server);
+        if (limbo == null) {
+            helper.fail("o Limbo devia abrir");
+            return;
+        }
+        if (!ShatteredRealms.isOurs(limbo)) helper.fail("e ser um mundo do ramo");
+        if (ShatteredRealms.isPocket(limbo)) helper.fail("mas não um bolso");
+
+        // o chão: tudo até ao oitavo é tecido eterno
+        BlockPos fundo = new BlockPos(8, 0, 8);
+        if (!limbo.getBlockState(fundo).is(net.thaumcraft.shattered.FabricBlocks.ETERNAL)) {
+            helper.fail("o fundo do Limbo é tecido eterno; achei " + limbo.getBlockState(fundo));
+        }
+        // e o relevo por cima é tecido desfiado
+        int alto = limbo.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, 8, 8);
+        if (alto <= net.thaumcraft.shattered.LimboChunkGenerator.FLOOR) {
+            helper.fail("o relevo do Limbo fica acima do chão; ficou em " + alto);
+        }
+        if (!limbo.getBlockState(new BlockPos(8, alto - 1, 8)).is(net.thaumcraft.shattered.FabricBlocks.UNRAVELLED)) {
+            helper.fail("e é de tecido desfiado");
+        }
+
+        net.thaumcraft.world.DynamicDimensions.remove(server, ShatteredRealms.LIMBO);
+        helper.succeed();
+    }
+
+    /** O desfiar desce um degrau de cada vez, e não toca no que é do Limbo. */
+    @GameTest
+    public void theDecayGoesDownOneStepAtATime(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(2, 2, 2);
+        var level = helper.getLevel();
+
+        helper.setBlock(onde, net.minecraft.world.level.block.Blocks.STONE);
+        net.thaumcraft.shattered.LimboDecay.decay(level, helper.absolutePos(onde));
+        helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.COBBLESTONE, onde);
+        net.thaumcraft.shattered.LimboDecay.decay(level, helper.absolutePos(onde));
+        helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.GRAVEL, onde);
+        net.thaumcraft.shattered.LimboDecay.decay(level, helper.absolutePos(onde));
+        helper.assertBlockPresent(net.thaumcraft.shattered.FabricBlocks.UNRAVELLED, onde);
+        // e daí não desce mais
+        net.thaumcraft.shattered.LimboDecay.decay(level, helper.absolutePos(onde));
+        helper.assertBlockPresent(net.thaumcraft.shattered.FabricBlocks.UNRAVELLED, onde);
+
+        // o tecido eterno e as portas não se desfazem
+        if (net.thaumcraft.shattered.LimboDecay.canDecay(
+                net.thaumcraft.shattered.FabricBlocks.ETERNAL.defaultBlockState())) {
+            helper.fail("o tecido eterno não se desfia");
+        }
+        if (net.thaumcraft.shattered.LimboDecay.canDecay(
+                net.thaumcraft.shattered.ShatteredBlocks.OAK_DIMENSIONAL_DOOR.defaultBlockState())) {
+            helper.fail("nem as portas");
+        }
+        // e o que não é cheio some
+        helper.setBlock(onde, net.minecraft.world.level.block.Blocks.TORCH);
+        net.thaumcraft.shattered.LimboDecay.decay(level, helper.absolutePos(onde));
+        helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.AIR, onde);
+        helper.succeed();
+    }
+
     /** A Assinatura de Fenda marca um lugar, liga-o a outro e gasta-se; a estabilizada não. */
     @GameTest
     public void theSignatureLinksTwoPlaces(GameTestHelper helper) {

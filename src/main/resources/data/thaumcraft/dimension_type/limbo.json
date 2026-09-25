@@ -1,5 +1,5 @@
 {
-  "ambient_light": 0.2,
+  "ambient_light": 0.25,
   "attributes": {
     "minecraft:gameplay/bed_rule": {
       "can_set_spawn": "never",
@@ -8,17 +8,19 @@
     },
     "minecraft:gameplay/respawn_anchor_works": false,
     "minecraft:gameplay/can_start_raid": false,
-    "minecraft:visual/fog_color": "#2B2B33",
-    "minecraft:visual/sky_color": "#101014",
+    "minecraft:visual/fog_color": "#3A3A44",
+    "minecraft:visual/sky_color": "#22222A",
     "minecraft:visual/fog_start_distance": 8,
     "minecraft:visual/fog_end_distance": 64,
-    "minecraft:visual/sky_light_factor": 0
+    "minecraft:visual/sky_light_factor": 0,
+    "minecraft:visual/ambient_light_color": "#4A4A55",
+    "minecraft:visual/sky_light_color": "#8A8AA0"
   },
   "coordinate_scale": 1,
   "has_ceiling": false,
   "has_ender_dragon_fight": false,
   "has_fixed_time": true,
-  "has_skylight": false,
+  "has_skylight": true,
   "height": 256,
   "infiniburn": "#minecraft:infiniburn_overworld",
   "logical_height": 256,

@@ -37,8 +37,8 @@ public final class FabricBlocks {
 
     /** E o que o Limbo vai comendo. */
     public static final Block UNRAVELLED = register("unravelled_fabric", properties ->
-            new Block(properties.mapColor(MapColor.COLOR_GRAY).strength(0.1f)
-                    .sound(SoundType.STONE).noLootTable()));
+            new UnravelledFabricBlock(properties.mapColor(MapColor.COLOR_GRAY).strength(0.1f)
+                    .sound(SoundType.STONE).noLootTable().randomTicks()));
 
     static {
         for (DyeColor cor : DyeColor.values()) {

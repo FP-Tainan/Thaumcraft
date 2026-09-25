@@ -63,6 +63,14 @@ public final class ShatteredRealms {
         return isPocket(level) || level.dimension() == LIMBO;
     }
 
+    /** O Limbo, abrindo-o se ainda não houver. */
+    public static @org.jetbrains.annotations.Nullable ServerLevel limbo(net.minecraft.server.MinecraftServer server) {
+        var biomas = new net.minecraft.world.level.biome.FixedBiomeSource(
+                server.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME)
+                        .getOrThrow(net.minecraft.world.level.biome.Biomes.THE_VOID));
+        return DynamicDimensions.getOrCreate(server, LIMBO, LIMBO_TYPE, new LimboChunkGenerator(biomas));
+    }
+
     /**
      * A saída do Limbo: o {@code EscapeTarget} do original devolve quem pisa o tecido eterno ao mundo de onde ele
      * veio. Sem uma marca de onde se estava — que chega noutra fatia — a saída é o mundo de cima.
