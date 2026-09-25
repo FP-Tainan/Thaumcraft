@@ -37,7 +37,11 @@ public final class ForbiddenDrops {
      * @param killer quem deu o último golpe, se foi gente
      */
     public static void onDeath(LivingEntity dead, DamageSource source) {
-        if (!(dead.level() instanceof ServerLevel level) || !inTheNether(level)) return;
+        if (!(dead.level() instanceof ServerLevel serverLevel)) return;
+        // o machado decepa em qualquer lugar; o resto é só no Nether
+        beheading(dead, source);
+        if (!inTheNether(serverLevel)) return;
+        ServerLevel level = serverLevel;
         var random = level.getRandom();
         Player killer = source.getEntity() instanceof Player player ? player : null;
 
@@ -69,6 +73,38 @@ public final class ForbiddenDrops {
                 && dead.getItemBySlot(EquipmentSlot.MAINHAND).is(ForbiddenItems.SHARDS.get("envy"))) {
             drop(dead, new ItemStack(ForbiddenItems.SHARDS.get("envy")));
         }
+    }
+
+    /**
+     * O Machado do Tomador de Crânios: quem morre por ele pode perder a cabeça. As chances são as do original —
+     * o esqueleto uma em vinte e seis mais a pilhagem, o zumbi e o creeper o dobro dela, e a gente uma em onze.
+     */
+    private static void beheading(LivingEntity dead, DamageSource source) {
+        if (!(source.getEntity() instanceof Player killer)) return;
+        if (!killer.getMainHandItem().is(ForbiddenItems.SKULLTAKER_AXE)) return;
+        var random = dead.level().getRandom();
+        int pilhagem = looting(killer);
+        ItemStack cabeca = switch (dead) {
+            case net.minecraft.world.entity.monster.skeleton.WitherSkeleton ignored ->
+                    random.nextInt(26) <= 3 + pilhagem ? new ItemStack(Items.WITHER_SKELETON_SKULL) : ItemStack.EMPTY;
+            case net.minecraft.world.entity.monster.skeleton.Skeleton ignored ->
+                    random.nextInt(26) <= 3 + pilhagem ? new ItemStack(Items.SKELETON_SKULL) : ItemStack.EMPTY;
+            case net.minecraft.world.entity.monster.zombie.Zombie ignored ->
+                    random.nextInt(26) <= 2 + 2 * pilhagem ? new ItemStack(Items.ZOMBIE_HEAD) : ItemStack.EMPTY;
+            case net.minecraft.world.entity.monster.Creeper ignored ->
+                    random.nextInt(26) <= 2 + 2 * pilhagem ? new ItemStack(Items.CREEPER_HEAD) : ItemStack.EMPTY;
+            case Player morto -> cabecaDe(morto, random.nextInt(11) <= 1 + pilhagem);
+            default -> ItemStack.EMPTY;
+        };
+        if (!cabeca.isEmpty()) drop(dead, cabeca);
+    }
+
+    /** A cabeça de quem joga leva o nome do dono, como no original. */
+    private static ItemStack cabecaDe(Player morto, boolean saiu) {
+        if (!saiu) return ItemStack.EMPTY;
+        ItemStack cabeca = new ItemStack(Items.PLAYER_HEAD);
+        cabeca.set(DataComponents.PROFILE, net.minecraft.world.item.component.ResolvableProfile.createResolved(morto.getGameProfile()));
+        return cabeca;
     }
 
     /** O {@code onSpawn}: um porco-zumbi em cada cento e setenta e cinco nasce com um fragmento de inveja na mão. */

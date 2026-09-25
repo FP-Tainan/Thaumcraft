@@ -10,6 +10,17 @@ import net.thaumcraft.api.aspects.AspectList;
 
 /** O que os itens do mod carregam por dentro. */
 public final class TCComponents {
+    /** Em que cara está uma ferramenta camaleão do Forbidden Magic: zero, uma ou duas. */
+    public static final DataComponentType<Integer> MORPH_PHASE = register("morph_phase",
+            builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** E as três caras que ela guarda: os encantamentos e o nome de cada uma. */
+    public static final DataComponentType<java.util.List<net.thaumcraft.forbidden.MorphSlot>> MORPH_SLOTS =
+            register("morph_slots", builder -> builder
+                    .persistent(net.thaumcraft.forbidden.MorphSlot.CODEC.listOf())
+                    .networkSynchronized(net.thaumcraft.forbidden.MorphSlot.STREAM_CODEC
+                            .apply(ByteBufCodecs.list(3))));
+
     /** De que madeira a varinha é feita: manda em quanto ela guarda. */
     public static final DataComponentType<String> WAND_ROD = register("wand_rod",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));

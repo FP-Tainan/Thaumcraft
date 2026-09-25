@@ -2178,3 +2178,24 @@ Thaumcraft. O modelo daqui era um caixote de doze por catorze, sem as coordenada
 
 E ele cintila: o `randomDisplayTick` do original solta, uma vez em quatro, uma faísca dourada
 (`0xFFCC00`) em volta do vidro.
+
+### Fatia 4 — as ferramentas do ramo
+
+- A **Pá do Purificador**, que cava mácula como quem cava terra, limpa a gosma e o gás de fluxo de onze por nove
+  por onze com um clique (um ponto de vida por bloco, até quinze) e, cavando mácula, tira dali um Fragmento de
+  Mácula — a Fortuna e o Toque Suave melhoram a sorte, como no `onHarvest` do original.
+- A **Picareta da Distorção**, a **Espada do Garfo do Diabolista** — que é de táumio e vai ser a chave da Gaiola
+  da Ira — e o **Chicote de Montaria**, que apressa o cavalo e o porco que apanham dele, dá pressa, força e mão
+  de obra a gente e golem, e no Nether às vezes arranca um fragmento.
+- E o **Machado do Tomador de Crânios**, que decepa: o esqueleto uma vez em vinte e seis mais a pilhagem, o zumbi
+  e o creeper o dobro dela, e quem joga uma vez em onze — a cabeça sai com o nome do dono.
+
+### Fatia 5 — as ferramentas camaleão
+
+As quatro (picareta, espada, pá e machado) guardam **três caras** cada uma. Agachado, com o botão direito, a
+ferramenta troca de cara: os encantamentos e o nome que ela tinha ficam na cara de onde ela saiu, e voltam os da
+cara para onde ela foi — cinco de vida por troca, e não se troca com a ferramenta no fim. É o `enchants0..2` e o
+`Name0..2` do NBT do original, aqui num pedaço de dado (`MorphSlot`) com o mesmo feitio.
+
+O olho da figura diz em que cara ela está, com as três cores do original — vinho, azul e ouro —, pintado pela cor
+que o próprio item carrega.

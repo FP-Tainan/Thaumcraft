@@ -167,4 +167,167 @@ public class ForbiddenGameTest {
         if (!player.hasEffect(net.thaumcraft.registry.TCEffects.FLUX_TAINT)) helper.fail("e deixa a mácula");
         helper.succeed();
     }
+
+    /** A Pá do Purificador limpa a gosma e o gás de fluxo de um pedaço inteiro, gastando-se nisso. */
+    @GameTest
+    public void thePurifierShovelCleansFlux(GameTestHelper helper) {
+        BlockPos chao = new BlockPos(2, 2, 2);
+        helper.setBlock(chao, net.minecraft.world.level.block.Blocks.DIRT);
+        helper.setBlock(chao.above(), net.thaumcraft.registry.TCBlocks.FLUX_GOO);
+        helper.setBlock(chao.above(2), net.thaumcraft.registry.TCBlocks.FLUX_GAS);
+
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack pa = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.PURIFIER_SHOVEL);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, pa);
+        var mundo = helper.absolutePos(chao);
+        pa.getItem().useOn(new net.minecraft.world.item.context.UseOnContext(helper.getLevel(), player,
+                net.minecraft.world.InteractionHand.MAIN_HAND, pa,
+                new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(mundo),
+                        net.minecraft.core.Direction.UP, mundo, false)));
+
+        if (!helper.getLevel().getBlockState(helper.absolutePos(chao.above())).isAir()) {
+            helper.fail("a gosma de fluxo devia ter sumido");
+        }
+        if (!helper.getLevel().getBlockState(helper.absolutePos(chao.above(2))).isAir()) {
+            helper.fail("o gás de fluxo devia ter sumido");
+        }
+        if (pa.getDamageValue() != 2) helper.fail("ela gasta um ponto por bloco limpo; gastou " + pa.getDamageValue());
+        helper.succeed();
+    }
+
+    /** E ela cava mácula tão depressa quanto o que sabe cavar. */
+    @GameTest
+    public void thePurifierShovelDigsTaintFast(GameTestHelper helper) {
+        ItemStack pa = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.PURIFIER_SHOVEL);
+        var macula = net.thaumcraft.registry.TCBlocks.TAINT_CRUST.defaultBlockState();
+        float velocidade = pa.getItem().getDestroySpeed(pa, macula);
+        if (velocidade < 10.0f) helper.fail("a pá devia rasgar a mácula; foi a " + velocidade);
+        helper.succeed();
+    }
+
+    /** O Machado do Tomador de Crânios arranca a cabeça de quem ele mata. */
+    @GameTest
+    public void theSkulltakerAxeTakesHeads(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,
+                new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.SKULLTAKER_AXE));
+        boolean caiu = false;
+        for (int volta = 0; volta < 200 && !caiu; volta++) {
+            var creeper = helper.spawn(net.minecraft.world.entity.EntityTypes.CREEPER, new BlockPos(1, 2, 1));
+            net.thaumcraft.forbidden.ForbiddenDrops.onDeath(creeper,
+                    helper.getLevel().damageSources().playerAttack(player));
+            caiu = helper.getLevel()
+                    .getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                            new net.minecraft.world.phys.AABB(helper.absolutePos(new BlockPos(1, 2, 1))).inflate(3.0))
+                    .stream().anyMatch(item -> item.getItem().is(net.minecraft.world.item.Items.CREEPER_HEAD));
+            creeper.discard();
+        }
+        if (!caiu) helper.fail("em duzentas mortes devia ter caído ao menos uma cabeça de creeper");
+        helper.succeed();
+    }
+
+    /** Sem o machado na mão, cabeça nenhuma cai. */
+    @GameTest
+    public void onlyTheSkulltakerAxeTakesHeads(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,
+                new ItemStack(net.minecraft.world.item.Items.DIAMOND_SWORD));
+        for (int volta = 0; volta < 60; volta++) {
+            var creeper = helper.spawn(net.minecraft.world.entity.EntityTypes.CREEPER, new BlockPos(1, 2, 1));
+            net.thaumcraft.forbidden.ForbiddenDrops.onDeath(creeper,
+                    helper.getLevel().damageSources().playerAttack(player));
+            creeper.discard();
+        }
+        boolean caiu = helper.getLevel()
+                .getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                        new net.minecraft.world.phys.AABB(helper.absolutePos(new BlockPos(1, 2, 1))).inflate(3.0))
+                .stream().anyMatch(item -> item.getItem().is(net.minecraft.world.item.Items.CREEPER_HEAD));
+        if (caiu) helper.fail("só o machado do ramo arranca cabeças");
+        helper.succeed();
+    }
+
+    /** O Chicote de Montaria apressa o porco que apanha dele. */
+    @GameTest
+    public void theRidingCropHastensThePig(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        var porco = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(1, 2, 1));
+        ItemStack chicote = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.RIDING_CROP);
+        chicote.getItem().hurtEnemy(chicote, porco, player);
+        var pressa = porco.getEffect(net.minecraft.world.effect.MobEffects.SPEED);
+        if (pressa == null || pressa.getAmplifier() != 5) helper.fail("o porco devia sair em disparada");
+        if (chicote.getDamageValue() != 1) helper.fail("a chicotada gasta o chicote");
+        helper.succeed();
+    }
+
+    /**
+     * A ferramenta camaleão guarda três caras: o que estava nela fica na cara de onde ela saiu, e volta quando
+     * ela der a volta inteira.
+     */
+    @GameTest
+    public void theChameleonToolKeepsThreeFaces(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack picareta = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.CHAMELEON_PICKAXE);
+
+        var registro = helper.getLevel().registryAccess()
+                .lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+        var fortuna = registro.getOrThrow(net.minecraft.world.item.enchantment.Enchantments.FORTUNE);
+        picareta.enchant(fortuna, 3);
+        picareta.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,
+                net.minecraft.network.chat.Component.literal("Cavadora"));
+
+        // primeira troca: a cara nova está limpa
+        net.thaumcraft.forbidden.MorphToolItem.cycle(picareta);
+        if (net.thaumcraft.forbidden.MorphToolItem.phase(picareta) != 1) helper.fail("ela devia ter ido para a cara 1");
+        if (net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(fortuna, picareta) != 0) {
+            helper.fail("a cara 1 nasce sem encantamento");
+        }
+        if (picareta.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME) != null) {
+            helper.fail("e sem nome");
+        }
+
+        // a segunda e a terceira fecham a volta e trazem tudo de volta
+        net.thaumcraft.forbidden.MorphToolItem.cycle(picareta);
+        net.thaumcraft.forbidden.MorphToolItem.cycle(picareta);
+        if (net.thaumcraft.forbidden.MorphToolItem.phase(picareta) != 0) helper.fail("a volta devia fechar na cara 0");
+        if (net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(fortuna, picareta) != 3) {
+            helper.fail("a Fortuna III devia ter voltado com a cara 0");
+        }
+        var nome = picareta.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
+        if (nome == null || !nome.getString().equals("Cavadora")) helper.fail("e o nome também");
+        helper.succeed();
+    }
+
+    /** A troca custa cinco de vida, e não se troca com a ferramenta no fim. */
+    @GameTest
+    public void theChameleonToolCostsToTurn(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack espada = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.CHAMELEON_SWORD);
+        espada.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,
+                net.minecraft.network.chat.Component.literal("Camaleoa"));
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, espada);
+
+        espada.getItem().use(helper.getLevel(), player, net.minecraft.world.InteractionHand.MAIN_HAND);
+        if (net.thaumcraft.forbidden.MorphToolItem.phase(espada) != 0) {
+            helper.fail("de pé ela não troca de cara");
+        }
+
+        player.setShiftKeyDown(true);
+        espada.getItem().use(helper.getLevel(), player, net.minecraft.world.InteractionHand.MAIN_HAND);
+        if (net.thaumcraft.forbidden.MorphToolItem.phase(espada) != 1) helper.fail("agachado ela troca");
+        if (espada.getDamageValue() != 5) {
+            helper.fail("a troca custa cinco de vida; custou " + espada.getDamageValue());
+        }
+
+        espada.setDamageValue(espada.getMaxDamage() - 3);
+        player.setShiftKeyDown(true);
+        espada.getItem().use(helper.getLevel(), player, net.minecraft.world.InteractionHand.MAIN_HAND);
+        if (net.thaumcraft.forbidden.MorphToolItem.phase(espada) != 1) {
+            helper.fail("no fim da vida ela não troca mais");
+        }
+        helper.succeed();
+    }
 }

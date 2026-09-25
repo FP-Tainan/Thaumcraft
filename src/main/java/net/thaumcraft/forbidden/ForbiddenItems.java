@@ -71,6 +71,40 @@ public final class ForbiddenItems {
     public static final Item TAINT_STONE = blockItem(ForbiddenBlocks.TAINT_STONE);
     public static final Item TAINT_STONE_BRICKS = blockItem(ForbiddenBlocks.TAINT_STONE_BRICKS);
 
+    /**
+     * As ferramentas do ramo, com o metal elemental do Thaumcraft, que é o que o original lhes dá.
+     *
+     * <p>A Pá do Purificador cava mácula e limpa fluxo; a Picareta da Distorção quebra o que houver; o Machado
+     * do Tomador de Crânios decepa cabeças mas não serve para madeira; o Garfo do Diabolista é de táumio e é a
+     * chave das coisas da Gaiola da Ira; e o Chicote de Montaria apressa quem apanha dele.
+     */
+    public static final Item PURIFIER_SHOVEL = register("purifier_shovel", properties ->
+            new PurifierShovelItem(properties.shovel(net.thaumcraft.item.TCMaterials.ELEMENTAL, 1.5f, -3.0f)
+                    .rarity(Rarity.RARE)));
+    public static final Item DISTORTION_PICKAXE = register("distortion_pickaxe", properties ->
+            new Item(properties.pickaxe(net.thaumcraft.item.TCMaterials.ELEMENTAL, 1.0f, -2.8f)
+                    .rarity(Rarity.RARE)));
+    public static final Item SKULLTAKER_AXE = register("skulltaker_axe", properties ->
+            new Item(properties.sword(net.thaumcraft.item.TCMaterials.ELEMENTAL, 3.0f, -2.4f)
+                    .rarity(Rarity.UNCOMMON)));
+    public static final Item DIABOLIST_FORK = register("diabolist_fork", properties ->
+            new Item(properties.sword(net.thaumcraft.item.TCMaterials.THAUMIUM, 3.0f, -2.4f)));
+    public static final Item RIDING_CROP = register("riding_crop", properties ->
+            new RidingCropItem(properties.sword(net.minecraft.world.item.ToolMaterial.WOOD, 3.0f, -2.4f)));
+
+    /**
+     * As quatro ferramentas camaleão, que guardam três caras cada uma — três jogos de encantamentos e três nomes
+     * na mesma ferramenta, trocados com um clique de quem está agachado.
+     */
+    public static final Item CHAMELEON_PICKAXE = register("chameleon_pickaxe", properties ->
+            new MorphToolItem(properties.pickaxe(net.thaumcraft.item.TCMaterials.ELEMENTAL, 1.0f, -2.8f).rarity(Rarity.EPIC)));
+    public static final Item CHAMELEON_SWORD = register("chameleon_sword", properties ->
+            new MorphToolItem(properties.sword(net.thaumcraft.item.TCMaterials.ELEMENTAL, 3.0f, -2.4f).rarity(Rarity.EPIC)));
+    public static final Item CHAMELEON_SHOVEL = register("chameleon_shovel", properties ->
+            new MorphToolItem(properties.shovel(net.thaumcraft.item.TCMaterials.ELEMENTAL, 1.5f, -3.0f).rarity(Rarity.EPIC)));
+    public static final Item CHAMELEON_AXE = register("chameleon_axe", properties ->
+            new MorphToolItem(properties.axe(net.thaumcraft.item.TCMaterials.ELEMENTAL, 6.0f, -3.1f).rarity(Rarity.EPIC)));
+
     private ForbiddenItems() {
     }
 

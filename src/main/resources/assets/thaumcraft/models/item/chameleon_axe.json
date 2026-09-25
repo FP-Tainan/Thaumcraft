@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "thaumcraft:item/chameleon_axe",
+    "layer1": "thaumcraft:item/chameleon_axe_eye"
+  }
+}
