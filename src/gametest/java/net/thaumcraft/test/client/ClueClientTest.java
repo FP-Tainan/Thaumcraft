@@ -61,8 +61,16 @@ public class ClueClientTest implements FabricClientGameTest {
             context.takeScreenshot("exame-avisos");
             server.runOnServer(s -> {
                 var player = s.getPlayerList().getPlayers().getFirst();
-                if (!net.thaumcraft.research.Knowledges.of(player).hasResearch("@BONEBOW")) {
-                    throw new AssertionError("o osso examinado devia dar a pista do arco de osso");
+                var conhecimento = net.thaumcraft.research.Knowledges.of(player);
+                // o createClue sorteia uma entre as que o osso desperta, e não é sempre a mesma; o que se
+                // cobra aqui é que o exame deu alguma pista, e que a do arco de osso está entre as que pode dar
+                boolean alguma = net.thaumcraft.research.Researches.ALL.keySet().stream()
+                        .anyMatch(chave -> conhecimento.hasResearch("@" + chave));
+                if (!alguma) throw new AssertionError("o osso examinado devia dar alguma pista");
+                var gatilhos = net.thaumcraft.research.ResearchTriggers.of("BONEBOW");
+                if (gatilhos == null || gatilhos.items().stream().noneMatch(
+                        t -> t.test(new ItemStack(net.minecraft.world.item.Items.BONE)))) {
+                    throw new AssertionError("e a do arco de osso devia estar entre elas");
                 }
             });
             context.waitTicks(60);

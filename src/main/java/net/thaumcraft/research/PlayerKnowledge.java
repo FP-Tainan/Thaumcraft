@@ -25,10 +25,12 @@ public final class PlayerKnowledge {
     /** A partir daqui o ganho encolhe; é o {@code aspect_total_cap} do mod original. */
     public static final int ASPECT_CAP = 100;
 
-    private final Set<String> discovered = new LinkedHashSet<>();
+    // os três conjuntos vão sincronizados: quem os escreve é a linha do servidor, e quem os lê para mandar
+    // ao cliente é a linha da rede — sem isto, o toArray da cópia apanha o conjunto a meio de uma escrita
+    private final Set<String> discovered = java.util.Collections.synchronizedSet(new LinkedHashSet<>());
     private final AspectList pool = new AspectList();
-    private final Set<String> scanned = new LinkedHashSet<>();
-    private final Set<String> research = new LinkedHashSet<>();
+    private final Set<String> scanned = java.util.Collections.synchronizedSet(new LinkedHashSet<>());
+    private final Set<String> research = java.util.Collections.synchronizedSet(new LinkedHashSet<>());
     /** A distorção: a permanente, a que gruda (sai com o tempo, pelos sabões e pelo sais), a temporária e o contador. */
     private int warpPerm, warpSticky, warpTemp, warpCounter;
 
@@ -162,7 +164,7 @@ public final class PlayerKnowledge {
     }
 
     public List<String> research() {
-        return new ArrayList<>(this.research);
+        return copy(this.research);
     }
 
     // ------------------------------------------------------------ distorção (os warp do original)
@@ -237,12 +239,19 @@ public final class PlayerKnowledge {
         return map;
     }
 
+    /** A cópia de um conjunto sincronizado, com o cadeado dele na mão: é o que a documentação do Java manda. */
+    private static List<String> copy(Set<String> conjunto) {
+        synchronized (conjunto) {
+            return new ArrayList<>(conjunto);
+        }
+    }
+
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerKnowledge> STREAM_CODEC = StreamCodec.of(
             (buffer, knowledge) -> {
-                ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buffer, new ArrayList<>(knowledge.discovered));
+                ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buffer, copy(knowledge.discovered));
                 AspectList.STREAM_CODEC.encode(buffer, knowledge.pool);
-                ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buffer, new ArrayList<>(knowledge.scanned));
-                ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buffer, new ArrayList<>(knowledge.research));
+                ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buffer, copy(knowledge.scanned));
+                ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()).encode(buffer, copy(knowledge.research));
                 ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()).encode(buffer, knowledge.warpAsList());
             },
             buffer -> new PlayerKnowledge(
