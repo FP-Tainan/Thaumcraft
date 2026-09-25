@@ -16,6 +16,65 @@ import net.thaumcraft.world.DynamicDimensions;
 
 /** Os Reinos Fragmentados: os tecidos e o que eles fazem. */
 public class ShatteredGameTest {
+    /** A Assinatura de Fenda marca um lugar, liga-o a outro e gasta-se; a estabilizada não. */
+    @GameTest
+    public void theSignatureLinksTwoPlaces(GameTestHelper helper) {
+        BlockPos um = new BlockPos(1, 2, 1);
+        BlockPos dois = new BlockPos(4, 2, 4);
+        var quem = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack assinatura = new ItemStack(ShatteredItems.RIFT_SIGNATURE);
+
+        usa(helper, quem, assinatura, um);
+        if (net.thaumcraft.shattered.RiftSignatureItem.source(assinatura) == null) {
+            helper.fail("a primeira vez devia marcar o lugar");
+        }
+        if (helper.getLevel().getBlockState(helper.absolutePos(um)).is(net.thaumcraft.shattered.ShatteredBlocks.RIFT)) {
+            helper.fail("e ainda não rasgar fenda nenhuma");
+        }
+
+        usa(helper, quem, assinatura, dois);
+        helper.assertBlockPresent(net.thaumcraft.shattered.ShatteredBlocks.RIFT, um);
+        helper.assertBlockPresent(net.thaumcraft.shattered.ShatteredBlocks.RIFT, dois);
+        if (net.thaumcraft.shattered.RiftSignatureItem.source(assinatura) != null) {
+            helper.fail("e a assinatura devia esquecer o lugar");
+        }
+
+        // e cada fenda aponta para a outra
+        var daqui = helper.getBlockEntity(um, net.thaumcraft.shattered.RiftBlockEntity.class);
+        var dali = helper.getBlockEntity(dois, net.thaumcraft.shattered.RiftBlockEntity.class);
+        if (daqui == null || dali == null) {
+            helper.fail("as duas fendas deviam ter miolo");
+            return;
+        }
+        if (daqui.destination() == null || !daqui.destination().pos().equals(helper.absolutePos(dois))) {
+            helper.fail("a primeira aponta para a segunda");
+        }
+        if (dali.destination() == null || !dali.destination().pos().equals(helper.absolutePos(um))) {
+            helper.fail("e a segunda para a primeira");
+        }
+        helper.succeed();
+    }
+
+    /** O Fecha-Fendas fecha a fenda solta. */
+    @GameTest
+    public void theRemoverClosesTheRift(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(2, 2, 2);
+        helper.setBlock(onde, net.thaumcraft.shattered.ShatteredBlocks.RIFT);
+        var quem = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        usa(helper, quem, new ItemStack(ShatteredItems.RIFT_REMOVER), onde);
+        helper.assertBlockNotPresent(net.thaumcraft.shattered.ShatteredBlocks.RIFT, onde);
+        helper.succeed();
+    }
+
+    private static void usa(GameTestHelper helper, net.minecraft.world.entity.player.Player quem,
+                            ItemStack coisa, BlockPos onde) {
+        var alvo = new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(onde)),
+                net.minecraft.core.Direction.UP, helper.absolutePos(onde), false);
+        coisa.getItem().useOn(new net.minecraft.world.item.context.UseOnContext(
+                helper.getLevel(), quem, net.minecraft.world.InteractionHand.MAIN_HAND, coisa, alvo));
+    }
+
     /** A porta dimensional traz uma fenda na metade de baixo, e só nela. */
     @GameTest
     public void theDoorCarriesARift(GameTestHelper helper) {
@@ -96,7 +155,7 @@ public class ShatteredGameTest {
         if (FabricBlocks.FABRIC.size() != 16) helper.fail("o tecido comum tem dezesseis cores");
         if (FabricBlocks.ANCIENT.size() != 16) helper.fail("e o antigo também");
         if (FabricBlocks.count() != 34) helper.fail("com o eterno e o desfiado, são trinta e quatro");
-        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size()) {
+        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size() + 5) {
             helper.fail("cada bloco tem o seu item; achei " + ShatteredItems.count());
         }
         if (!FabricBlocks.isFabric(FabricBlocks.FABRIC.get(DyeColor.BLACK))) helper.fail("o preto é tecido");

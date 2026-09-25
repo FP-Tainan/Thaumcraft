@@ -32,6 +32,24 @@ public final class ShatteredItems {
         for (Block porta : ShatteredBlocks.doors()) door(porta);
     }
 
+    /** O Fio do Mundo, que se tira do que o Limbo desfiou. */
+    public static final Item WORLD_THREAD = plain("world_thread", new Item.Properties());
+
+    /** E o Tecido Estável, que se tece dele. */
+    public static final Item STABLE_FABRIC = plain("stable_fabric", new Item.Properties());
+
+    /** A Assinatura de Fenda, que liga dois lugares. */
+    public static final Item RIFT_SIGNATURE = tool("rift_signature",
+            properties -> new RiftSignatureItem(properties.stacksTo(1).durability(1), false));
+
+    /** A Estabilizada, que não se gasta nem esquece o lugar marcado. */
+    public static final Item STABILIZED_RIFT_SIGNATURE = tool("stabilized_rift_signature",
+            properties -> new RiftSignatureItem(properties.stacksTo(1), true));
+
+    /** E o Fecha-Fendas. */
+    public static final Item RIFT_REMOVER = tool("rift_remover",
+            properties -> new RiftRemoverItem(properties.stacksTo(1).durability(32)));
+
     private ShatteredItems() {
     }
 
@@ -43,6 +61,18 @@ public final class ShatteredItems {
                 .useBlockDescriptionPrefix();
         ORDER.add(Registry.register(BuiltInRegistries.ITEM, id,
                 new net.minecraft.world.item.DoubleHighBlockItem(bloco, properties)));
+    }
+
+    /** Uma coisa que não é bloco. */
+    private static Item plain(String nome, Item.Properties ignorado) {
+        return tool(nome, Item::new);
+    }
+
+    private static Item tool(String nome, java.util.function.Function<Item.Properties, Item> fábrica) {
+        Identifier id = Thaumcraft.id(nome);
+        Item feito = fábrica.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)));
+        ORDER.add(Registry.register(BuiltInRegistries.ITEM, id, feito));
+        return feito;
     }
 
     private static void item(Block bloco) {

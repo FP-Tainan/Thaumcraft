@@ -46,6 +46,7 @@ public final class ShatteredRealms {
     public static void init() {
         FabricBlocks.init();
         ShatteredBlocks.init();
+        ShatteredComponents.init();
         ShatteredItems.init();
         Thaumcraft.LOGGER.info("Reinos Fragmentados: {} tecidos", FabricBlocks.count());
     }

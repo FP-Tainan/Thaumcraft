@@ -149,8 +149,8 @@ public class OuterLandsGameTest {
         BlockPos cap = new BlockPos(cx * 16 + 8, MazeFeature.FLOOR + 2, cz * 16 + 8);
         if (!level.getBlockState(cap).is(TCBlocks.ELDRITCH_CAPSTONE)) helper.fail("o capitel da chave");
         var box = new AABB(cap).inflate(6);
-        // quem nasce junto com a sala só entra na lista do mundo no tique seguinte
-        helper.runAfterDelay(2, () -> {
+        // quem nasce junto com a sala só entra na lista do mundo nos tiques seguintes, e nem sempre no primeiro
+        helper.runAfterDelay(8, () -> {
             var tablets = level.getEntitiesOfClass(PermanentItemEntity.class, box);
             if (tablets.isEmpty() || !tablets.getFirst().getItem().is(TCItems.RUNED_TABLET)) {
                 helper.fail("a tábua rúnica boiando");

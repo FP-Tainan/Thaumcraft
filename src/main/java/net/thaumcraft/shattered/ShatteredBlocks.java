@@ -42,11 +42,17 @@ public final class ShatteredBlocks {
                     .strength(5.0f).sound(SoundType.STONE).noOcclusion().pushReaction(
                             net.minecraft.world.level.material.PushReaction.DESTROY)));
 
+    /** A fenda solta, que fica no ar. */
+    public static final Block RIFT = register("rift", properties ->
+            new FloatingRiftBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(-1.0f, 3600000.0f)
+                    .noOcclusion().noCollision().noLootTable().lightLevel(state -> 8)
+                    .replaceable().air()));
+
     public static final BlockEntityType<RiftBlockEntity> RIFT_ENTITY =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("rift"),
                     new BlockEntityType<>(RiftBlockEntity::new, Set.of(
                             OAK_DIMENSIONAL_DOOR, IRON_DIMENSIONAL_DOOR,
-                            GOLD_DIMENSIONAL_DOOR, QUARTZ_DIMENSIONAL_DOOR)));
+                            GOLD_DIMENSIONAL_DOOR, QUARTZ_DIMENSIONAL_DOOR, RIFT)));
 
     private ShatteredBlocks() {
     }

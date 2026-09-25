@@ -493,7 +493,9 @@ public class NaturalisGameTest {
     @GameTest
     public void theTaintBreederIsToughAndImmune(GameTestHelper helper) {
         var criadora = helper.spawn(net.thaumcraft.naturalis.NaturalisEntities.TAINT_BREEDER, new BlockPos(2, 2, 2));
-        if (criadora.getMaxHealth() != 42.0f) helper.fail("o original lhe dá 42 de vida; tem " + criadora.getMaxHealth());
+        // o número é o de fábrica: se ela nascer campeã, o bônus do campeão soma por cima e não é disso que se trata aqui
+        double base = criadora.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).getBaseValue();
+        if (base != 42.0) helper.fail("o original lhe dá 42 de vida; tem " + base);
         if (!(criadora instanceof net.thaumcraft.api.TaintedMob)) helper.fail("ela é uma criatura da mácula");
         var veneno = new net.minecraft.world.effect.MobEffectInstance(net.thaumcraft.registry.TCEffects.FLUX_TAINT, 100);
         if (criadora.canBeAffected(veneno)) helper.fail("o veneno da mácula não pega nela");
