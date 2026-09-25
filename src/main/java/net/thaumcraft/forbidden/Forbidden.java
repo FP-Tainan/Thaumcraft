@@ -26,6 +26,8 @@ public final class Forbidden {
         ForbiddenItems.init();
         ForbiddenFoci.init();
         ForbiddenWands.init();
+        // as receitas pedem itens prontos, e por isso esperam a montagem acabar
+        net.thaumcraft.api.ThaumcraftApi.onSetup(ForbiddenTable::recipes);
         events();
         Thaumcraft.LOGGER.info("Forbidden Magic: {} aspectos sombrios, {} coisas",
                 ForbiddenAspects.ASPECTS.size(), ForbiddenItems.count());

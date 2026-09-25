@@ -36,7 +36,10 @@ public class EnchantmentGameTest {
         if (net.minecraft.world.item.enchantment.Enchantment.areCompatible(repair, registry.getOrThrow(Enchantments.UNBREAKING))) {
             helper.fail("Reparo não convive com Inquebrável");
         }
-        if (InfusionEnchantments.ALL.size() != 24) helper.fail("o original tem 24 infusões de encantamento");
+        // as do próprio Thaumcraft; os ramos de fora somam as deles, com a pesquisa deles
+        long doMod = InfusionEnchantments.ALL.stream()
+                .filter(recipe -> recipe.research().equals("INFUSIONENCHANTMENT")).count();
+        if (doMod != 24) helper.fail("o original tem 24 infusões de encantamento; achei " + doMod);
         helper.succeed();
     }
 
