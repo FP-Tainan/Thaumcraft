@@ -143,6 +143,16 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_ENDER_POUCH.1"), Page.crafting("EnderPouch"))
                 .register();
 
+        ThaumcraftApi.research("MN_EVIL_TRUNK", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.SOUL, 3).add(Aspects.BEAST, 3).add(Aspects.TAINT, 3))
+                .at(2, 5)
+                .complexity(2)
+                .icon(() -> new ItemStack(NaturalisItems.TRUNK_SPAWNER_CORRUPTED))
+                .parents("TRAVELTRUNK")
+                .warp(1)
+                .pages(Page.text("tc.research_page.MN_EVIL_TRUNK.1"), Page.crafting("CorruptedTrunk"), Page.crafting("SinisterTrunk"), Page.crafting("DemonicTrunk"), Page.crafting("TaintedTrunk"))
+                .register();
+
         ThaumcraftApi.research("MN_PRISON_JAR", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TRAP, 6).add(Aspects.GREED, 3).add(Aspects.EXCHANGE, 3).add(Aspects.MOTION, 3))
                 .at(-1, 4)
@@ -384,5 +394,21 @@ public final class NaturalisTable {
                 new ItemStack(NaturalisItems.QUICKSILVER_STONE), 2, new AspectList().add(Aspects.EXCHANGE, 16).add(Aspects.WATER, 16).add(Aspects.MAGIC, 8).add(Aspects.FLESH, 6),
                 Ingredient.of(TCResources.get("quicksilver")),
                 java.util.List.of(Ingredient.of(net.minecraft.world.item.Items.GLOWSTONE_DUST), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()), Ingredient.of(net.minecraft.world.item.Items.GLOWSTONE_DUST), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone").asItem()))));
+        ThaumcraftApi.bookRecipe("CorruptedTrunk", ThaumcraftApi.infusion("MN_EVIL_TRUNK",
+                new ItemStack(NaturalisItems.TRUNK_SPAWNER_CORRUPTED), 2, new AspectList().add(Aspects.MOTION, 16).add(Aspects.SOUL, 16).add(Aspects.ENTROPY, 16).add(Aspects.FLESH, 6),
+                Ingredient.of(TCItems.TRUNK_SPAWNER),
+                java.util.List.of(Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(net.minecraft.world.item.Items.IRON_INGOT), Ingredient.of(net.minecraft.world.item.Items.SPIDER_EYE), Ingredient.of(net.minecraft.world.item.Items.ENDER_EYE))));
+        ThaumcraftApi.bookRecipe("TaintedTrunk", ThaumcraftApi.infusion("MN_EVIL_TRUNK",
+                new ItemStack(NaturalisItems.TRUNK_SPAWNER_TAINTED), 6, new AspectList().add(Aspects.TAINT, 16).add(Aspects.SOUL, 16).add(Aspects.ENTROPY, 16).add(Aspects.FLESH, 8),
+                Ingredient.of(NaturalisItems.TRUNK_SPAWNER_CORRUPTED),
+                java.util.List.of(Ingredient.of(TCResources.get("taint_tendril")), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCResources.get("tainted_goo")), Ingredient.of(TCResources.get("taint_tendril")), Ingredient.of(net.minecraft.world.item.Items.ENDER_EYE), Ingredient.of(TCResources.get("tainted_goo")))));
+        ThaumcraftApi.bookRecipe("DemonicTrunk", ThaumcraftApi.infusion("MN_EVIL_TRUNK",
+                new ItemStack(NaturalisItems.TRUNK_SPAWNER_DEMONIC), 6, new AspectList().add(Aspects.FIRE, 16).add(Aspects.SOUL, 16).add(Aspects.ENTROPY, 16).add(Aspects.FLESH, 8),
+                Ingredient.of(NaturalisItems.TRUNK_SPAWNER_CORRUPTED),
+                java.util.List.of(Ingredient.of(net.minecraft.world.item.Items.BLAZE_ROD), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(net.minecraft.world.level.block.Blocks.NETHER_BRICKS.asItem()), Ingredient.of(net.minecraft.world.item.Items.BLAZE_ROD), Ingredient.of(net.minecraft.world.level.block.Blocks.NETHER_BRICKS.asItem()), Ingredient.of(net.minecraft.world.level.block.Blocks.QUARTZ_BLOCK.asItem()))));
+        ThaumcraftApi.bookRecipe("SinisterTrunk", ThaumcraftApi.infusion("MN_EVIL_TRUNK",
+                new ItemStack(NaturalisItems.TRUNK_SPAWNER_SINISTER), 6, new AspectList().add(Aspects.MIND, 16).add(Aspects.SOUL, 16).add(Aspects.ENTROPY, 16).add(Aspects.FLESH, 8),
+                Ingredient.of(NaturalisItems.TRUNK_SPAWNER_CORRUPTED),
+                java.util.List.of(Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(net.minecraft.world.item.Items.GOLD_INGOT), Ingredient.of(TCBlocks.BRAIN_JAR.asItem()), Ingredient.of(TCItems.VIS_STONE), Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(net.minecraft.world.item.Items.SPIDER_EYE))));
     }
 }

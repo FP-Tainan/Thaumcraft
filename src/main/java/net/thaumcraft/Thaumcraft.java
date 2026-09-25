@@ -108,6 +108,9 @@ public class Thaumcraft implements ModInitializer {
         net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(net.thaumcraft.item.ElementalSwordItem::sweep);
         // e as chaves do Magia Naturalis, que se ligam a quem elas batem
         net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(net.thaumcraft.naturalis.ArcaneKeyItem::bind);
+        // e o sino de golem recolhe o Baú Maligno de volta em item
+        net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(
+                net.thaumcraft.naturalis.EvilTrunkEntity::pickUp);
 
         // o comando de teste, para destrancar a pesquisa sem ter de jogar tudo de novo
         net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register(

@@ -488,4 +488,85 @@ public class NaturalisGameTest {
         if (!sobra.get(0).is(NaturalisItems.MUTATION_STONE)) helper.fail("a pedra devia voltar para a bancada");
         helper.succeed();
     }
+
+    /** A Criadora de Mácula é dura, ligeira e não pega o veneno da mácula. */
+    @GameTest
+    public void theTaintBreederIsToughAndImmune(GameTestHelper helper) {
+        var criadora = helper.spawn(net.thaumcraft.naturalis.NaturalisEntities.TAINT_BREEDER, new BlockPos(2, 2, 2));
+        if (criadora.getMaxHealth() != 42.0f) helper.fail("o original lhe dá 42 de vida; tem " + criadora.getMaxHealth());
+        if (!(criadora instanceof net.thaumcraft.api.TaintedMob)) helper.fail("ela é uma criatura da mácula");
+        var veneno = new net.minecraft.world.effect.MobEffectInstance(net.thaumcraft.registry.TCEffects.FLUX_TAINT, 100);
+        if (criadora.canBeAffected(veneno)) helper.fail("o veneno da mácula não pega nela");
+        if (!criadora.canBeAffected(new net.minecraft.world.effect.MobEffectInstance(
+                net.minecraft.world.effect.MobEffects.SLOWNESS, 100))) {
+            helper.fail("mas a lentidão pega");
+        }
+        helper.succeed();
+    }
+
+    /** E, ferida e com alguém para caçar, ela põe aranhas de mácula no mundo. */
+    @GameTest
+    public void theTaintBreederBreedsWhenHurt(GameTestHelper helper) {
+        var criadora = helper.spawn(net.thaumcraft.naturalis.NaturalisEntities.TAINT_BREEDER, new BlockPos(2, 2, 2));
+        var porco = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(3, 2, 2));
+        criadora.setTarget(porco);
+        criadora.setHealth(20.0f);
+        int antes = helper.getLevel().getEntitiesOfClass(net.thaumcraft.entity.taint.TaintSpiderEntity.class,
+                new net.minecraft.world.phys.AABB(helper.absolutePos(new BlockPos(2, 2, 2))).inflate(8.0)).size();
+        // ela pare de vinte em vinte tiques; uma volta em cada vintena basta
+        for (int volta = 0; volta < 3; volta++) criadora.aiStep();
+        int depois = helper.getLevel().getEntitiesOfClass(net.thaumcraft.entity.taint.TaintSpiderEntity.class,
+                new net.minecraft.world.phys.AABB(helper.absolutePos(new BlockPos(2, 2, 2))).inflate(8.0)).size();
+        if (depois <= antes) helper.fail("ferida e caçando, ela devia ter posto aranha no mundo");
+        helper.succeed();
+    }
+
+    /** O Baú Maligno é de quem o chamou, guarda trinta e seis coisas e o sino o recolhe com elas. */
+    @GameTest
+    public void theEvilTrunkComesAndGoes(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        BlockPos onde = new BlockPos(2, 2, 2);
+        ItemStack chamado = new ItemStack(NaturalisItems.TRUNK_SPAWNER_DEMONIC);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, chamado);
+        BlockPos chao = helper.absolutePos(onde.below());
+        chamado.getItem().useOn(new net.minecraft.world.item.context.UseOnContext(helper.getLevel(), player,
+                net.minecraft.world.InteractionHand.MAIN_HAND, chamado,
+                new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(chao),
+                        net.minecraft.core.Direction.UP, chao, false)));
+        var baus = helper.getLevel().getEntitiesOfClass(net.thaumcraft.naturalis.EvilTrunkEntity.class,
+                new net.minecraft.world.phys.AABB(helper.absolutePos(onde)).inflate(4.0));
+        if (baus.size() != 1) {
+            helper.fail("o item devia ter chamado um baú; chamou " + baus.size());
+            return;
+        }
+        var trunk = baus.get(0);
+        if (trunk.kind() != net.thaumcraft.naturalis.EvilTrunkEntity.Kind.DEMONIC) {
+            helper.fail("o feitio do baú é o do item; veio " + trunk.kind());
+        }
+        if (!trunk.isOwner(player)) helper.fail("e ele é de quem o chamou");
+        if (trunk.inventory.getContainerSize() != 36) {
+            helper.fail("ele guarda 36 coisas; guarda " + trunk.inventory.getContainerSize());
+        }
+        trunk.inventory.setItem(0, new ItemStack(net.minecraft.world.item.Items.DIAMOND, 3));
+
+        // o sino o recolhe, e o item leva o que havia dentro
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,
+                new ItemStack(net.thaumcraft.registry.TCItems.GOLEM_BELL));
+        net.thaumcraft.naturalis.EvilTrunkEntity.pickUp(player, helper.getLevel(),
+                net.minecraft.world.InteractionHand.MAIN_HAND, trunk, null);
+        if (!trunk.isRemoved()) helper.fail("o sino devia ter recolhido o baú");
+        var caidos = helper.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                new net.minecraft.world.phys.AABB(helper.absolutePos(onde)).inflate(4.0));
+        var encolhido = caidos.stream().map(net.minecraft.world.entity.item.ItemEntity::getItem)
+                .filter(i -> i.is(NaturalisItems.TRUNK_SPAWNER_DEMONIC)).findFirst();
+        if (encolhido.isEmpty()) {
+            helper.fail("o baú recolhido devia ter caído no chão");
+            return;
+        }
+        var guardado = encolhido.get().get(net.minecraft.core.component.DataComponents.CONTAINER);
+        if (guardado == null || guardado.nonEmptyItemCopyStream().findFirst().isEmpty()) {
+            helper.fail("e devia levar os diamantes junto");
+        }
+        helper.succeed();
+    }
 }

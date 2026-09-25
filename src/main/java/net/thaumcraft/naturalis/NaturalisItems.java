@@ -112,6 +112,12 @@ public final class NaturalisItems {
     public static final Item KEY_OF_ENDORSING = register("key_of_endorsing", properties ->
             new ArcaneKeyItem(1, properties.stacksTo(1).rarity(Rarity.UNCOMMON)));
 
+    /** Os quatro que chamam o Baú Maligno, um por feitio. */
+    public static final Item TRUNK_SPAWNER_CORRUPTED = trunk(EvilTrunkEntity.Kind.CORRUPTED);
+    public static final Item TRUNK_SPAWNER_SINISTER = trunk(EvilTrunkEntity.Kind.SINISTER);
+    public static final Item TRUNK_SPAWNER_DEMONIC = trunk(EvilTrunkEntity.Kind.DEMONIC);
+    public static final Item TRUNK_SPAWNER_TAINTED = trunk(EvilTrunkEntity.Kind.TAINTED);
+
     // ------------------------------------------------------------------ a madeira arcana
 
     /** Os sete feitios da madeira arcana, na ordem em que o original os listava. */
@@ -141,6 +147,22 @@ public final class NaturalisItems {
                 new net.thaumcraft.item.FocusItem(properties.stacksTo(1).rarity(Rarity.RARE), type, cost, false));
         net.thaumcraft.registry.TCItems.FOCI.put(type, item);
         return item;
+    }
+
+    /** O que chama um dos feitios do Baú Maligno. */
+    private static Item trunk(EvilTrunkEntity.Kind kind) {
+        return register("trunk_spawner_" + kind.name().toLowerCase(), properties ->
+                new EvilTrunkSpawnerItem(kind, properties.stacksTo(1).rarity(Rarity.RARE)));
+    }
+
+    /** Qual dos quatro chama este feitio. */
+    public static Item trunkSpawner(EvilTrunkEntity.Kind kind) {
+        return switch (kind) {
+            case CORRUPTED -> TRUNK_SPAWNER_CORRUPTED;
+            case SINISTER -> TRUNK_SPAWNER_SINISTER;
+            case DEMONIC -> TRUNK_SPAWNER_DEMONIC;
+            case TAINTED -> TRUNK_SPAWNER_TAINTED;
+        };
     }
 
     /** O item de um bloco do ramo, com o nome do bloco. */

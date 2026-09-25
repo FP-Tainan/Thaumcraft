@@ -13,6 +13,12 @@ public final class TCMenus {
             BuiltInRegistries.MENU, Thaumcraft.id("arcane_workbench"),
             new MenuType<>(ArcaneWorkbenchMenu::new, FeatureFlags.VANILLA_SET));
 
+    /** O Baú Maligno do Magia Naturalis, que abre pelo número da criatura. */
+    public static final MenuType<net.thaumcraft.inventory.EvilTrunkMenu> EVIL_TRUNK = Registry.register(
+            BuiltInRegistries.MENU, Thaumcraft.id("evil_trunk"),
+            new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.EvilTrunkMenu::new,
+                    net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
+
     /** A Mesa de Transcrição do Magia Naturalis. */
     public static final MenuType<net.thaumcraft.inventory.TranscribingTableMenu> TRANSCRIBING_TABLE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("transcribing_table"),

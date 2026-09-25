@@ -61,6 +61,27 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.naturalis.NaturalisEntities.REVENANT,
                 net.minecraft.client.renderer.entity.ZombieRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.naturalis.client.TaintBreederRenderer.LAYER,
+                net.thaumcraft.naturalis.client.TaintBreederModel::createBodyLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.naturalis.NaturalisEntities.TAINT_BREEDER,
+                net.thaumcraft.naturalis.client.TaintBreederRenderer::new);
+        // o Baú Maligno: uma camada de modelo para cada um dos quatro feitios
+        for (var feitio : net.thaumcraft.naturalis.EvilTrunkEntity.Kind.values()) {
+            var camada = net.thaumcraft.naturalis.client.EvilTrunkRenderer.LAYERS.get(feitio);
+            net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(camada, switch (feitio) {
+                case CORRUPTED -> net.thaumcraft.naturalis.client.CorruptedTrunkModel::createBodyLayer;
+                case SINISTER -> net.thaumcraft.naturalis.client.SinisterTrunkModel::createBodyLayer;
+                case DEMONIC -> net.thaumcraft.naturalis.client.DemonicTrunkModel::createBodyLayer;
+                case TAINTED -> net.thaumcraft.naturalis.client.TaintedTrunkModel::createBodyLayer;
+            });
+        }
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.naturalis.NaturalisEntities.EVIL_TRUNK,
+                net.thaumcraft.naturalis.client.EvilTrunkRenderer::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.EVIL_TRUNK,
+                net.thaumcraft.client.gui.EvilTrunkScreen::new);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.naturalis.client.ArcaneChestRenderer.LAYER,
                 net.minecraft.client.model.object.chest.ChestModel::createSingleBodyLayer);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(

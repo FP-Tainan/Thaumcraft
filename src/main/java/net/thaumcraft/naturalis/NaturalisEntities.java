@@ -17,6 +17,21 @@ public final class NaturalisEntities {
                             mob -> mob.defaultAttributes(RevenantEntity::attributes))
                     .sized(0.3f, 0.975f).eyeHeight(0.93f).clientTrackingRange(8));
 
+    /** O Criador de Mácula: a aranha grande da terra maculada, que nasce na mácula. */
+    public static final EntityType<TaintBreederEntity> TAINT_BREEDER = register("taint_breeder",
+            FabricEntityType.Builder.createMob(TaintBreederEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(TaintBreederEntity::attributes)
+                                    .spawnPlacement(net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                                            net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                                            net.minecraft.world.entity.monster.Monster::checkMonsterSpawnRules))
+                    .sized(2.0f, 1.2f).eyeHeight(0.9f).clientTrackingRange(8));
+
+    /** O Baú Maligno: o baú de dentes que pula atrás do dono. */
+    public static final EntityType<EvilTrunkEntity> EVIL_TRUNK = register("evil_trunk",
+            FabricEntityType.Builder.createMob(EvilTrunkEntity::new, MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(EvilTrunkEntity::attributes))
+                    .sized(0.8f, 0.8f).eyeHeight(0.6f).clientTrackingRange(8));
+
     private NaturalisEntities() {
     }
 
