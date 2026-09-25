@@ -40,6 +40,18 @@ public final class BuilderFocus {
     /** O que o foco cobra por bloco posto, como no original. */
     public static final AspectList COST = new AspectList().add(Aspects.ORDER, 5).add(Aspects.EARTH, 5);
 
+    /**
+     * Os dois jeitos do original ({@code BuilderFocusUtil.Mode}): com o bloco marcado pela tecla, ou com o bloco
+     * que estiver na mira na hora de construir.
+     */
+    public enum Mode {
+        PICKED, UNIFORM;
+
+        public Mode next() {
+            return this == PICKED ? UNIFORM : PICKED;
+        }
+    }
+
     /** As quatro formas do original, na ordem em que ele as lista. */
     public enum Shape {
         CUBE, PLANE, PLANE_EXTEND, SPHERE;
@@ -68,6 +80,11 @@ public final class BuilderFocus {
         return value == null ? Shape.CUBE : Shape.values()[Math.floorMod(value, Shape.values().length)];
     }
 
+    public static Mode mode(ItemStack focus) {
+        Integer value = focus.get(TCComponents.BUILDER_MODE);
+        return value != null && value == 1 ? Mode.UNIFORM : Mode.PICKED;
+    }
+
     public static int size(ItemStack focus) {
         Integer value = focus.get(TCComponents.BUILDER_SIZE);
         return value == null ? 1 : Math.max(1, value);
@@ -85,33 +102,35 @@ public final class BuilderFocus {
         return BuiltInRegistries.BLOCK.getValue(Identifier.parse(name));
     }
 
+    // ------------------------------------------------------------------ o que as teclas mexem
+
+    /** O {@code cycleSize}: anda um degrau no tamanho, dando a volta entre um e o maior. */
+    public static void cycleSize(ItemStack focus, int passo) {
+        int maior = maxSize(focus);
+        int tamanho = size(focus) + passo;
+        if (tamanho > maior) tamanho = 1;
+        if (tamanho < 1) tamanho = maior;
+        focus.set(TCComponents.BUILDER_SIZE, tamanho);
+    }
+
+    /** O {@code setShape(getShape().next())}. */
+    public static void cycleShape(ItemStack focus) {
+        focus.set(TCComponents.BUILDER_SHAPE, shape(focus).next().ordinal());
+    }
+
+    /** O {@code setMode(getMode().cycle())}. */
+    public static void cycleMode(ItemStack focus) {
+        focus.set(TCComponents.BUILDER_MODE, mode(focus).next().ordinal());
+    }
+
     // ------------------------------------------------------------------ o uso
 
     private static boolean cast(Level level, Player player, ItemStack wand, FocusItem focus) {
         ItemStack stack = WandItem.focusStack(wand);
         HitResult mira = Focuses.targetBlock(level, player);
-        boolean sneaking = player.isShiftKeyDown();
-
-        // agachado, o foco se ajusta em vez de construir
-        if (sneaking) {
-            if (mira instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
-                Shape novo = shape(stack).next();
-                stack.set(TCComponents.BUILDER_SHAPE, novo.ordinal());
-                Block block = level.getBlockState(hit.getBlockPos()).getBlock();
-                stack.set(TCComponents.BUILDER_BLOCK, BuiltInRegistries.BLOCK.getKey(block).toString());
-                say(player, Component.translatable("focus.build.shape")
-                        .append(": " + novo.name().toLowerCase() + ", " + block.getName().getString()));
-            } else {
-                int tamanho = size(stack) + 1;
-                if (tamanho > maxSize(stack)) tamanho = 1;
-                stack.set(TCComponents.BUILDER_SIZE, tamanho);
-                say(player, Component.translatable("focus.build.size").append(": " + tamanho));
-            }
-            return true;
-        }
-
         if (!(mira instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK) return false;
-        Block block = picked(stack);
+        // no jeito do bloco da mira, ele copia o que está apontado; no outro, usa o que a tecla marcou
+        Block block = mode(stack) == Mode.UNIFORM ? level.getBlockState(hit.getBlockPos()).getBlock() : picked(stack);
         if (block == null) block = level.getBlockState(hit.getBlockPos()).getBlock();
         if (block == net.minecraft.world.level.block.Blocks.AIR) return false;
 

@@ -11,6 +11,7 @@
     "NoteBlockMixin",
     "ItemEntityBathSaltsMixin",
     "ItemEntityAccessor",
+    "MobGoalAccessor",
     "LivingEntityHungerMixin",
     "LivingEntityIncurableMixin",
     "ItemStackWarpMixin",

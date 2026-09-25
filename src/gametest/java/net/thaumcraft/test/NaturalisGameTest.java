@@ -569,4 +569,35 @@ public class NaturalisGameTest {
         }
         helper.succeed();
     }
+
+    /** As teclas do foco de construção: o tamanho dá a volta, a forma anda e o jeito troca. */
+    @GameTest
+    public void theBuilderFocusKeysCycle(GameTestHelper helper) {
+        ItemStack foco = new ItemStack(NaturalisItems.BUILDER_FOCUS);
+        int maior = net.thaumcraft.naturalis.BuilderFocus.maxSize(foco);
+        for (int volta = 1; volta < maior; volta++) {
+            net.thaumcraft.naturalis.BuilderFocus.cycleSize(foco, 1);
+            if (net.thaumcraft.naturalis.BuilderFocus.size(foco) != volta + 1) {
+                helper.fail("a tecla devia ter subido para " + (volta + 1));
+            }
+        }
+        // no maior, ela volta ao um
+        net.thaumcraft.naturalis.BuilderFocus.cycleSize(foco, 1);
+        if (net.thaumcraft.naturalis.BuilderFocus.size(foco) != 1) helper.fail("no maior ela volta ao um");
+        net.thaumcraft.naturalis.BuilderFocus.cycleSize(foco, -1);
+        if (net.thaumcraft.naturalis.BuilderFocus.size(foco) != maior) helper.fail("e do um vai ao maior");
+
+        var forma = net.thaumcraft.naturalis.BuilderFocus.shape(foco);
+        net.thaumcraft.naturalis.BuilderFocus.cycleShape(foco);
+        if (net.thaumcraft.naturalis.BuilderFocus.shape(foco) != forma.next()) helper.fail("a forma devia ter andado");
+
+        if (net.thaumcraft.naturalis.BuilderFocus.mode(foco) != net.thaumcraft.naturalis.BuilderFocus.Mode.PICKED) {
+            helper.fail("ele começa no jeito do bloco marcado");
+        }
+        net.thaumcraft.naturalis.BuilderFocus.cycleMode(foco);
+        if (net.thaumcraft.naturalis.BuilderFocus.mode(foco) != net.thaumcraft.naturalis.BuilderFocus.Mode.UNIFORM) {
+            helper.fail("e o Ctrl o passa ao jeito do bloco da mira");
+        }
+        helper.succeed();
+    }
 }

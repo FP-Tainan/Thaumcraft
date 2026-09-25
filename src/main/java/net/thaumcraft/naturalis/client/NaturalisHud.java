@@ -13,10 +13,11 @@ import net.thaumcraft.Thaumcraft;
 import net.thaumcraft.naturalis.NaturalisItems;
 
 /**
- * O que os Óculos escrevem na tela: o {@code renderSpectaclesHUD} do Magia Naturalis 0.5.0.
+ * O que o Magia Naturalis 0.5.0 escreve na tela: o {@code renderSpectaclesHUD} e o {@code renderBuildFocusHUD}.
  *
- * <p>Com eles no rosto e sem taumômetro na mão, o que estiver na mira ganha um nome no meio da tela — o tipo e o
- * feitio do nó de aura, ou de quem é o baú arcano.
+ * <p>Com os Óculos no rosto e sem taumômetro na mão, o que estiver na mira ganha um nome no meio da tela — o tipo
+ * e o feitio do nó de aura. E, com o Foco de Construção na varinha, o canto de cima mostra o bloco que ele vai
+ * pôr, quantos ainda há, a forma e o tamanho da área.
  */
 public final class NaturalisHud {
     private NaturalisHud() {
@@ -24,6 +25,7 @@ public final class NaturalisHud {
 
     public static void init() {
         HudElementRegistry.addLast(Thaumcraft.id("spectacles"), (graphics, tracker) -> draw(graphics));
+        HudElementRegistry.addLast(Thaumcraft.id("builder_focus"), (graphics, tracker) -> builder(graphics));
     }
 
     private static void draw(GuiGraphicsExtractor graphics) {
@@ -54,5 +56,61 @@ public final class NaturalisHud {
         if (detail != null) {
             graphics.text(minecraft.font, detail, middleX - minecraft.font.width(detail) / 2, middleY + 35, -1, true);
         }
+    }
+
+    /** O {@code renderBuildFocusHUD}: o bloco, a conta, a forma e o tamanho, no canto de cima. */
+    private static void builder(GuiGraphicsExtractor graphics) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+        if (player == null || minecraft.gui.screen() != null) return;
+        var held = player.getMainHandItem();
+        if (!(held.getItem() instanceof net.thaumcraft.item.WandItem)) return;
+        var focus = net.thaumcraft.item.WandItem.focusStack(held);
+        if (!(focus.getItem() instanceof net.thaumcraft.item.FocusItem item) || !"build".equals(item.type())) return;
+
+        var jeito = net.thaumcraft.naturalis.BuilderFocus.mode(focus);
+        net.minecraft.world.level.block.Block bloco = null;
+        if (jeito == net.thaumcraft.naturalis.BuilderFocus.Mode.UNIFORM) {
+            if (minecraft.hitResult instanceof BlockHitResult mira && mira.getType() == HitResult.Type.BLOCK) {
+                bloco = player.level().getBlockState(mira.getBlockPos()).getBlock();
+            }
+        } else {
+            bloco = net.thaumcraft.naturalis.BuilderFocus.picked(focus);
+        }
+
+        int x = 49, y = 44;
+        if (bloco != null && bloco != net.minecraft.world.level.block.Blocks.AIR) {
+            var pilha = new net.minecraft.world.item.ItemStack(bloco);
+            graphics.item(pilha, x, y);
+            // quantos ainda há na mochila, ou o infinito de quem está no criativo
+            Component conta = player.getAbilities().instabuild
+                    ? Component.translatable("focus.build.infinite")
+                    : Component.literal(String.valueOf(count(player, bloco)));
+            graphics.text(minecraft.font, conta, x, y + 18, -1, true);
+        } else {
+            graphics.text(minecraft.font, Component.literal("?"), x + 6, y + 4, -1, true);
+        }
+        Component forma = Component.translatable("focus.build.shape")
+                .append(": ")
+                .append(Component.translatable("focus.build.shape."
+                        + net.thaumcraft.naturalis.BuilderFocus.shape(focus).name().toLowerCase()));
+        Component tamanho = Component.translatable("focus.build.size")
+                .append(": " + net.thaumcraft.naturalis.BuilderFocus.size(focus));
+        graphics.text(minecraft.font, forma, x, y - 20, -1, true);
+        graphics.text(minecraft.font, tamanho, x, y - 10, -1, true);
+        if (jeito == net.thaumcraft.naturalis.BuilderFocus.Mode.UNIFORM) {
+            graphics.text(minecraft.font, Component.translatable("focus.build.mode.uniform")
+                    .withStyle(ChatFormatting.AQUA), x, y + 28, -1, true);
+        }
+    }
+
+    /** Quantos desses blocos há na mochila de quem constrói. */
+    private static int count(Player player, net.minecraft.world.level.block.Block block) {
+        int conta = 0;
+        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
+            var stack = player.getInventory().getItem(slot);
+            if (stack.is(block.asItem())) conta += stack.getCount();
+        }
+        return conta;
     }
 }

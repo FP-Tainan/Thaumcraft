@@ -26,6 +26,15 @@ public final class Naturalis {
         NaturalisItems.init();
         BuilderFocus.init();
         RevenantFocus.init();
+        NaturalisKeys.init();
+        // o WorldEventHandler do original: creeper foge do Baú Maligno
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
+            if (entity instanceof net.minecraft.world.entity.monster.Creeper creeper) {
+                ((net.thaumcraft.mixin.MobGoalAccessor) creeper).thaumcraft$goalSelector().addGoal(3,
+                        new net.minecraft.world.entity.ai.goal.AvoidEntityGoal<>(
+                                creeper, EvilTrunkEntity.class, 6.0f, 1.0, 1.2));
+            }
+        });
         // o "championWhiteList" que o original mandava ao Thaumcraft: taint_breeder com bônus um
         net.thaumcraft.event.Champions.whitelist(e -> e instanceof TaintBreederEntity, 1);
         // o Criador de Mácula nasce na terra maculada, como o addSpawn do original o punha

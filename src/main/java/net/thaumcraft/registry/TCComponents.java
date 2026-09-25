@@ -187,6 +187,9 @@ public final class TCComponents {
             builder -> builder.persistent(Codec.intRange(0, 3)).networkSynchronized(ByteBufCodecs.VAR_INT));
     public static final DataComponentType<Integer> BUILDER_SIZE = register("builder_size",
             builder -> builder.persistent(Codec.intRange(1, 32)).networkSynchronized(ByteBufCodecs.VAR_INT));
+    /** O jeito do Foco de Construção: zero é com o bloco marcado, um é com o bloco da mira. */
+    public static final DataComponentType<Integer> BUILDER_MODE = register("builder_mode",
+            builder -> builder.persistent(Codec.intRange(0, 1)).networkSynchronized(ByteBufCodecs.VAR_INT));
     public static final DataComponentType<String> BUILDER_BLOCK = register("builder_block",
             builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
