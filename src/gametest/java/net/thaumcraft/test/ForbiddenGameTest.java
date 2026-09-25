@@ -465,4 +465,71 @@ public class ForbiddenGameTest {
         if (quantas > 11) helper.fail("mas só até dez por perto; achei " + quantas);
         helper.succeed();
     }
+
+    /** As quatro hastes e a ponta do ramo entram na lista de peças do Thaumcraft. */
+    @GameTest
+    public void theBranchAddsItsWandParts(GameTestHelper helper) {
+        for (String haste : new String[]{"tainted", "infernal", "profane", "profaned"}) {
+            if (net.thaumcraft.api.wands.WandParts.rod(haste) == null) helper.fail("falta a haste " + haste);
+            if (!net.thaumcraft.registry.TCItems.WAND_RODS.containsKey(haste)) {
+                helper.fail("a haste " + haste + " devia ter item");
+            }
+        }
+        if (net.thaumcraft.api.wands.WandParts.cap("alchemical") == null) helper.fail("falta a ponta alquímica");
+        if (net.thaumcraft.api.wands.WandParts.rod("tainted").capacity() != 150) {
+            helper.fail("a haste maculada guarda cento e cinquenta");
+        }
+        helper.succeed();
+    }
+
+    /** A haste infernal apaga o fogo de quem a leva, cura o definhamento e repõe o fogo dela. */
+    @GameTest(maxTicks = 120)
+    public void theInfernalRodPutsYouOut(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        ItemStack wand = new ItemStack(net.thaumcraft.registry.TCItems.WAND);
+        wand.set(net.thaumcraft.registry.TCComponents.WAND_ROD, "infernal");
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, wand);
+        player.igniteForSeconds(5.0f);
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                net.minecraft.world.effect.MobEffects.WITHER, 200));
+
+        var tique = net.thaumcraft.api.wands.WandParts.rodTick("infernal");
+        if (tique == null) helper.fail("a haste infernal devia ter o que fazer a cada tique");
+        tique.tick(wand, player);
+        if (player.isOnFire()) helper.fail("ela devia ter apagado o fogo");
+        if (player.hasEffect(net.minecraft.world.effect.MobEffects.WITHER)) {
+            helper.fail("e curado o definhamento");
+        }
+        helper.succeed();
+    }
+
+    /** A haste profana repõe o vis do pacto, e quando ele acaba ela vira um pau seco. */
+    @GameTest(maxTicks = 200)
+    public void theProfaneRodSpendsItsPact(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        ItemStack wand = new ItemStack(net.thaumcraft.registry.TCItems.WAND);
+        wand.set(net.thaumcraft.registry.TCComponents.WAND_ROD, "profane");
+        wand.set(net.thaumcraft.registry.TCComponents.WAND_VIS, new net.thaumcraft.api.aspects.AspectList());
+        var tique = net.thaumcraft.api.wands.WandParts.rodTick("profane");
+
+        // o primeiro tique já enche o que cabe e come o pacto
+        player.tickCount = 20;
+        tique.tick(wand, player);
+        if (net.thaumcraft.item.WandItem.vis(wand, net.thaumcraft.api.aspects.Aspects.ORDER) <= 0) {
+            helper.fail("o pacto devia ter enchido a varinha");
+        }
+        if (net.thaumcraft.forbidden.ForbiddenWands.contract(wand)
+                >= net.thaumcraft.forbidden.ForbiddenWands.CONTRACT) {
+            helper.fail("e gastado do que prometeu");
+        }
+
+        // gasto o pacto, a haste seca
+        wand.set(net.thaumcraft.registry.TCComponents.WAND_CONTRACT, 1);
+        wand.set(net.thaumcraft.registry.TCComponents.WAND_VIS, new net.thaumcraft.api.aspects.AspectList());
+        tique.tick(wand, player);
+        if (!"profaned".equals(wand.get(net.thaumcraft.registry.TCComponents.WAND_ROD))) {
+            helper.fail("sem pacto, a haste profana vira profanada");
+        }
+        helper.succeed();
+    }
 }

@@ -25,6 +25,7 @@ public final class Forbidden {
         ForbiddenBlocks.init();
         ForbiddenItems.init();
         ForbiddenFoci.init();
+        ForbiddenWands.init();
         events();
         Thaumcraft.LOGGER.info("Forbidden Magic: {} aspectos sombrios, {} coisas",
                 ForbiddenAspects.ASPECTS.size(), ForbiddenItems.count());

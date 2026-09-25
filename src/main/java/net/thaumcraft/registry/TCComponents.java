@@ -10,6 +10,10 @@ import net.thaumcraft.api.aspects.AspectList;
 
 /** O que os itens do mod carregam por dentro. */
 public final class TCComponents {
+    /** O que a haste profana do Forbidden Magic ainda tem para dar, em centésimos de vis. */
+    public static final DataComponentType<Integer> WAND_CONTRACT = register("wand_contract",
+            builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     /** Em que cara está uma ferramenta camaleão do Forbidden Magic: zero, uma ou duas. */
     public static final DataComponentType<Integer> MORPH_PHASE = register("morph_phase",
             builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));

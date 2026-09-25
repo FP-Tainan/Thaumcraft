@@ -123,6 +123,20 @@ public final class ForbiddenItems {
     public static final Item UMBRAL_BUSH = blockItem(ForbiddenBlocks.UMBRAL_BUSH);
     public static final Item NETHER_STAR_BLOCK = blockItem(ForbiddenBlocks.NETHER_STAR_BLOCK);
 
+    /**
+     * As peças de varinha do ramo: a haste maculada, a infernal, a profana — e a profanada, que é o que sobra
+     * dela quando o pacto acaba — e a ponta alquímica.
+     */
+    public static final Item WAND_ROD_TAINTED = register("wand_rod_tainted", properties ->
+            new Item(properties.rarity(Rarity.UNCOMMON)));
+    public static final Item WAND_ROD_INFERNAL = register("wand_rod_infernal", properties ->
+            new Item(properties.rarity(Rarity.UNCOMMON)));
+    public static final Item WAND_ROD_PROFANE = register("wand_rod_profane", properties ->
+            new Item(properties.rarity(Rarity.RARE)));
+    public static final Item WAND_ROD_PROFANED = register("wand_rod_profaned", properties -> new Item(properties));
+    public static final Item WAND_CAP_ALCHEMICAL = register("wand_cap_alchemical", properties ->
+            new Item(properties.rarity(Rarity.UNCOMMON)));
+
     private ForbiddenItems() {
     }
 

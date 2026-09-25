@@ -2216,3 +2216,17 @@ entropia com fogo, entropia com ordem —, como no `getVisCost` do original.
 - O **Bloco de Estrelas do Nether**, que serve de base de farol, e a **Pepita de Esmeralda**.
 - A tinta preta do original era um item próprio, porque em 1.7.10 as tintas eram números de um item só; aqui ela é
   a tinta preta do jogo, que é a mesma coisa.
+
+### Fatia 8 — as peças de varinha do ramo
+
+- A **haste maculada**, que em terra maculada repõe um de cada primário a cada cem tiques, até um décimo do que
+  cabe.
+- A **haste infernal**, que faz o mesmo no Nether (e o fogo em qualquer lugar, até um quinto), apaga o fogo de
+  quem a leva e cura o definhamento.
+- A **haste profana**, que é um pacto: ela repõe o vis de graça até gastar as vinte e cinco mil que prometeu,
+  grudando distorção pelo caminho (uma chance em duas mil e quinhentas por ponto reposto) — e, gasto o pacto, ela
+  vira a **haste profanada**, que não faz nada, e cobra mais um ponto de distorção.
+- E a **ponta alquímica**, que desconta dez por cento do vis e vinte por cento no de água.
+
+As de brincadeira do original — a haste de neutrônio, feita de bedrock, e a ponta de oricalco, feita de bloco de
+comando — ficaram de fora, como o resto do que só existe em modo criativo.
