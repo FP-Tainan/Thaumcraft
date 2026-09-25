@@ -18,6 +18,13 @@ public abstract class EvilTrunkModel extends EntityModel<EvilTrunkRenderer.State
         this.root = root;
     }
 
+    /** O mesmo, com o tipo de desenho que o feitio pedir: o sinistro desenha o frasco com mistura. */
+    protected EvilTrunkModel(ModelPart root, java.util.function.Function<net.minecraft.resources.Identifier,
+            net.minecraft.client.renderer.rendertype.RenderType> renderType) {
+        super(root, renderType);
+        this.root = root;
+    }
+
     /** As peças que sobem junto com a boca. */
     protected abstract String[] lid();
 

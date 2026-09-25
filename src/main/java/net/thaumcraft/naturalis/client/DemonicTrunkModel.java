@@ -74,7 +74,7 @@ public class DemonicTrunkModel extends EvilTrunkModel {
         root.addOrReplaceChild("chest_outer_left_wing", CubeListBuilder.create()
                 .mirror().texOffs(56, 17).addBox(-8.0f, -10.0f, -0.5f, 8, 13, 1),
                 PartPose.offset(1.0f, 11.0f, 9.0f));
-        return LayerDefinition.create(mesh, 64, 64);
+        return LayerDefinition.create(mesh, 128, 64);
     }
 
     /** As peças que a boca leva consigo quando o baú abre. */

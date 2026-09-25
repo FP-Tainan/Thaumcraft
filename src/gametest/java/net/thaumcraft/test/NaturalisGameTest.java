@@ -630,4 +630,52 @@ public class NaturalisGameTest {
         }
         helper.succeed();
     }
+
+    /**
+     * O jarro leva o bicho do começo ao fim: pega-o da mão, guarda-o no bloco que se põe e devolve-o ao item
+     * quando alguém quebra o vidro. É o que faz o bicho aparecer lá dentro para quem olha.
+     */
+    @GameTest
+    public void thePrisonJarCarriesTheMob(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        BlockPos pos = new BlockPos(2, 2, 2);
+        var porco = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, pos.above());
+        ItemStack jarro = new ItemStack(net.thaumcraft.naturalis.NaturalisBlocks.PRISON_JAR);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, jarro);
+        jarro.getItem().interactLivingEntity(jarro, player, porco, net.minecraft.world.InteractionHand.MAIN_HAND);
+        if (!porco.isRemoved()) helper.fail("o porco devia ter entrado no jarro");
+
+        ItemStack cheio = ItemStack.EMPTY;
+        for (int casa = 0; casa < player.getInventory().getContainerSize(); casa++) {
+            ItemStack naCasa = player.getInventory().getItem(casa);
+            if (naCasa.has(net.thaumcraft.registry.TCComponents.JARRED_MOB)) cheio = naCasa;
+        }
+        if (cheio.isEmpty()) helper.fail("o jarro cheio devia ter ido para a mochila de quem o usou");
+
+        // o bloco posto guarda o mesmo bicho, que é o que o desenhista mostra dentro do vidro
+        helper.setBlock(pos, net.thaumcraft.naturalis.NaturalisBlocks.PRISON_JAR);
+        BlockPos mundo = helper.absolutePos(pos);
+        net.thaumcraft.naturalis.NaturalisBlocks.PRISON_JAR.setPlacedBy(helper.getLevel(), mundo,
+                helper.getLevel().getBlockState(mundo), player, cheio);
+        if (!(helper.getLevel().getBlockEntity(mundo) instanceof net.thaumcraft.naturalis.PrisonJarBlockEntity jar)
+                || !jar.hasStored()) {
+            helper.fail("o jarro posto devia estar com o bicho dentro");
+            helper.succeed();
+            return;
+        }
+        var dentro = jar.stored();
+        if (dentro == null || !dentro.getString("id").orElse("").equals("minecraft:pig")) {
+            helper.fail("quem está no jarro é o porco, e não " + (dentro == null ? "nada" : dentro.getString("id")));
+        }
+
+        // e quebrado, ele devolve o bicho ao item
+        net.thaumcraft.naturalis.NaturalisBlocks.PRISON_JAR.playerWillDestroy(helper.getLevel(), mundo,
+                helper.getLevel().getBlockState(mundo), player);
+        boolean caiu = helper.getLevel()
+                .getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                        new net.minecraft.world.phys.AABB(mundo).inflate(2.0))
+                .stream().anyMatch(item -> item.getItem().has(net.thaumcraft.registry.TCComponents.JARRED_MOB));
+        if (!caiu) helper.fail("o jarro quebrado devia cair com o bicho ainda dentro");
+        helper.succeed();
+    }
 }

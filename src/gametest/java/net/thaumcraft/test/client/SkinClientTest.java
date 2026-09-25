@@ -33,24 +33,30 @@ public class SkinClientTest implements FabricClientGameTest {
             context.waitTicks(20);
             context.takeScreenshot("baus_lado_a_lado");
 
-            // o baú maligno, parado e longe dos outros, para se ver se ele assenta no chão
-            perto(server, "summon thaumcraft:evil_trunk ~5 ~ ~4 {TrunkType:0,NoAI:1b,Rotation:[180f,0f]}");
+            // um feitio de cada vez, de frente e sozinho
+            perto(server, "tp @p ~6 ~ ~ 0 8");
             context.waitTicks(20);
-            perto(server, "tp @p ~5 ~ ~1 0 5");
-            context.waitTicks(20);
-            context.takeScreenshot("bau_maligno");
+            String[] feitios = {"corrompido", "sinistro", "demoniaco", "maculado"};
+            for (int feitio = 0; feitio < feitios.length; feitio++) {
+                perto(server, "kill @e[type=thaumcraft:evil_trunk]");
+                perto(server, "summon thaumcraft:evil_trunk ~ ~ ~5 {TrunkType:" + feitio
+                        + ",NoAI:1b,Rotation:[180f,0f]}");
+                context.waitTicks(20);
+                context.takeScreenshot("bau_" + feitios[feitio]);
+            }
+            perto(server, "kill @e[type=thaumcraft:evil_trunk]");
 
-            // e o jarro com um porco dentro, que é o que o vidro tem de mostrar
-            perto(server, "setblock ~-4 ~ ~4 thaumcraft:prison_jar");
-            perto(server, "data merge block ~-4 ~ ~4 {entity:{id:\"minecraft:pig\"}}");
+            // e dois jarros com bicho dentro, que é o que o vidro tem de mostrar
+            perto(server, "setblock ~-1 ~ ~3 thaumcraft:prison_jar");
+            perto(server, "data merge block ~-1 ~ ~3 {entity:{id:\"minecraft:pig\"}}");
+            perto(server, "setblock ~1 ~ ~3 thaumcraft:prison_jar");
+            perto(server, "data merge block ~1 ~ ~3 {entity:{id:\"minecraft:bee\"}}");
             context.waitTicks(20);
-            perto(server, "tp @p ~-4 ~ ~2 0 10");
+            perto(server, "tp @p ~ ~ ~ 0 12");
             context.waitTicks(20);
-            context.takeScreenshot("jarro");
+            context.takeScreenshot("jarros");
 
             // a chama branca do Lumos, de noite, que é quando ela vale
-            perto(server, "tp @p ~4 ~ ~-2 0 0");
-            context.waitTicks(20);
             perto(server, "setblock ~ ~1 ~4 thaumcraft:lumos");
             server.runCommand("time set midnight");
             perto(server, "tp @p ~ ~ ~2 0 0");

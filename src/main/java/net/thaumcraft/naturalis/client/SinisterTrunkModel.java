@@ -14,7 +14,9 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
  */
 public class SinisterTrunkModel extends EvilTrunkModel {
     public SinisterTrunkModel(ModelPart root) {
-        super(root);
+        // o original desenha o vidro do frasco com a mistura ligada; por aqui isso é o tipo de
+        // desenho do modelo inteiro, e as peças de sempre, que são opacas, saem iguais
+        super(root, net.minecraft.client.renderer.rendertype.RenderTypes::entityTranslucent);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -50,7 +52,7 @@ public class SinisterTrunkModel extends EvilTrunkModel {
         root.addOrReplaceChild("chest_jar", CubeListBuilder.create()
                 .texOffs(0, 43).addBox(1.0f, -14.0f, -13.0f, 12, 4, 12),
                 PartPose.offset(1.0f, 11.0f, 15.0f));
-        return LayerDefinition.create(mesh, 64, 64);
+        return LayerDefinition.create(mesh, 128, 64);
     }
 
     /** As peças que a boca leva consigo quando o baú abre. */

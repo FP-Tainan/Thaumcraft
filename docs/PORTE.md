@@ -2139,3 +2139,20 @@ pendurou as três que faltavam:
 **Desvio pedido**: no original o Lumos é uma luz invisível que solta uma faísca a cada quinze tiques, e quase não
 se acha. A pedido de quem joga ele acende agora também um **Nitor branco** — a mesma chama do Nitor, com os mesmos
 jatos, só que branca. O resto do Lumos continua igual: as faíscas, o som de gelo ao quebrar e a luz que ele dá.
+
+## O sinistro, o demoníaco e a folha de 128 (2026-09-25)
+
+Postos os quatro feitios do Baú Maligno de frente, um a um, dois ainda saíam errados — e a culpa não era da
+posição, mas da **folha de textura**: o `CorruptedTrunkModel` e o `TaintedTrunkModel` do original dizem
+`setTextureSize(64, 64)`, mas o **sinistro** e o **demoníaco** dizem `setTextureSize(128, 64)`. O gerador dos
+modelos não lia esse número e escrevia 64x64 para todos, então cada peça desses dois ia buscar a figura no dobro do
+lugar certo — as asas do demoníaco saíam de um pedaço vazio da folha, e o frasco do sinistro, de outro.
+
+O gerador passou a ler o tamanho da folha do próprio jar, e também a **mistura**: o sinistro é o único que liga o
+`glBlendFunc` para desenhar o vidro do frasco que ele carrega na cabeça. Por aqui isso vira o tipo de desenho do
+modelo inteiro (`entityTranslucent`), e as peças opacas, que têm alfa cheio, saem iguais. O frasco voltou a ser
+vidro, com o cérebro aparecendo lá dentro.
+
+O `SkinClientTest` agora tira uma foto de cada feitio, sozinho e de frente, que é a única maneira de saber qual é
+qual; e o `NaturalisGameTest` ganhou o caminho inteiro do jarro — pegar o bicho da mão, pô-lo no bloco e
+devolvê-lo ao item quando o vidro se quebra.
