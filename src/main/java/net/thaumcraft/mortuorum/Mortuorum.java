@@ -24,6 +24,13 @@ public final class Mortuorum {
         MortuorumEntities.init();
         MortuorumItems.init();
         MortuorumEvents.init();
+        // a aba do ramo no livro
+        net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
+                Thaumcraft.id("textures/item/necronomicon.png"),
+                Thaumcraft.id("textures/gui/gui_mortuorum_researchback.png"));
+        MortuorumTable.research();
+        // as receitas pedem itens prontos, e por isso esperam a montagem acabar
+        net.thaumcraft.api.ThaumcraftApi.onSetup(MortuorumTable::recipes);
         Thaumcraft.LOGGER.info("Ars Mortuorum: {} coisas, {} peças de corpo",
                 MortuorumItems.count(), MortuorumItems.PARTS.size());
     }
