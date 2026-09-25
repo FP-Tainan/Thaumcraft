@@ -48,7 +48,13 @@ public final class ShatteredRealms {
         ShatteredBlocks.init();
         ShatteredComponents.init();
         ShatteredItems.init();
-        Thaumcraft.LOGGER.info("Reinos Fragmentados: {} tecidos", FabricBlocks.count());
+        // a aba do ramo no livro
+        net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
+                Thaumcraft.id("textures/misc/r_shattered.png"),
+                Thaumcraft.id("textures/gui/gui_shattered_researchback.png"));
+        ShatteredTable.research();
+        net.thaumcraft.api.ThaumcraftApi.onSetup(ShatteredTable::recipes);
+        Thaumcraft.LOGGER.info("Reinos Fragmentados: {} tecidos, {} coisas", FabricBlocks.count(), ShatteredItems.count());
     }
 
     /** Se aquele mundo é um dos bolsos — o {@code isDimDoorsPocketDimension} do original. */

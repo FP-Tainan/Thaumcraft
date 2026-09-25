@@ -32,6 +32,16 @@ public class ShatteredClientTest implements FabricClientGameTest {
             server.runCommand("tp @p ~-1 ~2 ~ 170 20");
             context.waitTicks(40);
             context.takeScreenshot("tecidos");
+
+            // e a aba do ramo no livro
+            server.runCommand("thaumcraft pesquisa tudo");
+            context.waitTicks(20);
+            context.runOnClient(minecraft -> {
+                net.thaumcraft.client.gui.ThaumonomiconScreen.select(net.thaumcraft.shattered.ShatteredRealms.CATEGORY);
+                minecraft.setScreenAndShow(new net.thaumcraft.client.gui.ThaumonomiconScreen());
+            });
+            context.waitTicks(20);
+            context.takeScreenshot("livro_shattered");
         }
     }
 }
