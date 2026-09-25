@@ -2199,3 +2199,20 @@ cara para onde ela foi — cinco de vida por troca, e não se troca com a ferram
 
 O olho da figura diz em que cara ela está, com as três cores do original — vinho, azul e ouro —, pintado pela cor
 que o próprio item carrega.
+
+### Fatia 6 — o Foco do Piscar
+
+O salto até onde a varinha aponta, a até cento e vinte e oito blocos, com as duas melhorias que só ele tem: o
+**Fogo do Inferno**, que incendeia (e machuca em três mais três por Potência) quem estiver onde ele chega, e o
+**Pandemônio**, que manda os monstros de lá para onde ele saiu. O custo muda com a melhoria posta — entropia,
+entropia com fogo, entropia com ordem —, como no `getVisCost` do original.
+
+### Fatia 7 — o bolo, as flores e as estrelas
+
+- O **Bolo Arcano**, de doze fatias, que volta a crescer sozinho: cada batida do acaso repõe uma fatia. Cada
+  garfada enche dois de fome com um de saturação.
+- A **Flor de Tinta**, que se espalha sozinha, mas só até dez num pedaço de cinco por três por cinco, e a
+  **Roseira Umbria**, de dois blocos, que espalha as flores — três vezes em dez, ou de uma vez com farinha de osso.
+- O **Bloco de Estrelas do Nether**, que serve de base de farol, e a **Pepita de Esmeralda**.
+- A tinta preta do original era um item próprio, porque em 1.7.10 as tintas eram números de um item só; aqui ela é
+  a tinta preta do jogo, que é a mesma coisa.

@@ -48,6 +48,27 @@ public final class ForbiddenBlocks {
     public static final Block TAINT_STONE = register("taint_stone", properties -> new Block(stone(properties)));
     public static final Block TAINT_STONE_BRICKS = register("taint_stone_bricks", properties -> new Block(stone(properties)));
 
+    /** O Bolo Arcano: doze fatias que voltam a crescer sozinhas. */
+    public static final Block ARCANE_CAKE = register("arcane_cake", properties ->
+            new ArcaneCakeBlock(properties.mapColor(MapColor.WOOL).strength(0.5f).sound(SoundType.WOOL)
+                    .randomTicks().noOcclusion().pushReaction(PushReaction.DESTROY)));
+
+    /** A Flor de Tinta, que se espalha sozinha e dá tinta preta. */
+    public static final Block INK_FLOWER = register("ink_flower", properties ->
+            new InkFlowerBlock(properties.mapColor(MapColor.COLOR_BLACK).noCollision().instabreak()
+                    .sound(SoundType.GRASS).offsetType(net.minecraft.world.level.block.state.BlockBehaviour.OffsetType.XZ)
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** O Arbusto Umbrio, de dois blocos, que espalha as flores. */
+    public static final Block UMBRAL_BUSH = register("umbral_bush", properties ->
+            new UmbralBushBlock(properties.mapColor(MapColor.COLOR_BLACK).noCollision().instabreak()
+                    .randomTicks().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY)));
+
+    /** O Bloco de Estrelas: nove estrelas do Nether, e serve de base de farol. */
+    public static final Block NETHER_STAR_BLOCK = register("nether_star_block", properties ->
+            new Block(properties.mapColor(MapColor.SNOW).strength(5.0f, 6.0f)
+                    .sound(SoundType.METAL).lightLevel(state -> 10)));
+
     private ForbiddenBlocks() {
     }
 

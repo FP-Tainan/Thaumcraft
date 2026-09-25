@@ -1,0 +1,81 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "thaumcraft:block/cake_side",
+    "bottom": "thaumcraft:block/cake_bottom",
+    "top": "thaumcraft:block/cake_top",
+    "side": "thaumcraft:block/cake_side",
+    "inside": "thaumcraft:block/cake_inner"
+  },
+  "elements": [
+    {
+      "from": [
+        6.666666666666667,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        8,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#side",
+          "uv": [
+            6.666666666666667,
+            8,
+            15,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#side",
+          "uv": [
+            6.666666666666667,
+            8,
+            15,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#inside",
+          "uv": [
+            1,
+            8,
+            15,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            1,
+            8,
+            15,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#top",
+          "uv": [
+            6.666666666666667,
+            1,
+            15,
+            15
+          ]
+        },
+        "down": {
+          "texture": "#bottom",
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

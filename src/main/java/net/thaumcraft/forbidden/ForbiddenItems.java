@@ -114,6 +114,15 @@ public final class ForbiddenItems {
         net.thaumcraft.registry.TCItems.FOCI.put("blink", FOCUS_BLINK);
     }
 
+    /** A pepita de esmeralda, que o ramo trouxe para o jogo. */
+    public static final Item EMERALD_NUGGET = register("emerald_nugget", properties -> new Item(properties));
+
+    /** E os itens dos blocos novos. */
+    public static final Item ARCANE_CAKE = blockItem(ForbiddenBlocks.ARCANE_CAKE);
+    public static final Item INK_FLOWER = blockItem(ForbiddenBlocks.INK_FLOWER);
+    public static final Item UMBRAL_BUSH = blockItem(ForbiddenBlocks.UMBRAL_BUSH);
+    public static final Item NETHER_STAR_BLOCK = blockItem(ForbiddenBlocks.NETHER_STAR_BLOCK);
+
     private ForbiddenItems() {
     }
 

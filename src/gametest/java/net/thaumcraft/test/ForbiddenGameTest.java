@@ -395,4 +395,74 @@ public class ForbiddenGameTest {
         wand.set(net.thaumcraft.registry.TCComponents.WAND_VIS, vis);
         return wand;
     }
+
+    /** O Bolo Arcano dá doze garfadas e volta a crescer sozinho. */
+    @GameTest
+    public void theArcaneCakeGrowsBack(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(2, 2, 2);
+        helper.setBlock(onde.below(), net.minecraft.world.level.block.Blocks.STONE);
+        helper.setBlock(onde, net.thaumcraft.forbidden.ForbiddenBlocks.ARCANE_CAKE);
+        var player = helper.makeMockServerPlayerInLevel();
+        player.getFoodData().setFoodLevel(10);
+
+        var mundo = helper.absolutePos(onde);
+        for (int garfada = 1; garfada <= 3; garfada++) {
+            player.getFoodData().setFoodLevel(10);
+            helper.getLevel().getBlockState(mundo).useWithoutItem(helper.getLevel(), player,
+                    new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(mundo),
+                            net.minecraft.core.Direction.UP, mundo, false));
+            int mordidas = helper.getLevel().getBlockState(mundo)
+                    .getValue(net.thaumcraft.forbidden.ArcaneCakeBlock.BITES);
+            if (mordidas != garfada) helper.fail("a garfada " + garfada + " devia deixar " + garfada + " fatias fora; deixou " + mordidas);
+        }
+
+        // e o acaso o refaz, uma fatia de cada vez
+        helper.getLevel().getBlockState(mundo).randomTick(helper.getLevel(), mundo, helper.getLevel().getRandom());
+        if (helper.getLevel().getBlockState(mundo).getValue(net.thaumcraft.forbidden.ArcaneCakeBlock.BITES) != 2) {
+            helper.fail("o bolo devia ter crescido de volta uma fatia");
+        }
+        helper.succeed();
+    }
+
+    /** Doze garfadas acabam com ele. */
+    @GameTest
+    public void theArcaneCakeHasTwelveSlices(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(2, 2, 2);
+        helper.setBlock(onde.below(), net.minecraft.world.level.block.Blocks.STONE);
+        helper.setBlock(onde, net.thaumcraft.forbidden.ForbiddenBlocks.ARCANE_CAKE);
+        var player = helper.makeMockServerPlayerInLevel();
+        var mundo = helper.absolutePos(onde);
+        for (int garfada = 0; garfada < 12; garfada++) {
+            player.getFoodData().setFoodLevel(10);
+            helper.getLevel().getBlockState(mundo).useWithoutItem(helper.getLevel(), player,
+                    new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(mundo),
+                            net.minecraft.core.Direction.UP, mundo, false));
+        }
+        if (!helper.getLevel().getBlockState(mundo).isAir()) helper.fail("doze garfadas acabam com o bolo");
+        helper.succeed();
+    }
+
+    /** A Flor de Tinta se espalha, mas só até dez num pedaço. */
+    @GameTest
+    public void theInkFlowerSpreads(GameTestHelper helper) {
+        for (int x = 0; x < 5; x++) {
+            for (int z = 0; z < 5; z++) {
+                helper.setBlock(new BlockPos(x, 1, z), net.minecraft.world.level.block.Blocks.GRASS_BLOCK);
+            }
+        }
+        BlockPos onde = new BlockPos(2, 2, 2);
+        helper.setBlock(onde, net.thaumcraft.forbidden.ForbiddenBlocks.INK_FLOWER);
+        var flor = (net.thaumcraft.forbidden.InkFlowerBlock) net.thaumcraft.forbidden.ForbiddenBlocks.INK_FLOWER;
+        var mundo = helper.absolutePos(onde);
+        for (int volta = 0; volta < 60; volta++) {
+            flor.spread(helper.getLevel(), mundo, helper.getLevel().getRandom());
+        }
+        int quantas = 0;
+        for (var pos : BlockPos.betweenClosed(mundo.offset(-3, -2, -3), mundo.offset(3, 2, 3))) {
+            if (helper.getLevel().getBlockState(pos).is(net.thaumcraft.forbidden.ForbiddenBlocks.INK_FLOWER)) quantas++;
+        }
+        if (quantas < 2) helper.fail("ela devia ter se espalhado; achei " + quantas);
+        if (quantas > 11) helper.fail("mas só até dez por perto; achei " + quantas);
+        helper.succeed();
+    }
 }
