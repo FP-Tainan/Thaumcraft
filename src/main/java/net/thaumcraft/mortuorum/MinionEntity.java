@@ -63,7 +63,10 @@ public class MinionEntity extends TamableAnimal {
                 .add(Attributes.MOVEMENT_SPEED, 0.1)
                 .add(Attributes.FOLLOW_RANGE, 16.0)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.1)
-                .add(Attributes.ATTACK_DAMAGE, 2.0);
+                .add(Attributes.ATTACK_DAMAGE, 2.0)
+                // o TemptGoal do jogo de hoje lê o alcance num atributo, e sem ele derruba o servidor ao tiquear;
+                // dez é o que o Animal declara, e é o alcance que o EntityAITempt da 1.7.10 tinha fixo no código
+                .add(Attributes.TEMPT_RANGE, 10.0);
     }
 
     @Override
