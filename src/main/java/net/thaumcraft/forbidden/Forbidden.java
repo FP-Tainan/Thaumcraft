@@ -34,6 +34,13 @@ public final class Forbidden {
     /** O {@code FMEventHandler}: de onde vêm os fragmentos dos pecados. */
     private static void events() {
         net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.AFTER_DEATH.register(ForbiddenDrops::onDeath);
+        // a dor de quem veste a coleira vira vis
+        net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.AFTER_DAMAGE.register(
+                (entity, source, baseDamage, damageTaken, blocked) -> {
+                    if (entity instanceof net.minecraft.world.entity.player.Player player) {
+                        CollarItem.onHurt(player, damageTaken, source);
+                    }
+                });
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
             if (entity instanceof net.minecraft.world.entity.LivingEntity living) ForbiddenDrops.onSpawn(living, level);
         });

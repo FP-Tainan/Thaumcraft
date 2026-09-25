@@ -164,10 +164,10 @@ public final class ResearchNotes {
 
     /** O {@code consumeInkFromTable}. */
     public static boolean consumeInkFromTable(ItemStack stack, boolean doit) {
-        if (!(stack.getItem() instanceof ScribingToolsItem) || stack.getDamageValue() >= stack.getMaxDamage()) {
+        if (!(stack.getItem() instanceof ScribingToolsItem tools) || stack.getDamageValue() >= stack.getMaxDamage()) {
             return false;
         }
-        if (doit) stack.setDamageValue(stack.getDamageValue() + 1);
+        if (doit && tools.spendsInk()) stack.setDamageValue(stack.getDamageValue() + 1);
         return true;
     }
 

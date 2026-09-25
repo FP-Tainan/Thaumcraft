@@ -116,6 +116,8 @@ public final class ForbiddenDrops {
 
     /** O {@code onEat}: comer no Nether faz cair um Fragmento da Gula, duas vezes em dez. */
     public static void onEat(Player player, ItemStack food) {
+        // o anel da nutrição rende mais em qualquer lugar
+        if (food.get(DataComponents.FOOD) != null) NutritionRingItem.onEat(player);
         if (!(player.level() instanceof ServerLevel level) || !inTheNether(level)) return;
         if (food.is(ForbiddenItems.GLUTTONY_SHARD) || food.get(DataComponents.FOOD) == null) return;
         if (level.getRandom().nextInt(10) >= 2) return;

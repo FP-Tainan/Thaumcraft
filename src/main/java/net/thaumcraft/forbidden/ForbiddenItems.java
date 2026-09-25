@@ -137,6 +137,19 @@ public final class ForbiddenItems {
     public static final Item WAND_CAP_ALCHEMICAL = register("wand_cap_alchemical", properties ->
             new Item(properties.rarity(Rarity.UNCOMMON)));
 
+    /**
+     * Os dois tinteiros e as duas bijuterias: o de cristal, que no fim devolve pontos de pesquisa; o primordial,
+     * que não seca; o anel que rende mais em cada garfada; e a coleira, que faz vis da dor de quem a veste.
+     */
+    public static final Item CRYSTALWELL = register("crystalwell", properties ->
+            new CrystalwellItem(properties.stacksTo(1).durability(100).rarity(Rarity.UNCOMMON)));
+    public static final Item PRIMEWELL = register("primewell", properties ->
+            new PrimewellItem(properties.stacksTo(1).durability(100).rarity(Rarity.EPIC)));
+    public static final Item NUTRITION_RING = register("nutrition_ring", properties ->
+            new NutritionRingItem(properties.stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final Item COLLAR = register("collar", properties ->
+            new CollarItem(properties.stacksTo(1).rarity(Rarity.RARE)));
+
     private ForbiddenItems() {
     }
 

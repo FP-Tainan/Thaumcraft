@@ -22,6 +22,14 @@ public class ScribingToolsItem extends Item {
         super(properties);
     }
 
+    /**
+     * Se cada risco gasta tinta. O Tinteiro Primordial do Forbidden Magic diz que não, que é como o original
+     * dele faz: lá o {@code setDamage} dele nunca deixa o dano subir.
+     */
+    public boolean spendsInk() {
+        return true;
+    }
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();

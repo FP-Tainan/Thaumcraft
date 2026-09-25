@@ -2230,3 +2230,13 @@ entropia com fogo, entropia com ordem —, como no `getVisCost` do original.
 
 As de brincadeira do original — a haste de neutrônio, feita de bedrock, e a ponta de oricalco, feita de bloco de
 comando — ficaram de fora, como o resto do que só existe em modo criativo.
+
+### Fatia 9 — os tinteiros e as duas bijuterias
+
+- O **Tinteiro de Cristal**, que escreve como os outros mas, gasto até o fim, devolve de quatro a sete pontos de
+  cada primário ao caderno de quem o usou — e vira pena e tinteiro comuns.
+- O **Tinteiro Primordial**, que não seca nunca. As ferramentas de escrita ganharam uma porta (`spendsInk`) para
+  isso, que é como o original faz, não deixando o dano subir.
+- O **Anel da Nutrição**, que rende dois de fome e dois de saturação a mais em cada garfada.
+- E a **Coleira do Pacto**, um amuleto de vis do tamanho do grande que converte a dor de quem a veste em vis —
+  três centésimos por ponto de dano, seis se quem bate estiver de chicote.

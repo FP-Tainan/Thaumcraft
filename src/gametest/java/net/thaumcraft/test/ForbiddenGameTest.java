@@ -532,4 +532,70 @@ public class ForbiddenGameTest {
         }
         helper.succeed();
     }
+
+    /** O Tinteiro Primordial escreve sem gastar tinta; o de cristal gasta como os outros. */
+    @GameTest
+    public void thePrimewellNeverRunsDry(GameTestHelper helper) {
+        ItemStack primordial = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.PRIMEWELL);
+        for (int risco = 0; risco < 50; risco++) {
+            net.thaumcraft.research.ResearchNotes.consumeInkFromTable(primordial, true);
+        }
+        if (primordial.getDamageValue() != 0) helper.fail("o tinteiro primordial não seca");
+
+        ItemStack cristal = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.CRYSTALWELL);
+        net.thaumcraft.research.ResearchNotes.consumeInkFromTable(cristal, true);
+        if (cristal.getDamageValue() != 1) helper.fail("o de cristal gasta como os outros");
+        helper.succeed();
+    }
+
+    /** Gasto até o fim, o Tinteiro de Cristal devolve pontos de pesquisa e vira pena e tinteiro. */
+    @GameTest
+    public void theCrystalwellPaysBackAspects(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        ItemStack cristal = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.CRYSTALWELL);
+        cristal.setDamageValue(cristal.getMaxDamage());
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, cristal);
+
+        int antes = net.thaumcraft.research.Knowledges.of(player)
+                .points(net.thaumcraft.api.aspects.Aspects.ORDER);
+        cristal.getItem().use(helper.getLevel(), player, net.minecraft.world.InteractionHand.MAIN_HAND);
+        int depois = net.thaumcraft.research.Knowledges.of(player)
+                .points(net.thaumcraft.api.aspects.Aspects.ORDER);
+        if (depois - antes < 4) helper.fail("ele devia devolver ao menos quatro de cada primário; deu " + (depois - antes));
+        if (!player.getMainHandItem().is(net.thaumcraft.registry.TCItems.SCRIBING_TOOLS)) {
+            helper.fail("e virar pena e tinteiro");
+        }
+        helper.succeed();
+    }
+
+    /** O Anel da Nutrição rende dois de fome e dois de saturação a mais em cada garfada. */
+    @GameTest
+    public void theNutritionRingFeedsMore(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.getFoodData().setFoodLevel(10);
+        net.thaumcraft.baubles.Baubles.container(player).setItem(net.thaumcraft.baubles.Baubles.RING_1,
+                new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.NUTRITION_RING));
+        net.thaumcraft.forbidden.NutritionRingItem.onEat(player);
+        if (player.getFoodData().getFoodLevel() != 12) {
+            helper.fail("com o anel a garfada rende dois a mais; ficou em " + player.getFoodData().getFoodLevel());
+        }
+        helper.succeed();
+    }
+
+    /** A Coleira do Pacto faz vis da dor de quem a veste. */
+    @GameTest
+    public void theCollarMakesVisFromPain(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        ItemStack coleira = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.COLLAR);
+        net.thaumcraft.baubles.Baubles.container(player).setItem(net.thaumcraft.baubles.Baubles.AMULET, coleira);
+        coleira = net.thaumcraft.baubles.Baubles.get(player, net.thaumcraft.baubles.Baubles.AMULET);
+
+        net.thaumcraft.forbidden.CollarItem.onHurt(player, 4.0f, helper.getLevel().damageSources().generic());
+        var guardado = coleira.get(net.thaumcraft.registry.TCComponents.WAND_VIS);
+        if (guardado == null || guardado.visSize() != 12) {
+            helper.fail("quatro de dano viram doze centésimos de vis; deu "
+                    + (guardado == null ? 0 : guardado.visSize()));
+        }
+        helper.succeed();
+    }
 }
