@@ -10,6 +10,10 @@ import net.thaumcraft.api.aspects.AspectList;
 
 /** O que os itens do mod carregam por dentro. */
 public final class TCComponents {
+    /** Que bicho um Cristal de Bicho do Forbidden Magic guarda. */
+    public static final DataComponentType<String> CRYSTAL_MOB = register("crystal_mob",
+            builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+
     /** O que a haste profana do Forbidden Magic ainda tem para dar, em centésimos de vis. */
     public static final DataComponentType<Integer> WAND_CONTRACT = register("wand_contract",
             builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));

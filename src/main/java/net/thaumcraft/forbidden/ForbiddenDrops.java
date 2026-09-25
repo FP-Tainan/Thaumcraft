@@ -41,6 +41,8 @@ public final class ForbiddenDrops {
         // o machado decepa em qualquer lugar; o resto é só no Nether
         beheading(dead, source);
         if (source.getEntity() instanceof Player quemMatou) ForbiddenEnchantments.onKill(dead, quemMatou);
+        // quem mata com o garfo marca um cristal em branco
+        if (source.getEntity() instanceof Player comGarfo) MobCrystalItem.imprint(comGarfo, dead);
         if (!inTheNether(serverLevel)) return;
         ServerLevel level = serverLevel;
         var random = level.getRandom();

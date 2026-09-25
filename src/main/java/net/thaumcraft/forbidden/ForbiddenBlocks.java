@@ -69,6 +69,16 @@ public final class ForbiddenBlocks {
             new Block(properties.mapColor(MapColor.SNOW).strength(5.0f, 6.0f)
                     .sound(SoundType.METAL).lightLevel(state -> 10)));
 
+    /** A Gaiola da Ira: o gerador de monstros que come essência. */
+    public static final Block WRATH_CAGE = register("wrath_cage", properties ->
+            new WrathCageBlock(properties.mapColor(MapColor.METAL).strength(5.0f, 2000.0f)
+                    .sound(SoundType.METAL)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<WrathCageBlockEntity> WRATH_CAGE_ENTITY =
+            net.minecraft.core.Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("wrath_cage"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(WrathCageBlockEntity::new,
+                            java.util.Set.of(WRATH_CAGE)));
+
     private ForbiddenBlocks() {
     }
 

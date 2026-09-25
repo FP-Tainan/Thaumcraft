@@ -680,4 +680,83 @@ public class ForbiddenGameTest {
         }
         helper.succeed();
     }
+
+    /** O Cristal de Marca pega o bicho de quem morre pelo Garfo do Diabolista. */
+    @GameTest
+    public void theCrystalTakesTheMobFromTheFork(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,
+                new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.DIABOLIST_FORK));
+        player.getInventory().setItem(9, new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.MOB_CRYSTAL));
+
+        var porco = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(1, 2, 1));
+        if (!net.thaumcraft.forbidden.MobCrystalItem.imprint(player, porco)) {
+            helper.fail("o cristal devia ter pegado a marca do porco");
+        }
+        var marcado = player.getInventory().getItem(9);
+        var bicho = net.thaumcraft.forbidden.MobCrystalItem.mob(marcado);
+        if (bicho == null || !bicho.toString().equals("minecraft:pig")) {
+            helper.fail("e a marca é a do porco; é " + bicho);
+        }
+
+        // sem o garfo na mão, nada se marca
+        var outro = helper.makeMockServerPlayerInLevel();
+        outro.getInventory().setItem(9, new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.MOB_CRYSTAL));
+        if (net.thaumcraft.forbidden.MobCrystalItem.imprint(outro, porco)) {
+            helper.fail("só o garfo marca cristal");
+        }
+        helper.succeed();
+    }
+
+    /** A Gaiola da Ira se afina com o cristal e devolve o cristal do bicho que estava nela. */
+    @GameTest
+    public void theWrathCageTakesTheCrystal(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(2, 2, 2);
+        helper.setBlock(onde, net.thaumcraft.forbidden.ForbiddenBlocks.WRATH_CAGE);
+        var cage = helper.getBlockEntity(onde, net.thaumcraft.forbidden.WrathCageBlockEntity.class);
+        if (cage == null) helper.fail("a gaiola devia ter entidade de bloco");
+
+        if (cage.isSet()) helper.fail("ela nasce sem bicho");
+        cage.attune(net.minecraft.resources.Identifier.parse("minecraft:zombie"));
+        if (!cage.isSet()) helper.fail("e se afina com o bicho do cristal");
+        if (cage.aspect() != net.thaumcraft.api.aspects.Aspects.FLESH) {
+            helper.fail("o zumbi é feito de carne; ela pede " + cage.aspect());
+        }
+
+        // o garfo troca o modo, que é qual essência ela puxa
+        int antes = cage.mode();
+        cage.cycleMode();
+        if (cage.mode() == antes) helper.fail("o garfo troca o modo");
+        if (cage.getSuctionType(net.minecraft.core.Direction.UP)
+                != net.thaumcraft.forbidden.ForbiddenAspects.ASPECTS.get("ira")) {
+            helper.fail("no segundo modo ela puxa Ira");
+        }
+        helper.succeed();
+    }
+
+    /** E, com essência dentro, ela faz o bicho. */
+    @GameTest(maxTicks = 400)
+    public void theWrathCageSpawns(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(2, 2, 2);
+        helper.setBlock(onde, net.thaumcraft.forbidden.ForbiddenBlocks.WRATH_CAGE);
+        var cage = helper.getBlockEntity(onde, net.thaumcraft.forbidden.WrathCageBlockEntity.class);
+        cage.attune(net.minecraft.resources.Identifier.parse("minecraft:pig"));
+        for (int gota = 0; gota < net.thaumcraft.forbidden.WrathCageBlockEntity.COST; gota++) {
+            cage.addEssentia(cage.aspect(), 1, net.minecraft.core.Direction.UP);
+        }
+        if (cage.stored(net.thaumcraft.forbidden.WrathCageBlockEntity.MODE_SPECIAL)
+                != net.thaumcraft.forbidden.WrathCageBlockEntity.COST) {
+            helper.fail("ela devia ter guardado a essência");
+        }
+
+        var mundo = helper.absolutePos(onde);
+        for (int tique = 0; tique < 300; tique++) {
+            net.thaumcraft.forbidden.WrathCageBlockEntity.tick(helper.getLevel(), mundo,
+                    helper.getLevel().getBlockState(mundo), cage);
+        }
+        int porcos = helper.getLevel().getEntities(net.minecraft.world.entity.EntityTypes.PIG,
+                new net.minecraft.world.phys.AABB(mundo).inflate(8.0), bicho -> true).size();
+        if (porcos == 0) helper.fail("com essência dentro ela devia ter feito porcos");
+        helper.succeed();
+    }
 }

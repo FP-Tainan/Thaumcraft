@@ -2262,3 +2262,14 @@ As três que mexem no que o bloco larga entram pelo mesmo mixin que já servia �
 
 **Fica de fora**: as duas poções do original (o Selo de Sangue e a Praga do Dragão), porque quem as aplica é o
 Rapieira de Sangue do Blood Magic e o Matadragões, que só faz o que faz com o Draconic Evolution instalado.
+
+### Fatia 11 — a Gaiola da Ira
+
+O gerador de monstros que não nasce do mundo: afinado com um **Cristal de Marca** (que se marca matando o bicho
+com o Garfo do Diabolista), ele come **essência** para trabalhar. Guarda até sessenta e quatro de três coisas — a
+essência do próprio bicho, Ira e Desídia —, e cada cinco delas rendem quatro bichos, três por vez, num raio de
+quatro e nunca mais de seis por perto. O Garfo troca o modo, que diz qual das três ela puxa dos canos; comendo
+Desídia ela trabalha devagar, como no original.
+
+A tabela de que essência cada bicho é feito é a do original (`spawnerMobs`), com os quarenta e dois bichos dele
+traduzidos para os nomes de hoje — e quem não está nela pede cobiça.

@@ -150,6 +150,11 @@ public final class ForbiddenItems {
     public static final Item COLLAR = register("collar", properties ->
             new CollarItem(properties.stacksTo(1).rarity(Rarity.RARE)));
 
+    /** O Cristal de Bicho, que a Gaiola da Ira pede, e a gaiola em si. */
+    public static final Item MOB_CRYSTAL = register("mob_crystal", properties ->
+            new MobCrystalItem(properties.stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final Item WRATH_CAGE = blockItem(ForbiddenBlocks.WRATH_CAGE);
+
     private ForbiddenItems() {
     }
 
