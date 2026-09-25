@@ -13,8 +13,13 @@ import net.thaumcraft.Thaumcraft;
  * <b>inspiração</b>, e não como porte — o que dele se guarda é o altar, a estrutura, o rito e os três chamados.
  */
 public final class Crimson {
-    /** A aba do ramo no Thaumonomicon, com o nome que o original lhe dá. */
-    public static final String CATEGORY = "WARFARE";
+    /**
+     * Em que aba do Thaumonomicon o ramo mora.
+     *
+     * <p><b>Desvio declarado:</b> o original tem aba própria, chamada {@code WARFARE}. Aqui a única entrada dele
+     * pende do Culto Carmesim, na aba de sempre, a pedido de quem joga.
+     */
+    public static final String CATEGORY = "BASICS";
 
     private Crimson() {
     }
@@ -22,10 +27,6 @@ public final class Crimson {
     public static void init() {
         CrimsonBlocks.init();
         CrimsonItems.init();
-        // a aba do ramo no livro
-        net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
-                Thaumcraft.id("textures/misc/r_crimson.png"),
-                Thaumcraft.id("textures/gui/gui_crimson_researchback.png"));
         CrimsonTable.research();
         Thaumcraft.LOGGER.info("Crimson Warfare: o altar antigo e os três chamados");
     }

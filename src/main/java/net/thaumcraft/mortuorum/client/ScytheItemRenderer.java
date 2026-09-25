@@ -6,7 +6,6 @@ import com.mojang.math.Axis;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
@@ -26,69 +25,43 @@ import java.util.function.Consumer;
 /**
  * A foice na mão e no inventário: o {@code ItemScytheRenderer} do Necromancy.
  *
- * <p>São as sete caixas do {@code ModelScythe} (ou as sete do {@code ModelScytheBone}), com a folha de cada uma.
- * O original tem ainda uma foice de modelo de Blender, que ele só desenha para quem estiver numa lista de nomes
- * que ele ia buscar à rede — a lista morreu com o sítio, e o único nome que ficou no código é o de
- * {@code AtomicStryker}; é esse que aqui a vê, como lá.
+ * <p>A foice de sangue é o {@code scythe.obj} — o modelo de Blender, mil trezentos e trinta e seis triângulos,
+ * com o gume e o pano em folhas próprias. A de osso continua a ser as sete caixas do {@code ModelScytheBone}.
  *
- * <p><b>Desvio declarado, nos lugares em que a foice aparece:</b> o original tem uma conta de posição, giro e
+ * <p><b>Desvio declarado:</b> no original o modelo de Blender só aparecia a quem estivesse numa lista de nomes
+ * que o mod ia buscar à rede, e todos os outros viam sete caixas do {@code ModelScythe}. A lista morreu com o
+ * sítio e o único nome que ficou no código era o de {@code AtomicStryker}. Aqui a foice de Blender é a de toda a
+ * gente, a pedido de quem joga; as sete caixas do {@code ModelScythe} saíram, e ficam no histórico.
+ *
+ * <p><b>E o outro desvio, nos lugares em que a foice aparece:</b> o original tem uma conta de posição, giro e
  * tamanho para cada lugar ({@code ENTITY}, {@code EQUIPPED}, {@code EQUIPPED_FIRST_PERSON} e {@code INVENTORY}),
  * mas aqueles números contam a partir do quadro que o desenhista de itens da 1.7.10 montava, e esse quadro já
- * não existe. Do original ficam os giros — e sobretudo o de 180 graus em Z, que é o que põe a foice de pé, e sem
- * o qual ela sai virada ao contrário —, enquanto a posição e o tamanho em {@code models/item/scythe.json} foram
- * acertados a olho até a foice ficar na mão como na origem.
+ * não existe. Cada foice tem agora o seu arquivo — {@code models/item/scythe.json} para a de Blender, que já vem
+ * de pé, e {@code models/item/scythe_bone.json} para a de caixas, que precisa do giro de 180 em Z —, e a posição
+ * e o tamanho de ambos foram acertados a olho.
  */
 public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<Unit> {
-    private static final Identifier SCYTHE = Thaumcraft.id("textures/models/scythe.png");
     private static final Identifier SCYTHE_BONE = Thaumcraft.id("textures/models/scythe_bone.png");
 
-    /** Quem vê a foice do modelo de Blender: o único nome que sobrou do {@code specialFolk} do original. */
-    private static final String SPECIAL = "AtomicStryker";
-
-    // as sete caixas do ModelScythe numa folha de 64 por 32
+    // as caixas do ModelScytheBone numa folha de 64 por 32
     private static final float[] HANDLE_MIDDLE = BoxMesh.box(0, 0, 0, 1, 11, 1, 0, 0, 64, 32);
     private static final float[] HANDLE_BOTTOM = BoxMesh.box(0, 0, 0, 1, 12, 1, 0, 0, 64, 32);
     private static final float[] HANDLE_TOP = BoxMesh.box(0, 0, 0, 1, 10, 1, 0, 0, 64, 32);
-    private static final float[] BLADE_EDGE = BoxMesh.box(-0.5f, -0.5f, 0, 1, 1, 10, 4, 0, 64, 32);
-    private static final float[] BLADE_BASE = BoxMesh.box(0, 0, 0, 1, 1, 11, 40, 0, 64, 32);
-    private static final float[] JOINT = BoxMesh.box(0, 0, 0, 2, 2, 2, 0, 13, 64, 32);
 
     // e as da foice de osso, que troca o gume e a junta
     private static final float[] BONE_JOINT = BoxMesh.box(0, 0, 0, 2, 4, 4, 34, 0, 64, 32);
     private static final float[] BONE_BLADE = BoxMesh.box(-0.5f, -0.5f, 0, 1, 1, 15, 0, 15, 64, 32);
     private static final float[] BONE_BLADE_BASE = BoxMesh.box(0, 0, 0, 1, 1, 15, 0, 15, 64, 32);
 
-    private static final float QUARTER = (float) (Math.PI / 4.0);
-
     @Override
     public void submit(@Nullable Unit ignored, PoseStack pose, SubmitNodeCollector collector,
                        int light, int overlay, boolean foil, int tint) {
         pose.pushPose();
-        // o modelo desenha-se a partir do meio da casa; de pé quem o põe é o giro de 180 em Z do arquivo do
-        // item, que é o que o original faz — aqui não se vira mais nada, ou a foice sai virada ao contrário
+        // o modelo desenha-se a partir do meio da casa; o que o põe de pé e no tamanho é o arquivo do item
         pose.translate(0.5f, 0.5f, 0.5f);
-        pose.scale(0.9f, 0.9f, 0.9f);
-        if (special()) {
-            // a foice de Blender já vem de pé: o original desenha-a sem o giro de 180, então desfaz-se ele
-            pose.mulPose(Axis.ZP.rotationDegrees(180.0f));
-            objScythe(pose, collector, light, overlay);
-        } else if (this.bone) {
-            boneScythe(pose, collector, light, overlay);
-        } else {
-            plainScythe(pose, collector, light, overlay);
-        }
+        if (this.bone) boneScythe(pose, collector, light, overlay);
+        else objScythe(pose, collector, light, overlay);
         pose.popPose();
-    }
-
-    /** As sete caixas do {@code ModelScythe}. */
-    private static void plainScythe(PoseStack pose, SubmitNodeCollector collector, int light, int overlay) {
-        part(pose, collector, HANDLE_MIDDLE, SCYTHE, 0, 1.7f, 0, -0.2602503f, 0, 0, light, overlay);
-        part(pose, collector, BLADE_EDGE, SCYTHE, 0.5f, -7.0f, 2.0f, 0, 0, QUARTER, light, overlay);
-        part(pose, collector, BLADE_BASE, SCYTHE, 0.2f, -8.0f, 1.0f, 0, 0, 0, light, overlay);
-        part(pose, collector, HANDLE_BOTTOM, SCYTHE, 0, 12.0f, -2.8f, 0, 0, 0, light, overlay);
-        part(pose, collector, HANDLE_TOP, SCYTHE, 0, -8.0f, 0, 0, 0, 0, light, overlay);
-        part(pose, collector, JOINT, SCYTHE, -0.5f, -8.1f, 0, 0, 0, 0, light, overlay);
-        part(pose, collector, BLADE_BASE, SCYTHE, -0.2f, -8.0f, 1.0f, 0, 0, 0, light, overlay);
     }
 
     /** E as sete do {@code ModelScytheBone}, com o gume que o {@code render} vira antes de desenhar. */
@@ -113,13 +86,6 @@ public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<U
         collector.submitCustomGeometry(pose, RenderTypes.entityCutout(folha),
                 (m, v) -> MeshDrawer.draw(mesh, m, v, light, overlay, 0xFFFFFFFF));
         pose.popPose();
-    }
-
-    // ------------------------------------------------------------- a foice de segredo
-
-    private static boolean special() {
-        var jogador = Minecraft.getInstance().player;
-        return jogador != null && SPECIAL.equals(jogador.getGameProfile().name());
     }
 
     /** O {@code ModelScytheSpecial}: o {@code scythe.obj}, em triângulos. */

@@ -123,6 +123,29 @@ public class MortuorumLookClientTest implements FabricClientGameTest {
             context.waitTicks(30);
             context.takeScreenshot("am_thaumonomicon_abas");
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
+
+            // ------------------------------------------------------------------ o vão da Porta Dimensional
+            perto(server, "tp @p ~12 ~ ~-12 0 0");
+            context.waitTicks(10);
+            perto(server, "fill ~-2 ~ ~4 ~2 ~3 ~4 minecraft:stone_bricks");
+            perto(server, "setblock ~ ~ ~4 thaumcraft:oak_dimensional_door[facing=south,half=lower]");
+            perto(server, "setblock ~ ~1 ~4 thaumcraft:oak_dimensional_door[facing=south,half=upper]");
+            server.runCommand("time set midnight");
+            context.waitTicks(20);
+            perto(server, "tp @p ~ ~1 ~1 0 0");
+            context.waitTicks(20);
+            context.takeScreenshot("dd_porta_fechada");
+            perto(server, "tp @p ~-2 ~ ~ -30 0");
+            context.waitTicks(20);
+            context.takeScreenshot("dd_porta_de_lado");
+            server.runCommand("time set noon");
+            // e o Muro de Caveiras, que ganhou folha de casa
+            perto(server, "setblock ~-3 ~-1 ~3 thaumcraft:skull_wall");
+            perto(server, "setblock ~-3 ~ ~3 thaumcraft:skull_wall");
+            perto(server, "tp @p ~-3 ~1 ~1 0 10");
+            context.waitTicks(20);
+            context.takeScreenshot("am_muro_caveiras");
+            server.runCommand("time set noon");
         }
     }
 

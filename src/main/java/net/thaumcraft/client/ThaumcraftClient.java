@@ -138,6 +138,10 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.shattered.ShatteredEntities.MONOLITH,
                 net.thaumcraft.shattered.client.MonolithRenderer::new);
+        // o vão da Porta Dimensional
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.shattered.ShatteredBlocks.RIFT_ENTITY,
+                net.thaumcraft.shattered.client.DimensionalPortalRenderer::new);
         net.thaumcraft.mortuorum.BloodFluid.clientDrip = (level, x, y, z) ->
                 level.addParticle(net.minecraft.core.particles.ParticleTypes.DRIPPING_LAVA, x, y, z, 0.0, 0.0, 0.0);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(

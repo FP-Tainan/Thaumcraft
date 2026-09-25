@@ -1,7 +1,7 @@
 {
   "model": {
     "type": "minecraft:special",
-    "base": "thaumcraft:item/scythe",
+    "base": "thaumcraft:item/scythe_bone",
     "model": {
       "type": "thaumcraft:scythe",
       "bone": true

@@ -24,11 +24,14 @@ public class ResearchGameTest {
      *
      * <p>Conta-se por aba, e não a tabela inteira: desde que a porta dos mods de fora existe, a árvore pode ter
      * pesquisas que não são do Thaumcraft — o que não pode é faltar ou sobrar nas abas dele.
+     *
+     * <p>A única que entra de fora é a Guerra Carmesim, que a pedido de quem joga trocou a aba própria dela por
+     * um lugar junto do Culto Carmesim; por isso a conta de {@code BASICS} é a do original mais uma.
      */
     @GameTest
     public void theTreeCameFromTheOriginal(GameTestHelper helper) {
         Map<String, Integer> expected = new HashMap<>();
-        expected.put("BASICS", 19);
+        expected.put("BASICS", 19 + 1);
         expected.put("THAUMATURGY", 42);
         expected.put("ALCHEMY", 35);
         expected.put("ARTIFICE", 50);

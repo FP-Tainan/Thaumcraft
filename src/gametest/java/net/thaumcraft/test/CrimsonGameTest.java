@@ -80,4 +80,31 @@ public class CrimsonGameTest {
         for (var bicho : chamados) bicho.discard();
         helper.succeed();
     }
+
+    /**
+     * A Guerra Carmesim pende do Culto Carmesim, e o ramo não tem aba própria.
+     *
+     * <p>É desvio declarado do original, e é fácil de desfazer sem querer: quem voltar a pôr a aba faz este
+     * teste cair.
+     */
+    @GameTest
+    public void theWarfareHangsFromTheCult(GameTestHelper helper) {
+        var guerra = net.thaumcraft.research.Researches.get("CW_WARFARE");
+        if (guerra == null) helper.fail("não há pesquisa CW_WARFARE");
+        var culto = net.thaumcraft.research.Researches.get("CRIMSON");
+        if (culto == null) helper.fail("não há pesquisa CRIMSON, que é o Culto Carmesim");
+        if (!guerra.category().equals(culto.category())) {
+            helper.fail("a guerra mora na aba do culto; está em " + guerra.category()
+                    + " e ele em " + culto.category());
+        }
+        if (!guerra.parents().contains("CRIMSON")) helper.fail("e pende dele");
+        if (net.thaumcraft.research.ResearchCategories.ALL.containsKey("WARFARE")) {
+            helper.fail("e o ramo não tem aba própria");
+        }
+        // os pais de verdade do original continuam a ser precisos, mas escondidos
+        for (String pai : new String[]{"VOIDMETAL", "ELDRITCHMINOR", "BOTTLETAINT"}) {
+            if (!guerra.parentsHidden().contains(pai)) helper.fail("falta o pai escondido " + pai);
+        }
+        helper.succeed();
+    }
 }
