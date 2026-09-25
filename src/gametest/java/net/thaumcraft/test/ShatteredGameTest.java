@@ -16,6 +16,37 @@ import net.thaumcraft.world.DynamicDimensions;
 
 /** Os Reinos Fragmentados: os tecidos e o que eles fazem. */
 public class ShatteredGameTest {
+    /** O Monólito não se mata, não se empurra e nunca está vivo. */
+    @GameTest
+    public void theMonolithIsNotAlive(GameTestHelper helper) {
+        var limbo = ShatteredRealms.limbo(helper.getLevel().getServer());
+        if (limbo == null) {
+            helper.fail("o Limbo devia abrir");
+            return;
+        }
+        var lousa = net.thaumcraft.shattered.ShatteredEntities.MONOLITH.create(limbo,
+                net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+        if (lousa == null) {
+            helper.fail("o Monólito devia nascer");
+            return;
+        }
+        lousa.snapTo(8.5, 80.0, 8.5, 0.0f, 0.0f);
+        limbo.addFreshEntity(lousa);
+
+        if (!lousa.isInvulnerable()) helper.fail("ele é invulnerável");
+        if (lousa.isPushable()) helper.fail("e não se empurra");
+        if (!lousa.isDangerous()) helper.fail("e no Limbo ele é perigoso");
+        if (lousa.face() != 0) helper.fail("nasce de olho fechado");
+
+        // bater nele só o irrita
+        lousa.hurtServer(limbo, lousa.damageSources().generic(), 10.0f);
+        if (lousa.aggro() != 0 && lousa.face() == 0) helper.fail("bater nele abre-lhe o olho");
+
+        lousa.discard();
+        net.thaumcraft.world.DynamicDimensions.remove(helper.getLevel().getServer(), ShatteredRealms.LIMBO);
+        helper.succeed();
+    }
+
     /** O Limbo abre-se, tem chão de tecido eterno e terra de tecido desfiado por cima. */
     @GameTest
     public void theLimboIsMadeOfFabric(GameTestHelper helper) {

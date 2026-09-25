@@ -125,6 +125,13 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("scythe"),
                 net.thaumcraft.mortuorum.client.ScytheItemRenderer.Unbaked.CODEC);
+        // o Monólito dos Reinos Fragmentados
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.shattered.client.MonolithRenderer.LAYER,
+                net.thaumcraft.shattered.client.MonolithRenderer.Model::createBodyLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.shattered.ShatteredEntities.MONOLITH,
+                net.thaumcraft.shattered.client.MonolithRenderer::new);
         net.thaumcraft.mortuorum.BloodFluid.clientDrip = (level, x, y, z) ->
                 level.addParticle(net.minecraft.core.particles.ParticleTypes.DRIPPING_LAVA, x, y, z, 0.0, 0.0, 0.0);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(

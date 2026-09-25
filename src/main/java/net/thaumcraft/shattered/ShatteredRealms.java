@@ -47,6 +47,7 @@ public final class ShatteredRealms {
         FabricBlocks.init();
         ShatteredBlocks.init();
         ShatteredComponents.init();
+        ShatteredEntities.init();
         ShatteredItems.init();
         // a aba do ramo no livro
         net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,

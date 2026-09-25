@@ -20,7 +20,21 @@ public class LimboClientTest implements FabricClientGameTest {
                 // o pedaço tem de estar feito antes de se lhe perguntar a altura
                 limbo.getChunk(0, 0);
                 int alto = limbo.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, 8, 8);
-                jogador.teleportTo(limbo, 8.5, alto + 1.0, 8.5, java.util.Set.of(), 135.0f, 5.0f, false);
+                jogador.teleportTo(limbo, 14.5, alto + 3.0, 14.5, java.util.Set.of(), 135.0f, -5.0f, false);
+                // e um monólito a olhar, uns blocos à frente
+                var lousa = net.thaumcraft.shattered.ShatteredEntities.MONOLITH.create(limbo,
+                        net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                if (lousa != null) {
+                    lousa.snapTo(2.5, alto + 1.0, 2.5, 0.0f, 0.0f);
+                    limbo.addFreshEntity(lousa);
+                    // o Limbo é escuro e a lousa é preta: umas luzes para se a ver
+                    for (int dx = -4; dx <= 4; dx += 4) {
+                        for (int dz = -4; dz <= 4; dz += 4) {
+                            limbo.setBlockAndUpdate(new net.minecraft.core.BlockPos(2 + dx, alto + 1, 2 + dz),
+                                    net.minecraft.world.level.block.Blocks.GLOWSTONE.defaultBlockState());
+                        }
+                    }
+                }
             });
             context.waitTicks(80);
             context.takeScreenshot("limbo");
