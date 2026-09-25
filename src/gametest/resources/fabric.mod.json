@@ -89,6 +89,7 @@
       "net.thaumcraft.test.MaleficiumGearGameTest"
     ],
     "fabric-client-gametest": [
+      "net.thaumcraft.test.client.MortuorumClientTest",
       "net.thaumcraft.test.client.LookClientTest",
       "net.thaumcraft.test.client.InfusionRunClientTest",
       "net.thaumcraft.test.client.WarpClientTest",

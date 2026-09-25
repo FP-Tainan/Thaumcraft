@@ -61,6 +61,18 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("summoning_altar"),
                 net.thaumcraft.mortuorum.client.SummoningAltarItemRenderer.Unbaked.CODEC);
+        // o Lacaio: uma camada de modelo por bicho de que se tiram peças, e mais a raiz vazia dele
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.mortuorum.client.MinionModel.EMPTY,
+                net.thaumcraft.mortuorum.client.MinionModel::createEmptyLayer);
+        for (var entrada : net.thaumcraft.mortuorum.client.MinionModel.LAYERS.entrySet()) {
+            var bicho = net.thaumcraft.mortuorum.client.MinionModels.of(entrada.getKey());
+            net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(entrada.getValue(),
+                    () -> net.thaumcraft.mortuorum.client.MinionModel.createLayer(bicho));
+        }
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.mortuorum.MortuorumEntities.MINION,
+                net.thaumcraft.mortuorum.client.MinionRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.naturalis.NaturalisBlocks.TRANSCRIBING_TABLE_ENTITY,
                 net.thaumcraft.naturalis.client.TranscribingTableRenderer::new);

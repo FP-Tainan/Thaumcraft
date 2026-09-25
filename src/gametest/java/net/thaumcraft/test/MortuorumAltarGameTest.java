@@ -106,6 +106,35 @@ public class MortuorumAltarGameTest {
         helper.succeed();
     }
 
+    /** Toda peça que se pode costurar tem desenho: senão o lacaio nasceria com um buraco no corpo. */
+    @GameTest
+    public void everyPartHasAModel(GameTestHelper helper) {
+        var modelos = net.thaumcraft.mortuorum.client.MinionModels.all();
+        if (modelos.size() != 16) helper.fail("são dezesseis bichos de que se tiram peças; achei " + modelos.size());
+        for (var entrada : MortuorumItems.PARTS.entrySet()) {
+            var bicho = net.thaumcraft.mortuorum.client.MinionModels.of(entrada.getValue().mob());
+            if (bicho == null) {
+                helper.fail("não há desenho nenhum de " + entrada.getValue().mob());
+                continue;
+            }
+            String peca = entrada.getValue().piece();
+            // o braço é um item só, mas dois desenhos: o da esquerda e o da direita
+            for (String lugar : peca.equals("Arm") ? new String[]{"ArmLeft", "ArmRight"} : new String[]{peca}) {
+                var pedacos = bicho.limbs().get(lugar);
+                if (pedacos == null || pedacos.isEmpty()) {
+                    helper.fail("falta o desenho de " + entrada.getKey() + " em " + lugar);
+                }
+            }
+        }
+        // e toda folha tem de ser do jogo, que é de onde o original as tira
+        for (var bicho : modelos.values()) {
+            if (!bicho.texture().startsWith("textures/entity/")) {
+                helper.fail("a folha de " + bicho.texture() + " não é de criatura do jogo");
+            }
+        }
+        helper.succeed();
+    }
+
     /** A mesa do altar ocupa mais dois blocos para o lado para onde ele olha. */
     @GameTest
     public void theAltarTakesThreeBlocks(GameTestHelper helper) {

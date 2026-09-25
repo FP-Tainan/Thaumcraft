@@ -25,10 +25,11 @@ public record SummoningAltarItemRenderer() implements SpecialModelRenderer<Unit>
     public void submit(@Nullable Unit ignored, PoseStack pose, SubmitNodeCollector collector,
                        int light, int overlay, boolean foil, int tint) {
         pose.pushPose();
-        pose.translate(0.5f, 0.1f, 0.5f);
+        pose.translate(0.5f, 0.5f, 0.5f);
         pose.scale(SCALE, SCALE, SCALE);
-        // a mesa sai para o +x do modelo; recuada um bloco, o conjunto fica no meio da casa
-        pose.translate(-1.0f, 1.5f, 0.0f);
+        // o altar vai de -0,5 a 2,5 de comprimento e de 0 a 1,5 de altura: o meio dele é este ponto
+        pose.translate(-1.0f, -0.75f, 0.0f);
+        pose.translate(0.5f, 1.5f, 0.5f);
         pose.scale(1.0f, -1.0f, -1.0f);
         SummoningAltarRenderer.boxes(pose, collector, light);
         pose.popPose();

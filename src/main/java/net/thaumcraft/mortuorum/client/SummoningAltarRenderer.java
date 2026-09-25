@@ -36,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class SummoningAltarRenderer implements BlockEntityRenderer<SummoningAltarBlockEntity, SummoningAltarRenderer.State> {
     private static final Identifier TEXTURE = Thaumcraft.id("textures/models/summoning_altar.png");
+    private static final Identifier TORCH = Identifier.withDefaultNamespace("textures/block/torch.png");
     private static final Identifier BOOK = Identifier.withDefaultNamespace("textures/entity/enchantment/enchanting_table_book.png");
 
     // as onze caixas do ModelAltar, todas espelhadas, numa folha de 128 por 64
@@ -110,10 +111,12 @@ public class SummoningAltarRenderer implements BlockEntityRenderer<SummoningAlta
         pose.pushPose();
         pose.translate(0.3f, -0.1f, -0.3f);
         pose.scale(-0.5f, -0.5f, 0.5f);
-        state.torch.submit(pose, collector, 0xF000F0, OverlayTexture.NO_OVERLAY, 0);
+        torch(pose, collector);
         pose.scale(0.1f, 0.1f, 0.1f);
         pose.mulPose(Axis.ZP.rotationDegrees(90.0f));
         pose.translate(-4.0f, -8.0f, 8.0f);
+        // o livro do original vai desenhado em medida de bloco; o de hoje já se encolhe por dentro
+        pose.scale(16.0f, 16.0f, 16.0f);
         collector.submitModel(this.book, new BookModel.State(1.22f, 0.0f, 0.0f), pose,
                 RenderTypes.entitySolid(BOOK), 0xF000F0, OverlayTexture.NO_OVERLAY, 0xFFE5E5E5, null, 0, null);
         pose.popPose();
@@ -134,6 +137,42 @@ public class SummoningAltarRenderer implements BlockEntityRenderer<SummoningAlta
         part(pose, collector, CONNECTION, 7, 8, -4, 0.0f, 0.0f, light);
         part(pose, collector, TABLE_MIDDLE, 8, 10, -5, 0.0f, 0.0f, light);
         part(pose, collector, TABLE_TOP, 8, 8, -8, 0.0f, 0.0f, light);
+    }
+
+    /**
+     * A tocha em cima do altar: o {@code renderBlockAsItem(Blocks.torch)} do original.
+     *
+     * <p>Hoje o item da tocha é uma figura chata, então o pau vai desenhado à mão, com as medidas e os recortes do
+     * {@code block/template_torch} do jogo: dois por dez por dois, no meio do bloco, e cada face no seu pedaço da
+     * figura.
+     */
+    private static void torch(PoseStack pose, SubmitNodeCollector collector) {
+        float x0 = 7.0f / 16.0f - 0.5f, x1 = 9.0f / 16.0f - 0.5f;
+        float y0 = -0.5f, y1 = 10.0f / 16.0f - 0.5f;
+        float z0 = 7.0f / 16.0f - 0.5f, z1 = 9.0f / 16.0f - 0.5f;
+        float u0 = 7.0f / 16.0f, u1 = 9.0f / 16.0f;
+        float vLado0 = 6.0f / 16.0f, vLado1 = 1.0f;
+        float vCima0 = 6.0f / 16.0f, vCima1 = 8.0f / 16.0f;
+        float vBaixo0 = 13.0f / 16.0f, vBaixo1 = 15.0f / 16.0f;
+        collector.submitCustomGeometry(pose, RenderTypes.entityCutout(TORCH), (m, v) -> {
+            quad(m, v, x0, y1, z0, x1, y1, z0, x1, y0, z0, x0, y0, z0, u0, vLado0, u1, vLado1, 0, 0, -1);
+            quad(m, v, x1, y1, z1, x0, y1, z1, x0, y0, z1, x1, y0, z1, u0, vLado0, u1, vLado1, 0, 0, 1);
+            quad(m, v, x0, y1, z1, x0, y1, z0, x0, y0, z0, x0, y0, z1, u0, vLado0, u1, vLado1, -1, 0, 0);
+            quad(m, v, x1, y1, z0, x1, y1, z1, x1, y0, z1, x1, y0, z0, u0, vLado0, u1, vLado1, 1, 0, 0);
+            quad(m, v, x0, y1, z1, x1, y1, z1, x1, y1, z0, x0, y1, z0, u0, vCima0, u1, vCima1, 0, 1, 0);
+            quad(m, v, x0, y0, z0, x1, y0, z0, x1, y0, z1, x0, y0, z1, u0, vBaixo0, u1, vBaixo1, 0, -1, 0);
+        });
+    }
+
+    private static void quad(com.mojang.blaze3d.vertex.PoseStack.Pose m, com.mojang.blaze3d.vertex.VertexConsumer v,
+                             float ax, float ay, float az, float bx, float by, float bz,
+                             float cx, float cy, float cz, float dx, float dy, float dz,
+                             float u0, float v0, float u1, float v1, float nx, float ny, float nz) {
+        float[][] cantos = {{ax, ay, az, u0, v0}, {bx, by, bz, u1, v0}, {cx, cy, cz, u1, v1}, {dx, dy, dz, u0, v1}};
+        for (float[] canto : cantos) {
+            v.addVertex(m, canto[0], canto[1], canto[2]).setColor(-1).setUv(canto[3], canto[4])
+                    .setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(m, nx, ny, nz);
+        }
     }
 
     /** Uma caixa do modelo: o ponto de giro, o giro em Z e o giro em X, na ordem do {@code ModelRenderer} antigo. */

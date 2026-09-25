@@ -48,8 +48,8 @@ public class MinionEntity extends TamableAnimal {
     private static final EntityDataAccessor<String> ARM_RIGHT = SynchedEntityData.defineId(MinionEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<String> LEGS = SynchedEntityData.defineId(MinionEntity.class, EntityDataSerializers.STRING);
 
-    /** A marca dos modificadores que as peças põem, para se poderem tirar depois. */
-    private static final String MODIFIER = "mortuorum:parts";
+    /** O {@code attackTimer} do original: enquanto corre, os braços do lacaio ficam levantados. */
+    private int attackTimer;
 
     public MinionEntity(EntityType<? extends MinionEntity> type, Level level) {
         super(type, level);
@@ -151,6 +151,32 @@ public class MinionEntity extends TamableAnimal {
                 instance.removeModifier(Identifier.fromNamespaceAndPath("thaumcraft", "minion_" + place));
             }
         }
+    }
+
+    // ----------------------------------------------------------------- o golpe
+
+    /** Quantos passos ainda faltam do gesto de bater. */
+    public int attackTimer() {
+        return this.attackTimer;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.attackTimer > 0) this.attackTimer--;
+    }
+
+    @Override
+    public boolean doHurtTarget(ServerLevel level, net.minecraft.world.entity.Entity target) {
+        this.attackTimer = 10;
+        this.level().broadcastEntityEvent(this, (byte) 4);
+        return super.doHurtTarget(level, target);
+    }
+
+    @Override
+    public void handleEntityEvent(byte event) {
+        if (event == 4) this.attackTimer = 10;
+        else super.handleEntityEvent(event);
     }
 
     // ----------------------------------------------------------------- o dono
