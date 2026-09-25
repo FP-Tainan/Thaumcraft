@@ -162,6 +162,32 @@ public final class ThaumcraftApi {
         return recipe;
     }
 
+    /**
+     * Uma pesquisa-sombra: o {@code ResearchItemProxy} do Magia Naturalis 0.5.0. Ela põe na aba do ramo uma cópia
+     * oca de uma pesquisa do Thaumcraft — mesmo desenho, mesmas páginas —, só de leitura e escondida, para servir
+     * de pé das pesquisas do ramo que nascem dela. Sabida a de verdade, a sombra abre junto.
+     *
+     * @param key      a chave da sombra, no espaço de nome do ramo
+     * @param category a aba do ramo
+     * @param original a chave da pesquisa do Thaumcraft de que ela é sombra
+     */
+    public static net.thaumcraft.research.Research proxy(String key, String category, String original,
+                                                        int column, int row) {
+        net.thaumcraft.research.Research base = net.thaumcraft.research.Researches.get(original);
+        if (base == null) {
+            net.thaumcraft.Thaumcraft.LOGGER.warn("sombra de pesquisa sem original: {}", original);
+            return null;
+        }
+        var builder = net.thaumcraft.research.Research.of(key, category).at(column, row).complexity(1).stub().hidden();
+        if (base.iconStack() != null) builder.icon(base.iconStack());
+        else if (base.iconTexture() != null) builder.icon(base.iconTexture());
+        builder.pages(base.pages().toArray(new net.thaumcraft.research.Page[0]));
+        if (base.is(net.thaumcraft.research.Research.Mark.SECONDARY)) builder.secondary();
+        net.thaumcraft.research.Research sombra = builder.register();
+        net.thaumcraft.research.Researches.addSibling(original, key);
+        return sombra;
+    }
+
     // ------------------------------------------------------------------ aspectos e distorção
 
     /**

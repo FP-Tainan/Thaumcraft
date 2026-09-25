@@ -38,6 +38,22 @@ public final class Researches {
         add(research);
     }
 
+    /**
+     * Dá uma irmã nova a uma pesquisa que já está no livro: é o {@code addSiblingToOriginal} do
+     * {@code ResearchItemProxy}, que faz a sombra do ramo abrir junto com a pesquisa de que ela é sombra.
+     */
+    public static void addSibling(String key, String sibling) {
+        Research research = ALL.get(key);
+        if (research == null) return;
+        if (research.siblings().contains(sibling)) return;
+        List<String> irmas = new ArrayList<>(research.siblings());
+        irmas.add(sibling);
+        add(new Research(research.key(), research.category(), research.tags(), research.column(), research.row(),
+                research.complexity(), research.iconTexture(), research.iconStack(), research.marks(),
+                research.parents(), research.parentsHidden(), List.copyOf(irmas), research.pages(),
+                research.warp(), research.requires()));
+    }
+
     /** Só para garantir que a tabela do mod já esteja montada antes de um mod de fora mexer nela. */
     public static void init() {
     }

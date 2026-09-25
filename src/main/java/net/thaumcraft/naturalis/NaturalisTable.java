@@ -19,8 +19,18 @@ public final class NaturalisTable {
     private NaturalisTable() {
     }
 
-    /** As pesquisas, na ordem em que o original as registra. */
+    /**
+     * As pesquisas, na ordem em que o original as registra. As primeiras são as sombras das pesquisas do
+     * Thaumcraft de que as do ramo nascem, como o ResearchItemProxy do original as punha.
+     */
     public static void research() {
+        ThaumcraftApi.proxy("MN_TC_GOGGLES", Naturalis.CATEGORY, "GOGGLES", -4, 1);
+        ThaumcraftApi.proxy("MN_TC_WARDED_ARCANA", Naturalis.CATEGORY, "WARDEDARCANA", -5, -2);
+        ThaumcraftApi.proxy("MN_TC_FOCUS_TRADE", Naturalis.CATEGORY, "FOCUSTRADE", 2, -4);
+        ThaumcraftApi.proxy("MN_TC_CRUCIBLE", Naturalis.CATEGORY, "CRUCIBLE", 3, -1);
+        ThaumcraftApi.proxy("MN_TC_FOCUS_POUCH", Naturalis.CATEGORY, "FOCUSPOUCH", 4, 2);
+        ThaumcraftApi.proxy("MN_TC_TRAVEL_TRUNK", Naturalis.CATEGORY, "TRAVELTRUNK", 1, 3);
+
         ThaumcraftApi.research("MN_INTRO", Naturalis.CATEGORY)
                 .at(0, 0)
                 .icon(() -> new ItemStack(TCResources.get("primal_charm")))
@@ -60,7 +70,7 @@ public final class NaturalisTable {
                 .at(-6, 0)
                 .complexity(1)
                 .icon(() -> new ItemStack(NaturalisItems.SPECTACLES))
-                .parents("GOGGLES")
+                .parents("MN_TC_GOGGLES")
                 .secondary()
                 .pages(Page.text("tc.research_page.MN_SPECTACLES.1"), Page.crafting("Spectacles"))
                 .register();
@@ -70,7 +80,7 @@ public final class NaturalisTable {
                 .at(-7, 2)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.DARK_CRYSTAL_GOGGLES))
-                .parents("GOGGLES")
+                .parents("MN_TC_GOGGLES")
                 .hiddenParents("MN_SPECTACLES")
                 .warp(1)
                 .pages(Page.text("tc.research_page.MN_DARK_GOGGLES.1"), Page.crafting("DarkGoggles"))
@@ -81,7 +91,7 @@ public final class NaturalisTable {
                 .at(-4, -3)
                 .complexity(3)
                 .icon(() -> new ItemStack(NaturalisItems.KEY_OF_UNRAVELING))
-                .parents("WARDEDARCANA")
+                .parents("MN_TC_WARDED_ARCANA")
                 .pages(Page.text("tc.research_page.MN_ARCANE_KEYS.1"), Page.crafting("ThaumiumKey1"), Page.text("tc.research_page.MN_ARCANE_KEYS.2"), Page.crafting("ThaumiumKey2"))
                 .register();
 
@@ -90,7 +100,7 @@ public final class NaturalisTable {
                 .at(-7, -3)
                 .complexity(3)
                 .icon(() -> new ItemStack(NaturalisBlocks.ARCANE_CHEST_GREATWOOD.asItem()))
-                .parents("WARDEDARCANA")
+                .parents("MN_TC_WARDED_ARCANA")
                 .pages(Page.text("tc.research_page.MN_ARCANE_CHEST.1"), Page.crafting("ArcaneChest1"), Page.crafting("ArcaneChest2"))
                 .register();
 
@@ -99,7 +109,7 @@ public final class NaturalisTable {
                 .at(4, -5)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.BUILDER_FOCUS))
-                .parents("FOCUSTRADE")
+                .parents("MN_TC_FOCUS_TRADE")
                 .pages(Page.text("tc.research_page.MN_CONSTRUCTION_FOCUS.1"), Page.crafting("ConstructionFocus"))
                 .register();
 
@@ -119,7 +129,7 @@ public final class NaturalisTable {
                 .at(4, -3)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.MUTATION_STONE))
-                .parents("FOCUSTRADE", "CRUCIBLE")
+                .parents("MN_TC_FOCUS_TRADE", "MN_TC_CRUCIBLE")
                 .secondary()
                 .pages(Page.text("tc.research_page.MN_MUTATION_STONE.1"), Page.crafting("StonePheno"), Page.crafting("WoodConversion1", "WoodConversion2", "WoodConversion3", "WoodConversion4", "WoodConversion5", "WoodConversion6"), Page.crafting("ColorConversion1", "ColorConversion2", "ColorConversion3", "ColorConversion4", "ColorConversion5", "ColorConversion6", "ColorConversion7", "ColorConversion8", "ColorConversion9", "ColorConversion10", "ColorConversion11", "ColorConversion12", "ColorConversion13", "ColorConversion14", "ColorConversion15", "ColorConversion16", "ColorConversion17", "ColorConversion18", "ColorConversion19", "ColorConversion20", "ColorConversion21", "ColorConversion22", "ColorConversion23", "ColorConversion24", "ColorConversion25", "ColorConversion26", "ColorConversion27", "ColorConversion28", "ColorConversion29", "ColorConversion30", "ColorConversion31", "ColorConversion32"))
                 .register();
@@ -129,7 +139,7 @@ public final class NaturalisTable {
                 .at(6, -1)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.QUICKSILVER_STONE))
-                .parents("CRUCIBLE")
+                .parents("MN_TC_CRUCIBLE")
                 .pages(Page.text("tc.research_page.MN_QUICKSILVER_STONE.1"), Page.crafting("StoneQuick"))
                 .register();
 
@@ -138,7 +148,7 @@ public final class NaturalisTable {
                 .at(6, 3)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.ENDER_POUCH))
-                .parents("FOCUSPOUCH")
+                .parents("MN_TC_FOCUS_POUCH")
                 .round()
                 .pages(Page.text("tc.research_page.MN_ENDER_POUCH.1"), Page.crafting("EnderPouch"))
                 .register();
@@ -148,7 +158,7 @@ public final class NaturalisTable {
                 .at(2, 5)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.TRUNK_SPAWNER_CORRUPTED))
-                .parents("TRAVELTRUNK")
+                .parents("MN_TC_TRAVEL_TRUNK")
                 .warp(1)
                 .pages(Page.text("tc.research_page.MN_EVIL_TRUNK.1"), Page.crafting("CorruptedTrunk"), Page.crafting("SinisterTrunk"), Page.crafting("DemonicTrunk"), Page.crafting("TaintedTrunk"))
                 .register();

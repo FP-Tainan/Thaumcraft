@@ -600,4 +600,34 @@ public class NaturalisGameTest {
         }
         helper.succeed();
     }
+
+    /** As sombras das pesquisas do Thaumcraft estão na aba do ramo, ocas e irmãs das de verdade. */
+    @GameTest
+    public void theBranchHasTheThaumcraftShadows(GameTestHelper helper) {
+        String[][] sombras = {{"MN_TC_GOGGLES", "GOGGLES"}, {"MN_TC_WARDED_ARCANA", "WARDEDARCANA"},
+                {"MN_TC_FOCUS_TRADE", "FOCUSTRADE"}, {"MN_TC_CRUCIBLE", "CRUCIBLE"},
+                {"MN_TC_FOCUS_POUCH", "FOCUSPOUCH"}, {"MN_TC_TRAVEL_TRUNK", "TRAVELTRUNK"}};
+        for (String[] par : sombras) {
+            var sombra = net.thaumcraft.research.Researches.get(par[0]);
+            var original = net.thaumcraft.research.Researches.get(par[1]);
+            if (sombra == null) {
+                helper.fail("falta a sombra " + par[0]);
+                return;
+            }
+            if (!sombra.category().equals(net.thaumcraft.naturalis.Naturalis.CATEGORY)) {
+                helper.fail(par[0] + " devia estar na aba do ramo");
+            }
+            if (!sombra.is(net.thaumcraft.research.Research.Mark.STUB)
+                    || !sombra.is(net.thaumcraft.research.Research.Mark.HIDDEN)) {
+                helper.fail(par[0] + " é oca e escondida, como no original");
+            }
+            if (sombra.pages().size() != original.pages().size()) {
+                helper.fail(par[0] + " lê as páginas da pesquisa de que é sombra");
+            }
+            if (!original.siblings().contains(par[0])) {
+                helper.fail(par[1] + " devia ter a sombra por irmã");
+            }
+        }
+        helper.succeed();
+    }
 }
