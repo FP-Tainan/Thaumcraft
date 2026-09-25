@@ -1004,6 +1004,8 @@ public final class TCItems {
             "lime_tallow_candle", "pink_tallow_candle", "gray_tallow_candle", "light_gray_tallow_candle", "cyan_tallow_candle",
             "purple_tallow_candle", "blue_tallow_candle", "brown_tallow_candle", "green_tallow_candle", "red_tallow_candle", "black_tallow_candle",
             "brainy_zombie_spawn_egg", "giant_brainy_zombie_spawn_egg", "wisp_spawn_egg", "firebat_spawn_egg", "pech_spawn_egg",
+            // o altar antigo do Crimson Warfare, que no mundo só nasce e não se faz
+            "ancient_altar",
     };
 
     /**

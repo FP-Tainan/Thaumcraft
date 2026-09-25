@@ -63,6 +63,12 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> RUINS_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("ruins"));
 
+    /** O altar antigo do Crimson Warfare: um disco de pedra arcana com o pedestal no meio. */
+    public static final Feature<NoneFeatureConfiguration> ANCIENT_ALTAR = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("ancient_altar"), new net.thaumcraft.crimson.AncientAltarFeature(NoneFeatureConfiguration.CODEC));
+    public static final ResourceKey<PlacedFeature> ANCIENT_ALTAR_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("ancient_altar"));
+
     /** O gerador das Terras de Fora: chunks vazios, com os recursos do bioma. */
     public static final com.mojang.serialization.MapCodec<net.thaumcraft.world.outer.OuterChunkGenerator> OUTER_GENERATOR = Registry.register(
             BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("outer"), net.thaumcraft.world.outer.OuterChunkGenerator.CODEC);
@@ -77,6 +83,11 @@ public final class TCFeatures {
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES,
                 RUINS_PLACED);
+        // o altar antigo do Crimson Warfare: uma tentativa por pedaço, e uma em mil dá certo
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES,
+                ANCIENT_ALTAR_PLACED);
         // os minérios: cinábrio, âmbar e os veios de pedra infundida, de onde saem os fragmentos
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
