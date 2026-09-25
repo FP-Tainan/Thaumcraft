@@ -25,6 +25,7 @@ public class TabGameTest {
             if (net.thaumcraft.maleficium.MaleficiumItems.shown().contains(item)) continue;
             if (net.thaumcraft.naturalis.NaturalisItems.shown().contains(item)) continue;
             if (net.thaumcraft.forbidden.ForbiddenItems.shown().contains(item)) continue;
+            if (net.thaumcraft.mortuorum.MortuorumItems.shown().contains(item)) continue;
             ours++;
         }
         if (ours < 60) helper.fail("o mod devia ter mais itens que isso: " + ours);

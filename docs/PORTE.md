@@ -2293,3 +2293,21 @@ E o livro inteiro em **inglês e português**: trinta nomes, trinta subtítulos 
 Divino (Blood Magic), as hastes e pontas de Botania, Ars Magica, Witchery e Equivalent Exchange, o Matadragões
 (Draconic Evolution) e as duas poções, que só vêm desses. Também ficam de fora as duas peças de brincadeira feitas
 de bedrock e de bloco de comando.
+
+## O Ars Mortuorum (2026-09-25)
+
+O quarto ramo de fora: o **Necromancy 1.7.10**, de sirolf2009 (119 classes), que na lore de quem joga se chama
+**Ars Mortuorum** — a arte de costurar os mortos. O código mora em `net.thaumcraft.mortuorum`, as figuras e os
+textos no espaço de nome `thaumcraft`, e as chaves de pesquisa levam o prefixo `AM_`.
+
+### Fatia 1 — as coisas que se tiram dos mortos
+
+- Os quatro avulsos do `ItemGeneric`: a **Agulha de Osso**, a **Alma num Pote**, o **Pote de Sangue** e o
+  **Cérebro no Espeto**.
+- Os cinco **órgãos** do `ItemOrgans` — miolos, coração, músculo, pulmões e pele —, que se comem: dois de fome,
+  pouca saturação e meio minuto de fome oito vezes em dez, como no original.
+- E as **cinquenta e quatro peças de corpo** do `ItemBodyPart`: dezesseis bichos, cada um com os pedaços que o
+  original lhe dá (da vaca saem quatro; do lobo, só a cabeça).
+
+Onde o original guardava tudo isso em três itens com muitos números, aqui é um item por coisa, que é como o jogo
+de hoje faz — e cada um leva a figura que tinha lá.
