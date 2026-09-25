@@ -111,6 +111,35 @@ public final class MortuorumItems {
     public static final Item SCYTHE_BONE_ITEM = register("scythe_bone", properties ->
             new ScytheItem(properties.sword(SCYTHE_BONE, 3.0f, -2.4f)));
 
+    /** O Necronomicon, que não se lê: ele levanta o altar de três pedras. */
+    public static final Item NECRONOMICON = register("necronomicon", properties ->
+            new NecronomiconItem(properties.stacksTo(1)));
+
+    /**
+     * De que é feita a Cabeça de Isaac: o {@code EnumHelper.addArmorMaterial("Isaac", MAX_VALUE, {0,0,0,0}, 0)} do
+     * original — não protege de nada e nunca se gasta; é máscara, não armadura.
+     *
+     * <p>A encantabilidade do original é zero, e o jogo de hoje não aceita zero: aqui vai um, que é o mais perto
+     * que se pode chegar.
+     */
+    public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> ISAAC_ASSET =
+            ResourceKey.create(net.minecraft.world.item.equipment.EquipmentAssets.ROOT_ID, Thaumcraft.id("isaac_head"));
+
+    public static final net.minecraft.world.item.equipment.ArmorMaterial ISAAC =
+            new net.minecraft.world.item.equipment.ArmorMaterial(0,
+                    Map.of(net.minecraft.world.item.equipment.ArmorType.HELMET, 0),
+                    1, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f,
+                    net.minecraft.tags.TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_isaac")), ISAAC_ASSET);
+
+    /** A Cabeça de Isaac, que se põe na cabeça. */
+    public static final Item ISAACS_HEAD = register("isaacs_head", properties ->
+            new Item(properties.humanoidArmor(ISAAC, net.minecraft.world.item.equipment.ArmorType.HELMET)));
+
+    /** O Muro de Caveiras. */
+    public static final Item SKULL_WALL = register("skull_wall", properties ->
+            new net.minecraft.world.item.BlockItem(MortuorumBlocks.SKULL_WALL,
+                    properties.useBlockDescriptionPrefix()));
+
     /** O balde de sangue. */
     public static final Item BUCKET_BLOOD = register("bucket_blood", properties ->
             new net.minecraft.world.item.BucketItem(MortuorumFluids.BLOOD, properties

@@ -39,6 +39,11 @@ public final class MortuorumBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(SummoningAltarBlockEntity::new,
                             java.util.Set.of(SUMMONING_ALTAR)));
 
+    /** O Muro de Caveiras, com a cara e a dureza da obsidiana. */
+    public static final Block SKULL_WALL = register("skull_wall", properties ->
+            new SkullWallBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(50.0f, 2000.0f)
+                    .sound(SoundType.STONE)));
+
     /** O sangue que corre no chão. */
     public static final Block BLOOD = register("blood", properties ->
             new net.thaumcraft.fluid.ThaumFluid.LiquidBlock(MortuorumFluids.BLOOD, properties

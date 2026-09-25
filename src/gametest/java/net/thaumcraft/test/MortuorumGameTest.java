@@ -11,6 +11,49 @@ import net.thaumcraft.mortuorum.MortuorumItems;
  * O ramo do Ars Mortuorum: as coisas que se tiram dos mortos.
  */
 public class MortuorumGameTest {
+    /** O Necronomicon levanta o altar de uma tábua com duas pedregulhos enfileiradas. */
+    @GameTest
+    public void theNecronomiconRaisesTheAltar(GameTestHelper helper) {
+        BlockPos tabua = new BlockPos(1, 2, 2);
+        helper.setBlock(tabua, net.minecraft.world.level.block.Blocks.OAK_PLANKS);
+        helper.setBlock(tabua.east(1), net.minecraft.world.level.block.Blocks.COBBLESTONE);
+        helper.setBlock(tabua.east(2), net.minecraft.world.level.block.Blocks.COBBLESTONE);
+
+        var leitor = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack livro = new ItemStack(MortuorumItems.NECRONOMICON);
+        leitor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, livro);
+        var alvo = new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(tabua)),
+                net.minecraft.core.Direction.UP, helper.absolutePos(tabua), false);
+        MortuorumItems.NECRONOMICON.useOn(new net.minecraft.world.item.context.UseOnContext(
+                helper.getLevel(), leitor, net.minecraft.world.InteractionHand.MAIN_HAND, livro, alvo));
+
+        helper.assertBlockPresent(net.thaumcraft.mortuorum.MortuorumBlocks.SUMMONING_ALTAR, tabua);
+        helper.assertBlockPresent(net.thaumcraft.mortuorum.MortuorumBlocks.SUMMONING_ALTAR_PART, tabua.east(1));
+        helper.assertBlockPresent(net.thaumcraft.mortuorum.MortuorumBlocks.SUMMONING_ALTAR_PART, tabua.east(2));
+        if (!livro.isEmpty()) helper.fail("o livro devia gastar-se");
+        helper.succeed();
+    }
+
+    /** Sem as duas pedregulhos, o livro não faz nada. */
+    @GameTest
+    public void theNecronomiconNeedsTheCobble(GameTestHelper helper) {
+        BlockPos tabua = new BlockPos(2, 2, 2);
+        helper.setBlock(tabua, net.minecraft.world.level.block.Blocks.OAK_PLANKS);
+
+        var leitor = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack livro = new ItemStack(MortuorumItems.NECRONOMICON);
+        var alvo = new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(tabua)),
+                net.minecraft.core.Direction.UP, helper.absolutePos(tabua), false);
+        MortuorumItems.NECRONOMICON.useOn(new net.minecraft.world.item.context.UseOnContext(
+                helper.getLevel(), leitor, net.minecraft.world.InteractionHand.MAIN_HAND, livro, alvo));
+
+        helper.assertBlockPresent(net.minecraft.world.level.block.Blocks.OAK_PLANKS, tabua);
+        if (livro.isEmpty()) helper.fail("e não devia gastar-se à toa");
+        helper.succeed();
+    }
+
     /** A foice tira a alma de quem mata, e gasta uma garrafa vazia para guardá-la. */
     @GameTest
     public void theScytheBottlesTheSoul(GameTestHelper helper) {
