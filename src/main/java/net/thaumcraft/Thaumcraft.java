@@ -65,6 +65,7 @@ public class Thaumcraft implements ModInitializer {
         // o Maleficium: o Tainted Magic, que no original era um mod à parte
         net.thaumcraft.maleficium.Maleficium.init();
         net.thaumcraft.naturalis.Naturalis.init();
+        net.thaumcraft.forbidden.Forbidden.init();
         net.thaumcraft.event.RunicShield.init();
         net.thaumcraft.event.Hover.init();
         net.thaumcraft.loot.ChestLoot.init();

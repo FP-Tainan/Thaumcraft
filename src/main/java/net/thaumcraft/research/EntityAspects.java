@@ -30,8 +30,20 @@ public final class EntityAspects {
 
     private static final Map<String, List<Entry>> TABLE = new HashMap<>();
 
+    /** O que os ramos de fora somam à tabela, como o {@code scanEntities} que os addons do original percorriam. */
+    private static final List<java.util.function.Consumer<Registrar>> HOOKS = new ArrayList<>();
+
     static {
         EntityAspectsTable.register(new Registrar());
+    }
+
+    /**
+     * Um ramo de fora somando aspecto às criaturas. Chama-se isto ao carregar o mod; o que for somado vale para
+     * todas as anotações daquela criatura.
+     */
+    public static void onRegister(java.util.function.Consumer<Registrar> hook) {
+        HOOKS.add(hook);
+        hook.accept(new Registrar());
     }
 
     private EntityAspects() {
@@ -43,6 +55,22 @@ public final class EntityAspects {
 
         public void entity(String id, String key, String value, AspectList aspects) {
             TABLE.computeIfAbsent(id, k -> new ArrayList<>()).add(new Entry(key, value, aspects));
+        }
+
+        /**
+         * Soma aspecto ao que a criatura já tem. Com {@code variante} falso vale para a anotação simples dela; com
+         * verdadeiro, para as que pedem NBT (o esqueleto do Nether de então, o creeper carregado).
+         */
+        public void add(String id, boolean variante, AspectList extra) {
+            List<Entry> entries = TABLE.get(id);
+            if (entries == null) return;
+            for (int i = 0; i < entries.size(); i++) {
+                Entry entry = entries.get(i);
+                if (variante != (entry.key() != null)) continue;
+                AspectList soma = entry.aspects().copy();
+                soma.add(extra);
+                entries.set(i, new Entry(entry.key(), entry.value(), soma));
+            }
         }
     }
 

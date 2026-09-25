@@ -53,6 +53,16 @@ public final class Aspect {
         return new Aspect(tag, color, new Aspect[]{first, second}, null, 771);
     }
 
+    /**
+     * Um aspecto de fora do mod, como o {@code new Aspect(tag, cor, componentes, imagem, mistura)} que os addons do
+     * original usavam. A imagem sai do mesmo lugar que a dos outros: {@code textures/aspects/<nome>.png}.
+     *
+     * @param blend 1 soma luz, 771 mistura por cima (é o que perdição e vazio fazem)
+     */
+    public static Aspect of(String tag, int color, Aspect first, Aspect second, int blend) {
+        return new Aspect(tag, color, new Aspect[]{first, second}, null, blend);
+    }
+
     public String tag() {
         return this.tag;
     }

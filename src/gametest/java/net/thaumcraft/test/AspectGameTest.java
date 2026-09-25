@@ -14,14 +14,29 @@ import java.util.List;
  * mexer numa cor, num par de composição ou esquecer um símbolo, o build para aqui.
  */
 public class AspectGameTest {
-    /** Quarenta e oito aspectos, seis deles primários — os números do mod original. */
+    /**
+     * Quarenta e oito aspectos do próprio Thaumcraft, seis deles primários — os números do mod original. A conta é
+     * dos que a classe {@link Aspects} declara: a tabela inteira pode ter mais, porque os ramos de fora somam os
+     * deles a ela, como os addons do original faziam.
+     */
     @GameTest
     public void tableMatchesTheOriginal(GameTestHelper helper) {
-        if (Aspects.count() != 48) {
-            helper.fail("a tabela tem " + Aspects.count() + " aspectos; o original tem 48");
+        List<Aspect> doMod = new ArrayList<>();
+        for (java.lang.reflect.Field campo : Aspects.class.getDeclaredFields()) {
+            if (campo.getType() != Aspect.class) continue;
+            try {
+                doMod.add((Aspect) campo.get(null));
+            } catch (IllegalAccessException erro) {
+                helper.fail("não consegui ler o campo " + campo.getName());
+            }
         }
-        long primal = Aspects.all().stream().filter(Aspect::isPrimal).count();
+        if (doMod.size() != 48) helper.fail("o mod declara " + doMod.size() + " aspectos; o original tem 48");
+        long primal = doMod.stream().filter(Aspect::isPrimal).count();
         if (primal != 6) helper.fail("primários: " + primal + ", esperado 6");
+        // e todos eles estão na tabela de verdade
+        for (Aspect aspecto : doMod) {
+            if (Aspect.ASPECTS.get(aspecto.tag()) != aspecto) helper.fail(aspecto.tag() + " sumiu da tabela");
+        }
         helper.succeed();
     }
 

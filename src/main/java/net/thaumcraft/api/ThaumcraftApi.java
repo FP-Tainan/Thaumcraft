@@ -191,6 +191,18 @@ public final class ThaumcraftApi {
     // ------------------------------------------------------------------ aspectos e distorção
 
     /**
+     * Um aspecto novo, do jeito que os addons do original os criavam: o nome em latim, a cor, os dois de que ele
+     * nasce e como o símbolo se mistura na tela (1 soma luz, 771 mistura por cima).
+     *
+     * <p>A figura vem de {@code assets/thaumcraft/textures/aspects/<nome>.png}.
+     */
+    public static net.thaumcraft.api.aspects.Aspect aspect(String tag, int color,
+                                                           net.thaumcraft.api.aspects.Aspect first,
+                                                           net.thaumcraft.api.aspects.Aspect second, int blend) {
+        return net.thaumcraft.api.aspects.Aspect.of(tag, color, first, second, blend);
+    }
+
+    /**
      * De que as coisas do seu mod são feitas. O que não for anotado aqui o Thaumcraft deduz das receitas, como faz
      * com tudo — anote só as peças de base.
      */

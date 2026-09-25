@@ -82,6 +82,7 @@
       "net.thaumcraft.test.MaleficiumBladesGameTest",
       "net.thaumcraft.test.NamesGameTest",
       "net.thaumcraft.test.NaturalisGameTest",
+      "net.thaumcraft.test.ForbiddenGameTest",
       "net.thaumcraft.test.MaleficiumGameTest",
       "net.thaumcraft.test.MaleficiumGearGameTest"
     ],

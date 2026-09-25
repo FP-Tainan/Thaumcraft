@@ -344,6 +344,27 @@ public final class ObjectAspects {
             for (Holder<Item> holder : BuiltInRegistries.ITEM.getTagOrEmpty(key)) building.put(holder.value(), aspects.copy());
         }
 
+        /**
+         * O jeito dos addons do original: {@code getObjectAspects}, somar o que é seu e registrar de volta. Se a
+         * coisa ainda não tiver anotação, esta vira a dela.
+         */
+        public void add(String id, AspectList extra) {
+            Item item = find(id);
+            if (item == null) return;
+            AspectList list = building.containsKey(item) ? building.get(item).copy() : new AspectList();
+            list.add(extra);
+            building.put(item, list);
+        }
+
+        /** O mesmo, num bloco que não vira item (o portal, o fogo, a água). */
+        public void blockAdd(String id, AspectList extra) {
+            BuiltInRegistries.BLOCK.getOptional(Identifier.parse(id)).ifPresent(block -> {
+                AspectList list = BLOCKS.containsKey(block) ? BLOCKS.get(block).copy() : new AspectList();
+                list.add(extra);
+                BLOCKS.put(block, list);
+            });
+        }
+
         /** A anotação que só vale se aquilo ainda não tiver uma: serve para tapar buracos sem mexer no que o original diz. */
         public void itemIfAbsent(String id, AspectList aspects) {
             Item item = find(id);
