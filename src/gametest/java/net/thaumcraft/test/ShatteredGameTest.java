@@ -16,6 +16,61 @@ import net.thaumcraft.world.DynamicDimensions;
 
 /** Os Reinos Fragmentados: os tecidos e o que eles fazem. */
 public class ShatteredGameTest {
+    /** A fenda come o mundo em volta e deixa Fio do Mundo, que é de onde o ramo todo começa. */
+    @GameTest
+    public void theRiftEatsTheWorldAndLeavesThread(GameTestHelper helper) {
+        BlockPos fenda = new BlockPos(3, 3, 3);
+        var level = helper.getLevel();
+        // uma bola de pedra em volta da fenda
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                for (int dz = -2; dz <= 2; dz++) {
+                    if (dx == 0 && dy == 0 && dz == 0) continue;
+                    helper.setBlock(fenda.offset(dx, dy, dz), net.minecraft.world.level.block.Blocks.STONE);
+                }
+            }
+        }
+        helper.setBlock(fenda, net.thaumcraft.shattered.ShatteredBlocks.RIFT);
+
+        // mordidas que cheguem para se ver o buraco e algum fio
+        var absoluto = helper.absolutePos(fenda);
+        for (int vez = 0; vez < 400; vez++) {
+            net.thaumcraft.shattered.RiftDecay.bite(level, absoluto, level.getRandom());
+        }
+        boolean buraco = false;
+        for (int dx = -2; dx <= 2 && !buraco; dx++) {
+            for (int dy = -2; dy <= 2 && !buraco; dy++) {
+                for (int dz = -2; dz <= 2 && !buraco; dz++) {
+                    if (dx == 0 && dy == 0 && dz == 0) continue;
+                    if (level.getBlockState(absoluto.offset(dx, dy, dz)).isAir()) buraco = true;
+                }
+            }
+        }
+        if (!buraco) helper.fail("a fenda devia ter comido alguma pedra");
+
+        var fios = level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                new net.minecraft.world.phys.AABB(absoluto).inflate(6.0),
+                item -> item.getItem().is(ShatteredItems.WORLD_THREAD));
+        if (fios.isEmpty()) helper.fail("e deixado algum Fio do Mundo");
+        for (var fio : fios) fio.discard();
+
+        // e não come o que é do ramo
+        if (net.thaumcraft.shattered.RiftDecay.canDecay(
+                net.thaumcraft.shattered.ShatteredBlocks.RIFT.defaultBlockState())) {
+            helper.fail("a fenda não come outra fenda");
+        }
+        if (net.thaumcraft.shattered.RiftDecay.canDecay(
+                net.thaumcraft.shattered.FabricBlocks.FABRIC.get(
+                        net.minecraft.world.item.DyeColor.BLACK).defaultBlockState())) {
+            helper.fail("nem o tecido");
+        }
+        if (net.thaumcraft.shattered.RiftDecay.canDecay(
+                net.minecraft.world.level.block.Blocks.BEDROCK.defaultBlockState())) {
+            helper.fail("nem a rocha-mãe");
+        }
+        helper.succeed();
+    }
+
     /** O Monólito não se mata, não se empurra e nunca está vivo. */
     @GameTest
     public void theMonolithIsNotAlive(GameTestHelper helper) {

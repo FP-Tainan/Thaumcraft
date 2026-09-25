@@ -45,7 +45,7 @@ public final class ShatteredBlocks {
     /** A fenda solta, que fica no ar. */
     public static final Block RIFT = register("rift", properties ->
             new FloatingRiftBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(-1.0f, 3600000.0f)
-                    .noOcclusion().noCollision().noLootTable().lightLevel(state -> 8)
+                    .noOcclusion().noCollision().noLootTable().lightLevel(state -> 8).randomTicks()
                     .replaceable().air()));
 
     public static final BlockEntityType<RiftBlockEntity> RIFT_ENTITY =

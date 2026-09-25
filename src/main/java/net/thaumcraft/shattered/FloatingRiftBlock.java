@@ -69,6 +69,17 @@ public class FloatingRiftBlock extends BaseEntityBlock {
         if (fenda.teleport(entity)) entity.setPortalCooldown(0);
     }
 
+    @Override
+    protected boolean isRandomlyTicking(BlockState state) {
+        return true;
+    }
+
+    /** A fenda vai desfazendo o mundo em volta, e do que ela come sai o Fio do Mundo. */
+    @Override
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, net.minecraft.util.RandomSource random) {
+        RiftDecay.bite(level, pos, random);
+    }
+
     /** As fagulhas que saem dela, do lado de quem vê. */
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
