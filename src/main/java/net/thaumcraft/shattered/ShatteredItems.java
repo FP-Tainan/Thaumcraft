@@ -29,9 +29,20 @@ public final class ShatteredItems {
         for (Block bloco : FabricBlocks.ANCIENT.values()) item(bloco);
         item(FabricBlocks.ETERNAL);
         item(FabricBlocks.UNRAVELLED);
+        for (Block porta : ShatteredBlocks.doors()) door(porta);
     }
 
     private ShatteredItems() {
+    }
+
+    /** As portas entram na mochila como item de porta, que se põe de pé em duas metades. */
+    private static void door(Block bloco) {
+        Identifier id = BuiltInRegistries.BLOCK.getKey(bloco);
+        var properties = new Item.Properties()
+                .setId(ResourceKey.create(Registries.ITEM, id))
+                .useBlockDescriptionPrefix();
+        ORDER.add(Registry.register(BuiltInRegistries.ITEM, id,
+                new net.minecraft.world.item.DoubleHighBlockItem(bloco, properties)));
     }
 
     private static void item(Block bloco) {

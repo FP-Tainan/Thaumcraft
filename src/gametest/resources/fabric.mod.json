@@ -98,6 +98,7 @@
       "net.thaumcraft.test.client.CrimsonClientTest",
       "net.thaumcraft.test.client.DynamicDimensionClientTest",
       "net.thaumcraft.test.client.ShatteredClientTest",
+      "net.thaumcraft.test.client.PocketClientTest",
       "net.thaumcraft.test.client.LookClientTest",
       "net.thaumcraft.test.client.InfusionRunClientTest",
       "net.thaumcraft.test.client.WarpClientTest",

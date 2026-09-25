@@ -16,13 +16,89 @@ import net.thaumcraft.world.DynamicDimensions;
 
 /** Os Reinos Fragmentados: os tecidos e o que eles fazem. */
 public class ShatteredGameTest {
+    /** A porta dimensional traz uma fenda na metade de baixo, e só nela. */
+    @GameTest
+    public void theDoorCarriesARift(GameTestHelper helper) {
+        BlockPos baixo = new BlockPos(2, 2, 2);
+        var estado = net.thaumcraft.shattered.ShatteredBlocks.OAK_DIMENSIONAL_DOOR.defaultBlockState();
+        helper.setBlock(baixo, estado);
+        helper.setBlock(baixo.above(), estado.setValue(
+                net.minecraft.world.level.block.DoorBlock.HALF,
+                net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER));
+
+        if (!(helper.getBlockEntity(baixo, net.thaumcraft.shattered.RiftBlockEntity.class)
+                instanceof net.thaumcraft.shattered.RiftBlockEntity)) {
+            helper.fail("a metade de baixo devia ter a fenda");
+        }
+        if (helper.getLevel().getBlockEntity(helper.absolutePos(baixo.above())) != null) {
+            helper.fail("e a de cima, não");
+        }
+        helper.succeed();
+    }
+
+    /** Atravessada, a porta abre um bolso e leva quem passa para lá — e a porta de volta traz de volta. */
+    @GameTest
+    public void theDoorOpensAPocketAndComesBack(GameTestHelper helper) {
+        BlockPos baixo = new BlockPos(2, 2, 2);
+        helper.setBlock(baixo, net.thaumcraft.shattered.ShatteredBlocks.OAK_DIMENSIONAL_DOOR);
+        var fenda = helper.getBlockEntity(baixo, net.thaumcraft.shattered.RiftBlockEntity.class);
+        if (fenda == null) {
+            helper.fail("a porta devia ter fenda");
+            return;
+        }
+        if (fenda.destination() != null) helper.fail("e nascer sem destino");
+
+        var bicho = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(2, 2, 3));
+        if (!fenda.teleport(bicho)) {
+            helper.fail("a travessia devia dar certo");
+            return;
+        }
+        var destino = fenda.destination();
+        if (destino == null) helper.fail("e a fenda devia ficar a apontar para o bolso");
+        else if (destino.level() != ShatteredRealms.PUBLIC_POCKETS) helper.fail("que fica no mundo dos bolsos");
+
+        var bolsos = helper.getLevel().getServer().getLevel(ShatteredRealms.PUBLIC_POCKETS);
+        if (bolsos == null) {
+            helper.fail("o mundo dos bolsos devia estar aberto");
+            return;
+        }
+        // um bicho que muda de mundo é copiado para lá, e não levado; o que se procura é a cópia
+        var chegados = bolsos.getEntitiesOfClass(net.minecraft.world.entity.animal.pig.Pig.class,
+                new net.minecraft.world.phys.AABB(destino.pos()).inflate(8.0));
+        if (chegados.isEmpty()) helper.fail("e quem atravessou devia estar lá");
+        for (var chegado : chegados) chegado.discard();
+
+        // a sala: paredes de tecido antigo e ar no meio
+        BlockPos dentro = destino.pos();
+        if (!bolsos.getBlockState(dentro).isAir()) helper.fail("onde se chega é ar");
+        var porta = bolsos.getBlockState(dentro.north());
+        if (!porta.is(net.thaumcraft.shattered.ShatteredBlocks.OAK_DIMENSIONAL_DOOR)) {
+            helper.fail("e atrás fica a porta de volta; achei " + porta);
+        }
+
+        // e a porta de volta aponta para onde se entrou
+        if (bolsos.getBlockEntity(dentro.north()) instanceof net.thaumcraft.shattered.RiftBlockEntity volta) {
+            var paraCasa = volta.destination();
+            if (paraCasa == null) helper.fail("a porta de volta devia ter destino");
+            else if (paraCasa.level() != helper.getLevel().dimension()) helper.fail("e ele é o mundo de onde se veio");
+        } else {
+            helper.fail("a porta de volta devia ter fenda");
+        }
+
+        bicho.discard();
+        net.thaumcraft.world.DynamicDimensions.remove(helper.getLevel().getServer(), ShatteredRealms.PUBLIC_POCKETS);
+        helper.succeed();
+    }
+
     /** São dezesseis cores de tecido comum, dezesseis de antigo, mais o eterno e o desfiado. */
     @GameTest
     public void theFabricsAreAllThere(GameTestHelper helper) {
         if (FabricBlocks.FABRIC.size() != 16) helper.fail("o tecido comum tem dezesseis cores");
         if (FabricBlocks.ANCIENT.size() != 16) helper.fail("e o antigo também");
         if (FabricBlocks.count() != 34) helper.fail("com o eterno e o desfiado, são trinta e quatro");
-        if (ShatteredItems.count() != FabricBlocks.count()) helper.fail("cada bloco tem o seu item");
+        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size()) {
+            helper.fail("cada bloco tem o seu item; achei " + ShatteredItems.count());
+        }
         if (!FabricBlocks.isFabric(FabricBlocks.FABRIC.get(DyeColor.BLACK))) helper.fail("o preto é tecido");
         if (FabricBlocks.isFabric(FabricBlocks.ETERNAL)) helper.fail("o eterno não é tecido de bolso");
         helper.succeed();
