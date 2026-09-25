@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "IH",
+    " S",
+    " B"
+  ],
+  "key": {
+    "I": "minecraft:obsidian",
+    "H": "minecraft:shears",
+    "S": "minecraft:stick",
+    "B": "thaumcraft:jar_of_blood"
+  },
+  "result": {
+    "id": "thaumcraft:scythe",
+    "count": 1
+  }
+}

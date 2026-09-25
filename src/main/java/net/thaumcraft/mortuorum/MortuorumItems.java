@@ -88,6 +88,29 @@ public final class MortuorumItems {
             new net.minecraft.world.item.BlockItem(MortuorumBlocks.SEWING_MACHINE,
                     properties.useBlockDescriptionPrefix()));
 
+    /**
+     * Do que são feitas as duas foices: o {@code BLOODSCYTHE} e o {@code BLOODSCYTHEBONE} do original — sem
+     * nível de colheita, seiscentos e sessenta e seis de uso, sete de velocidade e nove de encantabilidade; a de
+     * osso corta o dobro.
+     */
+    public static final net.minecraft.world.item.ToolMaterial SCYTHE = new net.minecraft.world.item.ToolMaterial(
+            net.minecraft.tags.BlockTags.INCORRECT_FOR_WOODEN_TOOL, 666, 7.0f, 2.0f, 9,
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                    net.thaumcraft.Thaumcraft.id("repairs_scythe")));
+
+    public static final net.minecraft.world.item.ToolMaterial SCYTHE_BONE = new net.minecraft.world.item.ToolMaterial(
+            net.minecraft.tags.BlockTags.INCORRECT_FOR_WOODEN_TOOL, 666, 7.0f, 4.0f, 9,
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                    net.thaumcraft.Thaumcraft.id("repairs_scythe")));
+
+    /** A Foice, que tira a alma de quem ela mata. */
+    public static final Item SCYTHE_ITEM = register("scythe", properties ->
+            new ScytheItem(properties.sword(SCYTHE, 3.0f, -2.4f)));
+
+    /** E a Foice de Osso, que corta mais. */
+    public static final Item SCYTHE_BONE_ITEM = register("scythe_bone", properties ->
+            new ScytheItem(properties.sword(SCYTHE_BONE, 3.0f, -2.4f)));
+
     /** O balde de sangue. */
     public static final Item BUCKET_BLOOD = register("bucket_blood", properties ->
             new net.minecraft.world.item.BucketItem(MortuorumFluids.BLOOD, properties

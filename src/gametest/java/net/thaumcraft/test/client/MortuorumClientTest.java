@@ -78,8 +78,10 @@ public class MortuorumClientTest implements FabricClientGameTest {
                 }
 
                 var inv = player.getInventory();
-                inv.setItem(0, new ItemStack(MortuorumItems.SUMMONING_ALTAR));
+                inv.setItem(0, new ItemStack(MortuorumItems.SCYTHE_ITEM));
                 inv.setItem(6, new ItemStack(MortuorumItems.BUCKET_BLOOD));
+                inv.setItem(7, new ItemStack(MortuorumItems.SUMMONING_ALTAR));
+                inv.setItem(8, new ItemStack(MortuorumItems.SCYTHE_BONE_ITEM));
                 inv.setItem(1, new ItemStack(MortuorumItems.SEWING_MACHINE));
                 inv.setItem(2, new ItemStack(MortuorumItems.BONE_NEEDLE));
                 inv.setItem(3, new ItemStack(MortuorumItems.JAR_OF_BLOOD));

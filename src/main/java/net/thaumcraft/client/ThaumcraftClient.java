@@ -83,6 +83,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                                 net.minecraft.resources.Identifier.withDefaultNamespace("block/water_flow"), true), null,
                         net.minecraft.client.color.block.BlockTintSources.constant(
                                 net.thaumcraft.mortuorum.BloodFluid.COLOUR)));
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("scythe"),
+                net.thaumcraft.mortuorum.client.ScytheItemRenderer.Unbaked.CODEC);
         net.thaumcraft.mortuorum.BloodFluid.clientDrip = (level, x, y, z) ->
                 level.addParticle(net.minecraft.core.particles.ParticleTypes.DRIPPING_LAVA, x, y, z, 0.0, 0.0, 0.0);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(

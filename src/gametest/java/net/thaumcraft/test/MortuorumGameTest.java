@@ -11,6 +11,58 @@ import net.thaumcraft.mortuorum.MortuorumItems;
  * O ramo do Ars Mortuorum: as coisas que se tiram dos mortos.
  */
 public class MortuorumGameTest {
+    /** A foice tira a alma de quem mata, e gasta uma garrafa vazia para guardá-la. */
+    @GameTest
+    public void theScytheBottlesTheSoul(GameTestHelper helper) {
+        var dono = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        dono.getInventory().add(new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE));
+        ItemStack foice = new ItemStack(MortuorumItems.SCYTHE_ITEM);
+
+        var bicho = helper.spawn(net.minecraft.world.entity.EntityTypes.ZOMBIE, new BlockPos(2, 2, 2));
+        bicho.setHealth(0.0f);
+        MortuorumItems.SCYTHE_ITEM.hurtEnemy(foice, bicho, dono);
+
+        boolean temAlma = false;
+        boolean temGarrafa = false;
+        for (int casa = 0; casa < dono.getInventory().getContainerSize(); casa++) {
+            ItemStack pilha = dono.getInventory().getItem(casa);
+            if (pilha.is(MortuorumItems.SOUL_IN_A_JAR)) temAlma = true;
+            if (pilha.is(net.minecraft.world.item.Items.GLASS_BOTTLE)) temGarrafa = true;
+        }
+        if (!temAlma) helper.fail("a foice devia deixar uma alma num pote");
+        if (temGarrafa) helper.fail("e gastar a garrafa vazia");
+        bicho.discard();
+        helper.succeed();
+    }
+
+    /** Sem garrafa nenhuma, não há onde guardar a alma. */
+    @GameTest
+    public void theScytheNeedsAnEmptyBottle(GameTestHelper helper) {
+        var dono = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack foice = new ItemStack(MortuorumItems.SCYTHE_ITEM);
+
+        var bicho = helper.spawn(net.minecraft.world.entity.EntityTypes.ZOMBIE, new BlockPos(2, 2, 2));
+        bicho.setHealth(0.0f);
+        MortuorumItems.SCYTHE_ITEM.hurtEnemy(foice, bicho, dono);
+
+        for (int casa = 0; casa < dono.getInventory().getContainerSize(); casa++) {
+            if (dono.getInventory().getItem(casa).is(MortuorumItems.SOUL_IN_A_JAR)) {
+                helper.fail("sem garrafa, não devia sair alma nenhuma");
+            }
+        }
+        bicho.discard();
+        helper.succeed();
+    }
+
+    /** A de osso corta o dobro da outra. */
+    @GameTest
+    public void theBoneScytheCutsDeeper(GameTestHelper helper) {
+        if (MortuorumItems.SCYTHE.attackDamageBonus() != 2.0f) helper.fail("a foice soma dois de dano");
+        if (MortuorumItems.SCYTHE_BONE.attackDamageBonus() != 4.0f) helper.fail("e a de osso, quatro");
+        if (MortuorumItems.SCYTHE.durability() != 666) helper.fail("as duas aguentam seiscentos e sessenta e seis golpes");
+        helper.succeed();
+    }
+
     /** O balde de sangue põe sangue no chão, e o sangue corre. */
     @GameTest
     public void theBloodFlows(GameTestHelper helper) {

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "IH",
+    " S",
+    " B"
+  ],
+  "key": {
+    "I": "minecraft:obsidian",
+    "H": "thaumcraft:scythe",
+    "S": "minecraft:bone",
+    "B": "minecraft:diamond"
+  },
+  "result": {
+    "id": "thaumcraft:scythe_bone",
+    "count": 1
+  }
+}
