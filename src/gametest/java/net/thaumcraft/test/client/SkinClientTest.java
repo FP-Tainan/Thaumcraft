@@ -33,9 +33,17 @@ public class SkinClientTest implements FabricClientGameTest {
             context.waitTicks(20);
             context.takeScreenshot("baus_lado_a_lado");
 
-            // um feitio de cada vez, de frente e sozinho
+            // os quatro juntos, que é quando cada um tinha de ficar com a própria pele
             perto(server, "tp @p ~6 ~ ~ 0 8");
             context.waitTicks(20);
+            for (int feitio = 0; feitio < 4; feitio++) {
+                perto(server, "summon thaumcraft:evil_trunk ~" + (feitio * 2 - 3) + " ~ ~6 {TrunkType:" + feitio
+                        + ",NoAI:1b,Rotation:[180f,0f]}");
+            }
+            context.waitTicks(20);
+            context.takeScreenshot("baus_os_quatro");
+
+            // um feitio de cada vez, de frente e sozinho
             String[] feitios = {"corrompido", "sinistro", "demoniaco", "maculado"};
             for (int feitio = 0; feitio < feitios.length; feitio++) {
                 perto(server, "kill @e[type=thaumcraft:evil_trunk]");

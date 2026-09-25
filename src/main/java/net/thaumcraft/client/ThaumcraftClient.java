@@ -92,6 +92,8 @@ net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.naturalis.NaturalisBlocks.ARCANE_CHEST_ENTITY, net.thaumcraft.naturalis.client.ArcaneChestRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.naturalis.NaturalisBlocks.PRISON_JAR_ENTITY, net.thaumcraft.naturalis.client.PrisonJarRenderer::new);
+        net.thaumcraft.naturalis.PrisonJarBlock.clientEffects = (level, pos) ->
+                net.thaumcraft.client.fx.GenericFx.blockSparkle(pos.getX(), pos.getY(), pos.getZ(), 0xFFCC00, 1);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.maleficium.MaleficiumBlocks.LUMOS_ENTITY,
                 net.thaumcraft.maleficium.client.LumosRenderer::new);

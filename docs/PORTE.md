@@ -2156,3 +2156,25 @@ vidro, com o cérebro aparecendo lá dentro.
 O `SkinClientTest` agora tira uma foto de cada feitio, sozinho e de frente, que é a única maneira de saber qual é
 qual; e o `NaturalisGameTest` ganhou o caminho inteiro do jarro — pegar o bicho da mão, pô-lo no bloco e
 devolvê-lo ao item quando o vidro se quebra.
+
+## A troca de pele dos baús e a forma do jarro (2026-09-25)
+
+### Cada baú com a própria pele
+
+Quem joga notou o que uma foto de um baú só nunca mostraria: **os baús trocavam de pele conforme o que houvesse
+em volta**. O desenhista guardava o modelo do feitio no `extractRenderState` — e em 26.2 o jogo **lê todos os
+bichos do quadro antes de desenhar qualquer um**, de modo que o último lido mandava no modelo de todos, enquanto a
+pele continuava a de cada um: um baú demoníaco ao lado de um maculado saía com o corpo de um e a figura do outro.
+
+A escolha passou para o `submit`, que corre por bicho na hora de desenhar. O teste de tela agora põe os quatro
+feitios juntos antes de os retratar um a um, que é a única cena em que isso aparece.
+
+### O jarro era um caixote
+
+O `BlockJarRenderer` do original desenha o jarro em duas caixas — o corpo, de três a treze e doze de alto, e a
+tampinha, de cinco a onze e mais dois — com a pele do lado do Magia Naturalis e o topo e o fundo do jarro do
+Thaumcraft. O modelo daqui era um caixote de doze por catorze, sem as coordenadas de figura e sem vidro. Agora ele
+é o mesmo modelo do jarro do Thaumcraft, com a pele do ramo, e o vidro voltou a ser vidro.
+
+E ele cintila: o `randomDisplayTick` do original solta, uma vez em quatro, uma faísca dourada
+(`0xFFCC00`) em volta do vidro.

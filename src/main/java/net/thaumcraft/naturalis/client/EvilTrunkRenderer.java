@@ -52,8 +52,19 @@ public class EvilTrunkRenderer extends MobRenderer<EvilTrunkEntity, EvilTrunkRen
         super.extractRenderState(trunk, state, partial);
         state.kind = trunk.kind();
         state.lidRot = trunk.lidRot;
-        // o modelo do feitio deste baú é o que vai desenhar
+    }
+
+    /**
+     * O modelo do feitio é escolhido aqui, na hora de desenhar, e não na de ler o bicho: o jogo lê todos os bichos
+     * do quadro antes de desenhar qualquer um, e escolhendo lá o último lido mandava em todos — era por isso que os
+     * baús trocavam de pele conforme o que houvesse em volta.
+     */
+    @Override
+    public void submit(State state, com.mojang.blaze3d.vertex.PoseStack pose,
+                       net.minecraft.client.renderer.SubmitNodeCollector collector,
+                       net.minecraft.client.renderer.state.level.CameraRenderState camera) {
         this.model = this.models.get(state.kind);
+        super.submit(state, pose, collector, camera);
     }
 
     /**

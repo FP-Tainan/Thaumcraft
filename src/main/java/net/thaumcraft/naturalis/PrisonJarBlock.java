@@ -50,6 +50,20 @@ public class PrisonJarBlock extends BaseEntityBlock {
         return SHAPE;
     }
 
+    /** As faíscas douradas do lado de quem vê, que o cliente pendura aqui ao abrir. */
+    public interface ClientEffects {
+        void sparkle(Level level, BlockPos pos);
+    }
+
+    public static ClientEffects clientEffects = (level, pos) -> {
+    };
+
+    /** O {@code randomDisplayTick} do original: uma vez em quatro, faíscas douradas em volta do vidro. */
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, net.minecraft.util.RandomSource random) {
+        if (random.nextInt(4) == 0) clientEffects.sparkle(level, pos);
+    }
+
     /** O que estava guardado no item vai para o jarro posto. */
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
