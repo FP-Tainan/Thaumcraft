@@ -330,4 +330,69 @@ public class ForbiddenGameTest {
         }
         helper.succeed();
     }
+
+    /** O Foco do Piscar leva quem o usa até onde a varinha aponta, e cobra entropia por isso. */
+    @GameTest(maxTicks = 80)
+    public void theBlinkFocusTakesYouThere(GameTestHelper helper) {
+        BlockPos parede = new BlockPos(1, 2, 5);
+        helper.setBlock(parede, net.minecraft.world.level.block.Blocks.STONE);
+        var player = helper.makeMockServerPlayerInLevel();
+        var pes = helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 2.0, 1.5));
+        player.snapTo(pes.x, pes.y, pes.z, 0.0f, 0.0f);
+
+        ItemStack wand = varinhaComFoco("blink");
+        player.getInventory().setItem(0, wand);
+        player.getInventory().setSelectedSlot(0);
+        var focus = net.thaumcraft.item.Focuses.on(wand);
+
+        double antes = player.getZ();
+        if (!net.thaumcraft.item.Focuses.tick(helper.getLevel(), player, wand, focus)) {
+            helper.fail("o foco devia ter piscado");
+        }
+        if (player.getZ() - antes < 1.5) {
+            helper.fail("quem pisca vai parar junto do bloco da mira; andou " + (player.getZ() - antes));
+        }
+        var sobrou = wand.get(net.thaumcraft.registry.TCComponents.WAND_VIS);
+        if (sobrou.getAmount(net.thaumcraft.api.aspects.Aspects.ENTROPY) >= 2500) {
+            helper.fail("piscar custa entropia");
+        }
+        helper.succeed();
+    }
+
+    /** Com o Fogo do Inferno, quem estiver onde ele chega pega fogo — e o custo muda. */
+    @GameTest(maxTicks = 80)
+    public void theBlinkFocusBurnsWithHellfire(GameTestHelper helper) {
+        BlockPos parede = new BlockPos(1, 2, 5);
+        helper.setBlock(parede, net.minecraft.world.level.block.Blocks.STONE);
+        var porco = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(1, 2, 4));
+        var player = helper.makeMockServerPlayerInLevel();
+        var pes = helper.absoluteVec(new net.minecraft.world.phys.Vec3(1.5, 2.0, 1.5));
+        player.snapTo(pes.x, pes.y, pes.z, 0.0f, 0.0f);
+
+        ItemStack wand = varinhaComFoco("blink");
+        wand.set(net.thaumcraft.registry.TCComponents.FOCUS_UPGRADES,
+                java.util.List.of(net.thaumcraft.forbidden.ForbiddenFoci.HELLFIRE.id(),
+                        (short) -1, (short) -1, (short) -1, (short) -1));
+        ItemStack focusStack = net.thaumcraft.item.WandItem.focusStack(wand);
+        player.getInventory().setItem(0, wand);
+        player.getInventory().setSelectedSlot(0);
+
+        var custo = net.thaumcraft.forbidden.ForbiddenFoci.cost(focusStack);
+        if (custo.getAmount(net.thaumcraft.api.aspects.Aspects.FIRE) != 100) {
+            helper.fail("com o fogo do inferno o piscar também custa fogo");
+        }
+        net.thaumcraft.item.Focuses.tick(helper.getLevel(), player, wand, net.thaumcraft.item.Focuses.on(wand));
+        if (porco.getRemainingFireTicks() <= 0) helper.fail("o porco devia ter pegado fogo");
+        helper.succeed();
+    }
+
+    /** Uma varinha cheia de vis com o foco pedido. */
+    private static ItemStack varinhaComFoco(String tipo) {
+        ItemStack wand = new ItemStack(net.thaumcraft.registry.TCItems.WAND);
+        wand.set(net.thaumcraft.registry.TCComponents.WAND_FOCUS, tipo);
+        var vis = new net.thaumcraft.api.aspects.AspectList();
+        for (var primal : net.thaumcraft.api.aspects.Aspects.primals()) vis.add(primal, 2500);
+        wand.set(net.thaumcraft.registry.TCComponents.WAND_VIS, vis);
+        return wand;
+    }
 }

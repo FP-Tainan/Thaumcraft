@@ -105,6 +105,15 @@ public final class ForbiddenItems {
     public static final Item CHAMELEON_AXE = register("chameleon_axe", properties ->
             new MorphToolItem(properties.axe(net.thaumcraft.item.TCMaterials.ELEMENTAL, 6.0f, -3.1f).rarity(Rarity.EPIC)));
 
+    /** O Foco do Piscar, que é o único foco do ramo. */
+    public static final Item FOCUS_BLINK = register("focus_blink", properties ->
+            new net.thaumcraft.item.FocusItem(properties.stacksTo(1).rarity(Rarity.RARE),
+                    "blink", ForbiddenFoci.COST_BLINK, false));
+
+    static {
+        net.thaumcraft.registry.TCItems.FOCI.put("blink", FOCUS_BLINK);
+    }
+
     private ForbiddenItems() {
     }
 
