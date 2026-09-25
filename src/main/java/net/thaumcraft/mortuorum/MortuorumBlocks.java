@@ -40,10 +40,10 @@ public final class MortuorumBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(SummoningAltarBlockEntity::new,
                             java.util.Set.of(SUMMONING_ALTAR)));
 
-    /** O Muro de Caveiras, com a cara e a dureza da obsidiana. */
+    /** O Muro de Caveiras: cerca de pedra caiada com um crânio em cima, e a dureza da obsidiana. */
     public static final Block SKULL_WALL = register("skull_wall", properties ->
-            new SkullWallBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(50.0f, 2000.0f)
-                    .sound(SoundType.STONE)));
+            new SkullWallBlock(properties.mapColor(MapColor.QUARTZ).strength(50.0f, 2000.0f)
+                    .sound(SoundType.STONE).noOcclusion()));
 
     /** O sangue que corre no chão. */
     public static final Block BLOOD = register("blood", properties ->

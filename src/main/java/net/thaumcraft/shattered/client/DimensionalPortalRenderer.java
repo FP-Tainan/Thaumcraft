@@ -77,7 +77,10 @@ public class DimensionalPortalRenderer
 
     public static class State extends BlockEntityRenderState {
         boolean door;
-        Direction facing = Direction.NORTH;
+        /** Em que eixo a folha da porta é fina, que é onde o vão se cola. */
+        boolean thinOnZ = true;
+        /** A caixa da folha, já em medida de bloco: onde ela começa e acaba nos três eixos. */
+        float minA, maxA, minFundo, maxFundo;
     }
 
     public DimensionalPortalRenderer(BlockEntityRendererProvider.Context context) {
@@ -101,7 +104,25 @@ public class DimensionalPortalRenderer
         var bloco = fenda.getBlockState();
         state.door = bloco.getBlock() instanceof DimensionalDoorBlock
                 && bloco.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
-        if (state.door) state.facing = bloco.getValue(DoorBlock.FACING);
+        if (!state.door || fenda.getLevel() == null) return;
+
+        // o vão cola-se à folha da porta, e a folha diz onde está pela forma dela: assim segue-a quando ela
+        // abre, sem ter de adivinhar a dobradiça nem o lado
+        var forma = bloco.getShape(fenda.getLevel(), fenda.getBlockPos());
+        if (forma.isEmpty()) return;
+        var caixa = forma.bounds();
+        state.thinOnZ = (caixa.maxZ - caixa.minZ) <= (caixa.maxX - caixa.minX);
+        if (state.thinOnZ) {
+            state.minA = (float) caixa.minX;
+            state.maxA = (float) caixa.maxX;
+            state.minFundo = (float) caixa.minZ;
+            state.maxFundo = (float) caixa.maxZ;
+        } else {
+            state.minA = (float) caixa.minZ;
+            state.maxA = (float) caixa.maxZ;
+            state.minFundo = (float) caixa.minX;
+            state.maxFundo = (float) caixa.maxX;
+        }
     }
 
     @Override
@@ -131,28 +152,28 @@ public class DimensionalPortalRenderer
 
             final float medidaF = medida, cosF = cos, sinF = sin, correF = corre;
             collector.submitCustomGeometry(pose, WARP_TYPE,
-                    (m, v) -> quad(m, v, state.facing, medidaF, cosF, sinF, correF, argb));
+                    (m, v) -> quad(m, v, state, medidaF, cosF, sinF, correF, argb));
         }
     }
 
     /**
-     * O pano: uma casa de largura por duas de altura, na cara da porta, dos dois lados.
+     * O pano: a cara da folha da porta, dos dois lados dela, de baixo até ao alto das duas metades.
      *
-     * <p>Não se corta face nenhuma — o desenho do vão não tem costas —, e por isso um pano só serve aos dois
-     * lados; o de trás vai à mesma, porque a porta ao abrir sai do vão e o vão continua ali.
+     * <p>Não se corta face nenhuma, e por isso o mesmo pano vai nas duas voltas — visto de um lado e do outro.
      */
-    private static void quad(PoseStack.Pose m, VertexConsumer v, Direction facing,
+    private static void quad(PoseStack.Pose m, VertexConsumer v, State state,
                              float medida, float cosGiro, float sinGiro, float corre, int argb) {
-        boolean emZ = facing.getAxis() == Direction.Axis.Z;
-        for (float fundura : new float[]{-PUSH, 1.0f + PUSH}) {
-            // o mesmo pano nas duas voltas, para se ver dos dois lados sem depender do corte de faces
+        // de que lado a folha olha, para a conta do desenho sair como no original
+        Direction olhar = state.thinOnZ ? Direction.NORTH : Direction.WEST;
+        for (int cara = 0; cara < 2; cara++) {
+            float fundura = cara == 0 ? state.minFundo - PUSH : state.maxFundo + PUSH;
             for (boolean avesso : new boolean[]{false, true}) {
                 for (int i = 0; i < 4; i++) {
                     int qual = avesso ? 3 - i : i;
-                    float largo = (qual == 1 || qual == 2) ? 1.0f : 0.0f;
+                    float largo = (qual == 1 || qual == 2) ? state.maxA : state.minA;
                     float alto = qual >= 2 ? 2.0f : 0.0f;
-                    if (emZ) canto(m, v, largo, alto, fundura, facing, medida, cosGiro, sinGiro, corre, argb);
-                    else canto(m, v, fundura, alto, largo, facing, medida, cosGiro, sinGiro, corre, argb);
+                    if (state.thinOnZ) canto(m, v, largo, alto, fundura, olhar, medida, cosGiro, sinGiro, corre, argb);
+                    else canto(m, v, fundura, alto, largo, olhar, medida, cosGiro, sinGiro, corre, argb);
                 }
             }
         }

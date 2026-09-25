@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "thaumcraft:block/skull_wall_post",
+    "rail": "thaumcraft:block/skull_wall_post"
+  },
+  "elements": [
+    {
+      "from": [7, 5, 0],
+      "to": [9, 8, 6],
+      "faces": {
+        "down":  { "texture": "#rail", "uv": [7, 0, 9, 6] },
+        "up":    { "texture": "#rail", "uv": [7, 0, 9, 6] },
+        "north": { "texture": "#rail", "uv": [7, 8, 9, 11] },
+        "west":  { "texture": "#rail", "uv": [0, 8, 6, 11] },
+        "east":  { "texture": "#rail", "uv": [0, 8, 6, 11] }
+      }
+    }
+  ]
+}

@@ -135,14 +135,17 @@ public class MortuorumLookClientTest implements FabricClientGameTest {
             perto(server, "tp @p ~ ~1 ~1 0 0");
             context.waitTicks(20);
             context.takeScreenshot("dd_porta_fechada");
-            perto(server, "tp @p ~-2 ~ ~ -30 0");
+            // aberta por redstone, que é a única maneira de a abrir sem lhe partir as metades
+            perto(server, "setblock ~1 ~ ~3 minecraft:redstone_block");
             context.waitTicks(20);
-            context.takeScreenshot("dd_porta_de_lado");
+            context.takeScreenshot("dd_porta_aberta");
+            perto(server, "setblock ~1 ~ ~3 minecraft:air");
+            context.waitTicks(10);
             server.runCommand("time set noon");
             // e o Muro de Caveiras, que ganhou folha de casa
-            perto(server, "setblock ~-3 ~-1 ~3 thaumcraft:skull_wall");
-            perto(server, "setblock ~-3 ~ ~3 thaumcraft:skull_wall");
-            perto(server, "tp @p ~-3 ~1 ~1 0 10");
+            perto(server, "fill ~-5 ~ ~3 ~-1 ~ ~3 thaumcraft:skull_wall[facing=north]");
+            perto(server, "setblock ~-3 ~ ~2 thaumcraft:skull_wall[facing=north]");
+            perto(server, "tp @p ~-3 ~ ~-1 0 5");
             context.waitTicks(20);
             context.takeScreenshot("am_muro_caveiras");
             server.runCommand("time set noon");
