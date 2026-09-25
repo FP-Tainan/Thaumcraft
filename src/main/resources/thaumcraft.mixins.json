@@ -5,6 +5,7 @@
   "mixins": [
     "LivingEntityArmorMixin",
     "LivingEntityChampionMixin",
+    "LivingEntityEatMixin",
     "PlayerRunicMixin",
     "PlayerHoverMixin",
     "OverworldBiomeBuilderMixin",

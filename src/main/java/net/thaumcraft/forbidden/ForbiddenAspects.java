@@ -59,6 +59,14 @@ public final class ForbiddenAspects {
             r.item("minecraft:comparator", new AspectList().add(Aspects.MECHANISM, 2).add(Aspects.ORDER, 2).add(ASPECTS.get("invidia"), 2));
             r.tag("c:foods/cooked_meat", new AspectList().add(Aspects.FLESH, 6).add(Aspects.LIFE, 6).add(Aspects.ENERGY, 6).add(Aspects.BEAST, 4).add(ASPECTS.get("gula"), 6));
             r.item("minecraft:lead", new AspectList().add(Aspects.BEAST, 2).add(Aspects.CLOTH, 2).add(Aspects.SLIME, 1).add(ASPECTS.get("luxuria"), 2));
+            r.item("thaumcraft:wrath_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(ASPECTS.get("ira"), 2).add(Aspects.CRYSTAL, 1));
+            r.item("thaumcraft:envy_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(ASPECTS.get("invidia"), 2).add(Aspects.CRYSTAL, 1));
+            r.item("thaumcraft:taint_shard", new AspectList().add(Aspects.TAINT, 3).add(Aspects.CRYSTAL, 1));
+            r.item("thaumcraft:pride_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(ASPECTS.get("superbia"), 2).add(Aspects.CRYSTAL, 1));
+            r.item("thaumcraft:lust_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(ASPECTS.get("luxuria"), 2).add(Aspects.CRYSTAL, 1));
+            r.item("thaumcraft:gluttony_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(ASPECTS.get("gula"), 2).add(Aspects.CRYSTAL, 1));
+            r.item("thaumcraft:sloth_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(ASPECTS.get("desidia"), 2).add(Aspects.CRYSTAL, 1));
+            r.item("thaumcraft:greed_shard", new AspectList().add(ASPECTS.get("infernus"), 1).add(Aspects.GREED, 2).add(Aspects.CRYSTAL, 1));
         });
 
         // e às criaturas

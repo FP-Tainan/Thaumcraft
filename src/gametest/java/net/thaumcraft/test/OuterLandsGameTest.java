@@ -143,6 +143,8 @@ public class OuterLandsGameTest {
         BlockPos origin = helper.absolutePos(BlockPos.ZERO);
         int cx = (origin.getX() >> 4) + 3, cz = origin.getZ() >> 4;
         Cell cell = new Cell((short) (6 << 8 | MazeGenerator.W));
+        // o pedaço do mundo tem de estar carregado, senão o que nasce com a sala se perde
+        level.getChunk(cx, cz);
         MazeFeature.generate(new MazeWorld(level, level.getRandom()), cx, cz, cell);
         BlockPos cap = new BlockPos(cx * 16 + 8, MazeFeature.FLOOR + 2, cz * 16 + 8);
         if (!level.getBlockState(cap).is(TCBlocks.ELDRITCH_CAPSTONE)) helper.fail("o capitel da chave");

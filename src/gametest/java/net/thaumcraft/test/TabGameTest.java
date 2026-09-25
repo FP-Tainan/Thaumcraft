@@ -24,6 +24,7 @@ public class TabGameTest {
             if (net.thaumcraft.registry.TCItems.HIDDEN.contains(item)) continue;
             if (net.thaumcraft.maleficium.MaleficiumItems.shown().contains(item)) continue;
             if (net.thaumcraft.naturalis.NaturalisItems.shown().contains(item)) continue;
+            if (net.thaumcraft.forbidden.ForbiddenItems.shown().contains(item)) continue;
             ours++;
         }
         if (ours < 60) helper.fail("o mod devia ter mais itens que isso: " + ours);
@@ -55,6 +56,18 @@ public class TabGameTest {
         var tab = BuiltInRegistries.CREATIVE_MODE_TAB.getValue(net.thaumcraft.naturalis.NaturalisItems.TAB_KEY);
         if (tab == null) helper.fail("faltou a aba do Magia Naturalis");
         if (net.thaumcraft.naturalis.NaturalisItems.shown().size() != net.thaumcraft.naturalis.NaturalisItems.count()) {
+            helper.fail("a aba do ramo devia mostrar tudo o que ele registra");
+        }
+        helper.succeed();
+    }
+
+    /** E o Forbidden Magic tem a dele. */
+    @GameTest
+    public void theForbiddenHasItsOwnTab(GameTestHelper helper) {
+        var tab = BuiltInRegistries.CREATIVE_MODE_TAB.getValue(net.thaumcraft.forbidden.ForbiddenItems.TAB_KEY);
+        if (tab == null) helper.fail("faltou a aba do Forbidden Magic");
+        var shown = net.thaumcraft.forbidden.ForbiddenItems.shown();
+        if (shown.size() != net.thaumcraft.forbidden.ForbiddenItems.count()) {
             helper.fail("a aba do ramo devia mostrar tudo o que ele registra");
         }
         helper.succeed();

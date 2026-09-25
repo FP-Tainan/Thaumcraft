@@ -22,6 +22,18 @@ public final class Forbidden {
 
     public static void init() {
         ForbiddenAspects.init();
-        Thaumcraft.LOGGER.info("Forbidden Magic: {} aspectos sombrios", ForbiddenAspects.ASPECTS.size());
+        ForbiddenItems.init();
+        events();
+        Thaumcraft.LOGGER.info("Forbidden Magic: {} aspectos sombrios, {} coisas",
+                ForbiddenAspects.ASPECTS.size(), ForbiddenItems.count());
+    }
+
+    /** O {@code FMEventHandler}: de onde vêm os fragmentos dos pecados. */
+    private static void events() {
+        net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.AFTER_DEATH.register(ForbiddenDrops::onDeath);
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
+            if (entity instanceof net.minecraft.world.entity.LivingEntity living) ForbiddenDrops.onSpawn(living, level);
+        });
+        // quem come é o LivingEntityEatMixin, porque o jogo não anuncia isso por evento
     }
 }

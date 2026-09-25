@@ -9,6 +9,7 @@ import net.thaumcraft.api.aspects.Aspect;
 import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.api.aspects.ObjectAspects;
 import net.thaumcraft.forbidden.ForbiddenAspects;
+import net.thaumcraft.forbidden.ForbiddenItems;
 import net.thaumcraft.research.EntityAspects;
 
 /** O ramo do Forbidden Magic tem de seguir o {@code DarkAspects} do 0.575. */
@@ -82,5 +83,48 @@ public class ForbiddenGameTest {
             case "FLESH" -> Aspects.FLESH;
             default -> null;
         };
+    }
+
+    /** Os oito fragmentos existem, com o aspecto do pecado de cada um. */
+    @GameTest
+    public void theEightShardsExist(GameTestHelper helper) {
+        if (net.thaumcraft.forbidden.ForbiddenItems.SHARDS.size() != 7) {
+            helper.fail("o original tem sete vícios; há " + net.thaumcraft.forbidden.ForbiddenItems.SHARDS.size());
+        }
+        String[][] pares = {{"wrath", "ira"}, {"envy", "invidia"}, {"pride", "superbia"},
+                {"lust", "luxuria"}, {"sloth", "desidia"}};
+        for (String[] par : pares) {
+            var item = net.thaumcraft.forbidden.ForbiddenItems.SHARDS.get(par[0]);
+            var aspectos = ObjectAspects.of(new ItemStack(item));
+            Aspect pecado = ForbiddenAspects.ASPECTS.get(par[1]);
+            if (aspectos.getAmount(pecado) != 2) {
+                helper.fail("o fragmento da " + par[0] + " tem dois de " + par[1] + "; tem " + aspectos.getAmount(pecado));
+            }
+            if (aspectos.getAmount(Aspects.CRYSTAL) != 1) helper.fail("e um de cristal");
+        }
+        // o da mácula não é pecado: ele leva mácula
+        var macula = ObjectAspects.of(new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.SHARDS.get("taint")));
+        if (macula.getAmount(Aspects.TAINT) != 3) helper.fail("o fragmento da mácula tem três de mácula");
+        // e o da gula se come
+        var gula = new ItemStack(net.thaumcraft.forbidden.ForbiddenItems.GLUTTONY_SHARD);
+        if (gula.get(net.minecraft.core.component.DataComponents.FOOD) == null) {
+            helper.fail("o fragmento da gula é comida, como no original");
+        }
+        helper.succeed();
+    }
+
+    /** A Preguiça cai de quem morre sozinho no Nether, e nada cai fora dele. */
+    @GameTest
+    public void theSlothShardFallsFromTheLonelyDead(GameTestHelper helper) {
+        // fora do Nether, o ramo não mexe em nada
+        var porco = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(1, 2, 1));
+        if (net.thaumcraft.forbidden.ForbiddenDrops.inTheNether(helper.getLevel())) {
+            helper.fail("o mundo do teste não é o Nether");
+        }
+        net.thaumcraft.forbidden.ForbiddenDrops.onDeath(porco, helper.getLevel().damageSources().generic());
+        var caidos = helper.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                new net.minecraft.world.phys.AABB(helper.absolutePos(new BlockPos(1, 2, 1))).inflate(4.0));
+        if (!caidos.isEmpty()) helper.fail("fora do Nether não cai fragmento nenhum");
+        helper.succeed();
     }
 }
