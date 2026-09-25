@@ -1953,9 +1953,12 @@ como dados do jogo, e não só como página de livro.
 
 - Levanta uma forma de blocos a partir da face mirada — cubo, plano, plano estendido ou esfera —, cobrando cinco de
   Ordo por bloco e tirando os blocos do inventário; o alcance cresce três por posto de Ampliação.
-- O original trocava forma, tamanho e bloco por teclas próprias. Aqui isso se faz agachado, para não inventar tecla
-  nova: o clique no ar passa o tamanho, e o clique num bloco troca a forma e marca aquele bloco como o de construir.
-  A página do livro diz isso.
+- As teclas são as do original (`MNKeyBindings` mais o `PacketKeyInput`): **N** aumenta a área, **J** diminui,
+  **B** passa à forma seguinte — e, com o Ctrl, ao jeito seguinte — e o botão do meio do mouse marca o bloco da mira.
+  O foco tem os dois jeitos do original: constrói com o bloco marcado ou com o que estiver na mira.
+- O canto de cima da tela mostra o bloco que ele vai pôr, quantos ainda há na mochila, a forma e o tamanho — é o
+  `renderBuildFocusHUD`. (Por um tempo isso se fez agachado, enquanto as teclas não existiam; saiu quando elas
+  chegaram, porque o original não tinha esse atalho.)
 
 ### Fatia 7 — a Bolsa de Focos do Fim
 
@@ -1969,5 +1972,65 @@ como dados do jogo, e não só como página de livro.
   varinha quebra o vidro e solta quem estava preso. Gente e os dois chefes não cabem em jarro, como no original.
 - O desenho é o do original: a criatura flutua no meio do vidro, encolhida para caber, girando devagar.
 
-**Falta**: o baú arcano e as chaves, a mesa de transcrição, o estandarte, o geo-pylon com o amostrador de bioma, o
-foco do revenant e as três criaturas (o criador de mácula, o baú maligno e o revenant feroz).
+### Fatia 9 — o estandarte do ramo
+
+- O estandarte do Thaumcraft com a figura do Magia Naturalis, que a folha do estandarte passa a aceitar por bloco.
+
+### Fatia 10 — o Baú Arcano e as chaves de táumio
+
+- **O Baú Arcano**, de madeira-grande (nove por seis) ou de prateada (onze por sete): quem o põe vira dono, e só o
+  dono — e quem ele deixar entrar — o abre. Não liga para explosão, e para quem não entra ele nem se desgasta.
+- A tampa abre e fecha como a do baú comum; as folhas entram no atlas dos baús do jogo, como as de lá.
+- A varinha o encolhe de volta em item, levando o que havia dentro e a lista de quem entrava; posto de novo, tudo
+  volta ao lugar.
+- **As duas chaves de táumio**: a **Chave do Desvendar** liga uma alma à outra e, num bloco arcano de quem a forjou,
+  dá a entrada a quem ela carrega; a **Chave do Endosso** junta uma lista de gente ao bater em cada uma e despeja
+  todos de uma vez num bloco a que quem a leva já entra. A chave arcana do próprio Thaumcraft também abre caminho no
+  baú, batendo nele.
+
+### Fatia 11 — a Mesa de Transcrição
+
+- A mesa arcana com a pintura do ramo, o diário deitado no tampo e a pena girando por cima.
+- De dois em dois segundos ela sorteia uma das quatro mesas de decomposição postas em cruz a dois blocos dali e leva
+  para o Diário de Pesquisa o primário que aquela mesa acabou de tirar. Cheio o diário — sessenta e quatro de cada
+  primário —, ele desce pronto para a casa de baixo.
+- O diário ganhou o teto de sessenta e quatro do original, e a mesa de decomposição passou a deixar levar o primário.
+
+### Fatia 12 — o Geo-Pilone, o amostrador e as trocas da pedra
+
+- **O Geo-Pilone**, em cima de um vão e de três totens de obsidiana, reescreve a terra num círculo de oito blocos —
+  um pedaço por vez, cobrando de essência o que a terra nova carrega de aura (a conta do `BiomeHandler`, dois por
+  cento da aura de cada marca). A varinha o liga e o desliga; agachada, refaz a cobrança.
+- **O Relatório de Bioma** guarda a terra de um lugar — o nome, a cor da folhagem e o que ela cobraria — e afina o
+  pilone com ela. A figura dele ganha a cor da terra guardada, como no original.
+- **As trocas da Pedra do Catalisador** viraram receita própria (`MutationRecipe`), que devolve a pedra à bancada
+  como o `getContainerItem` do original: as seis da madeira arcana e as trinta e duas da lã e da argila de cor.
+
+### Fatia 13 — o Revenante Feroz
+
+- O **Foco do Revenante** levanta do chão um zumbi pequeno contra a criatura da mira, a até trinta e dois blocos.
+- Ele é de quem o levantou e não o ataca, arremete em cima do alvo, transforma em outro revenante metade dos aldeões
+  que mata e desmancha quando o alvo morre ou passados quinze segundos. Cada posto de Potência engrossa o braço dele.
+
+### Fatia 14 — a Criadora de Mácula e o Baú Maligno
+
+- **A Criadora de Mácula**: a aranha grande da terra maculada (42 de vida, ligeira, imune ao veneno da mácula) que,
+  ferida e com alguém para caçar, põe no mundo uma ou duas aranhas de mácula de um segundo em um segundo, com pressa
+  e força de mais. Nasce na terra maculada e pode ser campeã, como o original pedia.
+- **O Baú Maligno**, nos quatro feitios: pula atrás de quem o chamou, morde quem está caçando, come comida para se
+  remendar e guarda trinta e seis coisas numa tela de quatro fileiras. O sino de golem o recolhe de volta em item —
+  levando o que tinha dentro, ou derramando tudo se quem o recolhe estiver agachado. Creeper foge dele.
+- Os quatro modelos saem do jar por `scratchpad/mn-baus.js`, e o item que chama o baú é desenhado com o modelo do
+  feitio dele (o `RenderItemEvilTrunkSpawner`).
+
+### Fatia 15 — as sombras das pesquisas do Thaumcraft
+
+- O `ResearchItemProxy` do original: seis cópias ocas de pesquisas do Thaumcraft (óculos, arcanas protegidas, foco
+  de troca, crisol, bolsa de focos e baú itinerante) entram na aba do ramo, escondidas e só de leitura, com o desenho
+  e as páginas da pesquisa de que são sombra — e como irmãs dela, de modo que abrem junto. É por elas que as
+  pesquisas do ramo nascem de um pé que está na aba delas.
+- Com isso a tabela do ramo não adia nada: dezoito pesquisas e setenta receitas.
+
+**Desvios declarados**: a Foice da Abundância pede um livro encantado qualquer, porque hoje um ingrediente não sabe
+olhar encantamento; e a troca de terra usa o `fillbiome` do jogo, que é o que existe hoje no lugar do
+`setBiomeAt` de então.
