@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -20,21 +20,21 @@ import org.jetbrains.annotations.Nullable;
  *
  * <p><b>Desvio declarado:</b> lá o {@code registerBlockIcons} regista literalmente {@code "obsidian"}, e o bloco
  * fica com a cara da obsidiana — o que num bloco chamado Muro de Caveiras não diz nada a quem o vê. A pedido de
- * quem joga ele passou a ser o que o nome promete: uma cerca de pedra caiada de branco, com um crânio de
- * esqueleto sentado no alto do mourão. As folhas são de casa, desenhadas por
- * {@code scratchpad/MuroCaveiras.java}.
+ * quem joga ele passou a ser o que o nome promete: um muro de pedra caiada de branco com um crânio de esqueleto
+ * sentado em cima. As duas folhas são as do próprio jogo — o tijolo de pedra e a cabeça do esqueleto —, caiadas
+ * por {@code scratchpad/Caiar.java}, que tira a cor e clareia só o que já era claro, para as órbitas não sumirem.
  */
-public class SkullWallBlock extends FenceBlock {
+public class SkullWallBlock extends WallBlock {
     /**
      * Para que lado o crânio olha.
      *
-     * <p>A cerca em si não tem frente — quem a tem é o crânio —, então o lado guarda-se à parte, e o arquivo de
+     * <p>O muro em si não tem frente — quem a tem é o crânio —, então o lado guarda-se à parte, e o arquivo de
      * feitios gira o mourão inteiro conforme ele.
      */
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public static final MapCodec<FenceBlock> CODEC =
-            simpleCodec(SkullWallBlock::new).xmap(bloco -> (FenceBlock) bloco, bloco -> (SkullWallBlock) bloco);
+    public static final MapCodec<WallBlock> CODEC =
+            simpleCodec(SkullWallBlock::new).xmap(bloco -> (WallBlock) bloco, bloco -> (SkullWallBlock) bloco);
 
     public SkullWallBlock(Properties properties) {
         super(properties);
@@ -42,7 +42,7 @@ public class SkullWallBlock extends FenceBlock {
     }
 
     @Override
-    public MapCodec<FenceBlock> codec() {
+    public MapCodec<WallBlock> codec() {
         return CODEC;
     }
 

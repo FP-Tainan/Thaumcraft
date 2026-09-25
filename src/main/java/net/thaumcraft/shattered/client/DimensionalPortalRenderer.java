@@ -67,13 +67,15 @@ public class DimensionalPortalRenderer
         return saida;
     }
     /**
-     * O tipo de desenho: soma luz, acende por si e não corta faces.
+     * Os dois desenhos do vão: o pano de baixo é sólido e escuro, e os outros quinze somam luz por cima dele.
      *
-     * <p><b>Desvio pequeno:</b> no original o primeiro pano vai com a tinta normal, a fazer um fundo escuro, e
-     * só os outros quinze somam. Hoje o desenho que soma sem cortar faces é um só, e é com ele que vão os
-     * dezesseis; o primeiro fica com a tinta fraca que o original já lhe dava, e o fundo escuro perde-se.
+     * <p>É o que o original faz — lá o primeiro pano vai com a tinta normal e os outros com a que soma. Aqui há
+     * uma manha a mais: quem manda na ordem do desenho é o tipo dele, e não quem o mandou desenhar, e um pano
+     * translúcido acabava por cima de tudo e tapava o resto. Sólido, ele vai na primeira leva, que é o que se
+     * quer; e por ser sólido, tapa o que está atrás, que é o que faz o vão ler-se à luz do dia.
      */
-    private static final RenderType WARP_TYPE = RenderTypes.energySwirl(WARP, 0.0f, 0.0f);
+    private static final RenderType FUNDO = RenderTypes.entitySolid(WARP);
+    private static final RenderType SOMA = RenderTypes.energySwirl(WARP, 0.0f, 0.0f);
 
     public static class State extends BlockEntityRenderState {
         boolean door;
@@ -106,9 +108,11 @@ public class DimensionalPortalRenderer
                 && bloco.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
         if (!state.door || fenda.getLevel() == null) return;
 
-        // o vão cola-se à folha da porta, e a folha diz onde está pela forma dela: assim segue-a quando ela
-        // abre, sem ter de adivinhar a dobradiça nem o lado
-        var forma = bloco.getShape(fenda.getLevel(), fenda.getBlockPos());
+        // o vão fica no buraco da porta, e não na folha: é a forma da porta FECHADA que o diz. Assim ele cola-se
+        // à folha enquanto ela está fechada e fica no lugar quando ela abre, que é o que o original faz — lá o
+        // vão é um bloco à parte, e não a porta.
+        var fechada = bloco.hasProperty(DoorBlock.OPEN) ? bloco.setValue(DoorBlock.OPEN, false) : bloco;
+        var forma = fechada.getShape(fenda.getLevel(), fenda.getBlockPos());
         if (forma.isEmpty()) return;
         var caixa = forma.bounds();
         state.thinOnZ = (caixa.maxZ - caixa.minZ) <= (caixa.maxX - caixa.minX);
@@ -150,9 +154,11 @@ public class DimensionalPortalRenderer
             int argb = argb(1.0f, cor[0] * tinta, cor[1] * tinta, cor[2] * tinta);
 
 
+            // o pano de baixo fica um fio mais para dentro, para os que somam ficarem à frente dele
             final float medidaF = medida, cosF = cos, sinF = sin, correF = corre;
-            collector.submitCustomGeometry(pose, WARP_TYPE,
-                    (m, v) -> quad(m, v, state, medidaF, cosF, sinF, correF, argb));
+            final float folga = pano == 0 ? PUSH * 0.4f : PUSH;
+            collector.submitCustomGeometry(pose, pano == 0 ? FUNDO : SOMA,
+                    (m, v) -> quad(m, v, state, folga, medidaF, cosF, sinF, correF, argb));
         }
     }
 
@@ -161,12 +167,12 @@ public class DimensionalPortalRenderer
      *
      * <p>Não se corta face nenhuma, e por isso o mesmo pano vai nas duas voltas — visto de um lado e do outro.
      */
-    private static void quad(PoseStack.Pose m, VertexConsumer v, State state,
+    private static void quad(PoseStack.Pose m, VertexConsumer v, State state, float folga,
                              float medida, float cosGiro, float sinGiro, float corre, int argb) {
         // de que lado a folha olha, para a conta do desenho sair como no original
         Direction olhar = state.thinOnZ ? Direction.NORTH : Direction.WEST;
         for (int cara = 0; cara < 2; cara++) {
-            float fundura = cara == 0 ? state.minFundo - PUSH : state.maxFundo + PUSH;
+            float fundura = cara == 0 ? state.minFundo - folga : state.maxFundo + folga;
             for (boolean avesso : new boolean[]{false, true}) {
                 for (int i = 0; i < 4; i++) {
                     int qual = avesso ? 3 - i : i;

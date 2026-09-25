@@ -44,9 +44,13 @@ public class MortuorumLookClientTest implements FabricClientGameTest {
             context.takeScreenshot("am_foice_de_frente");
             context.runOnClient(minecraft -> minecraft.options.setCameraType(CameraType.FIRST_PERSON));
 
-            context.runOnClient(minecraft -> minecraft.player.getInventory().setSelectedSlot(1));
+            context.runOnClient(minecraft -> {
+                minecraft.player.getInventory().setSelectedSlot(1);
+                minecraft.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+            });
             context.waitTicks(20);
             context.takeScreenshot("am_foice_de_osso");
+            context.runOnClient(minecraft -> minecraft.options.setCameraType(CameraType.FIRST_PERSON));
 
             // a foice no chão, que é o lugar ENTITY do original
             perto(server, "summon item ~ ~1 ~2 {Item:{id:\"thaumcraft:scythe\",count:1},NoGravity:1b}");
@@ -141,7 +145,10 @@ public class MortuorumLookClientTest implements FabricClientGameTest {
             context.takeScreenshot("dd_porta_aberta");
             perto(server, "setblock ~1 ~ ~3 minecraft:air");
             context.waitTicks(10);
+            // e à luz do dia, que é quando o vão mais estoura
             server.runCommand("time set noon");
+            context.waitTicks(20);
+            context.takeScreenshot("dd_porta_de_dia");
             // e o Muro de Caveiras, que ganhou folha de casa
             perto(server, "fill ~-5 ~ ~3 ~-1 ~ ~3 thaumcraft:skull_wall[facing=north]");
             perto(server, "setblock ~-3 ~ ~2 thaumcraft:skull_wall[facing=north]");
