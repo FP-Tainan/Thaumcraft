@@ -24,7 +24,10 @@ public class PechGameTest {
     @GameTest
     public void thePechKnowsWhatIsValuable(GameTestHelper helper) {
         PechEntity pech = helper.spawn(TCEntities.PECH, new BlockPos(1, 1, 1));
-        if (pech.getMaxHealth() != 30.0f) helper.fail("o pech tem 30 de vida");
+        // a vida de base, e não a de agora: o sorteio dos campeões pode ter engrossado este pech
+        if (pech.getAttributeBaseValue(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH) != 30.0) {
+            helper.fail("o pech tem 30 de vida");
+        }
         if (pech.getValue(new ItemStack(Items.EMERALD)) != 5) helper.fail("a esmeralda vale cinco");
         if (pech.getValue(new ItemStack(Items.DIAMOND)) != 4) helper.fail("o diamante vale quatro");
         if (pech.getValue(new ItemStack(TCItems.MANA_BEAN)) != 1) helper.fail("o feijão de mana vale um");
