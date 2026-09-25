@@ -83,6 +83,11 @@ public final class MortuorumItems {
         parts("Wolf", "Head");
     }
 
+    /** E o item da Máquina de Costura. */
+    public static final Item SEWING_MACHINE = register("sewing_machine", properties ->
+            new net.minecraft.world.item.BlockItem(MortuorumBlocks.SEWING_MACHINE,
+                    properties.useBlockDescriptionPrefix()));
+
     private MortuorumItems() {
     }
 

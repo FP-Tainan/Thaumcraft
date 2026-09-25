@@ -2311,3 +2311,20 @@ textos no espaço de nome `thaumcraft`, e as chaves de pesquisa levam o prefixo 
 
 Onde o original guardava tudo isso em três itens com muitos números, aqui é um item por coisa, que é como o jogo
 de hoje faz — e cada um leva a figura que tinha lá.
+
+### Fatia 2 — a Máquina de Costura
+
+O `BlockSewing` e o `ContainerSewing` do original: uma grade de **quatro por quatro** — não de três por três —,
+mais duas casas com o que a costura gasta (a **agulha de osso** e a **linha**) e a casa de onde sai a peça. Sem
+agulha ou sem linha, nada sai, mesmo com o desenho certo; e tirar a peça gasta uma de cada coisa da grade, uma
+agulha e uma linha, como no `SlotSewing`.
+
+As **cinquenta e cinco receitas** saem do `initDefaultRecipes`: cada peça de corpo tem o desenho do pedaço —
+cabeça, tronco, braço ou pernas — com a pele, o osso e os órgãos nas mesmas casas, e a carne do bicho no lugar das
+letras E e F (a vaca pede carne de vaca; o golem de ferro pede abóbora na cabeça e bloco de ferro no resto). Mais a
+pele, que sai de um couro qualquer, oito de cada vez, sem forma nenhuma.
+
+A receita com forma anda pela grade e aceita o desenho espelhado, como a da bancada do jogo.
+
+**De passagem**: o teste do frenesi do guardião-mor era instável, porque o escudo dele é absorção e ele às vezes já
+nascia com ela; agora o teste zera o escudo antes de bater, que é o que ele queria provar.

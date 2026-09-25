@@ -19,6 +19,11 @@ public final class TCMenus {
             new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.EvilTrunkMenu::new,
                     net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
 
+    /** A Máquina de Costura do Ars Mortuorum. */
+    public static final MenuType<net.thaumcraft.mortuorum.SewingMenu> SEWING =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("sewing"),
+                    new MenuType<>(net.thaumcraft.mortuorum.SewingMenu::new, FeatureFlags.VANILLA_SET));
+
     /** A Mesa de Transcrição do Magia Naturalis. */
     public static final MenuType<net.thaumcraft.inventory.TranscribingTableMenu> TRANSCRIBING_TABLE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("transcribing_table"),

@@ -47,6 +47,8 @@ public class BossGameTest {
         warden.setPersistenceRequired();
         warden.setNoAi(false);
         level.addFreshEntity(warden);
+        // o escudo dele é absorção, e às vezes ele já nasce com ela: aqui a prova é sem escudo nenhum
+        warden.setAbsorptionAmount(0.0f);
         warden.hurtServer(level, level.damageSources().generic(), 5.0f);
         if (!warden.isInvulnerable()) helper.fail("sem escudo, o primeiro golpe põe em frenesi");
         helper.succeedWhen(() -> {
