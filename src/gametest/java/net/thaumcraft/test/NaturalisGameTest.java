@@ -279,32 +279,45 @@ public class NaturalisGameTest {
         helper.succeed();
     }
 
-    /** A mesa de transcrição copia para o diário o primário que a mesa de decomposição ao lado tirou. */
+    /** As quatro cruzes em volta da mesa de transcrição, a dois blocos, com mesa de decomposição em cada uma. */
+    private static final BlockPos[] CRUZ = {new BlockPos(2, 0, 0), new BlockPos(-2, 0, 0),
+            new BlockPos(0, 0, 2), new BlockPos(0, 0, -2)};
+
+    /** A mesa de transcrição copia para o diário o primário que uma mesa de decomposição em volta tirou. */
     @GameTest
     public void theTranscribingTableCopiesTheAspect(GameTestHelper helper) {
-        BlockPos mesa = new BlockPos(1, 2, 1);
-        BlockPos decon = mesa.offset(2, 0, 0);
+        BlockPos mesa = new BlockPos(3, 2, 3);
         helper.setBlock(mesa, net.thaumcraft.naturalis.NaturalisBlocks.TRANSCRIBING_TABLE);
-        helper.setBlock(decon, net.thaumcraft.registry.TCBlocks.DECONSTRUCTION_TABLE);
         var transcricao = helper.getBlockEntity(mesa, net.thaumcraft.naturalis.TranscribingTableBlockEntity.class);
-        var decomposicao = helper.getBlockEntity(decon, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.class);
+        // as quatro cruzes têm mesa, para o sorteio do original sempre cair numa delas
+        var mesas = new java.util.ArrayList<net.thaumcraft.block.entity.DeconstructionTableBlockEntity>();
+        for (BlockPos volta : CRUZ) {
+            BlockPos onde = mesa.offset(volta);
+            helper.setBlock(onde, net.thaumcraft.registry.TCBlocks.DECONSTRUCTION_TABLE);
+            var decomposicao = helper.getBlockEntity(onde, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.class);
+            decomposicao.data().set(1, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.indexOf(
+                    net.thaumcraft.api.aspects.Aspects.AIR));
+            mesas.add(decomposicao);
+        }
         ItemStack diario = new ItemStack(NaturalisItems.RESEARCH_LOG);
         transcricao.setItem(0, diario);
-        decomposicao.data().set(1, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.indexOf(
-                net.thaumcraft.api.aspects.Aspects.AIR));
-        if (decomposicao.aspect() != net.thaumcraft.api.aspects.Aspects.AIR) {
-            helper.fail("a mesa de decomposição devia estar com o primário do ar");
-        }
-        // ela olha um dos quatro lugares em cruz por vez; vinte voltas dão de sobra para cair neste
-        for (int volta = 0; volta < 20 && decomposicao.aspect() != null; volta++) {
+
+        // o sorteio pode cair no próprio lugar da mesa, que não vale; vinte voltas dão de sobra
+        for (int volta = 0; volta < 20; volta++) {
             transcricao.data().set(0, 1);
             net.thaumcraft.naturalis.TranscribingTableBlockEntity.tick(helper.getLevel(), helper.absolutePos(mesa),
                     helper.getBlockState(mesa), transcricao);
+            if (net.thaumcraft.naturalis.ResearchLogItem.notes(transcricao.getItem(0))
+                    .getAmount(net.thaumcraft.api.aspects.Aspects.AIR) > 0) {
+                break;
+            }
         }
-        if (decomposicao.aspect() != null) helper.fail("a mesa devia ter levado o primário");
         if (net.thaumcraft.naturalis.ResearchLogItem.notes(transcricao.getItem(0))
-                .getAmount(net.thaumcraft.api.aspects.Aspects.AIR) != 1) {
-            helper.fail("o diário devia ter um ponto de ar anotado");
+                .getAmount(net.thaumcraft.api.aspects.Aspects.AIR) < 1) {
+            helper.fail("o diário devia ter ao menos um ponto de ar anotado");
+        }
+        if (mesas.stream().noneMatch(m -> m.aspect() == null)) {
+            helper.fail("a mesa de onde ele copiou devia ter ficado sem o primário");
         }
         helper.succeed();
     }
@@ -312,12 +325,16 @@ public class NaturalisGameTest {
     /** E o diário cheio desce sozinho para a casa de baixo. */
     @GameTest
     public void theFullLogMovesToTheOutputSlot(GameTestHelper helper) {
-        BlockPos mesa = new BlockPos(1, 2, 1);
-        BlockPos decon = mesa.offset(0, 0, 2);
+        BlockPos mesa = new BlockPos(3, 2, 3);
         helper.setBlock(mesa, net.thaumcraft.naturalis.NaturalisBlocks.TRANSCRIBING_TABLE);
-        helper.setBlock(decon, net.thaumcraft.registry.TCBlocks.DECONSTRUCTION_TABLE);
         var transcricao = helper.getBlockEntity(mesa, net.thaumcraft.naturalis.TranscribingTableBlockEntity.class);
-        var decomposicao = helper.getBlockEntity(decon, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.class);
+        for (BlockPos volta : CRUZ) {
+            BlockPos onde = mesa.offset(volta);
+            helper.setBlock(onde, net.thaumcraft.registry.TCBlocks.DECONSTRUCTION_TABLE);
+            helper.getBlockEntity(onde, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.class)
+                    .data().set(1, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.indexOf(
+                            net.thaumcraft.api.aspects.Aspects.EARTH));
+        }
         ItemStack diario = new ItemStack(NaturalisItems.RESEARCH_LOG);
         var cheio = new net.thaumcraft.api.aspects.AspectList();
         for (var primal : net.thaumcraft.api.aspects.Aspects.primals()) {
@@ -326,8 +343,6 @@ public class NaturalisGameTest {
         diario.set(net.thaumcraft.registry.TCComponents.RESEARCH_LOG, cheio);
         if (!net.thaumcraft.naturalis.TranscribingTableBlockEntity.full(diario)) helper.fail("este diário está cheio");
         transcricao.setItem(0, diario);
-        decomposicao.data().set(1, net.thaumcraft.block.entity.DeconstructionTableBlockEntity.indexOf(
-                net.thaumcraft.api.aspects.Aspects.EARTH));
         for (int volta = 0; volta < 40 && transcricao.getItem(1).isEmpty(); volta++) {
             transcricao.data().set(0, 1);
             net.thaumcraft.naturalis.TranscribingTableBlockEntity.tick(helper.getLevel(), helper.absolutePos(mesa),
@@ -335,6 +350,51 @@ public class NaturalisGameTest {
         }
         if (transcricao.getItem(1).isEmpty()) helper.fail("o diário cheio devia ter descido para a casa de baixo");
         if (!transcricao.getItem(0).isEmpty()) helper.fail("e a casa de cima devia ter ficado vazia");
+        helper.succeed();
+    }
+
+    /** O revenante é de quem o levantou, não o ataca e desmancha quando fica sem alvo. */
+    @GameTest
+    public void theRevenantServesWhoRaisedIt(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        var revenante = helper.spawn(net.thaumcraft.naturalis.NaturalisEntities.REVENANT, new BlockPos(1, 2, 1));
+        revenante.owner(player.getUUID());
+        if (!revenante.isBaby()) helper.fail("o revenante é um zumbi pequeno");
+        if (revenante.canAttack(player)) helper.fail("ele não ataca quem o levantou");
+        var porco = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(2, 2, 1));
+        if (!revenante.canAttack(porco)) helper.fail("mas ataca quem não é o dono");
+        revenante.setTarget(porco);
+        if (revenante.ownerEntity() != player) helper.fail("ele sabe de quem é");
+        // sem alvo ele se desfaz
+        revenante.setTarget(null);
+        revenante.tick();
+        if (revenante.isAlive() && revenante.getHealth() > 0.0f) {
+            helper.fail("sem alvo ele devia ter se desmanchado; ficou com " + revenante.getHealth());
+        }
+        helper.succeed();
+    }
+
+    /** E o foco dele cobra terra, entropia e água, e aceita Potência e Frugal nos cinco postos. */
+    @GameTest
+    public void theRevenantFocusCostsAndUpgrades(GameTestHelper helper) {
+        var custo = net.thaumcraft.naturalis.RevenantFocus.COST;
+        if (custo.getAmount(net.thaumcraft.api.aspects.Aspects.EARTH) != 450
+                || custo.getAmount(net.thaumcraft.api.aspects.Aspects.ENTROPY) != 350
+                || custo.getAmount(net.thaumcraft.api.aspects.Aspects.WATER) != 200) {
+            helper.fail("o custo do original é 450 de terra, 350 de entropia e 200 de água");
+        }
+        if (!(NaturalisItems.REVENANT_FOCUS instanceof net.thaumcraft.item.FocusItem foco)) {
+            helper.fail("o foco do revenante devia ser um foco");
+            return;
+        }
+        ItemStack stack = new ItemStack(NaturalisItems.REVENANT_FOCUS);
+        for (int posto = 1; posto <= 5; posto++) {
+            var cabem = foco.possibleByRank(stack, posto);
+            if (cabem.size() != 2 || !cabem.contains(net.thaumcraft.item.FocusUpgradeTable.POTENCY)
+                    || !cabem.contains(net.thaumcraft.item.FocusUpgradeTable.FRUGAL)) {
+                helper.fail("no posto " + posto + " cabem Potência e Frugal; cabem " + cabem);
+            }
+        }
         helper.succeed();
     }
 

@@ -103,6 +103,17 @@ public final class NaturalisTable {
                 .pages(Page.text("tc.research_page.MN_CONSTRUCTION_FOCUS.1"), Page.crafting("ConstructionFocus"))
                 .register();
 
+        ThaumcraftApi.research("MN_REVENANT_FOCUS", Naturalis.CATEGORY)
+                .aspects(new AspectList().add(Aspects.TRAVEL, 3).add(Aspects.BEAST, 6).add(Aspects.UNDEAD, 3).add(Aspects.MAGIC, 3))
+                .at(3, -7)
+                .complexity(2)
+                .icon(() -> new ItemStack(NaturalisItems.REVENANT_FOCUS))
+                .hiddenParents("BASICTHAUMATURGY", "INFUSION")
+                .hidden()
+                .warp(2)
+                .pages(Page.text("tc.research_page.MN_REVENANT_FOCUS.1"), Page.crafting("RevenantFocus"))
+                .register();
+
         ThaumcraftApi.research("MN_MUTATION_STONE", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.MAGIC, 3).add(Aspects.EXCHANGE, 4).add(Aspects.EARTH, 2))
                 .at(4, -3)
@@ -353,6 +364,10 @@ public final class NaturalisTable {
                 new ItemStack(NaturalisItems.BUILDER_FOCUS), 5, new AspectList().add(Aspects.CRAFT, 32).add(Aspects.TOOL, 16).add(Aspects.EXCHANGE, 8).add(Aspects.MECHANISM, 3),
                 Ingredient.of(TCItems.FOCI.get("trade")),
                 java.util.List.of(Ingredient.of(TCItems.SHARDS.get("order")), Ingredient.of(TCItems.SHARD_BALANCED), Ingredient.of(TCItems.SHARDS.get("entropy")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCItems.ELEMENTAL_SHOVEL), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()), Ingredient.of(TCResources.get("quicksilver")), Ingredient.of(TCBlocks.BUILDING.get("arcane_stone_bricks").asItem()))));
+        ThaumcraftApi.bookRecipe("RevenantFocus", ThaumcraftApi.infusion("MN_REVENANT_FOCUS",
+                new ItemStack(NaturalisItems.REVENANT_FOCUS), 3, new AspectList().add(Aspects.UNDEAD, 25).add(Aspects.FLESH, 15).add(Aspects.BEAST, 15).add(Aspects.ENTROPY, 25),
+                Ingredient.of(TCResources.get("quicksilver")),
+                java.util.List.of(Ingredient.of(TCItems.ZOMBIE_BRAIN), Ingredient.of(TCItems.SHARDS.get("earth")), Ingredient.of(net.minecraft.world.item.Items.ROTTEN_FLESH), Ingredient.of(TCItems.SHARDS.get("water")), Ingredient.of(net.minecraft.world.item.Items.ROTTEN_FLESH), Ingredient.of(TCItems.SHARDS.get("entropy")))));
         ThaumcraftApi.bookRecipe("EnderPouch", ThaumcraftApi.infusion("MN_ENDER_POUCH",
                 new ItemStack(NaturalisItems.ENDER_POUCH), 1, new AspectList().add(Aspects.ELDRITCH, 8).add(Aspects.VOID, 8).add(Aspects.TRAVEL, 8).add(Aspects.EXCHANGE, 3),
                 Ingredient.of(TCItems.FOCUS_POUCH),

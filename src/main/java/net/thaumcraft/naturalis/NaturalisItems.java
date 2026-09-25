@@ -49,6 +49,9 @@ public final class NaturalisItems {
     /** O Foco de Construção: levanta uma forma de blocos a partir da face mirada. */
     public static final Item BUILDER_FOCUS = focus("builder_focus", "build", BuilderFocus.COST);
 
+    /** O Foco do Revenante: levanta um revenante feroz contra a criatura da mira. */
+    public static final Item REVENANT_FOCUS = focus("revenant_focus", "revenant", RevenantFocus.COST);
+
     /** A Bolsa de Focos do Fim: mostra o baú do fim de quem a veste. */
     public static final Item ENDER_POUCH = register("focus_ender_pouch", properties ->
             new EnderPouchItem(properties.stacksTo(1).rarity(Rarity.EPIC)));

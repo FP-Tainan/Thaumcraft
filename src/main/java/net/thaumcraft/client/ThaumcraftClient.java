@@ -57,6 +57,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.naturalis.NaturalisBlocks.GEO_PYLON_ENTITY,
                 net.thaumcraft.naturalis.client.GeoPylonRenderer::new);
         net.thaumcraft.naturalis.client.BiomeTint.register();
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.naturalis.NaturalisEntities.REVENANT,
+                net.minecraft.client.renderer.entity.ZombieRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.naturalis.client.ArcaneChestRenderer.LAYER,
                 net.minecraft.client.model.object.chest.ChestModel::createSingleBodyLayer);

@@ -54,6 +54,11 @@ public final class BuilderFocus {
 
     public static void init() {
         Focuses.register("build", BuilderFocus::cast);
+        // o getPossibleUpgradesByRank do original: Ampliação e Frugal em qualquer posto
+        var postos = java.util.List.of(net.thaumcraft.item.FocusUpgradeTable.ENLARGE,
+                net.thaumcraft.item.FocusUpgradeTable.FRUGAL);
+        net.thaumcraft.api.FocusUpgrades.ranks("build",
+                java.util.List.of(postos, postos, postos, postos, postos));
     }
 
     // ------------------------------------------------------------------ o que o foco guarda
