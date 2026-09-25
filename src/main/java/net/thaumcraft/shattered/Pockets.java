@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.flat.FlatLayerInfo;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
@@ -74,7 +73,7 @@ public final class Pockets {
                 List.of()).withBiomeAndLayers(List.of(new FlatLayerInfo(1, Blocks.AIR)), Optional.empty(),
                 registos.lookupOrThrow(Registries.BIOME).getOrThrow(net.minecraft.world.level.biome.Biomes.THE_VOID)));
         return DynamicDimensions.getOrCreate(server, ShatteredRealms.PUBLIC_POCKETS,
-                BuiltinDimensionTypes.OVERWORLD, gerador);
+                ShatteredRealms.POCKET_TYPE, gerador);
     }
 
     /**
@@ -97,7 +96,8 @@ public final class Pockets {
         BlockPos porta = canto.offset(ROOM / 2, 1, 1);
         door(bolsos, porta, Direction.SOUTH, de.dimension(), fenda);
 
-        return new RiftBlockEntity.Destination(bolsos.dimension(), porta.south(), 180.0f);
+        // quem chega sai da porta e olha para dentro da sala, que é o que se faz ao atravessar uma porta
+        return new RiftBlockEntity.Destination(bolsos.dimension(), porta.south(), 0.0f);
     }
 
     /** A sala: as paredes de tecido antigo, o chão e o teto de tecido comum, e o vazio no meio. */

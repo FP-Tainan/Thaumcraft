@@ -63,6 +63,12 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> RUINS_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("ruins"));
 
+    /** As fendas que já estavam no mundo, raras, num oco debaixo da terra. */
+    public static final Feature<NoneFeatureConfiguration> RIFT = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("rift"), new net.thaumcraft.shattered.RiftFeature(NoneFeatureConfiguration.CODEC));
+    public static final ResourceKey<PlacedFeature> RIFT_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("rift"));
+
     /** O gerador do Limbo: terra de tecido desfiado sobre um chão de tecido eterno. */
     public static final com.mojang.serialization.MapCodec<net.thaumcraft.shattered.LimboChunkGenerator> LIMBO_GENERATOR =
             Registry.register(BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("limbo"),
@@ -93,6 +99,11 @@ public final class TCFeatures {
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES,
                 ANCIENT_ALTAR_PLACED);
+        // as fendas que já estavam lá
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                RIFT_PLACED);
         // os minérios: cinábrio, âmbar e os veios de pedra infundida, de onde saem os fragmentos
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
