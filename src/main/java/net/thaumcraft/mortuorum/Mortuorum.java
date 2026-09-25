@@ -18,6 +18,7 @@ public final class Mortuorum {
     }
 
     public static void init() {
+        MortuorumFluids.init();
         MortuorumBlocks.init();
         MortuorumEntities.init();
         MortuorumItems.init();

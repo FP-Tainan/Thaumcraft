@@ -73,6 +73,18 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.mortuorum.MortuorumEntities.MINION,
                 net.thaumcraft.mortuorum.client.MinionRenderer::new);
+        // o sangue: a figura da água, tingida do vermelho do original, e o pingo de onde está pendurado
+        net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderingRegistry.register(
+                net.thaumcraft.mortuorum.MortuorumFluids.BLOOD, net.thaumcraft.mortuorum.MortuorumFluids.BLOOD_FLOWING,
+                new net.minecraft.client.renderer.block.FluidModel.Unbaked(
+                        new net.minecraft.client.resources.model.sprite.Material(
+                                net.minecraft.resources.Identifier.withDefaultNamespace("block/water_still"), true),
+                        new net.minecraft.client.resources.model.sprite.Material(
+                                net.minecraft.resources.Identifier.withDefaultNamespace("block/water_flow"), true), null,
+                        net.minecraft.client.color.block.BlockTintSources.constant(
+                                net.thaumcraft.mortuorum.BloodFluid.COLOUR)));
+        net.thaumcraft.mortuorum.BloodFluid.clientDrip = (level, x, y, z) ->
+                level.addParticle(net.minecraft.core.particles.ParticleTypes.DRIPPING_LAVA, x, y, z, 0.0, 0.0, 0.0);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.naturalis.NaturalisBlocks.TRANSCRIBING_TABLE_ENTITY,
                 net.thaumcraft.naturalis.client.TranscribingTableRenderer::new);

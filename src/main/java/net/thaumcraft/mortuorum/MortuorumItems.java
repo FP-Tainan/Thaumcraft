@@ -88,6 +88,11 @@ public final class MortuorumItems {
             new net.minecraft.world.item.BlockItem(MortuorumBlocks.SEWING_MACHINE,
                     properties.useBlockDescriptionPrefix()));
 
+    /** O balde de sangue. */
+    public static final Item BUCKET_BLOOD = register("bucket_blood", properties ->
+            new net.minecraft.world.item.BucketItem(MortuorumFluids.BLOOD, properties
+                    .craftRemainder(net.minecraft.world.item.Items.BUCKET).stacksTo(1)));
+
     /** E o item do Altar de Invocação. */
     public static final Item SUMMONING_ALTAR = register("summoning_altar", properties ->
             new net.minecraft.world.item.BlockItem(MortuorumBlocks.SUMMONING_ALTAR,

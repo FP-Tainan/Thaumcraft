@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:bucket",
+    "thaumcraft:jar_of_blood",
+    "thaumcraft:jar_of_blood",
+    "thaumcraft:jar_of_blood",
+    "thaumcraft:jar_of_blood",
+    "thaumcraft:jar_of_blood",
+    "thaumcraft:jar_of_blood",
+    "thaumcraft:jar_of_blood",
+    "thaumcraft:jar_of_blood"
+  ],
+  "result": {
+    "id": "thaumcraft:bucket_blood",
+    "count": 1
+  }
+}

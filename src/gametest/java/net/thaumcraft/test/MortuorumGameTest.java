@@ -11,6 +11,52 @@ import net.thaumcraft.mortuorum.MortuorumItems;
  * O ramo do Ars Mortuorum: as coisas que se tiram dos mortos.
  */
 public class MortuorumGameTest {
+    /** O balde de sangue põe sangue no chão, e o sangue corre. */
+    @GameTest
+    public void theBloodFlows(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(2, 2, 2);
+        helper.setBlock(onde, net.thaumcraft.mortuorum.MortuorumBlocks.BLOOD);
+        var fluido = helper.getLevel().getFluidState(helper.absolutePos(onde));
+        if (!fluido.is(net.thaumcraft.mortuorum.MortuorumFluids.BLOOD)) helper.fail("o bloco devia ser sangue");
+        if (!fluido.isSource()) helper.fail("e uma fonte");
+        if (net.thaumcraft.mortuorum.MortuorumFluids.BLOOD.getBucket() != MortuorumItems.BUCKET_BLOOD) {
+            helper.fail("o balde do sangue é o balde de sangue");
+        }
+        helper.succeed();
+    }
+
+    /** Um balde de sangue dá oito frascos, e oito frascos voltam a dar um balde. */
+    @GameTest
+    public void theBloodGoesBackAndForth(GameTestHelper helper) {
+        var recipes = helper.getLevel().getServer().getRecipeManager();
+
+        var paraFrasco = new java.util.ArrayList<ItemStack>();
+        paraFrasco.add(new ItemStack(MortuorumItems.BUCKET_BLOOD));
+        for (int i = 0; i < 8; i++) paraFrasco.add(new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE));
+        var entradaFrasco = net.minecraft.world.item.crafting.CraftingInput.of(3, 3, paraFrasco);
+        var achadoFrasco = recipes.getRecipeFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING,
+                entradaFrasco, helper.getLevel());
+        if (achadoFrasco.isEmpty()) helper.fail("um balde e oito garrafas deviam fechar receita");
+        else {
+            ItemStack saida = achadoFrasco.get().value().assemble(entradaFrasco);
+            if (!saida.is(MortuorumItems.JAR_OF_BLOOD) || saida.getCount() != 8) {
+                helper.fail("deviam sair oito frascos de sangue; saiu " + saida);
+            }
+        }
+
+        var paraBalde = new java.util.ArrayList<ItemStack>();
+        paraBalde.add(new ItemStack(net.minecraft.world.item.Items.BUCKET));
+        for (int i = 0; i < 8; i++) paraBalde.add(new ItemStack(MortuorumItems.JAR_OF_BLOOD));
+        var entradaBalde = net.minecraft.world.item.crafting.CraftingInput.of(3, 3, paraBalde);
+        var achadoBalde = recipes.getRecipeFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING,
+                entradaBalde, helper.getLevel());
+        if (achadoBalde.isEmpty()) helper.fail("um balde e oito frascos deviam fechar receita");
+        else if (!achadoBalde.get().value().assemble(entradaBalde).is(MortuorumItems.BUCKET_BLOOD)) {
+            helper.fail("e devia sair o balde de sangue");
+        }
+        helper.succeed();
+    }
+
     /** As cinquenta e quatro peças de corpo do original existem, e cada uma tem item. */
     @GameTest
     public void theBodyPartsAreAllThere(GameTestHelper helper) {

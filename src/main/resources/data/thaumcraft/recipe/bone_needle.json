@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:bone_meal"
+  ],
+  "result": {
+    "id": "thaumcraft:bone_needle",
+    "count": 1
+  }
+}

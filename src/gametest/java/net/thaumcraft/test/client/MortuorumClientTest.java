@@ -33,7 +33,7 @@ public class MortuorumClientTest implements FabricClientGameTest {
             var server = singleplayer.getServer();
             server.runCommand("gamemode creative");
             server.runCommand("time set noon");
-            server.runCommand("tp @p ~ ~ ~ 180 0");
+            server.runCommand("tp @p ~ ~ ~ 180 15");
             server.runOnServer(s -> {
                 var player = s.getPlayerList().getPlayers().getFirst();
                 var level = (net.minecraft.server.level.ServerLevel) player.level();
@@ -65,8 +65,21 @@ public class MortuorumClientTest implements FabricClientGameTest {
                             new ItemStack(MortuorumItems.PART_ITEMS.get("skeleton_torso")));
                 }
 
+                // e uma poça de sangue, para se ver a cor dele
+                BlockPos poca = base.south(2).east(5);
+                var pedra = net.minecraft.world.level.block.Blocks.STONE.defaultBlockState();
+                for (int dx = -1; dx <= 3; dx++) {
+                    for (int dz = -1; dz <= 3; dz++) {
+                        boolean borda = dx < 0 || dx > 2 || dz < 0 || dz > 2;
+                        level.setBlockAndUpdate(poca.offset(dx, -1, dz), pedra);
+                        level.setBlockAndUpdate(poca.offset(dx, 0, dz), borda ? pedra
+                                : net.thaumcraft.mortuorum.MortuorumBlocks.BLOOD.defaultBlockState());
+                    }
+                }
+
                 var inv = player.getInventory();
                 inv.setItem(0, new ItemStack(MortuorumItems.SUMMONING_ALTAR));
+                inv.setItem(6, new ItemStack(MortuorumItems.BUCKET_BLOOD));
                 inv.setItem(1, new ItemStack(MortuorumItems.SEWING_MACHINE));
                 inv.setItem(2, new ItemStack(MortuorumItems.BONE_NEEDLE));
                 inv.setItem(3, new ItemStack(MortuorumItems.JAR_OF_BLOOD));

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "# ",
+    " X"
+  ],
+  "key": {
+    "#": "minecraft:fishing_rod",
+    "X": "thaumcraft:brains"
+  },
+  "result": {
+    "id": "thaumcraft:brain_on_a_stick",
+    "count": 1
+  }
+}

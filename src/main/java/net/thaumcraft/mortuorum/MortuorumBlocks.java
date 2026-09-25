@@ -39,6 +39,18 @@ public final class MortuorumBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(SummoningAltarBlockEntity::new,
                             java.util.Set.of(SUMMONING_ALTAR)));
 
+    /** O sangue que corre no chão. */
+    public static final Block BLOOD = register("blood", properties ->
+            new net.thaumcraft.fluid.ThaumFluid.LiquidBlock(MortuorumFluids.BLOOD, properties
+                    .mapColor(MapColor.COLOR_RED)
+                    .replaceable()
+                    .noCollision()
+                    .strength(100.0f)
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)
+                    .noLootTable()
+                    .liquid()
+                    .sound(SoundType.EMPTY)));
+
     private MortuorumBlocks() {
     }
 
