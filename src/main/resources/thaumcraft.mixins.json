@@ -20,7 +20,8 @@
     "AbstractArrowDamageMixin",
     "AbstractArrowAccessor",
     "InventoryMenuBaublesMixin",
-    "ItemEntitySalisMixin"
+    "ItemEntitySalisMixin",
+    "MinecraftServerLevelsAccessor"
   ],
   "client": [
     "ItemInHandRendererMixin",
