@@ -47,11 +47,11 @@ public final class MinionModels {
         cow.put("Torso", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(18, 4, -2.0f, -12.0f, -12.0f, 12, 18, 10, 0.0f), new Cube(52, 0, 2.0f, 2.0f, -13.0f, 4, 6, 1, 0.0f)), List.of())));
         cow.put("ArmLeft", List.of(
-                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, 0.0f, 0.0f, -1.0f, 4, 12, 4, 0.0f)), List.of())));
+                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 0.0f, 0.0f, -1.0f, 4, 12, 4, 0.0f)), List.of())));
         cow.put("ArmRight", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 0.0f, 0.0f, -1.0f, 4, 12, 4, 0.0f)), List.of())));
         cow.put("Legs", List.of(
-                new Piece(-4.0f, 10.0f, 2.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, -2.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
+                new Piece(-4.0f, 10.0f, 2.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -2.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
                 new Piece(4.0f, 10.0f, 2.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -2.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         MOBS.put("Cow", new Mob("textures/entity/cow/cow_temperate.png", 64, 32, Family.QUADRUPED,
                 new float[]{-4.0f, -2.0f, 0.0f}, new float[]{-1.0f, 12.0f, -10.0f},
@@ -98,11 +98,11 @@ public final class MinionModels {
         pig.put("Torso", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(28, 8, -1.0f, -12.0f, -12.0f, 10, 16, 8, 0.0f)), List.of())));
         pig.put("ArmLeft", List.of(
-                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, 0.0f, 0.0f, -1.0f, 4, 12, 4, 0.0f)), List.of())));
+                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 0.0f, 0.0f, -1.0f, 4, 12, 4, 0.0f)), List.of())));
         pig.put("ArmRight", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 0.0f, 0.0f, -1.0f, 4, 12, 4, 0.0f)), List.of())));
         pig.put("Legs", List.of(
-                new Piece(-3.0f, 10.0f, 3.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, -2.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
+                new Piece(-3.0f, 10.0f, 3.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -2.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
                 new Piece(3.0f, 10.0f, 3.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -2.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         MOBS.put("Pig", new Mob("textures/entity/pig/pig_temperate.png", 64, 32, Family.QUADRUPED,
                 new float[]{-4.0f, 4.0f, 0.0f}, new float[]{-1.0f, 12.0f, -10.0f},
@@ -116,11 +116,11 @@ public final class MinionModels {
         pigzombie.put("Torso", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(16, 16, 0.0f, 0.0f, 0.0f, 8, 12, 4, 0.0f)), List.of())));
         pigzombie.put("ArmLeft", List.of(
-                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(40, 16, 0.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
+                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(40, 16, 0.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         pigzombie.put("ArmRight", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(40, 16, 0.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         pigzombie.put("Legs", List.of(
-                new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, -4.0f, -2.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
+                new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -4.0f, -2.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
                 new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 0.0f, -2.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         MOBS.put("Pigzombie", new Mob("textures/entity/piglin/zombified_piglin.png", 64, 64, Family.BIPED,
                 new float[]{-4.0f, -2.0f, -2.0f}, new float[]{-4.0f, 0.0f, 2.0f},
@@ -134,11 +134,11 @@ public final class MinionModels {
         skeleton.put("Torso", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(16, 16, 0.0f, 0.0f, 0.0f, 8, 12, 4, 0.0f)), List.of())));
         skeleton.put("ArmLeft", List.of(
-                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(40, 16, 2.0f, 0.0f, -1.0f, 2, 12, 2, 0.0f)), List.of())));
+                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(40, 16, 2.0f, 0.0f, -1.0f, 2, 12, 2, 0.0f)), List.of())));
         skeleton.put("ArmRight", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(40, 16, 0.0f, 0.0f, -1.0f, 2, 12, 2, 0.0f)), List.of())));
         skeleton.put("Legs", List.of(
-                new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, -3.0f, -2.0f, -1.0f, 2, 12, 2, 0.0f)), List.of()),
+                new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -3.0f, -2.0f, -1.0f, 2, 12, 2, 0.0f)), List.of()),
                 new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 1.0f, -2.0f, -1.0f, 2, 12, 2, 0.0f)), List.of())));
         MOBS.put("Skeleton", new Mob("textures/entity/skeleton/skeleton.png", 64, 32, Family.BIPED,
                 new float[]{-4.0f, -2.0f, -2.0f}, new float[]{-4.0f, 0.0f, 2.0f},
@@ -172,11 +172,11 @@ public final class MinionModels {
         zombie.put("Torso", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(16, 16, 0.0f, 0.0f, 0.0f, 8, 12, 4, 0.0f)), List.of())));
         zombie.put("ArmLeft", List.of(
-                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(40, 16, 0.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
+                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(40, 16, 0.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         zombie.put("ArmRight", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(40, 16, 0.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         zombie.put("Legs", List.of(
-                new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, -4.0f, -2.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
+                new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -4.0f, -2.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
                 new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 0.0f, -2.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         MOBS.put("Zombie", new Mob("textures/entity/zombie/zombie.png", 64, 64, Family.BIPED,
                 new float[]{-4.0f, -2.0f, -2.0f}, new float[]{-4.0f, 0.0f, 2.0f},
@@ -285,11 +285,11 @@ public final class MinionModels {
         sheep.put("Torso", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(28, 8, 0.0f, -10.0f, -6.0f, 8, 16, 6, 0.0f)), List.of())));
         sheep.put("ArmLeft", List.of(
-                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, 0.0f, 0.0f, -1.0f, 4, 12, 4, 0.0f)), List.of())));
+                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 0.0f, 0.0f, -1.0f, 4, 12, 4, 0.0f)), List.of())));
         sheep.put("ArmRight", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 0.0f, 0.0f, -1.0f, 4, 12, 4, 0.0f)), List.of())));
         sheep.put("Legs", List.of(
-                new Piece(-3.0f, 10.0f, 3.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, -2.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
+                new Piece(-3.0f, 10.0f, 3.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -2.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
                 new Piece(3.0f, 10.0f, 3.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -2.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         MOBS.put("Sheep", new Mob("textures/entity/sheep/sheep.png", 64, 32, Family.QUADRUPED,
                 new float[]{-4.0f, 4.0f, 0.0f}, new float[]{-1.0f, 6.0f, -10.0f},
@@ -320,11 +320,11 @@ public final class MinionModels {
         wolf.put("Torso", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(16, 16, 0.0f, 0.0f, 0.0f, 8, 12, 4, 0.0f)), List.of())));
         wolf.put("ArmLeft", List.of(
-                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(40, 16, 0.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
+                new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(40, 16, 0.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         wolf.put("ArmRight", List.of(
                 new Piece(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(40, 16, 0.0f, 0.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         wolf.put("Legs", List.of(
-                new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, true, List.of(new Cube(0, 16, -4.0f, -2.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
+                new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, -4.0f, -2.0f, -2.0f, 4, 12, 4, 0.0f)), List.of()),
                 new Piece(0.0f, 12.0f, 0.0f, 0.0f, 0.0f, 0.0f, false, List.of(new Cube(0, 16, 0.0f, -2.0f, -2.0f, 4, 12, 4, 0.0f)), List.of())));
         MOBS.put("Wolf", new Mob("textures/entity/wolf/wolf.png", 64, 32, Family.BIPED,
                 new float[]{-4.0f, -2.0f, -2.0f}, new float[]{-4.0f, 0.0f, 2.0f},

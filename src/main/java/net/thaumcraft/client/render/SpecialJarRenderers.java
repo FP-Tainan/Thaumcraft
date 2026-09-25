@@ -41,11 +41,11 @@ public final class SpecialJarRenderers {
     private static final Identifier BRINE = Thaumcraft.id("textures/models/jarbrine.png");
     // o ModelBrain (folha de 128 por 64): o cérebro, o tronco embaixo e o nervinho inclinado
     private static final float[] BRAIN_BOXES = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(-6, 8, -8, 12, 10, 16, 0, 0, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-4, 18, 0, 8, 3, 7, 64, 0, 128, 64)));
-    private static final float[] BRAIN_NERVE = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 2, 6, 2, 0, 32, 128, 64));
+            BoxMesh.box(-6, 8, -8, 12, 10, 16, 0, 0, 128, 64),
+            BoxMesh.box(-4, 18, 0, 8, 3, 7, 64, 0, 128, 64));
+    private static final float[] BRAIN_NERVE = BoxMesh.box(0, 0, 0, 2, 6, 2, 0, 32, 128, 64);
     // a salmoura do ModelJar (folha de 64 por 32)
-    private static final float[] BRINE_BOX = BoxMesh.mirror(BoxMesh.box(-4, -11, -4, 8, 10, 8, 0, 0, 64, 32));
+    private static final float[] BRINE_BOX = BoxMesh.box(-4, -11, -4, 8, 10, 8, 0, 0, 64, 32);
 
     private SpecialJarRenderers() {
     }

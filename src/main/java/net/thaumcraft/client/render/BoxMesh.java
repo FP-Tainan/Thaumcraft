@@ -59,6 +59,12 @@ public final class BoxMesh {
     /**
      * A caixa espelhada, o {@code mirror} do {@code ModelRenderer} antigo: as faces de oeste e de leste trocam
      * de desenho, e cada face mostra o seu desenho de trás para a frente.
+     *
+     * <p><b>Cuidado ao ler os originais:</b> em 1.7.10 o sinalizador é lido <i>dentro</i> do {@code addBox}, logo
+     * só vale se estiver ligado antes da caixa entrar. O exportador do Techne punha-o sempre no fim, depois do
+     * {@code addBox}, onde não faz nada — e é assim que ele aparece em quase todos os modelos destes mods. Quando
+     * o jogo daquele tempo queria espelhar de verdade (o braço e a perna esquerdos do bípede, a perna do aldeão),
+     * punha-o antes. Só se chama este método para os que o punham antes.
      */
     public static float[] mirror(float[] box) {
         float[] out = box.clone();

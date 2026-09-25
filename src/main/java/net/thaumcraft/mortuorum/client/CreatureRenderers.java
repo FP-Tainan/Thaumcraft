@@ -5,6 +5,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -70,20 +71,24 @@ public final class CreatureRenderers {
     /**
      * O {@code ModelIsaacNormal}: o bípede do jogo com a cabeça grande do original, e o
      * {@code ModelIsaacSevered}, que troca a cabeça por um toco de pescoço.
+     *
+     * <p>O original liga o {@code mirror} nas duas peças, mas <b>depois</b> do {@code addBox} — e em 1.7.10 o
+     * sinalizador é lido dentro do {@code addBox}, logo aquilo não faz nada. É a marca do exportador do Techne,
+     * que o punha sempre no fim; o jogo daquele tempo, quando queria espelhar de verdade, punha-o antes. Aqui
+     * fica sem espelho, que é o que se vê no original.
      */
     public static LayerDefinition isaacLayer(boolean severed) {
         MeshDefinition mesh = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0f);
-        if (severed) {
-            mesh.getRoot().addOrReplaceChild("head", CubeListBuilder.create().mirror()
-                            .texOffs(0, 0).addBox(0.0f, 0.0f, 0.0f, 2, 1, 2),
-                    PartPose.offset(-1.0f, 1.0f, -1.0f));
-        } else {
-            mesh.getRoot().addOrReplaceChild("head", CubeListBuilder.create().mirror()
-                            .texOffs(0, 0).addBox(-4.0f, -8.0f, -4.0f, 10, 9, 8),
-                    PartPose.offset(-1.0f, 1.0f, 0.0f));
-        }
-        // o original não desenha o chapéu do bípede
-        mesh.getRoot().addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+        PartDefinition head = severed
+                ? mesh.getRoot().addOrReplaceChild("head", CubeListBuilder.create()
+                        .texOffs(0, 0).addBox(0.0f, 0.0f, 0.0f, 2, 1, 2),
+                        PartPose.offset(-1.0f, 1.0f, -1.0f))
+                : mesh.getRoot().addOrReplaceChild("head", CubeListBuilder.create()
+                        .texOffs(0, 0).addBox(-4.0f, -8.0f, -4.0f, 10, 9, 8),
+                        PartPose.offset(-1.0f, 1.0f, 0.0f));
+        // O original não desenha o chapéu do bípede. Ele mora dentro da cabeça, e não na raiz: esvaziá-lo na raiz
+        // deixava o verdadeiro de pé, e era ele — uma caixa de oito com a folha do chapéu — que tapava a cara.
+        head.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
         return LayerDefinition.create(mesh, 64, 32);
     }
 

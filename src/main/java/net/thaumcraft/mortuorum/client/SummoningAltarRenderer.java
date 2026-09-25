@@ -39,17 +39,17 @@ public class SummoningAltarRenderer implements BlockEntityRenderer<SummoningAlta
     private static final Identifier TORCH = Identifier.withDefaultNamespace("textures/block/torch.png");
     private static final Identifier BOOK = Identifier.withDefaultNamespace("textures/entity/enchantment/enchanting_table_book.png");
 
-    // as onze caixas do ModelAltar, todas espelhadas, numa folha de 128 por 64
-    private static final float[] BOTTOM = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 16, 3, 16, 0, 45, 128, 64));
-    private static final float[] PILLAR = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 11, 17, 6, 0, 41, 128, 64));
-    private static final float[] BASE = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 16, 2, 16, 64, 46, 128, 64));
-    private static final float[] BACK1 = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 1, 2, 16, 0, 46, 128, 64));
-    private static final float[] BACK2 = BoxMesh.mirror(BoxMesh.box(-8, 0, 0, 8, 2, 1, 0, 54, 128, 64));
-    private static final float[] BACK3 = BoxMesh.mirror(BoxMesh.box(-8, 0, 0, 8, 2, 1, 0, 52, 128, 64));
-    private static final float[] CONNECTION = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 1, 13, 1, 0, 0, 128, 64));
-    private static final float[] TABLE_BOTTOM = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 32, 3, 16, 0, 0, 128, 64));
-    private static final float[] TABLE_MIDDLE = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 29, 11, 10, 0, 0, 128, 64));
-    private static final float[] TABLE_TOP = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 32, 2, 16, 0, 0, 128, 64));
+    // as onze caixas do ModelAltar numa folha de 128 por 64
+    private static final float[] BOTTOM = BoxMesh.box(0, 0, 0, 16, 3, 16, 0, 45, 128, 64);
+    private static final float[] PILLAR = BoxMesh.box(0, 0, 0, 11, 17, 6, 0, 41, 128, 64);
+    private static final float[] BASE = BoxMesh.box(0, 0, 0, 16, 2, 16, 64, 46, 128, 64);
+    private static final float[] BACK1 = BoxMesh.box(0, 0, 0, 1, 2, 16, 0, 46, 128, 64);
+    private static final float[] BACK2 = BoxMesh.box(-8, 0, 0, 8, 2, 1, 0, 54, 128, 64);
+    private static final float[] BACK3 = BoxMesh.box(-8, 0, 0, 8, 2, 1, 0, 52, 128, 64);
+    private static final float[] CONNECTION = BoxMesh.box(0, 0, 0, 1, 13, 1, 0, 0, 128, 64);
+    private static final float[] TABLE_BOTTOM = BoxMesh.box(0, 0, 0, 32, 3, 16, 0, 0, 128, 64);
+    private static final float[] TABLE_MIDDLE = BoxMesh.box(0, 0, 0, 29, 11, 10, 0, 0, 128, 64);
+    private static final float[] TABLE_TOP = BoxMesh.box(0, 0, 0, 32, 2, 16, 0, 0, 128, 64);
 
     /** O grau que o {@code pillarAltar} do original tem de inclinação. */
     private static final float PILLAR_TILT = 0.0174533f;
@@ -58,14 +58,18 @@ public class SummoningAltarRenderer implements BlockEntityRenderer<SummoningAlta
 
     public static class State extends BlockEntityRenderState {
         Direction facing = Direction.NORTH;
+        /** O corpo que já está montado nas cinco casas, para ficar deitado na mesa. */
+        final MinionRenderState minion = new MinionRenderState();
         final ItemStackRenderState torch = new ItemStackRenderState();
     }
 
     private final BookModel book;
     private final ItemModelResolver items;
+    private final MinionModel minion;
 
     public SummoningAltarRenderer(BlockEntityRendererProvider.Context context) {
         this.book = new BookModel(context.bakeLayer(ModelLayers.BOOK));
+        this.minion = MinionModel.build(context::bakeLayer);
         this.items = context.itemModelResolver();
     }
 
@@ -86,6 +90,13 @@ public class SummoningAltarRenderer implements BlockEntityRenderer<SummoningAlta
         BlockEntityRenderer.super.extractRenderState(altar, state, partial, camera, crumbling);
         state.facing = altar.getBlockState().hasProperty(SummoningAltarBlock.FACING)
                 ? altar.getBlockState().getValue(SummoningAltarBlock.FACING) : Direction.NORTH;
+        state.minion.parts = altar.parts();
+        state.minion.attackTimer = 0;
+        state.minion.walkAnimationSpeed = 0.0f;
+        state.minion.walkAnimationPos = 0.0f;
+        state.minion.yRot = 0.0f;
+        state.minion.xRot = 0.0f;
+        state.minion.ageInTicks = 0.0f;
         this.items.updateForTopItem(state.torch, new ItemStack(Items.TORCH), ItemDisplayContext.FIXED,
                 altar.getLevel(), null, 0);
     }
@@ -121,6 +132,60 @@ public class SummoningAltarRenderer implements BlockEntityRenderer<SummoningAlta
                 RenderTypes.entitySolid(BOOK), 0xF000F0, OverlayTexture.NO_OVERLAY, 0xFFE5E5E5, null, 0, null);
         pose.popPose();
 
+        pose.popPose();
+
+        preview(state, pose, collector);
+    }
+
+    /**
+     * O corpo pré-montado, deitado na mesa do altar: o {@code getPreviewEntity} do {@code TileEntityAltar} com o
+     * quadro do {@code TileEntityAltarRenderer}.
+     *
+     * <p>São as contas do original, uma por lado a que o altar olha, e depois o balanço de vem-e-vai que ele faz
+     * no eixo Z — meio dedo para lá e para cá, no tempo do relógio da máquina. O corpo fica de costas na mesa,
+     * que é o que o giro de menos noventa em X faz.
+     */
+    private void preview(State state, PoseStack pose, SubmitNodeCollector collector) {
+        if (state.minion.parts.isEmpty()) return;
+
+        pose.pushPose();
+        pose.translate(1.5f, 1.0f, 0.5f);
+        switch (state.facing) {
+            case NORTH -> {
+                pose.translate(-1.0f, 0.2f, 3.0f);
+                pose.mulPose(Axis.XP.rotationDegrees(-90.0f));
+                pose.translate(0.0f, 0.4f, 0.0f);
+            }
+            case WEST -> {
+                pose.translate(-3.2f, 0.2f, 0.0f);
+                pose.mulPose(Axis.YP.rotationDegrees(270.0f));
+                pose.mulPose(Axis.XP.rotationDegrees(-90.0f));
+                pose.translate(0.0f, -0.4f, 0.0f);
+            }
+            case SOUTH -> {
+                pose.translate(-1.0f, 0.2f, -2.2f);
+                pose.mulPose(Axis.YP.rotationDegrees(180.0f));
+                pose.mulPose(Axis.XP.rotationDegrees(-90.0f));
+                pose.translate(0.0f, -0.4f, 0.0f);
+            }
+            default -> {
+                pose.translate(1.2f, 0.2f, 0.0f);
+                pose.mulPose(Axis.YP.rotationDegrees(90.0f));
+                pose.mulPose(Axis.XP.rotationDegrees(-90.0f));
+                pose.translate(0.0f, -0.4f, 0.0f);
+            }
+        }
+        // o vem-e-vai do original: 0,05 de seno mais 0,1, no tempo do relógio
+        pose.translate(0.0f, 0.0f, (float) (0.05 * Math.sin(0.001 * System.currentTimeMillis()) + 0.1));
+
+        // o quadro em que o jogo desenha um bicho vivo: virado de costas, de cabeça para baixo e assentado no chão
+        pose.mulPose(Axis.YP.rotationDegrees(180.0f));
+        pose.scale(-1.0f, -1.0f, 1.0f);
+        pose.translate(0.0f, -1.5078125f, 0.0f);
+
+        this.minion.setupAnim(state.minion);
+        MinionRenderer.draw(this.minion, pose, collector, state.lightCoords,
+                state.minion);
         pose.popPose();
     }
 

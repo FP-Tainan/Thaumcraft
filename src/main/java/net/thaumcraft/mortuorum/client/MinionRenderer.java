@@ -32,11 +32,7 @@ public class MinionRenderer extends LivingEntityRenderer<MinionEntity, MinionRen
     }
 
     private static MinionModel montar(EntityRendererProvider.Context context) {
-        Map<String, ModelPart> raizes = new LinkedHashMap<>();
-        for (var entrada : MinionModel.LAYERS.entrySet()) {
-            raizes.put(entrada.getKey(), context.bakeLayer(entrada.getValue()));
-        }
-        return new MinionModel(context.bakeLayer(MinionModel.EMPTY), raizes);
+        return MinionModel.build(context::bakeLayer);
     }
 
     @Override

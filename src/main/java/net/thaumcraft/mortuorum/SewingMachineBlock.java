@@ -16,6 +16,15 @@ import net.minecraft.world.phys.BlockHitResult;
 public class SewingMachineBlock extends BaseEntityBlock {
     public static final MapCodec<SewingMachineBlock> CODEC = simpleCodec(SewingMachineBlock::new);
 
+    /**
+     * O tamanho que ela ocupa: o {@code setBlockBounds(0.3F, 0.5F, 0.2F, 0.7F, 0.0F, 0.95F)} do original.
+     *
+     * <p><b>Desvio declarado:</b> os números são os dele, mas ali o alto e o baixo estão trocados — pede uma caixa
+     * que começa em 0,5 de altura e acaba em 0,0 —, e uma caixa virada do avesso não vale nada. Aqui ficam na
+     * ordem certa, que é o que ele queria e o que dá o tamanho do que se desenha.
+     */
+    private static final net.minecraft.world.phys.shapes.VoxelShape SHAPE = box(4.8, 0.0, 3.2, 11.2, 8.0, 15.2);
+
     public SewingMachineBlock(Properties properties) {
         super(properties);
     }
@@ -31,8 +40,17 @@ public class SewingMachineBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,
+                                                                  net.minecraft.world.level.BlockGetter level,
+                                                                  BlockPos pos,
+                                                                  net.minecraft.world.phys.shapes.CollisionContext context) {
+        return SHAPE;
+    }
+
+    /** O original devolve -1 no {@code getRenderType}: quem a desenha é o desenhista do tile, e não um modelo. */
+    @Override
     protected net.minecraft.world.level.block.RenderShape getRenderShape(BlockState state) {
-        return net.minecraft.world.level.block.RenderShape.MODEL;
+        return net.minecraft.world.level.block.RenderShape.INVISIBLE;
     }
 
     @Override

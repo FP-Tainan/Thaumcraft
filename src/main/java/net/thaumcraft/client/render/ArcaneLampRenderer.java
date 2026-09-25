@@ -25,8 +25,8 @@ public class ArcaneLampRenderer<T extends BlockEntity> implements BlockEntityRen
     private static final Identifier TEXTURE = Thaumcraft.id("textures/models/bore.png");
     /** O {@code Nozzle1} e o {@code Nozzle2}, já com o ponto de giro deles (0, 8, 0). */
     private static final float[] NOZZLE = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(2.5f, 6.0f, -2.0f, 5, 4, 4, 106, 42, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(7.0f, 5.5f, -2.5f, 1, 5, 5, 106, 51, 128, 64)));
+            BoxMesh.box(2.5f, 6.0f, -2.0f, 5, 4, 4, 106, 42, 128, 64),
+            BoxMesh.box(7.0f, 5.5f, -2.5f, 1, 5, 5, 106, 51, 128, 64));
 
     public static class State extends BlockEntityRenderState {
         Direction facing = Direction.DOWN;

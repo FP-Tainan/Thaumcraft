@@ -17,7 +17,8 @@ import java.util.function.Function;
 public final class MortuorumBlocks {
     /** A Máquina de Costura, onde os pedaços viram peça de corpo. */
     public static final Block SEWING_MACHINE = register("sewing_machine", properties ->
-            new SewingMachineBlock(properties.mapColor(MapColor.METAL).strength(4.0f).sound(SoundType.METAL)));
+            new SewingMachineBlock(properties.mapColor(MapColor.METAL).strength(4.0f).sound(SoundType.METAL)
+                    .noOcclusion()));
 
     public static final net.minecraft.world.level.block.entity.BlockEntityType<SewingMachineBlockEntity> SEWING_MACHINE_ENTITY =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("sewing_machine"),

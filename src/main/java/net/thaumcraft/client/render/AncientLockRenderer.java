@@ -57,10 +57,15 @@ public class AncientLockRenderer implements BlockEntityRenderer<AncientLockBlock
         this.items = context.itemModelResolver();
     }
 
-    /** O {@code ModelCube(0)}: um cubo de dezesseis, espelhado, numa folha de 64 por 64. */
+    /**
+     * O {@code ModelCube(0)}: um cubo de dezesseis numa folha de 64 por 64.
+     *
+     * <p>O original liga o espelho, mas depois do {@code addBox} — em 1.7.10 o sinalizador é lido dentro do
+     * {@code addBox}, logo aquilo não faz nada. É a marca do exportador do Techne, que o punha sempre no fim.
+     */
     public static LayerDefinition createLayer() {
         MeshDefinition mesh = new MeshDefinition();
-        mesh.getRoot().addOrReplaceChild("cube", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-8.0f, -8.0f, -8.0f, 16, 16, 16),
+        mesh.getRoot().addOrReplaceChild("cube", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0f, -8.0f, -8.0f, 16, 16, 16),
                 PartPose.ZERO);
         return LayerDefinition.create(mesh, 64, 64);
     }

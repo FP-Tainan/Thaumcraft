@@ -42,34 +42,34 @@ public final class ArcaneBoreRenderers {
 
     // o ModelBore: base, laterais e travessa; o bico (meio e frente), com o ponto de giro em y 8
     private static final float[] BORE_BASE = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(-6, 0, -6, 12, 2, 12, 0, 32, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-2, 2, -5.5f, 4, 8, 1, 0, 0, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-2, 2, 4.5f, 4, 8, 1, 0, 0, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-1, 7, -6, 2, 2, 12, 0, 48, 128, 64)));
+            BoxMesh.box(-6, 0, -6, 12, 2, 12, 0, 32, 128, 64),
+            BoxMesh.box(-2, 2, -5.5f, 4, 8, 1, 0, 0, 128, 64),
+            BoxMesh.box(-2, 2, 4.5f, 4, 8, 1, 0, 0, 128, 64),
+            BoxMesh.box(-1, 7, -6, 2, 2, 12, 0, 48, 128, 64));
     private static final float[] BORE_NOZZLE = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(4, 5.5f, -2.5f, 4, 5, 5, 30, 14, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-2, 4, -4, 6, 8, 8, 0, 14, 128, 64)));
+            BoxMesh.box(4, 5.5f, -2.5f, 4, 5, 5, 30, 14, 128, 64),
+            BoxMesh.box(-2, 4, -4, 6, 8, 8, 0, 14, 128, 64));
     // o ModelBoreEmit: a bola (só com foco), as três cruzetas e a haste
-    private static final float[] EMIT_KNOB = BoxMesh.mirror(BoxMesh.box(-2, 12, -2, 4, 4, 4, 66, 0, 128, 64));
+    private static final float[] EMIT_KNOB = BoxMesh.box(-2, 12, -2, 4, 4, 4, 66, 0, 128, 64);
     private static final float[] EMIT = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(-2, 8, -2, 4, 1, 4, 56, 16, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-2, 0, -2, 4, 1, 4, 56, 16, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-3, 4, -3, 6, 1, 6, 56, 24, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-1, 1, -1, 2, 11, 2, 56, 0, 128, 64)));
+            BoxMesh.box(-2, 8, -2, 4, 1, 4, 56, 16, 128, 64),
+            BoxMesh.box(-2, 0, -2, 4, 1, 4, 56, 16, 128, 64),
+            BoxMesh.box(-3, 4, -3, 6, 1, 6, 56, 24, 128, 64),
+            BoxMesh.box(-1, 1, -1, 2, 11, 2, 56, 0, 128, 64));
     // o miolo do ModelJar
-    private static final float[] JAR_CORE = BoxMesh.mirror(BoxMesh.box(-5, -12, -5, 10, 12, 10, 0, 0, 64, 32));
+    private static final float[] JAR_CORE = BoxMesh.box(-5, -12, -5, 10, 12, 10, 0, 0, 64, 32);
     // o ModelBoreBase: as duas chapas e as cinco colunas; o bico de lado
     private static final float[] BASE = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(-8, 0, -8, 16, 2, 16, 64, 24, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-8, 14, -8, 16, 2, 16, 64, 24, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-2.5f, 2, -2.5f, 5, 12, 5, 84, 42, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-7, 2, -7, 4, 12, 4, 64, 42, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-7, 2, 3, 4, 12, 4, 64, 42, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(3, 2, 3, 4, 12, 4, 64, 42, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(3, 2, -7, 4, 12, 4, 64, 42, 128, 64)));
+            BoxMesh.box(-8, 0, -8, 16, 2, 16, 64, 24, 128, 64),
+            BoxMesh.box(-8, 14, -8, 16, 2, 16, 64, 24, 128, 64),
+            BoxMesh.box(-2.5f, 2, -2.5f, 5, 12, 5, 84, 42, 128, 64),
+            BoxMesh.box(-7, 2, -7, 4, 12, 4, 64, 42, 128, 64),
+            BoxMesh.box(-7, 2, 3, 4, 12, 4, 64, 42, 128, 64),
+            BoxMesh.box(3, 2, 3, 4, 12, 4, 64, 42, 128, 64),
+            BoxMesh.box(3, 2, -7, 4, 12, 4, 64, 42, 128, 64));
     private static final float[] BASE_NOZZLE = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(2.5f, 6, -2, 5, 4, 4, 106, 42, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(7, 5.5f, -2.5f, 1, 5, 5, 106, 51, 128, 64)));
+            BoxMesh.box(2.5f, 6, -2, 5, 4, 4, 106, 42, 128, 64),
+            BoxMesh.box(7, 5.5f, -2.5f, 1, 5, 5, 106, 51, 128, 64));
 
     private ArcaneBoreRenderers() {
     }

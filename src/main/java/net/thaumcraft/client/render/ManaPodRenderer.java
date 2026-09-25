@@ -29,8 +29,8 @@ public class ManaPodRenderer implements BlockEntityRenderer<ManaPodBlockEntity, 
     private static final Identifier INNER = Thaumcraft.id("textures/models/manapod_0.png");
     private static final Identifier SHELL = Thaumcraft.id("textures/models/manapod_2.png");
     /** O {@code pod0}, de quatro por cinco por quatro, e o {@code pod2}, de sete por nove por sete, numa folha de 32. */
-    private static final float[] POD0 = BoxMesh.mirror(BoxMesh.box(-2, 0, -2, 4, 5, 4, 0, 0, 32, 32));
-    private static final float[] POD2 = BoxMesh.mirror(BoxMesh.box(-3.5f, 0, -3.5f, 7, 9, 7, 0, 0, 32, 32));
+    private static final float[] POD0 = BoxMesh.box(-2, 0, -2, 4, 5, 4, 0, 0, 32, 32);
+    private static final float[] POD2 = BoxMesh.box(-3.5f, 0, -3.5f, 7, 9, 7, 0, 0, 32, 32);
 
     public static class State extends BlockEntityRenderState {
         int age;

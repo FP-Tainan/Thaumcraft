@@ -30,6 +30,13 @@ import java.util.function.Consumer;
  * O original tem ainda uma foice de modelo de Blender, que ele só desenha para quem estiver numa lista de nomes
  * que ele ia buscar à rede — a lista morreu com o sítio, e o único nome que ficou no código é o de
  * {@code AtomicStryker}; é esse que aqui a vê, como lá.
+ *
+ * <p><b>Desvio declarado, nos lugares em que a foice aparece:</b> o original tem uma conta de posição, giro e
+ * tamanho para cada lugar ({@code ENTITY}, {@code EQUIPPED}, {@code EQUIPPED_FIRST_PERSON} e {@code INVENTORY}),
+ * mas aqueles números contam a partir do quadro que o desenhista de itens da 1.7.10 montava, e esse quadro já
+ * não existe. Do original ficam os giros — e sobretudo o de 180 graus em Z, que é o que põe a foice de pé, e sem
+ * o qual ela sai virada ao contrário —, enquanto a posição e o tamanho em {@code models/item/scythe.json} foram
+ * acertados a olho até a foice ficar na mão como na origem.
  */
 public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<Unit> {
     private static final Identifier SCYTHE = Thaumcraft.id("textures/models/scythe.png");
@@ -38,18 +45,18 @@ public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<U
     /** Quem vê a foice do modelo de Blender: o único nome que sobrou do {@code specialFolk} do original. */
     private static final String SPECIAL = "AtomicStryker";
 
-    // as sete caixas do ModelScythe, todas espelhadas, numa folha de 64 por 32
-    private static final float[] HANDLE_MIDDLE = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 1, 11, 1, 0, 0, 64, 32));
-    private static final float[] HANDLE_BOTTOM = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 1, 12, 1, 0, 0, 64, 32));
-    private static final float[] HANDLE_TOP = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 1, 10, 1, 0, 0, 64, 32));
-    private static final float[] BLADE_EDGE = BoxMesh.mirror(BoxMesh.box(-0.5f, -0.5f, 0, 1, 1, 10, 4, 0, 64, 32));
-    private static final float[] BLADE_BASE = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 1, 1, 11, 40, 0, 64, 32));
-    private static final float[] JOINT = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 2, 2, 2, 0, 13, 64, 32));
+    // as sete caixas do ModelScythe numa folha de 64 por 32
+    private static final float[] HANDLE_MIDDLE = BoxMesh.box(0, 0, 0, 1, 11, 1, 0, 0, 64, 32);
+    private static final float[] HANDLE_BOTTOM = BoxMesh.box(0, 0, 0, 1, 12, 1, 0, 0, 64, 32);
+    private static final float[] HANDLE_TOP = BoxMesh.box(0, 0, 0, 1, 10, 1, 0, 0, 64, 32);
+    private static final float[] BLADE_EDGE = BoxMesh.box(-0.5f, -0.5f, 0, 1, 1, 10, 4, 0, 64, 32);
+    private static final float[] BLADE_BASE = BoxMesh.box(0, 0, 0, 1, 1, 11, 40, 0, 64, 32);
+    private static final float[] JOINT = BoxMesh.box(0, 0, 0, 2, 2, 2, 0, 13, 64, 32);
 
     // e as da foice de osso, que troca o gume e a junta
-    private static final float[] BONE_JOINT = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 2, 4, 4, 34, 0, 64, 32));
-    private static final float[] BONE_BLADE = BoxMesh.mirror(BoxMesh.box(-0.5f, -0.5f, 0, 1, 1, 15, 0, 15, 64, 32));
-    private static final float[] BONE_BLADE_BASE = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 1, 1, 15, 0, 15, 64, 32));
+    private static final float[] BONE_JOINT = BoxMesh.box(0, 0, 0, 2, 4, 4, 34, 0, 64, 32);
+    private static final float[] BONE_BLADE = BoxMesh.box(-0.5f, -0.5f, 0, 1, 1, 15, 0, 15, 64, 32);
+    private static final float[] BONE_BLADE_BASE = BoxMesh.box(0, 0, 0, 1, 1, 15, 0, 15, 64, 32);
 
     private static final float QUARTER = (float) (Math.PI / 4.0);
 
@@ -57,12 +64,13 @@ public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<U
     public void submit(@Nullable Unit ignored, PoseStack pose, SubmitNodeCollector collector,
                        int light, int overlay, boolean foil, int tint) {
         pose.pushPose();
-        // o modelo do original é desenhado de cabeça para baixo, a partir do meio da casa
+        // o modelo desenha-se a partir do meio da casa; de pé quem o põe é o giro de 180 em Z do arquivo do
+        // item, que é o que o original faz — aqui não se vira mais nada, ou a foice sai virada ao contrário
         pose.translate(0.5f, 0.5f, 0.5f);
-        pose.scale(1.0f, -1.0f, -1.0f);
         pose.scale(0.9f, 0.9f, 0.9f);
         if (special()) {
-            pose.scale(1.0f, -1.0f, -1.0f);
+            // a foice de Blender já vem de pé: o original desenha-a sem o giro de 180, então desfaz-se ele
+            pose.mulPose(Axis.ZP.rotationDegrees(180.0f));
             objScythe(pose, collector, light, overlay);
         } else if (this.bone) {
             boneScythe(pose, collector, light, overlay);

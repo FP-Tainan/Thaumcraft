@@ -61,6 +61,12 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("summoning_altar"),
                 net.thaumcraft.mortuorum.client.SummoningAltarItemRenderer.Unbaked.CODEC);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.mortuorum.MortuorumBlocks.SEWING_MACHINE_ENTITY,
+                net.thaumcraft.mortuorum.client.SewingMachineRenderer::new);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("sewing_machine"),
+                net.thaumcraft.mortuorum.client.SewingMachineItemRenderer.Unbaked.CODEC);
         // o Lacaio: uma camada de modelo por bicho de que se tiram peças, e mais a raiz vazia dele
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.mortuorum.client.MinionModel.EMPTY,

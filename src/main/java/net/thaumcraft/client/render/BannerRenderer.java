@@ -64,12 +64,12 @@ public class BannerRenderer implements BlockEntityRenderer<BannerBlockEntity, Ba
         Parts() {
             MeshDefinition mesh = new MeshDefinition();
             PartDefinition root = mesh.getRoot();
-            root.addOrReplaceChild("b1", CubeListBuilder.create().texOffs(0, 29).mirror().addBox(-5.0f, -7.5f, -1.5f, 2, 3, 3), PartPose.ZERO);
-            root.addOrReplaceChild("b2", CubeListBuilder.create().texOffs(0, 29).mirror().addBox(3.0f, -7.5f, -1.5f, 2, 3, 3), PartPose.ZERO);
-            root.addOrReplaceChild("beam", CubeListBuilder.create().texOffs(30, 0).mirror().addBox(-7.0f, -7.0f, -1.0f, 14, 2, 2), PartPose.ZERO);
-            root.addOrReplaceChild("banner", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-7.0f, 0.0f, -0.5f, 14, 28, 1),
+            root.addOrReplaceChild("b1", CubeListBuilder.create().texOffs(0, 29).addBox(-5.0f, -7.5f, -1.5f, 2, 3, 3), PartPose.ZERO);
+            root.addOrReplaceChild("b2", CubeListBuilder.create().texOffs(0, 29).addBox(3.0f, -7.5f, -1.5f, 2, 3, 3), PartPose.ZERO);
+            root.addOrReplaceChild("beam", CubeListBuilder.create().texOffs(30, 0).addBox(-7.0f, -7.0f, -1.0f, 14, 2, 2), PartPose.ZERO);
+            root.addOrReplaceChild("banner", CubeListBuilder.create().texOffs(0, 0).addBox(-7.0f, 0.0f, -0.5f, 14, 28, 1),
                     PartPose.offset(0.0f, -5.0f, 0.0f));
-            root.addOrReplaceChild("pole", CubeListBuilder.create().texOffs(62, 0).mirror().addBox(0.0f, 0.0f, -1.0f, 2, 31, 2),
+            root.addOrReplaceChild("pole", CubeListBuilder.create().texOffs(62, 0).addBox(0.0f, 0.0f, -1.0f, 2, 31, 2),
                     PartPose.offset(-1.0f, -7.0f, -2.0f));
             ModelPart baked = LayerDefinition.create(mesh, 128, 64).bakeRoot();
             this.pole = baked.getChild("pole");

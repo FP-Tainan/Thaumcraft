@@ -38,6 +38,7 @@
       "net.thaumcraft.test.EquipmentGameTest",
       "net.thaumcraft.test.CreatureGameTest",
       "net.thaumcraft.test.SmallThingsGameTest",
+      "net.thaumcraft.test.TextureFramesGameTest",
       "net.thaumcraft.test.BiomeGameTest",
       "net.thaumcraft.test.PechGameTest",
       "net.thaumcraft.test.WardedGameTest",
@@ -168,7 +169,9 @@
       "net.thaumcraft.test.client.MaleficiumTreeClientTest",
       "net.thaumcraft.test.client.NaturalisClientTest",
       "net.thaumcraft.test.client.NaturalisWorldClientTest",
-      "net.thaumcraft.test.client.SkinClientTest"
+      "net.thaumcraft.test.client.SkinClientTest",
+      "net.thaumcraft.test.client.ItemModelClientTest",
+      "net.thaumcraft.test.client.MortuorumLookClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

@@ -34,17 +34,17 @@ public class ResearchTableRenderer implements BlockEntityRenderer<ResearchTableB
     private static final Identifier QUILL = Thaumcraft.id("textures/block/tablequill.png");
     private static final float UNIT = 1.0f / 16.0f;
 
-    // as caixas do ModelResearchTable, cada uma já no lugar do seu ponto de giro; todas espelhadas
+    // as caixas do ModelResearchTable, cada uma já no lugar do seu ponto de giro
     private static final float[] BODY = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(-8, 0, -8, 32, 4, 16, 0, 0, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-6, 4, -6, 4, 12, 4, 0, 24, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-6, 4, 2, 4, 12, 4, 0, 24, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(18, 4, -6, 4, 12, 4, 0, 24, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(18, 4, 2, 4, 12, 4, 0, 24, 128, 64)),
-            BoxMesh.mirror(BoxMesh.box(-4, 10, -2, 24, 4, 4, 24, 24, 128, 64)));
-    private static final float[] INKWELL = BoxMesh.mirror(BoxMesh.box(-6, -2, 3, 3, 2, 3, 0, 44, 128, 64));
-    private static final float[] TUBE = BoxMesh.mirror(BoxMesh.box(-21, -0.5f, -8, 8, 2, 2, 0, 0, 128, 64));
-    private static final float[] RIBBON = BoxMesh.mirror(BoxMesh.box(-15.1f, -0.275f, -6.75f, 1, 2, 2, 0, 4, 128, 64));
+            BoxMesh.box(-8, 0, -8, 32, 4, 16, 0, 0, 128, 64),
+            BoxMesh.box(-6, 4, -6, 4, 12, 4, 0, 24, 128, 64),
+            BoxMesh.box(-6, 4, 2, 4, 12, 4, 0, 24, 128, 64),
+            BoxMesh.box(18, 4, -6, 4, 12, 4, 0, 24, 128, 64),
+            BoxMesh.box(18, 4, 2, 4, 12, 4, 0, 24, 128, 64),
+            BoxMesh.box(-4, 10, -2, 24, 4, 4, 24, 24, 128, 64));
+    private static final float[] INKWELL = BoxMesh.box(-6, -2, 3, 3, 2, 3, 0, 44, 128, 64);
+    private static final float[] TUBE = BoxMesh.box(-21, -0.5f, -8, 8, 2, 2, 0, 0, 128, 64);
+    private static final float[] RIBBON = BoxMesh.box(-15.1f, -0.275f, -6.75f, 1, 2, 2, 0, 4, 128, 64);
     /** O giro de dez radianos que o rolo tem no modelo original. */
     private static final float SCROLL_TURN = (float) Math.toDegrees(10.0);
 

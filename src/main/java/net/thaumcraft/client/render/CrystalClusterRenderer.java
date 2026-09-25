@@ -42,8 +42,8 @@ import java.util.function.Consumer;
  */
 public class CrystalClusterRenderer implements BlockEntityRenderer<CrystalClusterBlockEntity, CrystalClusterRenderer.State> {
     private static final Identifier TEXTURE = Thaumcraft.id("textures/models/crystal.png");
-    /** O cubo do {@code ModelCrystal}, espelhado, numa folha de 64 por 32. */
-    private static final float[] CRYSTAL = BoxMesh.mirror(BoxMesh.box(-16, -16, 0, 16, 16, 16, 0, 0, 64, 32));
+    /** O cubo do {@code ModelCrystal} numa folha de 64 por 32. */
+    private static final float[] CRYSTAL = BoxMesh.box(-16, -16, 0, 16, 16, 16, 0, 0, 64, 32);
 
     public static class State extends BlockEntityRenderState {
         int kind;

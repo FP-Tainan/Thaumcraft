@@ -35,9 +35,9 @@ import java.util.function.Consumer;
  */
 public class InfusionMatrixRenderer implements BlockEntityRenderer<InfusionMatrixBlockEntity, InfusionMatrixRenderer.State> {
     private static final Identifier TEXTURE = Thaumcraft.id("textures/models/infuser.png");
-    /** O {@code ModelCube(0)} e o {@code ModelCube(32)}: a caixa de 16 na folha de 64 por 64, espelhada. */
-    private static final float[] CUBE = BoxMesh.mirror(BoxMesh.box(-8, -8, -8, 16, 16, 16, 0, 0, 64, 64));
-    private static final float[] CUBE_OVER = BoxMesh.mirror(BoxMesh.box(-8, -8, -8, 16, 16, 16, 0, 32, 64, 64));
+    /** O {@code ModelCube(0)} e o {@code ModelCube(32)}: a caixa de 16 na folha de 64 por 64. */
+    private static final float[] CUBE = BoxMesh.box(-8, -8, -8, 16, 16, 16, 0, 0, 64, 64);
+    private static final float[] CUBE_OVER = BoxMesh.box(-8, -8, -8, 16, 16, 16, 0, 32, 64, 64);
 
     public static class State extends BlockEntityRenderState {
         float ticks;

@@ -1,6 +1,9 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "thaumcraft:block/sewing_machine"
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/sewing_machine",
+    "model": {
+      "type": "thaumcraft:sewing_machine"
+    }
   }
 }

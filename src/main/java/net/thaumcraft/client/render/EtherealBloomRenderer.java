@@ -28,8 +28,8 @@ public class EtherealBloomRenderer implements BlockEntityRenderer<EtherealBloomB
     private static final Identifier CRYSTAL = Thaumcraft.id("textures/models/crystalcapacitor.png");
     private static final Identifier LEAVES = Thaumcraft.id("textures/block/purifier_leaves.png");
     private static final Identifier STALK = Thaumcraft.id("textures/block/purifier_stalk.png");
-    /** O {@code ModelCube} de sempre: a caixa de 16 com a textura de 64 por 32, espelhada. */
-    private static final float[] CUBE = BoxMesh.mirror(BoxMesh.box(0, 0, 0, 16, 16, 16, 0, 0, 64, 32));
+    /** O {@code ModelCube} de sempre: a caixa de 16 com a textura de 64 por 32. */
+    private static final float[] CUBE = BoxMesh.box(0, 0, 0, 16, 16, 16, 0, 0, 64, 32);
     /** O {@code 200} que o original passa ao {@code setBrightness} das folhas e do caule. */
     private static final int PLANT_LIGHT = 200;
     private static final int GLOW = 0xFFAADBFF;

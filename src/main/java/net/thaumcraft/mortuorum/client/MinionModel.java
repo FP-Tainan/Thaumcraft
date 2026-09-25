@@ -43,6 +43,13 @@ public class MinionModel extends EntityModel<MinionRenderState> {
         this.roots = roots;
     }
 
+    /** O modelo cozido, das camadas de todos os bichos: serve ao lacaio no mundo e ao corpo deitado no altar. */
+    public static MinionModel build(java.util.function.Function<ModelLayerLocation, ModelPart> forno) {
+        Map<String, ModelPart> raizes = new LinkedHashMap<>();
+        for (var entrada : LAYERS.entrySet()) raizes.put(entrada.getKey(), forno.apply(entrada.getValue()));
+        return new MinionModel(forno.apply(EMPTY), raizes);
+    }
+
     /** Os pedaços daquele lugar daquele bicho, prontos para desenhar, ou lista vazia. */
     public List<ModelPart> pieces(String mob, String place) {
         ModelPart raiz = this.roots.get(mob);

@@ -321,21 +321,31 @@ public class ThaumonomiconScreen extends Screen {
         }
         graphics.disableScissor();
 
-        // as abas, encostadas na lombada à esquerda
+        // as abas: as primeiras encostadas à lombada, à esquerda, e as que sobram na borda direita
         int count = 0;
         for (ResearchCategories.Category category : ResearchCategories.visible(this.knowledge)) {
             boolean selected = category.key().equals(selectedCategory);
+            boolean mirrored = tabMirrored(count);
             int s1 = selected ? 0 : 24;
             int s2 = selected ? 0 : 8;
             int tabX = var8 + tabColumn(count);
             int tabY = var9 + tabRow(count);
-            graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, tabX, tabY, 152 + s1, 232, 24, 24, 256, 256);
+
+            // o pergaminho vai espelhado nas da direita, para a ponta dele apontar para fora do livro
+            if (mirrored) blitFlipped(graphics, tabX, tabY, 152 + s1, 232, 24, 24);
+            else graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, tabX, tabY, 152 + s1, 232, 24, 24, 256, 256);
+
+            // o desenho da aba e a faísca não se espelham: seriam lidos ao contrário
+            int iconX = mirrored ? tabX + 3 - s2 : tabX + 5 + s2;
             if (HIGHLIGHTED.contains(category.key())) {
                 int px = (int) (16L * (t % 16L));
-                graphics.blit(RenderPipelines.GUI_TEXTURED, PARTICLES, tabX - 3 + s2, tabY - 4, px, 80, 16, 16, 256, 256);
+                graphics.blit(RenderPipelines.GUI_TEXTURED, PARTICLES, iconX - 8, tabY - 4, px, 80, 16, 16, 256, 256);
             }
-            graphics.blit(RenderPipelines.GUI_TEXTURED, category.icon(), tabX + 5 + s2, tabY + 4, 0, 0, 16, 16, 16, 16);
-            if (!selected) graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, tabX, tabY, 200, 232, 24, 24, 256, 256);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, category.icon(), iconX, tabY + 4, 0, 0, 16, 16, 16, 16);
+            if (!selected) {
+                if (mirrored) blitFlipped(graphics, tabX, tabY, 200, 232, 24, 24);
+                else graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, tabX, tabY, 200, 232, 24, 24, 256, 256);
+            }
             count++;
         }
         graphics.blit(RenderPipelines.GUI_TEXTURED, BOOK, var8, var9, 0, 0, PANE_WIDTH, PANE_HEIGHT, 256, 256);
@@ -344,13 +354,32 @@ public class ThaumonomiconScreen extends Screen {
     }
 
     /**
-     * Onde fica a aba de número n. O original punha todas numa fileira só descendo a lombada; com os mods de fora
-     * elas passam de oito e cairiam fora do livro, então a nona começa outra coluna, mais para a esquerda.
+     * Onde fica a aba de número n. O original punha todas numa fileira só descendo a lombada, e oito era quanto
+     * cabia; com os mods de fora elas passam disso, então as que sobram vão para a borda direita do livro, de
+     * fora para dentro, e o pergaminho delas é desenhado espelhado, para apontar para fora como o das da esquerda.
      */
     private static final int TABS_PER_COLUMN = PANE_HEIGHT / CELL - 1;
 
     private static int tabColumn(int index) {
-        return -24 * (1 + index / TABS_PER_COLUMN);
+        int coluna = index / TABS_PER_COLUMN;
+        return coluna == 0 ? -CELL : PANE_WIDTH + CELL * (coluna - 1);
+    }
+
+    /** Se a aba de número n mora na borda direita, e portanto se desenha ao contrário. */
+    private static boolean tabMirrored(int index) {
+        return index / TABS_PER_COLUMN > 0;
+    }
+
+    /**
+     * Desenha um pedaço da folha do livro do avesso, da direita para a esquerda: é o que vira o pergaminho das
+     * abas da borda direita para a ponta apontar para fora.
+     *
+     * <p>Espelhar com a matriz do desenho não serve — uma escala negativa vira o quadro do avesso e ele
+     * desaparece —, então trocam-se as duas beiras da folha, que dá no mesmo e sempre aparece.
+     */
+    private static void blitFlipped(GuiGraphicsExtractor graphics, int x, int y, int u, int v, int w, int h) {
+        graphics.blit(BOOK, x, y, x + w, y + h,
+                (u + w) / 256.0f, u / 256.0f, v / 256.0f, (v + h) / 256.0f);
     }
 
     private static int tabRow(int index) {

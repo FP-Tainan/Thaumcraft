@@ -117,4 +117,26 @@ public class SummoningAltarBlockEntity extends BaseContainerBlockEntity {
         this.setChanged();
         return true;
     }
+
+    /**
+     * O que está no altar tem de chegar ao cliente: é dele que sai o corpo pré-montado que aparece deitado na
+     * mesa. No original o desenhista lê o tile direto — aqui o tile vive no servidor, então manda-se o feitio.
+     */
+    @Override
+    public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider registries) {
+        return this.saveWithoutMetadata(registries);
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (this.level != null && !this.level.isClientSide()) {
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        }
+    }
 }

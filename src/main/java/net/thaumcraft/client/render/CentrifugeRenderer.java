@@ -32,13 +32,13 @@ import java.util.function.Consumer;
 public class CentrifugeRenderer implements BlockEntityRenderer<CentrifugeBlockEntity, CentrifugeRenderer.State> {
     private static final Identifier TEXTURE = Thaumcraft.id("textures/models/centrifuge.png");
     private static final float[] BOXES = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(-4, -8, -4, 8, 4, 8, 20, 16, 64, 32)),
-            BoxMesh.mirror(BoxMesh.box(-4, 4, -4, 8, 4, 8, 20, 16, 64, 32)));
+            BoxMesh.box(-4, -8, -4, 8, 4, 8, 20, 16, 64, 32),
+            BoxMesh.box(-4, 4, -4, 8, 4, 8, 20, 16, 64, 32));
     private static final float[] SPINNY = BoxMesh.join(
-            BoxMesh.mirror(BoxMesh.box(-4, -1, -1, 8, 2, 2, 16, 0, 64, 32)),
-            BoxMesh.mirror(BoxMesh.box(4, -3, -2, 4, 6, 4, 0, 16, 64, 32)),
-            BoxMesh.mirror(BoxMesh.box(-8, -3, -2, 4, 6, 4, 0, 16, 64, 32)),
-            BoxMesh.mirror(BoxMesh.box(-1.5f, -4, -1.5f, 3, 8, 3, 0, 0, 64, 32)));
+            BoxMesh.box(-4, -1, -1, 8, 2, 2, 16, 0, 64, 32),
+            BoxMesh.box(4, -3, -2, 4, 6, 4, 0, 16, 64, 32),
+            BoxMesh.box(-8, -3, -2, 4, 6, 4, 0, 16, 64, 32),
+            BoxMesh.box(-1.5f, -4, -1.5f, 3, 8, 3, 0, 0, 64, 32));
 
     public static class State extends BlockEntityRenderState {
         float rotation;
