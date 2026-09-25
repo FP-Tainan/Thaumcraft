@@ -21,7 +21,8 @@
     "AbstractArrowAccessor",
     "InventoryMenuBaublesMixin",
     "ItemEntitySalisMixin",
-    "MinecraftServerLevelsAccessor"
+    "MinecraftServerLevelsAccessor",
+    "MobSpawnReasonMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",

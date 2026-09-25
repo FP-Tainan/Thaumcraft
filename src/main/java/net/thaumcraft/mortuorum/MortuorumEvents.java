@@ -32,10 +32,24 @@ public final class MortuorumEvents {
     private MortuorumEvents() {
     }
 
+    /** A marca de por que aquela criatura nasceu, que o mixin põe. */
+    public static final AttachmentType<Boolean> NATURAL = AttachmentRegistry.<Boolean>builder()
+            .buildAndRegister(Thaumcraft.id("mortuorum_natural"));
+
+    /** O {@code finalizeSpawn} diz por que a criatura nasceu; só a que o mundo faz nascer entra no sorteio. */
+    public static void mark(Mob bicho, net.minecraft.world.entity.EntitySpawnReason razao) {
+        if (razao == net.minecraft.world.entity.EntitySpawnReason.NATURAL
+                || razao == net.minecraft.world.entity.EntitySpawnReason.CHUNK_GENERATION
+                || razao == net.minecraft.world.entity.EntitySpawnReason.SPAWNER) {
+            bicho.setAttached(NATURAL, true);
+        }
+    }
+
     public static void init() {
         ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
             if (!(entity instanceof Mob bicho)) return;
             if (!(bicho.getClass() == Zombie.class || bicho.getClass() == Skeleton.class)) return;
+            if (!bicho.getAttachedOrElse(NATURAL, false)) return;
             if (bicho.hasAttached(ROLLED)) return;
             bicho.setAttached(ROLLED, true);
             var random = level.getRandom();
