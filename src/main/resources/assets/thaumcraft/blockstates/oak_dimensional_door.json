@@ -1,124 +1,1028 @@
 {
   "variants": {
-    "facing=east,half=lower,hinge=left,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_left"
-    },
-    "facing=east,half=lower,hinge=left,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open",
-      "y": 90
-    },
-    "facing=east,half=lower,hinge=right,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_right"
-    },
-    "facing=east,half=lower,hinge=right,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open",
-      "y": 270
-    },
-    "facing=east,half=upper,hinge=left,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_left"
-    },
-    "facing=east,half=upper,hinge=left,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_left_open",
-      "y": 90
-    },
-    "facing=east,half=upper,hinge=right,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_right"
-    },
-    "facing=east,half=upper,hinge=right,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_right_open",
-      "y": 270
-    },
-    "facing=south,half=lower,hinge=left,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_left",
-      "y": 90
-    },
-    "facing=south,half=lower,hinge=left,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open",
-      "y": 180
-    },
-    "facing=south,half=lower,hinge=right,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_right",
-      "y": 90
-    },
-    "facing=south,half=lower,hinge=right,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open"
-    },
-    "facing=south,half=upper,hinge=left,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_left",
-      "y": 90
-    },
-    "facing=south,half=upper,hinge=left,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_left_open",
-      "y": 180
-    },
-    "facing=south,half=upper,hinge=right,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_right",
-      "y": 90
-    },
-    "facing=south,half=upper,hinge=right,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_right_open"
-    },
-    "facing=west,half=lower,hinge=left,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_left",
-      "y": 180
-    },
-    "facing=west,half=lower,hinge=left,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open",
-      "y": 270
-    },
-    "facing=west,half=lower,hinge=right,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_right",
-      "y": 180
-    },
-    "facing=west,half=lower,hinge=right,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open",
-      "y": 90
-    },
-    "facing=west,half=upper,hinge=left,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_left",
-      "y": 180
-    },
-    "facing=west,half=upper,hinge=left,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_left_open",
-      "y": 270
-    },
-    "facing=west,half=upper,hinge=right,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_right",
-      "y": 180
-    },
-    "facing=west,half=upper,hinge=right,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_right_open",
-      "y": 90
-    },
-    "facing=north,half=lower,hinge=left,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_left",
-      "y": 270
-    },
-    "facing=north,half=lower,hinge=left,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open"
-    },
-    "facing=north,half=lower,hinge=right,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_right",
-      "y": 270
-    },
-    "facing=north,half=lower,hinge=right,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open",
-      "y": 180
-    },
-    "facing=north,half=upper,hinge=left,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_left",
-      "y": 270
-    },
-    "facing=north,half=upper,hinge=left,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_left_open"
-    },
-    "facing=north,half=upper,hinge=right,open=false": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_right",
-      "y": 270
-    },
-    "facing=north,half=upper,hinge=right,open=true": {
-      "model": "thaumcraft:block/oak_dimensional_door_top_right_open",
-      "y": 180
-    }
+    "facing=east,half=lower,hinge=left,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_0"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_1"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_2"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_3"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_4"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_5"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_6"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_7"
+      }
+    ],
+    "facing=east,half=lower,hinge=left,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_0",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_1",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_2",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_3",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_4",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_5",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_6",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_7",
+        "y": 90
+      }
+    ],
+    "facing=east,half=lower,hinge=right,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_0"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_1"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_2"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_3"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_4"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_5"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_6"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_7"
+      }
+    ],
+    "facing=east,half=lower,hinge=right,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_0",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_1",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_2",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_3",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_4",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_5",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_6",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_7",
+        "y": 270
+      }
+    ],
+    "facing=east,half=upper,hinge=left,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_0"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_1"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_2"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_3"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_4"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_5"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_6"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_7"
+      }
+    ],
+    "facing=east,half=upper,hinge=left,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_0",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_1",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_2",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_3",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_4",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_5",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_6",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_7",
+        "y": 90
+      }
+    ],
+    "facing=east,half=upper,hinge=right,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_0"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_1"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_2"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_3"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_4"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_5"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_6"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_7"
+      }
+    ],
+    "facing=east,half=upper,hinge=right,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_0",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_1",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_2",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_3",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_4",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_5",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_6",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_7",
+        "y": 270
+      }
+    ],
+    "facing=south,half=lower,hinge=left,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_0",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_1",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_2",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_3",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_4",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_5",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_6",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_7",
+        "y": 90
+      }
+    ],
+    "facing=south,half=lower,hinge=left,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_0",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_1",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_2",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_3",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_4",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_5",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_6",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_7",
+        "y": 180
+      }
+    ],
+    "facing=south,half=lower,hinge=right,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_0",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_1",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_2",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_3",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_4",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_5",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_6",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_7",
+        "y": 90
+      }
+    ],
+    "facing=south,half=lower,hinge=right,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_0"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_1"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_2"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_3"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_4"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_5"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_6"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_7"
+      }
+    ],
+    "facing=south,half=upper,hinge=left,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_0",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_1",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_2",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_3",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_4",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_5",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_6",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_7",
+        "y": 90
+      }
+    ],
+    "facing=south,half=upper,hinge=left,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_0",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_1",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_2",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_3",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_4",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_5",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_6",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_7",
+        "y": 180
+      }
+    ],
+    "facing=south,half=upper,hinge=right,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_0",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_1",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_2",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_3",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_4",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_5",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_6",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_7",
+        "y": 90
+      }
+    ],
+    "facing=south,half=upper,hinge=right,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_0"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_1"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_2"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_3"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_4"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_5"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_6"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_7"
+      }
+    ],
+    "facing=west,half=lower,hinge=left,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_0",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_1",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_2",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_3",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_4",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_5",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_6",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_7",
+        "y": 180
+      }
+    ],
+    "facing=west,half=lower,hinge=left,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_0",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_1",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_2",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_3",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_4",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_5",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_6",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_7",
+        "y": 270
+      }
+    ],
+    "facing=west,half=lower,hinge=right,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_0",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_1",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_2",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_3",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_4",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_5",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_6",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_7",
+        "y": 180
+      }
+    ],
+    "facing=west,half=lower,hinge=right,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_0",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_1",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_2",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_3",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_4",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_5",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_6",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_7",
+        "y": 90
+      }
+    ],
+    "facing=west,half=upper,hinge=left,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_0",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_1",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_2",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_3",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_4",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_5",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_6",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_7",
+        "y": 180
+      }
+    ],
+    "facing=west,half=upper,hinge=left,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_0",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_1",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_2",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_3",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_4",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_5",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_6",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_7",
+        "y": 270
+      }
+    ],
+    "facing=west,half=upper,hinge=right,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_0",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_1",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_2",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_3",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_4",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_5",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_6",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_7",
+        "y": 180
+      }
+    ],
+    "facing=west,half=upper,hinge=right,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_0",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_1",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_2",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_3",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_4",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_5",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_6",
+        "y": 90
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_7",
+        "y": 90
+      }
+    ],
+    "facing=north,half=lower,hinge=left,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_0",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_1",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_2",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_3",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_4",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_5",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_6",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_7",
+        "y": 270
+      }
+    ],
+    "facing=north,half=lower,hinge=left,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_0"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_1"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_2"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_3"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_4"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_5"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_6"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_left_open_7"
+      }
+    ],
+    "facing=north,half=lower,hinge=right,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_0",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_1",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_2",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_3",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_4",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_5",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_6",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_7",
+        "y": 270
+      }
+    ],
+    "facing=north,half=lower,hinge=right,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_0",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_1",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_2",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_3",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_4",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_5",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_6",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_bottom_right_open_7",
+        "y": 180
+      }
+    ],
+    "facing=north,half=upper,hinge=left,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_0",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_1",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_2",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_3",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_4",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_5",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_6",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_7",
+        "y": 270
+      }
+    ],
+    "facing=north,half=upper,hinge=left,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_0"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_1"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_2"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_3"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_4"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_5"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_6"
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_left_open_7"
+      }
+    ],
+    "facing=north,half=upper,hinge=right,open=false": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_0",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_1",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_2",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_3",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_4",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_5",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_6",
+        "y": 270
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_7",
+        "y": 270
+      }
+    ],
+    "facing=north,half=upper,hinge=right,open=true": [
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_0",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_1",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_2",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_3",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_4",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_5",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_6",
+        "y": 180
+      },
+      {
+        "model": "thaumcraft:block/oak_dimensional_door_top_right_open_7",
+        "y": 180
+      }
+    ]
   }
 }

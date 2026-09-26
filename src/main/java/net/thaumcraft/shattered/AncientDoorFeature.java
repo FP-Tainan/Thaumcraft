@@ -101,5 +101,9 @@ public class AncientDoorFeature extends Feature<NoneFeatureConfiguration> {
                 .setValue(DoorBlock.HALF, DoubleBlockHalf.LOWER);
         level.setBlock(chão, porta, 2);
         level.setBlock(chão.above(), porta.setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER), 2);
+
+        // esta é brava: quem passar por ela não cai no quarto liso, cai numa das salas do original. Uma porta
+        // que ficou de pé num descampado desde antes de haver quem a visse não dá para um quarto de tecido.
+        if (level.getBlockEntity(chão) instanceof RiftBlockEntity fenda) fenda.setWild(true);
     }
 }

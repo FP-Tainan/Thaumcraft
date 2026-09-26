@@ -73,9 +73,23 @@ public class DimensionalPortalRenderer
      */
     private static final RenderType FUNDO = RenderTypes.entitySolid(WARP);
 
-    /** E a folha da Porta Antiga, que vai de recorte para a racha dela deixar ver o vão. */
-    private static final Identifier ANTIGA = Thaumcraft.id("textures/entity/ancient_door.png");
-    private static final RenderType FOLHA = RenderTypes.entityCutout(ANTIGA);
+    /**
+     * E as oito folhas da Porta Antiga, que vão de recorte para a racha delas deixar ver o vão.
+     *
+     * <p>São oito porque quem manda pediu que a racha não fosse sempre a mesma. As portas comuns resolvem isso
+     * no arquivo de estados, que lista oito desenhos e deixa o jogo sortear; esta não tem desenho de bloco
+     * nenhum, e por isso quem sorteia é este, pela posição dela — a mesma porta escolhe sempre a mesma racha.
+     */
+    private static final int RACHAS = 8;
+    private static final RenderType[] FOLHAS = folhas();
+
+    private static RenderType[] folhas() {
+        RenderType[] saída = new RenderType[RACHAS];
+        for (int i = 0; i < RACHAS; i++) {
+            saída[i] = RenderTypes.entityCutout(Thaumcraft.id("textures/entity/ancient_door_" + i + ".png"));
+        }
+        return saída;
+    }
     private static final RenderType SOMA = RenderTypes.energySwirl(WARP, 0.0f, 0.0f);
 
     public static class State extends BlockEntityRenderState {
@@ -210,7 +224,10 @@ public class DimensionalPortalRenderer
     private static void sheet(State state, PoseStack pose, SubmitNodeCollector collector) {
         float minA = state.minA, maxA = state.maxA;
         float perto = state.minFundo, longe = state.maxFundo;
-        collector.submitCustomGeometry(pose, FOLHA, (m, v) -> {
+        // a racha desta porta sai da posição dela: é sempre a mesma, e a do lado é outra
+        RenderType folha = FOLHAS[Math.floorMod(
+                state.onde.getX() * 31 + state.onde.getY() * 17 + state.onde.getZ() * 7, RACHAS)];
+        collector.submitCustomGeometry(pose, folha, (m, v) -> {
             if (state.thinOnZ) {
                 // as duas caras, uma vista de cada lado
                 face(m, v, minA, 0, perto, maxA, 2, perto, false);

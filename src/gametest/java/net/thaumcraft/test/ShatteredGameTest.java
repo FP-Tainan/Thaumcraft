@@ -165,45 +165,6 @@ public class ShatteredGameTest {
         helper.succeed();
     }
 
-    /** A Assinatura de Fenda marca um lugar, liga-o a outro e gasta-se; a estabilizada não. */
-    @GameTest
-    public void theSignatureLinksTwoPlaces(GameTestHelper helper) {
-        BlockPos um = new BlockPos(1, 2, 1);
-        BlockPos dois = new BlockPos(4, 2, 4);
-        var quem = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
-        ItemStack assinatura = new ItemStack(ShatteredItems.RIFT_SIGNATURE);
-
-        usa(helper, quem, assinatura, um);
-        if (net.thaumcraft.shattered.RiftSignatureItem.source(assinatura) == null) {
-            helper.fail("a primeira vez devia marcar o lugar");
-        }
-        if (helper.getLevel().getBlockState(helper.absolutePos(um)).is(net.thaumcraft.shattered.ShatteredBlocks.RIFT)) {
-            helper.fail("e ainda não rasgar fenda nenhuma");
-        }
-
-        usa(helper, quem, assinatura, dois);
-        helper.assertBlockPresent(net.thaumcraft.shattered.ShatteredBlocks.RIFT, um);
-        helper.assertBlockPresent(net.thaumcraft.shattered.ShatteredBlocks.RIFT, dois);
-        if (net.thaumcraft.shattered.RiftSignatureItem.source(assinatura) != null) {
-            helper.fail("e a assinatura devia esquecer o lugar");
-        }
-
-        // e cada fenda aponta para a outra
-        var daqui = helper.getBlockEntity(um, net.thaumcraft.shattered.RiftBlockEntity.class);
-        var dali = helper.getBlockEntity(dois, net.thaumcraft.shattered.RiftBlockEntity.class);
-        if (daqui == null || dali == null) {
-            helper.fail("as duas fendas deviam ter miolo");
-            return;
-        }
-        if (daqui.destination() == null || !daqui.destination().pos().equals(helper.absolutePos(dois))) {
-            helper.fail("a primeira aponta para a segunda");
-        }
-        if (dali.destination() == null || !dali.destination().pos().equals(helper.absolutePos(um))) {
-            helper.fail("e a segunda para a primeira");
-        }
-        helper.succeed();
-    }
-
     private static void usa(GameTestHelper helper, net.minecraft.world.entity.player.Player quem,
                             ItemStack coisa, BlockPos onde) {
         var alvo = new net.minecraft.world.phys.BlockHitResult(
@@ -293,9 +254,9 @@ public class ShatteredGameTest {
         if (FabricBlocks.FABRIC.size() != 16) helper.fail("o tecido comum tem dezesseis cores");
         if (FabricBlocks.ANCIENT.size() != 16) helper.fail("e o antigo também");
         if (FabricBlocks.count() != 34) helper.fail("com o eterno e o desfiado, são trinta e quatro");
-        // mais o alçapão, a placa e as duas portas comuns, e treze coisas que não são bloco: os dois fios, as três
-        // marcas de fenda, a lâmina, os três focos, as quatro peças de armadura e os Óculos do Véu
-        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size() + 4 + 13) {
+        // mais a placa, e onze coisas que não são bloco: os dois fios, a lâmina, os três focos, as quatro peças
+        // de armadura e os Óculos do Véu
+        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size() + 1 + 11) {
             helper.fail("cada bloco tem o seu item; achei " + ShatteredItems.count());
         }
         if (!FabricBlocks.isFabric(FabricBlocks.FABRIC.get(DyeColor.BLACK))) helper.fail("o preto é tecido");

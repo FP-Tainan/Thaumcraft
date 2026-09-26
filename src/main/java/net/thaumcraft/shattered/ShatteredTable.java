@@ -54,22 +54,12 @@ public final class ShatteredTable {
                 .pages(Page.text("tc.research_page.SR_VEIL_GOGGLES.1"), Page.crafting("SRVeilGoggles"))
                 .register();
 
-        // terceiro: estabilizar — a assinatura
-        ThaumcraftApi.research("SR_SIGNATURE", ShatteredRealms.CATEGORY)
-                .aspects(new AspectList().add(Aspects.VOID, 4).add(Aspects.TRAVEL, 4).add(Aspects.EXCHANGE, 3))
-                .at(-4, 0)
-                .icon(() -> new ItemStack(ShatteredItems.RIFT_SIGNATURE))
-                .parents("SR_WORLD_THREAD")
-                .pages(Page.text("tc.research_page.SR_SIGNATURE.1"),
-                        Page.crafting("SRRiftSignature"), Page.crafting("SRStabilizedRiftSignature"))
-                .register();
-
-        // e os três focos, que é o que a varinha passa a fazer às fendas
+        // terceiro: rasgar, firmar e cerzir — os três focos, que é o que a varinha faz às fendas
         ThaumcraftApi.research("SR_FOCI", ShatteredRealms.CATEGORY)
                 .aspects(new AspectList().add(Aspects.VOID, 5).add(Aspects.MAGIC, 4).add(Aspects.ORDER, 4))
-                .at(-4, -2)
+                .at(-4, 0)
                 .icon(() -> new ItemStack(ShatteredItems.FOCUS_RIFT_HOLD))
-                .parents("SR_SIGNATURE")
+                .parents("SR_WORLD_THREAD")
                 .pages(Page.text("tc.research_page.SR_FOCI.1"), Page.crafting("SRFocusRiftOpen"),
                         Page.crafting("SRFocusRiftHold"), Page.crafting("SRFocusRiftClose"))
                 .register();
@@ -81,7 +71,7 @@ public final class ShatteredTable {
                 .icon(() -> new ItemStack(ShatteredBlocks.OAK_DIMENSIONAL_DOOR))
                 .parents("SR_WORLD_THREAD")
                 .pages(Page.text("tc.research_page.SR_DOORS.1"), Page.text("tc.research_page.SR_DOORS.2"),
-                        Page.crafting("SROakDoor"), Page.crafting("SRIronDoor"))
+                        Page.crafting("SROakDoor"))
                 .register();
 
         // quinto: mandar — os bolsos
@@ -126,24 +116,6 @@ public final class ShatteredTable {
                         List.of(new ItemStack(Items.OAK_DOOR)),
                         List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)),
                         List.of(new ItemStack(Items.OAK_DOOR)))));
-
-        ThaumcraftApi.bookRecipe("SRIronDoor", ThaumcraftApi.crafting(
-                () -> new ItemStack(ShatteredBlocks.IRON_DIMENSIONAL_DOOR), 3, 1, List.of(
-                        List.of(new ItemStack(Items.IRON_DOOR)),
-                        List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)),
-                        List.of(new ItemStack(Items.IRON_DOOR)))));
-
-        ThaumcraftApi.bookRecipe("SRRiftSignature", ThaumcraftApi.crafting(
-                () -> new ItemStack(ShatteredItems.RIFT_SIGNATURE), 3, 3, List.of(
-                        List.of(new ItemStack(Items.IRON_INGOT)), List.<ItemStack>of(), List.of(new ItemStack(Items.IRON_INGOT)),
-                        List.<ItemStack>of(), List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)), List.<ItemStack>of(),
-                        List.of(new ItemStack(Items.IRON_INGOT)), List.<ItemStack>of(), List.of(new ItemStack(Items.IRON_INGOT)))));
-
-        ThaumcraftApi.bookRecipe("SRStabilizedRiftSignature", ThaumcraftApi.crafting(
-                () -> new ItemStack(ShatteredItems.STABILIZED_RIFT_SIGNATURE), 3, 3, List.of(
-                        List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)), List.<ItemStack>of(), List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)),
-                        List.<ItemStack>of(), List.of(new ItemStack(ShatteredItems.RIFT_SIGNATURE)), List.<ItemStack>of(),
-                        List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)), List.<ItemStack>of(), List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)))));
 
         // os três focos de fenda, cada um por infusão à volta de um foco em branco
         foco("SRFocusRiftOpen", "SR_FOCI", ShatteredItems.FOCUS_RIFT_OPEN, 4,

@@ -2719,3 +2719,49 @@ passam a ser em primordiais; o Vazio fica para a essência da infusão que faz c
 
 **Guardas:** `theOpenFocusTearsARift`, `theHoldFocusHoldsARift` (e a segunda vez não faz nada) e
 `theCloseFocusClosesARift`, os três com varinha de verdade e o foco preso nela.
+
+## Cinco pedidos de quem manda (2026-09-26)
+
+### Português do Brasil
+
+O primeiro, e o que vale para tudo o que vier: *eu quero as coisas em português do Brasil, não nesse português de
+Portugal*. O texto de jogo do ramo foi reescrito — as páginas do livro, os nomes, as mensagens —, e o resto do
+`pt_br.json` foi varrido nas construções que denunciavam o europeu: o gerúndio com "estar a", o "há de", e o
+pronome grudado depois do verbo onde o Brasil põe antes ("o sangue guarda-se" virou "o sangue se guarda").
+
+**Fica dito:** os comentários do código e este documento ainda estão em português europeu de ponta a ponta, de
+muitas sessões atrás. Do que é novo em diante vai tudo em brasileiro; varrer o que já existe é um serviço à parte,
+e fica para quando ele pedir.
+
+### As rachas da porta, uma por uma
+
+*As rachaduras ficam de um tamanho e forma fixas, eu queria algo mais aleatório e como um fio caído no chão.*
+
+São oito agora, e o jogo sorteia uma por posição — o arquivo de estados lista oito desenhos para cada variante, e
+o resto é do próprio Minecraft. Cada racha é um risco que atravessa a folha de um lado ao outro por uma curva de
+quatro pontos, com o meio dela saindo do caminho reto para cada lado: dá um fio contínuo que ondula e nunca se
+enrola nem faz bico.
+
+**Uma coisa que a solução obrigou:** o jogo sorteia a metade de cima e a de baixo **em separado**, porque são dois
+blocos. Então a racha de cada metade tem de caber inteira dentro dela e nunca encostar na beirada — se ela
+atravessasse a folha toda, metade das portas sairia com a racha partida no meio.
+
+A Porta Antiga não tem desenho de bloco nenhum, e por isso o sorteio dela é feito à mão, pela posição, dentro do
+desenhista do vão. São as mesmas oito rachas.
+
+### A porta do mundo leva às salas
+
+*A porta que nasce no mundo leva pra uma sala quadrada pequena, não pras salas de desafios do puzzle.* Era um
+defeito: faltava marcar a fenda dela como brava quando a ombreira nasce. Uma porta que ficou de pé num descampado
+desde antes de haver quem a visse não dá para um quarto de tecido.
+
+### Uma porta só
+
+*Não precisa ter portas de ferro, ouro, quartzo, nem o alçapão, só a porta de madeira.* Saíram as três
+dimensionais, o alçapão e as duas portas comuns de enfeite. As salas do original que traziam porta de ferro ou de
+quartzo passam a trazer a de madeira — quem resolve isso é a tradução dos esquemas, não o jogo.
+
+### E as assinaturas também não
+
+*Os itens Assinatura da Fenda e Assinatura da Fenda Estabilizada não precisam existir, porque temos os focos de
+varinha.* Saíram, e com eles a pesquisa que as ensinava; os três focos ficam pendurados direto no Fio do Mundo.

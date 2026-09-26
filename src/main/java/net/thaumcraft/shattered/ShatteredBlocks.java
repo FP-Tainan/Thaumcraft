@@ -16,30 +16,12 @@ import net.thaumcraft.Thaumcraft;
 import java.util.Set;
 import java.util.function.Function;
 
-/** As portas dos Reinos Fragmentados, e a fenda que mora nelas. */
+/** A porta dos Reinos Fragmentados, a antiga que nasce no mundo, e a fenda que mora nelas. */
 public final class ShatteredBlocks {
     /** A porta de madeira: a que leva a um bolso qualquer, e a que volta dele. */
     public static final Block OAK_DIMENSIONAL_DOOR = register("oak_dimensional_door", properties ->
             new DimensionalDoorBlock(BlockSetType.OAK, properties.mapColor(MapColor.WOOD)
                     .strength(3.0f).sound(SoundType.WOOD).noOcclusion().pushReaction(
-                            net.minecraft.world.level.material.PushReaction.DESTROY)));
-
-    /** A de ferro, que o original dá às portas que já estavam no mundo. */
-    public static final Block IRON_DIMENSIONAL_DOOR = register("iron_dimensional_door", properties ->
-            new DimensionalDoorBlock(BlockSetType.IRON, properties.mapColor(MapColor.METAL)
-                    .strength(5.0f).sound(SoundType.METAL).noOcclusion().pushReaction(
-                            net.minecraft.world.level.material.PushReaction.DESTROY)));
-
-    /** A de ouro, que leva sempre ao mesmo bolso. */
-    public static final Block GOLD_DIMENSIONAL_DOOR = register("gold_dimensional_door", properties ->
-            new DimensionalDoorBlock(BlockSetType.GOLD, properties.mapColor(MapColor.GOLD)
-                    .strength(5.0f).sound(SoundType.METAL).noOcclusion().pushReaction(
-                            net.minecraft.world.level.material.PushReaction.DESTROY)));
-
-    /** E a de quartzo, que leva ao bolso de quem a atravessa. */
-    public static final Block QUARTZ_DIMENSIONAL_DOOR = register("quartz_dimensional_door", properties ->
-            new DimensionalDoorBlock(BlockSetType.STONE, properties.mapColor(MapColor.QUARTZ)
-                    .strength(5.0f).sound(SoundType.STONE).noOcclusion().pushReaction(
                             net.minecraft.world.level.material.PushReaction.DESTROY)));
 
 
@@ -52,26 +34,6 @@ public final class ShatteredBlocks {
             new AncientDoorBlock(BlockSetType.STONE, properties.mapColor(MapColor.STONE)
                     .strength(-1.0f, 3600000.0f).sound(SoundType.STONE).noOcclusion().noLootTable()
                     .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK)));
-
-    /**
-     * O Alçapão Dimensional, que é a porta deitada.
-     *
-     * <p>O original só tem o de madeira; aqui é o mesmo.
-     */
-    public static final Block DIMENSIONAL_TRAPDOOR = register("dimensional_trapdoor", properties ->
-            new DimensionalTrapdoorBlock(BlockSetType.OAK, properties.mapColor(MapColor.WOOD)
-                    .strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
-
-    /** E as duas portas comuns do ramo, que não levam fenda nenhuma: são só portas de ouro e de quartzo. */
-    public static final Block GOLD_DOOR = register("gold_door", properties ->
-            new net.minecraft.world.level.block.DoorBlock(BlockSetType.GOLD,
-                    properties.mapColor(MapColor.GOLD).strength(5.0f).sound(SoundType.METAL).noOcclusion()
-                            .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
-
-    public static final Block QUARTZ_DOOR = register("quartz_door", properties ->
-            new net.minecraft.world.level.block.DoorBlock(BlockSetType.STONE,
-                    properties.mapColor(MapColor.QUARTZ).strength(5.0f).sound(SoundType.STONE).noOcclusion()
-                            .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
 
     /**
      * A Placa de Marcação: o {@code BlockMarkingPlate} das Portas Dimensionais.
@@ -91,9 +53,7 @@ public final class ShatteredBlocks {
     public static final BlockEntityType<RiftBlockEntity> RIFT_ENTITY =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("rift"),
                     new BlockEntityType<>(RiftBlockEntity::new, Set.of(
-                            OAK_DIMENSIONAL_DOOR, IRON_DIMENSIONAL_DOOR,
-                            GOLD_DIMENSIONAL_DOOR, QUARTZ_DIMENSIONAL_DOOR, ANCIENT_DIMENSIONAL_DOOR,
-                            DIMENSIONAL_TRAPDOOR, RIFT)));
+                            OAK_DIMENSIONAL_DOOR, ANCIENT_DIMENSIONAL_DOOR, RIFT)));
 
     private ShatteredBlocks() {
     }
@@ -104,10 +64,15 @@ public final class ShatteredBlocks {
         return Registry.register(BuiltInRegistries.BLOCK, id, block);
     }
 
-    /** As quatro portas, na ordem da aba. */
+    /**
+     * As portas que entram na mochila.
+     *
+     * <p>Eram cinco — madeira, ferro, ouro, quartzo e o alçapão. Quem manda pediu **só a de madeira**, e o
+     * resto saiu. As salas do original que traziam porta de ferro ou de quartzo passam a trazer a de madeira,
+     * que é a tradução dos esquemas que resolve isso.
+     */
     public static java.util.List<Block> doors() {
-        return java.util.List.of(OAK_DIMENSIONAL_DOOR, IRON_DIMENSIONAL_DOOR,
-                GOLD_DIMENSIONAL_DOOR, QUARTZ_DIMENSIONAL_DOOR);
+        return java.util.List.of(OAK_DIMENSIONAL_DOOR);
     }
 
     public static void init() {

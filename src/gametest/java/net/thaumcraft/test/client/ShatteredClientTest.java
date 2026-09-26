@@ -60,10 +60,10 @@ public class ShatteredClientTest implements FabricClientGameTest {
                 }
                 level.setBlockAndUpdate(base.east(3).below(),
                         net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState());
-                porta(level, base.west(3), net.thaumcraft.shattered.ShatteredBlocks.GOLD_DOOR);
-                porta(level, base, net.thaumcraft.shattered.ShatteredBlocks.QUARTZ_DOOR);
-                level.setBlockAndUpdate(base.east(3),
-                        net.thaumcraft.shattered.ShatteredBlocks.DIMENSIONAL_TRAPDOOR.defaultBlockState());
+                // três portas iguais, lado a lado: cada uma sorteia a racha dela, e é isso que a foto mostra
+                porta(level, base.west(3), net.thaumcraft.shattered.ShatteredBlocks.OAK_DIMENSIONAL_DOOR);
+                porta(level, base, net.thaumcraft.shattered.ShatteredBlocks.OAK_DIMENSIONAL_DOOR);
+                porta(level, base.east(3), net.thaumcraft.shattered.ShatteredBlocks.OAK_DIMENSIONAL_DOOR);
             });
             server.runCommand("time set noon");
             // os Óculos do Véu no rosto: sem eles o vão de uma porta que ninguém assentou não se vê

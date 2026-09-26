@@ -30,10 +30,7 @@ public final class ShatteredItems {
         item(FabricBlocks.ETERNAL);
         item(FabricBlocks.UNRAVELLED);
         for (Block porta : ShatteredBlocks.doors()) door(porta);
-        item(ShatteredBlocks.DIMENSIONAL_TRAPDOOR);
         item(ShatteredBlocks.MARKING_PLATE);
-        door(ShatteredBlocks.GOLD_DOOR);
-        door(ShatteredBlocks.QUARTZ_DOOR);
     }
 
     /** O Fio do Mundo, que se tira do que o Limbo desfiou. */
@@ -41,14 +38,6 @@ public final class ShatteredItems {
 
     /** E o Tecido Estável, que se tece dele. */
     public static final Item STABLE_FABRIC = plain("stable_fabric", new Item.Properties());
-
-    /** A Assinatura de Fenda, que liga dois lugares. */
-    public static final Item RIFT_SIGNATURE = tool("rift_signature",
-            properties -> new RiftSignatureItem(properties.stacksTo(1).durability(1), false));
-
-    /** A Estabilizada, que não se gasta nem esquece o lugar marcado. */
-    public static final Item STABILIZED_RIFT_SIGNATURE = tool("stabilized_rift_signature",
-            properties -> new RiftSignatureItem(properties.stacksTo(1), true));
 
 
     /** A Lâmina de Fenda, que corta e salta. */

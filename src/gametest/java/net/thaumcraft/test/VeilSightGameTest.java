@@ -48,24 +48,6 @@ public class VeilSightGameTest {
         helper.succeed();
     }
 
-    /** A Assinatura de Fenda rasga fendas de quem a usa, e essas ficam à vista. */
-    @GameTest
-    public void theSignaturesRiftsAreOurs(GameTestHelper helper) {
-        BlockPos um = new BlockPos(1, 2, 1);
-        BlockPos dois = new BlockPos(4, 2, 4);
-        var quem = helper.makeMockPlayer(GameType.SURVIVAL);
-        var assinatura = new ItemStack(ShatteredItems.RIFT_SIGNATURE);
-        usa(helper, quem, assinatura, um, Direction.UP);
-        usa(helper, quem, assinatura, dois, Direction.UP);
-
-        for (BlockPos onde : new BlockPos[]{um, dois}) {
-            if (helper.getBlockEntity(onde, RiftBlockEntity.class).natural()) {
-                helper.fail("quem rasgou sabe onde rasgou");
-            }
-        }
-        helper.succeed();
-    }
-
     /** Sem os óculos, a fenda do mundo é ar; com eles no rosto, aparece. E a nossa aparece sempre. */
     @GameTest
     public void theGogglesAreWhatOpensTheEye(GameTestHelper helper) {

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_left_open",
+  "textures": {
+    "bottom": "thaumcraft:block/oak_dimensional_door_lower_5",
+    "top": "thaumcraft:block/oak_dimensional_door_upper_5"
+  }
+}
