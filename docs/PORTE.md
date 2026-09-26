@@ -3057,3 +3057,30 @@ de poções, e isso é um sistema inteiro, que vem em fatia própria.
 **Uma coisa do porte:** a cor da água. O original guarda uma cor por ingrediente numa tabela que só existe junto
 das poções; enquanto elas não chegam, a cor de cada coisa sai do nome dela, e a mistura é meio a meio, como no
 `augmentColor` dele.
+
+### Fatia 5 — o Altar
+
+O `BlockAltar` do original: **seis pedras, duas por três**, encostadas de lado. Uma pedra sozinha não é nada; o
+bando é que faz o altar, e a primeira pedra dele passa a ser a que manda. A conta que decide isso é a do
+original, e é curiosa: cada pedra tem de ter **dois ou três** vizinhos de altar, e o bando todo tem de dar
+**exatamente seis** — duas por três é a única forma que fecha as duas coisas ao mesmo tempo.
+
+**O poder vem da natureza em volta.** O altar olha um cubo de vinte e nove de lado e conta o que lá há: cada
+coisa vale um tanto e só conta até um tanto. A folhagem vale três e conta até cem; a grama, dois até oitenta; a
+flor, quatro mas só até trinta; o ovo de dragão vale duzentos e cinquenta e conta uma vez. Somado, dá o teto. O
+que está guardado sobe dez por segundo até esse teto.
+
+Os números são os do original, um por um; o que lá era um bloco por linha passa aqui à marca que reúne os do
+mesmo tipo — as mudas, as toras, a folhagem, as flores —, que é como o jogo de hoje agrupa.
+
+**Os enfeites em cima somam:** a caveira de esqueleto soma um ao teto e à velocidade, a do wither dois, a de
+gente três; e a tocha soma um à velocidade. Ficam de fora, declarados, o candelabro, o cálice, a Arthana, o Ramo
+Místico, o pentáculo e o Ovo do Infinito — que ainda não foram portados.
+
+**Uma armadilha do jogo de hoje, que custou uma volta.** Ao marcar quem manda, o miolo troca a cara da pedra — e
+uma troca de estado também passa pelo `onPlace`. A conta do bando recomeçava do meio dela mesma, e cada pedra
+acabava a achar que quem manda é outra: o altar ficava de pé, mas sem juntar poder nenhum. Agora o `onPlace` só
+conta o bando quando a pedra é **nova**, e a cara só se troca quando muda mesmo.
+
+**E um desvio declarado:** a tela. O original abre uma janela que diz quanto poder o altar tem; aqui o clique
+escreve a mesma coisa na conversa, que é o que dá para fazer sem uma tela de bloco inteira só para três números.

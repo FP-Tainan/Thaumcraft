@@ -122,6 +122,17 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(WitchesCauldronBlockEntity::new,
                             java.util.Set.of(WITCHES_CAULDRON)));
 
+    // ------------------------------------------------------------------ o altar
+
+    /** O Altar da Bruxa: seis deles, dois por três, fazem um altar de verdade. */
+    public static final Block WITCH_ALTAR = register("witch_altar", properties ->
+            new AltarBlock(properties.mapColor(MapColor.STONE).strength(2.0f).sound(SoundType.STONE)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<AltarBlockEntity> WITCH_ALTAR_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("witch_altar"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(AltarBlockEntity::new,
+                            java.util.Set.of(WITCH_ALTAR)));
+
     private OccultaBlocks() {
     }
 

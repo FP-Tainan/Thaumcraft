@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "joined=false": {
+      "model": "thaumcraft:block/witch_altar"
+    },
+    "joined=true": {
+      "model": "thaumcraft:block/witch_altar_joined"
+    }
+  }
+}

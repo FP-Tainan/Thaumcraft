@@ -115,6 +115,8 @@ public final class OccultaAspects {
             r.item("thaumcraft:mutandis", new AspectList().add(Aspects.EXCHANGE, 4).add(Aspects.PLANT, 1));
             r.item("thaumcraft:mutandis_extremis", new AspectList().add(Aspects.EXCHANGE, 8).add(Aspects.PLANT, 1)
                     .add(Aspects.MAGIC, 1));
+            r.item("thaumcraft:witch_altar", new AspectList().add(Aspects.MAGIC, 3).add(Aspects.EARTH, 4)
+                    .add(Aspects.MECHANISM, 3).add(Aspects.ENERGY, 3));
         });
     }
 }

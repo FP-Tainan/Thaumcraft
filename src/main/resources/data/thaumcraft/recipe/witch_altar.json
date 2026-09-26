@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "abc",
+    "xyx",
+    "xyx"
+  ],
+  "key": {
+    "a": "thaumcraft:breath_of_the_goddess",
+    "b": "minecraft:potion",
+    "c": "thaumcraft:exhale_of_the_horned_one",
+    "x": "minecraft:stone_bricks",
+    "y": "thaumcraft:rowan_log"
+  },
+  "result": {
+    "id": "thaumcraft:witch_altar",
+    "count": 3
+  }
+}

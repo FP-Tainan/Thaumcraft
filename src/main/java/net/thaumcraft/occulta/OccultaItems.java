@@ -118,6 +118,10 @@ public final class OccultaItems {
     public static final Item MUTANDIS_EXTREMIS = register("mutandis_extremis",
             properties -> new MutandisItem(properties, true));
 
+    /** O Altar da Bruxa, que junta o poder da natureza em volta. */
+    public static final Item WITCH_ALTAR = register("witch_altar", properties ->
+            new BlockItem(OccultaBlocks.WITCH_ALTAR, properties.useBlockDescriptionPrefix()));
+
     /** As peças das árvores: o item de cada bloco, pelo nome. */
     public static final java.util.Map<String, Item> WOOD = new java.util.LinkedHashMap<>();
 
