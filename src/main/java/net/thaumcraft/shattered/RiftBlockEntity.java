@@ -102,6 +102,37 @@ public class RiftBlockEntity extends BlockEntity {
         this.setChanged();
     }
 
+    /**
+     * Se esta fenda é <b>brava</b>: se ela veio de uma das que já estavam no mundo.
+     *
+     * <p><b>Isto é do porte, e não do original.</b> Lá toda a porta abre o mesmo bolso liso. Aqui, a pedido de
+     * quem joga, quem prende uma fenda do mundo com o Firma-Fendas e lhe assenta uma porta em cima ganha outra
+     * coisa: um bolso com tema, e mais duas portas nele que levam a outros bolsos com tema. As portas feitas na
+     * bancada e assentadas onde calhou continuam a abrir o bolso liso do original.
+     */
+    private boolean wild;
+
+    /** E de que tema era a sala de onde se veio, para a seguinte não sair a mesma. */
+    private @Nullable PocketThemes theme;
+
+    public boolean wild() {
+        return this.wild;
+    }
+
+    public void setWild(boolean bravo) {
+        this.wild = bravo;
+        this.setChanged();
+    }
+
+    public @Nullable PocketThemes theme() {
+        return this.theme;
+    }
+
+    public void setTheme(@Nullable PocketThemes tema) {
+        this.theme = tema;
+        this.setChanged();
+    }
+
     public float size() {
         return this.size;
     }
@@ -164,7 +195,7 @@ public class RiftBlockEntity extends BlockEntity {
     public boolean teleport(Entity quem) {
         if (!(this.level instanceof ServerLevel aqui)) return false;
         if (this.destination == null) {
-            Destination feito = Pockets.open(aqui, this.worldPosition);
+            Destination feito = Pockets.open(aqui, this.worldPosition, this.wild, this.theme);
             if (feito == null) return false;
             this.setDestination(feito);
         }
@@ -194,6 +225,8 @@ public class RiftBlockEntity extends BlockEntity {
         this.riftYaw = input.getFloatOr("yaw", -1.0f);
         this.curveId = input.getIntOr("curve", -1);
         this.natural = input.getBooleanOr("natural", true);
+        this.wild = input.getBooleanOr("wild", false);
+        this.theme = input.getString("theme").map(PocketThemes::byName).orElse(null);
     }
 
     @Override
@@ -206,6 +239,8 @@ public class RiftBlockEntity extends BlockEntity {
         if (this.riftYaw >= 0.0f) output.putFloat("yaw", this.riftYaw);
         if (this.curveId >= 0) output.putInt("curve", this.curveId);
         if (!this.natural) output.putBoolean("natural", false);
+        if (this.wild) output.putBoolean("wild", true);
+        if (this.theme != null) output.putString("theme", this.theme.name());
     }
 
     /** O rosto da fenda tem de chegar ao cliente: é ele quem desenha o rasgão. */

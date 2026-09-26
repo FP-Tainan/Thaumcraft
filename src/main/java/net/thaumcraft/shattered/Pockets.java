@@ -77,10 +77,19 @@ public final class Pockets {
     }
 
     /**
-     * Abre um bolso novo e devolve onde quem entra há de aparecer. A porta de volta fica na parede do fundo e
-     * aponta para a fenda por onde se entrou.
+     * Abre um bolso novo e devolve onde quem entra há de aparecer. A porta de volta fica no meio da parede do
+     * norte e aponta para a fenda por onde se entrou.
+     *
+     * <p>Se a fenda que abriu este bolso era <b>brava</b> — uma das que já estavam no mundo, presa pelo
+     * Firma-Fendas e tomada por uma porta —, a sala sai com um dos temas do {@link PocketThemes} e com mais duas
+     * portas, uma em cada parede de lado, que ainda não apontam para lugar nenhum. Quem as atravessar abre outro
+     * bolso bravo, de outro tema, e é assim que as salas se vão ligando umas às outras.
+     *
+     * <p>Sem fenda brava — uma porta comum, feita na bancada e assentada onde calhou — o bolso é o liso de tecido
+     * preto do original, com a porta de volta e mais nada.
      */
-    public static RiftBlockEntity.@Nullable Destination open(ServerLevel de, BlockPos fenda) {
+    public static RiftBlockEntity.@Nullable Destination open(ServerLevel de, BlockPos fenda, boolean bravo,
+                                                             @Nullable PocketThemes veioDe) {
         MinecraftServer server = de.getServer();
         ServerLevel bolsos = level(server);
         if (bolsos == null) return null;
@@ -90,38 +99,77 @@ public final class Pockets {
         conta.setDirty();
 
         BlockPos canto = new BlockPos(qual * STRIDE, 32, 0);
-        carve(bolsos, canto);
+        PocketThemes tema = bravo ? PocketThemes.roll(bolsos.getRandom(), veioDe) : null;
+        carve(bolsos, canto, tema);
+        if (tema != null) tema.fill(bolsos, canto, bolsos.getRandom());
 
         // a porta de volta, no meio da parede do norte, olhando para dentro
-        BlockPos porta = canto.offset(ROOM / 2, 1, 1);
-        door(bolsos, porta, Direction.SOUTH, de.dimension(), fenda);
+        BlockPos porta = canto.offset(ROOM / 2, 0, 1);
+        limpa(bolsos, porta);
+        door(bolsos, porta, Direction.SOUTH, de.dimension(), fenda, false, tema);
+
+        // e, num bolso bravo, as outras duas: uma em cada parede de lado, ainda sem destino, a olhar para dentro
+        if (tema != null) {
+            // encostada à parede de oeste, olhando para leste; e a de leste, olhando para oeste
+            BlockPos oeste = canto.offset(0, 0, ROOM / 2);
+            limpa(bolsos, oeste);
+            door(bolsos, oeste, Direction.EAST, null, null, true, tema);
+
+            BlockPos leste = canto.offset(ROOM - 1, 0, ROOM / 2);
+            limpa(bolsos, leste);
+            door(bolsos, leste, Direction.WEST, null, null, true, tema);
+        }
 
         // quem chega sai da porta e olha para dentro da sala, que é o que se faz ao atravessar uma porta
         return new RiftBlockEntity.Destination(bolsos.dimension(), porta.south(), 0.0f);
     }
 
-    /** A sala: as paredes de tecido antigo, o chão e o teto de tecido comum, e o vazio no meio. */
-    public static void carve(ServerLevel bolsos, BlockPos canto) {
-        BlockState parede = FabricBlocks.ANCIENT.get(DyeColor.BLACK).defaultBlockState();
-        BlockState chão = FabricBlocks.FABRIC.get(DyeColor.BLACK).defaultBlockState();
+    /** O mesmo, para uma porta comum: bolso liso e nada mais. */
+    public static RiftBlockEntity.@Nullable Destination open(ServerLevel de, BlockPos fenda) {
+        return open(de, fenda, false, null);
+    }
+
+    /** A sala: as paredes, o chão e o teto do tema, e o vazio no meio. Sem tema, o tecido preto do original. */
+    public static void carve(ServerLevel bolsos, BlockPos canto, @Nullable PocketThemes tema) {
+        BlockState parede = tema == null ? PocketThemes.plainWall() : tema.wall();
+        BlockState chão = tema == null ? PocketThemes.plainFloor() : tema.floor();
+        BlockState teto = tema == null ? PocketThemes.plainFloor() : tema.ceiling();
         for (int x = -1; x <= ROOM; x++) {
             for (int z = -1; z <= ROOM; z++) {
                 for (int y = -1; y <= HEIGHT; y++) {
                     BlockPos onde = canto.offset(x, y, z);
                     boolean borda = x < 0 || x >= ROOM || z < 0 || z >= ROOM;
-                    boolean cima = y < 0 || y >= HEIGHT;
+                    boolean cima = y >= HEIGHT;
+                    boolean baixo = y < 0;
                     if (borda) bolsos.setBlock(onde, parede, 2);
-                    else if (cima) bolsos.setBlock(onde, chão, 2);
+                    else if (baixo) bolsos.setBlock(onde, chão, 2);
+                    else if (cima) bolsos.setBlock(onde, teto, 2);
                     else bolsos.setBlock(onde, Blocks.AIR.defaultBlockState(), 2);
                 }
             }
         }
     }
 
-    /** Põe uma porta dimensional de madeira de duas metades, com a fenda dela já apontada. */
+    public static void carve(ServerLevel bolsos, BlockPos canto) {
+        carve(bolsos, canto, null);
+    }
+
+    /** Abre espaço para uma porta, que o tema pode ter enchido. */
+    private static void limpa(ServerLevel bolsos, BlockPos baixo) {
+        bolsos.setBlock(baixo, Blocks.AIR.defaultBlockState(), 2);
+        bolsos.setBlock(baixo.above(), Blocks.AIR.defaultBlockState(), 2);
+    }
+
+    /**
+     * Põe uma porta dimensional de madeira de duas metades.
+     *
+     * <p>Com um lugar de volta, ela já sai apontada para lá; sem ele, fica por apontar, e a primeira travessia é
+     * que lhe abre o bolso do outro lado. As portas que a sala traz de nascença estão sempre à vista — não são
+     * fendas do mundo à espera de quem as veja, são o caminho por onde se há de andar.
+     */
     public static void door(ServerLevel onde, BlockPos baixo, Direction olhando,
-                            net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> voltaLevel,
-                            BlockPos voltaPos) {
+                            net.minecraft.resources.@Nullable ResourceKey<net.minecraft.world.level.Level> voltaLevel,
+                            @Nullable BlockPos voltaPos, boolean bravo, @Nullable PocketThemes tema) {
         DoorBlock bloco = (DoorBlock) ShatteredBlocks.OAK_DIMENSIONAL_DOOR;
         BlockState debaixo = bloco.defaultBlockState()
                 .setValue(DoorBlock.FACING, olhando)
@@ -133,8 +181,21 @@ public final class Pockets {
         onde.setBlock(baixo.above(), debaixo.setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER), 3);
 
         if (onde.getBlockEntity(baixo) instanceof RiftBlockEntity fenda) {
-            fenda.setDestination(new RiftBlockEntity.Destination(voltaLevel, voltaPos.above(), olhando.getOpposite().toYRot()));
+            fenda.setNatural(false);
+            fenda.setWild(bravo);
+            fenda.setTheme(tema);
+            if (voltaLevel != null && voltaPos != null) {
+                fenda.setDestination(new RiftBlockEntity.Destination(
+                        voltaLevel, voltaPos.above(), olhando.getOpposite().toYRot()));
+            }
         }
+    }
+
+    /** O mesmo, para quem só quer a porta de volta de um bolso liso. */
+    public static void door(ServerLevel onde, BlockPos baixo, Direction olhando,
+                            net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> voltaLevel,
+                            BlockPos voltaPos) {
+        door(onde, baixo, olhando, voltaLevel, voltaPos, false, null);
     }
 
     /** Quantos bolsos já se abriram naquele mundo. */

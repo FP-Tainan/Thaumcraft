@@ -71,7 +71,7 @@ public final class ShatteredTable {
                 .at(2, 0)
                 .icon(() -> new ItemStack(ShatteredBlocks.OAK_DIMENSIONAL_DOOR))
                 .parents("SR_WORLD_THREAD")
-                .pages(Page.text("tc.research_page.SR_DOORS.1"),
+                .pages(Page.text("tc.research_page.SR_DOORS.1"), Page.text("tc.research_page.SR_DOORS.2"),
                         Page.crafting("SROakDoor"), Page.crafting("SRIronDoor"))
                 .register();
 
@@ -81,7 +81,7 @@ public final class ShatteredTable {
                 .at(4, 0)
                 .icon(() -> new ItemStack(FabricBlocks.FABRIC.get(net.minecraft.world.item.DyeColor.BLACK)))
                 .parents("SR_DOORS")
-                .pages(Page.text("tc.research_page.SR_POCKETS.1"))
+                .pages(Page.text("tc.research_page.SR_POCKETS.1"), Page.text("tc.research_page.SR_POCKETS.2"))
                 .register();
 
         // e o que há do outro lado quando a travessia corre mal

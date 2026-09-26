@@ -2529,3 +2529,44 @@ quatro blocos de altura ficava do tamanho de um dedo.
 Saíram daqui o `RiftCurves`, o `rift_curves.mesh` e o `scratchpad/dd-curvas.js` que o fazia, e com eles o ouvinte
 de recarga que só existia para os esquecer. Ficam no histórico, que é onde hão de estar se alguém quiser o feitio
 do original de volta.
+
+## Da fenda presa à sala com tema (2026-09-26)
+
+A terceira coisa que quem manda pediu: *o jogador poderia ter que estabilizar a fenda pra conseguir abrir uma
+porta, e aí cai em uma daquelas salas aleatórias que saem se conectando — uma é uma biblioteca, na próxima porta
+um pedaço de deserto, a outra o Nether, a outra um pedaço de um reino antigo*.
+
+### A regra da porta
+
+Quem manda nisso é o `DimensionalDoorItem`, e não o bloco: o que a fenda sabia tem de ser lido **antes** de a
+porta lhe tomar o lugar, porque assim que o bloco troca o miolo dela vai-se e leva o destino consigo. São três
+casos:
+
+* numa fenda **solta**, a porta não pega — o aviso aparece e a porta fica na mão;
+* numa fenda **presa** pelo Firma-Fendas, a porta toma-lhe o lugar e tudo o que ela sabia, e fica **brava**;
+* **longe de qualquer fenda**, a porta assenta-se como sempre e abre o bolso liso do original.
+
+### As salas
+
+Um bolso bravo sai com um dos quatro temas do `PocketThemes` e com **três portas**: a de volta, no meio da parede
+do norte, e mais duas nas paredes de lado, que ainda não apontam para lado nenhum. Quem atravessar uma delas abre
+outro bolso bravo, de outro tema — o sorteio nunca repete o tema de onde se veio —, e é assim que as salas se vão
+ligando. O bolso liso continua a ser o que uma porta comum abre, com a porta de volta e mais nada.
+
+Lá as salas vêm de esquemas `.schem` guardados no jar. O porte ainda não os lê, e estas são feitas em código;
+quando o leitor chegar, troca-se o que enche a sala e não o resto.
+
+### Três coisas que custaram a achar, e que valem para o que vier
+
+1. **Areia num bolso cai para o vazio.** O deserto tinha chão de areia, e um bolso não tem nada por baixo dele: à
+   primeira sacudidela o chão esvaziava-se e via-se o céu do vazio por baixo. O chão passou a arenito, e as dunas
+   de areia por cima têm-no a segurá-las.
+2. **Um bolso cavado num pedaço de mundo que ninguém segura pode ir-se embora.** Nos retratos, cavar a sala e só
+   depois levar lá quem joga dava sala nenhuma e queda no vazio. Leva-se primeiro, cava-se depois.
+3. **Da consola, `gamemode creative` sem `@p` não faz nada** — queixa-se de que falta um jogador, e o resto do
+   teste corre com quem joga a pé, a cair e a morrer. Nos retratos de bolso é melhor `gamemode spectator @p`, que
+   além disso não cai enquanto a sala não nasce.
+
+**Guardas:** o `WildPocketGameTest` cobre as seis — a porta não pega na fenda solta e não se gasta, pega na presa
+e fica brava, a porta comum não fica brava, o bolso liso tem uma porta só, o bravo tem três com duas por apontar
+e um tema, e dois temas seguidos nunca são o mesmo. O `WildPocketClientTest` tira um retrato de cada sala.

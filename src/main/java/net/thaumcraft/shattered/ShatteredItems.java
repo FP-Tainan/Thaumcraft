@@ -91,8 +91,11 @@ public final class ShatteredItems {
         var properties = new Item.Properties()
                 .setId(ResourceKey.create(Registries.ITEM, id))
                 .useBlockDescriptionPrefix();
+        // as dimensionais sabem onde se podem assentar; as de enfeite são portas como as outras
         ORDER.add(Registry.register(BuiltInRegistries.ITEM, id,
-                new net.minecraft.world.item.DoubleHighBlockItem(bloco, properties)));
+                bloco instanceof DimensionalDoorBlock
+                        ? new DimensionalDoorItem(bloco, properties)
+                        : new net.minecraft.world.item.DoubleHighBlockItem(bloco, properties)));
     }
 
 
