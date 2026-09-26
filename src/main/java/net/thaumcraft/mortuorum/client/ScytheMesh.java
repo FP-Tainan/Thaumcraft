@@ -20,9 +20,13 @@ import java.io.InputStream;
 public final class ScytheMesh {
     public static final Identifier BLADE_TEXTURE = Thaumcraft.id("textures/models/scythe_blade.png");
     public static final Identifier CLOTH_TEXTURE = Thaumcraft.id("textures/models/scythe_cloth.png");
-    /** O cabo da foice de sangue, e o da de osso, que é o mesmo pano mais claro. */
+    /**
+     * O cabo, que é a {@code guntex.jpg} do original.
+     *
+     * <p>O {@code .mtl} manda usar aqui a {@code cloth.jpg}, mas o {@code ModelScytheSpecial} liga a outra antes
+     * de desenhar o cabo, e é a dele que vale.
+     */
     public static final Identifier HANDLE_TEXTURE = Thaumcraft.id("textures/models/scythe_handle.png");
-    public static final Identifier HANDLE_BONE_TEXTURE = Thaumcraft.id("textures/models/scythe_handle_bone.png");
 
     /** Quantos números tem cada canto. */
     public static final int STRIDE = 8;

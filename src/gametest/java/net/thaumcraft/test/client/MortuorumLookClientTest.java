@@ -58,6 +58,9 @@ public class MortuorumLookClientTest implements FabricClientGameTest {
             perto(server, "tp @p ~ ~ ~ 0 0");
             context.waitTicks(20);
             context.takeScreenshot("am_foice_no_chao");
+            perto(server, "tp @p ~ ~1 ~-1 0 5");
+            context.waitTicks(20);
+            context.takeScreenshot("am_foice_no_chao_perto");
             perto(server, "kill @e[type=item]");
 
             // e no inventário, com os cinco itens de quadros ao lado
