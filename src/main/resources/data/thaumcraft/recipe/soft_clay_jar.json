@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " # ",
+    "###"
+  ],
+  "key": {
+    "#": "minecraft:clay_ball"
+  },
+  "result": {
+    "id": "thaumcraft:soft_clay_jar",
+    "count": 4
+  }
+}

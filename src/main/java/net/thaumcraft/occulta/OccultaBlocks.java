@@ -53,6 +53,34 @@ public final class OccultaBlocks {
     /** E o alho. */
     public static final Block GARLIC = crop("garlic", ALHO, () -> OccultaItems.GARLIC);
 
+    // ------------------------------------------------------------------ o forno e os funis
+
+    /** O Forno das Bruxas, onde o que se queima deixa o cheiro num pote. */
+    public static final Block WITCHES_OVEN = register("witches_oven", properties ->
+            new WitchesOvenBlock(properties.mapColor(MapColor.METAL).strength(3.5f)
+                    .sound(SoundType.METAL).noOcclusion()
+                    .lightLevel(state -> state.getValue(WitchesOvenBlock.LIT) ? WitchesOvenBlock.LIGHT : 0)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<WitchesOvenBlockEntity> WITCHES_OVEN_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("witches_oven"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(WitchesOvenBlockEntity::new,
+                            java.util.Set.of(WITCHES_OVEN)));
+
+    /** O Funil de Fumos, que apressa o forno e melhora a sorte do cheiro. */
+    public static final Block FUME_FUNNEL = register("fume_funnel", properties ->
+            new FumeFunnelBlock(properties.mapColor(MapColor.METAL).strength(3.5f)
+                    .sound(SoundType.METAL).noOcclusion(), false));
+
+    /** E o mesmo com filtro, que melhora mais. */
+    public static final Block FILTERED_FUME_FUNNEL = register("filtered_fume_funnel", properties ->
+            new FumeFunnelBlock(properties.mapColor(MapColor.METAL).strength(3.5f)
+                    .sound(SoundType.METAL).noOcclusion(), true));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<FumeFunnelBlockEntity> FUME_FUNNEL_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("fume_funnel"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(FumeFunnelBlockEntity::new,
+                            java.util.Set.of(FUME_FUNNEL, FILTERED_FUME_FUNNEL)));
+
     private OccultaBlocks() {
     }
 

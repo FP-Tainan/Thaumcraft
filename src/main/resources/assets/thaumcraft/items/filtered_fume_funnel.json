@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/filtered_fume_funnel",
+    "model": {
+      "type": "thaumcraft:fume_funnel",
+      "filtered": true
+    }
+  }
+}

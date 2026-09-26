@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": "#minecraft:saplings",
+  "result": {
+    "id": "thaumcraft:wood_ash"
+  },
+  "experience": 0,
+  "cookingtime": 200
+}

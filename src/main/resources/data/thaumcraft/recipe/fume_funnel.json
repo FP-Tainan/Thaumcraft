@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "ele",
+    "ege",
+    "bib"
+  ],
+  "key": {
+    "e": "minecraft:bucket",
+    "l": "minecraft:lava_bucket",
+    "b": "minecraft:iron_block",
+    "g": "minecraft:glowstone",
+    "i": "minecraft:iron_bars"
+  },
+  "result": {
+    "id": "thaumcraft:fume_funnel",
+    "count": 1
+  }
+}

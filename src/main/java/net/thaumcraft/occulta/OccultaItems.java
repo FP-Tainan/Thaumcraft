@@ -69,6 +69,35 @@ public final class OccultaItems {
     /** A Agulha de Gelo, que sai de vez em quando ao colher a campainha-de-neve. */
     public static final Item ICY_NEEDLE = register("icy_needle", Item::new);
 
+    // ------------------------------------------------------------------ o forno e o que sai dele
+
+    /** O Forno das Bruxas e os dois funis. */
+    public static final Item WITCHES_OVEN = register("witches_oven", properties ->
+            new BlockItem(OccultaBlocks.WITCHES_OVEN, properties.useBlockDescriptionPrefix()));
+    public static final Item FUME_FUNNEL = register("fume_funnel", properties ->
+            new BlockItem(OccultaBlocks.FUME_FUNNEL, properties.useBlockDescriptionPrefix()));
+    public static final Item FILTERED_FUME_FUNNEL = register("filtered_fume_funnel", properties ->
+            new BlockItem(OccultaBlocks.FILTERED_FUME_FUNNEL, properties.useBlockDescriptionPrefix()));
+
+    /** O pote de barro: mole como sai da bancada, e feito depois de ir ao fogo. */
+    public static final Item SOFT_CLAY_JAR = register("soft_clay_jar", Item::new);
+    public static final Item CLAY_JAR = register("clay_jar", Item::new);
+
+    /** A Cinza de Madeira, no que uma muda vira quando se queima. */
+    public static final Item WOOD_ASH = register("wood_ash", Item::new);
+
+    /** E os sete fumos que o forno guarda nos potes. */
+    public static final Item FOUL_FUME = register("foul_fume", Item::new);
+    public static final Item EXHALE_OF_THE_HORNED_ONE = register("exhale_of_the_horned_one", Item::new);
+    public static final Item BREATH_OF_THE_GODDESS = register("breath_of_the_goddess", Item::new);
+    public static final Item HINT_OF_REBIRTH = register("hint_of_rebirth", Item::new);
+    public static final Item WHIFF_OF_MAGIC = register("whiff_of_magic", Item::new);
+    public static final Item REEK_OF_MISFORTUNE = register("reek_of_misfortune", Item::new);
+    public static final Item ODOUR_OF_PURITY = register("odour_of_purity", Item::new);
+
+    /** O Filtro de Fumos, que faz o funil com filtro. */
+    public static final Item FUME_FILTER = register("fume_filter", Item::new);
+
     private OccultaItems() {
     }
 

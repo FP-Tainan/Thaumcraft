@@ -65,6 +65,21 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("summoning_altar"),
                 net.thaumcraft.mortuorum.client.SummoningAltarItemRenderer.Unbaked.CODEC);
+        // o Ars Occulta: o Forno das Bruxas e os funis
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.WITCHES_OVEN,
+                net.thaumcraft.occulta.client.WitchesOvenScreen::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.WITCHES_OVEN_ENTITY,
+                net.thaumcraft.occulta.client.WitchesOvenRenderer::new);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("witches_oven"),
+                net.thaumcraft.occulta.client.WitchesOvenItemRenderer.Unbaked.CODEC);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.FUME_FUNNEL_ENTITY,
+                net.thaumcraft.occulta.client.FumeFunnelRenderer::new);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("fume_funnel"),
+                net.thaumcraft.occulta.client.FumeFunnelItemRenderer.Unbaked.CODEC);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.mortuorum.MortuorumBlocks.SEWING_MACHINE_ENTITY,
                 net.thaumcraft.mortuorum.client.SewingMachineRenderer::new);

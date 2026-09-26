@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": "thaumcraft:soft_clay_jar",
+  "result": {
+    "id": "thaumcraft:clay_jar"
+  },
+  "experience": 0,
+  "cookingtime": 200
+}

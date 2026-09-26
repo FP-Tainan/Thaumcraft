@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " z ",
+    "xxx",
+    "xzx"
+  ],
+  "key": {
+    "x": "minecraft:iron_ingot",
+    "z": "minecraft:iron_bars"
+  },
+  "result": {
+    "id": "thaumcraft:witches_oven",
+    "count": 1
+  }
+}

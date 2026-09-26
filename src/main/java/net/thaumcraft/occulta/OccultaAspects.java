@@ -64,6 +64,36 @@ public final class OccultaAspects {
                     .add(Aspects.BEAST, 2).add(Aspects.CROP, 1));
             r.blockAdd("thaumcraft:garlic", new AspectList().add(Aspects.PLANT, 2).add(Aspects.LIFE, 1)
                     .add(Aspects.CROP, 1));
+
+            // ---------------------------------------------------------- o forno, os funis e os fumos
+            r.item("thaumcraft:witches_oven", new AspectList().add(Aspects.METAL, 14).add(Aspects.MECHANISM, 3)
+                    .add(Aspects.FIRE, 1).add(Aspects.AIR, 2));
+            r.item("thaumcraft:fume_funnel", new AspectList().add(Aspects.VOID, 4).add(Aspects.METAL, 20)
+                    .add(Aspects.SENSES, 3).add(Aspects.LIGHT, 5).add(Aspects.ORDER, 4).add(Aspects.FIRE, 4));
+            r.item("thaumcraft:filtered_fume_funnel", new AspectList().add(Aspects.METAL, 24)
+                    .add(Aspects.CRYSTAL, 10).add(Aspects.GREED, 4).add(Aspects.ENERGY, 6).add(Aspects.MAGIC, 10)
+                    .add(Aspects.ORDER, 8).add(Aspects.VOID, 4).add(Aspects.SENSES, 3).add(Aspects.LIGHT, 5)
+                    .add(Aspects.FIRE, 4));
+            r.item("thaumcraft:fume_filter", new AspectList().add(Aspects.METAL, 4).add(Aspects.CRYSTAL, 10)
+                    .add(Aspects.GREED, 4).add(Aspects.ENERGY, 6).add(Aspects.MAGIC, 10).add(Aspects.ORDER, 4));
+
+            r.item("thaumcraft:soft_clay_jar", new AspectList().add(Aspects.EARTH, 1).add(Aspects.WATER, 1)
+                    .add(Aspects.VOID, 1));
+            r.item("thaumcraft:clay_jar", new AspectList().add(Aspects.EARTH, 1).add(Aspects.FIRE, 1)
+                    .add(Aspects.VOID, 1));
+            r.item("thaumcraft:wood_ash", new AspectList().add(Aspects.TREE, 1).add(Aspects.FIRE, 1));
+
+            // os sete cheiros: todos são ar, e o que os separa é o resto
+            r.item("thaumcraft:foul_fume", new AspectList().add(Aspects.AIR, 3).add(Aspects.EARTH, 1));
+            r.item("thaumcraft:exhale_of_the_horned_one", new AspectList().add(Aspects.AIR, 3).add(Aspects.FIRE, 1)
+                    .add(Aspects.UNDEAD, 1));
+            r.item("thaumcraft:breath_of_the_goddess", new AspectList().add(Aspects.AIR, 3).add(Aspects.ORDER, 1)
+                    .add(Aspects.SOUL, 1));
+            r.item("thaumcraft:hint_of_rebirth", new AspectList().add(Aspects.AIR, 3).add(Aspects.LIFE, 1)
+                    .add(Aspects.EXCHANGE, 1));
+            r.item("thaumcraft:whiff_of_magic", new AspectList().add(Aspects.AIR, 3).add(Aspects.MAGIC, 1));
+            r.item("thaumcraft:reek_of_misfortune", new AspectList().add(Aspects.AIR, 3).add(Aspects.ENTROPY, 1));
+            r.item("thaumcraft:odour_of_purity", new AspectList().add(Aspects.AIR, 3).add(Aspects.ORDER, 1));
         });
     }
 }

@@ -2967,3 +2967,35 @@ pelo `scratchpad/wi-plantas.js`, que também escreve os modelos e os arquivos de
 e têm todas o mesmo nome, `age`. Não dá para declarar as três num bloco só, e o construtor do `CropBlock` pergunta
 pela propriedade antes de o campo do filho estar escrito. A idade de cada planta espera num balcão
 (`ThreadLocal`) enquanto o bloco nasce, e sai de lá assim que o construtor acaba.
+
+### Fatia 2 — o Forno das Bruxas
+
+O `BlockWitchesOven` e o `BlockFumeFunnel` do original, que é por onde o ramo começa de verdade: é no forno que se
+ganham os **sete fumos**, e sem eles não há Pedra Sintonizada, nem altar, nem quase nada do que vem depois.
+
+**O forno cozinha pouco de propósito.** Ele segue as receitas de fornalha do jogo, mas o `canSmelt` só deixa
+passar o que vira **carvão, comida ou cinza de madeira** — não é fundição. E qualquer muda vira Cinza de Madeira,
+que é o que o `AddSmeltingForAllSaplingsToWoodAsh` do original faz por padrão; aqui isso é uma receita só, pela
+marca `minecraft:saplings`.
+
+**Cada coisa cozida deixa um cheiro**, e com um Pote de Barro na casa dos potes o cheiro fica guardado: três
+décimos de chance, mais o que os funis dos lados acrescentam. A muda de carvalho dá a Exalação do Cornífero, a de
+pinheiro o Indício de Renascimento, a de bétula o Sopro da Deusa; a de selva não dá nada, e o original não diz por
+quê. Tudo o mais dá Fumo Fétido. Os outros três — Lufada de Magia, Fedor de Má Sorte e Odor de Pureza — vêm das
+três árvores do ofício, que ainda não chegaram; os itens já estão aqui à espera delas.
+
+**Os funis fazem duas coisas, e não a mesma.** Apressam a cozedura em vinte tiques cada um, dos cento e oitenta —
+e aí vale também o que está em cima do forno. Mas a **sorte** do cheiro só melhora com os dois dos lados: um
+quarto cada, ou três décimos se tiver filtro. Um funil virado para outro lado não serve para nada, como no
+original, onde a marca dele tinha de ser igual à do forno.
+
+**Dois blocos viraram um.** No original há um forno aceso e outro apagado, que é como o jogo de 2014 fazia; aqui é
+um só, com a marca `lit`.
+
+**O feitio dos dois é de modelo de Techne**, desenhado por desenhista de bloco, como a Máquina de Costura do Ars
+Mortuorum — e o do funil muda com o que ele tem em volta: com forno embaixo vira cano com chapéu, sem forno é o
+corpo largo, e com forno ao lado sai de lá a canalização daquele lado.
+
+**Uma pedra no caminho, que já é conhecida da casa.** As duas peças do cano chamam `setTextureSize(64, 128)`
+**depois** do `addBox`, onde aquilo já não vale — o mesmo caso do espelho do Techne. Lido ao pé da letra, o cano
+ia buscar um pedaço vazio da folha e sumia; a folha é de 64 por 64 como o resto do modelo.
