@@ -3084,3 +3084,23 @@ conta o bando quando a pedra é **nova**, e a cara só se troca quando muda mesm
 
 **E um desvio declarado:** a tela. O original abre uma janela que diz quanto poder o altar tem; aqui o clique
 escreve a mesma coisa na conversa, que é o que dá para fazer sem uma tela de bloco inteira só para três números.
+
+### Fatia 6 — a aba no Thaumonomicon
+
+O Witchery não tem pesquisa nenhuma: o que lá se aprende está num livro escrito à parte, fora do sistema do
+Thaumcraft. A árvore desta aba é a que a **lore de quem joga** marca — *O Caminho Antigo*, *Bruxaria*,
+*Resonantia Naturae* e *O Altar da Bruxa* —, e o que cada pesquisa ensina é o que o original faz.
+
+Das quatro linhas que a lore abre depois do Altar, estão aqui as duas que já têm coisa dentro: as **Plantas de
+Ritual** e os **Cozimentos e Infusões**. As outras duas — a Magia Simpática e as Artes do Espírito — esperam as
+bonecas e os sonhos.
+
+**Uma escolha declarada:** na lore as quatro linhas saem todas do Altar. Aqui as duas que já existem saem de onde
+a mão alcança, que é **antes** dele: sem as plantas não há Pasta de Unção, e sem o caldeirão não há Mutandis nem
+as madeiras do ofício. A ordem do que se aprende segue a ordem do que se faz.
+
+**O fundo da aba** é a mesma nebulosa das outras, girada para o verde (`scratchpad/Tingir.java`), que é como as
+abas dos ramos se parecem umas com as outras sem serem iguais.
+
+**E uma pedra no caminho:** a quebra de linha das páginas do livro é a da 4.2.3.5 — `<BR>` —, e não o `[nl]` que
+eu tinha escrito; até o acerto, as páginas mostravam a marca no meio do texto.

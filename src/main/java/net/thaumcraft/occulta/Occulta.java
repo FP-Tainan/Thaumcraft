@@ -10,11 +10,11 @@ import net.thaumcraft.Thaumcraft;
  * mesmo jar do Thaumcraft, com figuras e textos no espaço de nome {@code thaumcraft}, aba própria no criativo e
  * chaves de pesquisa com o prefixo {@code AO_}.
  *
- * <p><b>Por onde vai:</b> esta é a primeira fatia — as oito plantas. O caldeirão, o altar, os rituais e o resto
- * vêm depois, na ordem que o {@code docs/PORTE.md} marca.
+ * <p><b>Por onde vai:</b> estão feitas as plantas, o forno, as árvores, o caldeirão e o altar. As poções, os
+ * rituais de círculo, os bichos e o resto vêm depois, na ordem que o {@code docs/PORTE.md} marca.
  */
 public final class Occulta {
-    /** A aba do ramo no Thaumonomicon, quando ela chegar. */
+    /** A aba do ramo no Thaumonomicon. */
     public static final String CATEGORY = "OCCULTA";
 
     private Occulta() {
@@ -25,6 +25,13 @@ public final class Occulta {
         OccultaItems.init();
         OccultaAspects.init();
         OccultaGrassSeeds.init();
+        // a aba do ramo no livro
+        net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
+                Thaumcraft.id("textures/item/mandrake_root.png"),
+                Thaumcraft.id("textures/gui/gui_occulta_researchback.png"));
+        OccultaTable.research();
+        // as receitas do livro pedem itens prontos, e por isso esperam a montagem acabar
+        net.thaumcraft.api.ThaumcraftApi.onSetup(OccultaTable::recipes);
         Thaumcraft.LOGGER.info("Ars Occulta: {} coisas", OccultaItems.count());
     }
 }

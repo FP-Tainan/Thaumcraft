@@ -101,7 +101,8 @@
       "net.thaumcraft.test.OccultaOvenGameTest",
       "net.thaumcraft.test.OccultaTreesGameTest",
       "net.thaumcraft.test.OccultaCauldronGameTest",
-      "net.thaumcraft.test.OccultaAltarGameTest"
+      "net.thaumcraft.test.OccultaAltarGameTest",
+      "net.thaumcraft.test.OccultaTableGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -189,7 +190,8 @@
       "net.thaumcraft.test.client.OccultaOvenClientTest",
       "net.thaumcraft.test.client.OccultaTreesClientTest",
       "net.thaumcraft.test.client.OccultaCauldronClientTest",
-      "net.thaumcraft.test.client.OccultaAltarClientTest"
+      "net.thaumcraft.test.client.OccultaAltarClientTest",
+      "net.thaumcraft.test.client.OccultaBookClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

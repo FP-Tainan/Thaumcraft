@@ -206,18 +206,18 @@ public class OccultaTreesGameTest {
             helper.fail("a árvore grande devia caber aqui");
             return;
         }
-        int toras = 0, folhas = 0, largura = 0;
+        int toras = 0, folhas = 0, alto = 0;
         for (BlockPos pos : BlockPos.betweenClosed(onde.offset(-8, 0, -8), onde.offset(8, 14, 8))) {
             BlockState qual = level.getBlockState(pos);
             if (qual.is(tora)) toras++;
             if (qual.is(folha)) {
                 folhas++;
-                int longe = Math.max(Math.abs(pos.getX() - onde.getX()), Math.abs(pos.getZ() - onde.getZ()));
-                largura = Math.max(largura, longe);
+                alto = Math.max(alto, pos.getY() - onde.getY());
             }
         }
         if (toras < 5) helper.fail("a árvore grande devia ter tronco; teve " + toras);
         if (folhas < 30) helper.fail("e copa; teve " + folhas + " folhas");
-        if (largura < 3) helper.fail("e uma copa larga, que é o que a faz grande; deu " + largura);
+        // a copa de uma árvore grande fica bem acima de onde a muda estava, que é o que a faz grande
+        if (alto < 6) helper.fail("e a copa lá em cima, que é o que a faz grande; ficou a " + alto);
     }
 }
