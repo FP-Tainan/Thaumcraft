@@ -58,6 +58,18 @@ public class RiftWorldClientTest implements FabricClientGameTest {
             });
             context.waitTicks(40);
             context.takeScreenshot("fenda_nossa_sem_oculos");
+
+            // e a mesma crescida de todo, que é o tamanho a que ela para
+            server.runOnServer(s -> {
+                var player = s.getPlayerList().getPlayers().getFirst();
+                var level = (net.minecraft.server.level.ServerLevel) player.level();
+                BlockPos onde = player.blockPosition().north(5).above(1);
+                if (level.getBlockEntity(onde) instanceof net.thaumcraft.shattered.RiftBlockEntity fenda) {
+                    for (int i = 0; i < 40000; i++) fenda.grow();
+                }
+            });
+            context.waitTicks(40);
+            context.takeScreenshot("fenda_crescida_de_todo");
         }
     }
 }

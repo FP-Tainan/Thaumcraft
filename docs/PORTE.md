@@ -2510,3 +2510,22 @@ sobre o vermelho e o verde —, e por isso a mesma conta serviu à folha do item
 fenda da Assinatura não, os óculos abrem o olho (e os da Descoberta sozinhos não), e os do Véu continuam a
 revelar os nós. O `RiftWorldClientTest` tira três retratos da mesma fenda: sem óculos (nada), com óculos (o
 rasgão e as fagulhas) e a nossa sem óculos (à vista).
+
+## O novo feitio da fenda (2026-09-26)
+
+Também a pedido: as fendas deixam de ser o rabisco de dragão do original e passam a ser **um talho alto e preto**,
+de beiras roídas, afilado nas duas pontas, com uma gavinha ou outra a sair-lhe do lado e fagulhas de estrela a
+piscar em volta — brancas na maior parte, e uma em cada três puxada para o roxo do vazio.
+
+O `RiftTear` monta-o do número que a fenda sorteou quando nasceu: dele saem o torcer da espinha, o inchar da
+barriga, as gavinhas e o lugar de cada fagulha. Duas fendas do mesmo número são iguais; de números diferentes,
+não. O que mexe continua a ser do original — o tremor, o esvoaçar das dez ondas e o giro —, e as fagulhas vão
+levadas pelo mesmo tremor, senão descolavam-se do talho quando a fenda abana.
+
+**Uma coisa que mudou por baixo:** o rasgão do original é largo e quadrado, e a medida dele saía da largura; o
+talho é alto e estreito, e por isso quem manda na medida passa a ser o lado maior. Com a largura, um talho de
+quatro blocos de altura ficava do tamanho de um dedo.
+
+Saíram daqui o `RiftCurves`, o `rift_curves.mesh` e o `scratchpad/dd-curvas.js` que o fazia, e com eles o ouvinte
+de recarga que só existia para os esquecer. Ficam no histórico, que é onde hão de estar se alguém quiser o feitio
+do original de volta.
