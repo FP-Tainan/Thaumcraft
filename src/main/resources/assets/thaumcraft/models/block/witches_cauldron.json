@@ -1,6 +1,274 @@
 {
   "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "minecraft:block/iron_block"
-  }
+    "particle": "thaumcraft:block/crucible3",
+    "side": "thaumcraft:block/crucible3",
+    "rim": "thaumcraft:block/crucible1",
+    "bottom": "thaumcraft:block/crucible2",
+    "inside": "thaumcraft:block/crucible5",
+    "floor": "thaumcraft:block/crucible6",
+    "herbs": "thaumcraft:block/witches_cauldron_herbs"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#bottom",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#rim"
+        },
+        "north": {
+          "texture": "#side",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#side",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#side",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#side",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        4,
+        0
+      ],
+      "to": [
+        16,
+        4,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#floor",
+          "shade": false
+        },
+        "down": {
+          "texture": "#floor",
+          "shade": false
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        4,
+        0
+      ],
+      "to": [
+        2,
+        16,
+        16
+      ],
+      "faces": {
+        "east": {
+          "texture": "#inside",
+          "shade": false
+        }
+      }
+    },
+    {
+      "from": [
+        14,
+        4,
+        0
+      ],
+      "to": [
+        14,
+        16,
+        16
+      ],
+      "faces": {
+        "west": {
+          "texture": "#inside",
+          "shade": false
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        4,
+        2
+      ],
+      "to": [
+        16,
+        16,
+        2
+      ],
+      "faces": {
+        "south": {
+          "texture": "#inside",
+          "shade": false
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        4,
+        14
+      ],
+      "to": [
+        16,
+        16,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#inside",
+          "shade": false
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        4,
+        -0.05
+      ],
+      "to": [
+        14,
+        15,
+        -0.05
+      ],
+      "faces": {
+        "north": {
+          "texture": "#herbs",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#herbs",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        4,
+        16.05
+      ],
+      "to": [
+        14,
+        15,
+        16.05
+      ],
+      "faces": {
+        "north": {
+          "texture": "#herbs",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#herbs",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        -0.05,
+        4,
+        2
+      ],
+      "to": [
+        -0.05,
+        15,
+        14
+      ],
+      "faces": {
+        "west": {
+          "texture": "#herbs",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#herbs",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        16.05,
+        4,
+        2
+      ],
+      "to": [
+        16.05,
+        15,
+        14
+      ],
+      "faces": {
+        "west": {
+          "texture": "#herbs",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#herbs",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    }
+  ]
 }

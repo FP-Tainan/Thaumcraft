@@ -3104,3 +3104,27 @@ abas dos ramos se parecem umas com as outras sem serem iguais.
 
 **E uma pedra no caminho:** a quebra de linha das páginas do livro é a da 4.2.3.5 — `<BR>` —, e não o `[nl]` que
 eu tinha escrito; até o acerto, as páginas mostravam a marca no meio do texto.
+
+### O caldeirão passa a ser o crisol (2026-09-27)
+
+*Por que o Caldeirão da Bruxa é um modelo novo, se já tudo é Thaumcraft? Usa o Crisol mesmo, e a unção só lhe
+pendura umas plantas nas laterais.*
+
+Foi o que se fez. O caldeirão deixa de ser o modelo de Techne do Witchery e passa a ser **o crisol do mod** — o
+mesmo modelo, as mesmas folhas — com quatro molhos de ervas encostados por fora, um em cada parede. A Pasta de
+Unção não troca a panela: enfeita-a.
+
+Com isso saiu um desenhista de bloco inteiro e o desenhista de item do caldeirão: agora o bloco é modelo comum, e
+o que o desenhista de tile põe é só o **líquido**, do mesmo jeito que o crisol põe o dele.
+
+**As ervas** são um retalho montado pelo `scratchpad/Ervas.java` com as plantas do próprio ramo: a losna de um
+lado, a beladona do outro e o alho pendurado no meio, num barbante.
+
+**E a cor do que ferve** deixou de sair do nome da coisa: sai do **aspecto maior** dela, o que o thaumômetro lê.
+A água começa azul como a do jogo e vai ficando da cor do que se joga dentro — verde com erva, e assim por
+diante. É mais coisa de Thaumcraft do que de Witchery, e fica declarado.
+
+**Uma hora perdida com o que não era defeito:** o líquido parecia não aparecer. Aparecia — mas um caldeirão de
+paredes altas só mostra o que tem dentro quando se olha de cima, e as fotos estavam todas de esguelha. O que as
+voltas de diagnóstico deixaram de bom foi o caminho honesto no teste de tela: a água entra por balde e clique,
+como quem joga faz, em vez de ser escrita à força no bloco.

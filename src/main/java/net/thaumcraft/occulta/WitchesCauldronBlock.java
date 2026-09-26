@@ -19,7 +19,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -36,12 +35,19 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * (ver o {@link OccultaRituals}).
  *
  * <p>Ele não se fabrica: faz-se <b>untando um caldeirão comum com Pasta de Unção</b>, como no original.
+ *
+ * <p><b>Desvio declarado, a pedido de quem manda:</b> o feitio não é o do Witchery. Como agora tudo é Thaumcraft,
+ * o caldeirão é o <b>crisol do mod</b> com quatro molhos de ervas amarrados por fora — a unção não troca a panela,
+ * enfeita-a. O modelo de Techne do original saiu, e fica no histórico.
  */
 public class WitchesCauldronBlock extends BaseEntityBlock {
     public static final MapCodec<WitchesCauldronBlock> CODEC = simpleCodec(WitchesCauldronBlock::new);
 
-    /** O tamanho dele: o {@code setBlockBounds(0, 0, 0, 1, 0.85, 1)} do original. */
-    private static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 13.6, 16.0);
+    /** O tamanho dele é o do crisol: fundo cheio e as quatro paredes, com o meio vazio. */
+    private static final VoxelShape SHAPE = net.minecraft.world.phys.shapes.Shapes.or(
+            Block.box(0, 0, 0, 16, 5, 16),
+            Block.box(0, 0, 0, 2, 13.6, 16), Block.box(0, 0, 0, 16, 13.6, 2),
+            Block.box(14, 0, 0, 16, 13.6, 16), Block.box(0, 0, 14, 16, 13.6, 16));
 
     public WitchesCauldronBlock(Properties properties) {
         super(properties);
@@ -62,12 +68,6 @@ public class WitchesCauldronBlock extends BaseEntityBlock {
                                                                   BlockEntityType<T> type) {
         if (level.isClientSide()) return null;
         return createTickerHelper(type, OccultaBlocks.WITCHES_CAULDRON_ENTITY, WitchesCauldronBlockEntity::tick);
-    }
-
-    /** Quem o desenha é o desenhista do bloco, como no original. */
-    @Override
-    protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.INVISIBLE;
     }
 
     @Override

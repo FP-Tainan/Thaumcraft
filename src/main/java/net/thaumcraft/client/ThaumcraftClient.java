@@ -69,9 +69,6 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.WITCHES_CAULDRON_ENTITY,
                 net.thaumcraft.occulta.client.WitchesCauldronRenderer::new);
-        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
-                net.thaumcraft.Thaumcraft.id("witches_cauldron"),
-                net.thaumcraft.occulta.client.WitchesCauldronItemRenderer.Unbaked.CODEC);
         // o Ars Occulta: o Forno das Bruxas e os funis
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.WITCHES_OVEN,
                 net.thaumcraft.occulta.client.WitchesOvenScreen::new);

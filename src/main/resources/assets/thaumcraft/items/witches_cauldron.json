@@ -1,9 +1,6 @@
 {
   "model": {
-    "type": "minecraft:special",
-    "base": "thaumcraft:block/witches_cauldron",
-    "model": {
-      "type": "thaumcraft:witches_cauldron"
-    }
+    "type": "minecraft:model",
+    "model": "thaumcraft:block/witches_cauldron"
   }
 }

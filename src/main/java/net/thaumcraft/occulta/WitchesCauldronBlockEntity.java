@@ -43,8 +43,13 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
     public static final int TICKS_TO_BOIL = 100;
     public static final int RITUAL_TICKS = 60;
 
-    /** A cor da água parada, que é a do original quando não há nada dentro. */
-    public static final int PLAIN_COLOR = 0x345F5A;
+    /**
+     * A cor da água parada.
+     *
+     * <p>É o azul da água do jogo, que é de onde a mistura parte: no original a água do caldeirão também começa
+     * água e só ganha cor com o que se joga dentro.
+     */
+    public static final int PLAIN_COLOR = 0x3F76E4;
 
     private int water;
     private int heated;
@@ -101,11 +106,18 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         return (r << 16) | (g << 8) | azul;
     }
 
-    /** Uma cor para cada coisa, tirada do nome dela: o original guarda uma por item, e aqui vale a mesma ideia. */
+    /**
+     * A cor de cada coisa que se joga dentro.
+     *
+     * <p><b>Desvio declarado.</b> O original guarda uma cor por item, numa tabela que só existe junto das poções.
+     * Enquanto elas não chegam, a cor de cada coisa é a do <b>aspecto maior</b> dela — o que o thaumômetro lê. É
+     * mais coisa de Thaumcraft do que de Witchery, e é o que faz a água ficar verde com erva e roxa com magia.
+     */
     private static int colorOf(Item item) {
-        Identifier id = BuiltInRegistries.ITEM.getKey(item);
-        int hash = id.toString().hashCode();
-        return hash & 0xFFFFFF;
+        var aspectos = net.thaumcraft.api.aspects.ObjectAspects.of(item);
+        var maior = aspectos.getAspectsSortedAmount();
+        if (maior.isEmpty()) return PLAIN_COLOR;
+        return maior.get(0).color();
     }
 
     // ------------------------------------------------------------------ o que se faz com ele
@@ -234,6 +246,6 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
 
     @Override
     public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider registries) {
-        return this.saveCustomOnly(registries);
+        return this.saveWithoutMetadata(registries);
     }
 }
