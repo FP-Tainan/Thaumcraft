@@ -2862,3 +2862,13 @@ para a frente e virar um pouco a cada volta — a curva vai se somando sozinha, 
   mostrar os dois. O ícone do inventário virou de lado até a lâmina se ler como lâmina, e o cabo ficou de esguelha.
 
 **Desvio declarado:** as três varetas do `ModelScytheBone` saíram, e ficam no histórico.
+
+**E o lugar dela custou três voltas.** A lâmina saía por trás de quem segura a foice; quem manda marcou de
+vermelho onde ela devia estar — para a frente, atravessando na altura do peito. Meia-volta em torno do cabo não
+resolvia (ela só trocava de um lado ruim para o outro): o que resolveu foi um quarto de volta, que tira a lâmina
+do eixo em que o cabo é segurado, mais uma caída para o lado do cabo. Os três números ficam juntos no começo da
+classe, que é onde se mexe quando ele quiser outra pose.
+
+**De passagem, um teste instável:** o `altarCallsTheGuardian` reprovou uma vez e passou no retry. Não era do
+que se mexeu — o altar tenta chamar o guardião a cada quarenta tiques e cada tentativa pode dar em nada, e em
+quatrocentos tiques são só oito tentativas. Passou para mil e duzentos.

@@ -115,8 +115,15 @@ public class EldritchCreatureGameTest {
         });
     }
 
-    /** O altar que chama o guardião: nasce perto e fica preso a ele. */
-    @GameTest(maxTicks = 400)
+    /**
+     * O altar que chama o guardião: nasce perto e fica preso a ele.
+     *
+     * <p>O altar tenta a cada quarenta tiques, e cada tentativa pode dar em nada — o lugar sorteado pode cair em
+     * cima dele, na parede, ou onde o guardião não nasce. Em quatrocentos tiques são oito tentativas, e de vez em
+     * quando as oito falhavam: o teste reprovava sem nada estar errado. Com mil e duzentos são quase trinta, e a
+     * chance de todas falharem é de desprezar.
+     */
+    @GameTest(maxTicks = 1200)
     public void altarCallsTheGuardian(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos altarPos = helper.absolutePos(new BlockPos(3, 2, 3));

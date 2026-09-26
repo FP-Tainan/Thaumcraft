@@ -64,6 +64,7 @@ public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<U
     private static final int BLADE_PARTS = 8;
     private static final float BLADE_STEP = 2.9f;
     private static final float BLADE_TURN = 0.20f;
+    private static final float BLADE_DROP = -0.70f;
     private static final float BLADE_WIDE = 5.6f;
     private static final float BLADE_TIP = 0.9f;
     private static final float BLADE_THICK = 0.8f;
@@ -118,11 +119,16 @@ public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<U
     private static void bladeOut(PoseStack pose, SubmitNodeCollector collector, Identifier folha,
                                  int light, int overlay) {
         pose.pushPose();
-        // da junta para a frente, e já um tanto virada para baixo, como a do original saía
-        pose.translate(0.0f, -8.4f / 16.0f, 1.2f / 16.0f);
+        // da junta para fora
+        pose.translate(0.0f, -8.4f / 16.0f, -1.2f / 16.0f);
         // a chapa é larga no X e fina no Y, e a curva vira em torno do Y: assim o plano da lâmina é o mesmo em
-        // que a foice é balançada, e de fora se vê a chapa de chapa, e não de perfil
-        pose.mulPose(Axis.YP.rotation(-0.30f));
+        // que a foice é balançada, e de fora se vê a chapa de chapa, e não de perfil.
+        //
+        // A meia-volta é o que põe a lâmina do lado certo do cabo: sem ela a foice saía com a lâmina caída para
+        // trás de quem a segura, e quem manda marcou de vermelho que ela vai para a frente.
+        pose.mulPose(Axis.YP.rotation((float) Math.PI / 2.0f - 0.30f));
+        // e caída um tanto na direção do cabo, que é como a lâmina de uma foice de verdade fica
+        pose.mulPose(Axis.XP.rotation(BLADE_DROP));
         for (int i = 0; i < BLADE_PARTS; i++) {
             flat(pose, collector, BLADE[i], folha, light, overlay);
             flat(pose, collector, EDGE[i], folha, light, overlay);
