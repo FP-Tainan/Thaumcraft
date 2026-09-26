@@ -2429,3 +2429,24 @@ não funcionam**, e isso só se vê lendo o código:
   título e mais nada. Não há um controlo nela.
 
 Se algum dia quiser trazê-las, é escrever o que lá falta, e não portar — e isso é outra conversa.
+
+## Um susto que não era do mod (2026-09-26)
+
+A suíte de tela falhou duas vezes em sete com um erro feio ao criar mundo:
+
+```
+Unbound values in registry ResourceKey[minecraft:root / minecraft:worldgen/biome]:
+    [thaumcraft:magical_forest, thaumcraft:tainted_land]
+```
+
+Não era do mod. Os dois arquivos de bioma estão certos, e o que faltava era **o arquivo em si**, por um instante:
+a suíte lê os recursos de `build/resources/main`, e uma compilação correndo ao mesmo tempo reescreve essa pasta
+por baixo do jogo. Quando a leitura dos registos calha no meio da reescrita, o bioma não está lá e fica por
+ligar.
+
+Prova: com a suíte a correr, forçaram-se oito reescritas seguidas do `magical_forest.json`, e o erro apareceu,
+nomeando esse mesmo bioma e o vizinho dele na pasta. Sem nada a compilar em paralelo, três voltas seguidas
+passaram limpas.
+
+**A regra que fica:** não compilar enquanto a suíte de tela corre. Se o erro voltar sem nada em paralelo, então aí
+sim é do mod, e o que se procura é quem refere esses dois biomas antes de os dados carregarem.
