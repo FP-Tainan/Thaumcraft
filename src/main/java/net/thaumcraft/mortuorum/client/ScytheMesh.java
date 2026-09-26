@@ -20,12 +20,16 @@ import java.io.InputStream;
 public final class ScytheMesh {
     public static final Identifier BLADE_TEXTURE = Thaumcraft.id("textures/models/scythe_blade.png");
     public static final Identifier CLOTH_TEXTURE = Thaumcraft.id("textures/models/scythe_cloth.png");
+    /** O cabo da foice de sangue, e o da de osso, que é o mesmo pano mais claro. */
+    public static final Identifier HANDLE_TEXTURE = Thaumcraft.id("textures/models/scythe_handle.png");
+    public static final Identifier HANDLE_BONE_TEXTURE = Thaumcraft.id("textures/models/scythe_handle_bone.png");
 
     /** Quantos números tem cada canto. */
     public static final int STRIDE = 8;
 
     private static float[] blade;
     private static float[] cloth;
+    private static float[] handle;
 
     private ScytheMesh() {
     }
@@ -40,10 +44,16 @@ public final class ScytheMesh {
         return cloth;
     }
 
+    public static float[] handle() {
+        if (handle == null) handle = read(Thaumcraft.id("models/scythe_handle.mesh"));
+        return handle;
+    }
+
     /** Esquece o que leu, para a próxima leitura pegar o que o pacote de recursos tiver posto. */
     public static void forget() {
         blade = null;
         cloth = null;
+        handle = null;
     }
 
     private static float[] read(Identifier onde) {

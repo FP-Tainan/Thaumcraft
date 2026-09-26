@@ -45,9 +45,6 @@ public class DimensionalPortalRenderer
 
     /** Quantos panos, como no original. */
     private static final int LAYERS = 16;
-    /** O quanto o pano se afasta da cara do bloco, para não brigar com ela. */
-    private static final float PUSH = 0.01f;
-
     /**
      * As dezesseis cores do {@code getEntranceRenderColor}, com a mesma semente do original.
      *
@@ -156,9 +153,8 @@ public class DimensionalPortalRenderer
 
             // o pano de baixo fica um fio mais para dentro, para os que somam ficarem à frente dele
             final float medidaF = medida, cosF = cos, sinF = sin, correF = corre;
-            final float folga = pano == 0 ? PUSH * 0.4f : PUSH;
             collector.submitCustomGeometry(pose, pano == 0 ? FUNDO : SOMA,
-                    (m, v) -> quad(m, v, state, folga, medidaF, cosF, sinF, correF, argb));
+                    (m, v) -> quad(m, v, state, medidaF, cosF, sinF, correF, argb));
         }
     }
 
@@ -167,20 +163,21 @@ public class DimensionalPortalRenderer
      *
      * <p>Não se corta face nenhuma, e por isso o mesmo pano vai nas duas voltas — visto de um lado e do outro.
      */
-    private static void quad(PoseStack.Pose m, VertexConsumer v, State state, float folga,
+    private static void quad(PoseStack.Pose m, VertexConsumer v, State state,
                              float medida, float cosGiro, float sinGiro, float corre, int argb) {
         // de que lado a folha olha, para a conta do desenho sair como no original
         Direction olhar = state.thinOnZ ? Direction.NORTH : Direction.WEST;
-        for (int cara = 0; cara < 2; cara++) {
-            float fundura = cara == 0 ? state.minFundo - folga : state.maxFundo + folga;
-            for (boolean avesso : new boolean[]{false, true}) {
-                for (int i = 0; i < 4; i++) {
-                    int qual = avesso ? 3 - i : i;
-                    float largo = (qual == 1 || qual == 2) ? state.maxA : state.minA;
-                    float alto = qual >= 2 ? 2.0f : 0.0f;
-                    if (state.thinOnZ) canto(m, v, largo, alto, fundura, olhar, medida, cosGiro, sinGiro, corre, argb);
-                    else canto(m, v, fundura, alto, largo, olhar, medida, cosGiro, sinGiro, corre, argb);
-                }
+        // um pano só, no meio da folha da porta. Eram dois, um em cada cara dela, e de lado viam-se os dois —
+        // o de trás por detrás do da frente, a três dedos um do outro. Como o pano vai desenhado nas duas
+        // voltas, um chega para os dois lados.
+        float fundura = (state.minFundo + state.maxFundo) / 2.0f;
+        for (boolean avesso : new boolean[]{false, true}) {
+            for (int i = 0; i < 4; i++) {
+                int qual = avesso ? 3 - i : i;
+                float largo = (qual == 1 || qual == 2) ? state.maxA : state.minA;
+                float alto = qual >= 2 ? 2.0f : 0.0f;
+                if (state.thinOnZ) canto(m, v, largo, alto, fundura, olhar, medida, cosGiro, sinGiro, corre, argb);
+                else canto(m, v, fundura, alto, largo, olhar, medida, cosGiro, sinGiro, corre, argb);
             }
         }
     }

@@ -4,7 +4,7 @@
     "layer0": "minecraft:item/iron_sword"
   },
   "display": {
-    "thirdperson_righthand": { "rotation": [90, 170, 0], "translation": [4, 6, 1], "scale": [1.5, 1.5, 1.5] },
+    "thirdperson_righthand": { "rotation": [90, 170, 45], "translation": [0, 6, 1], "scale": [1.5, 1.5, 1.5] },
     "thirdperson_lefthand": { "rotation": [90, -170, 0], "translation": [-4, 6, 1], "scale": [1.5, 1.5, 1.5] },
     "firstperson_righthand": { "rotation": [0, -50, 0], "translation": [5, 0, -6], "scale": [1.2, 1.2, 1.2] },
     "firstperson_lefthand": { "rotation": [0, 50, 0], "translation": [-5, 0, -6], "scale": [1.2, 1.2, 1.2] },
