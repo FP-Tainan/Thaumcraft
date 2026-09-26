@@ -40,6 +40,7 @@
       "net.thaumcraft.test.SmallThingsGameTest",
       "net.thaumcraft.test.TextureFramesGameTest",
       "net.thaumcraft.test.MobTickGameTest",
+      "net.thaumcraft.test.ShatteredToolsGameTest",
       "net.thaumcraft.test.BiomeGameTest",
       "net.thaumcraft.test.PechGameTest",
       "net.thaumcraft.test.WardedGameTest",

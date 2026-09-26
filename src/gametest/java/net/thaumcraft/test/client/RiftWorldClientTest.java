@@ -14,7 +14,7 @@ public class RiftWorldClientTest implements FabricClientGameTest {
             singleplayer.getConnection().waitForChunksRender();
             var server = singleplayer.getServer();
             server.runCommand("gamemode creative");
-            server.runCommand("time set midnight");
+            server.runCommand("time set noon");
             server.runOnServer(s -> {
                 var player = s.getPlayerList().getPlayers().getFirst();
                 var level = (net.minecraft.server.level.ServerLevel) player.level();
@@ -29,8 +29,20 @@ public class RiftWorldClientTest implements FabricClientGameTest {
                 level.setBlockAndUpdate(onde, ShatteredBlocks.RIFT.defaultBlockState());
             });
             server.runCommand("tp @p ~ ~ ~ 180 0");
-            context.waitTicks(60);
-            context.takeScreenshot("fenda_no_mundo");
+            context.waitTicks(40);
+            context.takeScreenshot("fenda_recem_nascida");
+
+            // a fenda cresce devagar — dois mil tiques de crescimento para o rasgão dar para ver
+            server.runOnServer(s -> {
+                var player = s.getPlayerList().getPlayers().getFirst();
+                var level = (net.minecraft.server.level.ServerLevel) player.level();
+                BlockPos onde = player.blockPosition().north(5).above(1);
+                if (level.getBlockEntity(onde) instanceof net.thaumcraft.shattered.RiftBlockEntity fenda) {
+                    for (int i = 0; i < 2000; i++) fenda.grow();
+                }
+            });
+            context.waitTicks(40);
+            context.takeScreenshot("fenda_crescida");
         }
     }
 }

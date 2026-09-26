@@ -50,6 +50,24 @@ public final class ShatteredItems {
     public static final Item RIFT_REMOVER = tool("rift_remover",
             properties -> new RiftRemoverItem(properties.stacksTo(1).durability(32)));
 
+
+    /** A Lâmina de Fenda, que corta e salta. */
+    public static final Item RIFT_BLADE = tool("rift_blade", properties ->
+            new RiftBladeItem(properties.sword(ShatteredMaterials.RIFT_BLADE, 3.0f, -2.4f)));
+
+    /** O Firma-Fendas, que prende uma fenda solta. */
+    public static final Item RIFT_STABILIZER = tool("rift_stabilizer",
+            properties -> new RiftStabilizerItem(properties.stacksTo(1).durability(6)));
+
+    /** E as quatro peças da armadura de Fio do Mundo Tecido. */
+    public static final Item WOVEN_HELMET = armor("woven_world_thread_helmet",
+            net.minecraft.world.item.equipment.ArmorType.HELMET);
+    public static final Item WOVEN_CHESTPLATE = armor("woven_world_thread_chestplate",
+            net.minecraft.world.item.equipment.ArmorType.CHESTPLATE);
+    public static final Item WOVEN_LEGGINGS = armor("woven_world_thread_leggings",
+            net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
+    public static final Item WOVEN_BOOTS = armor("woven_world_thread_boots",
+            net.minecraft.world.item.equipment.ArmorType.BOOTS);
     private ShatteredItems() {
     }
 
@@ -63,6 +81,12 @@ public final class ShatteredItems {
                 new net.minecraft.world.item.DoubleHighBlockItem(bloco, properties)));
     }
 
+
+    /** Uma peça da armadura do ramo. */
+    private static Item armor(String nome, net.minecraft.world.item.equipment.ArmorType tipo) {
+        return tool(nome, properties -> new Item(properties.humanoidArmor(
+                ShatteredMaterials.WOVEN_WORLD_THREAD, tipo)));
+    }
     /** Uma coisa que não é bloco. */
     private static Item plain(String nome, Item.Properties ignorado) {
         return tool(nome, Item::new);

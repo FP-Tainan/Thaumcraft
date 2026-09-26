@@ -52,6 +52,72 @@ public class RiftBlockEntity extends BlockEntity {
         super(ShatteredBlocks.RIFT_ENTITY, pos, state);
     }
 
+
+    /**
+     * Se a fenda está presa: o {@code stabilized} do {@code TileEntityFloatingRift}.
+     *
+     * <p>Uma fenda presa deixa de comer o mundo em volta. Quem a prende é o Firma-Fendas.
+     */
+    private boolean stabilized;
+
+
+    /**
+     * O rosto da fenda solta: o tamanho, o giro e qual das catorze formas é a dela.
+     *
+     * <p>São o {@code size}, o {@code riftYaw} e o {@code curveId} do {@code TileEntityFloatingRift}. O giro e a
+     * forma são sorteados quando a fenda nasce e não mudam mais; o tamanho cresce sozinho enquanto ela não
+     * estiver presa.
+     */
+    private float size;
+    private float riftYaw = -1.0f;
+    private int curveId = -1;
+
+    /**
+     * Quanto a fenda cresce por tique, e até onde.
+     *
+     * <p>O original soma dez vezes por tique {@code 1/(tamanho+1)} e nunca para. <b>Desvio declarado:</b> aqui
+     * ela para no {@link #MAX_SIZE}, senão ao fim de uma hora o rasgão teria vinte blocos de ponta a ponta.
+     */
+    public static final int GROWTH_STEPS = 10;
+    public static final float MAX_SIZE = 600.0f;
+
+    public float size() {
+        return this.size;
+    }
+
+    public float riftYaw() {
+        return this.riftYaw;
+    }
+
+    public int curveId() {
+        return this.curveId;
+    }
+
+    /** Sorteia o rosto da fenda, se ela ainda não tiver um. */
+    public void rollFace(net.minecraft.util.RandomSource random) {
+        if (this.riftYaw >= 0.0f) return;
+        this.riftYaw = random.nextInt(360);
+        this.curveId = random.nextInt(1024);
+        this.setChanged();
+    }
+
+    /** O crescer de cada tique, enquanto a fenda não estiver presa. */
+    public void grow() {
+        if (this.stabilized || this.size >= MAX_SIZE) return;
+        for (int passo = 0; passo < GROWTH_STEPS; passo++) {
+            this.size = Math.min(MAX_SIZE, this.size + 1.0f / (this.size + 1.0f));
+        }
+        // o feitio vai ao cliente de vez em quando, e não a cada tique
+        if ((int) this.size % 16 == 0) this.setChanged();
+    }
+    public boolean stabilized() {
+        return this.stabilized;
+    }
+
+    public void setStabilized(boolean preso) {
+        this.stabilized = preso;
+        this.setChanged();
+    }
     public @Nullable Destination destination() {
         return this.destination;
     }
@@ -102,6 +168,10 @@ public class RiftBlockEntity extends BlockEntity {
         super.loadAdditional(input);
         this.destination = input.read("destination", Destination.CODEC).orElse(null);
         this.source = input.read("source", Destination.CODEC).orElse(null);
+        this.stabilized = input.getBooleanOr("stabilized", false);
+        this.size = input.getFloatOr("size", 0.0f);
+        this.riftYaw = input.getFloatOr("yaw", -1.0f);
+        this.curveId = input.getIntOr("curve", -1);
     }
 
     @Override
@@ -109,5 +179,28 @@ public class RiftBlockEntity extends BlockEntity {
         super.saveAdditional(output);
         if (this.destination != null) output.store("destination", Destination.CODEC, this.destination);
         if (this.source != null) output.store("source", Destination.CODEC, this.source);
+        if (this.stabilized) output.putBoolean("stabilized", true);
+        if (this.size > 0.0f) output.putFloat("size", this.size);
+        if (this.riftYaw >= 0.0f) output.putFloat("yaw", this.riftYaw);
+        if (this.curveId >= 0) output.putInt("curve", this.curveId);
+    }
+
+    /** O rosto da fenda tem de chegar ao cliente: é ele quem desenha o rasgão. */
+    @Override
+    public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider registries) {
+        return this.saveWithoutMetadata(registries);
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (this.level != null && !this.level.isClientSide()) {
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        }
     }
 }

@@ -1,0 +1,6 @@
+{
+  "layers": {
+    "humanoid": [ { "texture": "thaumcraft:woven_world_thread" } ],
+    "humanoid_leggings": [ { "texture": "thaumcraft:woven_world_thread" } ]
+  }
+}

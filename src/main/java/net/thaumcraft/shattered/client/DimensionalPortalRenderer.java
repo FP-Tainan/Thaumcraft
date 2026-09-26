@@ -80,6 +80,12 @@ public class DimensionalPortalRenderer
         boolean thinOnZ = true;
         /** A caixa da folha, já em medida de bloco: onde ela começa e acaba nos três eixos. */
         float minA, maxA, minFundo, maxFundo;
+
+        /** E, quando não é porta, o rosto da fenda solta: qual das catorze formas, o giro e o tamanho dela. */
+        int curve;
+        float yaw = -1.0f;
+        float size;
+        net.minecraft.core.BlockPos onde = net.minecraft.core.BlockPos.ZERO;
     }
 
     public DimensionalPortalRenderer(BlockEntityRendererProvider.Context context) {
@@ -103,6 +109,10 @@ public class DimensionalPortalRenderer
         var bloco = fenda.getBlockState();
         state.door = bloco.getBlock() instanceof DimensionalDoorBlock
                 && bloco.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
+        state.curve = fenda.curveId();
+        state.yaw = fenda.riftYaw();
+        state.size = fenda.size();
+        state.onde = fenda.getBlockPos();
         if (!state.door || fenda.getLevel() == null) return;
 
         // o vão fica no buraco da porta, e não na folha: é a forma da porta FECHADA que o diz. Assim ele cola-se
@@ -128,8 +138,16 @@ public class DimensionalPortalRenderer
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
-        // a fenda solta do mundo tem desenho próprio; aqui só se trata do vão das portas
-        if (!state.door) return;
+        // a fenda solta não tem vão: o que ela tem é o rasgão preto que treme no ar
+        if (!state.door) {
+            if (state.yaw >= 0.0f) {
+                pose.pushPose();
+                pose.translate(0.5f, 1.5f, 0.5f);
+                RiftCrackRenderer.submit(pose, collector, state.curve, state.yaw, state.size, state.onde);
+                pose.popPose();
+            }
+            return;
+        }
 
         float tempo = (float) (System.currentTimeMillis() % 200000L) / 200000.0f;
         for (int pano = 0; pano < LAYERS; pano++) {

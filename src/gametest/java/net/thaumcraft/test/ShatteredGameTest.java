@@ -304,7 +304,9 @@ public class ShatteredGameTest {
         if (FabricBlocks.FABRIC.size() != 16) helper.fail("o tecido comum tem dezesseis cores");
         if (FabricBlocks.ANCIENT.size() != 16) helper.fail("e o antigo também");
         if (FabricBlocks.count() != 34) helper.fail("com o eterno e o desfiado, são trinta e quatro");
-        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size() + 5) {
+        // e onze coisas que não são bloco: os dois fios, as três marcas de fenda, a lâmina, o ferro e as quatro
+        // peças de armadura
+        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size() + 11) {
             helper.fail("cada bloco tem o seu item; achei " + ShatteredItems.count());
         }
         if (!FabricBlocks.isFabric(FabricBlocks.FABRIC.get(DyeColor.BLACK))) helper.fail("o preto é tecido");
@@ -376,5 +378,30 @@ public class ShatteredGameTest {
             helper.fail("mas o comum sim");
         }
         helper.succeed();
+    }
+
+    /** A fenda solta sorteia o rosto dela e cresce sozinha, até ao tamanho máximo. */
+    @GameTest(maxTicks = 100)
+    public void theRiftGrowsAndGetsAFace(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(1, 2, 1);
+        helper.setBlock(onde, net.thaumcraft.shattered.ShatteredBlocks.RIFT);
+        var fenda = helper.getBlockEntity(onde, net.thaumcraft.shattered.RiftBlockEntity.class);
+        if (fenda.riftYaw() >= 0.0f) helper.fail("a fenda nasce sem rosto; quem lho dá é o primeiro tique");
+
+        helper.runAfterDelay(5, () -> {
+            if (fenda.riftYaw() < 0.0f || fenda.riftYaw() >= 360.0f) {
+                helper.fail("o giro dela fica entre zero e trezentos e sessenta: " + fenda.riftYaw());
+            }
+            if (fenda.curveId() < 0) helper.fail("e ela escolhe uma das formas");
+            if (fenda.size() <= 0.0f) helper.fail("e cresce: " + fenda.size());
+
+            // presa, ela para de crescer
+            fenda.setStabilized(true);
+            float parou = fenda.size();
+            helper.runAfterDelay(5, () -> {
+                if (fenda.size() != parou) helper.fail("presa, ela não cresce mais: " + fenda.size());
+                helper.succeed();
+            });
+        });
     }
 }

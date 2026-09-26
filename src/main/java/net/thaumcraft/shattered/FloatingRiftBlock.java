@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -48,6 +49,18 @@ public class FloatingRiftBlock extends BaseEntityBlock {
         return RenderShape.INVISIBLE;
     }
 
+    /** A fenda cresce sozinha e sorteia o rosto dela assim que nasce. */
+    @Override
+    public <T extends BlockEntity> @Nullable net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> tipo) {
+        if (level.isClientSide()) return null;
+        return (mundo, onde, feitio, be) -> {
+            if (!(be instanceof RiftBlockEntity fenda)) return;
+            fenda.rollFace(mundo.getRandom());
+            fenda.grow();
+        };
+    }
+
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Shapes.empty();
@@ -77,6 +90,8 @@ public class FloatingRiftBlock extends BaseEntityBlock {
     /** A fenda vai desfazendo o mundo em volta, e do que ela come sai o Fio do Mundo. */
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, net.minecraft.util.RandomSource random) {
+        // a fenda presa pelo Firma-Fendas não come mais nada
+        if (level.getBlockEntity(pos) instanceof RiftBlockEntity fenda && fenda.stabilized()) return;
         RiftDecay.bite(level, pos, random);
     }
 

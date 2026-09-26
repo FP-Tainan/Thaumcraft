@@ -142,6 +142,21 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.shattered.ShatteredBlocks.RIFT_ENTITY,
                 net.thaumcraft.shattered.client.DimensionalPortalRenderer::new);
+        // as malhas que o mod lê à mão ficam guardadas depois da primeira leitura; um pacote de recursos novo
+        // tem de as fazer esquecer, senão fica-se com as antigas
+        net.fabricmc.fabric.api.resource.ResourceManagerHelper.get(net.minecraft.server.packs.PackType.CLIENT_RESOURCES)
+                .registerReloadListener(new net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener() {
+                    @Override
+                    public net.minecraft.resources.Identifier getFabricId() {
+                        return net.thaumcraft.Thaumcraft.id("malhas");
+                    }
+
+                    @Override
+                    public void onResourceManagerReload(net.minecraft.server.packs.resources.ResourceManager manager) {
+                        net.thaumcraft.mortuorum.client.ScytheMesh.forget();
+                        net.thaumcraft.shattered.client.RiftCurves.forget();
+                    }
+                });
         net.thaumcraft.mortuorum.BloodFluid.clientDrip = (level, x, y, z) ->
                 level.addParticle(net.minecraft.core.particles.ParticleTypes.DRIPPING_LAVA, x, y, z, 0.0, 0.0, 0.0);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(

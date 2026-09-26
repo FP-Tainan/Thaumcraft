@@ -2328,3 +2328,75 @@ A receita com forma anda pela grade e aceita o desenho espelhado, como a da banc
 
 **De passagem**: o teste do frenesi do guardião-mor era instável, porque o escudo dele é absorção e ele às vezes já
 nascia com ela; agora o teste zera o escudo antes de bater, que é o que ele queria provar.
+
+## Os Reinos Fragmentados (2026-09-25)
+
+O quinto ramo de fora: as **Dimensional Doors 3.2.3**, de StevenRS11 e da equipa dimdev, que na lore de quem joga
+são os **Reinos Fragmentados** — os bolsos que se abrem entre um lugar e outro. O código mora em
+`net.thaumcraft.shattered`, as figuras e os textos no espaço de nome `thaumcraft`, e as chaves de pesquisa levam o
+prefixo `SR_`.
+
+### O que já lá está
+
+- Os **trinta e quatro tecidos**: dezesseis cores de tecido comum, dezesseis de tecido antigo, o **Tecido Eterno**
+  e o **Tecido Desfiado**, que é o chão do Limbo.
+- As **quatro portas dimensionais** — carvalho, ferro, ouro e quartzo —, cada uma com uma **fenda** a morar na
+  metade de baixo. Quem atravessa uma porta aberta sai num bolso; sem destino marcado, a primeira travessia abre
+  um bolso novo e a porta passa a apontar para ele.
+- A **fenda solta**, que fica no ar onde uma porta esteve, e que vai comendo o mundo em volta — do que ela come
+  sai, de quatro em quatro mordidas, um **Fio do Mundo**, que é de onde vem todo o resto do ramo.
+- A **Assinatura de Fenda** e a **Estabilizada**, que ligam dois lugares, e o **Fecha-Fendas**.
+- O **Limbo**: um mundo próprio, de terra desfiada sobre chão de tecido eterno, com o gerador dele; e os
+  **bolsos**, que moram todos num mundo só, lado a lado numa grelha, cada um uma sala forrada de tecido com a
+  porta de volta na parede.
+- Os **Monólitos**, que olham quem entra no Limbo.
+
+O mundo dos bolsos e o Limbo abrem-se com o jogo a andar, pelo `DynamicDimensions` — o jogo de hoje não deixa
+registar mundos em código como a 1.7.10 deixava, então eles nascem na primeira vez que alguém precisa deles.
+
+### Fatia das ferramentas — a lâmina, o ferro e a armadura
+
+- A **Lâmina de Fenda** (`ItemRiftBlade`): corta como espada de ferro e, com o botão de usar, salta. Havendo uma
+  fenda na linha de visão, ela atravessa-a; havendo um bicho, leva quem a empunha para junto dele. Quanto mais
+  gasta a lâmina, mais longe e mais torto o salto sai — é a única coisa que o gasto dela muda. Vinte tiques de
+  espera entre saltos, e conserta-se com Tecido Estável.
+- O **Firma-Fendas** (`ItemRiftStabilizer`): usado numa fenda solta, prende-a — ela deixa de comer o mundo em
+  volta. Seis usos, e numa porta não faz nada.
+- A **armadura de Fio do Mundo Tecido**: as quatro peças do `ItemWovenWorldThreadArmor`, com os números do
+  original — vinte de durabilidade, 5/4/3/2 de proteção e vinte de encantabilidade —, que se consertam com Fio do
+  Mundo. Tecem-se do fio, e também se forram por cima de uma peça de couro, como lá.
+
+**Uma diferença declarada:** o original tem uma opção de configuração que troca o Tecido Estável por pérola do fim
+em todas as receitas. Aqui vale sempre o Tecido Estável, que é o que o mod faz de fábrica.
+
+**Ainda fica de fora** do ramo: o rosto da fenda solta (no original ela é um rasgão preto que treme no ar, feito
+de um sistema-L), o tamanho das fendas e o registo delas, os alçapões dimensionais, a Ferramenta de Ajuste de
+Fenda, as portas de ouro e de quartzo comuns e o disco de música.
+
+### Fatia do rosto — o rasgão da fenda solta
+
+A fenda solta era invisível: estava lá, comia o mundo em volta e levava quem a atravessasse, mas não se via. Agora
+tem o rosto do original — um **rabisco de dragão pintado de preto**, pendurado no ar, que treme.
+
+O desenho vem de um **sistema-L**: quatro rabiscos (o terdragão, o dragão, o dragão duplo e o vórtice) em várias
+gerações, catorze ao todo, e cada fenda escolhe o seu quando nasce, junto com o lado a que fica virada. Três
+coisas mexem nele ao mesmo tempo, e são as três do original: o **tremor**, que abana o rasgão inteiro e cresce com
+o cubo do tamanho dele; o **esvoaçar**, que mexe cada canto por conta própria com dez ondas a correr; e o
+**giro**. O tempo de cada fenda é o dela — a conta leva um número tirado do lugar onde ela está, de modo que duas
+fendas lado a lado não tremam juntas.
+
+A fenda também **cresce sozinha**, como no original: dez vezes por tique ela soma `1/(tamanho+1)` ao tamanho, e o
+rasgão cresce com ele. Presa pelo Firma-Fendas, para.
+
+**Três diferenças declaradas**, todas de dentro:
+
+- O original monta os sistemas-L ao arrancar e recorta o contorno de cada rabisco com uma biblioteca de Delaunay.
+  Aqui as catorze formas vêm prontas num arquivo de dados, feito por `scratchpad/dd-curvas.js` com o mesmo
+  sistema-L e a mesma ordem; e em vez de recortar o contorno, pintam-se as casas que o rabisco ocupa, juntas em
+  tiras deitadas. A silhueta é a mesma — o rabisco é uma união de quadradinhos, toda da mesma cor — e fica sem os
+  buracos que o corte deixa onde o contorno toca em si mesmo.
+- O original pinta o rasgão com uma mistura que escurece o que está atrás, e essa mistura já não existe no jogo de
+  hoje; aqui ele vai de preto quase opaco, que é o que se via lá.
+- O original esvoaça seis décimos, e o tamanho dele nunca para de crescer. Aqui o esvoaçar é de dois décimos e
+  meio — com as tiras pequenas, seis décimos esfarelavam o rasgão — e o tamanho para em seiscentos, senão ao fim
+  de uma hora o rasgão teria vinte blocos de ponta a ponta.
