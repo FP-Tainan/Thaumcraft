@@ -82,9 +82,9 @@ public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<U
             float larga = BLADE_WIDE + (BLADE_TIP - BLADE_WIDE) * quanto;
             saída[i] = gume
                     // o gume corre pela beirada de fora da chapa, um fio à frente dela
-                    ? BoxMesh.box(larga - EDGE_WIDE, -EDGE_THICK / 2, 0, EDGE_WIDE, EDGE_THICK, BLADE_STEP,
+                    ? BoxMesh.box(-larga, -EDGE_THICK / 2, 0, EDGE_WIDE, EDGE_THICK, BLADE_STEP,
                             55, 17, 64, 32)
-                    : BoxMesh.box(0, -BLADE_THICK / 2, 0, larga, BLADE_THICK, BLADE_STEP, 40, 17, 64, 32);
+                    : BoxMesh.box(-larga, -BLADE_THICK / 2, 0, larga, BLADE_THICK, BLADE_STEP, 40, 17, 64, 32);
         }
         return saída;
     }

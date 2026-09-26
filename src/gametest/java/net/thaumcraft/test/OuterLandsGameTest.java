@@ -136,8 +136,14 @@ public class OuterLandsGameTest {
         helper.succeed();
     }
 
-    /** A sala da chave: a tábua rúnica boiando em cima do capitel, com os guardiões em volta. */
-    @GameTest(maxTicks = 40)
+    /**
+     * A sala da chave: a tábua rúnica boiando em cima do capitel, com os guardiões em volta.
+     *
+     * <p>Quem nasce junto com a sala só entra na lista do mundo nos tiques seguintes, e <b>não num número fixo
+     * deles</b>. O teste olhava uma vez, num tique escolhido a dedo, e de vez em quando olhava cedo demais e
+     * reprovava sem nada estar errado. Agora olha a cada tique até aparecerem.
+     */
+    @GameTest(maxTicks = 120)
     public void keyRoom(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos origin = helper.absolutePos(BlockPos.ZERO);
@@ -149,8 +155,7 @@ public class OuterLandsGameTest {
         BlockPos cap = new BlockPos(cx * 16 + 8, MazeFeature.FLOOR + 2, cz * 16 + 8);
         if (!level.getBlockState(cap).is(TCBlocks.ELDRITCH_CAPSTONE)) helper.fail("o capitel da chave");
         var box = new AABB(cap).inflate(6);
-        // quem nasce junto com a sala só entra na lista do mundo nos tiques seguintes, e nem sempre no primeiro
-        helper.runAfterDelay(8, () -> {
+        helper.succeedWhen(() -> {
             var tablets = level.getEntitiesOfClass(PermanentItemEntity.class, box);
             if (tablets.isEmpty() || !tablets.getFirst().getItem().is(TCItems.RUNED_TABLET)) {
                 helper.fail("a tábua rúnica boiando");
@@ -159,7 +164,6 @@ public class OuterLandsGameTest {
             if (guardians.size() < 2) helper.fail("dois a quatro guardiões, achei " + guardians.size());
             tablets.forEach(net.minecraft.world.entity.Entity::discard);
             guardians.forEach(net.minecraft.world.entity.Entity::discard);
-            helper.succeed();
         });
     }
 

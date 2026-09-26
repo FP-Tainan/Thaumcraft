@@ -2869,6 +2869,20 @@ resolvia (ela só trocava de um lado ruim para o outro): o que resolveu foi um q
 do eixo em que o cabo é segurado, mais uma caída para o lado do cabo. Os três números ficam juntos no começo da
 classe, que é onde se mexe quando ele quiser outra pose.
 
+**E a meia-lua virada para o lado errado, que custou mais quatro voltas.** A lâmina estava no lugar certo mas
+com o gancho da ponta subindo, e não caindo. Duas coisas que eu confundi pelo caminho e que vale deixar escritas:
+virar a lâmina **não** é trocar o sinal do quanto ela vira a cada pedaço — isso muda para que lado o arco todo
+sai, e a lâmina vai parar no outro lado do cabo. E meia-volta em torno do próprio comprimento também não, porque
+ela leva a chapa para o outro lado da espinha e a lâmina some atrás do cabo.
+
+O que vira a meia-lua sem tirá-la do lugar é **desenhar a chapa do outro lado da espinha**: o arco continua o
+mesmo, e a barriga da lâmina passa de cima dele para baixo. Uma linha.
+
+**Como parei de adivinhar:** em vez de mais uma volta no escuro, os dois números viraram campos que se mexem em
+tempo de jogo, e um teste de tela fotografou as quatro combinações de uma vez. Com as quatro lado a lado deu
+para ver que nenhuma servia, e que o que faltava era outra coisa — o teste foi embora depois, que era ferramenta
+de ajuste e não guarda.
+
 **De passagem, um teste instável:** o `altarCallsTheGuardian` reprovou uma vez e passou no retry. Não era do
 que se mexeu — o altar tenta chamar o guardião a cada quarenta tiques e cada tentativa pode dar em nada, e em
 quatrocentos tiques são só oito tentativas. Passou para mil e duzentos.
