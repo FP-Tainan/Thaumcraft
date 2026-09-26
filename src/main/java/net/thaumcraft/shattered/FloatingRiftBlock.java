@@ -95,9 +95,16 @@ public class FloatingRiftBlock extends BaseEntityBlock {
         RiftDecay.bite(level, pos, random);
     }
 
-    /** As fagulhas que saem dela, do lado de quem vê. */
+    /**
+     * As fagulhas que saem dela, do lado de quem vê — e só de quem vê: uma fenda que já estava no mundo não dá
+     * sinal de si a quem não tem os Óculos do Véu, senão as fagulhas denunciavam-na.
+     */
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (level.getBlockEntity(pos) instanceof RiftBlockEntity fenda
+                && !VeilSight.seesHere(fenda.natural())) {
+            return;
+        }
         for (int i = 0; i < 3; i++) {
             level.addParticle(net.minecraft.core.particles.ParticleTypes.PORTAL,
                     pos.getX() + 0.5 + random.nextGaussian() * 0.3,

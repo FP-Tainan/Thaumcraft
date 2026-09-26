@@ -50,6 +50,18 @@ public final class ShatteredMaterials {
             Map.of(ArmorType.BOOTS, 2, ArmorType.LEGGINGS, 3, ArmorType.CHESTPLATE, 4, ArmorType.HELMET, 5),
             20, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f, REPAIRS_ARMOR, WOVEN_ASSET);
 
+    public static final ResourceKey<EquipmentAsset> VEIL_GOGGLES_ASSET =
+            ResourceKey.create(EquipmentAssets.ROOT_ID, Thaumcraft.id("veil_goggles"));
+
+    /**
+     * Os Óculos do Véu: o mesmo { armorMatSpecial} dos Óculos da Descoberta — vinte e cinco de durabilidade,
+     * um de proteção no elmo e vinte e cinco de encantabilidade —, mudado só no que os conserta: o Fio do Mundo,
+     * que é o que lá foi posto.
+     */
+    public static final ArmorMaterial VEIL_GOGGLES = new ArmorMaterial(25,
+            Map.of(ArmorType.BOOTS, 1, ArmorType.LEGGINGS, 2, ArmorType.CHESTPLATE, 3, ArmorType.HELMET, 1),
+            25, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f, REPAIRS_ARMOR, VEIL_GOGGLES_ASSET);
+
     /** O nome do desenho da armadura, para quem precisar dele. */
     public static Identifier assetId() {
         return WOVEN_ASSET.identifier();

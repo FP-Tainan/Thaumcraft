@@ -87,7 +87,11 @@ public class RiftSignatureItem extends Item {
             if (!level.getBlockState(onde).canBeReplaced()) return;
             level.setBlockAndUpdate(onde, ShatteredBlocks.RIFT.defaultBlockState());
         }
-        if (level.getBlockEntity(onde) instanceof RiftBlockEntity fenda) fenda.setDestination(para);
+        if (level.getBlockEntity(onde) instanceof RiftBlockEntity fenda) {
+            fenda.setDestination(para);
+            // quem rasgou sabe onde rasgou: esta fenda não pede os Óculos do Véu
+            fenda.setNatural(false);
+        }
     }
 
     /** A chave do lugar marcado, para o componente. */

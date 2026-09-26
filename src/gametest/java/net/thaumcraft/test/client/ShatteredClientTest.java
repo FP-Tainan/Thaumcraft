@@ -66,9 +66,22 @@ public class ShatteredClientTest implements FabricClientGameTest {
                         net.thaumcraft.shattered.ShatteredBlocks.DIMENSIONAL_TRAPDOOR.defaultBlockState());
             });
             server.runCommand("time set noon");
+            // os Óculos do Véu no rosto: sem eles o vão de uma porta que ninguém assentou não se vê
+            server.runCommand("item replace entity @p armor.head with thaumcraft:veil_goggles");
             server.runCommand("tp @p ~ ~1 ~ 180 0");
             context.waitTicks(40);
             context.takeScreenshot("portas_do_ramo");
+
+            // e os óculos, no rosto e na mão
+            context.runOnClient(minecraft -> {
+                minecraft.player.getInventory().setItem(0,
+                        new net.minecraft.world.item.ItemStack(net.thaumcraft.shattered.ShatteredItems.VEIL_GOGGLES));
+                minecraft.player.getInventory().setSelectedSlot(0);
+                minecraft.options.setCameraType(net.minecraft.client.CameraType.THIRD_PERSON_FRONT);
+            });
+            context.waitTicks(20);
+            context.takeScreenshot("oculos_do_veu");
+            context.runOnClient(minecraft -> minecraft.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON));
         }
     }
 

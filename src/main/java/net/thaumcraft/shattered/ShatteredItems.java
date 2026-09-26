@@ -72,6 +72,16 @@ public final class ShatteredItems {
             net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
     public static final Item WOVEN_BOOTS = armor("woven_world_thread_boots",
             net.minecraft.world.item.equipment.ArmorType.BOOTS);
+    /**
+     * Os Óculos do Véu: os da Descoberta com Fio do Mundo, e com eles no rosto as fendas do mundo aparecem.
+     *
+     * <p>Vão raros, como os outros óculos do mod.
+     */
+    public static final Item VEIL_GOGGLES = tool("veil_goggles", properties ->
+            new VeilGogglesItem(properties.humanoidArmor(ShatteredMaterials.VEIL_GOGGLES,
+                    net.minecraft.world.item.equipment.ArmorType.HELMET)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)));
+
     private ShatteredItems() {
     }
 

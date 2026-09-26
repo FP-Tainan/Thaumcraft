@@ -41,6 +41,20 @@ public class DimensionalDoorBlock extends DoorBlock implements EntityBlock {
         return CODEC;
     }
 
+    /**
+     * A porta que alguém assentou fica à vista de todos: só as que nasceram com o mundo pedem os Óculos do Véu.
+     *
+     * <p>Quem assenta passa por aqui; a geração do mundo não, e é isso que separa as duas.
+     */
+    
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
+                                net.minecraft.world.entity.LivingEntity quem,
+                               net.minecraft.world.item.ItemStack ferramenta) {
+        super.setPlacedBy(level, pos, state, quem, ferramenta);
+        BlockPos baixo = state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos;
+        if (level.getBlockEntity(baixo) instanceof RiftBlockEntity fenda) fenda.setNatural(false);
+    }
+
     /** A fenda mora na metade de baixo, como no original. */
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

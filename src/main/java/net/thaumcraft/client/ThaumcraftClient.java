@@ -15,6 +15,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o thaumômetro é peça de três dimensões, como no original: entra na lista do jogo junto do baú
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("scanner"), ScannerRenderer.Unbaked.CODEC);
 
+        // quem enxerga o Véu: o código comum precisa do jogador da vez, e só aqui ele existe
+        net.thaumcraft.shattered.VeilSight.localPlayer = () -> net.minecraft.client.Minecraft.getInstance().player;
+
         // a esfera de gelo e a brasa, com os desenhistas do original
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.FROST_SHARD, net.thaumcraft.client.render.FrostShardRenderer::new);

@@ -81,6 +81,27 @@ public class RiftBlockEntity extends BlockEntity {
     public static final int GROWTH_STEPS = 10;
     public static final float MAX_SIZE = 600.0f;
 
+    /**
+     * Se a fenda nasceu com o mundo.
+     *
+     * <p><b>Isto é do porte, e não do original:</b> lá toda a fenda se vê. Aqui, a pedido de quem joga, as que
+     * já estavam no mundo só aparecem a quem tem os {@link VeilSight Óculos do Véu}, e as que o thaumaturgo
+     * mesmo fez — a porta que assentou, a fenda que rasgou com a Assinatura — estão sempre à vista.
+     *
+     * <p>Vem ligado, porque quem põe fendas sem passar por mãos de ninguém é a geração do mundo; quem as faz de
+     * propósito desliga-o.
+     */
+    private boolean natural = true;
+
+    public boolean natural() {
+        return this.natural;
+    }
+
+    public void setNatural(boolean nascida) {
+        this.natural = nascida;
+        this.setChanged();
+    }
+
     public float size() {
         return this.size;
     }
@@ -172,6 +193,7 @@ public class RiftBlockEntity extends BlockEntity {
         this.size = input.getFloatOr("size", 0.0f);
         this.riftYaw = input.getFloatOr("yaw", -1.0f);
         this.curveId = input.getIntOr("curve", -1);
+        this.natural = input.getBooleanOr("natural", true);
     }
 
     @Override
@@ -183,6 +205,7 @@ public class RiftBlockEntity extends BlockEntity {
         if (this.size > 0.0f) output.putFloat("size", this.size);
         if (this.riftYaw >= 0.0f) output.putFloat("yaw", this.riftYaw);
         if (this.curveId >= 0) output.putInt("curve", this.curveId);
+        if (!this.natural) output.putBoolean("natural", false);
     }
 
     /** O rosto da fenda tem de chegar ao cliente: é ele quem desenha o rasgão. */

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "yxy",
+    "y y"
+  ],
+  "key": {
+    "x": "thaumcraft:goggles",
+    "y": "thaumcraft:world_thread"
+  },
+  "result": {
+    "id": "thaumcraft:veil_goggles",
+    "count": 1
+  }
+}

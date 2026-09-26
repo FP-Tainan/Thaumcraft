@@ -86,6 +86,9 @@ public class DimensionalPortalRenderer
         float yaw = -1.0f;
         float size;
         net.minecraft.core.BlockPos onde = net.minecraft.core.BlockPos.ZERO;
+
+        /** E se esta fenda aparece a quem está a olhar: as que nasceram com o mundo pedem os Óculos do Véu. */
+        boolean seen = true;
     }
 
     public DimensionalPortalRenderer(BlockEntityRendererProvider.Context context) {
@@ -113,6 +116,9 @@ public class DimensionalPortalRenderer
         state.yaw = fenda.riftYaw();
         state.size = fenda.size();
         state.onde = fenda.getBlockPos();
+        // as fendas que já estavam no mundo só se veem com os Óculos do Véu no rosto
+        state.seen = net.thaumcraft.shattered.VeilSight.sees(
+                net.minecraft.client.Minecraft.getInstance().player, fenda.natural());
         if (!state.door || fenda.getLevel() == null) return;
 
         // o vão fica no buraco da porta, e não na folha: é a forma da porta FECHADA que o diz. Assim ele cola-se
@@ -138,6 +144,8 @@ public class DimensionalPortalRenderer
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
+        // sem os Óculos do Véu, uma fenda que já estava no mundo é ar
+        if (!state.seen) return;
         // a fenda solta não tem vão: o que ela tem é o rasgão preto que treme no ar
         if (!state.door) {
             if (state.yaw >= 0.0f) {

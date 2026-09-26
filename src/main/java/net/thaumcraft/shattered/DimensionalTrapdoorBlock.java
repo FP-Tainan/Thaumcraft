@@ -36,6 +36,15 @@ public class DimensionalTrapdoorBlock extends TrapDoorBlock implements EntityBlo
         return CODEC;
     }
 
+    /** O alçapão que alguém assentou fica à vista de todos, como a porta. */
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
+                               @Nullable net.minecraft.world.entity.LivingEntity quem,
+                               net.minecraft.world.item.ItemStack ferramenta) {
+        super.setPlacedBy(level, pos, state, quem, ferramenta);
+        if (level.getBlockEntity(pos) instanceof RiftBlockEntity fenda) fenda.setNatural(false);
+    }
+
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new RiftBlockEntity(pos, state);

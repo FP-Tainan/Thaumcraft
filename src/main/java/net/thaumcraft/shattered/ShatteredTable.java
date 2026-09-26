@@ -44,6 +44,16 @@ public final class ShatteredTable {
                 .pages(Page.text("tc.research_page.SR_WORLD_THREAD.1"), Page.crafting("SRStableFabric"))
                 .register();
 
+        // e, ainda no segundo degrau, o que faz o ver valer de facto: os Óculos do Véu
+        ThaumcraftApi.research("SR_VEIL_GOGGLES", ShatteredRealms.CATEGORY)
+                .aspects(new AspectList().add(Aspects.VOID, 4).add(Aspects.SENSES, 4).add(Aspects.CLOTH, 2))
+                .at(-2, -2)
+                .icon(() -> new ItemStack(ShatteredItems.VEIL_GOGGLES))
+                .parents("SR_WORLD_THREAD")
+                .round()
+                .pages(Page.text("tc.research_page.SR_VEIL_GOGGLES.1"), Page.crafting("SRVeilGoggles"))
+                .register();
+
         // terceiro: estabilizar — a assinatura
         ThaumcraftApi.research("SR_SIGNATURE", ShatteredRealms.CATEGORY)
                 .aspects(new AspectList().add(Aspects.VOID, 4).add(Aspects.TRAVEL, 4).add(Aspects.EXCHANGE, 3))
@@ -91,6 +101,15 @@ public final class ShatteredTable {
                 () -> new ItemStack(ShatteredItems.STABLE_FABRIC), 3, 1, List.of(
                         List.of(new ItemStack(ShatteredItems.WORLD_THREAD)),
                         List.of(new ItemStack(Items.ENDER_PEARL)),
+                        List.of(new ItemStack(ShatteredItems.WORLD_THREAD)))));
+
+        ThaumcraftApi.bookRecipe("SRVeilGoggles", ThaumcraftApi.crafting(
+                () -> new ItemStack(ShatteredItems.VEIL_GOGGLES), 3, 2, List.of(
+                        List.of(new ItemStack(ShatteredItems.WORLD_THREAD)),
+                        List.of(new ItemStack(net.thaumcraft.registry.TCItems.GOGGLES)),
+                        List.of(new ItemStack(ShatteredItems.WORLD_THREAD)),
+                        List.of(new ItemStack(ShatteredItems.WORLD_THREAD)),
+                        List.<ItemStack>of(),
                         List.of(new ItemStack(ShatteredItems.WORLD_THREAD)))));
 
         ThaumcraftApi.bookRecipe("SROakDoor", ThaumcraftApi.crafting(

@@ -2464,3 +2464,49 @@ no histórico.
 **De passagem, uma armadilha do original que vale guardar:** o `ModelScytheSpecial` **não segue o `.mtl`**. O
 arquivo de materiais manda o cabo usar a `cloth.jpg`, e o desenhista liga-o à `guntex.jpg` antes de o desenhar. É
 a folha do desenhista que vale — quem for ler um `.obj` de mod da 1.7.10 que olhe primeiro para quem o desenha.
+
+## Os Óculos do Véu (2026-09-26)
+
+Ideia de quem joga, e **do porte, não do original**: nas Portas Dimensionais toda a fenda se vê desde o primeiro
+dia, e então não há nada para descobrir. Aqui as fendas continuam a estar no mundo desde sempre — o `RiftFeature`
+já as espalhava —, mas **só aparecem a quem aprendeu a vê-las**, que é o que o Thaumcraft faz com tudo o mais.
+
+O que quem manda decidiu, quando lhe perguntei:
+
+* **Óculos novos do ramo**, e não uma melhoria dos que já havia: os **Óculos do Véu**, feitos dos Óculos da
+  Descoberta com Fio do Mundo em volta, com pesquisa própria na aba dos Reinos Fragmentados.
+* **Só as fendas que já estavam no mundo** pedem os óculos. A porta que o thaumaturgo assentou e a fenda que ele
+  rasgou com a Assinatura ficam à vista de qualquer um — quem rasgou sabe onde rasgou.
+
+### Como se sabe de quem é cada fenda
+
+O `RiftBlockEntity` ganhou um `natural`, que **vem ligado**. Quem põe fendas sem passar por mãos de ninguém é a
+geração do mundo, que chama `setBlock` e nada mais; quem as faz de propósito passa por um destes dois sítios, e
+os dois desligam-no:
+
+* `DimensionalDoorBlock.setPlacedBy` e `DimensionalTrapdoorBlock.setPlacedBy` — quem assenta passa por aqui, a
+  geração do mundo não. É essa a linha que separa as duas.
+* `RiftSignatureItem.rift` — a fenda que a Assinatura rasga é de quem a rasgou.
+
+### Quem enxerga
+
+O `VeilSight` é o irmão do `Revealing`: aquele diz quem vê os nós de aura, este quem vê o que está por trás do
+mundo. Tem a etiqueta `thaumcraft:sees_the_veil`, por onde um mod de fora mete o elmo dele, e os Óculos do Véu
+entram também na `thaumcraft:revealing` — são os da Descoberta melhorados, e não perdem nada do que eles faziam.
+
+**Uma manha que vale guardar:** o `animateTick` do `FloatingRiftBlock` também tinha de saber quem está a olhar, e
+é código comum — no servidor dedicado a classe `Minecraft` não existe. Em vez de lhe tocar, o `VeilSight` tem um
+`localPlayer` que quem corre do lado de quem joga preenche no arranque, que é o mesmo jeito do `clientTrail` dos
+orbes de foco. Sem isso, as fagulhas denunciavam a fenda a quem não a devia ver.
+
+### A folha
+
+A dos Óculos da Descoberta, com as lentes de ametista trocadas pelo vazio: uma rampa de preto-azulado com umas
+poucas fagulhas brancas dentro. Quem é lente reconhece-se pela cor e não pelo lugar — um pixel em que o azul manda
+sobre o vermelho e o verde —, e por isso a mesma conta serviu à folha do item e à da armadura. Gerador em
+`Veu.java`, no rascunho.
+
+**Guardas:** o `VeilSightGameTest` cobre as quatro coisas — a fenda do mundo nasce natural, a porta assentada e a
+fenda da Assinatura não, os óculos abrem o olho (e os da Descoberta sozinhos não), e os do Véu continuam a
+revelar os nós. O `RiftWorldClientTest` tira três retratos da mesma fenda: sem óculos (nada), com óculos (o
+rasgão e as fagulhas) e a nossa sem óculos (à vista).
