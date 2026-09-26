@@ -2810,3 +2810,32 @@ perdeu a colheita. **Guarda:** `theGrowingRiftShedsThread`.
 Ordo.* É o mesmo `FXLightningBolt` da 4.2.3.5, com o mesmo jeito de sair da mão e o mesmo esfarelar de fagulhas no
 alvo. Os sete tipos de raio do original ficaram como estavam — quem precisa de outra cor passa a dela pelo
 `setColours`, e a tabela fica intacta.
+
+## A porta que abre, e o ramo na aba dos Ancestrais (2026-09-26)
+
+### A folha tem de girar
+
+*Portas do mundo: quando clica ela não abre visualmente, mas funciona.* O desenhista do vão guarda a caixa da
+porta **fechada**, de propósito — é ali que o vão mora, e é o que faz ele ficar parado no buraco quando a porta
+abre. Só que a folha da Porta Antiga estava usando essa mesma caixa, e a folha *é* a porta: ela tem de girar.
+
+Agora são duas caixas no mesmo estado de desenho: a da porta fechada, para o vão, e a de agora, para a folha.
+
+### Sem espada e sem armadura
+
+Saíram a Lâmina de Fenda e as quatro peças de Fio do Mundo Tecido, com o material, as receitas, as folhas e a
+etiqueta de conserto delas. O que este ramo faz é abrir caminho, e não brigar.
+
+**Uma coisa ficou:** a conta que acha a fenda para onde alguém está apontando morava dentro da lâmina, e é dela
+que os três focos dependem — uma fenda solta não tem corpo, o raio do mouse passa direto por ela, e sem percorrer
+a linha de visão não há como pegar nenhuma. Virou o `RiftAim`.
+
+### E o ramo foi para a aba dos Ancestrais
+
+*Acho que podemos passar o progresso dele ali na aba do ancestral, porque combina e diminui as abas.* Combina
+mesmo: o Véu roto, o que anda do outro lado dele e o que os Eldritch fizeram ao mundo são a mesma história
+contada de lados diferentes.
+
+A aba própria saiu, e as sete pesquisas foram para o lado direito da dos Ancestrais, que estava livre — a do
+original ocupa de −5 a 4 em x, e o ramo começa no 6. A primeira delas passa a pendurar direto no
+{@code ELDRITCHMINOR}, e o atalho que existia só para isso saiu junto.

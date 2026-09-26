@@ -25,8 +25,9 @@ public class ResearchGameTest {
      * <p>Conta-se por aba, e não a tabela inteira: desde que a porta dos mods de fora existe, a árvore pode ter
      * pesquisas que não são do Thaumcraft — o que não pode é faltar ou sobrar nas abas dele.
      *
-     * <p>A única que entra de fora é a Guerra Carmesim, que a pedido de quem joga trocou a aba própria dela por
-     * um lugar junto do Culto Carmesim; por isso a conta de {@code BASICS} é a do original mais uma.
+     * <p>Duas entram de fora, as duas a pedido de quem manda, que trocaram a aba própria delas por um lugar numa
+     * aba que já existia: a Guerra Carmesim foi para junto do Culto Carmesim, e por isso {@code BASICS} é a do
+     * original mais uma; e os Reinos Fragmentados foram para a dos Ancestrais, que ganhou as sete deles.
      */
     @GameTest
     public void theTreeCameFromTheOriginal(GameTestHelper helper) {
@@ -36,7 +37,7 @@ public class ResearchGameTest {
         expected.put("ALCHEMY", 35);
         expected.put("ARTIFICE", 50);
         expected.put("GOLEMANCY", 39);
-        expected.put("ELDRITCH", 16);
+        expected.put("ELDRITCH", 16 + 7);
         for (Map.Entry<String, Integer> entry : expected.entrySet()) {
             int found = Researches.of(entry.getKey()).size();
             if (found != entry.getValue()) {

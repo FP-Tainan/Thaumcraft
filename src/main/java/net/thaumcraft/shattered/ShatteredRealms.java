@@ -25,8 +25,14 @@ import java.util.Set;
  * quem manda dizer outra coisa.
  */
 public final class ShatteredRealms {
-    /** A aba do ramo no Thaumonomicon. */
-    public static final String CATEGORY = "SHATTERED";
+    /**
+     * A aba do ramo no Thaumonomicon: a dos Ancestrais.
+     *
+     * <p>Ele já teve aba própria. Quem manda mandou tirar: <i>podemos passar o progresso dele ali na aba do
+     * ancestral, porque acho que combina e diminui as abas</i>. E combina mesmo — o Véu roto, o que anda do outro
+     * lado dele e o que os Eldritch fizeram ao mundo são a mesma história contada de lados diferentes.
+     */
+    public static final String CATEGORY = "ELDRITCH";
 
     /** Os três mundos do original, mais o Limbo. */
     public static final ResourceKey<Level> LIMBO = DynamicDimensions.key("limbo");
@@ -49,10 +55,6 @@ public final class ShatteredRealms {
         ShatteredComponents.init();
         ShatteredEntities.init();
         ShatteredItems.init();
-        // a aba do ramo no livro
-        net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
-                Thaumcraft.id("textures/misc/r_shattered.png"),
-                Thaumcraft.id("textures/gui/gui_shattered_researchback.png"));
         RiftWalkers.init();
         ShatteredFoci.init();
         ShatteredTable.research();

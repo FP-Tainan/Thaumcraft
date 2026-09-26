@@ -92,7 +92,7 @@ public final class ShatteredFoci {
 
     /** Prende a fenda apontada. */
     private static boolean hold(Level level, Player quem, ItemStack varinha, FocusItem foco) {
-        BlockPos onde = RiftBladeItem.riftAimedAt(level, quem);
+        BlockPos onde = RiftAim.riftAimedAt(level, quem);
         if (onde == null) return false;
         if (!(level.getBlockEntity(onde) instanceof RiftBlockEntity fenda)) return false;
         if (fenda.stabilized()) {
@@ -109,7 +109,7 @@ public final class ShatteredFoci {
 
     /** Fecha a fenda apontada; numa porta, faz a porta esquecer para onde levava. */
     private static boolean close(Level level, Player quem, ItemStack varinha, FocusItem foco) {
-        BlockPos onde = RiftBladeItem.riftAimedAt(level, quem);
+        BlockPos onde = RiftAim.riftAimedAt(level, quem);
         if (onde == null) {
             // numa porta não há fenda solta que apanhar: vale o bloco que estiver na mira
             if (!(Focuses.targetBlock(level, quem) instanceof BlockHitResult mira)

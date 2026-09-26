@@ -112,6 +112,16 @@ public class DimensionalPortalRenderer
         boolean ancient;
         /** Para que lado ela olha, e de que lado a dobradiça está — a folha só se desenha bem sabendo os dois. */
         net.minecraft.core.Direction facing = net.minecraft.core.Direction.NORTH;
+
+        /**
+         * E a caixa da folha <b>como ela está agora</b>, aberta ou fechada.
+         *
+         * <p>A de cima é sempre a da porta fechada, porque é onde o vão mora: ele fica no buraco da porta e não
+         * se mexe quando ela abre. A folha da Porta Antiga é outra história — ela <i>é</i> a porta, e tem de
+         * girar com ela, senão quem clica não vê nada acontecer.
+         */
+        boolean leafThinOnZ = true;
+        float leafMinA, leafMaxA, leafMinFundo, leafMaxFundo;
     }
 
     public DimensionalPortalRenderer(BlockEntityRendererProvider.Context context) {
@@ -164,6 +174,22 @@ public class DimensionalPortalRenderer
             state.maxA = (float) caixa.maxZ;
             state.minFundo = (float) caixa.minX;
             state.maxFundo = (float) caixa.maxX;
+        }
+
+        // e a caixa da folha como ela está agora: é essa que a Porta Antiga desenha, para ela girar ao abrir
+        var agora = bloco.getShape(fenda.getLevel(), fenda.getBlockPos());
+        var caixaAgora = agora.isEmpty() ? caixa : agora.bounds();
+        state.leafThinOnZ = (caixaAgora.maxZ - caixaAgora.minZ) <= (caixaAgora.maxX - caixaAgora.minX);
+        if (state.leafThinOnZ) {
+            state.leafMinA = (float) caixaAgora.minX;
+            state.leafMaxA = (float) caixaAgora.maxX;
+            state.leafMinFundo = (float) caixaAgora.minZ;
+            state.leafMaxFundo = (float) caixaAgora.maxZ;
+        } else {
+            state.leafMinA = (float) caixaAgora.minZ;
+            state.leafMaxA = (float) caixaAgora.maxZ;
+            state.leafMinFundo = (float) caixaAgora.minX;
+            state.leafMaxFundo = (float) caixaAgora.maxX;
         }
     }
 
@@ -222,13 +248,15 @@ public class DimensionalPortalRenderer
      * outro lado, só que ali quem recorta é o desenho do bloco e aqui é este.
      */
     private static void sheet(State state, PoseStack pose, SubmitNodeCollector collector) {
-        float minA = state.minA, maxA = state.maxA;
-        float perto = state.minFundo, longe = state.maxFundo;
+        // a folha usa a caixa de AGORA, e não a da porta fechada: ela é a porta, e tem de girar quando abre
+        float minA = state.leafMinA, maxA = state.leafMaxA;
+        float perto = state.leafMinFundo, longe = state.leafMaxFundo;
+        boolean thinOnZ = state.leafThinOnZ;
         // a racha desta porta sai da posição dela: é sempre a mesma, e a do lado é outra
         RenderType folha = FOLHAS[Math.floorMod(
                 state.onde.getX() * 31 + state.onde.getY() * 17 + state.onde.getZ() * 7, RACHAS)];
         collector.submitCustomGeometry(pose, folha, (m, v) -> {
-            if (state.thinOnZ) {
+            if (thinOnZ) {
                 // as duas caras, uma vista de cada lado
                 face(m, v, minA, 0, perto, maxA, 2, perto, false);
                 face(m, v, maxA, 0, longe, minA, 2, longe, false);

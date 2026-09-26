@@ -52,6 +52,21 @@ public class AncientDoorClientTest implements FabricClientGameTest {
             server.runCommand("item replace entity @p armor.head with thaumcraft:veil_goggles");
             context.waitTicks(40);
             context.takeScreenshot("porta_antiga_com_oculos");
+
+            // e aberta: a folha tem de girar, senão quem clica não vê nada acontecer
+            server.runOnServer(s -> {
+                var player = s.getPlayerList().getPlayers().getFirst();
+                var level = (net.minecraft.server.level.ServerLevel) player.level();
+                BlockPos meio = player.blockPosition().north(5);
+                for (var metade : new BlockPos[]{meio, meio.above()}) {
+                    var estado = level.getBlockState(metade);
+                    if (estado.hasProperty(DoorBlock.OPEN)) {
+                        level.setBlockAndUpdate(metade, estado.setValue(DoorBlock.OPEN, true));
+                    }
+                }
+            });
+            context.waitTicks(40);
+            context.takeScreenshot("porta_antiga_aberta");
         }
     }
 }

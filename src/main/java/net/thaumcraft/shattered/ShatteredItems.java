@@ -40,10 +40,6 @@ public final class ShatteredItems {
     public static final Item STABLE_FABRIC = plain("stable_fabric", new Item.Properties());
 
 
-    /** A Lâmina de Fenda, que corta e salta. */
-    public static final Item RIFT_BLADE = tool("rift_blade", properties ->
-            new RiftBladeItem(properties.sword(ShatteredMaterials.RIFT_BLADE, 3.0f, -2.4f)));
-
     /**
      * Os três focos de fenda: abrir, firmar e fechar.
      *
@@ -54,15 +50,6 @@ public final class ShatteredItems {
     public static final Item FOCUS_RIFT_HOLD = foco("focus_rift_hold", "rift_hold", ShatteredFoci.COST_HOLD);
     public static final Item FOCUS_RIFT_CLOSE = foco("focus_rift_close", "rift_close", ShatteredFoci.COST_CLOSE);
 
-    /** E as quatro peças da armadura de Fio do Mundo Tecido. */
-    public static final Item WOVEN_HELMET = armor("woven_world_thread_helmet",
-            net.minecraft.world.item.equipment.ArmorType.HELMET);
-    public static final Item WOVEN_CHESTPLATE = armor("woven_world_thread_chestplate",
-            net.minecraft.world.item.equipment.ArmorType.CHESTPLATE);
-    public static final Item WOVEN_LEGGINGS = armor("woven_world_thread_leggings",
-            net.minecraft.world.item.equipment.ArmorType.LEGGINGS);
-    public static final Item WOVEN_BOOTS = armor("woven_world_thread_boots",
-            net.minecraft.world.item.equipment.ArmorType.BOOTS);
     /**
      * Os Óculos do Véu: os da Descoberta com Fio do Mundo, e com eles no rosto as fendas do mundo aparecem.
      *
@@ -98,11 +85,6 @@ public final class ShatteredItems {
         return feito;
     }
 
-    /** Uma peça da armadura do ramo. */
-    private static Item armor(String nome, net.minecraft.world.item.equipment.ArmorType tipo) {
-        return tool(nome, properties -> new Item(properties.humanoidArmor(
-                ShatteredMaterials.WOVEN_WORLD_THREAD, tipo)));
-    }
     /** Uma coisa que não é bloco. */
     private static Item plain(String nome, Item.Properties ignorado) {
         return tool(nome, Item::new);

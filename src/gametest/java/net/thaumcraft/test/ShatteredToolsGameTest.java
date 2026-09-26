@@ -108,49 +108,29 @@ public class ShatteredToolsGameTest {
         helper.succeed();
     }
 
-    /** A Lâmina de Fenda acha a fenda que está na frente de quem a empunha. */
+    /**
+     * A conta de mira acha a fenda que está na frente de quem aponta.
+     *
+     * <p>Ela nasceu dentro da Lâmina de Fenda, que saiu; a conta ficou, porque é dela que os três focos
+     * dependem — uma fenda solta não tem corpo e o raio do mouse passa direto por ela.
+     */
     @GameTest
-    public void theBladeFindsTheRiftAhead(GameTestHelper helper) {
+    public void theAimFindsTheRiftAhead(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         Vec3 onde = helper.absoluteVec(new Vec3(1.5, 2.0, 1.5));
         player.snapTo(onde.x, onde.y, onde.z, 0.0f, 0.0f);
 
-        if (net.thaumcraft.shattered.RiftBladeItem.riftAimedAt(helper.getLevel(), player) != null) {
-            helper.fail("sem fenda na frente, a lâmina não acha nada");
+        if (net.thaumcraft.shattered.RiftAim.riftAimedAt(helper.getLevel(), player) != null) {
+            helper.fail("sem fenda na frente, a mira não acha nada");
         }
         // o giro zero olha para o sul, que é o +Z
         // o olho de quem joga fica a um bloco e meio do chão, então a fenda tem de estar à altura dele
         helper.setBlock(new BlockPos(1, 3, 4), ShatteredBlocks.RIFT);
-        var achada = net.thaumcraft.shattered.RiftBladeItem.riftAimedAt(helper.getLevel(), player);
+        var achada = net.thaumcraft.shattered.RiftAim.riftAimedAt(helper.getLevel(), player);
         if (achada == null) helper.fail("com fenda na frente, ela acha");
         helper.succeed();
     }
 
-
-    /** Os números da armadura são os do original, e cada peça conserta-se com Fio do Mundo. */
-    @GameTest
-    public void theArmourCameFromTheOriginal(GameTestHelper helper) {
-        var material = ShatteredMaterials.WOVEN_WORLD_THREAD;
-        if (material.durability() != 20) helper.fail("vinte de durabilidade: " + material.durability());
-        if (material.enchantmentValue() != 20) helper.fail("e vinte de encantabilidade");
-        int[] esperado = {5, 4, 3, 2};
-        var ordem = new net.minecraft.world.item.equipment.ArmorType[]{
-                net.minecraft.world.item.equipment.ArmorType.HELMET,
-                net.minecraft.world.item.equipment.ArmorType.CHESTPLATE,
-                net.minecraft.world.item.equipment.ArmorType.LEGGINGS,
-                net.minecraft.world.item.equipment.ArmorType.BOOTS};
-        for (int i = 0; i < ordem.length; i++) {
-            int achado = material.defense().getOrDefault(ordem[i], 0);
-            if (achado != esperado[i]) {
-                helper.fail(ordem[i] + " protege " + esperado[i] + ", e não " + achado);
-            }
-        }
-        if (!new ItemStack(net.thaumcraft.shattered.ShatteredItems.WORLD_THREAD)
-                .is(ShatteredMaterials.REPAIRS_ARMOR)) {
-            helper.fail("e conserta-se com Fio do Mundo");
-        }
-        helper.succeed();
-    }
 
     /** Usa o item do jeito que o jogo usa: no bloco, vindo de cima. */
     private static void usar(GameTestHelper helper, net.minecraft.world.entity.player.Player player,

@@ -11,7 +11,7 @@ import net.thaumcraft.client.fx.LightningBolt;
 import net.thaumcraft.client.fx.Sparkle;
 import net.thaumcraft.item.FocusItem;
 import net.thaumcraft.item.Focuses;
-import net.thaumcraft.shattered.RiftBladeItem;
+import net.thaumcraft.shattered.RiftAim;
 
 /**
  * O que os três focos de fenda desenham do lado de quem joga.
@@ -74,7 +74,7 @@ public final class ShatteredFx {
 
     /** Onde o raio vai bater. */
     private static Vec3 mira(Level level, Player quem) {
-        BlockPos fenda = RiftBladeItem.riftAimedAt(level, quem);
+        BlockPos fenda = RiftAim.riftAimedAt(level, quem);
         if (fenda != null) return Vec3.atCenterOf(fenda);
         HitResult bateu = Focuses.targetBlock(level, quem);
         if (bateu.getType() != HitResult.Type.MISS) return bateu.getLocation();
