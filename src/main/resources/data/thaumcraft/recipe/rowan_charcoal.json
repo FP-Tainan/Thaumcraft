@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": "thaumcraft:rowan_log",
+  "result": {
+    "id": "minecraft:charcoal"
+  },
+  "experience": 0,
+  "cookingtime": 200
+}

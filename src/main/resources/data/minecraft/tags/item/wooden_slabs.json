@@ -1,6 +1,9 @@
 {
   "values": [
     "thaumcraft:greatwood_slab",
-    "thaumcraft:silverwood_slab"
+    "thaumcraft:silverwood_slab",
+    "thaumcraft:rowan_slab",
+    "thaumcraft:alder_slab",
+    "thaumcraft:hawthorn_slab"
   ]
 }

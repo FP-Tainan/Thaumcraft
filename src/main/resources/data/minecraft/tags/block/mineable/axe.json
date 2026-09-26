@@ -17,6 +17,18 @@
     "thaumcraft:arcane_ear",
     "thaumcraft:common_loot_crate",
     "thaumcraft:uncommon_loot_crate",
-    "thaumcraft:rare_loot_crate"
+    "thaumcraft:rare_loot_crate",
+    "thaumcraft:rowan_log",
+    "thaumcraft:alder_log",
+    "thaumcraft:hawthorn_log",
+    "thaumcraft:rowan_planks",
+    "thaumcraft:alder_planks",
+    "thaumcraft:hawthorn_planks",
+    "thaumcraft:rowan_stairs",
+    "thaumcraft:alder_stairs",
+    "thaumcraft:hawthorn_stairs",
+    "thaumcraft:rowan_slab",
+    "thaumcraft:alder_slab",
+    "thaumcraft:hawthorn_slab"
   ]
 }

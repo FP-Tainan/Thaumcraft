@@ -2,6 +2,9 @@
   "values": [
     "thaumcraft:greatwood_sapling",
     "thaumcraft:silverwood_sapling",
-    "thaumcraft:warpwood_sapling"
+    "thaumcraft:warpwood_sapling",
+    "thaumcraft:rowan_sapling",
+    "thaumcraft:alder_sapling",
+    "thaumcraft:hawthorn_sapling"
   ]
 }

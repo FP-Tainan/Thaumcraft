@@ -81,6 +81,35 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(FumeFunnelBlockEntity::new,
                             java.util.Set.of(FUME_FUNNEL, FILTERED_FUME_FUNNEL)));
 
+    // ------------------------------------------------------------------ as três árvores do ofício
+
+    /** A sorveira, que tem afinidade com a magia. */
+    public static final Block ROWAN_LOG = log("rowan_log");
+    public static final Block ROWAN_LEAVES = leaves("rowan_leaves", () -> OccultaBlocks.ROWAN_SAPLING, true);
+    public static final Block ROWAN_SAPLING = sapling("rowan_sapling",
+            (level, pos) -> WitchTree.generate(level, level.getRandom(), pos, false));
+    public static final Block ROWAN_PLANKS = planks("rowan_planks");
+    public static final Block ROWAN_STAIRS = stairs("rowan_stairs", () -> ROWAN_PLANKS);
+    public static final Block ROWAN_SLAB = slab("rowan_slab");
+
+    /** O amieiro, cuja madeira parece sangrar e que traz má sorte. */
+    public static final Block ALDER_LOG = log("alder_log");
+    public static final Block ALDER_LEAVES = leaves("alder_leaves", () -> OccultaBlocks.ALDER_SAPLING, false);
+    public static final Block ALDER_SAPLING = sapling("alder_sapling",
+            (level, pos) -> LargeWitchTree.generate(level, level.getRandom(), pos, false, LargeWitchTree.alder()));
+    public static final Block ALDER_PLANKS = planks("alder_planks");
+    public static final Block ALDER_STAIRS = stairs("alder_stairs", () -> ALDER_PLANKS);
+    public static final Block ALDER_SLAB = slab("alder_slab");
+
+    /** E o espinheiro-alvar, a árvore da pureza, que quase não pega fogo. */
+    public static final Block HAWTHORN_LOG = log("hawthorn_log");
+    public static final Block HAWTHORN_LEAVES = leaves("hawthorn_leaves", () -> OccultaBlocks.HAWTHORN_SAPLING, false);
+    public static final Block HAWTHORN_SAPLING = sapling("hawthorn_sapling",
+            (level, pos) -> LargeWitchTree.generate(level, level.getRandom(), pos, false, LargeWitchTree.hawthorn()));
+    public static final Block HAWTHORN_PLANKS = planks("hawthorn_planks");
+    public static final Block HAWTHORN_STAIRS = stairs("hawthorn_stairs", () -> HAWTHORN_PLANKS);
+    public static final Block HAWTHORN_SLAB = slab("hawthorn_slab");
+
     private OccultaBlocks() {
     }
 
@@ -92,6 +121,47 @@ public final class OccultaBlocks {
                 .instabreak()
                 .sound(SoundType.GRASS)
                 .pushReaction(PushReaction.DESTROY), traits, seed));
+    }
+
+    /** Uma tora: dureza dois, como a madeira do jogo. */
+    private static Block log(String name) {
+        return register(name, properties -> new net.minecraft.world.level.block.RotatedPillarBlock(properties
+                .mapColor(MapColor.WOOD).strength(2.0f).sound(SoundType.WOOD).ignitedByLava()));
+    }
+
+    /** Uma folhagem, com a muda que ela larga e se dá bagas. */
+    private static Block leaves(String name, Supplier<ItemLike> sapling, boolean berries) {
+        return register(name, properties -> new WitchLeavesBlock(properties
+                .mapColor(MapColor.PLANT).strength(0.2f).randomTicks().sound(SoundType.GRASS).noOcclusion()
+                .isValidSpawn(net.minecraft.world.level.block.Blocks::ocelotOrParrot)
+                .isSuffocating((s, l, p) -> false).isViewBlocking((s, l, p) -> false)
+                .ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor((s, l, p) -> false),
+                sapling, berries));
+    }
+
+    /** Uma muda, com a árvore que ela faz. */
+    private static Block sapling(String name,
+                                 java.util.function.BiFunction<net.minecraft.server.level.ServerLevel,
+                                         net.minecraft.core.BlockPos, Boolean> tree) {
+        return register(name, properties -> new WitchSaplingBlock(properties
+                .mapColor(MapColor.PLANT).noCollision().randomTicks().instabreak()
+                .sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY), tree));
+    }
+
+    private static Block planks(String name) {
+        return register(name, properties -> new Block(properties
+                .mapColor(MapColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD).ignitedByLava()));
+    }
+
+    private static Block stairs(String name, Supplier<Block> planks) {
+        return register(name, properties -> new net.minecraft.world.level.block.StairBlock(
+                planks.get().defaultBlockState(), properties
+                .mapColor(MapColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD).ignitedByLava()));
+    }
+
+    private static Block slab(String name) {
+        return register(name, properties -> new net.minecraft.world.level.block.SlabBlock(properties
+                .mapColor(MapColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD).ignitedByLava()));
     }
 
     private static Block register(String name, Function<BlockBehaviour.Properties, Block> factory) {

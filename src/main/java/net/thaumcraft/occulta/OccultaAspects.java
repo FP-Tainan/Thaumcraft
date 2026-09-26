@@ -94,6 +94,18 @@ public final class OccultaAspects {
             r.item("thaumcraft:whiff_of_magic", new AspectList().add(Aspects.AIR, 3).add(Aspects.MAGIC, 1));
             r.item("thaumcraft:reek_of_misfortune", new AspectList().add(Aspects.AIR, 3).add(Aspects.ENTROPY, 1));
             r.item("thaumcraft:odour_of_purity", new AspectList().add(Aspects.AIR, 3).add(Aspects.ORDER, 1));
+
+            // ---------------------------------------------------------- as três árvores
+            for (String árvore : java.util.List.of("rowan", "alder", "hawthorn")) {
+                r.item("thaumcraft:" + árvore + "_log", new AspectList().add(Aspects.TREE, 2).add(Aspects.MAGIC, 1));
+                r.item("thaumcraft:" + árvore + "_leaves", new AspectList().add(Aspects.PLANT, 1));
+                r.item("thaumcraft:" + árvore + "_planks", new AspectList().add(Aspects.TREE, 1));
+            }
+            // e cada muda leva o que a árvore dela é: magia na sorveira, desordem no amieiro, ordem no espinheiro
+            r.item("thaumcraft:rowan_sapling", new AspectList().add(Aspects.PLANT, 2).add(Aspects.MAGIC, 1));
+            r.item("thaumcraft:alder_sapling", new AspectList().add(Aspects.PLANT, 2).add(Aspects.ENTROPY, 1));
+            r.item("thaumcraft:hawthorn_sapling", new AspectList().add(Aspects.PLANT, 2).add(Aspects.ORDER, 1));
+            r.item("thaumcraft:rowan_berries", new AspectList().add(Aspects.PLANT, 1).add(Aspects.HUNGER, 1));
         });
     }
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": "thaumcraft:rowan_planks"
+  },
+  "result": {
+    "id": "thaumcraft:rowan_stairs",
+    "count": 4
+  }
+}

@@ -2999,3 +2999,31 @@ corpo largo, e com forno ao lado sai de lá a canalização daquele lado.
 **Uma pedra no caminho, que já é conhecida da casa.** As duas peças do cano chamam `setTextureSize(64, 128)`
 **depois** do `addBox`, onde aquilo já não vale — o mesmo caso do espelho do Techne. Lido ao pé da letra, o cano
 ia buscar um pedaço vazio da folha e sumia; a folha é de 64 por 64 como o resto do modelo.
+
+### Fatia 3 — as três árvores do ofício
+
+A sorveira, o amieiro e o espinheiro-alvar: o `BlockWitchLog`, o `BlockWitchLeaves` e o `BlockWitchSapling` do
+original, com as duas árvores que os geradores dele fazem. Cada uma dá seis blocos — tora, folhagem, muda,
+tábuas, escada e laje —, que no original eram um bloco só com três marcas.
+
+**A sorveira é o carvalho pequeno do jogo antigo**, com a copa um bloco mais larga (`spread = 1`) e de cinco a
+sete de altura. O **amieiro** e o **espinheiro-alvar** são o carvalho grande, o mesmo desenho de galhos que a
+grande-madeira do Thaumcraft usa, com os números que o `setScale` de cada um manda: o amieiro estreito e ralo, de
+galhos mais caídos; o espinheiro largo e cheio.
+
+**O que cai da folhagem** é o do original: a muda uma vez em vinte, e a da sorveira larga ainda **Bagas de
+Sorveira** uma vez em duzentas — as duas contas melhoram com Fortuna. Com tesoura ou Toque Suave sai a própria
+folhagem, que é o que o jogo de hoje faz com qualquer folha.
+
+**A muda não cresce na primeira batida do acaso:** a primeira marca, a segunda faz a árvore. É o
+`markOrGrowMarked` do jogo antigo, e aqui a marca é o `stage`, como nas mudas de hoje.
+
+**E o forno fecha a conta:** as três mudas do ofício dão os três fumos que faltavam — a sorveira a Lufada de
+Magia, o amieiro o Fedor de Má Sorte, o espinheiro-alvar o Odor de Pureza.
+
+**Do original fica de fora, por agora,** o Ent que às vezes sai de uma tora quebrada (uma chance em cem, mais uma
+por tora encostada, até cinco) — é criatura, e vem na fatia dos bichos. E a Porta de Sorveira, que é porta.
+
+**Uma coisa a lembrar de quem joga:** as mudas do ofício não nascem no mundo nem saem de receita nenhuma. No
+original vêm de **mutar uma muda comum com Mutandis**, que é feito no caldeirão — e o caldeirão ainda não chegou.
+Até lá elas só existem no criativo. É assim no original também: sem caldeirão, não há árvore do ofício.

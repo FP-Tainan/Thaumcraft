@@ -1,6 +1,9 @@
 {
   "values": [
     "thaumcraft:greatwood_planks",
-    "thaumcraft:silverwood_planks"
+    "thaumcraft:silverwood_planks",
+    "thaumcraft:rowan_planks",
+    "thaumcraft:alder_planks",
+    "thaumcraft:hawthorn_planks"
   ]
 }

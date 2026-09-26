@@ -1,6 +1,9 @@
 {
   "values": [
     "thaumcraft:greatwood_stairs",
-    "thaumcraft:silverwood_stairs"
+    "thaumcraft:silverwood_stairs",
+    "thaumcraft:rowan_stairs",
+    "thaumcraft:alder_stairs",
+    "thaumcraft:hawthorn_stairs"
   ]
 }

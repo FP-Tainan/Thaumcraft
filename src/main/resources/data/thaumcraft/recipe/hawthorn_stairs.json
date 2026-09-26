@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": "thaumcraft:hawthorn_planks"
+  },
+  "result": {
+    "id": "thaumcraft:hawthorn_stairs",
+    "count": 4
+  }
+}

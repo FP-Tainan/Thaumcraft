@@ -98,7 +98,8 @@
       "net.thaumcraft.test.MaleficiumGameTest",
       "net.thaumcraft.test.MaleficiumGearGameTest",
       "net.thaumcraft.test.OccultaCropsGameTest",
-      "net.thaumcraft.test.OccultaOvenGameTest"
+      "net.thaumcraft.test.OccultaOvenGameTest",
+      "net.thaumcraft.test.OccultaTreesGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -183,7 +184,8 @@
       "net.thaumcraft.test.client.ItemModelClientTest",
       "net.thaumcraft.test.client.MortuorumLookClientTest",
       "net.thaumcraft.test.client.OccultaCropsClientTest",
-      "net.thaumcraft.test.client.OccultaOvenClientTest"
+      "net.thaumcraft.test.client.OccultaOvenClientTest",
+      "net.thaumcraft.test.client.OccultaTreesClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

@@ -2,6 +2,9 @@
   "values": [
     "thaumcraft:greatwood_log",
     "thaumcraft:silverwood_log",
-    "thaumcraft:warpwood_log"
+    "thaumcraft:warpwood_log",
+    "thaumcraft:rowan_log",
+    "thaumcraft:alder_log",
+    "thaumcraft:hawthorn_log"
   ]
 }

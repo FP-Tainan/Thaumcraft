@@ -21,19 +21,19 @@ import java.util.Set;
  * a distância é medida a partir das toras, pelo caminho das folhas, como o próprio jogo faz com as dele. A
  * folha que ficar longe demais fica para sempre, como ficaria no original.
  */
-final class TreeLeaves {
+public final class TreeLeaves {
     private final Set<BlockPos> placed = new LinkedHashSet<>();
 
-    void place(LevelAccessor level, BlockPos pos, BlockState state, int flags) {
+    public void place(LevelAccessor level, BlockPos pos, BlockState state, int flags) {
         level.setBlock(pos, state, flags);
         this.placed.add(pos.immutable());
     }
 
-    void forget(BlockPos pos) {
+    public void forget(BlockPos pos) {
         this.placed.remove(pos);
     }
 
-    void settle(LevelAccessor level, int flags) {
+    public void settle(LevelAccessor level, int flags) {
         Map<BlockPos, Integer> distance = new HashMap<>();
         ArrayDeque<BlockPos> queue = new ArrayDeque<>();
         for (BlockPos pos : this.placed) {
@@ -70,7 +70,7 @@ final class TreeLeaves {
     }
 
     /** O chão em que uma muda pega: terra, grama e o resto que a muda de carvalho de hoje aceita. */
-    static boolean isSoil(BlockState state) {
+    public static boolean isSoil(BlockState state) {
         return state.is(BlockTags.SUPPORTS_VEGETATION);
     }
 }

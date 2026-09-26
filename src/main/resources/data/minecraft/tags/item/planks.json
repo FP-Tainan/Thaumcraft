@@ -5,6 +5,9 @@
     "thaumcraft:warpwood_planks",
     "thaumcraft:greatwood_planks_horizontal",
     "thaumcraft:silverwood_planks_horizontal",
-    "thaumcraft:silverwood_planks_vertical"
+    "thaumcraft:silverwood_planks_vertical",
+    "thaumcraft:rowan_planks",
+    "thaumcraft:alder_planks",
+    "thaumcraft:hawthorn_planks"
   ]
 }

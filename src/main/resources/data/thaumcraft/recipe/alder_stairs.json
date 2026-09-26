@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": "thaumcraft:alder_planks"
+  },
+  "result": {
+    "id": "thaumcraft:alder_stairs",
+    "count": 4
+  }
+}

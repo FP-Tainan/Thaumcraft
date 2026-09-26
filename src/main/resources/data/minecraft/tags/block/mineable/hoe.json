@@ -1,6 +1,9 @@
 {
   "values": [
     "thaumcraft:greatwood_leaves",
-    "thaumcraft:silverwood_leaves"
+    "thaumcraft:silverwood_leaves",
+    "thaumcraft:rowan_leaves",
+    "thaumcraft:alder_leaves",
+    "thaumcraft:hawthorn_leaves"
   ]
 }

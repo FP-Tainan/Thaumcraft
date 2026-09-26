@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "thaumcraft:rowan_log"
+  ],
+  "result": {
+    "id": "thaumcraft:rowan_planks",
+    "count": 4
+  }
+}

@@ -98,6 +98,32 @@ public final class OccultaItems {
     /** O Filtro de Fumos, que faz o funil com filtro. */
     public static final Item FUME_FILTER = register("fume_filter", Item::new);
 
+    // ------------------------------------------------------------------ as três árvores
+
+    /** As Bagas de Sorveira, que caem da folhagem da sorveira e se comem. */
+    public static final Item ROWAN_BERRIES = register("rowan_berries", properties -> new Item(properties.food(
+            new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(6.0f).build())));
+
+    /** As peças das árvores: o item de cada bloco, pelo nome. */
+    public static final java.util.Map<String, Item> WOOD = new java.util.LinkedHashMap<>();
+
+    static {
+        // seis peças por árvore, na ordem em que aparecem na aba
+        for (String árvore : java.util.List.of("rowan", "alder", "hawthorn")) {
+            bloco(árvore + "_log");
+            bloco(árvore + "_leaves");
+            bloco(árvore + "_sapling");
+            bloco(árvore + "_planks");
+            bloco(árvore + "_stairs");
+            bloco(árvore + "_slab");
+        }
+    }
+
+    private static void bloco(String name) {
+        var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getValue(Thaumcraft.id(name));
+        WOOD.put(name, register(name, properties -> new BlockItem(block, properties.useBlockDescriptionPrefix())));
+    }
+
     private OccultaItems() {
     }
 

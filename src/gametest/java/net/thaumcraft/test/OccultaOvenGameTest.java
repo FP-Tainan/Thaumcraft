@@ -46,9 +46,16 @@ public class OccultaOvenGameTest {
     }
 
     /** Cozinhando com pote dentro, o cheiro do que queimou fica guardado. */
-    @GameTest(maxTicks = 400)
+    @GameTest(maxTicks = 1200)
     public void theOvenCatchesTheSmellInAJar(GameTestHelper helper) {
-        WitchesOvenBlockEntity forno = place(helper, new BlockPos(1, 2, 1), Direction.NORTH);
+        BlockPos onde = new BlockPos(1, 2, 1);
+        WitchesOvenBlockEntity forno = place(helper, onde, Direction.NORTH);
+        // dois funis com filtro, um de cada lado: a sorte do cheiro sobe para nove décimos e a cozedura apressa
+        for (BlockPos lado : new BlockPos[]{onde.east(), onde.west()}) {
+            helper.getLevel().setBlockAndUpdate(helper.absolutePos(lado),
+                    OccultaBlocks.FILTERED_FUME_FUNNEL.defaultBlockState()
+                            .setValue(FumeFunnelBlock.FACING, Direction.NORTH));
+        }
         forno.setItem(WitchesOvenBlockEntity.INPUT, new ItemStack(Items.BIRCH_SAPLING, 64));
         forno.setItem(WitchesOvenBlockEntity.FUEL, new ItemStack(Items.COAL, 64));
         forno.setItem(WitchesOvenBlockEntity.JARS, new ItemStack(OccultaItems.CLAY_JAR, 64));

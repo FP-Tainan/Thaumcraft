@@ -4,6 +4,9 @@
     "thaumcraft:silverwood_log",
     "thaumcraft:silverwood_knot",
     "thaumcraft:warpwood_log",
-    "thaumcraft:warpwood_knot"
+    "thaumcraft:warpwood_knot",
+    "thaumcraft:rowan_log",
+    "thaumcraft:alder_log",
+    "thaumcraft:hawthorn_log"
   ]
 }

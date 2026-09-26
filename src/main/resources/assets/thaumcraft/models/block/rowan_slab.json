@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "thaumcraft:block/rowan_planks",
+    "top": "thaumcraft:block/rowan_planks",
+    "side": "thaumcraft:block/rowan_planks"
+  }
+}

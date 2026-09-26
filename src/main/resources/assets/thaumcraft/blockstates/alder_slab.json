@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "thaumcraft:block/alder_slab"
+    },
+    "type=top": {
+      "model": "thaumcraft:block/alder_slab_top"
+    },
+    "type=double": {
+      "model": "thaumcraft:block/alder_planks"
+    }
+  }
+}
