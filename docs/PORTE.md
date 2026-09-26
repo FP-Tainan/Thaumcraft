@@ -2839,3 +2839,26 @@ contada de lados diferentes.
 A aba própria saiu, e as sete pesquisas foram para o lado direito da dos Ancestrais, que estava livre — a do
 original ocupa de −5 a 4 em x, e o ramo começa no 6. A primeira delas passa a pendurar direto no
 {@code ELDRITCHMINOR}, e o atalho que existia só para isso saiu junto.
+
+## A lâmina da foice (2026-09-26)
+
+Quem manda desenhou de vermelho por cima do retrato o que faltava: uma lâmina de verdade no alto do cabo.
+
+No original a lâmina da foice de osso são **três varetas de um por um por quinze**. De longe elas somem, e o que
+se via era um cabo pelado com um toco na ponta. Agora a lâmina são sete chapas finas enfileiradas, cada uma
+virada um tanto em relação à de trás: juntas fazem a curva, e a largura vai caindo da base até a ponta. Por fora
+corre uma fita mais clara, que é o gume.
+
+**Como a curva se faz sem conta nenhuma:** cada chapa é desenhada dentro do quadro da anterior, então basta andar
+para a frente e virar um pouco a cada volta — a curva vai se somando sozinha, sem seno nem cosseno.
+
+**Duas coisas que a folha e o ângulo obrigaram:**
+
+* A folha do original só tem uma **barra fina** de lâmina, que dava para as três varetas e não dá para uma chapa.
+  O resto dela é transparente, e é onde entraram as duas manchas novas — a chapa escura e a fita do gume — que o
+  `scratchpad/Lamina.java` pinta. A folha de osso sai daí, passando a nova pelo `Osso.java` de sempre.
+* A lâmina de uma foice fica **deitada**, de través ao cabo: o plano dela é o mesmo em que ela é balançada. Isso
+  quer dizer que olhar a chapa de frente é olhar o cabo de topo, e num quadro de dezesseis por dezesseis não cabe
+  mostrar os dois. O ícone do inventário virou de lado até a lâmina se ler como lâmina, e o cabo ficou de esguelha.
+
+**Desvio declarado:** as três varetas do `ModelScytheBone` saíram, e ficam no histórico.

@@ -48,8 +48,45 @@ public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<U
     private static final float[] HANDLE_BOTTOM = BoxMesh.box(0, 0, 0, 1, 12, 1, 0, 0, 64, 32);
     private static final float[] HANDLE_TOP = BoxMesh.box(0, 0, 0, 1, 10, 1, 0, 0, 64, 32);
     private static final float[] BONE_JOINT = BoxMesh.box(0, 0, 0, 2, 4, 4, 34, 0, 64, 32);
-    private static final float[] BONE_BLADE = BoxMesh.box(-0.5f, -0.5f, 0, 1, 1, 15, 0, 15, 64, 32);
-    private static final float[] BONE_BLADE_BASE = BoxMesh.box(0, 0, 0, 1, 1, 15, 0, 15, 64, 32);
+
+    /**
+     * A lâmina, em pedaços que vão virando.
+     *
+     * <p><b>Desvio declarado, a pedido de quem manda.</b> No original a lâmina da foice de osso são três varetas
+     * de um por um por quinze, e de longe elas somem: o que se vê é um cabo pelado com um toco na ponta. Ele
+     * desenhou por cima do retrato o que queria — uma lâmina de verdade, larga na base, afinando e virando até a
+     * ponta. É o que está aqui.
+     *
+     * <p>Cada pedaço é uma chapa fina, e cada um sai virado um tanto em relação ao de trás: enfileirados, eles
+     * fazem a curva. A largura vai caindo da base para a ponta. O gume é uma fita mais clara que corre pela
+     * beirada de fora, e as duas cores saem das manchas que o {@code scratchpad/Lamina.java} pinta na folha.
+     */
+    private static final int BLADE_PARTS = 8;
+    private static final float BLADE_STEP = 2.9f;
+    private static final float BLADE_TURN = 0.20f;
+    private static final float BLADE_WIDE = 5.6f;
+    private static final float BLADE_TIP = 0.9f;
+    private static final float BLADE_THICK = 0.8f;
+    private static final float EDGE_THICK = 0.55f;
+    private static final float EDGE_WIDE = 1.1f;
+
+    private static final float[][] BLADE = blade(false);
+    private static final float[][] EDGE = blade(true);
+
+    /** As chapas da lâmina, ou as fitas do gume, uma por pedaço. */
+    private static float[][] blade(boolean gume) {
+        float[][] saída = new float[BLADE_PARTS][];
+        for (int i = 0; i < BLADE_PARTS; i++) {
+            float quanto = i / (float) (BLADE_PARTS - 1);
+            float larga = BLADE_WIDE + (BLADE_TIP - BLADE_WIDE) * quanto;
+            saída[i] = gume
+                    // o gume corre pela beirada de fora da chapa, um fio à frente dela
+                    ? BoxMesh.box(larga - EDGE_WIDE, -EDGE_THICK / 2, 0, EDGE_WIDE, EDGE_THICK, BLADE_STEP,
+                            55, 17, 64, 32)
+                    : BoxMesh.box(0, -BLADE_THICK / 2, 0, larga, BLADE_THICK, BLADE_STEP, 40, 17, 64, 32);
+        }
+        return saída;
+    }
 
     @Override
     public void submit(@Nullable Unit ignored, PoseStack pose, SubmitNodeCollector collector,
@@ -62,16 +99,47 @@ public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<U
         pose.popPose();
     }
 
-    /** As sete caixas do {@code ModelScytheBone}, com o gume que o {@code render} vira antes de desenhar. */
+    /** O cabo e a junta do {@code ModelScytheBone}, e a lâmina nova saindo da junta. */
     private static void scythe(PoseStack pose, SubmitNodeCollector collector, Identifier folha,
                                int light, int overlay) {
         part(pose, collector, HANDLE_MIDDLE, folha, 0, 1.7f, 0, -0.2602503f, 0, 0, light, overlay);
         part(pose, collector, HANDLE_BOTTOM, folha, 0, 12.0f, -2.8f, 0, 0, 0, light, overlay);
         part(pose, collector, HANDLE_TOP, folha, 0, -8.0f, 0, 0, 0, 0, light, overlay);
         part(pose, collector, BONE_JOINT, folha, -0.5f, -8.1f, -1.0f, 0, 0, 0, light, overlay);
-        part(pose, collector, BONE_BLADE, folha, 0.5f, -7.0f, 1.0f, -0.1f, 0.06f, 0.7f, light, overlay);
-        part(pose, collector, BONE_BLADE_BASE, folha, 0.2f, -8.0f, 1.0f, -0.1115358f, 0, 0, light, overlay);
-        part(pose, collector, BONE_BLADE_BASE, folha, -0.2f, -8.0f, 1.0f, -0.1115358f, 0, 0, light, overlay);
+        bladeOut(pose, collector, folha, light, overlay);
+    }
+
+    /**
+     * A lâmina: os pedaços encaixados um no outro, cada um virado em relação ao de trás.
+     *
+     * <p>Como cada pedaço é desenhado dentro do quadro do anterior, a curva vai se somando sozinha e não é
+     * preciso contar seno nem cosseno de nada.
+     */
+    private static void bladeOut(PoseStack pose, SubmitNodeCollector collector, Identifier folha,
+                                 int light, int overlay) {
+        pose.pushPose();
+        // da junta para a frente, e já um tanto virada para baixo, como a do original saía
+        pose.translate(0.0f, -8.4f / 16.0f, 1.2f / 16.0f);
+        // a chapa é larga no X e fina no Y, e a curva vira em torno do Y: assim o plano da lâmina é o mesmo em
+        // que a foice é balançada, e de fora se vê a chapa de chapa, e não de perfil
+        pose.mulPose(Axis.YP.rotation(-0.30f));
+        for (int i = 0; i < BLADE_PARTS; i++) {
+            flat(pose, collector, BLADE[i], folha, light, overlay);
+            flat(pose, collector, EDGE[i], folha, light, overlay);
+            pose.translate(0.0f, 0.0f, BLADE_STEP / 16.0f);
+            pose.mulPose(Axis.YP.rotation(BLADE_TURN));
+        }
+        pose.popPose();
+    }
+
+    /** Uma chapa no quadro em que o desenho já está, sem mexer em posição nem giro. */
+    private static void flat(PoseStack pose, SubmitNodeCollector collector, float[] caixa, Identifier folha,
+                             int light, int overlay) {
+        pose.pushPose();
+        pose.scale(1.0f / 16.0f, 1.0f / 16.0f, 1.0f / 16.0f);
+        collector.submitCustomGeometry(pose, RenderTypes.entityCutout(folha),
+                (m, v) -> MeshDrawer.draw(caixa, m, v, light, overlay, 0xFFFFFFFF));
+        pose.popPose();
     }
 
     private static void part(PoseStack pose, SubmitNodeCollector collector, float[] caixa, Identifier folha,
