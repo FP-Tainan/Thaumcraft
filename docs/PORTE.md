@@ -2570,3 +2570,25 @@ quando o leitor chegar, troca-se o que enche a sala e não o resto.
 **Guardas:** o `WildPocketGameTest` cobre as seis — a porta não pega na fenda solta e não se gasta, pega na presa
 e fica brava, a porta comum não fica brava, o bolso liso tem uma porta só, o bravo tem três com duas por apontar
 e um tema, e dois temas seguidos nunca são o mesmo. O `WildPocketClientTest` tira um retrato de cada sala.
+
+## Os que já andavam nas fendas (2026-09-26)
+
+A quarta coisa que quem manda pediu, e a que amarra as outras três: *a gente pode amarrar isso com os endermans,
+assim isso explicaria como eles vagam entre as dimensões e como eles teleportam*. E de facto explica — o
+Thaumcraft e as Portas Dimensionais já contavam a mesma história por dois lados, e faltava alguém a atravessar de
+um para o outro.
+
+O `RiftWalkers` diz três coisas sem uma linha de texto:
+
+* uma fenda **já crescida** põe cá fora um enderman de vez em quando — ele não apareceu, chegou;
+* um enderman morto **ao pé de uma fenda**, ou dentro de um Reino Fragmentado, deixa **Fio do Mundo**: é o que
+  traz agarrado de tanto andar por onde o Véu está roto;
+* e nas salas para lá de uma fenda presa há sempre um ou outro, porque é ali que eles moram.
+
+E, no livro, a página que o thaumaturgo escreveu ao fim de onze dias de olho num rasgão: *não se teleportam;
+passam, e saem noutro sítio onde o Véu esteja fino*.
+
+**Guardas:** o `RiftWalkersGameTest` cobre quem conta como andarilho do Véu (ao pé de uma fenda sim, longe dela
+não), que uma fenda pequena não põe ninguém cá fora por mais voltas que se dê, e que uma crescida põe — e pára
+quando a vizinhança enche. O fio que eles deixam ao morrer depende de terem morrido às mãos de alguém, e isso não
+dá para forjar num gametest sem armar uma morte inteira; fica por cobrir, e está dito.

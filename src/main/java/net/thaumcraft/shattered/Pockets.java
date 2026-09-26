@@ -101,7 +101,11 @@ public final class Pockets {
         BlockPos canto = new BlockPos(qual * STRIDE, 32, 0);
         PocketThemes tema = bravo ? PocketThemes.roll(bolsos.getRandom(), veioDe) : null;
         carve(bolsos, canto, tema);
-        if (tema != null) tema.fill(bolsos, canto, bolsos.getRandom());
+        if (tema != null) {
+            tema.fill(bolsos, canto, bolsos.getRandom());
+            // e quem lá mora: os que atravessam as fendas há mais tempo do que nós
+            RiftWalkers.populate(bolsos, canto);
+        }
 
         // a porta de volta, no meio da parede do norte, olhando para dentro
         BlockPos porta = canto.offset(ROOM / 2, 0, 1);

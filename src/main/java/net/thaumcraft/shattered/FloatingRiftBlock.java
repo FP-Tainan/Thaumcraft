@@ -58,6 +58,8 @@ public class FloatingRiftBlock extends BaseEntityBlock {
             if (!(be instanceof RiftBlockEntity fenda)) return;
             fenda.rollFace(mundo.getRandom());
             fenda.grow();
+            // e de vez em quando ela põe cá fora um dos que já andavam nela
+            if (mundo instanceof ServerLevel servidor) RiftWalkers.maybeEmerge(servidor, onde, fenda);
         };
     }
 

@@ -43,6 +43,7 @@
       "net.thaumcraft.test.ShatteredToolsGameTest",
       "net.thaumcraft.test.VeilSightGameTest",
       "net.thaumcraft.test.WildPocketGameTest",
+      "net.thaumcraft.test.RiftWalkersGameTest",
       "net.thaumcraft.test.BiomeGameTest",
       "net.thaumcraft.test.PechGameTest",
       "net.thaumcraft.test.WardedGameTest",

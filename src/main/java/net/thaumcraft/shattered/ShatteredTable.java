@@ -31,7 +31,7 @@ public final class ShatteredTable {
                 .round()
                 .auto()
                 .special()
-                .pages(Page.text("tc.research_page.SR_FRACTURES.1"))
+                .pages(Page.text("tc.research_page.SR_FRACTURES.1"), Page.text("tc.research_page.SR_FRACTURES.2"))
                 .register();
 
         // segundo: ver — o fio do mundo e o tecido estável
