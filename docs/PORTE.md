@@ -2765,3 +2765,48 @@ quartzo passam a trazer a de madeira — quem resolve isso é a tradução dos e
 
 *Os itens Assinatura da Fenda e Assinatura da Fenda Estabilizada não precisam existir, porque temos os focos de
 varinha.* Saíram, e com eles a pesquisa que as ensinava; os três focos ficam pendurados direto no Fio do Mundo.
+
+## Mais quatro de quem manda (2026-09-26)
+
+### Nascer do lado certo da porta
+
+O defeito que travava o jogo: quem atravessava uma porta do mundo nascia **atrás** da porta da sala e, ao dar o
+primeiro passo, atravessava ela de novo e voltava para o mundo de cima. O lugar de chegada vinha do lado para
+onde a porta olha, e as salas do original foram desenhadas à mão — tem porta virada para cada lado.
+
+Agora se procura. Primeiro os dois lados da porta, ganhando o que estiver mais para dentro da caixa da sala; e,
+se nenhum servir — tem porta do original encostada em escada, em degrau, em poço —, se varre a vizinhança até
+achar chão. **Um teste antigo não bastava:** o primeiro que eu escrevi só olhava se a casa era ar, e reprovava
+degraus e lajes onde dá para ficar de pé muito bem. O que vale é se a caixa de um jogador cabe ali.
+
+A volta também estava errada: quem voltava nascia **dentro** da porta do mundo, porque o destino era a casa da
+fenda, que é a própria porta.
+
+**Guarda:** `theArrivalIsInsideTheRoomAndStandable`, em seis salas seguidas.
+
+### A fenda se ramifica
+
+*Elas vão crescendo mas só vai aumentando de tamanho; eu queria que fossem se ramificando tipo uma raiz de
+planta.* A gavinha deixou de ser uma só e passou a ser uma lista de **braços**: o primeiro nasce com a fenda, e
+cada um dos outros brota de um ponto de um braço mais velho e só aparece depois que ela passa de um tamanho. Quem
+desenha escolhe quantos mostrar — é isso que faz a fenda parecer que está se abrindo, e não inchando.
+
+**Duas coisas que custaram uma volta cada:**
+
+* **O tamanho de cada galho tem de sair do braço de onde ele brotou**, e não do último que se montou. Com uma
+  variável só, os galhos iam encolhendo uns em cima dos outros e do quinto em diante nem se viam.
+* **O lado para onde o galho sai tem de ser de través ao pai.** Com um lado qualquer sorteado, sobrava nele um
+  tanto da direção do pai e o galho corria grudado no corpo dele: a fenda virava um borrão em vez de uma raiz.
+
+### O fio que ela solta
+
+*Conforme ela fosse aumentando de tamanho, fosse dropando, não todas as vezes, um fio do mundo.* Uma fenda que
+cresce solta um Fio do Mundo uma vez em mil e duzentas. A presa não solta nada: quem a firmou ganhou uma porta e
+perdeu a colheita. **Guarda:** `theGrowingRiftShedsThread`.
+
+### Os raios dos focos
+
+*O mesmo do foco de choque, mas em raios da cor da fenda para abrir e fechar, e branco para firmar, que remete ao
+Ordo.* É o mesmo `FXLightningBolt` da 4.2.3.5, com o mesmo jeito de sair da mão e o mesmo esfarelar de fagulhas no
+alvo. Os sete tipos de raio do original ficaram como estavam — quem precisa de outra cor passa a dela pelo
+`setColours`, e a tabela fica intacta.

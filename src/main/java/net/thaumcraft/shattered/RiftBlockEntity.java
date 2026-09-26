@@ -153,14 +153,39 @@ public class RiftBlockEntity extends BlockEntity {
         this.setChanged();
     }
 
+    /**
+     * Quantas vezes, em média, uma fenda que está crescendo solta um Fio do Mundo.
+     *
+     * <p><b>Isto é do porte, e não do original.</b> Quem manda pediu: <i>conforme ela fosse aumentando de
+     * tamanho, fosse dropando, não todas as vezes, um fio do mundo</i>. Faz sentido — é o Véu se esgarçando, e é
+     * de esgarçar que o fio vem. Quem prende a fenda ganha uma porta e perde a colheita.
+     */
+    public static final int THREAD_CHANCE = 1200;
+
     /** O crescer de cada tique, enquanto a fenda não estiver presa. */
     public void grow() {
         if (this.stabilized || this.size >= MAX_SIZE) return;
         for (int passo = 0; passo < GROWTH_STEPS; passo++) {
             this.size = Math.min(MAX_SIZE, this.size + 1.0f / (this.size + 1.0f));
         }
+        // e de vez em quando ela deixa cair um fio: é o Véu se esgarçando, e é de esgarçar que o fio vem
+        if (this.level instanceof ServerLevel mundo && mundo.getRandom().nextInt(THREAD_CHANCE) == 0) {
+            shedThread(mundo);
+        }
         // o feitio vai ao cliente de vez em quando, e não a cada tique
         if ((int) this.size % 16 == 0) this.setChanged();
+    }
+
+    /** Larga um Fio do Mundo embaixo da fenda, com um empurrãozinho para ele não ficar preso nela. */
+    private void shedThread(ServerLevel mundo) {
+        var fio = new net.minecraft.world.entity.item.ItemEntity(mundo,
+                this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.3, this.worldPosition.getZ() + 0.5,
+                new net.minecraft.world.item.ItemStack(ShatteredItems.WORLD_THREAD));
+        fio.setDeltaMovement(
+                (mundo.getRandom().nextDouble() - 0.5) * 0.08, -0.04,
+                (mundo.getRandom().nextDouble() - 0.5) * 0.08);
+        fio.setDefaultPickUpDelay();
+        mundo.addFreshEntity(fio);
     }
     public boolean stabilized() {
         return this.stabilized;

@@ -45,6 +45,8 @@ public final class LightningBolt implements ThaumFx.Effect {
     private int particleAge;
     private int particleMaxAge;
     private float width = 0.03f;
+    private float[] wideOverride;
+    private float[] thinOverride;
 
     /**
      * O construtor de {@code (x1, y1, z1, x, y, z, seed, duration, multi, speed)} do original.
@@ -73,6 +75,19 @@ public final class LightningBolt implements ThaumFx.Effect {
 
     public void setWidth(float width) {
         this.width = width;
+    }
+
+    /**
+     * Dá ao raio uma cor que não está na tabela dos tipos do original.
+     *
+     * <p>Os sete tipos vêm da 4.2.3.5 e ficam como estão. Um ramo que precise de outra cor — o roxo da fenda, o
+     * branco do Ordo — põe a dele aqui, e a tabela fica intacta.
+     *
+     * @param wide a cor da passada larga e fraca, e {@code thin} a da fina e forte
+     */
+    public void setColours(float[] wide, float[] thin) {
+        this.wideOverride = wide;
+        this.thinOverride = thin;
     }
 
     public void fractal(int splits, float amount, float splitChance, float splitLength, float splitAngle) {
@@ -179,7 +194,7 @@ public final class LightningBolt implements ThaumFx.Effect {
     public void submit(PoseStack pose, SubmitNodeCollector collector, ThaumFx.View view, float partial) {
         if (view.distanceTo(this.start.x, this.start.y, this.start.z) > 100.0) return;
         // as cores de cada tipo, primeiro a da passada larga e depois a da fina
-        float[] wide = switch (this.type) {
+        float[] wide = this.wideOverride != null ? this.wideOverride : switch (this.type) {
             case 1 -> new float[]{0.6f, 0.6f, 0.1f};
             case 2 -> new float[]{0.1f, 0.1f, 0.6f};
             case 3 -> new float[]{0.1f, 1.0f, 0.1f};
@@ -188,7 +203,7 @@ public final class LightningBolt implements ThaumFx.Effect {
             case 6 -> new float[]{0.75f, 1.0f, 1.0f};
             default -> new float[]{0.6f, 0.3f, 0.6f};
         };
-        float[] thin = switch (this.type) {
+        float[] thin = this.thinOverride != null ? this.thinOverride : switch (this.type) {
             case 1 -> new float[]{1.0f, 1.0f, 0.1f};
             case 2 -> new float[]{0.1f, 0.1f, 1.0f};
             case 3 -> new float[]{0.1f, 0.6f, 0.1f};

@@ -161,8 +161,7 @@ public final class Pockets {
             miolo.setRoom(nome);
             if (porta.equals(volta)) {
                 miolo.setWild(false);
-                miolo.setDestination(new RiftBlockEntity.Destination(
-                        de.dimension(), fenda.above(), olhar.getOpposite().toYRot()));
+                miolo.setDestination(volta(de, fenda));
             } else {
                 miolo.setWild(true);
             }
@@ -172,7 +171,106 @@ public final class Pockets {
         RiftWalkers.populate(bolsos, canto, sala.width(), sala.length());
 
         // quem chega sai da porta de volta e olha para dentro da sala
-        return new RiftBlockEntity.Destination(bolsos.dimension(), volta.relative(olhar), olhar.toYRot());
+        return chegada(bolsos, volta, olhar, canto, sala);
+    }
+
+    /**
+     * Para onde a porta de volta aponta: um lugar onde dê para ficar de pé ao lado da fenda de onde se veio.
+     *
+     * <p>Se a fenda era uma porta, quem voltasse para cima dela nascia <i>dentro</i> da porta, e o primeiro passo
+     * atravessava ela outra vez. Aqui se procura um lado livre dela; se a fenda não for porta, vale a casa dela
+     * mesma, que é ar.
+     */
+    private static RiftBlockEntity.Destination volta(ServerLevel de, BlockPos fenda) {
+        BlockState estado = de.getBlockState(fenda);
+        if (estado.hasProperty(DoorBlock.FACING)) {
+            Direction olhar = estado.getValue(DoorBlock.FACING);
+            for (Direction lado : new Direction[]{olhar, olhar.getOpposite()}) {
+                BlockPos pé = fenda.relative(lado);
+                if (cabe(de, pé)) {
+                    return new RiftBlockEntity.Destination(de.dimension(), pé, lado.getOpposite().toYRot());
+                }
+            }
+            return new RiftBlockEntity.Destination(de.dimension(), fenda.relative(olhar), olhar.getOpposite().toYRot());
+        }
+        return new RiftBlockEntity.Destination(de.dimension(), fenda, 0.0f);
+    }
+
+    /**
+     * Onde quem chega a uma sala aparece, e para onde olha.
+     *
+     * <p>Não dá para confiar no lado para onde a porta olha: as salas do original foram desenhadas à mão, e há
+     * porta virada para cada lado. Quem chegasse pelo lado errado nascia atrás da porta e, ao dar o primeiro
+     * passo, atravessava ela de novo e voltava para o mundo.
+     *
+     * <p>Então se procura: primeiro os dois lados da porta, ganhando o que estiver mais para dentro da caixa da
+     * sala; e, se nenhum servir — há porta do original encostada numa escada, num degrau, num poço —, se varre a
+     * vizinhança dela até achar um lugar onde caiba gente. Sem isso, a sala inteira fica inalcançável.
+     */
+    private static RiftBlockEntity.Destination chegada(ServerLevel bolsos, BlockPos porta, Direction olhar,
+                                                       BlockPos canto, DungeonRooms.Room sala) {
+        Direction melhor = null;
+        double maisDentro = Double.MAX_VALUE;
+        for (Direction lado : new Direction[]{olhar, olhar.getOpposite()}) {
+            BlockPos pé = porta.relative(lado);
+            if (!cabe(bolsos, pé)) continue;
+            // a distância à beirada da sala: quanto maior, mais para dentro está
+            double fora = Math.min(
+                    Math.min(pé.getX() - canto.getX(), canto.getX() + sala.width() - 1 - pé.getX()),
+                    Math.min(pé.getZ() - canto.getZ(), canto.getZ() + sala.length() - 1 - pé.getZ()));
+            if (-fora < maisDentro) {
+                maisDentro = -fora;
+                melhor = lado;
+            }
+        }
+        if (melhor != null) {
+            return new RiftBlockEntity.Destination(bolsos.dimension(), porta.relative(melhor), melhor.toYRot());
+        }
+
+        BlockPos perto = perto(bolsos, porta);
+        if (perto != null) {
+            return new RiftBlockEntity.Destination(bolsos.dimension(), perto, olhar.toYRot());
+        }
+        return new RiftBlockEntity.Destination(bolsos.dimension(), porta.relative(olhar), olhar.toYRot());
+    }
+
+    /** Até onde se varre a vizinhança de uma porta à procura de chão. */
+    private static final int BUSCA = 5;
+
+    /** O lugar com chão mais perto da porta, em volta e um pouco acima e abaixo dela. */
+    private static @Nullable BlockPos perto(ServerLevel bolsos, BlockPos porta) {
+        BlockPos achado = null;
+        int melhor = Integer.MAX_VALUE;
+        for (int dy = -2; dy <= 2; dy++) {
+            for (int dx = -BUSCA; dx <= BUSCA; dx++) {
+                for (int dz = -BUSCA; dz <= BUSCA; dz++) {
+                    int quanto = Math.abs(dx) + Math.abs(dz) + Math.abs(dy) * 3;
+                    if (quanto >= melhor) continue;
+                    BlockPos pé = porta.offset(dx, dy, dz);
+                    if (!cabe(bolsos, pé)) continue;
+                    melhor = quanto;
+                    achado = pé;
+                }
+            }
+        }
+        return achado;
+    }
+
+    /**
+     * Cabe gente de pé nesta casa?
+     *
+     * <p>Não vale olhar bloco a bloco: um degrau ou uma laje deixam alguém de pé e não são ar. O que vale é se a
+     * caixa de um jogador cabe ali sem esbarrar, e se tem alguma coisa firme embaixo para ele não cair.
+     */
+    private static boolean cabe(ServerLevel bolsos, BlockPos pé) {
+        var caixa = new net.minecraft.world.phys.AABB(
+                pé.getX() + 0.2, pé.getY(), pé.getZ() + 0.2,
+                pé.getX() + 0.8, pé.getY() + 1.85, pé.getZ() + 0.8);
+        if (!bolsos.noCollision(caixa)) return false;
+        BlockPos chão = pé.below();
+        if (bolsos.getBlockState(chão).getCollisionShape(bolsos, chão).isEmpty()) return false;
+        // e não pode ser dentro de uma porta, que é onde quem chegava nascia preso
+        return !(bolsos.getBlockState(pé).getBlock() instanceof DoorBlock);
     }
 
     /** O quarto liso do original: paredes de tecido antigo, chão e teto de tecido comum, e o vazio no meio. */

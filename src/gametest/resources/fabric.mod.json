@@ -109,6 +109,7 @@
       "net.thaumcraft.test.client.RiftWorldClientTest",
       "net.thaumcraft.test.client.WildPocketClientTest",
       "net.thaumcraft.test.client.AncientDoorClientTest",
+      "net.thaumcraft.test.client.ShatteredFociClientTest",
       "net.thaumcraft.test.client.LookClientTest",
       "net.thaumcraft.test.client.InfusionRunClientTest",
       "net.thaumcraft.test.client.WarpClientTest",

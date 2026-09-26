@@ -140,7 +140,7 @@ public final class FocusEffects {
     }
 
     /** O ponto de onde o raio sai: um tanto para o lado e à frente do olho, o {@code shootLightning}. */
-    private static Vec3 hand(Player player) {
+    public static Vec3 hand(Player player) {
         boolean self = player == net.minecraft.client.Minecraft.getInstance().player;
         double px = player.getX(), pz = player.getZ();
         double py = self ? player.getEyeY() : player.getBoundingBox().minY + player.getBbHeight() / 2.0f + 0.25;

@@ -76,6 +76,35 @@ public class RiftWalkersGameTest {
         helper.succeed();
     }
 
+    /** E uma fenda que cresce solta um Fio do Mundo de vez em quando — não sempre, mas acontece. */
+    @GameTest
+    public void theGrowingRiftShedsThread(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(1, 2, 1);
+        helper.setBlock(onde, ShatteredBlocks.RIFT);
+        var fenda = helper.getBlockEntity(onde, RiftBlockEntity.class);
+
+        // a fenda presa não solta nada: quem prendeu ganhou uma porta e perdeu a colheita
+        fenda.setStabilized(true);
+        for (int volta = 0; volta < 20000; volta++) fenda.grow();
+        if (!fios(helper, onde).isEmpty()) helper.fail("a fenda presa não solta fio nenhum");
+
+        // e a solta volta ao tamanho de antes, para poder crescer outra vez
+        fenda.setStabilized(false);
+        for (int volta = 0; volta < 60000; volta++) fenda.grow();
+        var achados = fios(helper, onde);
+        if (achados.isEmpty()) helper.fail("com tantas voltas, algum fio havia de ter caído");
+        for (var fio : achados) fio.discard();
+        helper.succeed();
+    }
+
+    /** Os Fios do Mundo caídos ao pé da fenda. */
+    private static java.util.List<net.minecraft.world.entity.item.ItemEntity> fios(
+            GameTestHelper helper, BlockPos onde) {
+        return helper.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                perto(helper, onde),
+                item -> item.getItem().is(net.thaumcraft.shattered.ShatteredItems.WORLD_THREAD));
+    }
+
     /** A casa da fenda e o que lhe encosta, e nada mais: os testes correm com vizinhos à vista. */
     private static net.minecraft.world.phys.AABB perto(GameTestHelper helper, BlockPos onde) {
         return new net.minecraft.world.phys.AABB(helper.absolutePos(onde)).inflate(2.5);

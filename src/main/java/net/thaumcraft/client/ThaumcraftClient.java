@@ -47,6 +47,7 @@ public class ThaumcraftClient implements ClientModInitializer {
         };
         // os efeitos do Maleficium (o Tainted Magic)
         net.thaumcraft.maleficium.client.MaleficiumFx.init();
+        net.thaumcraft.shattered.client.ShatteredFx.init();
         net.thaumcraft.maleficium.client.MaleficiumEntityRenderers.init();
         net.thaumcraft.naturalis.client.NaturalisHud.init();
         net.thaumcraft.naturalis.client.NaturalisKeyBindings.init();

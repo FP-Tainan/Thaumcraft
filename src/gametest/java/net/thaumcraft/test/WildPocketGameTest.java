@@ -97,6 +97,49 @@ public class WildPocketGameTest {
         helper.succeed();
     }
 
+    /**
+     * Quem chega a uma sala cai do lado de dentro dela, e num lugar onde dá para ficar de pé.
+     *
+     * <p>Antes não caía: o lugar de chegada vinha do lado para onde a porta olha, e as salas do original têm
+     * porta virada para cada lado. Quem chegasse pelo lado errado nascia atrás da porta e, ao dar o primeiro
+     * passo, atravessava ela de novo e voltava para o mundo.
+     */
+    @GameTest
+    public void theArrivalIsInsideTheRoomAndStandable(GameTestHelper helper) {
+        var bolsos = Pockets.level(helper.getLevel().getServer());
+        if (bolsos == null) {
+            helper.fail("o mundo dos bolsos devia abrir");
+            return;
+        }
+        // várias salas seguidas, que cada uma tem as portas dela viradas para um lado
+        for (int volta = 0; volta < 6; volta++) {
+            var destino = Pockets.open(helper.getLevel(), helper.absolutePos(new BlockPos(1, 2, 1)), true, null);
+            if (destino == null) {
+                helper.fail("o bolso devia abrir");
+                return;
+            }
+            BlockPos pé = destino.pos();
+            var caixa = new net.minecraft.world.phys.AABB(
+                    pé.getX() + 0.2, pé.getY(), pé.getZ() + 0.2,
+                    pé.getX() + 0.8, pé.getY() + 1.85, pé.getZ() + 0.8);
+            if (!bolsos.noCollision(caixa)) {
+                helper.fail("a caixa de quem chega tem de caber ali; não coube na volta " + volta);
+                return;
+            }
+            if (bolsos.getBlockState(pé.below()).getCollisionShape(bolsos, pé.below()).isEmpty()) {
+                helper.fail("e tem de ter chão firme embaixo; faltou na volta " + volta);
+                return;
+            }
+            // e não pode ser dentro de uma porta, que é onde ele nascia antes
+            if (bolsos.getBlockState(pé).getBlock() instanceof net.minecraft.world.level.block.DoorBlock) {
+                helper.fail("e não pode nascer dentro da porta");
+                return;
+            }
+        }
+        net.thaumcraft.world.DynamicDimensions.remove(helper.getLevel().getServer(), ShatteredRealms.PUBLIC_POCKETS);
+        helper.succeed();
+    }
+
     /** O bolso bravo é uma sala do original, com as portas dela, e todas menos a de volta por apontar. */
     @GameTest
     public void theWildPocketIsOneOfTheOriginalRooms(GameTestHelper helper) {

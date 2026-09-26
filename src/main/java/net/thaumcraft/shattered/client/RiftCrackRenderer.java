@@ -68,7 +68,7 @@ public final class RiftCrackRenderer {
     public static void submit(PoseStack pose, SubmitNodeCollector collector, int curva,
                               float giro, float tamanho, BlockPos onde) {
         RiftTendril.Tendril gavinha = RiftTendril.get(curva);
-        if (gavinha.triangles() == 0) return;
+        if (gavinha.limbs().isEmpty()) return;
 
         double medida = tamanho / SIZE_SCALE;
         if (medida <= 0.0001) return;
@@ -91,36 +91,40 @@ public final class RiftCrackRenderer {
 
         double cos = Math.cos(Math.toRadians(giro));
         double sin = Math.sin(Math.toRadians(giro));
-        float[] pontos = gavinha.points();
-        float[] luz = gavinha.shade();
         float comprido = gavinha.length();
 
-        collector.submitCustomGeometry(pose, FENDA, (m, v) -> {
-            for (int canto = 0; canto + 9 <= pontos.length; canto += 9) {
-                for (int i = 0; i < 4; i++) {
-                    // o quarto canto é o terceiro outra vez: é o triângulo posto num quadrado
-                    int passo = Math.min(i, 2);
-                    int qual = canto + passo * 3;
-                    int cor = tinge(luz[canto / 3 + passo]);
-                    vertex(m, v, pontos[qual], pontos[qual + 1], pontos[qual + 2], ondas, cos, sin, escala,
-                            comprido, abanoX, abanoY, abanoZ, cor);
+        // quantos braços já brotaram: é o tamanho da fenda que manda, e é isso que faz ela parecer que está se
+        // abrindo em vez de só inchando
+        int quantos = gavinha.visible(tamanho);
+        for (int qualBraço = 0; qualBraço < quantos; qualBraço++) {
+            RiftTendril.Limb braço = gavinha.limbs().get(qualBraço);
+            float[] pontos = braço.points();
+            float[] luz = braço.shade();
+            collector.submitCustomGeometry(pose, FENDA, (m, v) -> {
+                for (int canto = 0; canto + 9 <= pontos.length; canto += 9) {
+                    for (int i = 0; i < 4; i++) {
+                        // o quarto canto é o terceiro de novo: é o triângulo posto num quadrado
+                        int passo = Math.min(i, 2);
+                        int qual = canto + passo * 3;
+                        int cor = tinge(luz[canto / 3 + passo]);
+                        vertex(m, v, pontos[qual], pontos[qual + 1], pontos[qual + 2], ondas, cos, sin, escala,
+                                comprido, abanoX, abanoY, abanoZ, cor);
+                    }
                 }
-            }
-        });
-
-        stars(pose, collector, gavinha, tempo, ondas, cos, sin, escala, abanoX, abanoY, abanoZ);
+            });
+            stars(pose, collector, braço, comprido, tempo, ondas, cos, sin, escala, abanoX, abanoY, abanoZ);
+        }
     }
 
     /**
      * As estrelas presas na pele: quadradinhos brancos a piscar, cada um no seu compasso, levados pelo mesmo
      * esvoaçar do corpo — senão descolavam-se dele quando a gavinha ondula.
      */
-    private static void stars(PoseStack pose, SubmitNodeCollector collector, RiftTendril.Tendril gavinha,
-                              float tempo, double[] ondas, double cos, double sin, double escala,
+    private static void stars(PoseStack pose, SubmitNodeCollector collector, RiftTendril.Limb braço,
+                              float comprido, float tempo, double[] ondas, double cos, double sin, double escala,
                               double abanoX, double abanoY, double abanoZ) {
-        float[] estrelas = gavinha.stars();
+        float[] estrelas = braço.stars();
         if (estrelas.length == 0) return;
-        float comprido = gavinha.length();
         collector.submitCustomGeometry(pose, FENDA, (m, v) -> {
             for (int i = 0; i + 5 <= estrelas.length; i += 5) {
                 float px = estrelas[i], py = estrelas[i + 1], pz = estrelas[i + 2];
