@@ -62,6 +62,16 @@ public final class ShatteredBlocks {
             new net.minecraft.world.level.block.DoorBlock(BlockSetType.STONE,
                     properties.mapColor(MapColor.QUARTZ).strength(5.0f).sound(SoundType.STONE).noOcclusion()
                             .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+
+    /**
+     * A Placa de Marcação: o {@code BlockMarkingPlate} das Portas Dimensionais.
+     *
+     * <p>Um poste alto e fino de tecido, de dois blocos de altura, que serve para marcar um lugar. No original
+     * não faz mais nada — é enfeite, e é assim que vem para cá.
+     */
+    public static final Block MARKING_PLATE = register("marking_plate", properties ->
+            new net.thaumcraft.shattered.MarkingPlateBlock(properties.mapColor(MapColor.COLOR_BLACK)
+                    .strength(0.1f).sound(SoundType.WOOL).noOcclusion()));
     /** A fenda solta, que fica no ar. */
     public static final Block RIFT = register("rift", properties ->
             new FloatingRiftBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(-1.0f, 3600000.0f)

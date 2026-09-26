@@ -2413,3 +2413,19 @@ Com elas o ramo fecha a lista de coisas que se constroem. **Ficam ainda de fora*
 fendas (lá as fendas falam umas com as outras e chamam endermen), a Ferramenta de Ajuste de Fenda, a Placa de
 Marcação, o disco de música e as salas de esquema — no original os bolsos vêm de `.schem` guardados no jar, com
 ruínas, prisões e bibliotecas, e aqui a sala ainda é lisa.
+
+### Fatia da placa — e o que no original está por acabar
+
+A **Placa de Marcação** (`BlockMarkingPlate`): um poste alto e fino, de quase dois blocos, que serve para marcar um
+lugar. No original não faz mais nada — é enfeite —, e é assim que vem para cá.
+
+Com ela o ramo fica completo no que dá para pôr no mundo. **Duas coisas do original não vieram porque lá também
+não funcionam**, e isso só se vê lendo o código:
+
+- O **chamado dos endermen**: a fenda devia chamar um enderman de vez em quando, mas o
+  `TileEntityFloatingRift.spawnEndermen` só corre se o `updateNearestRift` disser que sim — e na 3.2.3 esse método
+  devolve `false` sempre. Nunca chama ninguém.
+- A **Ferramenta de Ajuste de Fenda**: ela abre uma tela, e a tela (`GUIRiftConfigScreen`) desenha o fundo e o
+  título e mais nada. Não há um controlo nela.
+
+Se algum dia quiser trazê-las, é escrever o que lá falta, e não portar — e isso é outra conversa.

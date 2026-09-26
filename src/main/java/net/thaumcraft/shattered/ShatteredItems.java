@@ -31,6 +31,7 @@ public final class ShatteredItems {
         item(FabricBlocks.UNRAVELLED);
         for (Block porta : ShatteredBlocks.doors()) door(porta);
         item(ShatteredBlocks.DIMENSIONAL_TRAPDOOR);
+        item(ShatteredBlocks.MARKING_PLATE);
         door(ShatteredBlocks.GOLD_DOOR);
         door(ShatteredBlocks.QUARTZ_DOOR);
     }

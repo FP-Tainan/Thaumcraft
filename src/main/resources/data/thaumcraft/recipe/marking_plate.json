@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "x",
+    "x",
+    "y"
+  ],
+  "key": {
+    "x": "thaumcraft:world_thread",
+    "y": "thaumcraft:stable_fabric"
+  },
+  "result": {
+    "id": "thaumcraft:marking_plate",
+    "count": 1
+  }
+}

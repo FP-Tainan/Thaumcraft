@@ -304,9 +304,9 @@ public class ShatteredGameTest {
         if (FabricBlocks.FABRIC.size() != 16) helper.fail("o tecido comum tem dezesseis cores");
         if (FabricBlocks.ANCIENT.size() != 16) helper.fail("e o antigo também");
         if (FabricBlocks.count() != 34) helper.fail("com o eterno e o desfiado, são trinta e quatro");
-        // mais o alçapão e as duas portas comuns, e onze coisas que não são bloco: os dois fios, as três marcas
+        // mais o alçapão, a placa e as duas portas comuns, e onze coisas que não são bloco: os dois fios, as três marcas
         // de fenda, a lâmina, o ferro e as quatro peças de armadura
-        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size() + 3 + 11) {
+        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size() + 4 + 11) {
             helper.fail("cada bloco tem o seu item; achei " + ShatteredItems.count());
         }
         if (!FabricBlocks.isFabric(FabricBlocks.FABRIC.get(DyeColor.BLACK))) helper.fail("o preto é tecido");
