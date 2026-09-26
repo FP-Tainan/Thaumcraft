@@ -24,6 +24,7 @@ public final class Occulta {
         OccultaBlocks.init();
         OccultaItems.init();
         OccultaAspects.init();
+        OccultaGrassSeeds.init();
         Thaumcraft.LOGGER.info("Ars Occulta: {} coisas", OccultaItems.count());
     }
 }

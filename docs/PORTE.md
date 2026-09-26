@@ -2936,11 +2936,25 @@ isso a conta é em código, como no original.
 **Na mandrágora-de-mina e no alho a semente e a colheita são o mesmo item.** No original o item de colheita delas
 é nulo, e o mod copia o de semente — daí o bulbo ser o que se planta e o que se colhe, e o alho também.
 
-**Uma coisa que é do porte:** os aspectos. O Witchery não era addon de Thaumcraft e não anotava aspecto em nada, e
-como nada do ramo sai de receita, nada seria deduzido — as plantas ficariam sem leitura no thaumômetro. O
-`OccultaAspects` anota as quatorze coisas no tom do `ConfigAspects` do original: a semente é *herba*, a colheita é
-*messis*, e cada uma leva o que a lore do Witchery lhe dá — *venenum* na beladona, *gelum* na campainha-de-neve,
-*cognitio* na mandrágora-de-mina.
+**As primeiras sementes vêm do mato.** É o `MinecraftForge.addGrassSeed` do `Witchery.load`: seis das oito entram
+na lista de que o mato tira a semente que larga, com peso — cinco para a mandrágora, quatro para a beladona, três
+para a alcachofra, dois para a campainha-de-neve e um para a acônito e para o alho. Sem isso não há por onde
+começar o ramo, porque nenhuma delas nasce no mundo nem sai de receita.
+
+*Desvio declarado:* no 1.7.10 a lista era uma só, e o trigo do jogo disputava o mesmo sorteio (dez de vinte e
+seis). Aqui não se mexe na tabela do trigo: o ramo põe um sorteio à parte, com o mesmo um oitavo, os mesmos pesos
+e uma entrada vazia de peso dez no lugar do trigo. As seis saem com a chance exata do original; o trigo segue
+como o jogo de hoje quer.
+
+**E os aspectos são do próprio Witchery.** O mod trazia um `ModHookThaumcraft4` de mil e seiscentas linhas que
+anotava cada coisa dele nos aspectos do Thaumcraft 4 — era assim que os dois se davam em 2014. É de lá que saem
+os números do `OccultaAspects`, item por item e planta por planta (a flor de beladona é *venenum* 4 e *mortuus* 4;
+a raiz de mandrágora é *herba* 2, *humanus* 1 e *terra* 1; o bulbo da mindrake é *aqua* 1 e *permutatio* 1, que é
+o que o original diz mesmo sendo estranho).
+
+*Duas coisas são do porte, e ficam declaradas:* a acônito e o alho, que aquele arquivo não anotava — nem semente,
+nem colheita, nem a planta. Vão no tom do resto: veneno e fera na acônito, que é o que ela faz aos lobisomens;
+vida e morto-vivo no alho, que é o que ele faz aos vampiros.
 
 **Do original fica de fora, por agora,** a mandrágora que anda e grita: é criatura, e vem na fatia dos bichos do
 ramo. Enquanto ela não chega, a que escapa apenas não deixa nada no chão.

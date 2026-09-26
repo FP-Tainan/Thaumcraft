@@ -16,6 +16,7 @@ import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.api.aspects.ObjectAspects;
 import net.thaumcraft.occulta.OccultaBlocks;
 import net.thaumcraft.occulta.OccultaCrops;
+import net.thaumcraft.occulta.OccultaGrassSeeds;
 import net.thaumcraft.occulta.OccultaItems;
 import net.thaumcraft.occulta.WitchCropBlock;
 
@@ -297,18 +298,62 @@ public class OccultaCropsGameTest {
         helper.succeed();
     }
 
-    /** E o thaumômetro tem o que ler nelas — que é do porte, porque o original não anotava aspecto em nada. */
+    /** E o thaumômetro tem o que ler nelas: os números do {@code ModHookThaumcraft4} do próprio Witchery. */
     @GameTest
     public void theHarvestsHaveTheirAspects(GameTestHelper helper) {
         var raiz = ObjectAspects.of(OccultaItems.MANDRAKE_ROOT);
-        if (raiz.getAmount(Aspects.MAGIC) < 2 || raiz.getAmount(Aspects.SOUL) < 2) {
-            helper.fail("a raiz de mandrágora é praecantatio e spiritus; veio " + raiz);
+        if (raiz.getAmount(Aspects.PLANT) != 2 || raiz.getAmount(Aspects.MAN) != 1
+                || raiz.getAmount(Aspects.EARTH) != 1) {
+            helper.fail("a raiz de mandrágora é herba 2, humanus 1 e terra 1; veio " + raiz);
         }
         var agulha = ObjectAspects.of(OccultaItems.ICY_NEEDLE);
-        if (agulha.getAmount(Aspects.COLD) < 3) helper.fail("a agulha de gelo é gelum; veio " + agulha);
+        if (agulha.getAmount(Aspects.COLD) != 4) helper.fail("a agulha de gelo é gelum 4; veio " + agulha);
+        var flor = ObjectAspects.of(OccultaItems.BELLADONNA_FLOWER);
+        if (flor.getAmount(Aspects.POISON) != 4 || flor.getAmount(Aspects.DEATH) != 4) {
+            helper.fail("a flor de beladona é venenum 4 e mortuus 4; veio " + flor);
+        }
         var semente = ObjectAspects.of(OccultaItems.BELLADONNA_SEEDS);
-        if (semente.getAmount(Aspects.PLANT) < 1 || semente.getAmount(Aspects.POISON) < 1) {
-            helper.fail("a semente de beladona é herba e venenum; veio " + semente);
+        if (semente.getAmount(Aspects.PLANT) != 1 || semente.getAmount(Aspects.POISON) != 1) {
+            helper.fail("a semente de beladona é herba 1 e venenum 1; veio " + semente);
+        }
+        // e a planta no chão, que não vira item nenhum
+        var planta = ObjectAspects.ofBlock(OccultaBlocks.BELLADONNA);
+        if (planta == null || planta.getAmount(Aspects.CROP) != 1) {
+            helper.fail("a beladona plantada é messis 1 também; veio " + planta);
+        }
+        helper.succeed();
+    }
+
+    /** O mato larga as sementes do ofício, com os pesos do {@code addGrassSeed} do original. */
+    @GameTest
+    public void theGrassGivesTheFirstSeeds(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var tabela = level.getServer().reloadableRegistries()
+                .getLootTable(Blocks.SHORT_GRASS.getLootTable().orElseThrow());
+        var params = new net.minecraft.world.level.storage.loot.LootParams.Builder(level)
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN,
+                        helper.absoluteVec(net.minecraft.world.phys.Vec3.ZERO))
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_STATE,
+                        Blocks.SHORT_GRASS.defaultBlockState())
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.TOOL,
+                        ItemStack.EMPTY)
+                .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.BLOCK);
+        int voltas = 4000;
+        int sementes = 0;
+        int mandrágoras = 0;
+        for (int volta = 0; volta < voltas; volta++) {
+            for (ItemStack caiu : tabela.getRandomItems(params, volta)) {
+                if (caiu.is(OccultaItems.MANDRAKE_SEEDS)) mandrágoras++;
+                if (OccultaItems.shown().contains(caiu.getItem())) sementes++;
+            }
+        }
+        if (sementes == 0) helper.fail("o mato devia largar sementes do ofício");
+        int pesos = OccultaGrassSeeds.WEIGHTS.values().stream().mapToInt(Integer::intValue).sum()
+                + OccultaGrassSeeds.WHEAT_WEIGHT;
+        double esperado = OccultaGrassSeeds.CHANCE * 5.0 / pesos;
+        double saiu = mandrágoras / (double) voltas;
+        if (Math.abs(saiu - esperado) > 0.015) {
+            helper.fail("a mandrágora devia sair em " + esperado + " dos matos; saiu em " + saiu);
         }
         helper.succeed();
     }
