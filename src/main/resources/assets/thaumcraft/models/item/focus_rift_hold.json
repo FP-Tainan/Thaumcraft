@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "thaumcraft:item/rift_remover"
+    "layer0": "thaumcraft:item/focus_rift_hold"
   }
 }

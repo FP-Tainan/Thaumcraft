@@ -2698,3 +2698,24 @@ cada quatrocentos e vinte pedaços, com o lajedo já comido pelo tempo.
   forma nenhuma. É a única parte disto que olha para quem está do outro lado do ecrã.
 
 **Guarda:** `theAncientDoorIsOnlyThereForWhoSeesIt` — sem desenho, sem corpo, e fechada a quem não a vê.
+
+## Três focos, e menos três ferros no cinto (2026-09-26)
+
+Quem manda: *acho que estabilizar a fenda, fechar a fenda, abrir fenda deveriam ser focus de varinha e não
+itens*. Tem razão, e a razão é do próprio Thaumcraft: tudo o mais que um thaumaturgo faz ao mundo faz-se com a
+varinha, o vis está na varinha, e um rasgão no Véu não é trabalho de ferro como um nó também não é.
+
+Saíram o **Firma-Fendas** e o **Fecha-Fendas** de mão. Entraram três focos: **Rasgar**, que abre uma fenda onde a
+varinha aponta; **Firmar**, que prende a apontada; e **Cerzir**, que a fecha — e que numa porta faz a porta
+esquecer para onde levava. Entram pelo `Focuses.register`, que é a porta que o mod já tinha para os focos de um
+ramo de fora.
+
+A **Assinatura de Fenda** fica. Ela não abre nem fecha nada: o que ela faz é *ligar dois lugares*, e isso é outro
+ofício.
+
+**Uma coisa que custou uma volta de suíte:** uma varinha só guarda **vis primordial**. O Vazio, que seria o
+aspecto certo para tudo isto, é composto — uma varinha nunca tem nenhum, e os três focos não disparavam. Os custos
+passam a ser em primordiais; o Vazio fica para a essência da infusão que faz cada foco, onde ele cabe.
+
+**Guardas:** `theOpenFocusTearsARift`, `theHoldFocusHoldsARift` (e a segunda vez não faz nada) e
+`theCloseFocusClosesARift`, os três com varinha de verdade e o foco preso nela.

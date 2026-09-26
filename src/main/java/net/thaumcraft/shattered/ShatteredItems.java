@@ -50,18 +50,20 @@ public final class ShatteredItems {
     public static final Item STABILIZED_RIFT_SIGNATURE = tool("stabilized_rift_signature",
             properties -> new RiftSignatureItem(properties.stacksTo(1), true));
 
-    /** E o Fecha-Fendas. */
-    public static final Item RIFT_REMOVER = tool("rift_remover",
-            properties -> new RiftRemoverItem(properties.stacksTo(1).durability(32)));
-
 
     /** A Lâmina de Fenda, que corta e salta. */
     public static final Item RIFT_BLADE = tool("rift_blade", properties ->
             new RiftBladeItem(properties.sword(ShatteredMaterials.RIFT_BLADE, 3.0f, -2.4f)));
 
-    /** O Firma-Fendas, que prende uma fenda solta. */
-    public static final Item RIFT_STABILIZER = tool("rift_stabilizer",
-            properties -> new RiftStabilizerItem(properties.stacksTo(1).durability(6)));
+    /**
+     * Os três focos de fenda: abrir, firmar e fechar.
+     *
+     * <p>Tomaram o lugar do Firma-Fendas e do Fecha-Fendas de mão, que saíram — num mod de Thaumcraft isto é
+     * trabalho de varinha, e não de ferro no cinto.
+     */
+    public static final Item FOCUS_RIFT_OPEN = foco("focus_rift_open", "rift_open", ShatteredFoci.COST_OPEN);
+    public static final Item FOCUS_RIFT_HOLD = foco("focus_rift_hold", "rift_hold", ShatteredFoci.COST_HOLD);
+    public static final Item FOCUS_RIFT_CLOSE = foco("focus_rift_close", "rift_close", ShatteredFoci.COST_CLOSE);
 
     /** E as quatro peças da armadura de Fio do Mundo Tecido. */
     public static final Item WOVEN_HELMET = armor("woven_world_thread_helmet",
@@ -98,6 +100,14 @@ public final class ShatteredItems {
                         : new net.minecraft.world.item.DoubleHighBlockItem(bloco, properties)));
     }
 
+
+    /** Um foco de varinha do ramo, que entra também na lista de focos do mod. */
+    private static Item foco(String nome, String tipo, net.thaumcraft.api.aspects.AspectList custo) {
+        Item feito = tool(nome, properties -> new net.thaumcraft.item.FocusItem(
+                properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), tipo, custo, false));
+        net.thaumcraft.registry.TCItems.FOCI.put(tipo, feito);
+        return feito;
+    }
 
     /** Uma peça da armadura do ramo. */
     private static Item armor(String nome, net.minecraft.world.item.equipment.ArmorType tipo) {

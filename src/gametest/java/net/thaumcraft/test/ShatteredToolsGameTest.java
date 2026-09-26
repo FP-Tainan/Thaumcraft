@@ -16,24 +16,74 @@ import net.thaumcraft.shattered.ShatteredMaterials;
 
 /** As ferramentas dos Reinos Fragmentados: o Firma-Fendas, a Lâmina de Fenda e a armadura de Fio do Mundo. */
 public class ShatteredToolsGameTest {
+    /** Uma varinha com o foco pedido preso e vis a mais do que o preciso. */
+    private static ItemStack varinha(String foco) {
+        ItemStack varinha = new ItemStack(net.thaumcraft.registry.TCItems.WAND);
+        varinha.set(net.thaumcraft.registry.TCComponents.WAND_FOCUS, foco);
+        var melhorias = new java.util.ArrayList<Short>();
+        while (melhorias.size() < 5) melhorias.add((short) -1);
+        varinha.set(net.thaumcraft.registry.TCComponents.FOCUS_UPGRADES, melhorias);
+        var vis = new net.thaumcraft.api.aspects.AspectList();
+        for (var primal : net.thaumcraft.api.aspects.Aspects.primals()) vis.add(primal, 2500);
+        varinha.set(net.thaumcraft.registry.TCComponents.WAND_VIS, vis);
+        return varinha;
+    }
+
+    /** Aponta a varinha à casa dada e dispara o foco dela. */
+    private static boolean aponta(GameTestHelper helper, net.minecraft.server.level.ServerPlayer quem,
+                                  ItemStack varinha, BlockPos alvo) {
+        var olho = helper.absoluteVec(new Vec3(1.5, 2.0, 1.5));
+        quem.snapTo(olho.x, olho.y, olho.z, 0.0f, 0.0f);
+        quem.getInventory().setItem(0, varinha);
+        quem.getInventory().setSelectedSlot(0);
+        return net.thaumcraft.item.Focuses.tick(helper.getLevel(), quem, varinha,
+                net.thaumcraft.item.Focuses.on(varinha));
+    }
+
+    /** O Foco de Firmar Fenda prende a fenda apontada, e na segunda vez não faz nada. */
     @GameTest
-    public void theStabilizerHoldsARift(GameTestHelper helper) {
-        BlockPos onde = new BlockPos(1, 2, 1);
+    public void theHoldFocusHoldsARift(GameTestHelper helper) {
+        // o olho de quem joga fica a um bloco e meio do chão: a fenda tem de estar à altura dele
+        BlockPos onde = new BlockPos(1, 3, 4);
         helper.setBlock(onde, ShatteredBlocks.RIFT);
         var fenda = helper.getBlockEntity(onde, RiftBlockEntity.class);
         if (fenda.stabilized()) helper.fail("a fenda nasce solta");
 
-        var player = helper.makeMockPlayer(GameType.SURVIVAL);
-        ItemStack ferro = new ItemStack(ShatteredItems.RIFT_STABILIZER);
-        player.setItemInHand(InteractionHand.MAIN_HAND, ferro);
-        usar(helper, player, ferro, onde);
+        var quem = helper.makeMockServerPlayerInLevel();
+        ItemStack varinha = varinha("rift_hold");
+        if (!aponta(helper, quem, varinha, onde)) helper.fail("o foco devia pegar na fenda apontada");
+        if (!fenda.stabilized()) helper.fail("e prendê-la");
 
-        if (!fenda.stabilized()) helper.fail("o Firma-Fendas prende a fenda");
-        if (ferro.getDamageValue() != 1) helper.fail("e gasta um uso: " + ferro.getDamageValue());
+        if (aponta(helper, quem, varinha, onde)) helper.fail("e a segunda vez não faz nada");
+        helper.succeed();
+    }
 
-        // a segunda vez não faz nada, e não gasta
-        usar(helper, player, ferro, onde);
-        if (ferro.getDamageValue() != 1) helper.fail("e não gasta de novo numa fenda já presa");
+    /** O Foco de Abrir Fenda rasga uma onde a varinha aponta, e ela sai à vista de quem a rasgou. */
+    @GameTest
+    public void theOpenFocusTearsARift(GameTestHelper helper) {
+        // uma parede à altura dos olhos, para o foco ter onde bater
+        helper.setBlock(new BlockPos(1, 3, 5), net.minecraft.world.level.block.Blocks.STONE);
+        var quem = helper.makeMockServerPlayerInLevel();
+        ItemStack varinha = varinha("rift_open");
+        if (!aponta(helper, quem, varinha, BlockPos.ZERO)) helper.fail("o foco devia rasgar a fenda");
+
+        BlockPos onde = new BlockPos(1, 3, 4);
+        helper.assertBlockPresent(ShatteredBlocks.RIFT, onde);
+        if (helper.getBlockEntity(onde, RiftBlockEntity.class).natural()) {
+            helper.fail("quem a rasgou sabe onde a rasgou: esta não pede os óculos");
+        }
+        helper.succeed();
+    }
+
+    /** E o Foco de Fechar Fenda fecha-a. */
+    @GameTest
+    public void theCloseFocusClosesARift(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(1, 3, 4);
+        helper.setBlock(onde, ShatteredBlocks.RIFT);
+        var quem = helper.makeMockServerPlayerInLevel();
+        ItemStack varinha = varinha("rift_close");
+        if (!aponta(helper, quem, varinha, onde)) helper.fail("o foco devia pegar na fenda apontada");
+        helper.assertBlockNotPresent(ShatteredBlocks.RIFT, onde);
         helper.succeed();
     }
 
@@ -76,33 +126,6 @@ public class ShatteredToolsGameTest {
         helper.succeed();
     }
 
-    /**
-     * E o Firma-Fendas e o Fecha-Fendas acham-na do mesmo jeito, sem bloco nenhum por trás.
-     *
-     * <p>É o que faz a fatia da porta funcionar: a fenda não tem corpo, e sem esta procura não havia como lhe
-     * carregar em cima para a prender.
-     */
-    @GameTest
-    public void theHandToolsFindTheBodilessRift(GameTestHelper helper) {
-        var player = helper.makeMockPlayer(GameType.SURVIVAL);
-        Vec3 onde = helper.absoluteVec(new Vec3(1.5, 2.0, 1.5));
-        player.snapTo(onde.x, onde.y, onde.z, 0.0f, 0.0f);
-        BlockPos fenda = new BlockPos(1, 3, 4);
-        helper.setBlock(fenda, ShatteredBlocks.RIFT);
-
-        ItemStack ferro = new ItemStack(ShatteredItems.RIFT_STABILIZER);
-        player.setItemInHand(InteractionHand.MAIN_HAND, ferro);
-        ferro.getItem().use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
-        if (!helper.getBlockEntity(fenda, RiftBlockEntity.class).stabilized()) {
-            helper.fail("o Firma-Fendas havia de achar a fenda apontada");
-        }
-
-        ItemStack fecho = new ItemStack(ShatteredItems.RIFT_REMOVER);
-        player.setItemInHand(InteractionHand.MAIN_HAND, fecho);
-        fecho.getItem().use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
-        helper.assertBlockNotPresent(ShatteredBlocks.RIFT, fenda);
-        helper.succeed();
-    }
 
     /** Os números da armadura são os do original, e cada peça conserta-se com Fio do Mundo. */
     @GameTest

@@ -54,6 +54,7 @@ public final class ShatteredRealms {
                 Thaumcraft.id("textures/misc/r_shattered.png"),
                 Thaumcraft.id("textures/gui/gui_shattered_researchback.png"));
         RiftWalkers.init();
+        ShatteredFoci.init();
         ShatteredTable.research();
         net.thaumcraft.api.ThaumcraftApi.onSetup(ShatteredTable::recipes);
         Thaumcraft.LOGGER.info("Reinos Fragmentados: {} tecidos, {} coisas", FabricBlocks.count(), ShatteredItems.count());

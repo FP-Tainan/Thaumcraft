@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "thaumcraft:item/rift_stabilizer"
+    "model": "thaumcraft:item/focus_rift_hold"
   }
 }

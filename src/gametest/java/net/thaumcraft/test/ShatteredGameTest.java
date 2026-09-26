@@ -204,17 +204,6 @@ public class ShatteredGameTest {
         helper.succeed();
     }
 
-    /** O Fecha-Fendas fecha a fenda solta. */
-    @GameTest
-    public void theRemoverClosesTheRift(GameTestHelper helper) {
-        BlockPos onde = new BlockPos(2, 2, 2);
-        helper.setBlock(onde, net.thaumcraft.shattered.ShatteredBlocks.RIFT);
-        var quem = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
-        usa(helper, quem, new ItemStack(ShatteredItems.RIFT_REMOVER), onde);
-        helper.assertBlockNotPresent(net.thaumcraft.shattered.ShatteredBlocks.RIFT, onde);
-        helper.succeed();
-    }
-
     private static void usa(GameTestHelper helper, net.minecraft.world.entity.player.Player quem,
                             ItemStack coisa, BlockPos onde) {
         var alvo = new net.minecraft.world.phys.BlockHitResult(
@@ -304,9 +293,9 @@ public class ShatteredGameTest {
         if (FabricBlocks.FABRIC.size() != 16) helper.fail("o tecido comum tem dezesseis cores");
         if (FabricBlocks.ANCIENT.size() != 16) helper.fail("e o antigo também");
         if (FabricBlocks.count() != 34) helper.fail("com o eterno e o desfiado, são trinta e quatro");
-        // mais o alçapão, a placa e as duas portas comuns, e doze coisas que não são bloco: os dois fios, as três marcas
-        // de fenda, a lâmina, o ferro, as quatro peças de armadura e os Óculos do Véu
-        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size() + 4 + 12) {
+        // mais o alçapão, a placa e as duas portas comuns, e treze coisas que não são bloco: os dois fios, as três
+        // marcas de fenda, a lâmina, os três focos, as quatro peças de armadura e os Óculos do Véu
+        if (ShatteredItems.count() != FabricBlocks.count() + net.thaumcraft.shattered.ShatteredBlocks.doors().size() + 4 + 13) {
             helper.fail("cada bloco tem o seu item; achei " + ShatteredItems.count());
         }
         if (!FabricBlocks.isFabric(FabricBlocks.FABRIC.get(DyeColor.BLACK))) helper.fail("o preto é tecido");

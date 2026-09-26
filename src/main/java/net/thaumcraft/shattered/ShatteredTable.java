@@ -61,8 +61,17 @@ public final class ShatteredTable {
                 .icon(() -> new ItemStack(ShatteredItems.RIFT_SIGNATURE))
                 .parents("SR_WORLD_THREAD")
                 .pages(Page.text("tc.research_page.SR_SIGNATURE.1"),
-                        Page.crafting("SRRiftSignature"), Page.crafting("SRStabilizedRiftSignature"),
-                        Page.crafting("SRRiftRemover"))
+                        Page.crafting("SRRiftSignature"), Page.crafting("SRStabilizedRiftSignature"))
+                .register();
+
+        // e os três focos, que é o que a varinha passa a fazer às fendas
+        ThaumcraftApi.research("SR_FOCI", ShatteredRealms.CATEGORY)
+                .aspects(new AspectList().add(Aspects.VOID, 5).add(Aspects.MAGIC, 4).add(Aspects.ORDER, 4))
+                .at(-4, -2)
+                .icon(() -> new ItemStack(ShatteredItems.FOCUS_RIFT_HOLD))
+                .parents("SR_SIGNATURE")
+                .pages(Page.text("tc.research_page.SR_FOCI.1"), Page.crafting("SRFocusRiftOpen"),
+                        Page.crafting("SRFocusRiftHold"), Page.crafting("SRFocusRiftClose"))
                 .register();
 
         // quarto: atravessar — as portas
@@ -136,10 +145,29 @@ public final class ShatteredTable {
                         List.<ItemStack>of(), List.of(new ItemStack(ShatteredItems.RIFT_SIGNATURE)), List.<ItemStack>of(),
                         List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)), List.<ItemStack>of(), List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)))));
 
-        ThaumcraftApi.bookRecipe("SRRiftRemover", ThaumcraftApi.crafting(
-                () -> new ItemStack(ShatteredItems.RIFT_REMOVER), 3, 3, List.of(
-                        List.of(new ItemStack(Items.GOLD_INGOT)), List.<ItemStack>of(), List.of(new ItemStack(Items.GOLD_INGOT)),
-                        List.<ItemStack>of(), List.of(new ItemStack(ShatteredItems.STABLE_FABRIC)), List.<ItemStack>of(),
-                        List.of(new ItemStack(Items.GOLD_INGOT)), List.<ItemStack>of(), List.of(new ItemStack(Items.GOLD_INGOT)))));
+        // os três focos de fenda, cada um por infusão à volta de um foco em branco
+        foco("SRFocusRiftOpen", "SR_FOCI", ShatteredItems.FOCUS_RIFT_OPEN, 4,
+                new AspectList().add(Aspects.VOID, 30).add(Aspects.ENTROPY, 20).add(Aspects.TRAVEL, 15));
+        foco("SRFocusRiftHold", "SR_FOCI", ShatteredItems.FOCUS_RIFT_HOLD, 3,
+                new AspectList().add(Aspects.VOID, 24).add(Aspects.ORDER, 24).add(Aspects.CRYSTAL, 12));
+        foco("SRFocusRiftClose", "SR_FOCI", ShatteredItems.FOCUS_RIFT_CLOSE, 3,
+                new AspectList().add(Aspects.VOID, 24).add(Aspects.ORDER, 16).add(Aspects.EXCHANGE, 12));
+    }
+
+    /**
+     * Um foco de fenda: infunde-se à volta de um foco em branco, com Tecido Estável e Fio do Mundo.
+     *
+     * <p>São os três iguais no feitio — o que muda é o custo de essência e o quanto a infusão treme.
+     */
+    private static void foco(String chave, String pesquisa, net.minecraft.world.item.Item feito,
+                             int treme, AspectList essência) {
+        ThaumcraftApi.bookRecipe(chave, ThaumcraftApi.infusion(pesquisa, new ItemStack(feito), treme, essência,
+                net.minecraft.world.item.crafting.Ingredient.of(Items.QUARTZ),
+                List.of(net.minecraft.world.item.crafting.Ingredient.of(ShatteredItems.STABLE_FABRIC),
+                        net.minecraft.world.item.crafting.Ingredient.of(ShatteredItems.WORLD_THREAD),
+                        net.minecraft.world.item.crafting.Ingredient.of(ShatteredItems.STABLE_FABRIC),
+                        net.minecraft.world.item.crafting.Ingredient.of(ShatteredItems.WORLD_THREAD),
+                        net.minecraft.world.item.crafting.Ingredient.of(Items.ENDER_PEARL),
+                        net.minecraft.world.item.crafting.Ingredient.of(ShatteredItems.WORLD_THREAD))));
     }
 }
