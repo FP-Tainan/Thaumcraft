@@ -2511,7 +2511,7 @@ fenda da Assinatura não, os óculos abrem o olho (e os da Descoberta sozinhos n
 revelar os nós. O `RiftWorldClientTest` tira três retratos da mesma fenda: sem óculos (nada), com óculos (o
 rasgão e as fagulhas) e a nossa sem óculos (à vista).
 
-## O novo feitio da fenda (2026-09-26)
+## O feitio da fenda, segunda volta (2026-09-26)
 
 Também a pedido: as fendas deixam de ser o rabisco de dragão do original e passam a ser **um talho alto e preto**,
 de beiras roídas, afilado nas duas pontas, com uma gavinha ou outra a sair-lhe do lado e fagulhas de estrela a
@@ -2604,3 +2604,24 @@ A Lâmina de Fenda já resolvia isto à mão, percorrendo a linha de visão de u
 poderem apontar ao ar, sem bloco por trás. Guarda: `theHandToolsFindTheBodilessRift`.
 
 Lá isto não aparecia porque a fenda era só de enfeite; aqui é dela que sai a porta.
+
+## A fenda como quem manda a quis: uma gavinha (2026-09-26)
+
+O talho chato não era o que ele tinha pedido. A foto que mostrou é outra coisa: **uma gavinha comprida de três
+dimensões**, redonda, gorda em baixo e a afinar até a ponta se perder, com um S ao meio, preta de céu sem lua e
+com estrelas presas na pele.
+
+O `RiftTendril` monta-a assim: uma espinha que sobe virando devagar e a meio caminho dobra o virar para o outro
+lado — é isso que lhe dá o S em vez de um gancho —, anéis de oito lados à volta dela, e a grossura a cair de uma
+raiz no pé até zero na ponta. Cada fenda tem a sua, do número que sorteou ao nascer.
+
+**Duas coisas que o desenho pedia e não havia:**
+
+* **Luz.** O desenho é de cor só, sem folha e sem normais, e por isso um tubo lia-se como uma fita chata. A
+  gavinha traz agora um número de luz por canto, feito quando ela se monta: quem olha para a luz fica claro,
+  quem lhe dá as costas fica escuro. É o que lhe dá o redondo.
+* **Um esvoaçar que respeite o pé.** O original esvoaça seis décimos por igual em todo o rabisco; numa gavinha
+  isso não serve, porque o pé dela está preso ao mundo. Aqui o esvoaçar cresce com o quadrado da altura do canto:
+  o pé fica quieto e a ponta ondula.
+
+O `RiftTear` chato ficou no histórico, ao lado do `RiftCurves` que já lá estava.

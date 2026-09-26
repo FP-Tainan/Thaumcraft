@@ -150,7 +150,8 @@ public class DimensionalPortalRenderer
         if (!state.door) {
             if (state.yaw >= 0.0f) {
                 pose.pushPose();
-                pose.translate(0.5f, 1.5f, 0.5f);
+                // a gavinha nasce do pé da casa e sobe: é assim que ela se vê na foto que quem manda mostrou
+                pose.translate(0.5f, 0.0f, 0.5f);
                 RiftCrackRenderer.submit(pose, collector, state.curve, state.yaw, state.size, state.onde);
                 pose.popPose();
             }
