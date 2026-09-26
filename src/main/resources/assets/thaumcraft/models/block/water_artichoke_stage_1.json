@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "thaumcraft:block/water_artichoke_stage_1"
+  }
+}

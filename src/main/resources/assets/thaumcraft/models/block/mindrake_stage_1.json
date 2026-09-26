@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "thaumcraft:block/mindrake_stage_1"
+  }
+}

@@ -27,6 +27,7 @@ public class TabGameTest {
             if (net.thaumcraft.forbidden.ForbiddenItems.shown().contains(item)) continue;
             if (net.thaumcraft.mortuorum.MortuorumItems.shown().contains(item)) continue;
             if (net.thaumcraft.shattered.ShatteredItems.shown().contains(item)) continue;
+            if (net.thaumcraft.occulta.OccultaItems.shown().contains(item)) continue;
             ours++;
         }
         if (ours < 60) helper.fail("o mod devia ter mais itens que isso: " + ours);
@@ -83,6 +84,18 @@ public class TabGameTest {
         var shown = net.thaumcraft.maleficium.MaleficiumItems.shown();
         if (shown.size() != net.thaumcraft.maleficium.MaleficiumItems.count()) {
             helper.fail("a aba do Maleficium mostra " + shown.size() + " de " + net.thaumcraft.maleficium.MaleficiumItems.count());
+        }
+        helper.succeed();
+    }
+
+    /** E o Ars Occulta tem a dele. */
+    @GameTest
+    public void theOccultaHasItsOwnTab(GameTestHelper helper) {
+        var tab = BuiltInRegistries.CREATIVE_MODE_TAB.getValue(net.thaumcraft.occulta.OccultaItems.TAB_KEY);
+        if (tab == null) helper.fail("faltou a aba do Ars Occulta");
+        var shown = net.thaumcraft.occulta.OccultaItems.shown();
+        if (shown.size() != net.thaumcraft.occulta.OccultaItems.count()) {
+            helper.fail("a aba do ramo devia mostrar tudo o que ele registra");
         }
         helper.succeed();
     }

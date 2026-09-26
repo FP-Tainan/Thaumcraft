@@ -2626,7 +2626,7 @@ raiz no pé até zero na ponta. Cada fenda tem a sua, do número que sorteou ao 
 
 O `RiftTear` chato ficou no histórico, ao lado do `RiftCurves` que já lá estava.
 
-## As salas do original, todas as cento e dezasseis (2026-09-26)
+## As salas do original, todas as cento e dezesseis (2026-09-26)
 
 As salas com tema feitas em código eram um remendo enquanto não havia leitor de esquemas. Quem manda disse o que
 elas eram: *o Dimensional Doors original era um mod de dungeon puzzle, onde cada sala aleatória era grande e tinha
@@ -2891,3 +2891,65 @@ olhavam uma vez, num tique escolhido a dedo, uma coisa que o jogo não promete p
   quando as oito falhavam. Passou para mil e duzentos.
 * O `keyRoom` — quem nasce junto com a sala só entra na lista do mundo nos tiques seguintes, e não num número
   fixo deles. Passou a olhar a cada tique até aparecerem, em vez de olhar no oitavo.
+
+## O Ars Occulta (2026-09-26)
+
+O sexto ramo de fora: o **Witchery 0.24.1**, de Emoniph (803 classes), que na lore de quem joga se chama
+**Ars Occulta** — o ofício das bruxas. O código mora em `net.thaumcraft.occulta`, as figuras e os textos no
+espaço de nome `thaumcraft`, e as chaves de pesquisa vão levar o prefixo `AO_`.
+
+É o maior dos ramos de fora, e por isso vai por fatias: as plantas, o caldeirão, o altar, os rituais, os
+espíritos e as artes de coven. Esta é a primeira.
+
+### Fatia 1 — as oito plantas do ofício
+
+O `BlockWitchCrop` do original, que cresce como o trigo mas com cinco coisas que são dele. Cada uma virou um
+campo do `WitchCropBlock.Traits`, e é o que separa as oito:
+
+| planta | idades | onde | farinha de osso | o que tem de seu |
+| --- | --- | --- | --- | --- |
+| beladona | 4 | terra | duas ou mais | dá a Flor de Beladona |
+| mandrágora | 4 | terra | duas ou mais | escapa de quem a arranca de dia |
+| alcachofra-d'água | 4 | **água** | duas ou mais | planta-se sobre a água parada |
+| campainha-de-neve | 4 | terra | duas ou mais | dá bola de neve e, uma vez em cinco, Agulha de Gelo |
+| losna | 4 | terra | duas ou mais | feita, **sobe outra em cima dela** |
+| mandrágora-de-mina | 4 | terra | **uma só** | cresce uma vez e meia mais devagar |
+| acônito | **7** | terra | **uma só** | as sete idades |
+| alho | **5** | terra | duas ou mais | é semente de si mesmo |
+
+**O chão delas é mais largo que o do trigo:** grama, terra, terra arada, a própria planta e a losna — esta última
+porque é sobre losna que a losna sobe. A alcachofra é a única que troca tudo isso por água, e a semente dela é um
+`PlaceOnWaterBlockItem`, que é o que o jogo de hoje tem no lugar do `waterPlant` do `ItemWitchSeeds`.
+
+**Nenhuma recusa farinha de osso.** O `canFertilize` do original não fecha a porta: ele diz de quanto o pulo é —
+de duas idades até o fim nas que aceitam, e de uma só na mandrágora-de-mina e na acônito. Foi o que ficou.
+
+**O que cai não dava tabela de saque** e está no `OccultaCrops`: planta verde larga uma semente; planta feita faz
+**três tentativas de semente** (mais uma por nível de Fortuna), cada uma com oito chances em quinze, e larga a
+colheita. Fora dessa conta ficam duas: a mandrágora-de-mina, que dá um bulbo sempre e o segundo uma vez em
+quatro, e a mandrágora — de dia ela escapa nove vezes em dez, de noite uma em dez. É o que obriga quem joga a
+colhê-la à noite, e é o número do original ao contrário, porque lá a conta diz quando ela *não* escapa.
+
+Uma tabela de dados não sabe contar três tentativas de oito em quinze, e muito menos olhar a hora do dia; por
+isso a conta é em código, como no original.
+
+**Na mandrágora-de-mina e no alho a semente e a colheita são o mesmo item.** No original o item de colheita delas
+é nulo, e o mod copia o de semente — daí o bulbo ser o que se planta e o que se colhe, e o alho também.
+
+**Uma coisa que é do porte:** os aspectos. O Witchery não era addon de Thaumcraft e não anotava aspecto em nada, e
+como nada do ramo sai de receita, nada seria deduzido — as plantas ficariam sem leitura no thaumômetro. O
+`OccultaAspects` anota as quatorze coisas no tom do `ConfigAspects` do original: a semente é *herba*, a colheita é
+*messis*, e cada uma leva o que a lore do Witchery lhe dá — *venenum* na beladona, *gelum* na campainha-de-neve,
+*cognitio* na mandrágora-de-mina.
+
+**Do original fica de fora, por agora,** a mandrágora que anda e grita: é criatura, e vem na fatia dos bichos do
+ramo. Enquanto ela não chega, a que escapa apenas não deixa nada no chão.
+
+**Cinco delas usam o modelo de plantação do jogo e três o de flor**, que é o que o `getRenderType` do original diz
+(seis para a maioria, um para a campainha-de-neve, a acônito e a losna). As sessenta e uma folhas vieram do jar
+pelo `scratchpad/wi-plantas.js`, que também escreve os modelos e os arquivos de estado.
+
+**Uma coisa que o jogo de hoje obrigou:** as três idades — quatro, cinco e sete — são três propriedades diferentes
+e têm todas o mesmo nome, `age`. Não dá para declarar as três num bloco só, e o construtor do `CropBlock` pergunta
+pela propriedade antes de o campo do filho estar escrito. A idade de cada planta espera num balcão
+(`ThreadLocal`) enquanto o bloco nasce, e sai de lá assim que o construtor acaba.

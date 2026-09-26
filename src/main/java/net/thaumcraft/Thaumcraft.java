@@ -69,6 +69,7 @@ public class Thaumcraft implements ModInitializer {
         net.thaumcraft.mortuorum.Mortuorum.init();
         net.thaumcraft.crimson.Crimson.init();
         net.thaumcraft.shattered.ShatteredRealms.init();
+        net.thaumcraft.occulta.Occulta.init();
         net.thaumcraft.event.RunicShield.init();
         net.thaumcraft.event.Hover.init();
         net.thaumcraft.loot.ChestLoot.init();

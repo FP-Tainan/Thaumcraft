@@ -96,7 +96,8 @@
       "net.thaumcraft.test.DynamicDimensionGameTest",
       "net.thaumcraft.test.ShatteredGameTest",
       "net.thaumcraft.test.MaleficiumGameTest",
-      "net.thaumcraft.test.MaleficiumGearGameTest"
+      "net.thaumcraft.test.MaleficiumGearGameTest",
+      "net.thaumcraft.test.OccultaCropsGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -179,7 +180,8 @@
       "net.thaumcraft.test.client.NaturalisWorldClientTest",
       "net.thaumcraft.test.client.SkinClientTest",
       "net.thaumcraft.test.client.ItemModelClientTest",
-      "net.thaumcraft.test.client.MortuorumLookClientTest"
+      "net.thaumcraft.test.client.MortuorumLookClientTest",
+      "net.thaumcraft.test.client.OccultaCropsClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"
