@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:water_artichoke_seeds",
+    "thaumcraft:mandrake_seeds",
+    "thaumcraft:belladonna_seeds",
+    "thaumcraft:snowbell_seeds"
+  ],
+  "result": {
+    "id": "thaumcraft:anointing_paste",
+    "count": 1
+  }
+}

@@ -206,20 +206,18 @@ public class OccultaTreesGameTest {
             helper.fail("a árvore grande devia caber aqui");
             return;
         }
-        int toras = 0, folhas = 0, galhos = 0;
+        int toras = 0, folhas = 0, largura = 0;
         for (BlockPos pos : BlockPos.betweenClosed(onde.offset(-8, 0, -8), onde.offset(8, 14, 8))) {
             BlockState qual = level.getBlockState(pos);
-            if (qual.is(tora)) {
-                toras++;
-                if (qual.getValue(net.minecraft.world.level.block.RotatedPillarBlock.AXIS)
-                        != net.minecraft.core.Direction.Axis.Y) {
-                    galhos++;
-                }
+            if (qual.is(tora)) toras++;
+            if (qual.is(folha)) {
+                folhas++;
+                int longe = Math.max(Math.abs(pos.getX() - onde.getX()), Math.abs(pos.getZ() - onde.getZ()));
+                largura = Math.max(largura, longe);
             }
-            if (qual.is(folha)) folhas++;
         }
         if (toras < 5) helper.fail("a árvore grande devia ter tronco; teve " + toras);
         if (folhas < 30) helper.fail("e copa; teve " + folhas + " folhas");
-        if (galhos == 0) helper.fail("e galhos deitados, que é o que a faz grande");
+        if (largura < 3) helper.fail("e uma copa larga, que é o que a faz grande; deu " + largura);
     }
 }

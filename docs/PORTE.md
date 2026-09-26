@@ -3027,3 +3027,33 @@ por tora encostada, até cinco) — é criatura, e vem na fatia dos bichos. E a 
 **Uma coisa a lembrar de quem joga:** as mudas do ofício não nascem no mundo nem saem de receita nenhuma. No
 original vêm de **mutar uma muda comum com Mutandis**, que é feito no caldeirão — e o caldeirão ainda não chegou.
 Até lá elas só existem no criativo. É assim no original também: sem caldeirão, não há árvore do ofício.
+
+### Fatia 4 — o Caldeirão da Bruxa
+
+O `BlockCauldron` e o `TileEntityCauldron` do original, que é onde o ofício começa a valer: enche-se de água,
+acende-se fogo embaixo, espera-se ferver — cinco segundos — e daí o que se joga dentro entra na panela.
+
+**Ele não se fabrica.** Faz-se untando um caldeirão comum com **Pasta de Unção**, que sai das quatro sementes que
+o mato dá (alcachofra, mandrágora, beladona e campainha-de-neve). É o `useAnnointingPaste` do original, e a água
+que o caldeirão comum já tinha passa para ele.
+
+**A ordem importa, e é a do original:** primeiro entra o que a receita pede, e por último a coisa que
+<b>dispara</b>. Quando ela cai, o caldeirão olha o que tem dentro; batendo, mexe três segundos e larga o que a
+receita faz, e esvazia. O que não serve a receita nenhuma nem entra.
+
+Do que o original faz assim, entram aqui as que só pedem coisas que já existem: o **Mutandis** (raiz de mandrágora
+e exalação do Cornífero, com um ovo por último; saem seis), o **Mutandis Extremis** (Mutandis com uma verruga do
+Nether) e a carne, que o caldeirão cozinha sem mais nada — porco, frango, boi e carneiro.
+
+**E o Mutandis fecha o ramo em si mesmo:** passado numa planta, ele a troca por outra da lista — e é só por aí que
+se chega às três mudas do ofício, porque elas não nascem no mundo nem saem de receita. O Extremis alcança também
+as plantações, troca grama por micélio e faz barro da terra que está debaixo de água.
+
+**Do original ficam de fora, por agora,** as coisas que o ritual dele consulta e que ainda não existem aqui: o
+poder do altar, os círculos de giz, o coven de bruxas em volta e a má sorte que cai sobre quem erra. O que sobra é
+a espera e o resultado. Ficam de fora também as **poções** — o caldeirão do Witchery é antes de tudo uma fábrica
+de poções, e isso é um sistema inteiro, que vem em fatia própria.
+
+**Uma coisa do porte:** a cor da água. O original guarda uma cor por ingrediente numa tabela que só existe junto
+das poções; enquanto elas não chegam, a cor de cada coisa sai do nome dela, e a mistura é meio a meio, como no
+`augmentColor` dele.

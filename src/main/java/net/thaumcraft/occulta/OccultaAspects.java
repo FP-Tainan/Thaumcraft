@@ -106,6 +106,15 @@ public final class OccultaAspects {
             r.item("thaumcraft:alder_sapling", new AspectList().add(Aspects.PLANT, 2).add(Aspects.ENTROPY, 1));
             r.item("thaumcraft:hawthorn_sapling", new AspectList().add(Aspects.PLANT, 2).add(Aspects.ORDER, 1));
             r.item("thaumcraft:rowan_berries", new AspectList().add(Aspects.PLANT, 1).add(Aspects.HUNGER, 1));
+
+            // ---------------------------------------------------------- o caldeirão e o que sai dele
+            r.item("thaumcraft:witches_cauldron", new AspectList().add(Aspects.METAL, 6).add(Aspects.CRYSTAL, 4)
+                    .add(Aspects.GREED, 4).add(Aspects.ENERGY, 4).add(Aspects.MAGIC, 2).add(Aspects.WATER, 4)
+                    .add(Aspects.CRAFT, 8));
+            r.item("thaumcraft:anointing_paste", new AspectList().add(Aspects.PLANT, 1).add(Aspects.EXCHANGE, 1));
+            r.item("thaumcraft:mutandis", new AspectList().add(Aspects.EXCHANGE, 4).add(Aspects.PLANT, 1));
+            r.item("thaumcraft:mutandis_extremis", new AspectList().add(Aspects.EXCHANGE, 8).add(Aspects.PLANT, 1)
+                    .add(Aspects.MAGIC, 1));
         });
     }
 }

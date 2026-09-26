@@ -104,6 +104,20 @@ public final class OccultaItems {
     public static final Item ROWAN_BERRIES = register("rowan_berries", properties -> new Item(properties.food(
             new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(6.0f).build())));
 
+    // ------------------------------------------------------------------ o caldeirão e o que ele faz
+
+    /** O Caldeirão da Bruxa não se fabrica: unta-se um caldeirão comum com a Pasta de Unção. */
+    public static final Item WITCHES_CAULDRON = register("witches_cauldron", properties ->
+            new BlockItem(OccultaBlocks.WITCHES_CAULDRON, properties.useBlockDescriptionPrefix()));
+
+    /** A Pasta de Unção, que faz o caldeirão de um caldeirão comum. */
+    public static final Item ANOINTING_PASTE = register("anointing_paste", AnointingPasteItem::new);
+
+    /** O Mutandis, que muda uma planta noutra, e o Extremis, que muda as que ele não alcança. */
+    public static final Item MUTANDIS = register("mutandis", properties -> new MutandisItem(properties, false));
+    public static final Item MUTANDIS_EXTREMIS = register("mutandis_extremis",
+            properties -> new MutandisItem(properties, true));
+
     /** As peças das árvores: o item de cada bloco, pelo nome. */
     public static final java.util.Map<String, Item> WOOD = new java.util.LinkedHashMap<>();
 

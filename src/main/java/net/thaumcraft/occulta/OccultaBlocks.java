@@ -110,6 +110,18 @@ public final class OccultaBlocks {
     public static final Block HAWTHORN_STAIRS = stairs("hawthorn_stairs", () -> HAWTHORN_PLANKS);
     public static final Block HAWTHORN_SLAB = slab("hawthorn_slab");
 
+    // ------------------------------------------------------------------ o caldeirão
+
+    /** O Caldeirão da Bruxa, onde se ferve o que o ofício pede. */
+    public static final Block WITCHES_CAULDRON = register("witches_cauldron", properties ->
+            new WitchesCauldronBlock(properties.mapColor(MapColor.METAL).strength(2.0f)
+                    .sound(SoundType.METAL).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<WitchesCauldronBlockEntity> WITCHES_CAULDRON_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("witches_cauldron"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(WitchesCauldronBlockEntity::new,
+                            java.util.Set.of(WITCHES_CAULDRON)));
+
     private OccultaBlocks() {
     }
 
