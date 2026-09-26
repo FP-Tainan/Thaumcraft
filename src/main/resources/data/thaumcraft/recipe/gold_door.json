@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "yy",
+    "yy",
+    "yy"
+  ],
+  "key": {
+    "y": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "thaumcraft:gold_door",
+    "count": 1
+  }
+}

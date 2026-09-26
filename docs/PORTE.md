@@ -2400,3 +2400,16 @@ rasgão cresce com ele. Presa pelo Firma-Fendas, para.
 - O original esvoaça seis décimos, e o tamanho dele nunca para de crescer. Aqui o esvoaçar é de dois décimos e
   meio — com as tiras pequenas, seis décimos esfarelavam o rasgão — e o tamanho para em seiscentos, senão ao fim
   de uma hora o rasgão teria vinte blocos de ponta a ponta.
+
+### Fatia das outras portas — o alçapão e as duas de enfeite
+
+- O **Alçapão Dimensional** (`BlockDimensionalTrapdoor`): é a porta deitada. Tem a fenda a morar nele, e quem cai
+  por ele aberto sai num Reino Fragmentado; atrás de quem passa ele fecha-se, a não ser que haja redstone a
+  segurá-lo. O original só tem o de madeira, e aqui é o mesmo.
+- A **Porta de Ouro** e a **Porta de Quartzo**: as duas portas comuns do ramo, que não levam fenda nenhuma. São
+  matéria-prima — a porta dimensional de ouro faz-se de uma delas com Tecido Estável, e a de quartzo da outra.
+
+Com elas o ramo fecha a lista de coisas que se constroem. **Ficam ainda de fora**: o tamanho e o registo das
+fendas (lá as fendas falam umas com as outras e chamam endermen), a Ferramenta de Ajuste de Fenda, a Placa de
+Marcação, o disco de música e as salas de esquema — no original os bolsos vêm de `.schem` guardados no jar, com
+ruínas, prisões e bibliotecas, e aqui a sala ainda é lisa.

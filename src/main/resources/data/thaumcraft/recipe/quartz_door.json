@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "yy",
+    "yy",
+    "yy"
+  ],
+  "key": {
+    "y": "minecraft:quartz"
+  },
+  "result": {
+    "id": "thaumcraft:quartz_door",
+    "count": 1
+  }
+}

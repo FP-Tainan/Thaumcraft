@@ -42,6 +42,26 @@ public final class ShatteredBlocks {
                     .strength(5.0f).sound(SoundType.STONE).noOcclusion().pushReaction(
                             net.minecraft.world.level.material.PushReaction.DESTROY)));
 
+
+    /**
+     * O Alçapão Dimensional, que é a porta deitada.
+     *
+     * <p>O original só tem o de madeira; aqui é o mesmo.
+     */
+    public static final Block DIMENSIONAL_TRAPDOOR = register("dimensional_trapdoor", properties ->
+            new DimensionalTrapdoorBlock(BlockSetType.OAK, properties.mapColor(MapColor.WOOD)
+                    .strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
+
+    /** E as duas portas comuns do ramo, que não levam fenda nenhuma: são só portas de ouro e de quartzo. */
+    public static final Block GOLD_DOOR = register("gold_door", properties ->
+            new net.minecraft.world.level.block.DoorBlock(BlockSetType.GOLD,
+                    properties.mapColor(MapColor.GOLD).strength(5.0f).sound(SoundType.METAL).noOcclusion()
+                            .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+
+    public static final Block QUARTZ_DOOR = register("quartz_door", properties ->
+            new net.minecraft.world.level.block.DoorBlock(BlockSetType.STONE,
+                    properties.mapColor(MapColor.QUARTZ).strength(5.0f).sound(SoundType.STONE).noOcclusion()
+                            .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
     /** A fenda solta, que fica no ar. */
     public static final Block RIFT = register("rift", properties ->
             new FloatingRiftBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(-1.0f, 3600000.0f)
@@ -52,7 +72,8 @@ public final class ShatteredBlocks {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("rift"),
                     new BlockEntityType<>(RiftBlockEntity::new, Set.of(
                             OAK_DIMENSIONAL_DOOR, IRON_DIMENSIONAL_DOOR,
-                            GOLD_DIMENSIONAL_DOOR, QUARTZ_DIMENSIONAL_DOOR, RIFT)));
+                            GOLD_DIMENSIONAL_DOOR, QUARTZ_DIMENSIONAL_DOOR,
+                            DIMENSIONAL_TRAPDOOR, RIFT)));
 
     private ShatteredBlocks() {
     }

@@ -42,6 +42,44 @@ public class ShatteredClientTest implements FabricClientGameTest {
             });
             context.waitTicks(20);
             context.takeScreenshot("livro_shattered");
+
+            context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
+            context.waitTicks(10);
+
+            // as portas comuns do ramo e o alçapão dimensional
+            server.runOnServer(s -> {
+                var player = s.getPlayerList().getPlayers().getFirst();
+                var level = (net.minecraft.server.level.ServerLevel) player.level();
+                BlockPos base = player.blockPosition().north(5);
+                // duas ombreiras de pedra para as portas, e um pilar baixo para o alçapão
+                for (int i = 0; i < 2; i++) {
+                    for (int y = 0; y < 4; y++) {
+                        level.setBlockAndUpdate(base.east(i * 3 - 3).below().above(y),
+                                net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState());
+                    }
+                }
+                level.setBlockAndUpdate(base.east(3).below(),
+                        net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState());
+                porta(level, base.west(3), net.thaumcraft.shattered.ShatteredBlocks.GOLD_DOOR);
+                porta(level, base, net.thaumcraft.shattered.ShatteredBlocks.QUARTZ_DOOR);
+                level.setBlockAndUpdate(base.east(3),
+                        net.thaumcraft.shattered.ShatteredBlocks.DIMENSIONAL_TRAPDOOR.defaultBlockState());
+            });
+            server.runCommand("time set noon");
+            server.runCommand("tp @p ~ ~1 ~ 180 0");
+            context.waitTicks(40);
+            context.takeScreenshot("portas_do_ramo");
         }
+    }
+
+    /** Põe uma porta de duas metades, que é como o jogo a assenta. */
+    private static void porta(net.minecraft.server.level.ServerLevel level, BlockPos baixo,
+                              net.minecraft.world.level.block.Block bloco) {
+        var estado = bloco.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.DoorBlock.FACING, net.minecraft.core.Direction.SOUTH);
+        level.setBlockAndUpdate(baixo, estado.setValue(net.minecraft.world.level.block.DoorBlock.HALF,
+                net.minecraft.world.level.block.state.properties.DoubleBlockHalf.LOWER));
+        level.setBlockAndUpdate(baixo.above(), estado.setValue(net.minecraft.world.level.block.DoorBlock.HALF,
+                net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER));
     }
 }

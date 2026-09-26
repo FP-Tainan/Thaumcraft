@@ -30,6 +30,9 @@ public final class ShatteredItems {
         item(FabricBlocks.ETERNAL);
         item(FabricBlocks.UNRAVELLED);
         for (Block porta : ShatteredBlocks.doors()) door(porta);
+        item(ShatteredBlocks.DIMENSIONAL_TRAPDOOR);
+        door(ShatteredBlocks.GOLD_DOOR);
+        door(ShatteredBlocks.QUARTZ_DOOR);
     }
 
     /** O Fio do Mundo, que se tira do que o Limbo desfiou. */
