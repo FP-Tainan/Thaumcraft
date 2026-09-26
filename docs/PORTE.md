@@ -2450,3 +2450,17 @@ passaram limpas.
 
 **A regra que fica:** não compilar enquanto a suíte de tela corre. Se o erro voltar sem nada em paralelo, então aí
 sim é do mod, e o que se procura é quem refere esses dois biomas antes de os dados carregarem.
+
+## As duas foices, por fim (2026-09-26)
+
+Depois de umas quantas voltas, o que quem joga queria era simples: **as duas foices no feitio das sete caixas do
+`ModelScytheBone`**, e a folha a separá-las — a de sangue com a do original, de cabo de madeira, e a de osso com
+a mesma folha passada a osso, de cabo e tudo.
+
+Saíram, então, as sete caixas do `ModelScythe` (a foice de sangue de origem) e o modelo de Blender do
+`scythe.obj`, que no original só aparecia a quem estivesse numa lista de nomes que o mod ia buscar à rede. Ficam
+no histórico.
+
+**De passagem, uma armadilha do original que vale guardar:** o `ModelScytheSpecial` **não segue o `.mtl`**. O
+arquivo de materiais manda o cabo usar a `cloth.jpg`, e o desenhista liga-o à `guntex.jpg` antes de o desenhar. É
+a folha do desenhista que vale — quem for ler um `.obj` de mod da 1.7.10 que olhe primeiro para quem o desenha.

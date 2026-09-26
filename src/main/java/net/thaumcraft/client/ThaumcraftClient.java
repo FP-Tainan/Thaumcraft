@@ -153,7 +153,6 @@ public class ThaumcraftClient implements ClientModInitializer {
 
                     @Override
                     public void onResourceManagerReload(net.minecraft.server.packs.resources.ResourceManager manager) {
-                        net.thaumcraft.mortuorum.client.ScytheMesh.forget();
                         net.thaumcraft.shattered.client.RiftCurves.forget();
                     }
                 });
