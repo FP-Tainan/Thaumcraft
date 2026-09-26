@@ -2883,6 +2883,11 @@ tempo de jogo, e um teste de tela fotografou as quatro combinações de uma vez.
 para ver que nenhuma servia, e que o que faltava era outra coisa — o teste foi embora depois, que era ferramenta
 de ajuste e não guarda.
 
-**De passagem, um teste instável:** o `altarCallsTheGuardian` reprovou uma vez e passou no retry. Não era do
-que se mexeu — o altar tenta chamar o guardião a cada quarenta tiques e cada tentativa pode dar em nada, e em
-quatrocentos tiques são só oito tentativas. Passou para mil e duzentos.
+**De passagem, dois testes que piscavam**, nenhum deles do que se mexeu. Os dois pelo mesmo motivo de fundo:
+olhavam uma vez, num tique escolhido a dedo, uma coisa que o jogo não promete para quando.
+
+* O `altarCallsTheGuardian` — o altar tenta chamar o guardião a cada quarenta tiques e cada tentativa pode dar
+  em nada, porque o lugar sorteado pode não servir. Em quatrocentos tiques eram oito tentativas, e de vez em
+  quando as oito falhavam. Passou para mil e duzentos.
+* O `keyRoom` — quem nasce junto com a sala só entra na lista do mundo nos tiques seguintes, e não num número
+  fixo deles. Passou a olhar a cada tique até aparecerem, em vez de olhar no oitavo.
