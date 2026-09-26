@@ -2706,7 +2706,7 @@ itens*. Tem razão, e a razão é do próprio Thaumcraft: tudo o mais que um tha
 varinha, o vis está na varinha, e um rasgão no Véu não é trabalho de ferro como um nó também não é.
 
 Saíram o **Firma-Fendas** e o **Fecha-Fendas** de mão. Entraram três focos: **Rasgar**, que abre uma fenda onde a
-varinha aponta; **Firmar**, que prende a apontada; e **Cerzir**, que a fecha — e que numa porta faz a porta
+varinha aponta; **Firmar**, que prende a apontada; e **Remendar**, que a fecha — e que numa porta faz a porta
 esquecer para onde levava. Entram pelo `Focuses.register`, que é a porta que o mod já tinha para os focos de um
 ramo de fora.
 
