@@ -4,7 +4,10 @@ import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
-/** A aba do Ars Occulta no Thaumonomicon: a árvore das seis pesquisas e as páginas delas. */
+/**
+ * A aba do Ars Occulta no Thaumonomicon: a árvore das seis pesquisas do ofício, a do Magia Naturalis ao lado
+ * dela — que se mudou para cá — e as páginas de duas delas.
+ */
 public class OccultaBookClientTest implements FabricClientGameTest {
     @Override
     public void runTest(ClientGameTestContext context) {

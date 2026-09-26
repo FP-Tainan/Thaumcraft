@@ -24,16 +24,17 @@ public final class NaturalisTable {
      * Thaumcraft de que as do ramo nascem, como o ResearchItemProxy do original as punha.
      */
     public static void research() {
-        ThaumcraftApi.proxy("MN_TC_GOGGLES", Naturalis.CATEGORY, "GOGGLES", -4, 1);
-        ThaumcraftApi.proxy("MN_TC_WARDED_ARCANA", Naturalis.CATEGORY, "WARDEDARCANA", -5, -2);
-        ThaumcraftApi.proxy("MN_TC_FOCUS_TRADE", Naturalis.CATEGORY, "FOCUSTRADE", 2, -4);
-        ThaumcraftApi.proxy("MN_TC_CRUCIBLE", Naturalis.CATEGORY, "CRUCIBLE", 3, -1);
-        ThaumcraftApi.proxy("MN_TC_FOCUS_POUCH", Naturalis.CATEGORY, "FOCUSPOUCH", 4, 2);
-        ThaumcraftApi.proxy("MN_TC_TRAVEL_TRUNK", Naturalis.CATEGORY, "TRAVELTRUNK", 1, 3);
+        ThaumcraftApi.proxy("MN_TC_GOGGLES", Naturalis.CATEGORY, "GOGGLES", 8, 1);
+        ThaumcraftApi.proxy("MN_TC_WARDED_ARCANA", Naturalis.CATEGORY, "WARDEDARCANA", 7, -2);
+        ThaumcraftApi.proxy("MN_TC_FOCUS_TRADE", Naturalis.CATEGORY, "FOCUSTRADE", 14, -4);
+        ThaumcraftApi.proxy("MN_TC_CRUCIBLE", Naturalis.CATEGORY, "CRUCIBLE", 15, -1);
+        ThaumcraftApi.proxy("MN_TC_FOCUS_POUCH", Naturalis.CATEGORY, "FOCUSPOUCH", 16, 2);
+        ThaumcraftApi.proxy("MN_TC_TRAVEL_TRUNK", Naturalis.CATEGORY, "TRAVELTRUNK", 13, 3);
 
         ThaumcraftApi.research("MN_INTRO", Naturalis.CATEGORY)
-                .at(0, 0)
+                .at(12, 0)
                 .icon(() -> new ItemStack(TCResources.get("primal_charm")))
+                .parents("AO_OLD_WAYS")
                 .round()
                 .auto()
                 .special()
@@ -41,7 +42,7 @@ public final class NaturalisTable {
                 .register();
 
         ThaumcraftApi.research("MN_CARPENTRY", Naturalis.CATEGORY)
-                .at(-2, 2)
+                .at(10, 2)
                 .icon(() -> new ItemStack(NaturalisBlocks.GREATWOOD_GOLD_ORNAMENT.asItem()))
                 .round()
                 .auto()
@@ -50,7 +51,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_RESEARCH_LOG", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.MIND, 3).add(Aspects.VOID, 3).add(Aspects.ORDER, 3))
-                .at(-1, -2)
+                .at(11, -2)
                 .icon(() -> new ItemStack(NaturalisItems.RESEARCH_LOG))
                 .hiddenParents("DECONSTRUCTOR")
                 .round()
@@ -59,7 +60,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_TRANSCRIBING_TABLE", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.MIND, 3).add(Aspects.VOID, 3).add(Aspects.ORDER, 3))
-                .at(-2, -4)
+                .at(10, -4)
                 .icon(() -> new ItemStack(NaturalisBlocks.TRANSCRIBING_TABLE.asItem()))
                 .parents("MN_RESEARCH_LOG")
                 .pages(Page.text("tc.research_page.MN_TRANSCRIBING_TABLE.1"), Page.crafting("TranscribingTable"))
@@ -67,7 +68,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_SPECTACLES", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.SENSES, 3).add(Aspects.AURA, 3).add(Aspects.MAGIC, 3))
-                .at(-6, 0)
+                .at(6, 0)
                 .complexity(1)
                 .icon(() -> new ItemStack(NaturalisItems.SPECTACLES))
                 .parents("MN_TC_GOGGLES")
@@ -77,7 +78,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_DARK_GOGGLES", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.SENSES, 6).add(Aspects.AURA, 3).add(Aspects.MAGIC, 3).add(Aspects.DARKNESS, 4))
-                .at(-7, 2)
+                .at(5, 2)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.DARK_CRYSTAL_GOGGLES))
                 .parents("MN_TC_GOGGLES")
@@ -88,7 +89,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_ARCANE_KEYS", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TOOL, 4).add(Aspects.MIND, 3).add(Aspects.MECHANISM, 3))
-                .at(-4, -3)
+                .at(8, -3)
                 .complexity(3)
                 .icon(() -> new ItemStack(NaturalisItems.KEY_OF_UNRAVELING))
                 .parents("MN_TC_WARDED_ARCANA")
@@ -97,7 +98,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_ARCANE_CHEST", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.VOID, 4).add(Aspects.MIND, 3).add(Aspects.MECHANISM, 3).add(Aspects.ARMOR, 3))
-                .at(-7, -3)
+                .at(5, -3)
                 .complexity(3)
                 .icon(() -> new ItemStack(NaturalisBlocks.ARCANE_CHEST_GREATWOOD.asItem()))
                 .parents("MN_TC_WARDED_ARCANA")
@@ -106,7 +107,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_CONSTRUCTION_FOCUS", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.MAGIC, 3).add(Aspects.CRAFT, 6).add(Aspects.ORDER, 2).add(Aspects.EARTH, 2))
-                .at(4, -5)
+                .at(16, -5)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.BUILDER_FOCUS))
                 .parents("MN_TC_FOCUS_TRADE")
@@ -115,7 +116,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_REVENANT_FOCUS", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TRAVEL, 3).add(Aspects.BEAST, 6).add(Aspects.UNDEAD, 3).add(Aspects.MAGIC, 3))
-                .at(3, -7)
+                .at(15, -7)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.REVENANT_FOCUS))
                 .hiddenParents("BASICTHAUMATURGY", "INFUSION")
@@ -126,7 +127,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_MUTATION_STONE", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.MAGIC, 3).add(Aspects.EXCHANGE, 4).add(Aspects.EARTH, 2))
-                .at(4, -3)
+                .at(16, -3)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.MUTATION_STONE))
                 .parents("MN_TC_FOCUS_TRADE", "MN_TC_CRUCIBLE")
@@ -136,7 +137,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_QUICKSILVER_STONE", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.SENSES, 3).add(Aspects.EXCHANGE, 4).add(Aspects.AURA, 2))
-                .at(6, -1)
+                .at(18, -1)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.QUICKSILVER_STONE))
                 .parents("MN_TC_CRUCIBLE")
@@ -145,7 +146,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_ENDER_POUCH", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.ELDRITCH, 3).add(Aspects.VOID, 3))
-                .at(6, 3)
+                .at(18, 3)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.ENDER_POUCH))
                 .parents("MN_TC_FOCUS_POUCH")
@@ -155,7 +156,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_EVIL_TRUNK", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.SOUL, 3).add(Aspects.BEAST, 3).add(Aspects.TAINT, 3))
-                .at(2, 5)
+                .at(14, 5)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.TRUNK_SPAWNER_CORRUPTED))
                 .parents("MN_TC_TRAVEL_TRUNK")
@@ -165,7 +166,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_PRISON_JAR", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TRAP, 6).add(Aspects.GREED, 3).add(Aspects.EXCHANGE, 3).add(Aspects.MOTION, 3))
-                .at(-1, 4)
+                .at(11, 4)
                 .complexity(3)
                 .icon(() -> new ItemStack(NaturalisBlocks.PRISON_JAR.asItem()))
                 .hiddenParents("JARLABEL")
@@ -174,7 +175,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_SICKLES", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TOOL, 3).add(Aspects.CROP, 3).add(Aspects.HARVEST, 3))
-                .at(-4, 3)
+                .at(8, 3)
                 .complexity(1)
                 .icon(() -> new ItemStack(NaturalisItems.THAUMIUM_SICKLE))
                 .hiddenParents("THAUMIUM")
@@ -184,7 +185,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_SICKLE_OF_ABUNDANCE", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.TOOL, 3).add(Aspects.CROP, 3).add(Aspects.HARVEST, 3).add(Aspects.GREED, 6))
-                .at(-5, 5)
+                .at(7, 5)
                 .complexity(2)
                 .icon(() -> new ItemStack(NaturalisItems.ELEMENTAL_SICKLE))
                 .parents("MN_SICKLES")
@@ -194,7 +195,7 @@ public final class NaturalisTable {
 
         ThaumcraftApi.research("MN_GEO_OCCULTISM", Naturalis.CATEGORY)
                 .aspects(new AspectList().add(Aspects.AURA, 4).add(Aspects.EXCHANGE, 3).add(Aspects.WEATHER, 3).add(Aspects.MAGIC, 6).add(Aspects.EARTH, 2).add(Aspects.AIR, 2))
-                .at(0, -5)
+                .at(12, -5)
                 .icon(() -> new ItemStack(NaturalisBlocks.GEO_PYLON.asItem()))
                 .hiddenParents("INFUSION", "MN_MUTATION_STONE")
                 .pages(Page.crafting("GeoPylon"), Page.crafting("BiomeReport"))

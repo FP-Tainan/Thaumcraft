@@ -3128,3 +3128,20 @@ diante. É mais coisa de Thaumcraft do que de Witchery, e fica declarado.
 paredes altas só mostra o que tem dentro quando se olha de cima, e as fotos estavam todas de esguelha. O que as
 voltas de diagnóstico deixaram de bom foi o caminho honesto no teste de tela: a água entra por balde e clique,
 como quem joga faz, em vez de ser escrita à força no bloco.
+
+### O Magia Naturalis muda-se para a aba do ofício (2026-09-27)
+
+*Une o Naturalis na aba da bruxaria, porque elas se conversam: a natureza, a bruxa, o que é antigo, o natural.*
+
+A aba própria do Magia Naturalis saiu do livro. As dezoito pesquisas dele e as seis sombras das do Thaumcraft
+passaram para a aba do **Ars Occulta**, à direita da árvore do ofício — doze colunas adiante, que é onde nenhuma
+cai em cima de outra (há um teste que confere isso, pesquisa por pesquisa).
+
+A entrada do ramo, o `MN_INTRO`, pendura-se agora no `AO_OLD_WAYS`: é o fio que liga as duas árvores e mostra de
+onde uma olha para a outra. Ele continua a abrir-se sozinho, como antes — quem já jogava não perde nada.
+
+O `Naturalis.CATEGORY` deixou de ser um nome seu e passou a apontar para o do ofício, que é o que faz todo o
+resto do ramo (receitas, sombras, testes) continuar a funcionar sem mexer em mais nada.
+
+**A aba do criativo do Magia Naturalis continua onde estava** — o que se juntou foi o livro, que é onde as duas
+histórias se encontram.

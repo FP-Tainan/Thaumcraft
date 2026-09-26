@@ -15,7 +15,14 @@ import net.thaumcraft.api.ThaumcraftApi;
  */
 public final class Naturalis {
     /** A aba do ramo no livro. */
-    public static final String CATEGORY = "NATURALIS";
+    /**
+     * A aba do ramo no Thaumonomicon.
+     *
+     * <p><b>A pedido de quem manda:</b> o Magia Naturalis não tem mais aba própria — ele mora na do <b>Ars
+     * Occulta</b>, ao lado da bruxaria. As duas falam da mesma coisa por caminhos diferentes: a natureza, o que é
+     * velho e o que se faz com as mãos. A árvore dele fica à direita da do ofício, com o mesmo desenho de sempre.
+     */
+    public static final String CATEGORY = net.thaumcraft.occulta.Occulta.CATEGORY;
 
     private Naturalis() {
     }
@@ -46,10 +53,6 @@ public final class Naturalis {
     }
 
     private static void research() {
-        ThaumcraftApi.category(CATEGORY,
-                Thaumcraft.id("textures/item/research_log.png"),
-                Thaumcraft.id("textures/gui/gui_naturalis_researchback.png"));
-
         NaturalisTable.research();
         // as receitas carregam itens, então só se montam quando o mundo abre
         ThaumcraftApi.onSetup(NaturalisTable::recipes);

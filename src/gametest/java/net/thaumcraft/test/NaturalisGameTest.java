@@ -18,17 +18,28 @@ import java.util.Arrays;
  * O ramo do Magia Naturalis: a aba, as foices e o que elas ceifam.
  */
 public class NaturalisGameTest {
-    /** A aba do ramo existe no livro, com as pesquisas do original. */
+    /**
+     * As pesquisas do ramo estão no livro — na aba do <b>Ars Occulta</b>, a pedido de quem manda: as duas falam
+     * da mesma coisa por caminhos diferentes, e o ramo deixou de ter aba própria.
+     */
     @GameTest
-    public void theBranchHasItsOwnTab(GameTestHelper helper) {
+    public void theBranchLivesInTheOccultaTab(GameTestHelper helper) {
         if (Researches.get("MN_INTRO") == null) helper.fail("a pesquisa de entrada do ramo devia existir");
         var sickles = Researches.get("MN_SICKLES");
         if (sickles == null) helper.fail("a pesquisa das foices devia existir");
         else if (!sickles.category().equals(net.thaumcraft.naturalis.Naturalis.CATEGORY)) {
             helper.fail("as foices deviam estar na aba do ramo; estão em " + sickles.category());
         }
-        int quantas = Researches.of(net.thaumcraft.naturalis.Naturalis.CATEGORY).size();
-        if (quantas < 10) helper.fail("a aba do ramo devia ter as dez pesquisas geradas; tem " + quantas);
+        long quantas = Researches.of(net.thaumcraft.naturalis.Naturalis.CATEGORY).stream()
+                .filter(pesquisa -> pesquisa.key().startsWith("MN_")).count();
+        if (quantas < 10) helper.fail("o ramo devia ter as dez pesquisas geradas; tem " + quantas);
+        // e a aba é mesmo a do ofício, não uma só dele
+        if (!net.thaumcraft.naturalis.Naturalis.CATEGORY.equals(net.thaumcraft.occulta.Occulta.CATEGORY)) {
+            helper.fail("o ramo mora na aba do Ars Occulta");
+        }
+        if (net.thaumcraft.research.ResearchCategories.get("NATURALIS") != null) {
+            helper.fail("e a aba própria dele saiu do livro");
+        }
         helper.succeed();
     }
 

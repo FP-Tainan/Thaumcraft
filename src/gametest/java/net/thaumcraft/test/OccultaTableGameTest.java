@@ -31,9 +31,24 @@ public class OccultaTableGameTest {
             }
             if (pesquisa.pages().isEmpty()) helper.fail(chave + " devia ter o que ler");
         }
-        int quantas = Researches.of(Occulta.CATEGORY).size();
-        if (quantas != AS_SEIS.size()) {
-            helper.fail("a aba tem as seis pesquisas da lore; tem " + quantas);
+        // a aba é partilhada com o Magia Naturalis, que se mudou para cá: contam-se as seis do ofício pela chave
+        long minhas = Researches.of(Occulta.CATEGORY).stream()
+                .filter(pesquisa -> AS_SEIS.contains(pesquisa.key())).count();
+        if (minhas != AS_SEIS.size()) helper.fail("a aba tem as seis pesquisas da lore; tem " + minhas);
+        if (Researches.of(Occulta.CATEGORY).stream().noneMatch(pesquisa -> pesquisa.key().startsWith("MN_"))) {
+            helper.fail("e as do Magia Naturalis, que agora moram nesta aba");
+        }
+        helper.succeed();
+    }
+
+    /** Na aba partilhada, nenhuma pesquisa cai em cima de outra. */
+    @GameTest
+    public void nothingSitsOnTopOfAnythingElse(GameTestHelper helper) {
+        var lugares = new java.util.HashMap<String, String>();
+        for (Research pesquisa : Researches.of(Occulta.CATEGORY)) {
+            String onde = pesquisa.column() + "," + pesquisa.row();
+            String outra = lugares.put(onde, pesquisa.key());
+            if (outra != null) helper.fail(pesquisa.key() + " cai em cima de " + outra + " em " + onde);
         }
         helper.succeed();
     }
