@@ -47,8 +47,9 @@ public class RiftWalkersGameTest {
         for (int volta = 0; volta < 4000; volta++) {
             RiftWalkers.maybeEmerge(helper.getLevel(), helper.absolutePos(onde), fenda);
         }
-        if (!helper.getLevel().getEntitiesOfClass(EnderMan.class,
-                new net.minecraft.world.phys.AABB(helper.absolutePos(onde)).inflate(24.0)).isEmpty()) {
+        // só a casa da fenda e o que lhe encosta: os testes correm lado a lado, e um olhar largo apanhava os
+        // endermans do teste do lado
+        if (!helper.getLevel().getEntitiesOfClass(EnderMan.class, perto(helper, onde)).isEmpty()) {
             helper.fail("uma fenda daquele tamanho não põe ninguém cá fora");
         }
         helper.succeed();
@@ -63,7 +64,7 @@ public class RiftWalkersGameTest {
         // cresce-a até passar da conta, como o tique faz sozinho ao fim de um bom bocado
         while (fenda.size() < RiftWalkers.EMERGE_SIZE) fenda.grow();
 
-        var perto = new net.minecraft.world.phys.AABB(helper.absolutePos(onde)).inflate(RiftWalkers.CROWD_RANGE);
+        var perto = perto(helper, onde);
         for (int volta = 0; volta < 400000; volta++) {
             RiftWalkers.maybeEmerge(helper.getLevel(), helper.absolutePos(onde), fenda);
         }
@@ -73,5 +74,10 @@ public class RiftWalkersGameTest {
 
         for (EnderMan quem : helper.getLevel().getEntitiesOfClass(EnderMan.class, perto)) quem.discard();
         helper.succeed();
+    }
+
+    /** A casa da fenda e o que lhe encosta, e nada mais: os testes correm com vizinhos à vista. */
+    private static net.minecraft.world.phys.AABB perto(GameTestHelper helper, BlockPos onde) {
+        return new net.minecraft.world.phys.AABB(helper.absolutePos(onde)).inflate(2.5);
     }
 }

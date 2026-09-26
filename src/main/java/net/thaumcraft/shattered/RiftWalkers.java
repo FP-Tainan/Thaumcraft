@@ -94,14 +94,14 @@ public final class RiftWalkers {
     }
 
     /** E um ou dois em cada sala para lá de uma fenda presa, que é onde eles moram. */
-    public static void populate(ServerLevel bolsos, BlockPos canto) {
+    public static void populate(ServerLevel bolsos, BlockPos canto, int largura, int comprimento) {
         if (bolsos.getDifficulty() == Difficulty.PEACEFUL) return;
         int quantos = 1 + bolsos.getRandom().nextInt(2);
         for (int i = 0; i < quantos; i++) {
             EnderMan quem = EntityTypes.ENDERMAN.create(bolsos, EntitySpawnReason.STRUCTURE);
             if (quem == null) continue;
-            BlockPos onde = canto.offset(2 + bolsos.getRandom().nextInt(Pockets.ROOM - 4), 1,
-                    2 + bolsos.getRandom().nextInt(Pockets.ROOM - 4));
+            BlockPos onde = canto.offset(2 + bolsos.getRandom().nextInt(Math.max(1, largura - 4)), 1,
+                    2 + bolsos.getRandom().nextInt(Math.max(1, comprimento - 4)));
             quem.snapTo(onde.getX() + 0.5, onde.getY(), onde.getZ() + 0.5,
                     bolsos.getRandom().nextFloat() * 360.0f, 0.0f);
             quem.setPersistenceRequired();

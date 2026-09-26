@@ -2530,7 +2530,7 @@ Saíram daqui o `RiftCurves`, o `rift_curves.mesh` e o `scratchpad/dd-curvas.js`
 de recarga que só existia para os esquecer. Ficam no histórico, que é onde hão de estar se alguém quiser o feitio
 do original de volta.
 
-## Da fenda presa à sala com tema (2026-09-26)
+## Da fenda presa à sala (2026-09-26)
 
 A terceira coisa que quem manda pediu: *o jogador poderia ter que estabilizar a fenda pra conseguir abrir uma
 porta, e aí cai em uma daquelas salas aleatórias que saem se conectando — uma é uma biblioteca, na próxima porta
@@ -2625,3 +2625,41 @@ raiz no pé até zero na ponta. Cada fenda tem a sua, do número que sorteou ao 
   o pé fica quieto e a ponta ondula.
 
 O `RiftTear` chato ficou no histórico, ao lado do `RiftCurves` que já lá estava.
+
+## As salas do original, todas as cento e dezasseis (2026-09-26)
+
+As salas com tema feitas em código eram um remendo enquanto não havia leitor de esquemas. Quem manda disse o que
+elas eram: *o Dimensional Doors original era um mod de dungeon puzzle, onde cada sala aleatória era grande e tinha
+espaço e uma construção única — veja nos arquivos originais e copie de lá as salas*. Tem razão, e agora estão cá.
+
+### O caminho
+
+Os esquemas são Sponge v1 da 1.12: `Width`, `Height`, `Length`, uma paleta de nome para número, e o corpo num
+vetor de varints. Os nomes são os de antes da planificação da 1.13 —
+`minecraft:stonebrick[variant=cracked_stonebrick]`, `minecraft:stone_slab[half=top]`,
+`minecraft:stone_stairs` (que era a escada de pedregulho, e não de pedra).
+
+Contam-se **cento e cinquenta e seis esquemas, noventa e seis blocos distintos e trezentos e vinte e oito
+estados** — pouco o bastante para a planificação se fazer à mão e por inteiro, sem adivinhar nada. É o
+`scratchpad/dd-mapa.js`, e o `dd-salas.js` passa-lhe cada esquema e escreve um arquivo por sala.
+
+O formato de saída é o mais simples que serve: cabeçalho, paleta de estados em texto — que o `BlockStateParser` lê
+—, e o corpo em pares de *quantas casas seguidas, qual entrada da paleta*. Estas salas são quase todas ar, e ar
+seguido comprime-se a nada: as **oito milhões de casas das cento e dezasseis salas cabem em 311 KiB**.
+
+As portas do mod viraram as nossas na tradução, e os tecidos também. Quer dizer que **as salas já vêm com as
+saídas desenhadas nas paredes**: a primeira passa a ser a de volta, as outras ficam por apontar, e quem as
+atravessar abre outra sala. O quebra-cabeças liga-se sozinho.
+
+### Três coisas que isto obrigou a mexer
+
+* Os bolsos afastavam-se **sessenta e quatro** uns dos outros; as salas vão até noventa e sete de lado. Passam a
+  duzentos e cinquenta e seis — num mundo que é só vazio, o espaço não custa nada.
+* Pôr uma sala é pôr até seiscentas mil casas enquanto alguém atravessa uma porta. Num bolso acabado de abrir o
+  mundo já é vazio, e mais de dois terços do que uma sala tem é ar: **o ar salta-se**, e sobra um terço do
+  trabalho.
+* As salas do original têm portas de ferro e de quartzo, e não só de madeira. O teste que as contava só sabia da
+  de madeira e dizia que não havia porta nenhuma.
+
+O `PocketThemes` — a biblioteca, o deserto, o Nether e o reino antigo feitos à mão — saiu, e fica no histórico.
+Serviu para saber o que se queria; as de verdade servem melhor.

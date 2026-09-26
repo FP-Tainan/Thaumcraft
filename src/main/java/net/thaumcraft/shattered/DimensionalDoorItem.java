@@ -49,7 +49,7 @@ public class DimensionalDoorItem extends DoubleHighBlockItem {
 
         RiftBlockEntity.Destination destino = antes == null ? null : antes.destination();
         RiftBlockEntity.Destination fonte = antes == null ? null : antes.source();
-        PocketThemes tema = antes == null ? null : antes.theme();
+        String sala = antes == null ? null : antes.room();
         boolean brava = antes != null;
 
         InteractionResult feito = super.place(context);
@@ -59,7 +59,7 @@ public class DimensionalDoorItem extends DoubleHighBlockItem {
             nova.setNatural(false);
             if (brava) {
                 nova.setWild(true);
-                nova.setTheme(tema);
+                nova.setRoom(sala);
                 if (destino != null) nova.setDestination(destino);
                 if (fonte != null) nova.setSource(fonte);
                 level.playSound(null, onde, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 0.8f, 0.6f);

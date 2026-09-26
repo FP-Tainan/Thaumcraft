@@ -112,8 +112,8 @@ public class RiftBlockEntity extends BlockEntity {
      */
     private boolean wild;
 
-    /** E de que tema era a sala de onde se veio, para a seguinte não sair a mesma. */
-    private @Nullable PocketThemes theme;
+    /** E qual era a sala de onde se veio, para a seguinte não sair a mesma. */
+    private @Nullable String room;
 
     public boolean wild() {
         return this.wild;
@@ -124,12 +124,12 @@ public class RiftBlockEntity extends BlockEntity {
         this.setChanged();
     }
 
-    public @Nullable PocketThemes theme() {
-        return this.theme;
+    public @Nullable String room() {
+        return this.room;
     }
 
-    public void setTheme(@Nullable PocketThemes tema) {
-        this.theme = tema;
+    public void setRoom(@Nullable String sala) {
+        this.room = sala;
         this.setChanged();
     }
 
@@ -195,7 +195,7 @@ public class RiftBlockEntity extends BlockEntity {
     public boolean teleport(Entity quem) {
         if (!(this.level instanceof ServerLevel aqui)) return false;
         if (this.destination == null) {
-            Destination feito = Pockets.open(aqui, this.worldPosition, this.wild, this.theme);
+            Destination feito = Pockets.open(aqui, this.worldPosition, this.wild, this.room);
             if (feito == null) return false;
             this.setDestination(feito);
         }
@@ -226,7 +226,7 @@ public class RiftBlockEntity extends BlockEntity {
         this.curveId = input.getIntOr("curve", -1);
         this.natural = input.getBooleanOr("natural", true);
         this.wild = input.getBooleanOr("wild", false);
-        this.theme = input.getString("theme").map(PocketThemes::byName).orElse(null);
+        this.room = input.getString("room").orElse(null);
     }
 
     @Override
@@ -240,7 +240,7 @@ public class RiftBlockEntity extends BlockEntity {
         if (this.curveId >= 0) output.putInt("curve", this.curveId);
         if (!this.natural) output.putBoolean("natural", false);
         if (this.wild) output.putBoolean("wild", true);
-        if (this.theme != null) output.putString("theme", this.theme.name());
+        if (this.room != null) output.putString("room", this.room);
     }
 
     /** O rosto da fenda tem de chegar ao cliente: é ele quem desenha o rasgão. */

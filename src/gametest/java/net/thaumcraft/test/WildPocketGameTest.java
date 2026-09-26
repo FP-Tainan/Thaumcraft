@@ -12,7 +12,7 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.thaumcraft.shattered.PocketThemes;
+import net.thaumcraft.shattered.DungeonRooms;
 import net.thaumcraft.shattered.Pockets;
 import net.thaumcraft.shattered.RiftBlockEntity;
 import net.thaumcraft.shattered.ShatteredBlocks;
@@ -97,9 +97,9 @@ public class WildPocketGameTest {
         helper.succeed();
     }
 
-    /** O bolso bravo tem tema, três portas, e as duas de lado ainda não apontam para lugar nenhum. */
+    /** O bolso bravo é uma sala do original, com as portas dela, e todas menos a de volta por apontar. */
     @GameTest
-    public void theWildPocketHasThemeAndTwoWaysOn(GameTestHelper helper) {
+    public void theWildPocketIsOneOfTheOriginalRooms(GameTestHelper helper) {
         var bolsos = Pockets.level(helper.getLevel().getServer());
         if (bolsos == null) {
             helper.fail("o mundo dos bolsos devia abrir");
@@ -111,31 +111,43 @@ public class WildPocketGameTest {
             return;
         }
         int quantas = portas(bolsos, destino.pos());
-        if (quantas != 3) helper.fail("o bolso bravo tem a de volta e mais duas; achei " + quantas);
+        if (quantas < 1) helper.fail("a sala tem de ter pelo menos a porta de volta");
 
-        int semDestino = 0;
-        PocketThemes tema = null;
+        int semDestino = 0, comDestino = 0;
+        String sala = null;
         for (BlockPos onde : volta(destino.pos())) {
             if (!(bolsos.getBlockEntity(onde) instanceof RiftBlockEntity fenda)) continue;
-            if (!fenda.wild() && fenda.destination() == null) helper.fail("a de volta sabe para onde vai");
-            if (fenda.destination() == null) semDestino++;
-            if (fenda.theme() != null) tema = fenda.theme();
+            if (fenda.destination() == null) {
+                semDestino++;
+                if (!fenda.wild()) helper.fail("as que ainda não apontam são bravas");
+            } else {
+                comDestino++;
+            }
+            if (fenda.room() != null) sala = fenda.room();
             if (fenda.natural()) helper.fail("as portas da sala estão à vista de quem lá cair");
         }
-        if (semDestino != 2) helper.fail("as duas de lado ainda não apontam; achei " + semDestino);
-        if (tema == null) helper.fail("o bolso bravo tem tema");
+        if (comDestino != 1) helper.fail("uma porta só sabe para onde vai, a de volta; achei " + comDestino);
+        if (sala == null) helper.fail("as portas sabem de que sala são");
+        if (!DungeonRooms.names(helper.getLevel().getServer()).contains(sala)) {
+            helper.fail("e a sala é uma das do original: " + sala);
+        }
 
         net.thaumcraft.world.DynamicDimensions.remove(helper.getLevel().getServer(), ShatteredRealms.PUBLIC_POCKETS);
         helper.succeed();
     }
 
-    /** E dois temas seguidos nunca são o mesmo. */
+    /** As cento e dezasseis salas do original estão todas lá, e duas seguidas nunca são a mesma. */
     @GameTest
-    public void theNextRoomIsNeverTheSame(GameTestHelper helper) {
+    public void theRoomsAreAllThereAndNeverRepeat(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
         var sorte = helper.getLevel().getRandom();
-        for (PocketThemes veioDe : PocketThemes.values()) {
-            for (int volta = 0; volta < 40; volta++) {
-                if (PocketThemes.roll(sorte, veioDe) == veioDe) {
+        if (DungeonRooms.count(server) != 116) {
+            helper.fail("são cento e dezasseis salas; achei " + DungeonRooms.count(server));
+            return;
+        }
+        for (String veioDe : DungeonRooms.names(server)) {
+            for (int volta = 0; volta < 8; volta++) {
+                if (veioDe.equals(DungeonRooms.roll(server, sorte, veioDe))) {
                     helper.fail("a sala seguinte não repete a de onde se veio: " + veioDe);
                     return;
                 }
@@ -148,7 +160,7 @@ public class WildPocketGameTest {
     private static int portas(net.minecraft.server.level.ServerLevel bolsos, BlockPos perto) {
         int achadas = 0;
         for (BlockPos onde : volta(perto)) {
-            if (bolsos.getBlockState(onde).is(ShatteredBlocks.OAK_DIMENSIONAL_DOOR)
+            if (bolsos.getBlockState(onde).getBlock() instanceof net.thaumcraft.shattered.DimensionalDoorBlock
                     && bolsos.getBlockEntity(onde) instanceof RiftBlockEntity) {
                 achadas++;
             }
@@ -156,11 +168,9 @@ public class WildPocketGameTest {
         return achadas;
     }
 
-    /** A sala inteira, à volta do lugar de chegada. */
+    /** A sala inteira, à volta do lugar de chegada — as do original chegam a cem de lado e setenta de alto. */
     private static Iterable<BlockPos> volta(BlockPos perto) {
-        return BlockPos.betweenClosed(
-                perto.offset(-Pockets.ROOM, -2, -Pockets.ROOM),
-                perto.offset(Pockets.ROOM, Pockets.HEIGHT, Pockets.ROOM));
+        return BlockPos.betweenClosed(perto.offset(-100, -40, -100), perto.offset(100, 80, 100));
     }
 
     private static void usa(GameTestHelper helper, Player quem, ItemStack coisa, BlockPos onde) {
