@@ -95,6 +95,40 @@ public class VeilSightGameTest {
         helper.succeed();
     }
 
+    /** A Porta Antiga: sem corpo, sem desenho de bloco, e só quem tem os óculos lhe pega. */
+    @GameTest
+    public void theAncientDoorIsOnlyThereForWhoSeesIt(GameTestHelper helper) {
+        BlockPos baixo = new BlockPos(1, 2, 1);
+        var porta = ShatteredBlocks.ANCIENT_DIMENSIONAL_DOOR.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.DoorBlock.FACING, Direction.SOUTH);
+        helper.setBlock(baixo, porta);
+        helper.setBlock(baixo.above(), porta.setValue(net.minecraft.world.level.block.DoorBlock.HALF,
+                net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER));
+
+        var estado = helper.getBlockState(baixo);
+        if (estado.getRenderShape() != net.minecraft.world.level.block.RenderShape.INVISIBLE) {
+            helper.fail("o bloco dela não se desenha: quem a desenha é o miolo");
+        }
+        if (!estado.getCollisionShape(helper.getLevel(), helper.absolutePos(baixo)).isEmpty()) {
+            helper.fail("e não tem corpo: uma parede invisível seria uma armadilha");
+        }
+
+        var quem = helper.makeMockPlayer(GameType.SURVIVAL);
+        var bateu = new BlockHitResult(Vec3.atCenterOf(helper.absolutePos(baixo)), Direction.SOUTH,
+                helper.absolutePos(baixo), false);
+        estado.useWithoutItem(helper.getLevel(), quem, bateu);
+        if (helper.getBlockState(baixo).getValue(net.minecraft.world.level.block.DoorBlock.OPEN)) {
+            helper.fail("de cabeça descoberta ninguém lhe pega");
+        }
+
+        quem.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ShatteredItems.VEIL_GOGGLES));
+        helper.getBlockState(baixo).useWithoutItem(helper.getLevel(), quem, bateu);
+        if (!helper.getBlockState(baixo).getValue(net.minecraft.world.level.block.DoorBlock.OPEN)) {
+            helper.fail("com os Óculos do Véu, sim");
+        }
+        helper.succeed();
+    }
+
     private static void usa(GameTestHelper helper, Player quem, ItemStack coisa, BlockPos onde, Direction lado) {
         quem.setItemInHand(InteractionHand.MAIN_HAND, coisa);
         var alvo = new BlockHitResult(Vec3.atCenterOf(helper.absolutePos(onde)), lado,

@@ -32,7 +32,13 @@ public class PocketClientTest implements FabricClientGameTest {
             });
             server.runCommand("tp @p ~ ~ ~ 180 0");
             context.waitTicks(40);
+            // esta porta foi posta pelo mundo, e não por mãos: de cabeça descoberta vê-se a racha, mas do outro
+            // lado dela está o mundo, e não o vão
             context.takeScreenshot("porta_dimensional");
+
+            server.runCommand("item replace entity @p armor.head with thaumcraft:veil_goggles");
+            context.waitTicks(40);
+            context.takeScreenshot("porta_dimensional_com_oculos");
 
             // e do outro lado dela
             server.runOnServer(s -> {

@@ -69,6 +69,12 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> RIFT_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("rift"));
 
+    /** As portas antigas do mundo de cima, dentro da ombreira de pedra delas. */
+    public static final Feature<NoneFeatureConfiguration> ANCIENT_DOOR = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("ancient_door"), new net.thaumcraft.shattered.AncientDoorFeature(NoneFeatureConfiguration.CODEC));
+    public static final ResourceKey<PlacedFeature> ANCIENT_DOOR_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("ancient_door"));
+
     /** O gerador do Limbo: terra de tecido desfiado sobre um chão de tecido eterno. */
     public static final com.mojang.serialization.MapCodec<net.thaumcraft.shattered.LimboChunkGenerator> LIMBO_GENERATOR =
             Registry.register(BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("limbo"),
@@ -104,6 +110,11 @@ public final class TCFeatures {
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_DECORATION,
                 RIFT_PLACED);
+        // e as portas que alguém abriu e já não está cá para as fechar
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES,
+                ANCIENT_DOOR_PLACED);
         // os minérios: cinábrio, âmbar e os veios de pedra infundida, de onde saem os fragmentos
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),

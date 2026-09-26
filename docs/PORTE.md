@@ -2663,3 +2663,38 @@ atravessar abre outra sala. O quebra-cabeças liga-se sozinho.
 
 O `PocketThemes` — a biblioteca, o deserto, o Nether e o reino antigo feitos à mão — saiu, e fica no histórico.
 Serviu para saber o que se queria; as de verdade servem melhor.
+
+## A porta do Thaumcraft, rachada (2026-09-26)
+
+Quem manda: *ao invés de várias portas no padrão do Minecraft, deveríamos usar a porta do Thaumcraft mas com umas
+rachaduras nela que dê pra ver o portalzinho lá*.
+
+As quatro portas dimensionais passam a ser a **porta arcana** do Thaumcraft com uma racha a atravessá-la de alto
+a baixo. A racha é um buraco de verdade — alfa zero —, e porque as portas se desenham de recorte, o que se vê por
+ela é o vão que já estava desenhado por trás da folha. Não foi preciso mexer no vão; ele sempre esteve ali, era a
+folha que o tapava toda.
+
+A racha corre pelas duas metades sem dar um salto no meio, e por isso monta-se numa folha de dezasseis por trinta
+e dois e corta-se depois (`scratchpad/Rachar.java`). **Desvio declarado:** as quatro continuam a distinguir-se,
+mas só pelo metal do aro — ferro, ouro, quartzo e o escuro da arcana —, porque as salas do original usam as
+quatro e seria pena ficarem todas iguais.
+
+## As portas que já estavam lá (2026-09-26)
+
+E: *precisa colocar também umas portas antigas pelo mundo que só dê pra ver de óculos*, com uma foto — uma
+ombreira de pedra de pé num descampado, vazia; e, com os óculos, uma porta dentro dela.
+
+A **Porta Antiga** é a única do ramo que não se desenha como bloco. O `AncientDoorBlock` diz que não tem desenho
+nenhum, e quem a põe de pé é o desenhista do vão, que já sabia quem está a olhar: uma caixa de três dedos com a
+folha rachada nas duas caras, de recorte, e o vão a brilhar pela racha. A ombreira nasce no mundo de cima, uma em
+cada quatrocentos e vinte pedaços, com o lajedo já comido pelo tempo.
+
+**Duas coisas que uma porta invisível obrigou a pensar:**
+
+* **Não pode ter corpo.** Uma parede invisível no meio de uma ombreira é uma armadilha, e não um segredo: quem
+  não tem os óculos atravessa a ombreira e não dá por nada.
+* **Nem contorno.** A caixa de ver ainda aparecia quando o rato lhe passava por cima, e a porta denunciava-se. A
+  forma de um bloco não costuma saber quem a pediu, mas a conta traz quem pediu: sem os óculos, ela devolve
+  forma nenhuma. É a única parte disto que olha para quem está do outro lado do ecrã.
+
+**Guarda:** `theAncientDoorIsOnlyThereForWhoSeesIt` — sem desenho, sem corpo, e fechada a quem não a vê.

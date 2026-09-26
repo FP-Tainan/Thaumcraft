@@ -44,6 +44,16 @@ public final class ShatteredBlocks {
 
 
     /**
+     * A Porta Antiga: a que já estava no mundo, invisível a quem não tenha os Óculos do Véu.
+     *
+     * <p>Nasce com o mundo, dentro de uma ombreira de pedra num descampado. Não se faz na bancada.
+     */
+    public static final Block ANCIENT_DIMENSIONAL_DOOR = register("ancient_dimensional_door", properties ->
+            new AncientDoorBlock(BlockSetType.STONE, properties.mapColor(MapColor.STONE)
+                    .strength(-1.0f, 3600000.0f).sound(SoundType.STONE).noOcclusion().noLootTable()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK)));
+
+    /**
      * O Alçapão Dimensional, que é a porta deitada.
      *
      * <p>O original só tem o de madeira; aqui é o mesmo.
@@ -82,7 +92,7 @@ public final class ShatteredBlocks {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("rift"),
                     new BlockEntityType<>(RiftBlockEntity::new, Set.of(
                             OAK_DIMENSIONAL_DOOR, IRON_DIMENSIONAL_DOOR,
-                            GOLD_DIMENSIONAL_DOOR, QUARTZ_DIMENSIONAL_DOOR,
+                            GOLD_DIMENSIONAL_DOOR, QUARTZ_DIMENSIONAL_DOOR, ANCIENT_DIMENSIONAL_DOOR,
                             DIMENSIONAL_TRAPDOOR, RIFT)));
 
     private ShatteredBlocks() {

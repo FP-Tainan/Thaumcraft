@@ -72,6 +72,10 @@ public class DimensionalPortalRenderer
      * quer; e por ser sólido, tapa o que está atrás, que é o que faz o vão ler-se à luz do dia.
      */
     private static final RenderType FUNDO = RenderTypes.entitySolid(WARP);
+
+    /** E a folha da Porta Antiga, que vai de recorte para a racha dela deixar ver o vão. */
+    private static final Identifier ANTIGA = Thaumcraft.id("textures/entity/ancient_door.png");
+    private static final RenderType FOLHA = RenderTypes.entityCutout(ANTIGA);
     private static final RenderType SOMA = RenderTypes.energySwirl(WARP, 0.0f, 0.0f);
 
     public static class State extends BlockEntityRenderState {
@@ -89,6 +93,11 @@ public class DimensionalPortalRenderer
 
         /** E se esta fenda aparece a quem está a olhar: as que nasceram com o mundo pedem os Óculos do Véu. */
         boolean seen = true;
+
+        /** E se é uma Porta Antiga, que não tem desenho de bloco nenhum e é este que a põe de pé. */
+        boolean ancient;
+        /** Para que lado ela olha, e de que lado a dobradiça está — a folha só se desenha bem sabendo os dois. */
+        net.minecraft.core.Direction facing = net.minecraft.core.Direction.NORTH;
     }
 
     public DimensionalPortalRenderer(BlockEntityRendererProvider.Context context) {
@@ -112,6 +121,8 @@ public class DimensionalPortalRenderer
         var bloco = fenda.getBlockState();
         state.door = bloco.getBlock() instanceof DimensionalDoorBlock
                 && bloco.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
+        state.ancient = bloco.getBlock() instanceof net.thaumcraft.shattered.AncientDoorBlock;
+        if (bloco.hasProperty(DoorBlock.FACING)) state.facing = bloco.getValue(DoorBlock.FACING);
         state.curve = fenda.curveId();
         state.yaw = fenda.riftYaw();
         state.size = fenda.size();
@@ -158,6 +169,9 @@ public class DimensionalPortalRenderer
             return;
         }
 
+        // a Porta Antiga não tem desenho de bloco: a folha dela põe-se de pé aqui, e só a quem a possa ver
+        if (state.ancient) sheet(state, pose, collector);
+
         float tempo = (float) (System.currentTimeMillis() % 200000L) / 200000.0f;
         for (int pano = 0; pano < LAYERS; pano++) {
             // o original: o pano de baixo é escuro e distante, o segundo é o maior, e os outros vão apertando
@@ -183,6 +197,60 @@ public class DimensionalPortalRenderer
             collector.submitCustomGeometry(pose, pano == 0 ? FUNDO : SOMA,
                     (m, v) -> quad(m, v, state, medidaF, cosF, sinF, correF, argb));
         }
+    }
+
+    /**
+     * A folha da Porta Antiga: uma caixa de três dedos de grossura, com a folha de dezasseis por trinta e dois
+     * nas duas caras e uma tira dela nas beiras.
+     *
+     * <p>Vai de recorte, e não de tinta cheia: onde a folha é buraco — a racha — não se desenha nada, e o que se
+     * vê por ali é o vão que está por trás. É a mesma conta que faz as rachas das outras portas deixarem ver o
+     * outro lado, só que ali quem recorta é o desenho do bloco e aqui é este.
+     */
+    private static void sheet(State state, PoseStack pose, SubmitNodeCollector collector) {
+        float minA = state.minA, maxA = state.maxA;
+        float perto = state.minFundo, longe = state.maxFundo;
+        collector.submitCustomGeometry(pose, FOLHA, (m, v) -> {
+            if (state.thinOnZ) {
+                // as duas caras, uma vista de cada lado
+                face(m, v, minA, 0, perto, maxA, 2, perto, false);
+                face(m, v, maxA, 0, longe, minA, 2, longe, false);
+                // e as beiras, com uma tira estreita da folha
+                edge(m, v, minA, perto, minA, longe);
+                edge(m, v, maxA, longe, maxA, perto);
+            } else {
+                face(m, v, perto, 0, maxA, perto, 2, minA, false);
+                face(m, v, longe, 0, minA, longe, 2, maxA, false);
+                edge(m, v, perto, minA, longe, minA);
+                edge(m, v, longe, maxA, perto, maxA);
+            }
+        });
+    }
+
+    /** Uma cara da folha, do canto de baixo ao de cima, com a folha inteira esticada nela. */
+    private static void face(PoseStack.Pose m, VertexConsumer v, float x0, float y0, float z0,
+                             float x1, float y1, float z1, boolean avesso) {
+        canto(m, v, x0, y0, z0, 0.0f, 1.0f);
+        canto(m, v, x1, y0, z1, 1.0f, 1.0f);
+        canto(m, v, x1, y1, z1, 1.0f, 0.0f);
+        canto(m, v, x0, y1, z0, 0.0f, 0.0f);
+    }
+
+    /** Uma beira da folha: três dedos de largura, com uma tira da beira da folha. */
+    private static void edge(PoseStack.Pose m, VertexConsumer v, float x0, float z0, float x1, float z1) {
+        canto(m, v, x0, 0.0f, z0, 0.0f, 1.0f);
+        canto(m, v, x1, 0.0f, z1, 0.1875f, 1.0f);
+        canto(m, v, x1, 2.0f, z1, 0.1875f, 0.0f);
+        canto(m, v, x0, 2.0f, z0, 0.0f, 0.0f);
+    }
+
+    private static void canto(PoseStack.Pose m, VertexConsumer v, float x, float y, float z, float u, float w) {
+        v.addVertex(m, x, y, z)
+                .setColor(0xFFFFFFFF)
+                .setUv(u, w)
+                .setOverlay(OverlayTexture.NO_OVERLAY)
+                .setLight(0x00F0)
+                .setNormal(m, 0.0f, 1.0f, 0.0f);
     }
 
     /**
