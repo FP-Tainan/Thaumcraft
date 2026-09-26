@@ -76,6 +76,34 @@ public class ShatteredToolsGameTest {
         helper.succeed();
     }
 
+    /**
+     * E o Firma-Fendas e o Fecha-Fendas acham-na do mesmo jeito, sem bloco nenhum por trás.
+     *
+     * <p>É o que faz a fatia da porta funcionar: a fenda não tem corpo, e sem esta procura não havia como lhe
+     * carregar em cima para a prender.
+     */
+    @GameTest
+    public void theHandToolsFindTheBodilessRift(GameTestHelper helper) {
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        Vec3 onde = helper.absoluteVec(new Vec3(1.5, 2.0, 1.5));
+        player.snapTo(onde.x, onde.y, onde.z, 0.0f, 0.0f);
+        BlockPos fenda = new BlockPos(1, 3, 4);
+        helper.setBlock(fenda, ShatteredBlocks.RIFT);
+
+        ItemStack ferro = new ItemStack(ShatteredItems.RIFT_STABILIZER);
+        player.setItemInHand(InteractionHand.MAIN_HAND, ferro);
+        ferro.getItem().use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
+        if (!helper.getBlockEntity(fenda, RiftBlockEntity.class).stabilized()) {
+            helper.fail("o Firma-Fendas havia de achar a fenda apontada");
+        }
+
+        ItemStack fecho = new ItemStack(ShatteredItems.RIFT_REMOVER);
+        player.setItemInHand(InteractionHand.MAIN_HAND, fecho);
+        fecho.getItem().use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
+        helper.assertBlockNotPresent(ShatteredBlocks.RIFT, fenda);
+        helper.succeed();
+    }
+
     /** Os números da armadura são os do original, e cada peça conserta-se com Fio do Mundo. */
     @GameTest
     public void theArmourCameFromTheOriginal(GameTestHelper helper) {

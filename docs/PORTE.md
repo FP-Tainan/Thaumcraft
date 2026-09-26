@@ -2592,3 +2592,15 @@ passam, e saem noutro sítio onde o Véu esteja fino*.
 não), que uma fenda pequena não põe ninguém cá fora por mais voltas que se dê, e que uma crescida põe — e pára
 quando a vizinhança enche. O fio que eles deixam ao morrer depende de terem morrido às mãos de alguém, e isso não
 dá para forjar num gametest sem armar uma morte inteira; fica por cobrir, e está dito.
+
+### E a fenda que não se pode apontar
+
+Depois de a porta passar a depender da fenda presa, veio à vista um buraco que até aí não fazia diferença: **uma
+fenda solta não tem corpo**, e o raio do rato passa através dela. Carregar-lhe em cima acertava no bloco por trás,
+e o Firma-Fendas nunca via fenda nenhuma — a fatia inteira não tinha como começar.
+
+A Lâmina de Fenda já resolvia isto à mão, percorrendo a linha de visão de um quarto de bloco em quarto de bloco
+(`RiftBladeItem.riftAimedAt`). O Firma-Fendas e o Fecha-Fendas passam a fazer o mesmo, e ganham um `use` para se
+poderem apontar ao ar, sem bloco por trás. Guarda: `theHandToolsFindTheBodilessRift`.
+
+Lá isto não aparecia porque a fenda era só de enfeite; aqui é dela que sai a porta.
