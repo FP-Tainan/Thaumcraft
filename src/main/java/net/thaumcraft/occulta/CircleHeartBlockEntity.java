@@ -24,9 +24,10 @@ import java.util.List;
  *
  * <p>Quem bate no glifo com um rito a correr <b>desiste</b> dele, e o que se ofereceu volta para o chão.
  *
- * <p><b>Do original fica de fora, declarado:</b> os ritos guardados em disco. Aqui um rito morre ao desligar o
- * mundo — no original ele continua de onde estava. Isso pede que cada passo saiba escrever-se, e virá quando os
- * ritos de sustento (os círculos de proteção) chegarem.
+ * <p><b>Os ritos guardam-se em disco</b>, como no original: desligado o mundo, o rito continua de onde estava.
+ * O que se guarda não são os passos — é o <b>nome do rito</b> e <b>quantos passos faltam</b>, e a fila é
+ * remontada da lista de ritos ao voltar. Um rito cujo nome já não exista é largado, e o que se ofereceu volta
+ * para o chão.
  */
 public class CircleHeartBlockEntity extends BlockEntity {
     private final List<ActiveRite> running = new ArrayList<>();
@@ -62,7 +63,7 @@ public class CircleHeartBlockEntity extends BlockEntity {
         }
 
         for (RiteRegistry.Entry rito : achados) {
-            this.running.add(new ActiveRite(rito.rite(), rito.steps(0),
+            this.running.add(new ActiveRite(rito.key(), rito.rite(), rito.steps(0),
                     quem == null ? null : quem.getUUID(), 0));
         }
         level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0f, 1.2f);
@@ -114,5 +115,38 @@ public class CircleHeartBlockEntity extends BlockEntity {
             }
         }
         coração.setChanged();
+    }
+
+    // ------------------------------------------------------------------ o que fica em disco
+
+    @Override
+    protected void saveAdditional(net.minecraft.world.level.storage.ValueOutput output) {
+        super.saveAdditional(output);
+        output.store("running", ActiveRite.Saved.CODEC.listOf(),
+                this.running.stream().map(ActiveRite::save).toList());
+        output.store("upkeep", ActiveRite.Saved.CODEC.listOf(),
+                this.upkeep.stream().map(ActiveRite::save).toList());
+        output.putLong("ticks", this.ticks);
+    }
+
+    @Override
+    protected void loadAdditional(net.minecraft.world.level.storage.ValueInput input) {
+        super.loadAdditional(input);
+        this.running.clear();
+        this.upkeep.clear();
+        read(input, "running", this.running);
+        read(input, "upkeep", this.upkeep);
+        this.ticks = input.getLongOr("ticks", 0L);
+        this.abortNext = false;
+    }
+
+    /** Lê uma das duas filas; o rito cujo nome já não exista fica de fora. */
+    private static void read(net.minecraft.world.level.storage.ValueInput input, String nome,
+                             List<ActiveRite> onde) {
+        for (ActiveRite.Saved guardado : input.read(nome, ActiveRite.Saved.CODEC.listOf())
+                .orElseGet(List::of)) {
+            ActiveRite rito = ActiveRite.load(guardado);
+            if (rito != null) onde.add(rito);
+        }
     }
 }

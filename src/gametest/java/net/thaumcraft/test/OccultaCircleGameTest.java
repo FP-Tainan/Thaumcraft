@@ -122,7 +122,7 @@ public class OccultaCircleGameTest {
 
         // e o passo dele coze o que está no chão, de vinte em vinte batidas
         var passo = new net.thaumcraft.occulta.rite.Rites.Cook(5.0f, 0.0).steps(0).getFirst();
-        var rito = new net.thaumcraft.occulta.rite.ActiveRite(achados.getFirst().rite(), List.of(passo),
+        var rito = new net.thaumcraft.occulta.rite.ActiveRite(achados.getFirst().key(), achados.getFirst().rite(), List.of(passo),
                 null, 0);
         if (passo.run(level, meio, 20L, rito) != net.thaumcraft.occulta.rite.RiteStep.Result.COMPLETED) {
             helper.fail("com carne no chão, o passo de cozer acaba");
@@ -149,7 +149,7 @@ public class OccultaCircleGameTest {
         ServerLevel level = helper.getLevel();
         BlockPos onde = helper.absolutePos(new BlockPos(2, 2, 2));
         var passo = new net.thaumcraft.occulta.rite.Sacrifice.TakePower(5.0f, 0);
-        var rito = new net.thaumcraft.occulta.rite.ActiveRite(coven -> List.of(), List.of(), null, 0);
+        var rito = new net.thaumcraft.occulta.rite.ActiveRite("tc.rite.prova", coven -> List.of(), List.of(), null, 0);
         if (passo.run(level, onde, 0L, rito) != net.thaumcraft.occulta.rite.RiteStep.Result.ABORTED_REFUND) {
             helper.fail("sem altar por perto, o rito desiste e devolve");
         }

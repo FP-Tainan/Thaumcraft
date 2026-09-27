@@ -3487,9 +3487,9 @@ Mutandis, anel de dentro de ritual) e o <b>Eclipse</b> (espada de pedra e cal, s
 três da tabela do original pedem coisa que ainda não existe aqui — a Pedra Sintonizada, a Sopa de Redstone, o
 Dedo de Sapo —, e entram quando os itens chegarem.
 
-**Dois desvios declarados.** Os ritos <b>não se guardam em disco</b>: um rito morre ao desligar o mundo, onde no
-original ele continuaria de onde estava — isso pede que cada passo saiba escrever-se, e virá com os ritos de
-sustento. E a Fertilidade não cura o aldeão zumbi como lá: no jogo de hoje isso é maçã dourada e fraqueza, que é
+**Dois desvios declarados.** ~~Os ritos <b>não se guardam em disco</b>: um rito morre ao desligar o mundo, onde
+no original ele continuaria de onde estava.~~ *Resolvido: eles guardam-se, e o que se guarda é o nome do rito e
+quantos passos faltam.* E a Fertilidade não cura o aldeão zumbi como lá: no jogo de hoje isso é maçã dourada e fraqueza, que é
 outra coisa, não o mesmo rito.
 
 **E uma armadilha que já tinha aparecido**, agora com nome: o que se registra no arranque do mod <b>não pode
@@ -3999,3 +3999,21 @@ a neve cai com ela.
 4. **O fantasma não se vê de fora como fantasma.** No original ele é desenhado translúcido, por um pacote de
    estilo que o servidor manda a todos. Este porte não tem esse pacote; o fantasma anda visível como qualquer
    um. O que ele é continua a valer em tudo o resto — o que carrega, o relógio, e não morrer.
+
+### Os ritos guardam-se em disco (2026-09-27)
+
+**Um rito a correr morria ao desligar o mundo.** Estava declarado desde a fatia dos círculos, com a nota de que
+guardá-lo pediria que cada passo soubesse escrever-se. Pedia menos do que isso.
+
+**O que se guarda não são os passos: é o nome do rito e quantos passos faltam.** Ao voltar, a fila é remontada
+da lista de ritos — sacrifício mais rito, na mesma ordem em que ela se monta ao começar — e cortada no ponto em
+que estava. Com ela voltam quem o começou, o tamanho do coven, o lugar que o rito escolheu e **o que já se
+ofereceu**, para que um rito que desista pedindo devolução continue a pôr tudo de volta no chão.
+
+**Um rito cujo nome já não exista é largado** em vez de estourar, e o mesmo vale para uma fila maior do que o
+rito tem — que é o que acontece a um mundo salvo com uma versão do mod em que o rito era mais comprido.
+
+**O que se perde com isto** é o estado que um passo tenha <b>só para si</b>, fora do {@code ActiveRite}. Nenhum
+dos ritos deste porte tem: os passos leem do mundo, do círculo e do que está guardado no rito, e o que eles
+precisam de lembrar — o alvo — já mora no rito. O dia em que um passo precisar de memória própria, ele passa a
+escrevê-la; até lá, isto é tudo.
