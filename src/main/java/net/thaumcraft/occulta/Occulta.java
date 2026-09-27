@@ -31,6 +31,7 @@ public final class Occulta {
         OccultaBatWool.init();
         OccultaEvents.init();
         Poppets.init();
+        net.thaumcraft.occulta.mirror.MirrorTravel.init();
         net.thaumcraft.occulta.rite.Rites.register();
         // a aba do ramo no livro
         net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,

@@ -3525,3 +3525,71 @@ uma vez em quatro cai um raio em cima de quem tentou.
 se empilham — na 1.7.10 uma coisa gasta ainda empilhava, hoje não. A receita dá <b>uma</b> de cento e vinte e
 oito, que é o mesmo giz na mesma conta. E a boneca da ferramenta: no original ela conserta no momento em que se
 usa a ferramenta; aqui é de segundo em segundo, no mesmo lugar em que a armadura se olha. O que se vê é o mesmo.
+
+### Os espelhos e o Mundo do Espelho (2026-09-27)
+
+A outra metade da Magia Simpática, e o pedaço do Witchery que tem mundo próprio.
+
+**Um espelho não sai de bancada.** Sai do **Rito de Infusão**: o anel do meio riscado a giz de ritual, uma
+Lágrima da Deusa, uma barra de ouro e uma vidraça, e dois mil de poder. O rito é o `RiteSummonItem` do original,
+que é o mais simples que há — o que se ofereceu some e no meio do círculo fica aquilo.
+
+**São dois blocos**, pregados numa parede, e a **alma mora nos dois** — como no original. A de cima é que guarda
+a ligação; a de baixo conta quem lhe fica diante e, sobretudo, **tem desenhista**: a figura é a mesma nas duas
+metades, a de baixo de cabeça para baixo, e é assim que a moldura oval fecha. Sem alma na de baixo o oval ficava
+pela metade, e foi a foto que apanhou isso.
+
+**Quem lhe fica diante, olhando para ele, atravessa.** São os quatro caminhos do `onEntityWalking`, na ordem do
+original: dois espelhos vazados **de costas** furam a parede entre eles (até trinta e duas casas); dentro do
+Mundo do Espelho um espelho posto por quem joga passa **de cela em cela** (paga três mil de poder de altar);
+dois vazados **em prumo** furam o chão (até dezesseis); e, não havendo nada disso, atravessa-se **de mundo**.
+
+**O Mundo do Espelho é uma colmeia.** Cada pedaço de dezesseis é uma cela de nove de lado forrada de superfície
+de espelho, e nenhuma se liga à outra. O desenho é o do `WorldChunkManagerMirror` casa por casa — as duas tabelas
+dele dizem quais casas são parede. Cada espelho ganha **a sua** cela pela caracol do `getDimCoords`, e nela nasce
+um espelho **selado** que aponta de volta. O mundo abre-se com o jogo andando, pelo mesmo `DynamicDimensions` dos
+bolsos das Portas Dimensionais.
+
+**O Reflexo** guarda a cela: cem de vida, **nenhuma pancada lhe tira mais de seis**, e ele veste a armadura, a
+melhor arma e os efeitos de quem entrou. Morto ele, o espelho de cá fica **vazado**, e passa a ser ponte.
+
+**A cara do espelho** aparece ao clique, e responde quem é o mais belo — com o rumo de quem for, e a lista de
+quem mais lhe ficou diante desde a última vez. Some em dez segundos.
+
+**As duas cantigas** tiram do Mundo do Espelho: *espelho espelho meu me manda para casa* leva à cela por onde se
+entrou (espera de cinco minutos) e *espelho espelho meu eu desisto* leva à cama (espera de uma hora). Elas ouvem-se
+no `ALLOW_CHAT_MESSAGE` do Fabric, que é o lugar de hoje para o que o original fazia no gancho de fala.
+
+**Desvios declarados.** (1) O Reflexo **não lança os feitiços da Vara Mística**, que é fatia à parte, nem toma a
+forma de lobisomem — briga de perto ou de arco. (2) A pele dele é a de reserva do próprio Witchery, e não a pele
+de quem entrou baixada do servidor de peles. (3) A **mais bela** nunca é uma Seguidora nascida na hora, por a
+Seguidora não estar portada: é sempre alguém que joga. (4) Os outros dois caminhos do clique — vestir a pele de
+outrem com um Frasco de Vínculo, e a Granada Duplicadora com a Esfera de Quartzo — pedem a Dobra e a Esfera, que
+não existem aqui. (5) O **Rito de Convocação**, que chama o Reflexo para fora do espelho, pede a Esfera de
+Quartzo e fica para quando ela chegar. (6) O Rito de Infusão pede uma Lágrima da Deusa no lugar do Cozimento de
+Lágrimas Ocas — que vem do Caldeirão de Pote e do Mundo dos Sonhos, nenhum dos dois portado — e não pede o
+demônio vivo em sacrifício. (7) O mundo do espelho é sempre da altura inteira: o ajuste de encolher do original
+morava no arquivo de ajustes, que este mod não tem. (8) A cantiga vale **nas duas línguas**, a do original e a
+de cá, porque o servidor não sabe em que língua está quem escreveu.
+
+**Uma coisa do original que aqui vai certa:** lá a caixa que dispara a travessia era escrita à mão para cada
+lado, e a do lado leste ficou com o número trocado — `maxZ` onde devia ser `maxX`. Aqui a caixa sai de uma conta
+só, e os quatro lados ficam iguais.
+
+### O espelho de textura das paredes, corrigido para todos os modelos (2026-09-27)
+
+A foto do espelho apanhou uma coisa **que vinha de trás**, e que valia para todos os modelos de Techne já
+portados: o `BoxMesh` emparelhava a figura das **quatro paredes** de cada caixa ao contrário — girada de
+meia-volta em relação ao `ModelBox` de 2014.
+
+A conta do jogo daquele tempo é esta, canto por canto: numa parede, o **menor** y da caixa fica no alto da figura
+e o **maior** x fica à direita dela. O `BoxMesh` fazia o contrário nos dois eixos. Como estes modelos se desenham
+**de cabeça para baixo** — é o giro de meia-volta que todo desenhista de Techne faz antes de começar —, o engano
+punha a figura das paredes de pernas para o ar e trocada de lado. O fundo e o topo já estavam certos.
+
+Em peça simétrica não se via. No espelho viu-se de uma vez: o vidro saía com a ponta redonda voltada para a
+emenda dos dois blocos e a faixa lavrada no meio, em vez do oval fechado que o original tem. Corrigidas as quatro
+paredes, o oval fecha.
+
+A correção vale para tudo o que usa o `BoxMesh` — a Destilaria, o Forno das Bruxas, o Caldeirão, os funis, a
+Máquina de Costura, o Altar de Convocação —, e a suíte de tela inteira correu depois dela.

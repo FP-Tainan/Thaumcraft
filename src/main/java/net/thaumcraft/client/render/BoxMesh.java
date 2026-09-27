@@ -16,6 +16,12 @@ public final class BoxMesh {
      *
      * <p>Cada canto são cinco números: x, y, z, u, v. A caixa vai de {@code (x,y,z)} e cresce
      * {@code (dx,dy,dz)}; a textura começa em {@code (u,v)} numa folha de {@code tw} por {@code th}.
+     *
+     * <p><b>O emparelhamento é o do {@code ModelBox} de 2014, canto por canto</b>: nas quatro paredes, o
+     * <i>menor</i> y da caixa fica no alto da figura e o <i>maior</i> x fica à direita dela. Como estes modelos
+     * se desenham de cabeça para baixo — é o giro de meia-volta que todo desenhista de Techne faz antes de
+     * começar —, é esse emparelhamento que põe a figura direita na tela. Trocá-lo por um que pareça mais natural
+     * gira a figura das paredes de meia-volta, e isso vê-se em qualquer peça que não seja simétrica.
      */
     public static float[] box(float x, float y, float z, float dx, float dy, float dz,
                               float u, float v, float tw, float th) {
@@ -35,16 +41,16 @@ public final class BoxMesh {
                         u + uz + ux, v + uz, u + uz + ux * 2, v, tw, th),
                 // norte
                 face(x1, y1, z, x, y1, z, x, y, z, x1, y, z,
-                        u + uz, v + uz, u + uz + ux, v + uz + dy, tw, th),
+                        u + uz + ux, v + uz + dy, u + uz, v + uz, tw, th),
                 // sul
                 face(x, y1, z1, x1, y1, z1, x1, y, z1, x, y, z1,
-                        u + uz * 2 + ux, v + uz, u + uz * 2 + ux * 2, v + uz + dy, tw, th),
+                        u + uz * 2 + ux * 2, v + uz + dy, u + uz * 2 + ux, v + uz, tw, th),
                 // oeste
                 face(x, y1, z, x, y1, z1, x, y, z1, x, y, z,
-                        u, v + uz, u + uz, v + uz + dy, tw, th),
+                        u + uz, v + uz + dy, u, v + uz, tw, th),
                 // leste
                 face(x1, y1, z1, x1, y1, z, x1, y, z, x1, y, z1,
-                        u + uz + ux, v + uz, u + uz * 2 + ux, v + uz + dy, tw, th),
+                        u + uz * 2 + ux, v + uz + dy, u + uz + ux, v + uz, tw, th),
         };
         float[] flat = new float[faces.length * 20];
         for (int i = 0; i < faces.length; i++) System.arraycopy(faces[i], 0, flat, i * 20, 20);

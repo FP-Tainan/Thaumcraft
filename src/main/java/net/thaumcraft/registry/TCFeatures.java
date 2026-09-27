@@ -86,6 +86,11 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> ANCIENT_ALTAR_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("ancient_altar"));
 
+    /** O gerador do Mundo do Espelho: a colmeia de celas forradas de superfície de espelho. */
+    public static final com.mojang.serialization.MapCodec<net.thaumcraft.occulta.mirror.MirrorChunkGenerator>
+            MIRROR_GENERATOR = Registry.register(BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("mirror"),
+            net.thaumcraft.occulta.mirror.MirrorChunkGenerator.CODEC);
+
     /** O gerador das Terras de Fora: chunks vazios, com os recursos do bioma. */
     public static final com.mojang.serialization.MapCodec<net.thaumcraft.world.outer.OuterChunkGenerator> OUTER_GENERATOR = Registry.register(
             BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("outer"), net.thaumcraft.world.outer.OuterChunkGenerator.CODEC);

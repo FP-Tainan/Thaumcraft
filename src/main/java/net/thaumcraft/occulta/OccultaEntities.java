@@ -45,6 +45,20 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.brew.BrewProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
+    /** A cara que aparece no vidro de um espelho a quem lhe pergunta. */
+    public static final EntityType<net.thaumcraft.occulta.mirror.MirrorFaceEntity> MIRROR_FACE =
+            register("mirror_face", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.mirror.MirrorFaceEntity::new, MobCategory.MISC,
+                            mob -> mob.defaultAttributes(net.thaumcraft.occulta.mirror.MirrorFaceEntity::attributes))
+                    .sized(0.5f, 0.5f).eyeHeight(0.25f).clientTrackingRange(8).fireImmune());
+
+    /** E o Reflexo, o demônio que guarda a cela de um espelho. */
+    public static final EntityType<net.thaumcraft.occulta.mirror.ReflectionEntity> REFLECTION =
+            register("reflection", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.mirror.ReflectionEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(net.thaumcraft.occulta.mirror.ReflectionEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(10).fireImmune());
+
     private OccultaEntities() {
     }
 
@@ -61,5 +75,9 @@ public final class OccultaEntities {
                 .register(MINEDRAKE, MinedrakeEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(ENT, EntEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(MIRROR_FACE, net.thaumcraft.occulta.mirror.MirrorFaceEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(REFLECTION, net.thaumcraft.occulta.mirror.ReflectionEntity.attributes());
     }
 }

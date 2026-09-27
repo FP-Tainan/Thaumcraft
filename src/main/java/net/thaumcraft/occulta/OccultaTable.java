@@ -165,6 +165,22 @@ public final class OccultaTable {
         distillery();
         circles();
         poppets();
+        mirrors();
+    }
+
+    /** Os espelhos, e o mundo que há dentro deles. */
+    private static void mirrors() {
+        ThaumcraftApi.research("AO_MIRRORS", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.SENSES, 5).add(Aspects.ELDRITCH, 4).add(Aspects.TRAVEL, 4)
+                        .add(Aspects.MAGIC, 3))
+                .at(-4, 6)
+                .icon(() -> new ItemStack(OccultaItems.WITCH_MIRROR))
+                .parents("AO_CIRCLES")
+                .pages(Page.text("tc.research_page.AO_MIRRORS.1"),
+                        Page.text("tc.research_page.AO_MIRRORS.2"),
+                        Page.text("tc.research_page.AO_MIRRORS.3"),
+                        Page.text("tc.research_page.AO_MIRRORS.4"))
+                .register();
     }
 
 

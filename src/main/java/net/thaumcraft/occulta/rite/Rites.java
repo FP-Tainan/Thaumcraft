@@ -242,6 +242,25 @@ public final class Rites {
         }
     }
 
+    /**
+     * Fazer aparecer uma coisa: o {@code RiteSummonItem} do original.
+     *
+     * <p>É o rito mais simples que há: o que se ofereceu some, e no meio do círculo fica <b>aquilo</b>. É assim
+     * que se faz um Espelho, que não sai de bancada nenhuma.
+     */
+    public record SummonItem(java.util.function.Supplier<ItemStack> what) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                Block.popResource(level, onde.above(), this.what.get());
+                level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
+                        onde.getZ() + 0.5, 48, 0.5, 1.0, 0.5, 0.1);
+                level.playSound(null, onde, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0f, 0.8f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
     /** A lista da primeira leva, posta na tabela. */
     public static void register() {
         RiteRegistry.register("tc.rite.cook", new Cook(5.0f, 0.08),
@@ -268,6 +287,15 @@ public final class Rites {
                         new Sacrifice.Power(3000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.DAY)));
+
+        // o Rito de Infusão, que prende um demônio num espelho — e é de onde todo espelho vem
+        RiteRegistry.register("tc.rite.mirror",
+                new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.WITCH_MIRROR)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TEAR_OF_THE_GODDESS,
+                                Items.GOLD_INGOT, Items.GLASS_PANE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE);
     }
 
     /** As coisas que um rito pede, para o livro. */

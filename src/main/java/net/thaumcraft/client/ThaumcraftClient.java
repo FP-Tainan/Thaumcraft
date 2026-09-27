@@ -106,6 +106,35 @@ public class ThaumcraftClient implements ClientModInitializer {
                     }
                 }), net.thaumcraft.occulta.OccultaBlocks.BREW_GAS);
 
+        // o Ars Occulta: os espelhos, a cara que aparece no vidro e o Reflexo
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.WITCH_MIRROR_ENTITY,
+                net.thaumcraft.occulta.client.MirrorRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.MirrorCreatureRenderers.MIRROR_FACE,
+                net.thaumcraft.occulta.client.MirrorCreatureRenderers::mirrorFace);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.MIRROR_FACE,
+                net.thaumcraft.occulta.client.MirrorCreatureRenderers.MirrorFace::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.REFLECTION,
+                net.thaumcraft.occulta.client.MirrorCreatureRenderers.Reflection::new);
+        // a superfície do espelho é pintada de lilás: o colorMultiplier do BlockMirrorWall
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(new net.minecraft.client.color.block.BlockTintSource() {
+                    @Override
+                    public int color(net.minecraft.world.level.block.state.BlockState state) {
+                        return net.thaumcraft.occulta.mirror.MirrorWallBlock.TINT;
+                    }
+
+                    @Override
+                    public int colorInWorld(net.minecraft.world.level.block.state.BlockState state,
+                                            net.minecraft.client.renderer.block.BlockAndTintGetter level,
+                                            net.minecraft.core.BlockPos pos) {
+                        return this.color(state);
+                    }
+                }), net.thaumcraft.occulta.OccultaBlocks.MIRROR_WALL);
+
         // o frasco atirado é o próprio item a voar, como a poção de arremesso do jogo
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.BREW,

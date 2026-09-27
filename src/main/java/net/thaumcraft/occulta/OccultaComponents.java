@@ -29,6 +29,12 @@ public final class OccultaComponents {
             builder -> builder.persistent(TaglockItem.Taglock.CODEC)
                     .networkSynchronized(TaglockItem.Taglock.STREAM_CODEC));
 
+    /** O que um Espelho em item leva dentro: a cela dele, e se o Reflexo já morreu. */
+    public static final DataComponentType<net.thaumcraft.occulta.mirror.MirrorLink.Held> MIRROR =
+            register("mirror", builder -> builder
+                    .persistent(net.thaumcraft.occulta.mirror.MirrorLink.Held.CODEC)
+                    .networkSynchronized(net.thaumcraft.occulta.mirror.MirrorLink.Held.STREAM_CODEC));
+
     private OccultaComponents() {
     }
 

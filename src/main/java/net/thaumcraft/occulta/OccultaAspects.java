@@ -136,6 +136,11 @@ public final class OccultaAspects {
 
             // a lã de morcego: corpus 1 e volatus 1, que é o que o ModHookThaumcraft4 do original lhe dá
             r.item("thaumcraft:bat_wool", new AspectList().add(Aspects.FLESH, 1).add(Aspects.FLIGHT, 1));
+
+            // o espelho: o original não o anotava, e este é do porte. A superfície do Mundo do Espelho não entra
+            // aqui porque não há item dela — ela não se apanha, e o thaumômetro não tem o que ler
+            r.item("thaumcraft:witch_mirror", new AspectList().add(Aspects.SENSES, 4).add(Aspects.ELDRITCH, 4)
+                    .add(Aspects.TRAVEL, 4).add(Aspects.MAGIC, 2));
         });
 
         // e os bichos do ramo, para o thaumômetro os ler: são planta que anda, e o Ent é árvore.
@@ -147,6 +152,10 @@ public final class OccultaAspects {
                     .add(Aspects.FIRE, 2).add(Aspects.ENTROPY, 2));
             r.entity("thaumcraft:ent", null, null, new AspectList().add(Aspects.TREE, 8).add(Aspects.PLANT, 4)
                     .add(Aspects.MAGIC, 2).add(Aspects.BEAST, 2));
+            r.entity("thaumcraft:mirror_face", null, null, new AspectList().add(Aspects.SENSES, 4)
+                    .add(Aspects.MIND, 2).add(Aspects.ELDRITCH, 2));
+            r.entity("thaumcraft:reflection", null, null, new AspectList().add(Aspects.MAN, 6)
+                    .add(Aspects.ELDRITCH, 4).add(Aspects.SOUL, 4).add(Aspects.MAGIC, 2));
         });
     }
 }

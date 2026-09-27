@@ -226,6 +226,15 @@ public final class OccultaItems {
     /** O Galho de Ent, que o Ent larga. */
     public static final Item ENT_BRANCH = register("ent_branch", Item::new);
 
+    /**
+     * O Espelho, que se prega na parede.
+     *
+     * <p>Um por casa, como no original: ele leva dentro a ligação com a cela dele, e duas ligações não caberiam na
+     * mesma pilha.
+     */
+    public static final Item WITCH_MIRROR = register("witch_mirror", properties ->
+            new net.thaumcraft.occulta.mirror.MirrorItem(properties.stacksTo(1)));
+
     /** O Altar da Bruxa, que junta o poder da natureza em volta. */
     public static final Item WITCH_ALTAR = register("witch_altar", properties ->
             new BlockItem(OccultaBlocks.WITCH_ALTAR, properties.useBlockDescriptionPrefix()));

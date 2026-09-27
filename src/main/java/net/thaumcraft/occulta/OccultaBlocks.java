@@ -191,6 +191,32 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(
                             net.thaumcraft.occulta.brew.BrewFluidBlockEntity::new, java.util.Set.of(BREW_GAS)));
 
+    // ------------------------------------------------------------------ os espelhos
+
+    /** O Espelho, que se prega na parede e leva ao Mundo do Espelho. */
+    public static final Block WITCH_MIRROR = register("witch_mirror", properties ->
+            new net.thaumcraft.occulta.mirror.MirrorBlock(properties.mapColor(MapColor.QUARTZ)
+                    .strength(1.0f, 9999.0f).sound(SoundType.GLASS).lightLevel(state -> 10)
+                    .noOcclusion().noLootTable().pushReaction(PushReaction.BLOCK), false));
+
+    /** E o selado, que é o da cela e não se quebra. */
+    public static final Block SEALED_WITCH_MIRROR = register("sealed_witch_mirror", properties ->
+            new net.thaumcraft.occulta.mirror.MirrorBlock(properties.mapColor(MapColor.QUARTZ)
+                    .strength(-1.0f, 3600000.0f).sound(SoundType.GLASS).lightLevel(state -> 10)
+                    .noOcclusion().noLootTable().pushReaction(PushReaction.BLOCK), true));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.mirror.MirrorBlockEntity> WITCH_MIRROR_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("witch_mirror"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.mirror.MirrorBlockEntity::new,
+                            java.util.Set.of(WITCH_MIRROR, SEALED_WITCH_MIRROR)));
+
+    /** A superfície de espelho, que forra as celas do Mundo do Espelho. */
+    public static final Block MIRROR_WALL = register("mirror_wall", properties ->
+            new net.thaumcraft.occulta.mirror.MirrorWallBlock(properties.mapColor(MapColor.COLOR_LIGHT_BLUE)
+                    .strength(-1.0f, 3600000.0f).sound(SoundType.GLASS).noLootTable()));
+
     // ------------------------------------------------------------------ o altar
 
     /** O Altar da Bruxa: seis deles, dois por três, fazem um altar de verdade. */
