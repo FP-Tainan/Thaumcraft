@@ -208,7 +208,8 @@
       "net.thaumcraft.test.client.OccultaKettleClientTest",
       "net.thaumcraft.test.client.OccultaKettleBrewClientTest",
       "net.thaumcraft.test.client.OccultaMachinesClientTest",
-      "net.thaumcraft.test.client.OccultaSpiritClientTest"
+      "net.thaumcraft.test.client.OccultaSpiritClientTest",
+      "net.thaumcraft.test.client.OccultaFlowingSpiritClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

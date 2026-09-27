@@ -27,13 +27,25 @@ public class OccultaKettleBrewGameTest {
         var frascos = java.util.List.of(OccultaItems.BREW_OF_VINES, OccultaItems.BREW_OF_THORNS,
                 OccultaItems.BREW_OF_INK, OccultaItems.BREW_OF_SPROUTING, OccultaItems.BREW_OF_EROSION,
                 OccultaItems.BREW_OF_LOVE, OccultaItems.BREW_OF_RAISING, OccultaItems.BREW_OF_WEBS,
-                OccultaItems.BREW_OF_ICE, OccultaItems.BREW_OF_INFECTION, OccultaItems.BREW_SUBSTITUTION);
+                OccultaItems.BREW_OF_ICE, OccultaItems.BREW_OF_INFECTION, OccultaItems.BREW_SUBSTITUTION,
+                OccultaItems.BREW_OF_FLOWING_SPIRIT, OccultaItems.BREW_OF_HOLLOW_TEARS,
+                OccultaItems.BREW_OF_SOLID_ROCK, OccultaItems.BREW_OF_SOLID_DIRT,
+                OccultaItems.BREW_OF_SOLID_SAND, OccultaItems.BREW_OF_SOLID_SANDSTONE,
+                OccultaItems.BREW_OF_SOLID_EROSION);
         java.util.Set<KettleBrews.Kind> feitios = new java.util.HashSet<>();
         for (var frasco : frascos) {
             var qual = KettleBrewItem.kindOf(new ItemStack(frasco));
             if (qual == null) helper.fail("um frasco do pote sabe de que feitio é");
             else if (!feitios.add(qual)) helper.fail("e dois frascos não são do mesmo feitio");
-            if (KettleRecipes.of(frasco) == null) helper.fail("e cada um sai de uma receita do pote");
+            // o das Lágrimas Ocas é o único que não sai do pote: ele sai da Destilaria, como no original
+            if (frasco == OccultaItems.BREW_OF_HOLLOW_TEARS) {
+                if (net.thaumcraft.occulta.DistilleryRecipes.all().stream()
+                        .noneMatch(r -> r.outputs().stream().anyMatch(o -> o.is(frasco)))) {
+                    helper.fail("o das Lágrimas Ocas sai da Destilaria");
+                }
+            } else if (KettleRecipes.of(frasco) == null) {
+                helper.fail("e cada um dos outros sai de uma receita do pote");
+            }
         }
         if (feitios.size() != KettleBrews.Kind.values().length) {
             helper.fail("há um feitio de frasco sem item: " + feitios.size()

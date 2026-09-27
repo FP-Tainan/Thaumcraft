@@ -14,6 +14,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.thaumcraft.occulta.OccultaBlocks;
 import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -60,7 +61,23 @@ public final class KettleBrews {
         /** A pedra que apodrece em pedra-de-bicho, e a doenca em quem apanha. */
         INFECTION,
         /** E a troca: o que esta largado no chao toma o lugar do chao. */
-        SUBSTITUTION;
+        SUBSTITUTION,
+
+        /** Uma poça de Espírito Fluente onde ele bate. */
+        FLOWING_SPIRIT,
+        /** E uma de Lágrimas Ocas. */
+        HOLLOW_TEARS,
+
+        /** Os cinco que endurecem uma poça de Lágrimas Ocas: em pedra, */
+        SOLID_ROCK,
+        /** em terra, */
+        SOLID_DIRT,
+        /** em areia, */
+        SOLID_SAND,
+        /** em arenito, */
+        SOLID_SANDSTONE,
+        /** e em nada — que é o que tira a poça e o chão debaixo dela. */
+        SOLID_EROSION;
 
         /** O que este frasco faz. Devolve se houve efeito: não havendo, o frasco cai de volta no chão. */
         public boolean impact(ServerLevel level, HitResult onde, @Nullable LivingEntity quemAtirou) {
@@ -76,6 +93,13 @@ public final class KettleBrews {
                 case ICE -> ice(level, onde, quemAtirou);
                 case INFECTION -> infection(level, onde, quemAtirou);
                 case SUBSTITUTION -> substitution(level, onde);
+                case FLOWING_SPIRIT -> pool(level, onde, net.thaumcraft.occulta.OccultaBlocks.FLOWING_SPIRIT);
+                case HOLLOW_TEARS -> pool(level, onde, net.thaumcraft.occulta.OccultaBlocks.HOLLOW_TEARS);
+                case SOLID_ROCK -> solidify(level, onde, Blocks.STONE);
+                case SOLID_DIRT -> solidify(level, onde, Blocks.DIRT);
+                case SOLID_SAND -> solidify(level, onde, Blocks.SAND);
+                case SOLID_SANDSTONE -> solidify(level, onde, Blocks.SANDSTONE);
+                case SOLID_EROSION -> solidify(level, onde, null);
             };
         }
     }
@@ -633,5 +657,90 @@ public final class KettleBrews {
                     && !level.getBlockState(bateu.getBlockPos()).isSolidRender() ? fora.below() : fora;
         }
         return BlockPos.containing(onde.getLocation());
+    }
+
+    // ------------------------------------------------------------------ as duas poças
+
+    /**
+     * O {@code depositLiquid} do {@code BrewFluid}: onde o frasco bate, fica o líquido.
+     *
+     * <p>O original mede a casa <b>do lado de fora</b> da que foi batida e, batendo por cima de uma casa que não
+     * é sólida, desce uma — para o líquido não ficar pendurado no ar. É a mesma conta do {@code alvo}.
+     */
+    private static boolean pool(ServerLevel level, HitResult onde, Block líquido) {
+        BlockPos casa = alvo(level, onde);
+        if (!livre(level, casa)) return false;
+        level.setBlock(casa, líquido.defaultBlockState(), Block.UPDATE_ALL);
+        level.sendParticles(ParticleTypes.SPLASH, casa.getX() + 0.5, casa.getY() + 0.5, casa.getZ() + 0.5,
+                16, 0.4, 0.4, 0.4, 0.0);
+        return true;
+    }
+
+    // ------------------------------------------------------------------ o endurecer
+
+    /** Até onde o endurecer se espalha pela poça, do lugar em que o frasco bateu. */
+    public static final int SOLIDIFY_RANGE = 64;
+    /** E quantas casas ele muda, no máximo, para não parar o servidor numa poça sem fim. */
+    public static final int SOLIDIFY_LIMIT = 4096;
+
+    /**
+     * O {@code BrewSolidifySpirit}: a poça de <b>Lágrimas Ocas</b> inteira vira aquilo.
+     *
+     * <p>Ele anda pela poça de casa em casa, pelas seis faces, até sessenta e quatro do ponto em que bateu — é o
+     * {@code SpreadEffect.spread} do original. Batendo em coisa que não seja Lágrimas Ocas, nem na casa do lado,
+     * o frasco cai de volta ao chão sem se gastar.
+     *
+     * <p>Com {@code em} nulo é o da <b>Erosão</b>: em vez de endurecer, tira a poça <b>e a casa debaixo dela</b>.
+     *
+     * <p><b>Desvio declarado:</b> o original anda pela poça <b>por chamada de função dentro de si mesma</b>, e
+     * uma poça grande o bastante estoura a pilha do jogo. Aqui a mesma varredura é feita com uma fila, e tem
+     * teto: {@value #SOLIDIFY_LIMIT} casas. O que se vê é o mesmo, e o servidor não cai.
+     */
+    private static boolean solidify(ServerLevel level, HitResult onde, @Nullable Block em) {
+        if (!(onde instanceof BlockHitResult bateu)) return false;
+
+        BlockPos início = bateu.getBlockPos();
+        if (!level.getBlockState(início).is(OccultaBlocks.HOLLOW_TEARS)) {
+            início = início.relative(bateu.getDirection());
+            if (!level.getBlockState(início).is(OccultaBlocks.HOLLOW_TEARS)) return false;
+        }
+
+        java.util.ArrayDeque<BlockPos> fila = new java.util.ArrayDeque<>();
+        java.util.HashSet<BlockPos> vistas = new java.util.HashSet<>();
+        fila.add(início.immutable());
+        vistas.add(início.immutable());
+
+        int mexidas = 0;
+        while (!fila.isEmpty() && mexidas < SOLIDIFY_LIMIT) {
+            BlockPos casa = fila.poll();
+            if (!level.getBlockState(casa).is(OccultaBlocks.HOLLOW_TEARS)) continue;
+
+            if (em == null) {
+                // ar mesmo, e não o {@code removeBlock}: numa casa de líquido ele repõe o próprio líquido
+                level.setBlock(casa, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+                BlockPos debaixo = casa.below();
+                if (!level.getBlockState(debaixo).isAir()
+                        && level.getBlockState(debaixo).getDestroySpeed(level, debaixo) >= 0.0f) {
+                    level.setBlock(debaixo, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+                }
+            } else {
+                level.setBlock(casa, em.defaultBlockState(), Block.UPDATE_ALL);
+            }
+            level.sendParticles(ParticleTypes.HAPPY_VILLAGER, casa.getX() + 0.5, casa.getY() + 1.5,
+                    casa.getZ() + 0.5, 2, 0.5, 0.5, 0.5, 0.0);
+            mexidas++;
+
+            for (Direction face : Direction.values()) {
+                BlockPos vizinha = casa.relative(face);
+                if (Math.abs(vizinha.getX() - início.getX()) >= SOLIDIFY_RANGE
+                        || Math.abs(vizinha.getY() - início.getY()) >= SOLIDIFY_RANGE
+                        || Math.abs(vizinha.getZ() - início.getZ()) >= SOLIDIFY_RANGE) {
+                    continue;
+                }
+                if (!vistas.add(vizinha.immutable())) continue;
+                if (level.getBlockState(vizinha).is(OccultaBlocks.HOLLOW_TEARS)) fila.add(vizinha.immutable());
+            }
+        }
+        return mexidas > 0;
     }
 }

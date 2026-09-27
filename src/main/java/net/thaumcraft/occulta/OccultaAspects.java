@@ -184,6 +184,21 @@ public final class OccultaAspects {
                     .add(Aspects.WATER, 1));
             r.item("thaumcraft:brew_of_flowing_spirit", new AspectList().add(Aspects.SOUL, 4)
                     .add(Aspects.MAGIC, 2).add(Aspects.WATER, 1));
+            r.item("thaumcraft:brew_of_hollow_tears", new AspectList().add(Aspects.SOUL, 4)
+                    .add(Aspects.DEATH, 2).add(Aspects.WATER, 1));
+            r.item("thaumcraft:focused_will", new AspectList().add(Aspects.MIND, 5).add(Aspects.SOUL, 3));
+            r.item("thaumcraft:condensed_fear", new AspectList().add(Aspects.MIND, 3).add(Aspects.DARKNESS, 3)
+                    .add(Aspects.SOUL, 2));
+            r.item("thaumcraft:bucket_flowing_spirit", new AspectList().add(Aspects.METAL, 6)
+                    .add(Aspects.SOUL, 4).add(Aspects.WATER, 2));
+            r.item("thaumcraft:bucket_hollow_tears", new AspectList().add(Aspects.METAL, 6)
+                    .add(Aspects.SOUL, 4).add(Aspects.DEATH, 2));
+            r.block("thaumcraft:flowing_spirit", new AspectList().add(Aspects.WATER, 1).add(Aspects.SOUL, 2));
+            r.block("thaumcraft:hollow_tears", new AspectList().add(Aspects.WATER, 1).add(Aspects.DEATH, 2));
+            for (String qual : new String[]{"rock", "dirt", "sand", "sandstone", "erosion"}) {
+                r.item("thaumcraft:brew_of_solid_" + qual, new AspectList().add(Aspects.EARTH, 4)
+                        .add(Aspects.EXCHANGE, 3).add(Aspects.MAGIC, 2));
+            }
             r.item("thaumcraft:sleeping_apple", new AspectList().add(Aspects.MIND, 4).add(Aspects.LIFE, 2).add(Aspects.MAGIC, 2));
             r.item("thaumcraft:disturbed_cotton", new AspectList().add(Aspects.CLOTH, 2).add(Aspects.MIND, 2).add(Aspects.DARKNESS, 2));
             r.item("thaumcraft:mellifluous_hunger", new AspectList().add(Aspects.HUNGER, 4).add(Aspects.MIND, 2));

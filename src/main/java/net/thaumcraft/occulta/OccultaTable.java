@@ -169,6 +169,7 @@ public final class OccultaTable {
         kettle();
         machines();
         dreams();
+        spirit();
     }
 
     /** O Caldeirão de Pote e os frascos que ele faz. */
@@ -238,6 +239,23 @@ public final class OccultaTable {
                         Page.crafting("AODreamWeaveNightmare"),
                         Page.crafting("AODreamWeaveIntensity"),
                         Page.text("tc.research_page.AO_DREAMS.5"))
+                .register();
+    }
+
+    /** O Espírito Fluente, o que a Destilaria tira dele e os cinco que endurecem a poça. */
+    private static void spirit() {
+        ThaumcraftApi.research("AO_SPIRIT", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.SOUL, 5).add(Aspects.WATER, 4).add(Aspects.EXCHANGE, 3)
+                        .add(Aspects.MAGIC, 2))
+                .at(6, 9)
+                .icon(() -> new ItemStack(OccultaItems.BREW_OF_HOLLOW_TEARS))
+                .parents("AO_DREAMS")
+                .pages(Page.text("tc.research_page.AO_SPIRIT.1"),
+                        Page.text("tc.research_page.AO_SPIRIT.2"),
+                        stillPage(OccultaItems.BREW_OF_FLOWING_SPIRIT, OccultaItems.OIL_OF_VITRIOL),
+                        Page.text("tc.research_page.AO_SPIRIT.3"),
+                        kettlePage(OccultaItems.BREW_OF_SOLID_DIRT),
+                        Page.text("tc.research_page.AO_SPIRIT.4"))
                 .register();
     }
 

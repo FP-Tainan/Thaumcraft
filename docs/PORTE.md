@@ -3567,9 +3567,9 @@ de quem entrou baixada do servidor de peles. (3) A **mais bela** nunca é uma Se
 Seguidora não estar portada: é sempre alguém que joga. (4) Os outros dois caminhos do clique — vestir a pele de
 outrem com um Frasco de Vínculo, e a Granada Duplicadora com a Esfera de Quartzo — pedem a Dobra e a Esfera, que
 não existem aqui. (5) O **Rito de Convocação**, que chama o Reflexo para fora do espelho, pede a Esfera de
-Quartzo e fica para quando ela chegar. (6) O Rito de Infusão pede uma Lágrima da Deusa no lugar do Cozimento de
-Lágrimas Ocas — que vem do Caldeirão de Pote e do Mundo dos Sonhos, nenhum dos dois portado — e não pede o
-demônio vivo em sacrifício. (7) O mundo do espelho é sempre da altura inteira: o ajuste de encolher do original
+Quartzo e fica para quando ela chegar. (6) ~~O Rito de Infusão pede uma Lágrima da Deusa no lugar do Cozimento de
+Lágrimas Ocas~~ — *resolvido: a fatia do Espírito Fluente trouxe o cozimento, e o rito voltou a pedi-lo* — e ele
+não pede o demônio vivo em sacrifício, que continua fora. (7) O mundo do espelho é sempre da altura inteira: o ajuste de encolher do original
 morava no arquivo de ajustes, que este mod não tem. (8) A cantiga vale **nas duas línguas**, a do original e a
 de cá, porque o servidor não sabe em que língua está quem escreveu.
 
@@ -3829,8 +3829,8 @@ original diz **três e três**. Corrigida.
 
 1. **Não há pesadelo demoníaco.** No original o **Coração de Demônio** *sobe* a chance em trinta e cinco por cento
    cada, e é ele que torna o pesadelo demoníaco. É bloco de demônio, e o demônio não está portado.
-2. **O termo das poças de Espírito Fluente fica fora da conta.** No original cada poça tira dez por cento. O
-   fluido entra com a Destilaria, e o termo entra com ele.
+2. ~~**O termo das poças de Espírito Fluente fica fora da conta.**~~ *Resolvido na fatia seguinte: o fluido
+   entrou, e cada poça tira os seus dez por cento, até três.*
 3. **O Algodão Sonhador é semeado por pedaço de mundo, e não por geração.** O Mundo dos Espíritos usa o gerador do
    mundo de cima, que não conhece as plantas de lá; então, quando um pedaço de mundo é carregado pela primeira vez
    do outro lado, três em cada quatro recebem uma mancha de doze algodões. O que se vê é o que o original mostra —
@@ -3852,6 +3852,65 @@ original diz **três e três**. Corrigida.
    hoje não sabe olhar os componentes de uma coisa, e portanto não distingue uma poção de Rapidez de uma de
    Veneno. A conta está em `DreamWeaveRecipe`, com as poções exatas do original — e aceita os dois cantos nas duas
    ordens, que é o que a receita moldada antiga fazia ao experimentar-se também espelhada.
-6. **O Cozimento do Espírito Corrente é item, e não frasco de fluido.** No original é um `BrewFluid`, que carrega
-   o Espírito Corrente para a Destilaria. Enquanto o fluido não entrar, ele é na bancada o que o original também é
-   ali: o ingrediente da Teia da Intensidade. Não faz mais nada, e não finge fazer.
+6. ~~**O Cozimento do Espírito Corrente é item, e não frasco de fluido.**~~ *Resolvido na fatia seguinte: ele
+   atira-se e faz poça, como o `BrewFluid` do original.*
+
+### O Espírito Fluente, a Destilaria e os Cozimentos Sólidos (2026-09-27)
+
+**O Mundo dos Espíritos tinha um líquido, e ele faltava.** Esta fatia é o `BlockFlowingSpirit` do Witchery — que
+serve aos dois líquidos do mod — e a destilação que os liga.
+
+**O Espírito Fluente** vem de um cozimento que só ferve do outro lado. Atira-se o frasco e onde ele bate fica uma
+poça. Ela **conhece quem entra nela**: gente comum sai **curada** por cinco segundos; morto-vivo, coisa do
+inferno e Pesadelo saem **fracos** por quinze. E ela desfaz o pesadelo de dentro das coisas — **Algodão
+Perturbado largado nela volta a ser Algodão Sonhador**, que é o `nightmareBane` do original.
+
+**Isso fecha a conta do pesadelo.** O termo das poças estava declarado como pendente na fatia dos sonhos: cada
+poça tira dez por cento, até três, e só contam as **fontes** — que é o que o original mede ao exigir metadado
+zero. O desvio cai.
+
+**A destilação que abre o fim da linha.** Passado pela Destilaria com **óleo de vitríolo**, o Espírito Corrente
+parte-se em três coisas que não se conseguem de nenhum outro jeito: a **Vontade Focada**, o **Medo Condensado** e
+**oito frascos de Lágrimas Ocas**, por dois potes de barro. É a receita mais importante da máquina, e a única do
+mod que gasta um cozimento para fazer outro.
+
+**As Lágrimas Ocas são o avesso dele**: nelas o morto e o demônio é que saram, e a gente comum é que definha. E
+servem para uma coisa só — a que faz delas o fim da linha.
+
+**Os cinco Cozimentos Sólidos.** Atirado numa poça de Lágrimas Ocas, cada um **endurece a poça inteira**: ele
+anda por ela de casa em casa, pelas seis faces, até sessenta e quatro do ponto em que bateu, e troca tudo de uma
+vez. Pedra, terra, areia, arenito — e o da **Erosão**, que não endurece nada: tira a poça **e a casa debaixo
+dela**. Os cinco pedem a mesma coisa no pote — Exalação Fétida, Odor de Pureza, Mutandis, Cinza de Madeira e
+Musgo Espanhol — e o que muda é a primeira casa, que diz no que a poça vira. **Dois mil de poder cada**: é o mais
+caro que o Caldeirão de Pote faz.
+
+**E o Rito de Infusão volta a pedir o que o original pede.** Ele fazia o Espelho da Bruxa com uma **Lágrima da
+Deusa** no lugar do **Cozimento das Lágrimas Ocas**, porque este não existia. Existe; o desvio cai.
+
+**Duas armadilhas do jogo de hoje, achadas aqui.**
+
+A primeira: **`Level.removeBlock` numa casa de líquido repõe o próprio líquido.** Ele monta a casa nova a partir
+do estado de fluido que lá está, e num bloco de líquido esse estado é o líquido. O Cozimento da Erosão tirava a
+poça e ela voltava no mesmo instante. Ar tem de ser posto como ar.
+
+A segunda: **andar pela poça por chamada de função dentro de si mesma**, como o `SpreadEffect.spread` do
+original, estoura a pilha do jogo numa poça grande o bastante. Aqui a mesma varredura é feita com uma fila, e tem
+teto de quatro mil e noventa e seis casas.
+
+**Desvios declarados.**
+
+1. **O líquido conta oito níveis por bloco, e não cinco.** O original põe `quantaPerBlock = 5`, que é coisa do
+   fluido do Forge de 2014; o fluido do jogo de hoje conta oito, como a água, e não se lhe muda isso sem
+   reescrever o motor do líquido. As poças correm um pouco mais longe do que corriam; nada mais muda.
+2. **Do `isDemonic` ficam os quatro do jogo.** O original conta, além do Ghast, do Blaze, do Cubo de Magma e do
+   Wither, os bichos do próprio Witchery — o Demônio, o Leonard, o Senhor do Tormento, o Diabrete e a Lilith.
+   Nenhum deles está portado.
+3. **O Portal do Espírito fica de fora, e é fatia própria.** No original, Espírito Fluente derramado sobre neve
+   **no Mundo dos Espíritos** acende um portal, e quem o atravessa **aparece no mundo de cá como fantasma** —
+   o `manifestPlayerInOverworldAsGhost`. É mecânica inteira, com um terceiro estado do jogador além do de andar
+   em espírito, e entra com ela. O líquido está completo menos esse gancho.
+4. **As duas destilações do Coração de Demônio continuam fora**, pelo mesmo motivo de sempre: o demônio não está
+   portado, e sem ele não há coração. São as únicas que faltam da tabela da máquina.
+5. **Os baldes dos dois líquidos são coisa deste porte.** O original usa o balde universal do Forge, que não
+   existe aqui; cada líquido ganhou o seu, com a figura do balde de sangue do Ars Mortuorum repintada da cor do
+   que carrega.

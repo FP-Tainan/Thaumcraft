@@ -84,9 +84,28 @@ public final class KettleTable {
                 OccultaItems.FANCIFUL_THREAD, OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.MANDRAKE_ROOT,
                 OccultaItems.SPANISH_MOSS, OccultaItems.GLINT_WEED, OccultaItems.BAT_WOOL);
 
+        // ------------------------------------------ os cinco que endurecem uma poça de Lágrimas Ocas
+        // Os cinco pedem a mesma coisa, e o que muda é a primeira: é ela que diz no que a poça vira.
+        solid(OccultaItems.BREW_OF_SOLID_DIRT, 0xFF503A50, Items.DIRT);
+        solid(OccultaItems.BREW_OF_SOLID_ROCK, 0xFF808080, Items.STONE);
+        solid(OccultaItems.BREW_OF_SOLID_SAND, 0xFFCAAF65, Items.SAND);
+        solid(OccultaItems.BREW_OF_SOLID_SANDSTONE, 0xFF7F8000, Items.SANDSTONE);
+        solid(OccultaItems.BREW_OF_SOLID_EROSION, 0xFFFFF31C, OccultaItems.BREW_OF_EROSION);
+
         // ---------------------------------------------------------- e a base dos óleos do ofício
         KettleRecipes.add(OccultaItems.REDSTONE_SOUP, 1, 0xFFFF1616, 1000.0f,
                 Items.REDSTONE, OccultaItems.DROP_OF_LUCK, OccultaItems.BAT_WOOL,
                 OccultaItems.DOG_TONGUE, OccultaItems.BELLADONNA_FLOWER, OccultaItems.MANDRAKE_ROOT);
+    }
+
+    /**
+     * Um dos cinco Cozimentos Sólidos: a mesma receita para todos, com a marca de cada um na primeira casa.
+     *
+     * <p>Dois mil de poder, que é o que o original pede — e é o mais caro do pote inteiro.
+     */
+    private static void solid(net.minecraft.world.item.Item sai, int cor, net.minecraft.world.item.Item marca) {
+        KettleRecipes.add(sai, BREW_COUNT, cor, 2000.0f,
+                marca, OccultaItems.FOUL_FUME, OccultaItems.ODOUR_OF_PURITY,
+                OccultaItems.MUTANDIS, OccultaItems.WOOD_ASH, OccultaItems.SPANISH_MOSS);
     }
 }

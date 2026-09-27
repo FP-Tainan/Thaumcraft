@@ -386,15 +386,48 @@ public final class OccultaItems {
                             net.minecraft.world.item.component.Consumables.defaultDrink().build())));
 
     /**
-     * O Cozimento do Espírito Corrente, que só se coze <b>do outro lado</b>.
+     * O Cozimento do Espírito Corrente, que só se coze <b>do outro lado</b>: o {@code BrewFluid} do original.
      *
-     * <p><b>Desvio declarado:</b> no original ele é um frasco de <b>fluido</b> — o {@code BrewFluid} que carrega
-     * o Espírito Corrente para a Destilaria. O fluido e a Destilaria são fatia à parte deste porte; até ela
-     * chegar, este frasco é o que o original também é na bancada: o ingrediente da Teia da Intensidade. Nada
-     * nele mente sobre o que faz, porque não faz mais nada.
+     * <p>Atira-se, e onde bate fica uma <b>poça de Espírito Fluente</b>.
      */
-    public static final Item BREW_OF_FLOWING_SPIRIT = register("brew_of_flowing_spirit", properties ->
-            new Item(properties.rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    public static final Item BREW_OF_FLOWING_SPIRIT =
+            brew("brew_of_flowing_spirit", net.thaumcraft.occulta.kettle.KettleBrews.Kind.FLOWING_SPIRIT);
+
+    /** E o das Lágrimas Ocas, que sai da Destilaria e faz a poça do contrário. */
+    public static final Item BREW_OF_HOLLOW_TEARS =
+            brew("brew_of_hollow_tears", net.thaumcraft.occulta.kettle.KettleBrews.Kind.HOLLOW_TEARS);
+
+    /** A Vontade Focada, que a Destilaria tira do Espírito Corrente. */
+    public static final Item FOCUSED_WILL = register("focused_will", Item::new);
+
+    /** E o Medo Condensado, que sai da mesma destilação. */
+    public static final Item CONDENSED_FEAR = register("condensed_fear", Item::new);
+
+    /**
+     * Os cinco Cozimentos Sólidos: o {@code BrewSolidifySpirit} do original.
+     *
+     * <p>Cada um endurece uma poça inteira de <b>Lágrimas Ocas</b> no que o nome dele diz — e o da Erosão, em
+     * nada: ele tira a poça e o chão debaixo dela.
+     */
+    public static final Item BREW_OF_SOLID_ROCK =
+            brew("brew_of_solid_rock", net.thaumcraft.occulta.kettle.KettleBrews.Kind.SOLID_ROCK);
+    public static final Item BREW_OF_SOLID_DIRT =
+            brew("brew_of_solid_dirt", net.thaumcraft.occulta.kettle.KettleBrews.Kind.SOLID_DIRT);
+    public static final Item BREW_OF_SOLID_SAND =
+            brew("brew_of_solid_sand", net.thaumcraft.occulta.kettle.KettleBrews.Kind.SOLID_SAND);
+    public static final Item BREW_OF_SOLID_SANDSTONE =
+            brew("brew_of_solid_sandstone", net.thaumcraft.occulta.kettle.KettleBrews.Kind.SOLID_SANDSTONE);
+    public static final Item BREW_OF_SOLID_EROSION =
+            brew("brew_of_solid_erosion", net.thaumcraft.occulta.kettle.KettleBrews.Kind.SOLID_EROSION);
+
+    /** Os dois baldes, que é como os líquidos se carregam de um lado para o outro. */
+    public static final Item BUCKET_FLOWING_SPIRIT = register("bucket_flowing_spirit", properties ->
+            new net.minecraft.world.item.BucketItem(net.thaumcraft.occulta.spirit.SpiritFluids.FLOWING_SPIRIT,
+                    properties.craftRemainder(net.minecraft.world.item.Items.BUCKET).stacksTo(1)));
+
+    public static final Item BUCKET_HOLLOW_TEARS = register("bucket_hollow_tears", properties ->
+            new net.minecraft.world.item.BucketItem(net.thaumcraft.occulta.spirit.SpiritFluids.HOLLOW_TEARS,
+                    properties.craftRemainder(net.minecraft.world.item.Items.BUCKET).stacksTo(1)));
 
     /** As cinco Teias de Sonho, uma por feitio de sonho. */
     public static final Item DREAM_WEAVE_MOVE =

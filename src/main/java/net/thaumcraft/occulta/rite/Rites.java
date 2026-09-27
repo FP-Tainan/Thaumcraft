@@ -292,7 +292,7 @@ public final class Rites {
         RiteRegistry.register("tc.rite.mirror",
                 new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.WITCH_MIRROR)),
                 new Sacrifice.Both(
-                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TEAR_OF_THE_GODDESS,
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_HOLLOW_TEARS,
                                 Items.GOLD_INGOT, Items.GLASS_PANE),
                         new Sacrifice.Power(2000.0f, 20)),
                 RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE);

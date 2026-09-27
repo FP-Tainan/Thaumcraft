@@ -17,6 +17,7 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.thaumcraft.occulta.OccultaBlocks;
 import net.thaumcraft.occulta.OccultaItems;
+import net.thaumcraft.occulta.kettle.KettleBrews;
 import net.thaumcraft.occulta.kettle.KettleRecipes;
 import net.thaumcraft.occulta.spirit.DreamCatcherBlock;
 import net.thaumcraft.occulta.spirit.DreamCatcherBlockEntity;
@@ -309,23 +310,238 @@ public class OccultaSpiritGameTest {
         int minX = chunk.getPos().getMinBlockX();
         int minZ = chunk.getPos().getMinBlockZ();
 
+        // o que já havia de algodão em volta não é desta prova: a suíte corre num mundo só
+        java.util.Set<BlockPos> antes = new java.util.HashSet<>();
+        var volta = BlockPos.betweenClosed(
+                new BlockPos(minX - 16, level.getMinY(), minZ - 16),
+                new BlockPos(minX + 31, level.getMaxY(), minZ + 31));
+        for (BlockPos casa : volta) {
+            if (level.getBlockState(casa).is(OccultaBlocks.WISPY_COTTON)) antes.add(casa.immutable());
+        }
+
         int postas = 0;
         for (long semente = 0L; semente < 30L; semente++) {
             postas += SpiritPlants.patch(chunk, RandomSource.create(semente));
         }
         if (postas == 0) helper.fail("a moita devia ter posto alguma coisa");
 
-        // e agora nada de algodão fora das dezesseis casas deste pedaço
+        // e nada do que ela pôs está fora das dezesseis casas deste pedaço
         for (BlockPos casa : BlockPos.betweenClosed(
                 new BlockPos(minX - 16, level.getMinY(), minZ - 16),
                 new BlockPos(minX + 31, level.getMaxY(), minZ + 31))) {
             if (!level.getBlockState(casa).is(OccultaBlocks.WISPY_COTTON)) continue;
+            if (antes.contains(casa)) continue;
             if (casa.getX() < minX || casa.getX() > minX + 15
                     || casa.getZ() < minZ || casa.getZ() > minZ + 15) {
                 helper.fail("a moita saiu do pedaço, em " + casa);
                 return;
             }
         }
+        helper.succeed();
+    }
+
+    // ------------------------------------------------------------------ o espírito fluente
+
+    /** A destilação que abre o fim da linha está na tabela, e dá o que o original dá. */
+    @GameTest
+    public void theDistilleryBreaksTheSpiritApart(GameTestHelper helper) {
+        var receita = net.thaumcraft.occulta.DistilleryRecipes.find(
+                new ItemStack(OccultaItems.BREW_OF_FLOWING_SPIRIT),
+                new ItemStack(OccultaItems.OIL_OF_VITRIOL),
+                new ItemStack(OccultaItems.CLAY_JAR, 64));
+        if (receita == null) {
+            helper.fail("o Espírito Corrente com óleo de vitríolo devia destilar");
+            return;
+        }
+        if (receita.jars() != 2) helper.fail("e gastar dois potes, e gasta " + receita.jars());
+
+        int lágrimas = 0;
+        boolean vontade = false;
+        boolean medo = false;
+        for (ItemStack sai : receita.outputs()) {
+            if (sai.is(OccultaItems.FOCUSED_WILL)) vontade = true;
+            if (sai.is(OccultaItems.CONDENSED_FEAR)) medo = true;
+            if (sai.is(OccultaItems.BREW_OF_HOLLOW_TEARS)) lágrimas += sai.getCount();
+        }
+        if (!vontade) helper.fail("dela sai a Vontade Focada");
+        if (!medo) helper.fail("e o Medo Condensado");
+        if (lágrimas != 8) helper.fail("e oito frascos de Lágrimas Ocas, e saíram " + lágrimas);
+
+        // e a ordem das duas não importa
+        if (net.thaumcraft.occulta.DistilleryRecipes.find(new ItemStack(OccultaItems.OIL_OF_VITRIOL),
+                new ItemStack(OccultaItems.BREW_OF_FLOWING_SPIRIT),
+                new ItemStack(OccultaItems.CLAY_JAR, 64)) == null) {
+            helper.fail("e a ordem das duas coisas não importa");
+        }
+        helper.succeed();
+    }
+
+    /** Os cinco Cozimentos Sólidos estão no pote, e todos pedem os dois mil de poder do original. */
+    @GameTest
+    public void theKettleKnowsTheFiveSolids(GameTestHelper helper) {
+        net.minecraft.world.item.Item[] cinco = {
+                OccultaItems.BREW_OF_SOLID_ROCK, OccultaItems.BREW_OF_SOLID_DIRT,
+                OccultaItems.BREW_OF_SOLID_SAND, OccultaItems.BREW_OF_SOLID_SANDSTONE,
+                OccultaItems.BREW_OF_SOLID_EROSION};
+        for (var qual : cinco) {
+            var receita = KettleRecipes.of(qual);
+            if (receita == null) {
+                helper.fail("falta no pote: " + qual);
+                return;
+            }
+            if (receita.power() != 2000.0f) {
+                helper.fail(qual + " pede dois mil de poder, e pede " + receita.power());
+            }
+            if (!receita.inputs().contains(OccultaItems.SPANISH_MOSS)) {
+                helper.fail(qual + " leva Musgo Espanhol");
+            }
+        }
+        helper.succeed();
+    }
+
+    /** O frasco do Espírito Corrente faz poça onde bate, e o das Lágrimas Ocas também. */
+    @GameTest
+    public void thrownBrewsMakePools(GameTestHelper helper) {
+        BlockPos chão = new BlockPos(1, 1, 1);
+        helper.setBlock(chão, Blocks.STONE.defaultBlockState());
+        BlockPos acima = chão.above();
+
+        var bateu = new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(chão)),
+                Direction.UP, helper.absolutePos(chão), false);
+        if (!KettleBrews.Kind.FLOWING_SPIRIT.impact(helper.getLevel(), bateu, null)) {
+            helper.fail("o frasco devia fazer poça");
+            return;
+        }
+        if (!helper.getBlockState(acima).is(OccultaBlocks.FLOWING_SPIRIT)) {
+            helper.fail("e a poça é de Espírito Fluente");
+        }
+        helper.succeed();
+    }
+
+    /** E o Sólido endurece a poça inteira de Lágrimas Ocas, e só ela. */
+    @GameTest
+    public void theSolidBrewHardensTheWholePool(GameTestHelper helper) {
+        // uma poça de cinco casas em linha, cada uma sobre pedra
+        for (int i = 0; i < 5; i++) {
+            helper.setBlock(new BlockPos(1 + i, 1, 1), Blocks.STONE.defaultBlockState());
+            helper.setBlock(new BlockPos(1 + i, 2, 1), OccultaBlocks.HOLLOW_TEARS.defaultBlockState());
+        }
+        // e uma de Espírito Fluente ao lado, que não é para mexer
+        helper.setBlock(new BlockPos(1, 1, 3), Blocks.STONE.defaultBlockState());
+        helper.setBlock(new BlockPos(1, 2, 3), OccultaBlocks.FLOWING_SPIRIT.defaultBlockState());
+
+        BlockPos alvo = helper.absolutePos(new BlockPos(1, 2, 1));
+        var bateu = new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(alvo), Direction.UP, alvo, false);
+        if (!KettleBrews.Kind.SOLID_ROCK.impact(helper.getLevel(), bateu, null)) {
+            helper.fail("o frasco devia pegar na poça");
+            return;
+        }
+        for (int i = 0; i < 5; i++) {
+            if (!helper.getBlockState(new BlockPos(1 + i, 2, 1)).is(Blocks.STONE)) {
+                helper.fail("a poça inteira devia virar pedra, e a casa " + i + " não virou");
+                return;
+            }
+        }
+        if (!helper.getBlockState(new BlockPos(1, 2, 3)).is(OccultaBlocks.FLOWING_SPIRIT)) {
+            helper.fail("e o Espírito Fluente ao lado não se mexe");
+        }
+        helper.succeed();
+    }
+
+    /** Batendo onde não há Lágrimas Ocas, o Sólido não faz nada — e o frasco volta ao chão. */
+    @GameTest
+    public void theSolidBrewNeedsAPool(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 1, 1), Blocks.STONE.defaultBlockState());
+        BlockPos alvo = helper.absolutePos(new BlockPos(1, 1, 1));
+        var bateu = new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(alvo), Direction.UP, alvo, false);
+        if (KettleBrews.Kind.SOLID_DIRT.impact(helper.getLevel(), bateu, null)) {
+            helper.fail("sem poça, o frasco não pega");
+        }
+        helper.succeed();
+    }
+
+    /** O da Erosão tira a poça e a casa debaixo dela. */
+    @GameTest
+    public void theErosionSolidTakesTheGroundToo(GameTestHelper helper) {
+        helper.setBlock(new BlockPos(1, 1, 1), Blocks.DIRT.defaultBlockState());
+        helper.setBlock(new BlockPos(1, 2, 1), OccultaBlocks.HOLLOW_TEARS.defaultBlockState());
+        BlockPos alvo = helper.absolutePos(new BlockPos(1, 2, 1));
+        var bateu = new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(alvo), Direction.UP, alvo, false);
+        if (!KettleBrews.Kind.SOLID_EROSION.impact(helper.getLevel(), bateu, null)) {
+            helper.fail("o frasco devia pegar");
+            return;
+        }
+        if (!helper.getBlockState(new BlockPos(1, 2, 1)).isAir()) helper.fail("a poça sai");
+        if (!helper.getBlockState(new BlockPos(1, 1, 1)).isAir()) helper.fail("e o chão debaixo dela também");
+        helper.succeed();
+    }
+
+    /** O Espírito Fluente cura quem é gente e enfraquece quem não é. */
+    @GameTest(maxTicks = 60)
+    public void theSpiritKnowsWhoStepsIn(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(1, 2, 1);
+        helper.setBlock(new BlockPos(1, 1, 1), Blocks.STONE.defaultBlockState());
+        helper.setBlock(onde, OccultaBlocks.FLOWING_SPIRIT.defaultBlockState());
+
+        var porco = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, onde);
+        var zumbi = helper.spawn(net.minecraft.world.entity.EntityTypes.ZOMBIE, onde);
+        helper.runAfterDelay(20, () -> {
+            if (!porco.hasEffect(net.minecraft.world.effect.MobEffects.REGENERATION)) {
+                helper.fail("o porco sai curado");
+                return;
+            }
+            if (!zumbi.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS)) {
+                helper.fail("e o zumbi, fraco");
+                return;
+            }
+            helper.succeed();
+        });
+    }
+
+    /** E o Algodão Perturbado largado nele volta a ser Algodão Sonhador. */
+    @GameTest(maxTicks = 80)
+    public void theSpiritUndoesTheNightmareInTheCotton(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(1, 2, 1);
+        helper.setBlock(new BlockPos(1, 1, 1), Blocks.STONE.defaultBlockState());
+        helper.setBlock(onde, OccultaBlocks.FLOWING_SPIRIT.defaultBlockState());
+
+        var certo = helper.absolutePos(onde);
+        var largado = new net.minecraft.world.entity.item.ItemEntity(helper.getLevel(),
+                certo.getX() + 0.5, certo.getY() + 0.3, certo.getZ() + 0.5,
+                new ItemStack(OccultaItems.DISTURBED_COTTON, 3));
+        helper.getLevel().addFreshEntity(largado);
+
+        helper.runAfterDelay(30, () -> {
+            if (!largado.getItem().is(OccultaItems.WISPY_COTTON)) {
+                helper.fail("o algodão devia perder o pesadelo, e ficou " + largado.getItem());
+                return;
+            }
+            if (largado.getItem().getCount() != 3) helper.fail("e sem perder nenhum");
+            helper.succeed();
+        });
+    }
+
+    /** As poças de Espírito Fluente também derrubam a conta do pesadelo. */
+    @GameTest
+    public void poolsBringTheReckoningDown(GameTestHelper helper) {
+        BlockPos parede = new BlockPos(1, 2, 1);
+        BlockPos apanhador = new BlockPos(1, 2, 2);
+        helper.setBlock(parede, Blocks.STONE.defaultBlockState());
+        helper.setBlock(apanhador, OccultaBlocks.DREAM_CATCHER.defaultBlockState()
+                .setValue(DreamCatcherBlock.FACING, Direction.SOUTH));
+        helper.getBlockEntity(apanhador, DreamCatcherBlockEntity.class)
+                .setWeave(DreamWeaveItem.Weave.NIGHTMARE);
+
+        BlockPos onde = helper.absolutePos(new BlockPos(1, 2, 4));
+        double sem = SpiritWorld.nightmareChance(helper.getLevel(), onde, 0.998);
+
+        helper.setBlock(new BlockPos(1, 2, 5), OccultaBlocks.FLOWING_SPIRIT.defaultBlockState());
+        double com = SpiritWorld.nightmareChance(helper.getLevel(), onde, 0.998);
+        if (com >= sem - 1.0e-9) helper.fail("a poça devia derrubar a conta, e deu " + com + " contra " + sem);
         helper.succeed();
     }
 

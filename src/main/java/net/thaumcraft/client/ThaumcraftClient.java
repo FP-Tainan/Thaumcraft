@@ -111,6 +111,23 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.KETTLE_BREW,
                 net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
 
+        // os dois líquidos do outro lado, com as figuras do próprio Witchery
+        for (var par : new Object[][]{
+                {net.thaumcraft.occulta.spirit.SpiritFluids.FLOWING_SPIRIT,
+                        net.thaumcraft.occulta.spirit.SpiritFluids.FLOWING_SPIRIT_FLOWING, "flowing_spirit"},
+                {net.thaumcraft.occulta.spirit.SpiritFluids.HOLLOW_TEARS,
+                        net.thaumcraft.occulta.spirit.SpiritFluids.HOLLOW_TEARS_FLOWING, "hollow_tears"}}) {
+            net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderingRegistry.register(
+                    (net.minecraft.world.level.material.Fluid) par[0],
+                    (net.minecraft.world.level.material.Fluid) par[1],
+                    new net.minecraft.client.renderer.block.FluidModel.Unbaked(
+                            new net.minecraft.client.resources.model.sprite.Material(
+                                    net.thaumcraft.Thaumcraft.id("block/" + par[2] + "_still"), true),
+                            new net.minecraft.client.resources.model.sprite.Material(
+                                    net.thaumcraft.Thaumcraft.id("block/" + par[2] + "_flow"), true), null,
+                            net.minecraft.client.color.block.BlockTintSources.constant(0xFFFFFFFF)));
+        }
+
         // o Ars Occulta: o que anda no sonho
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.CORPSE,

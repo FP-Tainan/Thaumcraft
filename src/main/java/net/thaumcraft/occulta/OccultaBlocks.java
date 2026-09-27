@@ -217,6 +217,20 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.spirit.DreamCatcherBlockEntity::new,
                             java.util.Set.of(DREAM_CATCHER)));
 
+    // ------------------------------------------------------------------ os dois líquidos do outro lado
+
+    /** O Espírito Fluente, que se atira e faz poça. */
+    public static final Block FLOWING_SPIRIT = register("flowing_spirit", properties ->
+            net.thaumcraft.occulta.spirit.SpiritLiquidBlock.spirit(properties.mapColor(MapColor.COLOR_CYAN)
+                    .replaceable().noCollision().strength(100.0f).pushReaction(PushReaction.DESTROY)
+                    .noLootTable().liquid().sound(SoundType.EMPTY)));
+
+    /** E as Lágrimas Ocas, que a Destilaria tira dele. */
+    public static final Block HOLLOW_TEARS = register("hollow_tears", properties ->
+            net.thaumcraft.occulta.spirit.SpiritLiquidBlock.tears(properties.mapColor(MapColor.COLOR_GRAY)
+                    .replaceable().noCollision().strength(100.0f).pushReaction(PushReaction.DESTROY)
+                    .noLootTable().liquid().sound(SoundType.EMPTY)));
+
     // ------------------------------------------------------------------ a roca, o braseiro e o crisol
 
     /** A Roca, que fia o que não se fia à mão. */

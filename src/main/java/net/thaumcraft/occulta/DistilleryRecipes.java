@@ -15,9 +15,8 @@ import java.util.List;
  * destila.
  *
  * <p>Esta é a parte da tabela que o mod de hoje alcança. <b>Fica declarado o que falta</b>, por depender de coisa
- * ainda não portada: o Coração de Demônio (o Sangue Infernal e o Mal Refinado em quantidade), o Cozimento de
- * Espírito Fluente (a Vontade Focada e o Medo Condensado) e os cozimentos engarrafados que o original usa como
- * ingrediente de si mesmos.
+ * ainda não portada: as <b>duas do Coração de Demônio</b>, que dão o Sangue Infernal — o demônio não está
+ * portado, e sem ele não há coração.
  */
 public final class DistilleryRecipes {
     /**
@@ -111,5 +110,11 @@ public final class DistilleryRecipes {
         add(um(Items.BLAZE_POWDER), um(Items.GUNPOWDER), 1,
                 um(Items.GLOWSTONE_DUST), um(Items.GLOWSTONE_DUST),
                 um(OccultaItems.REEK_OF_MISFORTUNE), ItemStack.EMPTY);
+
+        // o Cozimento do Espírito Corrente com óleo de vitríolo: a Vontade Focada, o Medo Condensado e oito
+        // frascos de Lágrimas Ocas. É a destilação que abre o fim da linha do outro lado.
+        add(um(OccultaItems.BREW_OF_FLOWING_SPIRIT), um(OccultaItems.OIL_OF_VITRIOL), 2,
+                um(OccultaItems.FOCUSED_WILL), um(OccultaItems.CONDENSED_FEAR),
+                tantos(OccultaItems.BREW_OF_HOLLOW_TEARS, 4), tantos(OccultaItems.BREW_OF_HOLLOW_TEARS, 4));
     }
 }

@@ -53,6 +53,9 @@ public final class SpiritWorld {
     public static final int COTTONS = 2;
     public static final double FIRE = 0.1;
     public static final int FIRES = 3;
+    /** E a poça de Espírito Fluente, que tira um décimo cada, até três. */
+    public static final double POOL = -0.1;
+    public static final int POOLS = 3;
 
     private SpiritWorld() {
     }
@@ -80,10 +83,12 @@ public final class SpiritWorld {
      * Sonhos com a teia dos pesadelos</b> por perto. Sem ele, a chance é a que veio, e ela é quase um. É isso que
      * faz da primeira noite uma noite feia, e do quarto de sonho uma coisa que se constrói.
      *
+     * <p>As <b>poças de Espírito Fluente</b> tiram dez por cento cada, até três — e só contam as <b>fontes</b>,
+     * que é o que o original mede ao exigir metadado zero.
+     *
      * <p><b>Do original fica de fora, declarado:</b> o <b>Coração de Demônio</b>, que lá <i>sobe</i> a chance em
      * trinta e cinco por cento cada e é o que torna o pesadelo <b>demoníaco</b>. Ele é bloco de demônio, e o
-     * demônio não está portado; sem ele, não há pesadelo demoníaco neste porte. E as <b>poças de Espírito
-     * Fluente</b>, que lá tiram dez por cento cada, entram com o Espírito Fluente.
+     * demônio não está portado; sem ele, não há pesadelo demoníaco neste porte.
      */
     public static double nightmareChance(ServerLevel level, BlockPos onde, double base) {
         if (base <= 0.0 || base >= 1.0) return base;
@@ -92,6 +97,7 @@ public final class SpiritWorld {
         boolean apanhador = false;
         int algodões = 0;
         int fogos = 0;
+        int poças = 0;
 
         for (BlockPos casa : BlockPos.betweenClosed(onde.offset(-LOOK, -LOOK, -LOOK),
                 onde.offset(LOOK, LOOK, LOOK))) {
@@ -108,6 +114,11 @@ public final class SpiritWorld {
             if (fogos < FIRES && feitio.is(Blocks.FIRE)) {
                 fogos++;
                 chance += FIRE;
+            }
+            if (poças < POOLS && feitio.is(OccultaBlocks.FLOWING_SPIRIT)
+                    && feitio.getFluidState().isSource()) {
+                poças++;
+                chance += POOL;
             }
         }
         return apanhador ? Math.min(Math.max(chance, 0.0), 1.0) : base;
