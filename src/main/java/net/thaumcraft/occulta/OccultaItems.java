@@ -147,6 +147,14 @@ public final class OccultaItems {
                                     new java.util.LinkedHashSet<>(java.util.List.of(
                                             net.minecraft.core.component.DataComponents.DYED_COLOR))))));
 
+    /** O Giz Dourado, que risca o glifo do meio. */
+    public static final Item GOLDEN_CHALK = chalk("golden_chalk", () -> OccultaBlocks.CIRCLE_HEART);
+
+    /** E os três gizes de anel. */
+    public static final Item RITUAL_CHALK = chalk("ritual_chalk", () -> OccultaBlocks.RITUAL_GLYPH);
+    public static final Item OTHERWHERE_CHALK = chalk("otherwhere_chalk", () -> OccultaBlocks.OTHERWHERE_GLYPH);
+    public static final Item INFERNAL_CHALK = chalk("infernal_chalk", () -> OccultaBlocks.INFERNAL_GLYPH);
+
     /** A Cal Virgem, que a destilaria come. */
     public static final Item QUICKLIME = register("quicklime", Item::new);
 
@@ -223,6 +231,11 @@ public final class OccultaItems {
     /** Uma semente comum: planta a sua planta, e leva o nome de item, não o do bloco. */
     private static Item seeds(String name, net.minecraft.world.level.block.Block crop) {
         return register(name, properties -> new WitchSeedItem(crop, properties.useItemDescriptionPrefix()));
+    }
+
+    /** Um giz: rende sessenta e quatro riscos, como no original. */
+    private static Item chalk(String name, java.util.function.Supplier<net.minecraft.world.level.block.Block> glyph) {
+        return register(name, properties -> new ChalkItem(glyph, properties.durability(64)));
     }
 
     private static Item register(String name, Function<Item.Properties, Item> factory) {

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "xax",
+    "xyx",
+    "xyx"
+  ],
+  "key": {
+    "a": "thaumcraft:tear_of_the_goddess",
+    "x": "thaumcraft:wood_ash",
+    "y": "thaumcraft:gypsum"
+  },
+  "result": {
+    "id": "thaumcraft:ritual_chalk",
+    "count": 2
+  }
+}

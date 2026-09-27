@@ -50,6 +50,23 @@ public class OccultaBrewClientTest implements FabricClientGameTest {
             context.waitTicks(10);
             context.takeScreenshot("destilaria");
 
+            // um círculo de giz desenhado no chão, com os três anéis
+            server.runCommand("fill ~-9 ~-1 ~-9 ~9 ~-1 ~9 minecraft:stone");
+            server.runCommand("setblock ~ ~ ~ thaumcraft:circle_heart");
+            for (int[] anel : new int[][]{{2, 0}, {4, 1}, {8, 2}}) {
+                String giz = anel[1] == 0 ? "ritual_glyph" : (anel[1] == 1 ? "otherwhere_glyph" : "infernal_glyph");
+                for (int i = -anel[0]; i <= anel[0]; i++) {
+                    for (int j = -anel[0]; j <= anel[0]; j++) {
+                        if (Math.abs(i) != anel[0] && Math.abs(j) != anel[0]) continue;
+                        server.runCommand(String.format("setblock ~%d ~ ~%d thaumcraft:%s", i, j, giz));
+                    }
+                }
+            }
+            server.runCommand("tp @p ~ ~6 ~-6 0 45");
+            context.waitTicks(10);
+            context.takeScreenshot("circulo_de_giz");
+            server.runCommand("tp @p ~ ~-6 ~6 0 20");
+
             // a névoa no chão, da cor do que se cozeu
             server.runCommand("setblock ~2 ~ ~5 thaumcraft:brew_gas");
             server.runCommand("setblock ~3 ~ ~5 thaumcraft:brew_gas");

@@ -1,0 +1,43 @@
+{
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "thaumcraft:block/ritual_glyph_7",
+    "all": "thaumcraft:block/ritual_glyph_7"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        0.25,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#all",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#all",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

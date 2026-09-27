@@ -122,6 +122,28 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(WitchesCauldronBlockEntity::new,
                             java.util.Set.of(WITCHES_CAULDRON)));
 
+    // ------------------------------------------------------------------ os círculos de giz
+
+    /** O glifo do meio, que o giz dourado risca: é nele que se bate para começar um rito. */
+    public static final Block CIRCLE_HEART = register("circle_heart", properties ->
+            new CircleHeartBlock(properties.mapColor(MapColor.SAND).strength(2.0f, 1000.0f)
+                    .sound(SoundType.WOOL).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<CircleHeartBlockEntity> CIRCLE_HEART_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("circle_heart"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(CircleHeartBlockEntity::new,
+                            java.util.Set.of(CIRCLE_HEART)));
+
+    /** Os três glifos de anel, um por giz. */
+    public static final Block RITUAL_GLYPH = glyph("ritual_glyph");
+    public static final Block OTHERWHERE_GLYPH = glyph("otherwhere_glyph");
+    public static final Block INFERNAL_GLYPH = glyph("infernal_glyph");
+
+    private static Block glyph(String name) {
+        return register(name, properties -> new GlyphBlock(properties.mapColor(MapColor.SAND)
+                .strength(2.0f, 1000.0f).sound(SoundType.WOOL).noOcclusion()));
+    }
+
     // ------------------------------------------------------------------ a destilaria
 
     /** A Destilaria, que separa uma coisa em quatro com o poder do altar. */

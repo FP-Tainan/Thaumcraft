@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "shape=0": {
+      "model": "thaumcraft:block/otherwhere_glyph_0"
+    },
+    "shape=1": {
+      "model": "thaumcraft:block/otherwhere_glyph_1"
+    },
+    "shape=2": {
+      "model": "thaumcraft:block/otherwhere_glyph_2"
+    },
+    "shape=3": {
+      "model": "thaumcraft:block/otherwhere_glyph_3"
+    },
+    "shape=4": {
+      "model": "thaumcraft:block/otherwhere_glyph_4"
+    },
+    "shape=5": {
+      "model": "thaumcraft:block/otherwhere_glyph_5"
+    },
+    "shape=6": {
+      "model": "thaumcraft:block/otherwhere_glyph_6"
+    },
+    "shape=7": {
+      "model": "thaumcraft:block/otherwhere_glyph_7"
+    },
+    "shape=8": {
+      "model": "thaumcraft:block/otherwhere_glyph_8"
+    },
+    "shape=9": {
+      "model": "thaumcraft:block/otherwhere_glyph_9"
+    },
+    "shape=10": {
+      "model": "thaumcraft:block/otherwhere_glyph_10"
+    },
+    "shape=11": {
+      "model": "thaumcraft:block/otherwhere_glyph_11"
+    }
+  }
+}

@@ -163,6 +163,7 @@ public final class OccultaTable {
         splash();
         world();
         distillery();
+        circles();
     }
 
 
@@ -186,6 +187,20 @@ public final class OccultaTable {
                 .register();
     }
 
+
+    /** Os círculos de giz e os ritos. */
+    private static void circles() {
+        ThaumcraftApi.research("AO_CIRCLES", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAGIC, 5).add(Aspects.ORDER, 4).add(Aspects.CRAFT, 3)
+                        .add(Aspects.ENERGY, 2))
+                .at(-2, 6)
+                .icon(() -> new ItemStack(OccultaItems.GOLDEN_CHALK))
+                .parents("AO_DISTILLERY")
+                .pages(Page.text("tc.research_page.AO_CIRCLES.1"), Page.crafting("AORitualChalk"),
+                        Page.text("tc.research_page.AO_CIRCLES.2"),
+                        Page.text("tc.research_page.AO_CIRCLES.3"))
+                .register();
+    }
 
     /** A Destilaria, que separa uma coisa em quatro. */
     private static void distillery() {
@@ -272,6 +287,17 @@ public final class OccultaTable {
 
     /** As receitas que o livro mostra. Correm depois de tudo montado, porque pedem os itens prontos. */
     public static void recipes() {
+        ThaumcraftApi.bookRecipe("AORitualChalk", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.RITUAL_CHALK, 2), 3, 3, List.of(
+                        List.of(new ItemStack(OccultaItems.WOOD_ASH)),
+                        List.of(new ItemStack(OccultaItems.TEAR_OF_THE_GODDESS)),
+                        List.of(new ItemStack(OccultaItems.WOOD_ASH)),
+                        List.of(new ItemStack(OccultaItems.WOOD_ASH)),
+                        List.of(new ItemStack(OccultaItems.GYPSUM)),
+                        List.of(new ItemStack(OccultaItems.WOOD_ASH)),
+                        List.of(new ItemStack(OccultaItems.WOOD_ASH)),
+                        List.of(new ItemStack(OccultaItems.GYPSUM)),
+                        List.of(new ItemStack(OccultaItems.WOOD_ASH)))));
         ThaumcraftApi.bookRecipe("AODistillery", ThaumcraftApi.crafting(
                 () -> new ItemStack(OccultaItems.DISTILLERY), 3, 3, List.of(
                         List.of(new ItemStack(OccultaItems.CLAY_JAR)), List.of(new ItemStack(Items.IRON_INGOT)),

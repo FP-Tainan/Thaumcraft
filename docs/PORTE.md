@@ -3459,3 +3459,38 @@ receitas é a parte que o mod alcança: faltam as que pedem o Coração de Demô
 que sai. O que ela mostra sai da <b>própria tabela</b>, e não da mão de quem escreve; e sai <b>na hora de
 desenhar</b>, porque no momento em que o livro se monta os itens ainda não existem — isso custou um tombo de
 arranque com um "Components not bound yet".
+
+### Os círculos de giz e os primeiros ritos (2026-09-27)
+
+O maior pedaço que faltava do Witchery. Um círculo é o contrário de um caldeirão: nada ferve, nada se mistura —
+risca-se no chão, larga-se o que se oferece dentro, e bate-se no meio.
+
+**Quatro gizes.** O de ritual sai da bancada (cinza de madeira, gesso e uma Lágrima da Deusa); os outros três
+saem dele, no caldeirão a ferver — o dourado, o do alhures e o infernal. Cada risco gasta um ponto dos sessenta e
+quatro, e riscar por cima de um glifo troca-o pelo do giz que se tem na mão.
+
+**Três anéis.** O desenho é o do original letra por letra, dezessete por dezessete: o de dentro com dezesseis
+glifos, o do meio com vinte e oito, o de fora com quarenta. Cada anel pode ser de qualquer giz, e o que um rito
+pede é <b>quantos glifos de qual giz em qual anel</b>. Não é círculo por conta de distância: é este risco.
+
+**Cada giz tem doze desenhos**, sorteados a cada risco — trinta e seis figuras ao todo, as do original.
+
+**O motor dos ritos** é a fila de passos do `RitualStep`: um passo por batida, e o que ele devolve diz o que
+acontece — fica, passa ao seguinte, desiste, ou passa a <b>sustentar-se</b> (que é como os círculos de proteção
+do original ficam de pé). O que se oferece some ao começar e <b>volta para o chão</b> se o rito desistir pedindo
+devolução.
+
+**Três ritos, os que o mod já alcança:** o <b>Cozimento</b> (vara de blaze, cinza e carvão, anel de fora
+infernal), a <b>Fertilidade</b> (farinha de osso, Sopro de Renascimento, Vapor de Diamante, cal, gesso e
+Mutandis, anel de dentro de ritual) e o <b>Eclipse</b> (espada de pedra e cal, só de dia). Os outros noventa e
+três da tabela do original pedem coisa que ainda não existe aqui — a Pedra Sintonizada, a Sopa de Redstone, o
+Dedo de Sapo —, e entram quando os itens chegarem.
+
+**Dois desvios declarados.** Os ritos <b>não se guardam em disco</b>: um rito morre ao desligar o mundo, onde no
+original ele continuaria de onde estava — isso pede que cada passo saiba escrever-se, e virá com os ritos de
+sustento. E a Fertilidade não cura o aldeão zumbi como lá: no jogo de hoje isso é maçã dourada e fraqueza, que é
+outra coisa, não o mesmo rito.
+
+**E uma armadilha que já tinha aparecido**, agora com nome: o que se registra no arranque do mod <b>não pode
+montar pilhas de item</b> — os componentes ainda não estão presos. A lista de ritos guarda os <b>itens</b> que
+cada oferenda pede, e monta a pilha só quando o livro vai desenhar.

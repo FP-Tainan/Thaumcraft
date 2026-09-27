@@ -49,6 +49,14 @@ public final class OccultaRituals {
         ritual(OccultaItems.MUTANDIS, List.of(Items.NETHER_WART),
                 () -> new ItemStack(OccultaItems.MUTANDIS_EXTREMIS));
 
+        // os três gizes que saem do caldeirão: o de ritual é a chave dos três
+        ritual(OccultaItems.RITUAL_CHALK, List.of(Items.NETHER_WART, OccultaItems.TEAR_OF_THE_GODDESS,
+                Items.ENDER_PEARL), () -> new ItemStack(OccultaItems.OTHERWHERE_CHALK));
+        ritual(OccultaItems.RITUAL_CHALK, List.of(OccultaItems.MANDRAKE_ROOT, Items.GOLD_NUGGET),
+                () -> new ItemStack(OccultaItems.GOLDEN_CHALK));
+        ritual(OccultaItems.RITUAL_CHALK, List.of(Items.NETHER_WART, Items.BLAZE_POWDER),
+                () -> new ItemStack(OccultaItems.INFERNAL_CHALK));
+
         // o caldeirão também cozinha carne, que é receita sem ingrediente nenhum
         ritual(Items.PORKCHOP, List.of(), () -> new ItemStack(Items.COOKED_PORKCHOP));
         ritual(Items.CHICKEN, List.of(), () -> new ItemStack(Items.COOKED_CHICKEN));
