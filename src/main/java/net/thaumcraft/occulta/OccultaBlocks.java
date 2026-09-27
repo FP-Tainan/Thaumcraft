@@ -191,6 +191,44 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(
                             net.thaumcraft.occulta.brew.BrewFluidBlockEntity::new, java.util.Set.of(BREW_GAS)));
 
+    // ------------------------------------------------------------------ a roca, o braseiro e o crisol
+
+    /** A Roca, que fia o que não se fia à mão. */
+    public static final Block SPINNING_WHEEL = register("spinning_wheel", properties ->
+            new net.thaumcraft.occulta.spinning.SpinningWheelBlock(properties.mapColor(MapColor.WOOD)
+                    .strength(3.5f).sound(SoundType.WOOD).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.spinning.SpinningWheelBlockEntity> SPINNING_WHEEL_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("spinning_wheel"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.spinning.SpinningWheelBlockEntity::new,
+                            java.util.Set.of(SPINNING_WHEEL)));
+
+    /** O Braseiro, em que o que arde vale para quem está em volta. */
+    public static final Block BRAZIER = register("brazier", properties ->
+            new net.thaumcraft.occulta.brazier.BrazierBlock(properties.mapColor(MapColor.METAL)
+                    .strength(3.5f).sound(SoundType.METAL).noOcclusion()
+                    .lightLevel(state -> 0)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.brazier.BrazierBlockEntity> BRAZIER_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("brazier"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.brazier.BrazierBlockEntity::new,
+                            java.util.Set.of(BRAZIER)));
+
+    /** E o Crisol de Sangue, que espera o vampiro. */
+    public static final Block BLOOD_CRUCIBLE = register("blood_crucible", properties ->
+            new BloodCrucibleBlock(properties.mapColor(MapColor.STONE)
+                    .strength(2.5f, 1000.0f).sound(SoundType.STONE).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<BloodCrucibleBlockEntity>
+            BLOOD_CRUCIBLE_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("blood_crucible"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            BloodCrucibleBlockEntity::new, java.util.Set.of(BLOOD_CRUCIBLE)));
+
     // ------------------------------------------------------------------ o caldeirão de pote
 
     /** O Caldeirão de Pote, pendurado nas correntes, onde se fazem os cozimentos de frasco. */

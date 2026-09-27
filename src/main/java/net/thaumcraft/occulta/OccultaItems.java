@@ -315,6 +315,30 @@ public final class OccultaItems {
                                     new net.minecraft.world.effect.MobEffectInstance(
                                             OccultaEffects.DEPTHS, 300, 0))).build())));
 
+    /**
+     * A Pedra Sintonizada: o {@code itemAttunedStone} do Witchery.
+     *
+     * <p>Um diamante passado por um Sopro de Magia sobre um balde de lava. É a pedra que faz uma coisa de madeira
+     * e ferro virar coisa de bruxa — está no Caldeirão de Pote, na Destilaria e na Roca.
+     */
+    public static final Item ATTUNED_STONE = register("attuned_stone", properties ->
+            new Item(properties.rarity(net.minecraft.world.item.Rarity.RARE)));
+
+    /** O Fio Dourado, que a Roca fia de um fardo de feno. */
+    public static final Item GOLDEN_THREAD = register("golden_thread", Item::new);
+
+    /** A Roca, em item. */
+    public static final Item SPINNING_WHEEL = register("spinning_wheel", properties ->
+            new BlockItem(OccultaBlocks.SPINNING_WHEEL, properties.useBlockDescriptionPrefix()));
+
+    /** O Braseiro, em item. */
+    public static final Item BRAZIER = register("brazier", properties ->
+            new BlockItem(OccultaBlocks.BRAZIER, properties.useBlockDescriptionPrefix()));
+
+    /** E o Crisol de Sangue. */
+    public static final Item BLOOD_CRUCIBLE = register("blood_crucible", properties ->
+            new BlockItem(OccultaBlocks.BLOOD_CRUCIBLE, properties.useBlockDescriptionPrefix()));
+
     /** O Caldeirão de Pote, em item. */
     public static final Item WITCHES_KETTLE = register("witches_kettle", properties ->
             new BlockItem(OccultaBlocks.WITCHES_KETTLE, properties.useBlockDescriptionPrefix()));

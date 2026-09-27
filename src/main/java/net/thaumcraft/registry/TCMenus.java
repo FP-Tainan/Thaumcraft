@@ -35,6 +35,11 @@ public final class TCMenus {
                     new MenuType<>(net.thaumcraft.occulta.WitchesOvenMenu::new, FeatureFlags.VANILLA_SET));
 
     /** A Destilaria do Ars Occulta. */
+    /** A Roca do Ars Occulta. */
+    public static final MenuType<net.thaumcraft.occulta.spinning.SpinningWheelMenu> SPINNING_WHEEL =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("spinning_wheel"),
+                    new MenuType<>(net.thaumcraft.occulta.spinning.SpinningWheelMenu::new, FeatureFlags.VANILLA_SET));
+
     public static final MenuType<net.thaumcraft.occulta.DistilleryMenu> DISTILLERY =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("distillery"),
                     new MenuType<>(net.thaumcraft.occulta.DistilleryMenu::new, FeatureFlags.VANILLA_SET));

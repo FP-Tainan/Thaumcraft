@@ -168,6 +168,13 @@ public final class OccultaAspects {
             r.item("thaumcraft:brew_substitution", new AspectList().add(Aspects.EXCHANGE, 4).add(Aspects.MOTION, 2).add(Aspects.MAGIC, 1));
             r.item("thaumcraft:brew_of_the_depths", new AspectList().add(Aspects.WATER, 4).add(Aspects.AIR, 2).add(Aspects.MAGIC, 1));
 
+            // a roca, o braseiro, o crisol e a pedra que os faz de bruxa
+            r.item("thaumcraft:attuned_stone", new AspectList().add(Aspects.MAGIC, 6).add(Aspects.CRYSTAL, 4).add(Aspects.ENERGY, 2));
+            r.item("thaumcraft:golden_thread", new AspectList().add(Aspects.CLOTH, 3).add(Aspects.GREED, 2));
+            r.item("thaumcraft:spinning_wheel", new AspectList().add(Aspects.CLOTH, 4).add(Aspects.MECHANISM, 3).add(Aspects.TREE, 2));
+            r.item("thaumcraft:brazier", new AspectList().add(Aspects.FIRE, 4).add(Aspects.METAL, 3).add(Aspects.MAGIC, 2));
+            r.item("thaumcraft:blood_crucible", new AspectList().add(Aspects.LIFE, 4).add(Aspects.EARTH, 3).add(Aspects.DEATH, 2));
+
             // o espelho: o original não o anotava, e este é do porte. A superfície do Mundo do Espelho não entra
             // aqui porque não há item dela — ela não se apanha, e o thaumômetro não tem o que ler
             r.item("thaumcraft:witch_mirror", new AspectList().add(Aspects.SENSES, 4).add(Aspects.ELDRITCH, 4)

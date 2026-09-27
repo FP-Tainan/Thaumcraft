@@ -111,6 +111,19 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.KETTLE_BREW,
                 net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
 
+        // o Ars Occulta: a Roca, o Braseiro e o Crisol de Sangue
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.SPINNING_WHEEL,
+                net.thaumcraft.occulta.client.SpinningWheelScreen::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.SPINNING_WHEEL_ENTITY,
+                net.thaumcraft.occulta.client.SpinningWheelRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.BRAZIER_ENTITY,
+                net.thaumcraft.occulta.client.BrazierRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.BLOOD_CRUCIBLE_ENTITY,
+                net.thaumcraft.occulta.client.BloodCrucibleRenderer::new);
+
         // o Ars Occulta: o Caldeirão de Pote
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.WITCHES_KETTLE_ENTITY,

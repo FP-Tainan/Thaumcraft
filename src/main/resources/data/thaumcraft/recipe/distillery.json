@@ -10,7 +10,7 @@
     "b": "thaumcraft:clay_jar",
     "x": "minecraft:iron_ingot",
     "y": "minecraft:gold_ingot",
-    "a": "minecraft:diamond"
+    "a": "thaumcraft:attuned_stone"
   },
   "result": {
     "id": "thaumcraft:distillery",

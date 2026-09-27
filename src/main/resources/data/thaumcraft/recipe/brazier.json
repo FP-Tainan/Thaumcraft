@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#a#",
+    " w ",
+    "www"
+  ],
+  "key": {
+    "a": "thaumcraft:attuned_stone",
+    "w": "minecraft:stick",
+    "#": "minecraft:iron_ingot"
+  },
+  "result": {
+    "id": "thaumcraft:brazier",
+    "count": 1
+  }
+}

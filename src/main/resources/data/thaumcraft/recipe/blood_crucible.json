@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "s s",
+    "blb"
+  ],
+  "key": {
+    "s": "minecraft:stone_brick_stairs",
+    "b": "minecraft:stone_bricks",
+    "l": "minecraft:stone_brick_slab"
+  },
+  "result": {
+    "id": "thaumcraft:blood_crucible",
+    "count": 1
+  }
+}

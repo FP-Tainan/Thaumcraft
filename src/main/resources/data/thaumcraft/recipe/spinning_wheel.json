@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aab",
+    "aac",
+    "wsw"
+  ],
+  "key": {
+    "a": "minecraft:item_frame",
+    "b": "#minecraft:wool",
+    "c": "minecraft:stick",
+    "w": "#minecraft:planks",
+    "s": "thaumcraft:attuned_stone"
+  },
+  "result": {
+    "id": "thaumcraft:spinning_wheel",
+    "count": 1
+  }
+}

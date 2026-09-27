@@ -3452,8 +3452,9 @@ quando ele vale.
 esse número muda — e só quando muda, para não falar à toa.
 
 **Duas coisas do original ficam declaradas.** A receita de montagem pede uma <b>Pedra Sintonizada</b>, que este
-porte ainda não tem; no lugar dela vai um diamante, e isso volta atrás quando a pedra chegar. E a tabela de
-receitas é a parte que o mod alcança: faltam as que pedem o Coração de Demônio e o Cozimento de Espírito Fluente.
+porte ainda não tem; no lugar dela vai um diamante, e isso volta atrás quando a pedra chegar. *(Voltou: a Pedra
+Sintonizada entrou na fatia das máquinas, de 2026-09-27, e a receita passou a pedi-la.)* E a tabela de receitas é
+a parte que o mod alcança: faltam as que pedem o Coração de Demônio e o Cozimento de Espírito Fluente.
 
 **E o livro ganhou uma página de destilação**, como a de cozimento — com o que entra, os potes que se gastam e o
 que sai. O que ela mostra sai da <b>própria tabela</b>, e não da mão de quem escreve; e sai <b>na hora de
@@ -3709,3 +3710,50 @@ de um arquivo de ajustes que este mod não tem. (3) Ficam fora, por dependerem d
 o **Revelar** e os **óleos** (que pedem casar poção com poção, e não item com item), e os três de **familiar** —
 o Salto Amaldiçoado, a Língua de Sapo e o Hitchcock —, que no original só se conseguem fazer com um familiar
 acordado.
+
+### A Pedra Sintonizada, a Roca, o Braseiro e o Crisol de Sangue (2026-09-27)
+
+**A peça que faltava era pequena e estava à vista.** A **Pedra Sintonizada** — o `itemAttunedStone` — sai de uma
+receita de bancada simples: um **Sopro de Magia** sobre um **diamante** sobre um **balde de lava**. Os três já
+existiam aqui. Com ela:
+
+- a **Destilaria** deixa de pedir um diamante no lugar dela, e **o desvio declarado na fatia dela cai**;
+- o **Caldeirão de Pote**, que estava sem receita de montagem nenhuma, ganha a do original (varas, linha, um
+  caldeirão e a pedra);
+- e a **Roca** e o **Braseiro** passam a ser montáveis.
+
+**A Roca** fia o que não se fia à mão: cinco casas — a fibra, três temperos e o que sai —, trezentos tiques por
+fio e seis décimos de poder de altar por batida. Sem altar por perto ela para, e diz isso na tela com o mesmo
+quadradinho da Destilaria. A roda gira enquanto ela fia, e o novelo gira com ela no outro sentido, que é o que o
+original faz.
+
+**Das quatro receitas dela, duas.** A **teia**, que é oito de linha e mais nada, e o **Fio Dourado**, que sai de um
+fardo de feno com um Sopro de Magia. As outras duas fiam o **algodão do sonho** — o Sonhador e o Perturbado —, que
+só nasce no Mundo dos Sonhos ao pé do Espírito Fluente; elas entram com ele.
+
+**O Braseiro** é o contrário de todas as outras máquinas do ofício: <b>não sai nada dele</b>. Põem-se três coisas,
+acende-se — com isqueiro ou com redstone — e o que ele faz é o que acontece <b>em volta</b> enquanto o fogo dura.
+Apaga-se com um balde de água, que volta vazio, ou com um frasco; quebrado aceso, larga cinza e mais nada, porque
+o que estava dentro ardeu.
+
+**Das oito receitas dele, quatro:** o **Sinal de Fumaça** (pólvora, cal virgem e pó de pedra luminosa), que faz uma
+coluna que se vê de longe por cinco minutos; o **Fogo da Força** e o do **Couro Duro** (uma Lágrima da Deusa com
+osso ou carne podre e pó de blaze), que derramam Força e Resistência a quatro de distância; e o **Fogo que Some**
+(pérola do end, olho de aranha e vara de blaze), que dá Invisibilidade a seis, por dez minutos. As outras quatro
+chamam <b>espíritos</b> — o Espectro, a Banshee e o Poltergeist — e pedem o Pó de Cemitério e o Medo Condensado.
+
+**O Crisol de Sangue está de pé, e é honesto dizer que ele ainda não faz nada.** Ele é peça de <b>vampiro</b>: o
+vampiro despeja nele o que bebeu, cinco de cada vez até vinte, e o crisol cheio abre-lhe a escolha do dom maior —
+a Tempestade com uma alcachofra-d'água na mão, o Enxame com lã de morcego, a Colheita com um osso. O bloco está
+inteiro: monta-se, guarda o sangue, mostra-o subindo dentro dele e sabe a conta dos três dons. O que falta é o
+vampiro, e ele liga-se por <b>dois fios</b>: o `feed` ao gole e o `BloodCrucibleBlock.level` à conta do grau, que
+hoje devolve zero de propósito. Até lá, quem clicar nele ouve o mesmo "não" que o original dá a quem não é
+vampiro.
+
+**Os três modelos são os do original, caixa por caixa**, tirados pelo gerador `wi-modelo.js`, que lê um
+`ModelX.java` de 2014 e escreve as linhas de `BoxMesh` — e que fica para os modelos que vierem.
+
+**Um desvio declarado, e é o único:** a receita de montagem do **Braseiro** pede, no original, uma **Pedra
+Necrótica**, que sai de um rito que pede a Pedra Sintonizada e o **Pó Espectral** — e o Pó Espectral só cai de um
+bicho morto com a **Arthana**, que não está portada. No lugar dela vai a **Pedra Sintonizada**, e isso volta atrás
+quando a Arthana chegar.

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "a",
+    "b",
+    "c"
+  ],
+  "key": {
+    "a": "thaumcraft:whiff_of_magic",
+    "b": "minecraft:diamond",
+    "c": "minecraft:lava_bucket"
+  },
+  "result": {
+    "id": "thaumcraft:attuned_stone",
+    "count": 1
+  }
+}

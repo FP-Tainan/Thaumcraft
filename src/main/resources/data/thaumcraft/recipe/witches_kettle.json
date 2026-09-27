@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "bxb",
+    "xax",
+    " y "
+  ],
+  "key": {
+    "a": "thaumcraft:attuned_stone",
+    "b": "minecraft:stick",
+    "x": "minecraft:string",
+    "y": "minecraft:cauldron"
+  },
+  "result": {
+    "id": "thaumcraft:witches_kettle",
+    "count": 1
+  }
+}
