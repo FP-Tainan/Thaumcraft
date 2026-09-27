@@ -179,6 +179,19 @@ public final class BrewRegistry {
         register(new BrewActions.Potion(Items.SOUL_SAND, new BrewName.Text("tc.brew.allergydark"), 4000,
                 net.thaumcraft.occulta.OccultaEffects.DARKNESS_ALLERGY, mins(2), GRAVE));
 
+        register(new BrewActions.Potion(Items.RED_MUSHROOM, new BrewName.Text("tc.brew.poisonweapons"), 200,
+                net.thaumcraft.occulta.OccultaEffects.POISON_WEAPONS, secs(90), COMUM));
+        register(new BrewActions.Potion(Items.COBWEB,
+                new BrewName.Text("tc.brew.reflectprojectiles", "tc.brew.attractprojectiles"), 250,
+                net.thaumcraft.occulta.OccultaEffects.REFLECT_PROJECTILES, secs(90),
+                net.thaumcraft.occulta.OccultaEffects.ATTRACT_PROJECTILES, secs(45), COMUM));
+        register(new BrewActions.Potion(Items.CACTUS, new BrewName.Text("tc.brew.thorns"), 150,
+                net.thaumcraft.occulta.OccultaEffects.SPIKED, secs(90), COMUM));
+        for (Item mato : List.of(Items.SHORT_GRASS, Items.DEAD_BUSH)) {
+            register(new BrewActions.Potion(mato, new BrewName.Text("tc.brew.volatility"), 1000,
+                    net.thaumcraft.occulta.OccultaEffects.VOLATILITY, secs(180), GRAVE));
+        }
+
         // ------------------------------------------------------------ os efeitos que mexem no lugar
         // só acontecem no cozimento atirado, porque é aí que há um lugar onde ele bateu
         register(new BrewWorldActions.Felling(Items.STRING, 0, 0, LEVE));

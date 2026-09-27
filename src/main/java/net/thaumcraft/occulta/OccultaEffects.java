@@ -183,6 +183,108 @@ public final class OccultaEffects {
                 }
             });
 
+    /**
+     * Espinhos: o {@code PotionSpiked}.
+     *
+     * <p>Quem a tem fere quem se encostar nele — de cinco em cinco batidas, um de dano mais um por grau. É o
+     * cacto passado para a pele.
+     */
+    public static final Holder<MobEffect> SPIKED = register("spiked",
+            new MobEffect(MobEffectCategory.HARMFUL, 0x4C7F32) {
+                @Override
+                public boolean applyEffectTick(ServerLevel level, LivingEntity quem, int grau) {
+                    double largura = 0.2 + 0.1 * grau;
+                    for (LivingEntity outro : level.getEntitiesOfClass(LivingEntity.class,
+                            quem.getBoundingBox().inflate(largura, 0.0, largura))) {
+                        if (outro == quem) continue;
+                        outro.hurtServer(level, level.damageSources().cactus(), 1 + grau);
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean shouldApplyEffectTickThisTick(int duração, int grau) {
+                    return duração % 5 == 3;
+                }
+            });
+
+    /**
+     * Envenenar Armas: o {@code PotionPoisonWeapons}.
+     *
+     * <p>Não faz nada em quem a tem: faz no que ele <b>acerta</b>. Do primeiro ao terceiro grau o golpe envenena,
+     * cada vez mais; do quarto em diante, apodrece. Quem trata disso é o {@link OccultaEvents}.
+     */
+    public static final Holder<MobEffect> POISON_WEAPONS = register("poison_weapons",
+            new MobEffect(MobEffectCategory.BENEFICIAL, 0x4E9331) {
+            });
+
+    /**
+     * Volatilidade: o {@code PotionVolatility}.
+     *
+     * <p>Quem a tem estoura quando apanha — e o estouro cresce com o grau, até três. De vez em quando a própria
+     * volatilidade se gasta no estouro. Não vale para queda, fogo, afogamento e fome: só para pancada.
+     */
+    public static final Holder<MobEffect> VOLATILITY = register("volatility",
+            new MobEffect(MobEffectCategory.HARMFUL, 0xC23B22) {
+            });
+
+    /**
+     * Refletir Projéteis: o {@code PotionReflectProjectiles}.
+     *
+     * <p>O que voa perto de quem a tem volta por onde veio, a um quarto da velocidade vezes o grau.
+     */
+    public static final Holder<MobEffect> REFLECT_PROJECTILES = register("reflect_projectiles",
+            new MobEffect(MobEffectCategory.BENEFICIAL, 0xD8D8F0) {
+                @Override
+                public boolean applyEffectTick(ServerLevel level, LivingEntity quem, int grau) {
+                    for (var voando : level.getEntitiesOfClass(net.minecraft.world.entity.projectile.Projectile.class,
+                            quem.getBoundingBox().inflate(2.0))) {
+                        if (voando.getOwner() == quem) continue;
+                        Vec3 vai = voando.getDeltaMovement();
+                        double quanto = -0.25 * (1.0 + grau);
+                        voando.setDeltaMovement(vai.x * quanto,
+                                vai.x > 0.0 || vai.z > 0.0 ? vai.y * quanto : vai.y, vai.z * quanto);
+                        voando.hurtMarked = true;
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean shouldApplyEffectTickThisTick(int duração, int grau) {
+                    return true;
+                }
+            });
+
+    /**
+     * Atrair Projéteis: o {@code PotionAttractProjectiles}, que é o contrário do de cima.
+     *
+     * <p>O que voa a três blocos (mais três por grau) vira-se para quem a tem. É o que o cozimento invertido dá.
+     */
+    public static final Holder<MobEffect> ATTRACT_PROJECTILES = register("attract_projectiles",
+            new MobEffect(MobEffectCategory.HARMFUL, 0x6B4F8A) {
+                @Override
+                public boolean applyEffectTick(ServerLevel level, LivingEntity quem, int grau) {
+                    double alcance = (1.0 + grau) * 3.0;
+                    for (var voando : level.getEntitiesOfClass(net.minecraft.world.entity.projectile.Projectile.class,
+                            quem.getBoundingBox().inflate(alcance))) {
+                        Vec3 vai = voando.getDeltaMovement();
+                        boolean depressa = vai.lengthSqr() > 0.25;
+                        if (voando.tickCount < (depressa ? 1 : 10)) continue;
+                        double dx = quem.getX() - voando.getX();
+                        double dy = quem.getBoundingBox().minY + quem.getBbHeight() * 0.75 - voando.getY();
+                        double dz = quem.getZ() - voando.getZ();
+                        if (Math.sqrt(dx * dx + dz * dz) < 1.0e-7) continue;
+                        voando.shoot(dx, dy, dz, 1.0f, 1.0f);
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean shouldApplyEffectTickThisTick(int duração, int grau) {
+                    return true;
+                }
+            });
+
     private OccultaEffects() {
     }
 

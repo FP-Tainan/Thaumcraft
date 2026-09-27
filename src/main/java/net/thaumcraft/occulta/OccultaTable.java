@@ -112,7 +112,10 @@ public final class OccultaTable {
                         brewPage(Items.NETHER_WART, Items.BLAZE_POWDER),
                         brewPage(OccultaItems.MANDRAKE_ROOT, Items.COD),
                         brewPage(Items.NETHER_WART, Items.FEATHER),
-                        brewPage(Items.NETHER_WART, Items.SUGAR_CANE))
+                        brewPage(Items.NETHER_WART, Items.SUGAR_CANE),
+                        brewPage(Items.NETHER_WART, Items.RED_MUSHROOM),
+                        brewPage(Items.NETHER_WART, Items.COBWEB),
+                        brewPage(Items.NETHER_WART, Items.FERMENTED_SPIDER_EYE, Items.COBWEB))
                 .register();
 
         ThaumcraftApi.research("AO_BREW_SENSES", Occulta.CATEGORY)
@@ -152,7 +155,9 @@ public final class OccultaTable {
                         brewPage(Items.NETHER_WART, Items.DIAMOND, Items.WITHER_SKELETON_SKULL),
                         brewPage(Items.NETHER_WART, Items.DIAMOND, Items.INK_SAC),
                         brewPage(Items.NETHER_WART, Items.DIAMOND, Items.NETHER_STAR, Items.SALMON),
-                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.SOUL_SAND))
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.SOUL_SAND),
+                        brewPage(Items.NETHER_WART, Items.CACTUS),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.SHORT_GRASS))
                 .register();
 
         splash();

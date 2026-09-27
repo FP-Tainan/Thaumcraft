@@ -3394,3 +3394,23 @@ bicho posto no meio depois de a caixa existir (posta com ele dentro, ela o empur
 A outra foi a que percorre as receitas do livro: eu tinha escrito a da alergia ao sol com verruga e diamante, que
 abrem quatro de espaço — e ela pesa <b>seis</b>. O caldeirão recusaria, e o livro estaria ensinando o que a panela
 não faz. A receita passou a levar uma Estrela do Nether, que abre os quatro que faltavam.
+
+### As poções do ofício, segunda leva (2026-09-27)
+
+Mais cinco, e estas todas dependem de alguém apanhar ou de alguma coisa voar:
+
+- **Espinhos** (cacto): quem a tem fere quem se encostar nele, de cinco em cinco batidas.
+- **Armas Envenenadas** (cogumelo vermelho): não faz nada em quem bebe — faz no que ele <b>acerta</b>. Do
+  primeiro ao terceiro grau envenena; do quarto, apodrece.
+- **Volatilidade** (mato alto ou arbusto seco): quem a tem estoura ao apanhar. Vindo de outro estouro é certo;
+  das outras pancadas, uma em cinco. E de vez em quando ela própria se gasta nisso.
+- **Reflexo de Projéteis** (teia): o que voa perto volta por onde veio.
+- **Atração de Projéteis** (a mesma teia, invertida): o que voa a três blocos vira-se para quem a tem.
+
+**As duas que esperam uma pancada** vivem num gancho à parte, o `OccultaEvents`, no `AFTER_DAMAGE` do Fabric — é
+o lugar de hoje para o que o original fazia no `IHandleLivingHurt`.
+
+**Uma prova escorregadia, e o que ela ensinou:** a da alergia ao escuro voltou a falhar porque o buraco de pedra
+de <b>um bloco</b> é estreito demais — o bicho tem 0,9 de largura e escorrega para fora dele à primeira sacudida.
+Agora a prova constrói uma sala de três por três, com as quinas fechadas, e põe o bicho no meio dela. Rodou duas
+vezes seguidas sem falhar.

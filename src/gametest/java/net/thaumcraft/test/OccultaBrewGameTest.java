@@ -560,16 +560,21 @@ public class OccultaBrewGameTest {
     public void theAllergyBitesAndTheMaskGuards(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         // primeiro a caixa de pedra, e só depois o bicho lá dentro: posta com ele dentro, ela o empurra para fora
-        BlockPos dentro = helper.absolutePos(new BlockPos(2, 2, 2));
-        // a caixa fecha também as quinas: sem elas a luz entra pelo canto e o lugar não é escuro
-        for (var lugar : BlockPos.betweenClosed(dentro.offset(-1, 0, -1), dentro.offset(1, 2, 1))) {
-            boolean meio = lugar.getX() == dentro.getX() && lugar.getZ() == dentro.getZ()
-                    && lugar.getY() <= dentro.getY() + 1;
-            if (meio) continue;
+        // uma sala de pedra de três por três: um buraco de um bloco é estreito demais e o bicho escorrega para
+        // fora dele. As quinas também vão fechadas, senão a luz entra de canto.
+        BlockPos dentro = helper.absolutePos(new BlockPos(3, 2, 3));
+        for (var lugar : BlockPos.betweenClosed(dentro.offset(-2, -1, -2), dentro.offset(2, 3, 2))) {
+            boolean sala = Math.abs(lugar.getX() - dentro.getX()) <= 1
+                    && Math.abs(lugar.getZ() - dentro.getZ()) <= 1
+                    && lugar.getY() >= dentro.getY() && lugar.getY() <= dentro.getY() + 1;
+            if (sala) {
+                level.setBlockAndUpdate(lugar, Blocks.AIR.defaultBlockState());
+                continue;
+            }
             level.setBlockAndUpdate(lugar, Blocks.STONE.defaultBlockState());
         }
 
-        var bicho = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 2));
+        var bicho = helper.spawn(EntityTypes.PIG, new BlockPos(3, 2, 3));
         bicho.setNoAi(true);
         bicho.snapTo(dentro.getX() + 0.5, dentro.getY(), dentro.getZ() + 0.5, 0.0f, 0.0f);
         float antes = bicho.getHealth();
@@ -579,7 +584,7 @@ public class OccultaBrewGameTest {
                 net.thaumcraft.occulta.OccultaEffects.DARKNESS_ALLERGY, 200, 1));
 
         // a máscara guarda do que é ruim numa névoa
-        var protegido = helper.spawn(EntityTypes.PIG, new BlockPos(3, 2, 2));
+        var protegido = helper.spawn(EntityTypes.PIG, new BlockPos(6, 2, 1));
         protegido.addEffect(new net.minecraft.world.effect.MobEffectInstance(
                 net.thaumcraft.occulta.OccultaEffects.GAS_MASK, 400, 0));
         BrewModifiers comMáscara = new BrewModifiers();
@@ -588,7 +593,7 @@ public class OccultaBrewGameTest {
         if (protegido.hasEffect(MobEffects.POISON)) helper.fail("com máscara, o veneno da névoa não pega");
 
         // e sem ela pega
-        var semMáscara = helper.spawn(EntityTypes.PIG, new BlockPos(4, 2, 2));
+        var semMáscara = helper.spawn(EntityTypes.PIG, new BlockPos(6, 2, 3));
         Brew.apply(level, semMáscara, List.of(Items.NETHER_WART, Items.SPIDER_EYE), new BrewModifiers());
         if (!semMáscara.hasEffect(MobEffects.POISON)) helper.fail("sem máscara, pega");
 
@@ -600,11 +605,72 @@ public class OccultaBrewGameTest {
             bicho.discard();
             protegido.discard();
             semMáscara.discard();
-            for (var lugar : BlockPos.betweenClosed(dentro.offset(-1, 0, -1), dentro.offset(1, 2, 1))) {
+            for (var lugar : BlockPos.betweenClosed(dentro.offset(-2, -1, -2), dentro.offset(2, 3, 2))) {
                 if (level.getBlockState(lugar).is(Blocks.STONE)) {
                     level.setBlockAndUpdate(lugar, Blocks.AIR.defaultBlockState());
                 }
             }
+        });
+    }
+
+    /** As armas envenenadas envenenam quem se acerta, e não quem as bebe. */
+    @GameTest
+    public void poisonWeaponsPoisonTheOther(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var quemBate = helper.spawn(EntityTypes.ZOMBIE, new BlockPos(2, 2, 2));
+        var quemLeva = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 3));
+        Brew.apply(level, quemBate, List.of(Items.NETHER_WART, Items.RED_MUSHROOM), new BrewModifiers());
+        if (!quemBate.hasEffect(net.thaumcraft.occulta.OccultaEffects.POISON_WEAPONS)) {
+            helper.fail("o cogumelo vermelho põe veneno nas armas de quem bebe");
+        }
+        if (quemBate.hasEffect(MobEffects.POISON)) helper.fail("mas não envenena quem bebeu");
+
+        quemBate.doHurtTarget(level, quemLeva);
+        if (!quemLeva.hasEffect(MobEffects.POISON)) helper.fail("e quem apanha o golpe é que se envenena");
+        quemBate.discard();
+        quemLeva.discard();
+        helper.succeed();
+    }
+
+    /** A volatilidade estoura quem apanha. */
+    @GameTest
+    public void volatilityBlowsUpWhoIsHurt(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var bicho = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 2));
+        bicho.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                net.thaumcraft.occulta.OccultaEffects.VOLATILITY, 400, 3));
+        var perto = helper.spawn(EntityTypes.PIG, new BlockPos(3, 2, 2));
+        float antes = perto.getHealth();
+
+        // com o grau alto, quase toda pancada estoura; vinte tentativas bastam
+        for (int volta = 0; volta < 20 && perto.getHealth() >= antes; volta++) {
+            bicho.hurtServer(level, level.damageSources().magic(), 1.0f);
+            bicho.invulnerableTime = 0;
+            bicho.setHealth(20.0f);
+        }
+        if (perto.getHealth() >= antes) helper.fail("quem estava ao lado devia ter apanhado do estouro");
+        bicho.discard();
+        perto.discard();
+        helper.succeed();
+    }
+
+    /** E os espinhos ferem quem se encosta. */
+    @GameTest(maxTicks = 100)
+    public void spikesHurtWhoTouches(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var comEspinho = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 2));
+        comEspinho.setNoAi(true);
+        comEspinho.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                net.thaumcraft.occulta.OccultaEffects.SPIKED, 200, 0));
+        var encostado = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 2));
+        encostado.setNoAi(true);
+        float antes = encostado.getHealth();
+        helper.succeedWhen(() -> {
+            if (encostado.getHealth() >= antes) {
+                throw helper.assertionException("quem está encostado ainda não se espetou");
+            }
+            comEspinho.discard();
+            encostado.discard();
         });
     }
 }
