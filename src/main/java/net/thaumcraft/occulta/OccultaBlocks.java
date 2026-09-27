@@ -217,6 +217,18 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.spirit.DreamCatcherBlockEntity::new,
                             java.util.Set.of(DREAM_CATCHER)));
 
+    /** A casa de barreira, que os ritos de proteção põem e que some sozinha. */
+    public static final Block BARRIER = register("barrier", properties ->
+            new net.thaumcraft.occulta.BarrierBlock(properties.mapColor(MapColor.NONE)
+                    .strength(-1.0f, 1000.0f).noLootTable().noOcclusion().isValidSpawn((a, b, c, d) -> false)
+                    .sound(SoundType.GLASS).pushReaction(PushReaction.BLOCK)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.BarrierBlockEntity> BARRIER_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("barrier"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.BarrierBlockEntity::new, java.util.Set.of(BARRIER)));
+
     // ------------------------------------------------------------------ os dois líquidos do outro lado
 
     /** O Espírito Fluente, que se atira e faz poça. */

@@ -465,6 +465,125 @@ public final class Rites {
         }
     }
 
+    /**
+     * Os ritos de proteção: a {@code RiteProtectionCircleBarrier} sobre a {@code RiteProtectionCircle} do
+     * Witchery.
+     *
+     * <p>Eles não acontecem e acabam: <b>sustentam-se</b>. De vinte em vinte batidas o rito volta a desenhar uma
+     * <b>cúpula de barreira</b> em volta do círculo — chão, parede cilíndrica e teto — e cada casa dela dura
+     * trinta batidas. Parado o rito, a parede desfaz-se sozinha em segundo e meio.
+     *
+     * <p>E ele <b>paga por batida</b>: sem um Altar por perto com poder de sobra, o rito morre. É o que faz de
+     * uma barreira uma coisa que se mantém, e não uma coisa que se faz.
+     *
+     * @param radius         o raio da cúpula
+     * @param height         a altura dela
+     * @param upkeep         quanto poder ela come por batida
+     * @param blocksPlayers  se trava gente também, e não só o que não é gente
+     * @param ticksToLive    quantas batidas ela vive, ou zero para viver enquanto houver poder
+     */
+    public record Barrier(int radius, int height, float upkeep, boolean blocksPlayers, int ticksToLive)
+            implements Rite {
+        /** De quantas em quantas batidas ela se redesenha. */
+        public static final int EVERY = 20;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (rito.stage() == 0) {
+                    if (ticks % EVERY != 0L) return RiteStep.Result.STARTING;
+                    rito.advance();
+                    level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 0.9f);
+                }
+
+                if (this.upkeep > 0.0f) {
+                    var altar = net.thaumcraft.occulta.PowerSources.closest(level, onde);
+                    if (altar == null || !altar.consume(this.upkeep)) return RiteStep.Result.ABORTED;
+                }
+
+                if (this.ticksToLive > 0 && ticks % EVERY == 0L
+                        && rito.advance() >= this.ticksToLive) {
+                    return RiteStep.Result.COMPLETED;
+                }
+
+                if (ticks % EVERY == 0L) {
+                    var dono = rito.starter();
+                    disc(level, onde.below(), this.radius, dono);
+                    cylinder(level, onde, this.radius, dono);
+                    disc(level, onde.above(this.height), this.radius, dono);
+                }
+                return RiteStep.Result.UPKEEP;
+            });
+        }
+
+        /** Uma casa de barreira, se ali couber. */
+        private void put(ServerLevel level, BlockPos casa, java.util.UUID dono) {
+            var feitio = level.getBlockState(casa);
+            if (!feitio.isAir() && !feitio.canBeReplaced()
+                    && !feitio.is(net.thaumcraft.occulta.OccultaBlocks.BARRIER)) {
+                return;
+            }
+            net.thaumcraft.occulta.BarrierBlock.put(level, casa,
+                    net.thaumcraft.occulta.BarrierBlock.TICKS_TO_LIVE, this.blocksPlayers, dono);
+        }
+
+        /** A parede: a coluna de cada ponto do círculo. */
+        private void cylinder(ServerLevel level, BlockPos meio, int raio, java.util.UUID dono) {
+            int x = raio;
+            int z = 0;
+            int erro = 1 - x;
+            while (x >= z) {
+                column(level, meio, x, z, dono);
+                column(level, meio, z, x, dono);
+                column(level, meio, -x, z, dono);
+                column(level, meio, -z, x, dono);
+                column(level, meio, -x, -z, dono);
+                column(level, meio, -z, -x, dono);
+                column(level, meio, x, -z, dono);
+                column(level, meio, z, -x, dono);
+                z++;
+                if (erro < 0) {
+                    erro += 2 * z + 1;
+                } else {
+                    x--;
+                    erro += 2 * (z - x + 1);
+                }
+            }
+        }
+
+        private void column(ServerLevel level, BlockPos meio, int dx, int dz, java.util.UUID dono) {
+            for (int dy = 0; dy < this.height; dy++) {
+                put(level, meio.offset(dx, dy, dz), dono);
+            }
+        }
+
+        /** E o chão e o teto: um disco cheio. */
+        private void disc(ServerLevel level, BlockPos meio, int raio, java.util.UUID dono) {
+            int x = raio;
+            int z = 0;
+            int erro = 1 - x;
+            while (x >= z) {
+                row(level, meio, -x, x, z, dono);
+                row(level, meio, -z, z, x, dono);
+                row(level, meio, -x, x, -z, dono);
+                row(level, meio, -z, z, -x, dono);
+                z++;
+                if (erro < 0) {
+                    erro += 2 * z + 1;
+                } else {
+                    x--;
+                    erro += 2 * (z - x + 1);
+                }
+            }
+        }
+
+        private void row(ServerLevel level, BlockPos meio, int de, int até, int dz, java.util.UUID dono) {
+            for (int dx = de; dx <= até; dx++) {
+                put(level, meio.offset(dx, 0, dz), dono);
+            }
+        }
+    }
+
     // ------------------------------------------------------------------ os ritos do tempo e da terra
 
     /**
@@ -846,6 +965,30 @@ public final class Rites {
                         new Sacrifice.Power(3000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.DAY)));
+
+        // as três barreiras, que se sustentam enquanto houver poder
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.barrier",
+                new Barrier(4, 5, 1.2f, false, 0),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.OBSIDIAN, Items.REDSTONE),
+                        new Sacrifice.Power(500.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.barrierlarge",
+                new Barrier(6, 6, 1.4f, true, 0),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.OBSIDIAN, Items.GLOWSTONE_DUST),
+                        new Sacrifice.Power(1000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.barrierportable",
+                new Barrier(6, 4, 0.0f, true, 60),
+                new Sacrifice.Items(Items.OBSIDIAN,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // a Pedra Sintonizada Carregada, que é o que os ritos grandes pedem
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.chargestone",

@@ -4081,5 +4081,31 @@ régua da borda.
 
 1. **O rompimento do cume conta oito e usa quatro.** O original sorteia de zero a sete e só os quatro primeiros
    abrem um lado; nos outros quatro não acontece nada. Está portado assim, porque mudar isso mudaria a chance.
-2. **As Barreiras continuam de fora.** Elas são as outras grandes clientes da pedra carregada, mas pedem um
-   **bloco de barreira** — invisível, que some sozinho e trava quem passa — que é peça própria e vem com elas.
+2. ~~**As Barreiras continuam de fora.**~~ *Resolvido na fatia seguinte: o bloco de barreira e os três ritos
+   entraram.*
+
+### As Barreiras (2026-09-27)
+
+**Há ritos que não acontecem e acabam: sustentam-se.** Os três **Ritos da Barreira** — a `RiteProtectionCircleBarrier`
+sobre a `RiteProtectionCircle` do Witchery — são os primeiros deste porte a correr **para sempre**, enquanto
+houver com que os pagar.
+
+**A cúpula.** De vinte em vinte batidas o rito desenha chão, parede cilíndrica e teto em volta do círculo, e
+cada casa dela é um **bloco de barreira** com trinta batidas de vida. Parado o rito, a parede desfaz-se sozinha
+em segundo e meio — não há nada a limpar, e não fica entulho de um rito interrompido.
+
+**E ela sabe de quem é.** Uma barreira que trava gente deixa passar **quem a ergueu**, e quem estiver em criativo
+agachado. Isso mora na casa, e não no rito: cada bloco guarda o dono, quanto tempo lhe falta e se trava gente.
+
+**Os três.** A **Barreira** pede obsidiana e redstone e trava só o que não é gente; a **Maior** pede obsidiana e
+pó de pedra luminosa, é mais alta e mais larga, trava gente também e exige o anel de vinte e oito. As duas
+**comem poder a cada batida** e morrem sem Altar por perto. A **Portátil** pede a **Pedra Sintonizada Carregada**,
+não come nada e dura um minuto certo — é a que se leva para onde não há altar.
+
+**Desvios declarados.**
+
+1. **A Pedra de Caminho opcional continua de fora**, como na Tempestade e no Erguer a Terra: no original, a
+   Barreira e a Maior aceitam uma ligada para a cúpula nascer **onde ela aponta**. Ela não está portada.
+2. **A fonte de poder é procurada de novo a cada batida.** O original guarda o altar que achou e só volta a
+   procurar uma vez em cinco, para poupar trabalho. Aqui a procura é a mesma que todos os outros ritos já fazem,
+   e não valeu a pena duplicar o cache por isso.
