@@ -533,4 +533,78 @@ public class OccultaBrewGameTest {
         bicho.discard();
         helper.succeed();
     }
+
+    /** As sete poções do ofício entram no caldeirão e pegam em quem bebe. */
+    @GameTest
+    public void theCraftsOwnPotionsWork(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var bicho = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 2));
+        Brew.apply(level, bicho, List.of(Items.NETHER_WART, Items.FEATHER), new BrewModifiers());
+        if (!bicho.hasEffect(net.thaumcraft.occulta.OccultaEffects.FEATHER_FALL)) {
+            helper.fail("a pena dá queda de pena");
+        }
+        Brew.apply(level, bicho, List.of(Items.NETHER_WART, Items.SUGAR_CANE), new BrewModifiers());
+        if (!bicho.hasEffect(net.thaumcraft.occulta.OccultaEffects.FLOATING)) {
+            helper.fail("a cana-de-açúcar faz flutuar");
+        }
+        // e o bacalhau, que é leve, cabe num caldeirão com só um de espaço
+        if (!Brew.canAdd(List.of(OccultaItems.MANDRAKE_ROOT), Items.COD, false)) {
+            helper.fail("o nado pesa um só, e cabe na raiz de mandrágora sozinha");
+        }
+        bicho.discard();
+        helper.succeed();
+    }
+
+    /** A alergia ao escuro dói no escuro, e a máscara de gás guarda de névoa ruim. */
+    @GameTest(maxTicks = 120)
+    public void theAllergyBitesAndTheMaskGuards(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        // primeiro a caixa de pedra, e só depois o bicho lá dentro: posta com ele dentro, ela o empurra para fora
+        BlockPos dentro = helper.absolutePos(new BlockPos(2, 2, 2));
+        // a caixa fecha também as quinas: sem elas a luz entra pelo canto e o lugar não é escuro
+        for (var lugar : BlockPos.betweenClosed(dentro.offset(-1, 0, -1), dentro.offset(1, 2, 1))) {
+            boolean meio = lugar.getX() == dentro.getX() && lugar.getZ() == dentro.getZ()
+                    && lugar.getY() <= dentro.getY() + 1;
+            if (meio) continue;
+            level.setBlockAndUpdate(lugar, Blocks.STONE.defaultBlockState());
+        }
+
+        var bicho = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 2));
+        bicho.setNoAi(true);
+        bicho.snapTo(dentro.getX() + 0.5, dentro.getY(), dentro.getZ() + 0.5, 0.0f, 0.0f);
+        float antes = bicho.getHealth();
+        // do segundo grau, que é o que a caixa de pedra da arena permite: ela deixa entrar luz 3, e a conta do
+        // original é "menos de dois, mais dois por grau"
+        bicho.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                net.thaumcraft.occulta.OccultaEffects.DARKNESS_ALLERGY, 200, 1));
+
+        // a máscara guarda do que é ruim numa névoa
+        var protegido = helper.spawn(EntityTypes.PIG, new BlockPos(3, 2, 2));
+        protegido.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                net.thaumcraft.occulta.OccultaEffects.GAS_MASK, 400, 0));
+        BrewModifiers comMáscara = new BrewModifiers();
+        comMáscara.protectedFromBadEffects = true;
+        Brew.apply(level, protegido, List.of(Items.NETHER_WART, Items.SPIDER_EYE), comMáscara);
+        if (protegido.hasEffect(MobEffects.POISON)) helper.fail("com máscara, o veneno da névoa não pega");
+
+        // e sem ela pega
+        var semMáscara = helper.spawn(EntityTypes.PIG, new BlockPos(4, 2, 2));
+        Brew.apply(level, semMáscara, List.of(Items.NETHER_WART, Items.SPIDER_EYE), new BrewModifiers());
+        if (!semMáscara.hasEffect(MobEffects.POISON)) helper.fail("sem máscara, pega");
+
+        helper.succeedWhen(() -> {
+            if (bicho.getHealth() >= antes) {
+                throw helper.assertionException("no escuro, a alergia ainda não doeu; a luz aqui é "
+                        + level.getMaxLocalRawBrightness(bicho.blockPosition()));
+            }
+            bicho.discard();
+            protegido.discard();
+            semMáscara.discard();
+            for (var lugar : BlockPos.betweenClosed(dentro.offset(-1, 0, -1), dentro.offset(1, 2, 1))) {
+                if (level.getBlockState(lugar).is(Blocks.STONE)) {
+                    level.setBlockAndUpdate(lugar, Blocks.AIR.defaultBlockState());
+                }
+            }
+        });
+    }
 }

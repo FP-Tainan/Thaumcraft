@@ -163,6 +163,22 @@ public final class BrewRegistry {
         register(BrewActions.Modifier.tempering(Items.TROPICAL_FISH, null, 200,
                 temperos -> temperos.strengthCeilingDisabled = true));
 
+        // ------------------------------------------------------------ as poções do próprio ofício
+        register(new BrewActions.Potion(Items.COD, new BrewName.Text("tc.brew.swimming"), 0,
+                net.thaumcraft.occulta.OccultaEffects.SWIMMING, mins(3), LEVE));
+        register(new BrewActions.Potion(Items.FEATHER, new BrewName.Text("tc.brew.featherfall"), 100,
+                net.thaumcraft.occulta.OccultaEffects.FEATHER_FALL, mins(1), COMUM));
+        register(new BrewActions.Potion(Items.SUGAR_CANE, new BrewName.Text("tc.brew.floating"), 250,
+                net.thaumcraft.occulta.OccultaEffects.FLOATING, secs(90), COMUM));
+        register(new BrewActions.Potion(Items.GRAVEL, new BrewName.Text("tc.brew.gasmask"), 100,
+                net.thaumcraft.occulta.OccultaEffects.GAS_MASK, secs(90), COMUM));
+        register(new BrewActions.Potion(OccultaItems.FOUL_FUME, new BrewName.Text("tc.brew.stoutbelly"), 1000,
+                net.thaumcraft.occulta.OccultaEffects.STOUT_BELLY, secs(90), GRAVE));
+        register(new BrewActions.Potion(Items.SALMON, new BrewName.Text("tc.brew.allergysun"), 1000,
+                net.thaumcraft.occulta.OccultaEffects.SUN_ALLERGY, secs(60), 6));
+        register(new BrewActions.Potion(Items.SOUL_SAND, new BrewName.Text("tc.brew.allergydark"), 4000,
+                net.thaumcraft.occulta.OccultaEffects.DARKNESS_ALLERGY, mins(2), GRAVE));
+
         // ------------------------------------------------------------ os efeitos que mexem no lugar
         // só acontecem no cozimento atirado, porque é aí que há um lugar onde ele bateu
         register(new BrewWorldActions.Felling(Items.STRING, 0, 0, LEVE));

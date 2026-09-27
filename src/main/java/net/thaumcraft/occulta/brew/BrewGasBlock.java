@@ -154,7 +154,9 @@ public class BrewGasBlock extends BaseEntityBlock {
         if (server.getRandom().nextInt(TOUCH_CHANCE) != 4) return;
         if (!(level.getBlockEntity(pos) instanceof BrewFluidBlockEntity nuvem)) return;
         if (nuvem.contents().isEmpty()) return;
-        Brew.apply(level, vivo, nuvem.contents(), new BrewModifiers(TOUCH_POWER, TOUCH_DURATION));
+        BrewModifiers temperos = new BrewModifiers(TOUCH_POWER, TOUCH_DURATION);
+        temperos.protectedFromBadEffects = vivo.hasEffect(net.thaumcraft.occulta.OccultaEffects.GAS_MASK);
+        Brew.apply(level, vivo, nuvem.contents(), temperos);
     }
 
     /** Onde uma nuvem cabe: no ar, ou onde só há neve. */

@@ -109,7 +109,10 @@ public final class OccultaTable {
                         brewPage(Items.NETHER_WART, Items.SUGAR),
                         brewPage(Items.NETHER_WART, Items.FERMENTED_SPIDER_EYE, Items.SUGAR),
                         brewPage(Items.NETHER_WART, Items.LEATHER),
-                        brewPage(Items.NETHER_WART, Items.BLAZE_POWDER))
+                        brewPage(Items.NETHER_WART, Items.BLAZE_POWDER),
+                        brewPage(OccultaItems.MANDRAKE_ROOT, Items.COD),
+                        brewPage(Items.NETHER_WART, Items.FEATHER),
+                        brewPage(Items.NETHER_WART, Items.SUGAR_CANE))
                 .register();
 
         ThaumcraftApi.research("AO_BREW_SENSES", Occulta.CATEGORY)
@@ -133,7 +136,9 @@ public final class OccultaTable {
                         brewPage(Items.NETHER_WART, Items.GHAST_TEAR),
                         brewPage(Items.NETHER_WART, Items.GLISTERING_MELON_SLICE),
                         brewPage(Items.NETHER_WART, Items.DIAMOND, Items.GOLDEN_APPLE),
-                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.ENCHANTED_GOLDEN_APPLE))
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.ENCHANTED_GOLDEN_APPLE),
+                        brewPage(Items.NETHER_WART, Items.GRAVEL),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, OccultaItems.FOUL_FUME))
                 .register();
 
         ThaumcraftApi.research("AO_BREW_HARM", Occulta.CATEGORY)
@@ -145,7 +150,9 @@ public final class OccultaTable {
                         brewPage(Items.NETHER_WART, Items.SPIDER_EYE),
                         brewPage(Items.NETHER_WART, Items.GLOWSTONE_DUST, Items.SPIDER_EYE),
                         brewPage(Items.NETHER_WART, Items.DIAMOND, Items.WITHER_SKELETON_SKULL),
-                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.INK_SAC))
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.INK_SAC),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.NETHER_STAR, Items.SALMON),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.SOUL_SAND))
                 .register();
 
         splash();

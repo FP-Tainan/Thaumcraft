@@ -135,6 +135,12 @@ public final class BrewActions {
             if (temperos.disableEntityTarget) return;
             Holder<MobEffect> qual = temperos.inverted ? this.invertedEffect : this.effect;
             int quanto = temperos.inverted ? this.invertedDuration : this.duration;
+            // o que é ruim não pega em quem traz máscara de gás
+            if (temperos.protectedFromBadEffects && qual.value().getCategory()
+                    == net.minecraft.world.effect.MobEffectCategory.HARMFUL) {
+                temperos.reset();
+                return;
+            }
             apply(quem, temperos, qual, quanto, this.strengthCeiling);
             temperos.reset();
         }
@@ -149,8 +155,14 @@ public final class BrewActions {
                 }
                 return;
             }
-            quem.addEffect(new MobEffectInstance(qual, temperos.modifiedDuration(duração), força,
-                    false, !temperos.noParticles));
+            MobEffectInstance posto = new MobEffectInstance(qual, temperos.modifiedDuration(duração), força,
+                    false, !temperos.noParticles);
+            // as que o leite não tira vão pelo caminho do Incurable, como as da dobra
+            if (net.thaumcraft.occulta.OccultaEffects.incurable(qual)) {
+                net.thaumcraft.research.Incurable.add(quem, posto);
+            } else {
+                quem.addEffect(posto);
+            }
         }
     }
 

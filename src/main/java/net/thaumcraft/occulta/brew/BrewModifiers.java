@@ -27,6 +27,9 @@ public class BrewModifiers {
     public boolean disableEntityTarget;
     public boolean strengthCeilingDisabled;
     public boolean powerCeilingDisabled;
+
+    /** Quem traz Máscara de Gás não apanha o que é ruim numa névoa: o {@code protectedFromNegativePotions}. */
+    public boolean protectedFromBadEffects;
     public int totalStrength;
     public int totalDuration;
 

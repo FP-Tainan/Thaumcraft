@@ -3363,3 +3363,34 @@ que a mudasse desenharia outra coisa.
 como estando dentro dela</b> — o gás nunca tocaria em quem passasse. A caixa passou a ser a do bloco inteiro,
 como a do portal do Nether, que é o que faz o jogo saber que alguém está dentro. A colisão continua vazia: não se
 esbarra numa névoa.
+
+### As poções do ofício, primeira leva (2026-09-27)
+
+O Witchery tem quase sessenta poções próprias, e é delas que depende metade da tabela de cozimentos. Esta é a
+primeira leva: as sete que se bastam a si mesmas e não pedem nada que o porte ainda não tenha.
+
+- **Nado** (bacalhau cru): dentro da água anda quinze por cento mais depressa, e mais três por grau.
+- **Queda de Pena** (pena): passada a distância em que acorda, a queda para de acelerar e o tombo conta pouco.
+- **Flutuação** (cana-de-açúcar): enquanto houver chão a três blocos debaixo, sobe; passando disso, fica no ar.
+- **Máscara de Gás** (cascalho): não faz nada sozinha — existe para que uma névoa ruim não pegue em quem a tem.
+- **Barriga Forte** (Exalação Fétida): do segundo grau para cima, tira a fome.
+- **Alergia ao Sol** (salmão cru): a céu aberto, de dia, queima.
+- **Alergia ao Escuro** (areia das almas): no escuro, dói — menos de dois de luz, mais dois por grau.
+
+**Quatro delas o leite não tira**, como no original: a máscara, a barriga e as duas alergias. Quem faz isso é o
+`Incurable`, que este mod já tinha para os efeitos da dobra — não foi preciso inventar nada.
+
+**A máscara ficou ligada à névoa**: o tempero ganhou a marca de quem está protegido, e um efeito <b>ruim</b> não
+pega em quem traz a máscara. É o `protectedFromNegativePotions` do original, que o `BlockBrewGas` já usava lá.
+
+**Um desvio declarado, no Nado:** no original o empurrão é dado do lado de quem joga, olhando se a tecla de andar
+está apertada. Aqui é do lado do servidor e vale para qualquer um que esteja nadando — é o único lugar de onde se
+pode empurrar um bicho sem depender do teclado de ninguém.
+
+**E duas provas apanharam coisa.** A da alergia ao escuro não doía porque a arena é clara — e a caixa de pedra
+que eu pus em volta não fechava as <b>quinas</b>, por onde a luz entra de canto. Fechadas as quinas, e com o
+bicho posto no meio depois de a caixa existir (posta com ele dentro, ela o empurra para fora), a prova anda.
+
+A outra foi a que percorre as receitas do livro: eu tinha escrito a da alergia ao sol com verruga e diamante, que
+abrem quatro de espaço — e ela pesa <b>seis</b>. O caldeirão recusaria, e o livro estaria ensinando o que a panela
+não faz. A receita passou a levar uma Estrela do Nether, que abre os quatro que faltavam.
