@@ -4130,3 +4130,22 @@ Eclipse Portátil pede um machado de ferro, e os dois têm de ser do mesmo feiti
 
 **Desvio declarado.** A Pedra de Caminho opcional continua de fora nas duas Tempestades, pelo mesmo motivo de
 sempre: ela não está portada.
+
+### A Maldição da Cegueira (2026-09-27)
+
+**A primeira das maldições que se abrem em roda.** A `RiteBlindness` do Witchery usa a mesma base que a
+Fertilidade — o anel que cresce de cinco em cinco batidas — e por isso ela entrou de graça: não foi preciso
+escrever motor nenhum, só dizer o que o anel faz a quem apanha.
+
+**O que ele faz são dois minutos de escuro**, em gente e em bicho, do círculo até **oitenta casas**. E só a quem
+está <b>naquele anel</b>: quem já ficou para trás não leva outra vez, e quem ainda vem espera a sua vez.
+
+**E há uma defesa, uma só.** Quem trouxer uma **boneca de proteção contra vodu** presa a si gasta-a — e o rito
+**morre de vez**. É a única coisa que pára a maldição, e é a que o original dá.
+
+**Desvios declarados.**
+
+1. **O Caçador de Bruxas não é avisado.** No original, fazer magia negra chama um sobre quem a fez. Ele não está
+   portado, e a maldição corre sem consequência.
+2. **O familiar de maldição não dobra o escuro.** No original, uma bruxa com esse familiar acordado faz o escuro
+   durar cinco minutos em vez de dois. Os familiares não estão portados; ficam os dois minutos.

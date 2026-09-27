@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -584,6 +585,58 @@ public final class Rites {
         }
     }
 
+    // ------------------------------------------------------------------ as maldições que se abrem em roda
+
+    /**
+     * A Maldição da Cegueira: a {@code RiteBlindness} do Witchery.
+     *
+     * <p>É a primeira das maldições que <b>se abrem em roda</b> deste porte, e usa a mesma base que a
+     * Fertilidade: um anel que cresce de cinco em cinco batidas, do círculo até oitenta casas, fazendo o que
+     * tem a fazer a quem estiver <b>naquele anel</b> — nem no que já ficou para trás, nem no que ainda vem.
+     *
+     * <p>Dois minutos de escuro em cada um, e quem já estiver cego não leva mais.
+     *
+     * <p>Ela pára de vez se alguém no anel trouxer uma <b>boneca de proteção contra vodu</b>: a boneca gasta-se
+     * e o rito morre. É a única defesa que há contra ela, e é a que o original dá.
+     *
+     * <p><b>Do original fica de fora, declarado:</b> o <b>Caçador de Bruxas</b>, que lá é avisado de que alguém
+     * fez magia negra e vem atrás de quem a fez; e o <b>familiar de maldição</b>, que lá dobra o tempo do escuro
+     * para cinco minutos. Nenhum dos dois está portado.
+     */
+    public static class CurseOfBlindness extends Expanding {
+        /** Quanto tempo o escuro dura: os dois minutos do original. */
+        public static final int BLIND_TICKS = 2 * 1200;
+
+        public CurseOfBlindness(int maxRadius, int height) {
+            super(maxRadius, height, true);
+        }
+
+        @Override
+        protected void onBlock(ServerLevel level, BlockPos onde, int raio, Player quem) {
+        }
+
+        @Override
+        protected boolean onRing(ServerLevel level, BlockPos meio, int raio, Player quem) {
+            double fora = (double) raio * raio;
+            double dentro = Math.max(0, (raio - 1.0) * (raio - 1.0));
+            AABB roda = new AABB(meio).inflate(raio, this.height, raio);
+
+            for (LivingEntity vítima : level.getEntitiesOfClass(LivingEntity.class, roda)) {
+                double d = vítima.distanceToSqr(meio.getX() + 0.5, meio.getY() + 0.5, meio.getZ() + 0.5);
+                if (d <= dentro || d > fora) continue;
+
+                if (vítima instanceof Player gente && gente != quem
+                        && net.thaumcraft.occulta.Poppets.spend(level, gente,
+                                net.thaumcraft.occulta.PoppetItem.Kind.VOODOO_PROTECTION)) {
+                    return false;
+                }
+                if (vítima.hasEffect(MobEffects.BLINDNESS)) continue;
+                vítima.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, BLIND_TICKS, 0));
+            }
+            return true;
+        }
+    }
+
     // ------------------------------------------------------------------ os ritos do tempo e da terra
 
     /**
@@ -965,6 +1018,18 @@ public final class Rites {
                         new Sacrifice.Power(3000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.DAY)));
+
+        // e a primeira das maldições que se abrem em roda
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.curseblindness",
+                new CurseOfBlindness(80, 15),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED,
+                        net.thaumcraft.occulta.OccultaItems.REDSTONE_SOUP,
+                        net.thaumcraft.occulta.OccultaItems.REEK_OF_MISFORTUNE,
+                        net.thaumcraft.occulta.OccultaItems.EXHALE_OF_THE_HORNED_ONE,
+                        net.thaumcraft.occulta.OccultaItems.BREW_OF_INK,
+                        Items.POISONOUS_POTATO, Items.FERMENTED_SPIDER_EYE, Items.DIAMOND),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(16, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // as versões maiores e as portáteis: o mesmo rito com outra escala e outro preço
         // A escada das ferramentas é a do original e é deliberada: pau para o pequeno, pedra para o maior,

@@ -347,4 +347,81 @@ public class OccultaWorldRitesGameTest {
         }
         helper.succeed();
     }
+
+    // ------------------------------------------------------------------ a maldição que se abre em roda
+
+    /** A Maldição da Cegueira está na lista e pede a pedra carregada e o Cozimento de Tinta. */
+    @GameTest
+    public void theCurseOfBlindnessIsThere(GameTestHelper helper) {
+        var rito = RiteRegistry.all().stream()
+                .filter(r -> r.key().equals("tc.rite.curseblindness")).findFirst().orElse(null);
+        if (rito == null) {
+            helper.fail("a Maldição da Cegueira devia estar na lista");
+            return;
+        }
+        var pede = Rites.shown(rito);
+        for (var coisa : new net.minecraft.world.item.Item[]{
+                OccultaItems.ATTUNED_STONE_CHARGED, OccultaItems.REDSTONE_SOUP,
+                OccultaItems.BREW_OF_INK, Items.DIAMOND}) {
+            if (pede.stream().noneMatch(c -> c.is(coisa))) helper.fail("ela pede " + coisa);
+        }
+        helper.succeed();
+    }
+
+    /** Ela cega quem está no anel, e vai crescendo. */
+    @GameTest(maxTicks = 100)
+    public void theCurseBlindsWhatIsInTheRing(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos meio = helper.absolutePos(new BlockPos(1, 2, 1));
+
+        // um bicho a cinco casas do meio: é onde o primeiro anel passa
+        var bicho = net.minecraft.world.entity.EntityTypes.PIG.create(level,
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        if (bicho == null) {
+            helper.fail("o bicho da prova devia nascer");
+            return;
+        }
+        bicho.snapTo(meio.getX() + 4.5, meio.getY(), meio.getZ() + 0.5, 0.0f, 0.0f);
+        level.addFreshEntity(bicho);
+
+        var qual = new Rites.CurseOfBlindness(10, 15);
+        var rito = new ActiveRite("tc.rite.curseblindness", qual, qual.steps(0), null, 0);
+        var passo = rito.steps().getFirst();
+
+        boolean cegou = false;
+        for (int i = 1; i <= 12 && !cegou; i++) {
+            passo.run(level, meio, 20L * i, rito);
+            cegou = bicho.hasEffect(net.minecraft.world.effect.MobEffects.BLINDNESS);
+        }
+        if (!cegou) helper.fail("o anel devia ter cegado o bicho ao passar por ele");
+        bicho.discard();
+        helper.succeed();
+    }
+
+    /** E o anel não apanha o que está fora do alcance dela. */
+    @GameTest(maxTicks = 100)
+    public void theCurseStopsAtItsReach(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos meio = helper.absolutePos(new BlockPos(1, 2, 1));
+
+        var longe = net.minecraft.world.entity.EntityTypes.PIG.create(level,
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        if (longe == null) {
+            helper.fail("o bicho da prova devia nascer");
+            return;
+        }
+        longe.snapTo(meio.getX() + 20.5, meio.getY(), meio.getZ() + 0.5, 0.0f, 0.0f);
+        level.addFreshEntity(longe);
+
+        var qual = new Rites.CurseOfBlindness(6, 15);
+        var rito = new ActiveRite("tc.rite.curseblindness", qual, qual.steps(0), null, 0);
+        var passo = rito.steps().getFirst();
+        for (int i = 1; i <= 20; i++) passo.run(level, meio, 20L * i, rito);
+
+        if (longe.hasEffect(net.minecraft.world.effect.MobEffects.BLINDNESS)) {
+            helper.fail("quem está fora do alcance não é apanhado");
+        }
+        longe.discard();
+        helper.succeed();
+    }
 }
