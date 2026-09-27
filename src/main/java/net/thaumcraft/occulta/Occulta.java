@@ -21,6 +21,7 @@ public final class Occulta {
     }
 
     public static void init() {
+        OccultaComponents.init();
         OccultaBlocks.init();
         OccultaEntities.init();
         OccultaItems.init();

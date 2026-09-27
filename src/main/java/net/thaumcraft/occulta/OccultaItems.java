@@ -129,6 +129,24 @@ public final class OccultaItems {
             new Item(properties.humanoidArmor(OccultaMaterials.EARMUFFS,
                     net.minecraft.world.item.equipment.ArmorType.HELMET)));
 
+    /**
+     * O Frasco de Cozimento: o {@code ItemBrew} do original.
+     *
+     * <p>Não tem nome nem cor próprios — o que ele é vem do que estava no caldeirão. Empilha-se um a um, como
+     * qualquer poção, e não aparece na aba do criativo, porque não há um frasco: há todos os que se possam
+     * cozer.
+     */
+    public static final Item BREW = register("brew", properties ->
+            new net.thaumcraft.occulta.brew.BrewItem(properties.stacksTo(1)
+                    .component(net.minecraft.core.component.DataComponents.CONSUMABLE,
+                            net.minecraft.world.item.component.Consumables.DEFAULT_DRINK)
+                    .usingConvertsTo(net.minecraft.world.item.Items.GLASS_BOTTLE)
+                    // a cor vai no componente de tinta só para o desenho: não é para se ler "tingido" no frasco
+                    .component(net.minecraft.core.component.DataComponents.TOOLTIP_DISPLAY,
+                            new net.minecraft.world.item.component.TooltipDisplay(false,
+                                    new java.util.LinkedHashSet<>(java.util.List.of(
+                                            net.minecraft.core.component.DataComponents.DYED_COLOR))))));
+
     /** O Galho de Ent, que o Ent larga. */
     public static final Item ENT_BRANCH = register("ent_branch", Item::new);
 

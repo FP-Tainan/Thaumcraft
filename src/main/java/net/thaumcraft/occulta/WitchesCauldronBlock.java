@@ -96,6 +96,16 @@ public class WitchesCauldronBlock extends BaseEntityBlock {
             level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
             return InteractionResult.SUCCESS;
         }
+        // a garrafa de vidro tira o cozimento do caldeirão
+        if (held.is(Items.GLASS_BOTTLE)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            ItemStack frasco = caldeirão.bottle((net.minecraft.server.level.ServerLevel) level, pos);
+            if (frasco.isEmpty()) return InteractionResult.CONSUME;
+            if (!player.hasInfiniteMaterials()) held.shrink(1);
+            if (!player.getInventory().add(frasco)) player.drop(frasco, false);
+            level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+            return InteractionResult.SUCCESS;
+        }
         return InteractionResult.PASS;
     }
 

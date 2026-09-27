@@ -56,6 +56,7 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
     private int ritual;
     private final List<Item> inside = new ArrayList<>();
     private ItemStack result = ItemStack.EMPTY;
+    private boolean powered;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(OccultaBlocks.WITCHES_CAULDRON_ENTITY, pos, state);
@@ -76,6 +77,11 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         return this.water / (float) FULL;
     }
 
+    /** Quantas batidas de fogo ele já levou. */
+    public int heated() {
+        return this.heated;
+    }
+
     public boolean isBoiling() {
         return this.heated >= TICKS_TO_BOIL;
     }
@@ -94,9 +100,29 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
      */
     public int color() {
         if (this.inside.isEmpty()) return PLAIN_COLOR;
+        // o cozimento manda na cor com a conta do original; as coisas de ritual, com o aspecto maior delas
+        if (this.isBrewing()) return net.thaumcraft.occulta.brew.Brew.color(this.inside);
         int cor = PLAIN_COLOR;
         for (Item item : this.inside) cor = mix(cor, colorOf(item));
         return cor;
+    }
+
+    /** Se o que está dentro é cozimento, e não ingrediente de ritual. */
+    public boolean isBrewing() {
+        for (Item item : this.inside) {
+            if (net.thaumcraft.occulta.brew.BrewRegistry.knows(item)) return true;
+        }
+        return false;
+    }
+
+    /** O poder que o altar tem de ter para este cozimento sair. */
+    public int brewPower() {
+        return this.isBrewing() ? net.thaumcraft.occulta.brew.Brew.power(this.inside) : 0;
+    }
+
+    /** Se há altar por perto com o poder que este cozimento pede: o {@code isPowered} do original. */
+    public boolean isPowered() {
+        return this.powered;
     }
 
     private static int mix(int a, int b) {
@@ -155,10 +181,40 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
             this.changed();
             return true;
         }
-        if (!OccultaRituals.isIngredient(item)) return false;
-        this.inside.add(item);
+        if (OccultaRituals.isIngredient(item)) {
+            this.inside.add(item);
+            this.changed();
+            return true;
+        }
+        // e o que não é de receita pode ser de cozimento
+        if (!net.thaumcraft.occulta.brew.Brew.canAdd(this.inside, item, this.isFull())) return false;
+        List<Item> depois = net.thaumcraft.occulta.brew.Brew.add(this.inside, item);
+        this.inside.clear();
+        this.inside.addAll(depois);
         this.changed();
         return true;
+    }
+
+    /**
+     * O frasco que se tira do caldeirão: o {@code fillBottleFromCauldron} do original.
+     *
+     * <p>Pede três coisas: que esteja <b>fervendo</b>, que haja <b>altar</b> com o poder do cozimento e que o
+     * caldeirão esteja <b>cheio</b> — o original tira uma garrafa por caldeirão a quem ainda não sabe engarrafar,
+     * e é aí que este porte está.
+     *
+     * <p><b>Do original fica de fora, declarado:</b> o rendimento maior de quem tem prática, chapéu de bruxa,
+     * túnica e familiar — nada disso existe ainda; quem engarrafa aqui é sempre alguém que está a aprender.
+     */
+    public ItemStack bottle(ServerLevel level, BlockPos pos) {
+        if (!this.isBoiling() || !this.isBrewing() || !this.isFull()) return ItemStack.EMPTY;
+        int poder = this.brewPower();
+        if (poder > 0) {
+            var altar = PowerSources.closest(level, pos);
+            if (altar == null || !altar.consume(poder)) return ItemStack.EMPTY;
+        }
+        ItemStack frasco = net.thaumcraft.occulta.brew.BrewItem.of(OccultaItems.BREW, this.inside);
+        this.empty();
+        return frasco;
     }
 
     /** Quebrado, larga no chão o que estava dentro. */
@@ -183,6 +239,19 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         } else if (caldeirão.heated > 0) {
             caldeirão.heated = 0;
             caldeirão.changed();
+        }
+
+        // o {@code isPowered} do original: de vinte em vinte batidas olha-se se há altar com o poder pedido
+        if (level instanceof ServerLevel server && level.getGameTime() % 20 == 7) {
+            int poder = caldeirão.brewPower();
+            boolean antes = caldeirão.powered;
+            if (!caldeirão.isBoiling()) caldeirão.powered = false;
+            else if (poder == 0) caldeirão.powered = true;
+            else {
+                var altar = PowerSources.closest(server, pos);
+                caldeirão.powered = altar != null && altar.power() >= poder;
+            }
+            if (antes != caldeirão.powered) caldeirão.changed();
         }
 
         if (caldeirão.ritual <= 0) return;

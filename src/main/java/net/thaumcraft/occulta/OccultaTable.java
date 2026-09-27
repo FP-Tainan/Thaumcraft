@@ -86,6 +86,19 @@ public final class OccultaTable {
                 .pages(Page.text("tc.research_page.AO_ALTAR.1"), Page.crafting("AOAltar"),
                         Page.text("tc.research_page.AO_ALTAR.2"))
                 .register();
+
+        // e o que o caldeirão faz com o poder do altar: os cozimentos
+        ThaumcraftApi.research("AO_POTIONS", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.WATER, 5).add(Aspects.MAGIC, 4).add(Aspects.LIFE, 3)
+                        .add(Aspects.ENERGY, 2))
+                .at(2, 4)
+                .icon(() -> net.thaumcraft.occulta.brew.BrewItem.of(OccultaItems.BREW,
+                        java.util.List.of(net.minecraft.world.item.Items.NETHER_WART,
+                                net.minecraft.world.item.Items.SPIDER_EYE)))
+                .parents("AO_ALTAR")
+                .pages(Page.text("tc.research_page.AO_POTIONS.1"), Page.text("tc.research_page.AO_POTIONS.2"),
+                        Page.text("tc.research_page.AO_POTIONS.3"), Page.text("tc.research_page.AO_POTIONS.4"))
+                .register();
     }
 
     /** As receitas que o livro mostra. Correm depois de tudo montado, porque pedem os itens prontos. */

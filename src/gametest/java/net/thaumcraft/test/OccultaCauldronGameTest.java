@@ -117,8 +117,10 @@ public class OccultaCauldronGameTest {
                 if (!caldeirão.addItem(new ItemStack(OccultaItems.EXHALE_OF_THE_HORNED_ONE))) {
                     helper.fail("a exalação também");
                 }
-                if (caldeirão.addItem(new ItemStack(Items.DIAMOND))) {
-                    helper.fail("mas um diamante não serve a receita nenhuma e não entra");
+                // o diamante entraria: desde os cozimentos ele é ingrediente de porte. Quem não serve a nada
+                // é o pedregulho, e é esse que o caldeirão recusa.
+                if (caldeirão.addItem(new ItemStack(Items.COBBLESTONE))) {
+                    helper.fail("mas pedregulho não serve a receita nenhuma e não entra");
                 }
                 if (!caldeirão.addItem(new ItemStack(Items.EGG))) helper.fail("e o ovo dispara a receita");
             }

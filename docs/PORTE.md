@@ -3209,3 +3209,52 @@ A losna continua a empilhar-se exatamente como antes: isso é do `randomTick`, n
 Há duas provas novas: uma percorre as oito plantas contra as oito e confere que só a losna sobre losna se
 sustenta; a outra dá a semente a um jogador de mentira e clica — recusa sobre a planta, planta em terra arada.
 A segunda metade existe para a primeira não passar à toa.
+
+### O caldeirão coze: o motor dos cozimentos (2026-09-27)
+
+O coração do Witchery. A tabela do original tem **três mil e quatrocentas linhas** e usa quase tudo o que o mod
+tem; esta é a primeira fatia dela — o motor inteiro, e a parte da tabela que o mod de hoje já alcança.
+
+**Como um cozimento é.** Não é um item com receita: é a **lista do que caiu no caldeirão, pela ordem**. Dela sai
+tudo o resto — o nome, a cor, o poder que o altar tem de pagar, o que faz em quem bebe e quanto se leva a beber.
+Por isso o `Brew` não guarda estado nenhum além da lista: recontar é mais barato que guardar duas verdades sobre
+o mesmo frasco.
+
+**O espaço.** Água fervendo não recebe efeito nenhum. Quem abre espaço são os ingredientes de porte — a raiz de
+mandrágora (um), a verruga do Nether (dois), o diamante (dois) e a Estrela do Nether (quatro) —, e cada um só
+abre enquanto o que já se abriu for menor que o **teto** dele. É por isso que duas verrugas não valem quatro: a
+segunda vê que já se passou do teto dela e não faz nada. Cada efeito **gasta** desse espaço conforme o peso, e o
+que não couber não entra.
+
+**Os temperos** valem para o efeito **seguinte**, uma vez só, e apagam-se depois dele. Força, tempo, inversão,
+sem fagulhas, sem alvo de bloco, sem alvo de criatura, sem teto de força. A força e o tempo param de subir aos
+sete — a não ser com a Estrela do Nether, que levanta o teto.
+
+**A cor** não se escolhe: é a conta encadeada do original (`37 * cor + chave`), que dá a cada receita a sua e faz
+receitas parecidas saírem parecidas. Só a lã tinta manda nela à força. No frasco ela vai também no componente de
+tinta do jogo, e é de lá que o desenho do item a tira — o mesmo caminho de uma armadura de couro tinta, e poupa
+um desenhista só para isto.
+
+**O poder** é a soma do que cada ingrediente custa, e o altar tem de o **ter** enquanto ferve e **pagá-lo** na
+hora de engarrafar. Uma garrafa de vidro na mão e um clique: o caldeirão tem de estar fervendo e cheio.
+
+**Sai um frasco por caldeirão.** No original sai mais para quem tem prática de engarrafar, chapéu de bruxa,
+túnica e familiar — nada disso existe aqui ainda, e quem engarrafa neste porte é sempre alguém que está a
+aprender. Fica declarado.
+
+**O que esta fatia traz da tabela:** os quatro ingredientes de porte que o mod tem, os onze temperos, as treze
+poções que são poções do próprio jogo e as dezesseis lãs.
+
+**E o que fica para as fatias seguintes, declarado:** os efeitos que são poções próprias do Witchery (o nadar, o
+não sentir dor, a acônito, a máscara de gás, a queda de pena — cinquenta e tantas); o **espalhamento**, que é o
+frasco que se atira, o gás, o líquido e o gatilho; os efeitos que mexem no mundo; e os rituais de círculo de giz.
+A Lágrima da Deusa, o Vapor de Diamante e o Pentáculo de Koboldite abrem espaço no original e ainda não existem.
+
+**Uma armadilha que custou meia hora**, e que vale escrever: dentro de um `succeedWhen` de teste, o `helper.fail`
+é **engolido** como "ainda não" — o teste tenta outra vez na batida seguinte. Como o corpo já tinha esvaziado o
+caldeirão, ele nunca mais fervia, e o que se via no fim era "o caldeirão não ferveu" em vez do defeito de
+verdade. A prova passou a esperar uma vez só (`runAfterDelay`), e o defeito apareceu na primeira tentativa.
+
+**E um achado do próprio motor:** a prova antiga do caldeirão dizia que "um diamante não serve a receita nenhuma
+e não entra". Desde os cozimentos, entra — ele é ingrediente de porte. Quem não serve a nada é o pedregulho, e é
+esse que a prova usa agora.
