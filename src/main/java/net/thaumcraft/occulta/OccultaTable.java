@@ -306,7 +306,9 @@ public final class OccultaTable {
                         Page.text("tc.research_page.AO_WORLD_RITES.2"),
                         Page.text("tc.research_page.AO_WORLD_RITES.3"),
                         Page.text("tc.research_page.AO_WORLD_RITES.4"),
-                        Page.text("tc.research_page.AO_WORLD_RITES.5"))
+                        Page.text("tc.research_page.AO_WORLD_RITES.5"),
+                        Page.text("tc.research_page.AO_WORLD_RITES.6"),
+                        Page.text("tc.research_page.AO_WORLD_RITES.7"))
                 .register();
     }
 

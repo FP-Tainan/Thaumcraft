@@ -192,6 +192,8 @@ public final class OccultaAspects {
             r.item("thaumcraft:spectral_dust", new AspectList().add(Aspects.SOUL, 4).add(Aspects.UNDEAD, 2));
             r.item("thaumcraft:graveyard_dust", new AspectList().add(Aspects.DEATH, 4).add(Aspects.SOUL, 2)
                     .add(Aspects.EARTH, 2));
+            r.item("thaumcraft:attuned_stone_charged", new AspectList().add(Aspects.ENERGY, 5)
+                    .add(Aspects.MAGIC, 4).add(Aspects.CRYSTAL, 3));
             r.item("thaumcraft:necrotic_stone", new AspectList().add(Aspects.DEATH, 5).add(Aspects.SOUL, 4)
                     .add(Aspects.MAGIC, 3).add(Aspects.EARTH, 2));
             r.item("thaumcraft:condensed_fear", new AspectList().add(Aspects.MIND, 3).add(Aspects.DARKNESS, 3)

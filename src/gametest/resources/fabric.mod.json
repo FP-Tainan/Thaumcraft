@@ -215,7 +215,8 @@
       "net.thaumcraft.test.client.OccultaSpiritClientTest",
       "net.thaumcraft.test.client.OccultaFlowingSpiritClientTest",
       "net.thaumcraft.test.client.OccultaArthanaClientTest",
-      "net.thaumcraft.test.client.OccultaPortalClientTest"
+      "net.thaumcraft.test.client.OccultaPortalClientTest",
+      "net.thaumcraft.test.client.OccultaVolcanoClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

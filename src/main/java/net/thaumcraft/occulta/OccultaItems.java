@@ -325,6 +325,15 @@ public final class OccultaItems {
     public static final Item ATTUNED_STONE = register("attuned_stone", properties ->
             new Item(properties.rarity(net.minecraft.world.item.Rarity.RARE)));
 
+    /**
+     * A Pedra Sintonizada <b>Carregada</b>: o {@code itemAttunedStoneCharged} do Witchery.
+     *
+     * <p>É a mesma pedra passada pelo Rito da Carga, e é a coisa que os ritos <b>grandes</b> pedem. Vinte e
+     * cinco dos noventa e seis ritos do original não correm sem ela.
+     */
+    public static final Item ATTUNED_STONE_CHARGED = register("attuned_stone_charged", properties ->
+            new Item(properties.rarity(net.minecraft.world.item.Rarity.RARE)));
+
     /** O Fio Dourado, que a Roca fia de um fardo de feno. */
     public static final Item GOLDEN_THREAD = register("golden_thread", Item::new);
 

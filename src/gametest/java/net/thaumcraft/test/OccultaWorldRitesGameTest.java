@@ -165,4 +165,95 @@ public class OccultaWorldRitesGameTest {
         if (volta.stage() != 3) helper.fail("e na mesma fase, e voltou na " + volta.stage());
         helper.succeed();
     }
+
+    // ------------------------------------------------------------------ a pedra carregada e o vulcão
+
+    /** O Rito da Carga está na lista e pede a Pedra Sintonizada. */
+    @GameTest
+    public void theRiteOfChargingIsThere(GameTestHelper helper) {
+        var rito = RiteRegistry.all().stream()
+                .filter(r -> r.key().equals("tc.rite.chargestone")).findFirst().orElse(null);
+        if (rito == null) {
+            helper.fail("o Rito da Carga devia estar na lista");
+            return;
+        }
+        var pede = Rites.shown(rito);
+        for (var coisa : new net.minecraft.world.item.Item[]{
+                OccultaItems.ATTUNED_STONE, Items.GLOWSTONE_DUST, Items.REDSTONE,
+                OccultaItems.WOOD_ASH, OccultaItems.QUICKLIME}) {
+            if (pede.stream().noneMatch(c -> c.is(coisa))) helper.fail("ele pede " + coisa);
+        }
+        helper.succeed();
+    }
+
+    /** O do Vulcão pede a pedra <b>carregada</b>, que é o que o separa dos outros. */
+    @GameTest
+    public void theVolcanoNeedsTheChargedStone(GameTestHelper helper) {
+        var rito = RiteRegistry.all().stream()
+                .filter(r -> r.key().equals("tc.rite.volcano")).findFirst().orElse(null);
+        if (rito == null) {
+            helper.fail("o Rito do Vulcão devia estar na lista");
+            return;
+        }
+        var pede = Rites.shown(rito);
+        if (pede.stream().noneMatch(c -> c.is(OccultaItems.ATTUNED_STONE_CHARGED))) {
+            helper.fail("ele pede a pedra carregada");
+        }
+        if (pede.stream().anyMatch(c -> c.is(OccultaItems.ATTUNED_STONE))) {
+            helper.fail("e não a comum");
+        }
+        helper.succeed();
+    }
+
+    /** Sem lava por baixo, o vulcão desiste e devolve o que se ofereceu. */
+    @GameTest(maxTicks = 60)
+    public void theVolcanoNeedsLavaBelow(GameTestHelper helper) {
+        BlockPos meio = helper.absolutePos(new BlockPos(2, 2, 2));
+        var qual = new Rites.Volcano(8, 8);
+        var rito = new ActiveRite("tc.rite.volcano", qual, List.of(), null, 0);
+        var passo = qual.steps(0).getFirst();
+
+        if (passo.run(helper.getLevel(), meio, 15L, rito) != RiteStep.Result.ABORTED_REFUND) {
+            helper.fail("sem lava por baixo, o rito desiste devolvendo");
+        }
+        helper.succeed();
+    }
+
+    /** E com uma poça de verdade por baixo, ele começa. */
+    @GameTest(maxTicks = 60)
+    public void theVolcanoStartsOverLava(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos meio = helper.absolutePos(new BlockPos(2, 3, 2));
+
+        // uma poça de lava de três por três, duas casas abaixo do círculo
+        BlockPos fundo = meio.below(2);
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                level.setBlock(fundo.offset(dx, 0, dz),
+                        net.minecraft.world.level.block.Blocks.LAVA.defaultBlockState(), 2);
+            }
+        }
+        if (!Rites.Volcano.lavaBelow(level, meio)) {
+            helper.fail("a poça devia contar como lava por baixo");
+            return;
+        }
+
+        var qual = new Rites.Volcano(2, 3);
+        var rito = new ActiveRite("tc.rite.volcano", qual, List.of(), null, 0);
+        var passo = qual.steps(0).getFirst();
+        if (passo.run(level, meio, 15L, rito) != RiteStep.Result.UPKEEP) {
+            helper.fail("com lava, o rito começa e sustenta-se");
+        }
+        helper.succeed();
+    }
+
+    /** Uma casa de lava sozinha não é poça: o rito quer lava em volta dela. */
+    @GameTest
+    public void aSingleLavaBlockIsNotAPool(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos meio = helper.absolutePos(new BlockPos(4, 3, 4));
+        level.setBlock(meio.below(2), net.minecraft.world.level.block.Blocks.LAVA.defaultBlockState(), 2);
+        if (Rites.Volcano.lavaBelow(level, meio)) helper.fail("um pingo de lava não é poça");
+        helper.succeed();
+    }
 }

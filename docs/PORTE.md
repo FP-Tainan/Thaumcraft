@@ -4051,6 +4051,35 @@ tempestade voltaria do começo. Ela mora no `ActiveRite`, guarda-se com ele, e h
 2. **A Pedra de Caminho opcional fica de fora.** A Tempestade e o Erguer a Terra aceitam, no original, uma Pedra
    de Caminho ligada como oferenda opcional, para o rito acontecer **onde ela aponta** em vez de no círculo. A
    Pedra de Caminho não está portada; os dois ritos acontecem no círculo.
-3. **Ficam de fora, por dependerem da Pedra Sintonizada Carregada:** o Vulcão, as Barreiras e as versões
-   portáteis do Eclipse e da Tempestade. A pedra carregada sai de um rito que este porte já consegue pedir — é a
-   próxima fatia, e ela sozinha abre meia dúzia deles.
+3. ~~**Ficam de fora, por dependerem da Pedra Sintonizada Carregada:** o Vulcão, as Barreiras e as versões
+   portáteis do Eclipse e da Tempestade.~~ *Resolvido em parte na fatia seguinte: a pedra carregada e o Vulcão
+   entraram; as Barreiras esperam o bloco de barreira, que é peça própria.*
+
+### A Pedra Sintonizada Carregada e o Vulcão (2026-09-27)
+
+**Vinte e cinco dos noventa e seis ritos do original não correm sem uma coisa**, e ela não existia aqui: a
+**Pedra Sintonizada Carregada**. É a mesma pedra passada pelo **Rito da Carga** — dois anéis, dezesseis glifos
+por dentro e vinte e oito por fora, dois mil de poder, e uma Pedra Sintonizada com pó de pedra luminosa,
+redstone, Cinza de Madeira e Cal Virgem. Tudo o que ele pede já existia.
+
+**E com ela entrou o maior estrago que o ofício faz.** O **Rito do Vulcão** não se faz em qualquer lugar: o
+círculo tem de ter **lava por baixo**, e a conta do original é exigente — uma casa de lava com **duas vizinhas
+de lava**, medidas nas seis casas que ele olha, e não um pingo. Não achando, ele desiste, devolve o que se
+ofereceu e diz ao dono do círculo por quê.
+
+**Achando, ele levanta um cone** de quinze em quinze batidas, camada a camada, com a beira de baixo salpicada de
+relva e quem estiver em cima a subir junto. Erguido o cone, a lava **sobe por dentro** até o alto; no penúltimo
+passo ela transborda e o cume **rompe-se por um dos quatro lados**, a esmo. No último, a coluna que veio de baixo
+é fechada — e o que fica é um monte com uma cratera, e não um cano de lava aberto até ao fundo do mundo.
+
+**Os números são os do original**, incluindo os que parecem enganos e não são: o raio da camada `y` conta-se
+como `raio - (alto - fase - 1 + y) * raio / alto`, e é essa conta torta que faz o cone crescer de dentro para
+fora em vez de subir reto. As linhas do círculo encolhem uma casa a cada cinco, a esmo, e é isso que tira a
+régua da borda.
+
+**Desvios declarados.**
+
+1. **O rompimento do cume conta oito e usa quatro.** O original sorteia de zero a sete e só os quatro primeiros
+   abrem um lado; nos outros quatro não acontece nada. Está portado assim, porque mudar isso mudaria a chance.
+2. **As Barreiras continuam de fora.** Elas são as outras grandes clientes da pedra carregada, mas pedem um
+   **bloco de barreira** — invisível, que some sozinho e trava quem passa — que é peça própria e vem com elas.

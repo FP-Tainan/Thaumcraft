@@ -242,6 +242,229 @@ public final class Rites {
         }
     }
 
+    /**
+     * O Rito do Vulcão: o {@code RiteRaiseVolcano} do Witchery.
+     *
+     * <p>É o maior estrago que o ofício faz, e não se faz em qualquer lugar: o círculo tem de ter <b>lava por
+     * baixo</b> — uma poça de verdade, com lava em volta dela, e não um pingo. Não achando, o rito desiste e
+     * devolve o que se ofereceu.
+     *
+     * <p>Achando, ele levanta um <b>cone</b> de quinze em quinze batidas, camada a camada, com a borda de baixo
+     * salpicada de relva; quem estiver em cima sobe com ele. Erguido o cone, a lava <b>sobe por dentro</b> até
+     * o alto e transborda — e o cume rompe-se por um dos lados, a esmo. No fim, a coluna de lava que veio de
+     * baixo é <b>drenada</b>, e o que fica é um monte com uma cratera.
+     *
+     * @param radius o raio da base, que cresce dois por bruxa do coven
+     * @param height e a altura, que cresce quatro
+     */
+    public record Volcano(int radius, int height) implements Rite {
+        /** Quantas batidas entre uma camada e a seguinte. */
+        public static final int EVERY = 15;
+        /** Quantas casas para baixo ele procura lava. */
+        public static final int LOOK_DOWN = 256;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % EVERY != 0L) return RiteStep.Result.STARTING;
+
+                int fase = rito.advance();
+                if (fase == 1 && !lavaBelow(level, onde)) {
+                    var quem = rito.starter(level);
+                    if (quem != null) {
+                        quem.sendSystemMessage(net.minecraft.network.chat.Component
+                                .translatable("tc.rite.missinglava"));
+                    }
+                    level.playSound(null, onde, SoundEvents.NOTE_BLOCK_SNARE.value(), SoundSource.BLOCKS,
+                            1.0f, 0.7f);
+                    return RiteStep.Result.ABORTED_REFUND;
+                }
+                if (fase == 1) {
+                    level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
+                            onde.getZ() + 0.5, 64, 1.0, 1.0, 1.0, 0.5);
+                    level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 0.6f);
+                }
+
+                int alto = this.height + 4 * coven;
+                float raio = this.radius + 2 * coven;
+
+                if (fase <= alto) {
+                    cone(level, onde, fase, alto, raio);
+                    return RiteStep.Result.UPKEEP;
+                }
+                if (fase >= alto * 2) {
+                    drain(level, onde);
+                    return RiteStep.Result.COMPLETED;
+                }
+                erupt(level, onde, fase, alto, raio);
+                return RiteStep.Result.UPKEEP;
+            });
+        }
+
+        /** Se há uma poça de lava de verdade por baixo do círculo. */
+        public static boolean lavaBelow(ServerLevel level, BlockPos onde) {
+            for (int y = onde.getY(); y > level.getMinY() && onde.getY() - y < LOOK_DOWN; y--) {
+                BlockPos casa = new BlockPos(onde.getX(), y, onde.getZ());
+                var feitio = level.getBlockState(casa);
+                if (feitio.is(net.minecraft.world.level.block.Blocks.BEDROCK)) return false;
+                if (feitio.is(net.minecraft.world.level.block.Blocks.LAVA) && lavaAround(level, casa, 2)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /** A conta do {@code surroundedByBlocks}, casa por casa e na mesma ordem. */
+        private static boolean lavaAround(ServerLevel level, BlockPos casa, int quantas) {
+            int conta = 0;
+            BlockPos[] olhar = {
+                    casa.below(), casa.west(), casa.east().below(),
+                    casa.north(), casa.south(), casa.above().south()};
+            for (BlockPos vizinha : olhar) {
+                if (level.getBlockState(vizinha).is(net.minecraft.world.level.block.Blocks.LAVA)) conta++;
+            }
+            return conta >= quantas;
+        }
+
+        /** Uma camada do cone, com as de baixo já postas: o cone cresce inteiro a cada batida. */
+        private static void cone(ServerLevel level, BlockPos onde, int fase, int alto, float raio) {
+            for (int y = 1; y <= fase; y++) {
+                float r = raio - (alto - fase - 1 + y) * raio / alto;
+                circle(level, onde.getX(), y + onde.getY() - 1, onde.getZ(),
+                        Math.max((int) Math.ceil(r), 1), y, true);
+                if (fase == alto) {
+                    int abaixo = onde.getY() - 1;
+                    for (int corta = 0; abaixo > onde.getY() - 5; corta++) {
+                        circle(level, onde.getX(), abaixo, onde.getZ(),
+                                Math.max((int) raio - corta, 2), y, false);
+                        abaixo--;
+                    }
+                }
+                sobe(level, onde, y, r);
+            }
+        }
+
+        /** Quem ficou dentro de pedra sobe uma casa, como no Erguer a Terra. */
+        private static void sobe(ServerLevel level, BlockPos onde, int y, float r) {
+            AABB roda = new AABB(onde.getX() - r, y + onde.getY(), onde.getZ() - r,
+                    onde.getX() + r, y + onde.getY() + 1, onde.getZ() + r);
+            for (var quem : level.getEntities((net.minecraft.world.entity.Entity) null, roda, e -> true)) {
+                double dx = quem.getX() - onde.getX();
+                double dz = quem.getZ() - onde.getZ();
+                if (dx * dx + dz * dz > (double) r * r) continue;
+                if (!level.getBlockState(quem.blockPosition()).isSolidRender()) continue;
+                quem.teleportTo(quem.getX(), quem.getY() + 1.0, quem.getZ());
+            }
+        }
+
+        /** A lava a subir por dentro, e o cume a romper-se. */
+        private static void erupt(ServerLevel level, BlockPos onde, int fase, int alto, float raio) {
+            var pedra = net.minecraft.world.level.block.Blocks.STONE.defaultBlockState();
+            var lava = net.minecraft.world.level.block.Blocks.LAVA.defaultBlockState();
+            var corrente = lava.setValue(net.minecraft.world.level.block.LiquidBlock.LEVEL, 1);
+
+            if (fase == alto * 2 - 1) {
+                level.setBlock(onde.above(fase - alto), corrente, Block.UPDATE_ALL);
+                level.setBlock(onde.above(), lava, Block.UPDATE_ALL);
+                if (raio >= 16.0f) {
+                    if (level.getRandom().nextInt(4) == 0) {
+                        level.setBlock(onde.above(1 + fase - alto), corrente, Block.UPDATE_ALL);
+                    }
+                    return;
+                }
+                BlockPos cume = onde.above(alto - 1);
+                BlockPos rompe = switch (level.getRandom().nextInt(8)) {
+                    case 0 -> cume.east();
+                    case 1 -> cume.south();
+                    case 2 -> cume.west();
+                    case 3 -> cume.north();
+                    default -> null;
+                };
+                if (rompe != null) {
+                    level.setBlock(rompe, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),
+                            Block.UPDATE_ALL);
+                }
+                return;
+            }
+            level.setBlock(onde.above(), pedra, Block.UPDATE_ALL);
+            level.setBlock(onde.above(fase - alto), lava, Block.UPDATE_ALL);
+        }
+
+        /** E a coluna que veio de baixo é fechada: o que fica é um monte, e não um cano de lava. */
+        private static void drain(ServerLevel level, BlockPos onde) {
+            for (int y = onde.getY(); y > level.getMinY(); y--) {
+                BlockPos casa = new BlockPos(onde.getX(), y, onde.getZ());
+                var feitio = level.getBlockState(casa);
+                if (feitio.is(net.minecraft.world.level.block.Blocks.BEDROCK)) return;
+                if (feitio.is(net.minecraft.world.level.block.Blocks.LAVA)) {
+                    while (level.getBlockState(casa).is(net.minecraft.world.level.block.Blocks.LAVA)) {
+                        apaga(level, casa);
+                        apaga(level, casa.east());
+                        apaga(level, casa.west());
+                        apaga(level, casa.south());
+                        apaga(level, casa.north());
+                        casa = casa.below();
+                    }
+                    return;
+                }
+                level.setBlock(casa, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),
+                        Block.UPDATE_ALL);
+            }
+        }
+
+        private static void apaga(ServerLevel level, BlockPos casa) {
+            if (!level.getBlockState(casa).is(net.minecraft.world.level.block.Blocks.LAVA)) return;
+            level.setBlock(casa, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),
+                    Block.UPDATE_ALL);
+        }
+
+        /** Um círculo cheio de pedra, com a beira de baixo salpicada de relva. */
+        private static void circle(ServerLevel level, int x0, int y, int z0, int raio, int altura,
+                                   boolean troca) {
+            int x = raio;
+            int z = 0;
+            int erro = 1 - x;
+            while (x >= z) {
+                line(level, -x + x0, x + x0, z + z0, y, x0, z0, raio, altura, troca);
+                line(level, -z + x0, z + x0, x + z0, y, x0, z0, raio, altura, troca);
+                line(level, -x + x0, x + x0, -z + z0, y, x0, z0, raio, altura, troca);
+                line(level, -z + x0, z + x0, -x + z0, y, x0, z0, raio, altura, troca);
+                z++;
+                if (erro < 0) {
+                    erro += 2 * z + 1;
+                } else {
+                    x--;
+                    erro += 2 * (z - x + 1);
+                }
+            }
+        }
+
+        private static void line(ServerLevel level, int x1, int x2, int z, int y, int meioX, int meioZ,
+                                 int raio, int altura, boolean troca) {
+            int de = raio > 1 && level.getRandom().nextInt(5) == 0 ? x1 + 1 : x1;
+            int até = raio > 1 && level.getRandom().nextInt(5) == 0 ? x2 - 1 : x2;
+            boolean beiraZ = meioZ + raio == z || meioZ - raio == z;
+
+            for (int x = de; x <= até; x++) {
+                if (x == meioX && z == meioZ) continue;
+                boolean baixa = (x == de || x == até || beiraZ) && altura < 3;
+                pixel(level, x, z, y, baixa, troca);
+            }
+        }
+
+        private static void pixel(ServerLevel level, int x, int z, int y, boolean baixa, boolean troca) {
+            BlockPos casa = new BlockPos(x, y, z);
+            var feitio = level.getBlockState(casa);
+            boolean vago = feitio.isAir();
+            if (!vago && !(troca && feitio.getDestroySpeed(level, casa) >= 0.0f)) return;
+
+            var põe = baixa && level.getRandom().nextInt(5) != 0
+                    ? net.minecraft.world.level.block.Blocks.GRASS_BLOCK.defaultBlockState()
+                    : net.minecraft.world.level.block.Blocks.STONE.defaultBlockState();
+            level.setBlock(casa, põe, Block.UPDATE_CLIENTS);
+        }
+    }
+
     // ------------------------------------------------------------------ os ritos do tempo e da terra
 
     /**
@@ -623,6 +846,25 @@ public final class Rites {
                         new Sacrifice.Power(3000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.DAY)));
+
+        // a Pedra Sintonizada Carregada, que é o que os ritos grandes pedem
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.chargestone",
+                new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE,
+                                Items.GLOWSTONE_DUST, Items.REDSTONE,
+                                net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
+                                net.thaumcraft.occulta.OccultaItems.QUICKLIME),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        // e o maior estrago que o ofício faz
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.volcano", new Volcano(8, 8),
+                new Sacrifice.Items(Items.STONE, Items.MAGMA_CREAM, Items.GOLDEN_SWORD,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(16, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // os ritos do tempo e da terra
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.storm", new Storm(0, 3, 8),
