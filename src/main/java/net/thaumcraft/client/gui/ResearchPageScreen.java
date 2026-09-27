@@ -336,6 +336,7 @@ public class ResearchPageScreen extends Screen {
             case Page.Concealed text -> this.drawText(graphics, side, x, y - 10, text.key());
             case Page.Aspects aspects -> this.drawAspectPage(graphics, side, x - 8, y - 8, mx, my, aspects.aspects());
             case Page.Smelting smelting -> this.drawSmeltingPage(graphics, side, x - 4, y - 8, mx, my, smelting);
+            case Page.Brew brew -> this.drawBrewPage(graphics, side, x - 4, y - 8, mx, my, brew);
             case Page.Recipe recipe -> {
                 List<Object> list = this.resolved.computeIfAbsent(recipe, p -> BookPages.resolve((Page.Recipe) p));
                 if (list.isEmpty()) return;
@@ -623,6 +624,39 @@ public class ResearchPageScreen extends Screen {
         this.item(graphics, catalyst, x + 26 + start, y + 72, false);
         if (over(mx, my, x + 48 + start, y + 36)) this.itemTooltip(out, mx, my, false);
         if (over(mx, my, x + 26 + start, y + 72)) this.itemTooltip(catalyst, mx, my, true);
+    }
+
+    /**
+     * A página de um cozimento: o caldeirão em cima, o que cai dentro <b>pela ordem</b>, e o frasco que sai.
+     *
+     * <p>A ordem é o que mais importa num cozimento, e por isso os ingredientes vão numa coluna, de cima para
+     * baixo — é a ordem em que se jogam. Embaixo, o que o altar paga.
+     */
+    private void drawBrewPage(GuiGraphicsExtractor graphics, int side, int x, int y, int mx, int my, Page.Brew page) {
+        int start = side * 152;
+        this.title(graphics, "recipe.type.brew", x + start, y);
+        ItemStack panela = page.vessel().get();
+        ItemStack saiu = page.result().get();
+        this.item(graphics, panela, x + 48 + start, y + 22, false);
+        if (over(mx, my, x + 48 + start, y + 22)) this.itemTooltip(panela, mx, my, true);
+
+        int quantos = page.ingredients().size();
+        int passo = quantos > 5 ? 20 : 24;
+        int topo = y + 50;
+        for (int i = 0; i < quantos; i++) {
+            ItemStack cai = page.ingredients().get(i).get();
+            int py = topo + i * passo;
+            this.item(graphics, cai, x + 48 + start, py, false);
+            // o número da ordem, à esquerda de cada um
+            graphics.text(this.font, Component.literal(String.valueOf(i + 1)), x + 36 + start, py + 4, GREY, false);
+            if (over(mx, my, x + 48 + start, py)) this.itemTooltip(cai, mx, my, true);
+        }
+
+        int fim = topo + quantos * passo + 6;
+        this.item(graphics, saiu, x + 48 + start, fim, true);
+        if (over(mx, my, x + 48 + start, fim)) this.itemTooltip(saiu, mx, my, false);
+        Component poder = Component.translatable("tc.brew.altarpower", page.power());
+        graphics.text(this.font, poder, x + start + 56 - this.font.width(poder) / 2, fim + 22, GREY, false);
     }
 
     private void drawSmeltingPage(GuiGraphicsExtractor graphics, int side, int x, int y, int mx, int my, Page.Smelting page) {

@@ -245,4 +245,40 @@ public class OccultaBrewGameTest {
         if (lãs != 16) helper.fail("as dezesseis lãs pintam o caldo; achei " + lãs);
         helper.succeed();
     }
+
+    /**
+     * Toda receita que o livro ensina é receita que o caldeirão aceita — ingrediente por ingrediente, na ordem.
+     *
+     * <p>É a prova que guarda as quatro ramificações de receitas: se alguma delas pedir um efeito que não cabe
+     * no espaço aberto, ou repetir um ingrediente onde não se pode, ela cai aqui e não no jogo de quem lê.
+     */
+    @GameTest
+    public void everyBrewInTheBookIsBrewable(GameTestHelper helper) {
+        int quantas = 0;
+        for (var pesquisa : net.thaumcraft.research.Researches.of(net.thaumcraft.occulta.Occulta.CATEGORY)) {
+            for (var página : pesquisa.pages()) {
+                if (!(página instanceof net.thaumcraft.research.Page.Brew cozimento)) continue;
+                quantas++;
+                List<Item> dentro = new java.util.ArrayList<>();
+                for (var cai : cozimento.ingredients()) {
+                    Item item = cai.get().getItem();
+                    if (!Brew.canAdd(dentro, item, false)) {
+                        helper.fail("o livro ensina uma receita que o caldeirão recusa: " + dentro + " + " + item);
+                        return;
+                    }
+                    dentro = Brew.add(dentro, item);
+                }
+                // e o que o livro diz que custa é o que custa mesmo
+                if (cozimento.power() != Brew.power(dentro)) {
+                    helper.fail("o poder escrito na página não bate com o do motor: " + dentro);
+                }
+                // e a receita tem de fazer alguma coisa: uma receita sem efeito nenhum não se ensina
+                if (Brew.capacity(dentro).effects() == 0) {
+                    helper.fail("esta receita não faz efeito nenhum: " + dentro);
+                }
+            }
+        }
+        if (quantas < 16) helper.fail("as quatro ramificações têm dezesseis receitas; achei " + quantas);
+        helper.succeed();
+    }
 }

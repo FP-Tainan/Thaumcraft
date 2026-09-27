@@ -27,6 +27,18 @@ public sealed interface Page {
     record Smelting(Supplier<ItemStack> input, Supplier<ItemStack> output) implements Page {
     }
 
+    /**
+     * Uma receita de cozimento: o caldeirão, o que se joga dentro <b>pela ordem</b>, o que sai e o que o altar
+     * paga.
+     *
+     * <p>Não é do original: no Witchery não há livro de pesquisa nenhum, e o que se sabe sobre cozimentos está
+     * num livro escrito à mão, fora do jogo. Aqui as receitas entram no Thaumonomicon como as outras — foi
+     * pedido, e é o que faz o ramo se parecer com o resto do mod.
+     */
+    record Brew(Supplier<ItemStack> vessel, List<Supplier<ItemStack>> ingredients, Supplier<ItemStack> result,
+                int power) implements Page {
+    }
+
     /** Os aspectos conhecidos, quatro por página ({@code ASPECTS}): só a pesquisa "Aspectos" as tem, montadas na hora. */
     record Aspects(net.thaumcraft.api.aspects.AspectList aspects) implements Page {
     }
@@ -89,6 +101,12 @@ public sealed interface Page {
     /** Uma página com a montagem de uma estrutura. */
     static Page compound(String... names) {
         return new Recipe(Kind.COMPOUND, List.of(names));
+    }
+
+    /** Uma página de cozimento: o caldeirão, o que cai dentro pela ordem, o frasco que sai e o poder que custa. */
+    static Page brew(Supplier<ItemStack> vessel, List<Supplier<ItemStack>> ingredients,
+                     Supplier<ItemStack> result, int power) {
+        return new Brew(vessel, ingredients, result, power);
     }
 
     /** Uma página de fornalha: o que entra e o que sai. */

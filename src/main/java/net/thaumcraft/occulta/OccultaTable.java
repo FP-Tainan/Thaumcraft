@@ -99,7 +99,76 @@ public final class OccultaTable {
                 .pages(Page.text("tc.research_page.AO_POTIONS.1"), Page.text("tc.research_page.AO_POTIONS.2"),
                         Page.text("tc.research_page.AO_POTIONS.3"), Page.text("tc.research_page.AO_POTIONS.4"))
                 .register();
+        // e daqui saem as receitas, por feitio do que fazem
+        ThaumcraftApi.research("AO_BREW_BODY", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MOTION, 4).add(Aspects.LIFE, 3).add(Aspects.WATER, 2))
+                .at(4, 2)
+                .icon(() -> brewStack(Items.NETHER_WART, Items.SUGAR))
+                .parents("AO_POTIONS")
+                .pages(Page.text("tc.research_page.AO_BREW_BODY.1"),
+                        brewPage(Items.NETHER_WART, Items.SUGAR),
+                        brewPage(Items.NETHER_WART, Items.FERMENTED_SPIDER_EYE, Items.SUGAR),
+                        brewPage(Items.NETHER_WART, Items.LEATHER),
+                        brewPage(Items.NETHER_WART, Items.BLAZE_POWDER))
+                .register();
+
+        ThaumcraftApi.research("AO_BREW_SENSES", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.SENSES, 4).add(Aspects.AIR, 3).add(Aspects.WATER, 2))
+                .at(4, 4)
+                .icon(() -> brewStack(Items.NETHER_WART, Items.GOLDEN_CARROT))
+                .parents("AO_POTIONS")
+                .pages(Page.text("tc.research_page.AO_BREW_SENSES.1"),
+                        brewPage(Items.NETHER_WART, Items.GOLDEN_CARROT),
+                        brewPage(Items.NETHER_WART, Items.FERMENTED_SPIDER_EYE, Items.GOLDEN_CARROT),
+                        brewPage(Items.NETHER_WART, Items.PUFFERFISH),
+                        brewPage(Items.NETHER_WART, Items.MAGMA_CREAM))
+                .register();
+
+        ThaumcraftApi.research("AO_BREW_LIFE", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.LIFE, 5).add(Aspects.HEAL, 4).add(Aspects.MAGIC, 2))
+                .at(6, 3)
+                .icon(() -> brewStack(Items.NETHER_WART, Items.GHAST_TEAR))
+                .parents("AO_BREW_BODY", "AO_BREW_SENSES")
+                .pages(Page.text("tc.research_page.AO_BREW_LIFE.1"),
+                        brewPage(Items.NETHER_WART, Items.GHAST_TEAR),
+                        brewPage(Items.NETHER_WART, Items.GLISTERING_MELON_SLICE),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.GOLDEN_APPLE),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.ENCHANTED_GOLDEN_APPLE))
+                .register();
+
+        ThaumcraftApi.research("AO_BREW_HARM", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.POISON, 5).add(Aspects.DEATH, 4).add(Aspects.ENTROPY, 3))
+                .at(2, 6)
+                .icon(() -> brewStack(Items.NETHER_WART, Items.SPIDER_EYE))
+                .parents("AO_POTIONS")
+                .pages(Page.text("tc.research_page.AO_BREW_HARM.1"),
+                        brewPage(Items.NETHER_WART, Items.SPIDER_EYE),
+                        brewPage(Items.NETHER_WART, Items.GLOWSTONE_DUST, Items.SPIDER_EYE),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.WITHER_SKELETON_SKULL),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.INK_SAC))
+                .register();
     }
+
+    /**
+     * Uma página de receita de cozimento, montada do que se joga dentro.
+     *
+     * <p>O frasco que sai e o poder que o altar paga <b>não se escrevem à mão</b>: saem do próprio motor, do
+     * mesmo jeito que sairiam no caldeirão. Assim o livro não pode ensinar uma receita que a panela recusa — e há
+     * uma prova que confere isso, receita por receita.
+     */
+    private static Page brewPage(net.minecraft.world.item.Item... dentro) {
+        java.util.List<net.minecraft.world.item.Item> lista = java.util.List.of(dentro);
+        java.util.List<java.util.function.Supplier<ItemStack>> caem = new java.util.ArrayList<>();
+        for (net.minecraft.world.item.Item item : lista) caem.add(() -> new ItemStack(item));
+        return Page.brew(() -> new ItemStack(OccultaItems.WITCHES_CAULDRON), java.util.List.copyOf(caem),
+                () -> brewStack(dentro), net.thaumcraft.occulta.brew.Brew.power(lista));
+    }
+
+    /** O frasco que aquela receita dá. */
+    public static ItemStack brewStack(net.minecraft.world.item.Item... dentro) {
+        return net.thaumcraft.occulta.brew.BrewItem.of(OccultaItems.BREW, java.util.List.of(dentro));
+    }
+
 
     /** As receitas que o livro mostra. Correm depois de tudo montado, porque pedem os itens prontos. */
     public static void recipes() {

@@ -3258,3 +3258,23 @@ verdade. A prova passou a esperar uma vez só (`runAfterDelay`), e o defeito apa
 **E um achado do próprio motor:** a prova antiga do caldeirão dizia que "um diamante não serve a receita nenhuma
 e não entra". Desde os cozimentos, entra — ele é ingrediente de porte. Quem não serve a nada é o pedregulho, e é
 esse que a prova usa agora.
+
+### As receitas de cozimento entram no livro (2026-09-27)
+
+*Depois de "Os Cozimentos" podia ter as ramificações com as receitas das poções.*
+
+Foi o que se fez. De "Os Cozimentos" saem agora quatro ramos — **do Corpo**, **dos Sentidos**, **que Guardam** e
+**que Ferem** —, e cada um traz quatro receitas.
+
+**Uma página nova no livro.** Nenhum dos tipos de página do Thaumonomicon servia: um cozimento não é bancada, nem
+crisol, nem infusão — é uma **ordem**. A página de cozimento mostra o caldeirão em cima, o que cai dentro numa
+coluna numerada de um a quatro, o frasco que sai e o que o altar paga.
+
+**É acréscimo do porte, declarado.** O Witchery não tem livro de pesquisa nenhum: o que se sabe sobre cozimentos
+lá está num livro escrito à mão, fora do jogo. Aqui as receitas entram no Thaumonomicon como as outras, que é o
+que faz o ramo se parecer com o resto do mod.
+
+**O frasco e o poder não se escrevem à mão:** saem do próprio motor, do mesmo jeito que sairiam no caldeirão. E
+há uma prova que percorre <b>todas</b> as receitas do livro, ingrediente por ingrediente, e confere que o
+caldeirão aceita cada uma, que o poder escrito bate com o do motor e que nenhuma delas é uma receita que não faz
+nada. O livro não pode ensinar o que a panela recusa.
