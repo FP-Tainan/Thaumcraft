@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "xxx",
+    "y y",
+    "xxx"
+  ],
+  "key": {
+    "x": "#minecraft:planks",
+    "y": "minecraft:string"
+  },
+  "result": {
+    "id": "thaumcraft:poppet_shelf",
+    "count": 1
+  }
+}

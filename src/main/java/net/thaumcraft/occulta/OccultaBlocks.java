@@ -122,6 +122,28 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(WitchesCauldronBlockEntity::new,
                             java.util.Set.of(WITCHES_CAULDRON)));
 
+    // ------------------------------------------------------------------ as bonecas
+
+    /** A Prateleira de Bonecas, onde as bonecas valem de longe. */
+    public static final Block POPPET_SHELF = register("poppet_shelf", properties ->
+            new PoppetShelfBlock(properties.mapColor(MapColor.WOOD).strength(2.0f)
+                    .sound(SoundType.WOOD).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<PoppetShelfBlockEntity> POPPET_SHELF_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("poppet_shelf"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(PoppetShelfBlockEntity::new,
+                            java.util.Set.of(POPPET_SHELF)));
+
+    /** O Musgo Espanhol, que pende das árvores do pântano. */
+    public static final Block SPANISH_MOSS = register("spanish_moss", properties ->
+            new net.minecraft.world.level.block.BushBlock(properties.mapColor(MapColor.PLANT)
+                    .instabreak().sound(SoundType.GRASS).ignitedByLava()));
+
+    /** E o Musgo de Brasa, que arde em quem lhe pisa. */
+    public static final Block EMBER_MOSS = register("ember_moss", properties ->
+            new EmberMossBlock(properties.mapColor(MapColor.COLOR_ORANGE)
+                    .instabreak().lightLevel(state -> 6).sound(SoundType.GRASS)));
+
     // ------------------------------------------------------------------ os círculos de giz
 
     /** O glifo do meio, que o giz dourado risca: é nele que se bate para começar um rito. */

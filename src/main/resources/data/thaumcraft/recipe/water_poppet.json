@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "b#b",
+    " a "
+  ],
+  "key": {
+    "#": "thaumcraft:poppet",
+    "a": "thaumcraft:water_artichoke_globe",
+    "b": "minecraft:ink_sac"
+  },
+  "result": {
+    "id": "thaumcraft:water_poppet",
+    "count": 1
+  }
+}

@@ -30,6 +30,7 @@ public final class Occulta {
         OccultaGrassSeeds.init();
         OccultaBatWool.init();
         OccultaEvents.init();
+        Poppets.init();
         net.thaumcraft.occulta.rite.Rites.register();
         // a aba do ramo no livro
         net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,

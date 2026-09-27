@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "axb",
+    "x#x",
+    " x "
+  ],
+  "key": {
+    "#": "thaumcraft:poppet",
+    "a": "thaumcraft:drop_of_luck",
+    "b": "thaumcraft:diamond_vapour",
+    "x": "minecraft:gold_nugget"
+  },
+  "result": {
+    "id": "thaumcraft:death_poppet",
+    "count": 1
+  }
+}

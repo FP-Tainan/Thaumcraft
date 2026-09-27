@@ -147,6 +147,40 @@ public final class OccultaItems {
                                     new java.util.LinkedHashSet<>(java.util.List.of(
                                             net.minecraft.core.component.DataComponents.DYED_COLOR))))));
 
+    /** A Gota de Sorte, que o caldeirão faz e as bonecas pedem. */
+    public static final Item DROP_OF_LUCK = register("drop_of_luck", Item::new);
+
+    /** O Frasco de Vínculo: vazio, enche-se tocando alguém. */
+    public static final Item TAGLOCK = register("taglock", properties -> new TaglockItem(properties.stacksTo(16)));
+
+    /** A boneca solta, que ainda não é de ninguém. */
+    public static final Item POPPET = poppet("poppet", PoppetItem.Kind.NONE);
+
+    /** E as bonecas presas, cada uma com o seu ofício. */
+    public static final Item EARTH_POPPET = poppet("earth_poppet", PoppetItem.Kind.EARTH);
+    public static final Item WATER_POPPET = poppet("water_poppet", PoppetItem.Kind.WATER);
+    public static final Item FIRE_POPPET = poppet("fire_poppet", PoppetItem.Kind.FIRE);
+    public static final Item HUNGER_POPPET = poppet("hunger_poppet", PoppetItem.Kind.HUNGER);
+    public static final Item TOOL_POPPET = poppet("tool_poppet", PoppetItem.Kind.TOOL);
+    public static final Item DEATH_POPPET = poppet("death_poppet", PoppetItem.Kind.DEATH);
+    public static final Item ARMOR_POPPET = poppet("armor_poppet", PoppetItem.Kind.ARMOR);
+    public static final Item VOODOO_PROTECTION_POPPET = poppet("voodoo_protection_poppet",
+            PoppetItem.Kind.VOODOO_PROTECTION);
+    public static final Item VOODOO_POPPET = poppet("voodoo_poppet", PoppetItem.Kind.VOODOO);
+
+    /** A Prateleira de Bonecas, em item. */
+    public static final Item POPPET_SHELF = register("poppet_shelf", properties ->
+            new net.minecraft.world.item.BlockItem(OccultaBlocks.POPPET_SHELF,
+                    properties.useBlockDescriptionPrefix()));
+
+    /** E os dois musgos. */
+    public static final Item SPANISH_MOSS = register("spanish_moss", properties ->
+            new net.minecraft.world.item.BlockItem(OccultaBlocks.SPANISH_MOSS,
+                    properties.useBlockDescriptionPrefix()));
+    public static final Item EMBER_MOSS = register("ember_moss", properties ->
+            new net.minecraft.world.item.BlockItem(OccultaBlocks.EMBER_MOSS,
+                    properties.useBlockDescriptionPrefix()));
+
     /** O Giz Dourado, que risca o glifo do meio. */
     public static final Item GOLDEN_CHALK = chalk("golden_chalk", () -> OccultaBlocks.CIRCLE_HEART);
 
@@ -233,9 +267,23 @@ public final class OccultaItems {
         return register(name, properties -> new WitchSeedItem(crop, properties.useItemDescriptionPrefix()));
     }
 
-    /** Um giz: rende sessenta e quatro riscos, como no original. */
+    /** Uma boneca: as que se gastam aos poucos aguentam mil pontos, como no original. */
+    private static Item poppet(String name, PoppetItem.Kind kind) {
+        return register(name, properties -> new PoppetItem(kind,
+                kind == PoppetItem.Kind.NONE || kind.breaks ? properties.stacksTo(16)
+                        : properties.durability(5000)));
+    }
+
+    /**
+     * Um giz.
+     *
+     * <p><b>Desvio declarado.</b> No original uma receita dá <b>duas</b> varas de sessenta e quatro riscos cada,
+     * e elas empilham-se — na 1.7.10 uma coisa gasta ainda empilhava. Hoje não: o que tem desgaste vai uma por
+     * casa. Por isso a receita dá <b>uma</b> vara de <b>cento e vinte e oito</b> riscos, que é o mesmo giz na
+     * mesma conta, numa vara só.
+     */
     private static Item chalk(String name, java.util.function.Supplier<net.minecraft.world.level.block.Block> glyph) {
-        return register(name, properties -> new ChalkItem(glyph, properties.durability(64)));
+        return register(name, properties -> new ChalkItem(glyph, properties.durability(128)));
     }
 
     private static Item register(String name, Function<Item.Properties, Item> factory) {

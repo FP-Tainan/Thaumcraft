@@ -2,10 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    "minecraft:bone_meal"
+    "minecraft:glass_bottle",
+    "thaumcraft:bone_needle"
   ],
   "result": {
-    "id": "thaumcraft:bone_needle",
+    "id": "thaumcraft:taglock",
     "count": 1
   }
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "b#b",
+    " c "
+  ],
+  "key": {
+    "#": "thaumcraft:poppet",
+    "b": "minecraft:feather",
+    "a": "minecraft:paper",
+    "c": "minecraft:dirt"
+  },
+  "result": {
+    "id": "thaumcraft:earth_poppet",
+    "count": 1
+  }
+}

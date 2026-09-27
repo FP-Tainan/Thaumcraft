@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "b#b",
+    " a "
+  ],
+  "key": {
+    "#": "thaumcraft:poppet",
+    "b": "minecraft:glistering_melon_slice",
+    "a": "minecraft:rotten_flesh"
+  },
+  "result": {
+    "id": "thaumcraft:hunger_poppet",
+    "count": 1
+  }
+}

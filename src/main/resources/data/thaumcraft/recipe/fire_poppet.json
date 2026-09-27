@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "b#b",
+    " a "
+  ],
+  "key": {
+    "#": "thaumcraft:poppet",
+    "b": "thaumcraft:bat_wool",
+    "a": "thaumcraft:ember_moss"
+  },
+  "result": {
+    "id": "thaumcraft:fire_poppet",
+    "count": 1
+  }
+}

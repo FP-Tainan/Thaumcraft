@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "b#b",
+    " d "
+  ],
+  "key": {
+    "#": "thaumcraft:poppet",
+    "a": "thaumcraft:reek_of_misfortune",
+    "b": "thaumcraft:drop_of_luck",
+    "d": "thaumcraft:diamond_vapour"
+  },
+  "result": {
+    "id": "thaumcraft:armor_poppet",
+    "count": 1
+  }
+}

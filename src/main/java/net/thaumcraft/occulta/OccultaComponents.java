@@ -24,6 +24,11 @@ public final class OccultaComponents {
                     .networkSynchronized(ByteBufCodecs.registry(net.minecraft.core.registries.Registries.ITEM)
                             .apply(ByteBufCodecs.list())));
 
+    /** A quem uma boneca ou um frasco está preso: o vínculo do {@code ItemTaglockKit}. */
+    public static final DataComponentType<TaglockItem.Taglock> TAGLOCK = register("taglock",
+            builder -> builder.persistent(TaglockItem.Taglock.CODEC)
+                    .networkSynchronized(TaglockItem.Taglock.STREAM_CODEC));
+
     private OccultaComponents() {
     }
 

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "xyx",
+    "ayb",
+    "x x"
+  ],
+  "key": {
+    "x": "#minecraft:wool",
+    "y": "thaumcraft:spanish_moss",
+    "a": "thaumcraft:bone_needle",
+    "b": "minecraft:string"
+  },
+  "result": {
+    "id": "thaumcraft:poppet",
+    "count": 1
+  }
+}

@@ -49,6 +49,11 @@ public final class OccultaRituals {
         ritual(OccultaItems.MUTANDIS, List.of(Items.NETHER_WART),
                 () -> new ItemStack(OccultaItems.MUTANDIS_EXTREMIS));
 
+        // a Gota de Sorte, que o Mutandis Extremis dispara
+        ritual(OccultaItems.MUTANDIS_EXTREMIS, List.of(OccultaItems.MANDRAKE_ROOT, Items.NETHER_WART,
+                OccultaItems.TEAR_OF_THE_GODDESS, OccultaItems.REFINED_EVIL),
+                () -> new ItemStack(OccultaItems.DROP_OF_LUCK));
+
         // os três gizes que saem do caldeirão: o de ritual é a chave dos três
         ritual(OccultaItems.RITUAL_CHALK, List.of(Items.NETHER_WART, OccultaItems.TEAR_OF_THE_GODDESS,
                 Items.ENDER_PEARL), () -> new ItemStack(OccultaItems.OTHERWHERE_CHALK));

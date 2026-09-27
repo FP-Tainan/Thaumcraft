@@ -164,6 +164,7 @@ public final class OccultaTable {
         world();
         distillery();
         circles();
+        poppets();
     }
 
 
@@ -187,6 +188,20 @@ public final class OccultaTable {
                 .register();
     }
 
+
+    /** As bonecas: a linha da Magia Simpática. */
+    private static void poppets() {
+        ThaumcraftApi.research("AO_POPPETS", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAN, 5).add(Aspects.MAGIC, 4).add(Aspects.ARMOR, 3)
+                        .add(Aspects.CLOTH, 2))
+                .at(-4, 4)
+                .icon(() -> new ItemStack(OccultaItems.DEATH_POPPET))
+                .parents("AO_DISTILLERY")
+                .pages(Page.text("tc.research_page.AO_POPPETS.1"), Page.crafting("AOPoppet"),
+                        Page.text("tc.research_page.AO_POPPETS.2"), Page.crafting("AOTaglock"),
+                        Page.text("tc.research_page.AO_POPPETS.3"), Page.crafting("AOPoppetShelf"))
+                .register();
+    }
 
     /** Os círculos de giz e os ritos. */
     private static void circles() {
@@ -287,8 +302,32 @@ public final class OccultaTable {
 
     /** As receitas que o livro mostra. Correm depois de tudo montado, porque pedem os itens prontos. */
     public static void recipes() {
+        ThaumcraftApi.bookRecipe("AOPoppet", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.POPPET), 3, 3, List.of(
+                        List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.white())),
+                        List.of(new ItemStack(OccultaItems.SPANISH_MOSS)),
+                        List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.white())),
+                        List.of(new ItemStack(net.thaumcraft.mortuorum.MortuorumItems.BONE_NEEDLE)),
+                        List.of(new ItemStack(OccultaItems.SPANISH_MOSS)),
+                        List.of(new ItemStack(Items.STRING)),
+                        List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.white())), List.<ItemStack>of(),
+                        List.of(new ItemStack(net.minecraft.world.item.Items.WOOL.white())))));
+        ThaumcraftApi.bookRecipe("AOTaglock", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.TAGLOCK), 3, 3, List.of(
+                        List.of(new ItemStack(Items.GLASS_BOTTLE)),
+                        List.of(new ItemStack(net.thaumcraft.mortuorum.MortuorumItems.BONE_NEEDLE)),
+                        List.<ItemStack>of(), List.<ItemStack>of(), List.<ItemStack>of(), List.<ItemStack>of(),
+                        List.<ItemStack>of(), List.<ItemStack>of(), List.<ItemStack>of())));
+        ThaumcraftApi.bookRecipe("AOPoppetShelf", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.POPPET_SHELF), 3, 3, List.of(
+                        List.of(new ItemStack(net.minecraft.world.level.block.Blocks.OAK_PLANKS)), List.of(new ItemStack(net.minecraft.world.level.block.Blocks.OAK_PLANKS)),
+                        List.of(new ItemStack(net.minecraft.world.level.block.Blocks.OAK_PLANKS)),
+                        List.of(new ItemStack(Items.STRING)), List.<ItemStack>of(),
+                        List.of(new ItemStack(Items.STRING)),
+                        List.of(new ItemStack(net.minecraft.world.level.block.Blocks.OAK_PLANKS)), List.of(new ItemStack(net.minecraft.world.level.block.Blocks.OAK_PLANKS)),
+                        List.of(new ItemStack(net.minecraft.world.level.block.Blocks.OAK_PLANKS)))));
         ThaumcraftApi.bookRecipe("AORitualChalk", ThaumcraftApi.crafting(
-                () -> new ItemStack(OccultaItems.RITUAL_CHALK, 2), 3, 3, List.of(
+                () -> new ItemStack(OccultaItems.RITUAL_CHALK), 3, 3, List.of(
                         List.of(new ItemStack(OccultaItems.WOOD_ASH)),
                         List.of(new ItemStack(OccultaItems.TEAR_OF_THE_GODDESS)),
                         List.of(new ItemStack(OccultaItems.WOOD_ASH)),

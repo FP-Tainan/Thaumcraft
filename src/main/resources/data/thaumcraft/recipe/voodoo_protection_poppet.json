@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ced",
+    "a#b",
+    "dfc"
+  ],
+  "key": {
+    "#": "thaumcraft:poppet",
+    "a": "thaumcraft:belladonna_flower",
+    "b": "thaumcraft:mandrake_root",
+    "c": "minecraft:poppy",
+    "d": "minecraft:dandelion",
+    "e": "minecraft:red_mushroom",
+    "f": "minecraft:brown_mushroom"
+  },
+  "result": {
+    "id": "thaumcraft:voodoo_protection_poppet",
+    "count": 1
+  }
+}

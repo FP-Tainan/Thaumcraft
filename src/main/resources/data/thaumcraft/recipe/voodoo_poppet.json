@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "a#b",
+    " d ",
+    " c "
+  ],
+  "key": {
+    "#": "thaumcraft:poppet",
+    "a": "thaumcraft:belladonna_flower",
+    "b": "thaumcraft:mandrake_root",
+    "c": "thaumcraft:exhale_of_the_horned_one",
+    "d": "minecraft:fermented_spider_eye"
+  },
+  "result": {
+    "id": "thaumcraft:voodoo_poppet",
+    "count": 1
+  }
+}

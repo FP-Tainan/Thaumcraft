@@ -3494,3 +3494,29 @@ outra coisa, não o mesmo rito.
 **E uma armadilha que já tinha aparecido**, agora com nome: o que se registra no arranque do mod <b>não pode
 montar pilhas de item</b> — os componentes ainda não estão presos. A lista de ritos guarda os <b>itens</b> que
 cada oferenda pede, e monta a pilha só quando o livro vai desenhar.
+
+### As bonecas: a Magia Simpática (2026-09-27)
+
+A primeira das duas linhas da lore que estavam vazias. Uma boneca de pano, musgo e fio; solta, não é nada. Presa
+a alguém, passa a **responder por essa pessoa**: quando a morte vem por onde a boneca guarda, é a boneca que se
+desfaz.
+
+**O Frasco de Vínculo** é o que prende: um frasco de vidro com uma agulha de osso, que se enche <b>tocando</b>
+quem se quer. Cheio, guarda o nome e a marca daquela pessoa — e na bancada, com uma boneca, faz dela a boneca
+dela. É o `RecipeShapelessPoppet` do original, aqui uma receita própria que passa o vínculo de um para o outro.
+
+**Nove bonecas.** Terra (queda), Água (afogamento), Fogo (fogo e estouro), Fome, Morte (todas), Ferramenta e
+Armadura (que consertam o que está gasto a nove décimos), Contra o Vodu, e a de Vodu.
+
+**Elas só precisam existir.** Valem na mochila de quem guardam ou numa <b>Prateleira de Bonecas</b>, em qualquer
+canto do mundo — e é por isso que uma casa de bruxa tem uma parede delas. A prateleira entra numa lista ao nascer
+e sai ao ser desfeita, para não haver de varrer o mundo à procura.
+
+**Com elas vieram** a Agulha de Osso (que o Ars Mortuorum já tinha, e é a mesma — não se registra duas), o Musgo
+Espanhol, o Musgo de Brasa (que queima quem lhe pisa) e a **Gota de Sorte**, que sai do caldeirão com Mutandis
+Extremis por chave.
+
+**Dois desvios declarados.** O giz: no original uma receita dá <b>duas</b> varas de sessenta e quatro riscos que
+se empilham — na 1.7.10 uma coisa gasta ainda empilhava, hoje não. A receita dá <b>uma</b> de cento e vinte e
+oito, que é o mesmo giz na mesma conta. E a boneca da ferramenta: no original ela conserta no momento em que se
+usa a ferramenta; aqui é de segundo em segundo, no mesmo lugar em que a armadura se olha. O que se vê é o mesmo.
