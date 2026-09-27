@@ -77,6 +77,24 @@ public class SpiritLiquidBlock extends ThaumFluid.LiquidBlock {
         return nightmareBane && quem instanceof NightmareEntity;
     }
 
+    /**
+     * O {@code onBlockAdded} do original: posto <b>no Mundo dos Espíritos</b>, <b>em fonte</b> e <b>sobre uma
+     * camada de neve</b>, ele tenta acender um Portal do Espírito.
+     *
+     * <p>Só o Espírito Fluente faz isso — as Lágrimas Ocas não —, que é o {@code igniteSpiritPortals} do
+     * original.
+     */
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState antes, boolean moveu) {
+        super.onPlace(state, level, pos, antes, moveu);
+        if (!this.nightmareBane || level.isClientSide()) return;
+        if (!(level instanceof net.minecraft.server.level.ServerLevel server)) return;
+        if (!SpiritWorld.is(server)) return;
+        if (!state.getFluidState().isSource()) return;
+        if (!level.getBlockState(pos.below()).is(SpiritPortalBlock.FRAME)) return;
+        SpiritPortalBlock.tryToCreate(level, pos);
+    }
+
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity quem,
                                 InsideBlockEffectApplier efeitos, boolean atravessou) {

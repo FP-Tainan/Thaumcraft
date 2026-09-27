@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "thaumcraft:block/spirit_portal_ns"
+    },
+    "axis=z": {
+      "model": "thaumcraft:block/spirit_portal_ew"
+    }
+  }
+}

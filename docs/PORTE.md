@@ -3905,10 +3905,8 @@ teto de quatro mil e noventa e seis casas.
 2. **Do `isDemonic` ficam os quatro do jogo.** O original conta, além do Ghast, do Blaze, do Cubo de Magma e do
    Wither, os bichos do próprio Witchery — o Demônio, o Leonard, o Senhor do Tormento, o Diabrete e a Lilith.
    Nenhum deles está portado.
-3. **O Portal do Espírito fica de fora, e é fatia própria.** No original, Espírito Fluente derramado sobre neve
-   **no Mundo dos Espíritos** acende um portal, e quem o atravessa **aparece no mundo de cá como fantasma** —
-   o `manifestPlayerInOverworldAsGhost`. É mecânica inteira, com um terceiro estado do jogador além do de andar
-   em espírito, e entra com ela. O líquido está completo menos esse gancho.
+3. ~~**O Portal do Espírito fica de fora, e é fatia própria.**~~ *Resolvido na fatia seguinte: o portal, o
+   fantasma e o Rito da Manifestação entraram.*
 4. **As duas destilações do Coração de Demônio continuam fora**, pelo mesmo motivo de sempre: o demônio não está
    portado, e sem ele não há coração. São as únicas que faltam da tabela da máquina.
 5. **Os baldes dos dois líquidos são coisa deste porte.** O original usa o balde universal do Forge, que não
@@ -3955,3 +3953,49 @@ Necrótica dependia de um pó que dependia de uma faca que não existia. Agora p
    lhes faltavam — o **Pó de Cemitério**, que esta fatia traz, e o **Medo Condensado**, que a do Espírito Fluente
    trouxe —, mas o que elas chamam são o Espectro, a Banshee e o Poltergeist, e esses bichos não estão portados.
    O que falta já não é ingrediente: é gente do outro lado.
+
+### O Portal do Espírito e o fantasma (2026-09-27)
+
+**A fatia do Espírito Fluente deixou um gancho declarado, e ele fecha aqui.** O que faltava era o
+`BlockSpiritPortal` do Witchery e a manifestação — a parte do `WorldProviderDreamWorld` que traz de volta ao
+mundo de cá quem está do outro lado, sem o acordar.
+
+**A cadeia inteira, que só agora existe.** O **Rito da Manifestação** não abre porta nenhuma e não mostra nada:
+o que sai dele é **crédito**, cento e cinquenta segundos de corpo neste lado, guardados no jogador até se
+precisar deles. Ele pede o que só a Arthana abre — Pó Espectral, Fome Melíflua, Pedra Necrótica, uma picareta de
+ouro, a própria faca e pólvora —, cinco mil de poder e um anel de dezesseis glifos de ritual.
+
+**A porta monta-se do outro lado.** Um vão de dois por dois com moldura de **neve** em volta, e uma fonte de
+**Espírito Fluente** derramada lá dentro. É a única coisa que o Espírito Fluente acende, e só acende no Mundo dos
+Espíritos: uma poça no mundo de cá não faz portal nenhum.
+
+**Atravessando-o com crédito**, o espírito volta ao mundo de cá em **fantasma**, no mesmo ponto do mapa. A
+mochila fica do outro lado; só as **Agulhas de Gelo** atravessam. O relógio desce de cinco em cinco segundos e
+avisa aos sessenta, aos trinta e aos quinze; no zero, o fantasma é puxado de volta, queira ou não — e o que ele
+tiver apanhado no mundo de cá fica cá, porque fantasma não carrega coisa de gente.
+
+**E entrou a regra que faltava: quem anda em espírito não morre.** No Mundo dos Espíritos e em fantasma, o golpe
+que mataria é **apagado** e em vez dele o espírito volta ao corpo. É o que o `onLivingHurt` do original faz, e é
+o que torna o outro lado jogável: o corpo está deitado no mundo de cá, à vista de qualquer um, e morrer *lá*
+mataria o que está *aqui*. Quem joga em criativo não entra nesta conta, como no original.
+
+**Um achado sobre o original.** A moldura do portal, no Witchery, é de **camada de neve** — e uma camada de neve
+precisa de chão firme por baixo. A fileira de cima da moldura fica sobre o **vão**, que é ar: a moldura do
+original **não se consegue montar em jogo**. Ou se monta dentro de uma estrutura sólida que depois se tira, e aí
+a neve cai com ela.
+
+**Desvios declarados.**
+
+1. **A moldura aceita a neve nas duas formas**, a camada e o bloco. É a correção do achado acima: com o bloco,
+   que se empilha, a moldura passa a ser construível sem deixar de ser de neve. A camada continua a valer, para
+   quem conseguir montá-la.
+2. **O crédito de manifestação soma-se**, e o original guarda um número só. Dois ritos dão o dobro de segundos;
+   no original o segundo rito reescreveria o primeiro. Somar é o que a leitura do `RiteSetNBT` sugere e é o que
+   não desperdiça o que se ofereceu.
+3. **A picareta de ouro do rito é leitura, e não certeza.** O original pede o `Items.field_151005_D`, que é uma
+   ferramenta de ouro; qual delas, o nome ofuscado não diz. Pela ordem em que o `EarthItems` do próprio mod
+   emparelha as ferramentas de ferro com as de ouro, ela é a **picareta**. Se um dia se provar que é o machado,
+   troca-se uma linha.
+4. **O fantasma não se vê de fora como fantasma.** No original ele é desenhado translúcido, por um pacote de
+   estilo que o servidor manda a todos. Este porte não tem esse pacote; o fantasma anda visível como qualquer
+   um. O que ele é continua a valer em tudo o resto — o que carrega, o relógio, e não morrer.

@@ -231,6 +231,12 @@ public final class OccultaBlocks {
                     .replaceable().noCollision().strength(100.0f).pushReaction(PushReaction.DESTROY)
                     .noLootTable().liquid().sound(SoundType.EMPTY)));
 
+    /** O Portal do Espírito, que se acende com Espírito Fluente numa moldura de neve. */
+    public static final Block SPIRIT_PORTAL = register("spirit_portal", properties ->
+            new net.thaumcraft.occulta.spirit.SpiritPortalBlock(properties.mapColor(MapColor.COLOR_CYAN)
+                    .noCollision().noLootTable().strength(-1.0f).lightLevel(state -> 12)
+                    .sound(SoundType.GLASS).pushReaction(PushReaction.BLOCK)));
+
     // ------------------------------------------------------------------ a roca, o braseiro e o crisol
 
     /** A Roca, que fia o que não se fia à mão. */

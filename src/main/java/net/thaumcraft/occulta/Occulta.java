@@ -39,6 +39,8 @@ public final class Occulta {
         net.thaumcraft.occulta.spinning.SpinningRecipes.register();
         net.thaumcraft.occulta.brazier.BrazierRecipes.register();
         net.thaumcraft.occulta.spirit.SpiritPlants.init();
+        net.thaumcraft.occulta.spirit.SpiritManifest.init();
+        net.thaumcraft.occulta.spirit.SpiritDeath.init();
         // a aba do ramo no livro
         net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
                 Thaumcraft.id("textures/item/mandrake_root.png"),

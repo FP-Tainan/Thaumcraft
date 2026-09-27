@@ -195,6 +195,22 @@ public class ThaumcraftClient implements ClientModInitializer {
                     }
                 }), net.thaumcraft.occulta.OccultaBlocks.MIRROR_WALL);
 
+        // o Portal do Espírito leva a figura do portal do Nether pintada de verde: o colorMultiplier do original
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(new net.minecraft.client.color.block.BlockTintSource() {
+                    @Override
+                    public int color(net.minecraft.world.level.block.state.BlockState state) {
+                        return net.thaumcraft.occulta.spirit.SpiritPortalBlock.TINT;
+                    }
+
+                    @Override
+                    public int colorInWorld(net.minecraft.world.level.block.state.BlockState state,
+                                            net.minecraft.client.renderer.block.BlockAndTintGetter level,
+                                            net.minecraft.core.BlockPos pos) {
+                        return this.color(state);
+                    }
+                }), net.thaumcraft.occulta.OccultaBlocks.SPIRIT_PORTAL);
+
         // o frasco atirado é o próprio item a voar, como a poção de arremesso do jogo
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.BREW,

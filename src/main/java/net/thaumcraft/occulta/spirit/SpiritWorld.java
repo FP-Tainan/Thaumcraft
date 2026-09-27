@@ -241,6 +241,80 @@ public final class SpiritWorld {
         return tirados;
     }
 
+    // ------------------------------------------------------------------ o fantasma
+
+    /**
+     * Manifesta o espírito no mundo de cá: o {@code manifestPlayerInOverworldAsGhost}.
+     *
+     * <p>Ele deixa do outro lado <b>tudo o que trazia menos as Agulhas de Gelo</b>, e aparece no chão alto do
+     * mundo de cima, no mesmo ponto do mapa. Só passa quem tiver crédito do Rito da Manifestação; sem ele, o
+     * portal deixa passar e não faz nada.
+     *
+     * @return se foi
+     */
+    public static boolean manifest(ServerPlayer quem) {
+        if (!(quem.level() instanceof ServerLevel aqui) || !is(aqui)) return false;
+        SpiritWalk era = SpiritWalk.of(quem);
+        if (!era.walking() || era.ghost()) return false;
+        if (!SpiritManifest.canManifest(quem)) return false;
+        MinecraftServer server = aqui.getServer();
+        if (server == null) return false;
+
+        // as agulhas atravessam; o resto fica
+        List<ItemStack> agulhas = take(quem, List.of(OccultaItems.ICY_NEEDLE));
+        List<ItemStack> ficam = new ArrayList<>();
+        var mochila = quem.getInventory();
+        for (int i = 0; i < mochila.getContainerSize(); i++) ficam.add(mochila.getItem(i).copy());
+        mochila.clearContent();
+        for (ItemStack coisa : agulhas) mochila.add(coisa);
+        quem.containerMenu.broadcastChanges();
+
+        SpiritWalk.set(quem, era.withGhost(true, ficam, Math.max(quem.getHealth(), 1.0f)));
+
+        ServerLevel casa = server.overworld();
+        BlockPos onde = quem.blockPosition();
+        int alto = casa.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, onde.getX(), onde.getZ());
+        quem.teleportTo(casa, onde.getX() + 0.5, alto, onde.getZ() + 0.5, Set.of(),
+                quem.getYRot(), quem.getXRot(), false);
+        quem.clearFire();
+        return true;
+    }
+
+    /**
+     * E o contrário: o {@code returnGhostPlayerToSpiritWorld}.
+     *
+     * <p>As Agulhas que ele tiver na mão voltam com ele; o resto do que apanhou no mundo de cá <b>fica lá</b>,
+     * porque fantasma não carrega coisa de gente. A mochila do outro lado volta ao lugar.
+     */
+    public static boolean unmanifest(ServerPlayer quem) {
+        SpiritWalk era = SpiritWalk.of(quem);
+        if (!era.ghost()) return false;
+        MinecraftServer server = quem.level().getServer();
+        if (server == null) return false;
+        ServerLevel lá = level(server);
+        if (lá == null) return false;
+
+        List<ItemStack> agulhas = take(quem, List.of(OccultaItems.ICY_NEEDLE));
+        var mochila = quem.getInventory();
+        mochila.clearContent();
+        List<ItemStack> voltam = era.ghostInventory();
+        for (int i = 0; i < voltam.size() && i < mochila.getContainerSize(); i++) {
+            mochila.setItem(i, voltam.get(i).copy());
+        }
+        for (ItemStack coisa : agulhas) mochila.add(coisa);
+        if (era.ghostHealth() > 0.0f) quem.setHealth(Math.min(era.ghostHealth(), quem.getMaxHealth()));
+        quem.containerMenu.broadcastChanges();
+
+        SpiritWalk.set(quem, SpiritWalk.of(quem).withGhost(false, List.of(), 0.0f));
+
+        BlockPos onde = quem.blockPosition();
+        int alto = lá.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, onde.getX(), onde.getZ());
+        quem.teleportTo(lá, onde.getX() + 0.5, alto + 1.0, onde.getZ() + 0.5, Set.of(),
+                quem.getYRot(), quem.getXRot(), false);
+        quem.clearFire();
+        return true;
+    }
+
     /** O corpo daquela pessoa, se ele estiver deitado por aí. */
     public static @Nullable CorpseEntity corpse(ServerLevel level, ServerPlayer quem) {
         return CorpseEntity.of(level, quem);

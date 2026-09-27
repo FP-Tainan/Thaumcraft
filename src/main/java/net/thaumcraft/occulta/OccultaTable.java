@@ -171,6 +171,7 @@ public final class OccultaTable {
         dreams();
         spirit();
         arthana();
+        ghost();
     }
 
     /** O Caldeirão de Pote e os frascos que ele faz. */
@@ -274,6 +275,21 @@ public final class OccultaTable {
                         Page.crafting("AOGraveyardDust"),
                         Page.text("tc.research_page.AO_ARTHANA.3"),
                         Page.text("tc.research_page.AO_ARTHANA.4"))
+                .register();
+    }
+
+    /** O Portal do Espírito e o fantasma que volta por ele. */
+    private static void ghost() {
+        ThaumcraftApi.research("AO_GHOST", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.SOUL, 5).add(Aspects.TRAVEL, 4).add(Aspects.MAN, 3)
+                        .add(Aspects.ELDRITCH, 3))
+                .at(2, 12)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.SNOW_BLOCK))
+                .parents("AO_SPIRIT", "AO_ARTHANA")
+                .pages(Page.text("tc.research_page.AO_GHOST.1"),
+                        Page.text("tc.research_page.AO_GHOST.2"),
+                        Page.text("tc.research_page.AO_GHOST.3"),
+                        Page.text("tc.research_page.AO_GHOST.4"))
                 .register();
     }
 

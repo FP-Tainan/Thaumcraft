@@ -243,6 +243,33 @@ public final class Rites {
     }
 
     /**
+     * Dar crédito de manifestação a quem começou o rito: o {@code RiteSetNBT} do original sobre o
+     * {@code WITCManifestDuration}.
+     *
+     * <p>Ele não abre porta nenhuma e não faz nada de visível: o que sai dele é o <b>direito</b> de atravessar
+     * um Portal do Espírito e voltar ao mundo de cá em fantasma, por cento e cinquenta segundos.
+     */
+    public record Manifest() implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (rito.starter(level) instanceof net.minecraft.server.level.ServerPlayer quem) {
+                    net.thaumcraft.occulta.spirit.SpiritManifest.grant(quem,
+                            net.thaumcraft.occulta.spirit.SpiritManifest.GRANTED);
+                    quem.sendSystemMessage(net.minecraft.network.chat.Component
+                            .translatable("tc.rite.manifest.granted",
+                                    net.thaumcraft.occulta.spirit.SpiritManifest.GRANTED)
+                            .withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
+                }
+                level.sendParticles(ParticleTypes.SOUL, onde.getX() + 0.5, onde.getY() + 1.0,
+                        onde.getZ() + 0.5, 64, 0.8, 1.0, 0.8, 0.05);
+                level.playSound(null, onde, SoundEvents.SOUL_ESCAPE.value(), SoundSource.BLOCKS, 1.0f, 0.7f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    /**
      * Fazer aparecer uma coisa: o {@code RiteSummonItem} do original.
      *
      * <p>É o rito mais simples que há: o que se ofereceu some, e no meio do círculo fica <b>aquilo</b>. É assim
@@ -287,6 +314,18 @@ public final class Rites {
                         new Sacrifice.Power(3000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.DAY)));
+
+        // o Rito da Manifestação, que não abre porta nenhuma: dá crédito de corpo no mundo de cá
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.manifest", new Manifest(),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.SPECTRAL_DUST,
+                                net.thaumcraft.occulta.OccultaItems.MELLIFLUOUS_HUNGER,
+                                net.thaumcraft.occulta.OccultaItems.NECROTIC_STONE,
+                                Items.GOLDEN_PICKAXE, net.thaumcraft.occulta.OccultaItems.ARTHANA,
+                                Items.GUNPOWDER),
+                        new Sacrifice.Power(5000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // o Rito de Necromancia, que faz a Pedra Necrótica — e é dele que o Braseiro nasce
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.necrostone",

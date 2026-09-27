@@ -113,7 +113,8 @@
       "net.thaumcraft.test.OccultaKettleBrewGameTest",
       "net.thaumcraft.test.OccultaMachinesGameTest",
       "net.thaumcraft.test.OccultaSpiritGameTest",
-      "net.thaumcraft.test.OccultaArthanaGameTest"
+      "net.thaumcraft.test.OccultaArthanaGameTest",
+      "net.thaumcraft.test.OccultaPortalGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -211,7 +212,8 @@
       "net.thaumcraft.test.client.OccultaMachinesClientTest",
       "net.thaumcraft.test.client.OccultaSpiritClientTest",
       "net.thaumcraft.test.client.OccultaFlowingSpiritClientTest",
-      "net.thaumcraft.test.client.OccultaArthanaClientTest"
+      "net.thaumcraft.test.client.OccultaArthanaClientTest",
+      "net.thaumcraft.test.client.OccultaPortalClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"
