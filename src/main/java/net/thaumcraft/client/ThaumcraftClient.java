@@ -106,6 +106,11 @@ public class ThaumcraftClient implements ClientModInitializer {
                     }
                 }), net.thaumcraft.occulta.OccultaBlocks.BREW_GAS);
 
+        // o frasco do pote a voar é o próprio item, como a poção de arremesso do jogo
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.KETTLE_BREW,
+                net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+
         // o Ars Occulta: o Caldeirão de Pote
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.WITCHES_KETTLE_ENTITY,

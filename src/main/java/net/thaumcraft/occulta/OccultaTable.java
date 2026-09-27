@@ -166,6 +166,49 @@ public final class OccultaTable {
         circles();
         poppets();
         mirrors();
+        kettle();
+    }
+
+    /** O Caldeirão de Pote e os frascos que ele faz. */
+    private static void kettle() {
+        ThaumcraftApi.research("AO_KETTLE", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.WATER, 5).add(Aspects.FIRE, 4).add(Aspects.CRAFT, 3)
+                        .add(Aspects.MAGIC, 2))
+                .at(2, 8)
+                .icon(() -> new ItemStack(OccultaItems.WITCHES_KETTLE))
+                .parents("AO_BREW_SPLASH")
+                .pages(Page.text("tc.research_page.AO_KETTLE.1"),
+                        Page.text("tc.research_page.AO_KETTLE.2"),
+                        kettlePage(OccultaItems.BREW_OF_VINES),
+                        kettlePage(OccultaItems.BREW_OF_THORNS),
+                        kettlePage(OccultaItems.BREW_OF_INK),
+                        kettlePage(OccultaItems.BREW_OF_SPROUTING),
+                        kettlePage(OccultaItems.BREW_OF_EROSION),
+                        kettlePage(OccultaItems.BREW_OF_LOVE),
+                        kettlePage(OccultaItems.BREW_OF_RAISING),
+                        kettlePage(OccultaItems.REDSTONE_SOUP))
+                .register();
+    }
+
+    /**
+     * Uma página de pote, montada da própria tabela: o que entra, o poder e o que sai saem de lá, e não da mão de
+     * quem escreve — e saem <b>na hora de desenhar</b>, que é quando os itens já existem.
+     */
+    private static Page kettlePage(net.minecraft.world.item.Item sai) {
+        java.util.List<java.util.function.Supplier<ItemStack>> entram = new java.util.ArrayList<>();
+        for (int i = 0; i < net.thaumcraft.occulta.kettle.KettleBlockEntity.INGREDIENTS; i++) {
+            final int qual = i;
+            entram.add(() -> {
+                var receita = net.thaumcraft.occulta.kettle.KettleRecipes.of(sai);
+                return receita == null || qual >= receita.inputs().size() ? ItemStack.EMPTY
+                        : new ItemStack(receita.inputs().get(qual));
+            });
+        }
+        var receita = net.thaumcraft.occulta.kettle.KettleRecipes.of(sai);
+        return new Page.Kettle(entram, () -> {
+            var agora = net.thaumcraft.occulta.kettle.KettleRecipes.of(sai);
+            return agora == null ? ItemStack.EMPTY : agora.output();
+        }, receita == null ? 0.0f : receita.power());
     }
 
     /** Os espelhos, e o mundo que há dentro deles. */

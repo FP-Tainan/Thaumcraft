@@ -49,6 +49,15 @@ public sealed interface Page {
                       Supplier<List<ItemStack>> outputs) implements Page {
     }
 
+    /**
+     * Uma receita do Caldeirão de Pote: as seis coisas que entram e o que sai, com o poder de altar que ela pede.
+     *
+     * <p>Como as outras, não é do original — no Witchery quem mostra estas receitas é o NEI. Aqui elas entram no
+     * Thaumonomicon, e o que elas mostram sai da <b>própria tabela do pote</b>, e não da mão de quem escreve.
+     */
+    record Kettle(List<Supplier<ItemStack>> inputs, Supplier<ItemStack> result, float power) implements Page {
+    }
+
     /** Os aspectos conhecidos, quatro por página ({@code ASPECTS}): só a pesquisa "Aspectos" as tem, montadas na hora. */
     record Aspects(net.thaumcraft.api.aspects.AspectList aspects) implements Page {
     }

@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * A tabela do Caldeirão de Pote: o {@code KettleRecipes} do Witchery.
@@ -30,14 +29,25 @@ public final class KettleRecipes {
     /**
      * Uma receita do pote.
      *
-     * @param output  o que sai, já com a quantidade
+     * @param result  o que sai
+     * @param count   e quantos
      * @param inputs  as coisas que entram, sem ordem
      * @param color   a cor do líquido enquanto ela cozinha
      * @param power   o poder de altar que ela pede, ou zero
      * @param level   o mundo em que ela pega, ou nada se pega em qualquer um
      */
-    public record Recipe(Supplier<ItemStack> output, List<Item> inputs, int color, float power,
+    public record Recipe(Item result, int count, List<Item> inputs, int color, float power,
                          @Nullable ResourceKey<Level> level) {
+        /**
+         * O que sai, montado <b>na hora</b>.
+         *
+         * <p>Montar pilhas de item no arranque do mod não se pode: os componentes ainda não estão presos, e o
+         * jogo cai com um "Components not bound yet". Por isso a tabela guarda o item, e não a pilha.
+         */
+        public ItemStack output() {
+            return new ItemStack(this.result, this.count);
+        }
+
         /** Se o que está no pote é esta receita. */
         public boolean matches(List<ItemStack> noPote, boolean pelaMetade, Level onde) {
             if (this.level != null && onde.dimension() != this.level) return false;
@@ -58,16 +68,16 @@ public final class KettleRecipes {
     }
 
     /** Põe uma receita na tabela. */
-    public static Recipe add(Supplier<ItemStack> output, int color, float power, Item... inputs) {
-        Recipe receita = new Recipe(output, List.of(inputs), color, power, null);
+    public static Recipe add(Item result, int count, int color, float power, Item... inputs) {
+        Recipe receita = new Recipe(result, count, List.of(inputs), color, power, null);
         ALL.add(receita);
         return receita;
     }
 
     /** E uma que só pega num mundo. */
-    public static Recipe add(Supplier<ItemStack> output, int color, float power, ResourceKey<Level> level,
+    public static Recipe add(Item result, int count, int color, float power, ResourceKey<Level> level,
                              Item... inputs) {
-        Recipe receita = new Recipe(output, List.of(inputs), color, power, level);
+        Recipe receita = new Recipe(result, count, List.of(inputs), color, power, level);
         ALL.add(receita);
         return receita;
     }
@@ -83,7 +93,7 @@ public final class KettleRecipes {
     /** A receita que faz aquilo, para o livro. */
     public static @Nullable Recipe of(Item saída) {
         for (Recipe receita : ALL) {
-            if (receita.output.get().is(saída)) return receita;
+            if (receita.result == saída) return receita;
         }
         return null;
     }

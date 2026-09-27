@@ -338,6 +338,7 @@ public class ResearchPageScreen extends Screen {
             case Page.Smelting smelting -> this.drawSmeltingPage(graphics, side, x - 4, y - 8, mx, my, smelting);
             case Page.Brew brew -> this.drawBrewPage(graphics, side, x - 4, y - 8, mx, my, brew);
             case Page.Distillery still -> this.drawDistilleryPage(graphics, side, x - 4, y - 8, mx, my, still);
+            case Page.Kettle pote -> this.drawKettlePage(graphics, side, x - 4, y - 8, mx, my, pote);
             case Page.Recipe recipe -> {
                 List<Object> list = this.resolved.computeIfAbsent(recipe, p -> BookPages.resolve((Page.Recipe) p));
                 if (list.isEmpty()) return;
@@ -371,6 +372,8 @@ public class ResearchPageScreen extends Screen {
         while (found) {
             found = false;
             raw = raw.replace("<BR>", "\n").replace("<BR/>", "\n");
+            // o negrito do livro: o original marcava-o com o código do jogo, e as páginas deste porte com <b>
+            raw = raw.replace("<b>", "§l").replace("</b>", "§r");
             int line = raw.indexOf("<LINE>");
             int lineAlt = raw.indexOf("<LINE/>");
             if (line >= 0 || lineAlt >= 0) {
@@ -690,6 +693,31 @@ public class ResearchPageScreen extends Screen {
             this.item(graphics, coisa, px, py, true);
             if (over(mx, my, px, py)) this.itemTooltip(coisa, mx, my, false);
         }
+    }
+
+    /** Uma receita do Caldeirão de Pote: as seis coisas em roda, e o que sai no meio. */
+    private void drawKettlePage(GuiGraphicsExtractor graphics, int side, int x, int y, int mx, int my,
+                                Page.Kettle page) {
+        int start = side * 152;
+        this.title(graphics, "recipe.type.kettle", x + start, y);
+
+        var entram = page.inputs();
+        for (int i = 0; i < entram.size(); i++) {
+            ItemStack entra = entram.get(i).get();
+            int px = x + start + 20 + (i % 3) * 24;
+            int py = y + 24 + (i / 3) * 24;
+            this.item(graphics, entra, px, py, false);
+            if (over(mx, my, px, py)) this.itemTooltip(entra, mx, my, true);
+        }
+
+        if (page.power() > 0.0f) {
+            Component poder = Component.translatable("tc.kettle.power", (int) page.power());
+            graphics.text(this.font, poder, x + start + 56 - this.font.width(poder) / 2, y + 76, GREY, false);
+        }
+
+        ItemStack sai = page.result().get();
+        this.item(graphics, sai, x + start + 44, y + 96, true);
+        if (over(mx, my, x + start + 44, y + 96)) this.itemTooltip(sai, mx, my, false);
     }
 
     private void drawSmeltingPage(GuiGraphicsExtractor graphics, int side, int x, int y, int mx, int my, Page.Smelting page) {

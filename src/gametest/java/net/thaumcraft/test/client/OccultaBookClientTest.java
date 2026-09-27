@@ -28,13 +28,20 @@ public class OccultaBookClientTest implements FabricClientGameTest {
 
             // e as páginas de duas delas, que é onde as receitas aparecem
             for (String pesquisa : new String[]{"AO_WITCHCRAFT", "AO_ALTAR", "AO_POTIONS", "AO_BREW_HARM",
-                    "AO_BREW_LIFE", "AO_DISTILLERY"}) {
+                    "AO_BREW_LIFE", "AO_DISTILLERY", "AO_KETTLE", "AO_MIRRORS"}) {
                 context.runOnClient(minecraft -> minecraft.setScreenAndShow(
                         new net.thaumcraft.client.gui.ResearchPageScreen(null,
                                 net.thaumcraft.research.Researches.get(pesquisa))));
                 context.waitTicks(20);
                 context.takeScreenshot("ao_livro_" + pesquisa.toLowerCase(java.util.Locale.ROOT));
             }
+            // e a página de receita do pote, que é a terceira da pesquisa dele
+            context.runOnClient(minecraft -> minecraft.setScreenAndShow(
+                    new net.thaumcraft.client.gui.ResearchPageScreen(null,
+                            net.thaumcraft.research.Researches.get("AO_KETTLE"), 2)));
+            context.waitTicks(20);
+            context.takeScreenshot("ao_livro_pote_receita");
+
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
         }
     }

@@ -247,6 +247,29 @@ public final class OccultaItems {
     /** A Sopa de Redstone, que sai do pote e é a base dos óleos do ofício. */
     public static final Item REDSTONE_SOUP = register("redstone_soup", Item::new);
 
+    // ------------------------------------------------------------------ os frascos do pote
+
+    /** O Cozimento de Vinhas, que veste de vinha a parede em que bate. */
+    public static final Item BREW_OF_VINES = brew("brew_of_vines", net.thaumcraft.occulta.kettle.KettleBrews.Kind.VINES);
+
+    /** O de Espinhos, que planta cacto. */
+    public static final Item BREW_OF_THORNS = brew("brew_of_thorns", net.thaumcraft.occulta.kettle.KettleBrews.Kind.THORNS);
+
+    /** O de Tinta, que cega quem está em roda. */
+    public static final Item BREW_OF_INK = brew("brew_of_ink", net.thaumcraft.occulta.kettle.KettleBrews.Kind.INK);
+
+    /** O de Brotação, que faz crescer um galho para onde ele foi. */
+    public static final Item BREW_OF_SPROUTING = brew("brew_of_sprouting", net.thaumcraft.occulta.kettle.KettleBrews.Kind.SPROUTING);
+
+    /** O de Erosão, que come uma bola de mundo e dá ácido em quem apanha. */
+    public static final Item BREW_OF_EROSION = brew("brew_of_erosion", net.thaumcraft.occulta.kettle.KettleBrews.Kind.EROSION);
+
+    /** O de Amor, que apaixona os bichos em volta. */
+    public static final Item BREW_OF_LOVE = brew("brew_of_love", net.thaumcraft.occulta.kettle.KettleBrews.Kind.LOVE);
+
+    /** E o de Erguer os Mortos, que levanta um morto onde bate. */
+    public static final Item BREW_OF_RAISING = brew("brew_of_raising", net.thaumcraft.occulta.kettle.KettleBrews.Kind.RAISING);
+
     /** O Caldeirão de Pote, em item. */
     public static final Item WITCHES_KETTLE = register("witches_kettle", properties ->
             new BlockItem(OccultaBlocks.WITCHES_KETTLE, properties.useBlockDescriptionPrefix()));
@@ -318,6 +341,12 @@ public final class OccultaItems {
      */
     private static Item chalk(String name, java.util.function.Supplier<net.minecraft.world.level.block.Block> glyph) {
         return register(name, properties -> new ChalkItem(glyph, properties.durability(128)));
+    }
+
+    /** Um frasco do Caldeirão de Pote: atira-se, e vai até dezesseis por casa como as poções do jogo. */
+    private static Item brew(String name, net.thaumcraft.occulta.kettle.KettleBrews.Kind kind) {
+        return register(name, properties ->
+                new net.thaumcraft.occulta.kettle.KettleBrewItem(kind, properties.stacksTo(16)));
     }
 
     private static Item register(String name, Function<Item.Properties, Item> factory) {

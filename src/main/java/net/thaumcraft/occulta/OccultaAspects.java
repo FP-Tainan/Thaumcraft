@@ -149,6 +149,15 @@ public final class OccultaAspects {
             r.item("thaumcraft:redstone_soup", new AspectList().add(Aspects.ENERGY, 4).add(Aspects.MAGIC, 2)
                     .add(Aspects.WATER, 1));
 
+            // os frascos do pote, com o feitio do que cada um faz
+            r.item("thaumcraft:brew_of_vines", new AspectList().add(Aspects.PLANT, 4).add(Aspects.MOTION, 2).add(Aspects.WATER, 1));
+            r.item("thaumcraft:brew_of_thorns", new AspectList().add(Aspects.PLANT, 3).add(Aspects.WEAPON, 3).add(Aspects.WATER, 1));
+            r.item("thaumcraft:brew_of_ink", new AspectList().add(Aspects.SENSES, 4).add(Aspects.DARKNESS, 2).add(Aspects.WATER, 1));
+            r.item("thaumcraft:brew_of_sprouting", new AspectList().add(Aspects.TREE, 4).add(Aspects.PLANT, 2).add(Aspects.WATER, 1));
+            r.item("thaumcraft:brew_of_erosion", new AspectList().add(Aspects.ENTROPY, 4).add(Aspects.EARTH, 2).add(Aspects.WATER, 1));
+            r.item("thaumcraft:brew_of_love", new AspectList().add(Aspects.LIFE, 4).add(Aspects.BEAST, 2).add(Aspects.WATER, 1));
+            r.item("thaumcraft:brew_of_raising", new AspectList().add(Aspects.UNDEAD, 4).add(Aspects.DEATH, 2).add(Aspects.WATER, 1));
+
             // o espelho: o original não o anotava, e este é do porte. A superfície do Mundo do Espelho não entra
             // aqui porque não há item dela — ela não se apanha, e o thaumômetro não tem o que ler
             r.item("thaumcraft:witch_mirror", new AspectList().add(Aspects.SENSES, 4).add(Aspects.ELDRITCH, 4)

@@ -3634,3 +3634,43 @@ e, sobretudo, os <b>frascos que elas fazem</b>, que são fatia à parte: cada um
 o `EntityWitchProjectile` inteiro. (4) A <b>Asa de Mocho</b> não entra porque o jogo de hoje não tem mocho, e o
 <b>Dedo de Sapo</b> cai do <b>sapo</b> do jogo de agora, que faz o mesmo papel do Toad do original. (5) A
 <b>Arthana</b>, que sobe todas estas chances de queda, ainda não está portada.
+
+### Os frascos do Caldeirão de Pote (2026-09-27)
+
+O pote sem frascos era uma panela sem receita. Esta fatia traz os **sete primeiros** — e com eles o ofício passa a
+ser uma coisa de andar com frascos no cinto.
+
+**Cada um faz uma coisa só**, escrita à mão no `EntityWitchProjectile` do original, e é isso que os separa dos
+cozimentos do Caldeirão da Bruxa: ali a mistura é que manda; aqui cada frasco é um efeito.
+
+- **Vinhas**: batendo numa **parede**, a vinha nasce nela e desce até onde a parede for, seguindo-a de degrau em
+  degrau; depois sobe do mesmo jeito. No chão e no teto não pega.
+- **Espinhos**: cacto. A terra vira areia debaixo dele, e o cacto sobe três. Em quem apanha, nascem quatro à volta.
+- **Tinta**: cegueira a quatro de raio, tanto mais longa quanto mais perto — e os bichos perdem o alvo.
+- **Brotação**: um galho de tronco cresce quinze casas na direção em que o frasco bateu, com folha aqui e ali. Se
+  cresce para cima, leva consigo quem estava em cima dele.
+- **Erosão**: come uma bola de dois de raio e devolve em **obsidiana** o que havia dela. Em quem apanha, ácido —
+  oito de dano, e a armadura gasta-se cem.
+- **Amor**: os bichos em roda apaixonam-se, e os filhotes crescem de uma vez.
+- **Erguer os Mortos**: um morto levanta-se onde ele bate. É o mesmo levantar do cozimento de caldeirão, que já
+  estava portado — não se escreveu duas vezes.
+
+**Um frasco que não pega volta ao chão em item**, como no original: um de espinhos atirado contra pedra do nether
+não se perde.
+
+**As oito receitas são as do original**, ingrediente por ingrediente e cor por cor — inclusive o Erguer os Mortos,
+que pede quinhentos de poder de altar, e a Sopa de Redstone, que pede mil.
+
+**O livro ganhou a página do pote:** as seis coisas em roda, o poder que ela pede e o que sai, tirados da
+**própria tabela** e montados na hora de desenhar.
+
+**E uma coisa que a foto do livro apanhou**, e que vinha das fatias das bonecas e dos espelhos: as páginas deste
+porte marcam o negrito com `<b>`, e o livro não conhecia essa marca — mostrava-a por escrito no meio da frase. O
+quebrador de linha do livro passou a trocá-la pelo código de negrito do jogo, que é o que o original usava.
+
+**Desvios declarados.** (1) O frasco **reforçado** fica de fora: lá ele estende o alcance de cada efeito e depende
+de se ter um **familiar de cozimento** acordado, e os familiares não estão portados. (2) O Cozimento de Amor não
+junta o par de **aldeões** à força nem o de **zumbis escravizados** — o primeiro seria outra coisa no jogo de
+hoje, e o segundo pede a Poção de Escravizar. (3) Ficam para as próximas levas os outros vinte e nove frascos da
+tabela, e com eles a Teia do ofício, a Asa de Mocho, o Leite Purificado, a Fome Melíflua, o Fio Enfeitado, o
+Espírito Subjugado, a Pedra Sintonizada e o Coração de Demônio.

@@ -270,7 +270,7 @@ public final class BrewWorldActions {
         }
 
         /** O {@code createUndeadCreature}: seis em dez zumbi, quase todo o resto esqueleto, e um porco-zumbi raro. */
-        private static void raise(ServerLevel level, BlockPos onde) {
+        public static void raise(ServerLevel level, BlockPos onde) {
             double sorte = level.getRandom().nextDouble();
             var tipo = sorte < 0.6 ? net.minecraft.world.entity.EntityTypes.ZOMBIE
                     : (sorte < 0.97 ? net.minecraft.world.entity.EntityTypes.SKELETON

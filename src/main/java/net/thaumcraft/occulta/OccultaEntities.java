@@ -59,6 +59,13 @@ public final class OccultaEntities {
                             mob -> mob.defaultAttributes(net.thaumcraft.occulta.mirror.ReflectionEntity::attributes))
                     .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(10).fireImmune());
 
+    /** O frasco do Caldeirão de Pote atirado. */
+    public static final EntityType<net.thaumcraft.occulta.kettle.KettleBrewProjectile> KETTLE_BREW =
+            register("kettle_brew", EntityType.Builder
+                    .<net.thaumcraft.occulta.kettle.KettleBrewProjectile>of(
+                            net.thaumcraft.occulta.kettle.KettleBrewProjectile::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
+
     private OccultaEntities() {
     }
 

@@ -191,7 +191,7 @@ public class KettleBlockEntity extends BlockEntity implements WorldlyContainer {
             return;
         }
 
-        this.items.set(RESULT, receita.output().get());
+        this.items.set(RESULT, receita.output());
         for (int i = 0; i < INGREDIENTS; i++) this.items.set(i, ItemStack.EMPTY);
         this.sync();
     }
