@@ -34,6 +34,15 @@ public class ActiveRite {
     @Nullable
     private BlockPos target;
 
+    /**
+     * Em que fase o passo de agora vai.
+     *
+     * <p>Há ritos que correm o mesmo passo muitas vezes e precisam de saber quantas já correram — a tempestade,
+     * a terra que sobe, a terra que se parte. Isso <b>mora aqui</b>, e não dentro do passo, para que um mundo
+     * desligado no meio de um rito volte no ponto em que estava.
+     */
+    private int stage;
+
     public ActiveRite(String key, Rite rite, List<RiteStep> steps, @Nullable UUID starter, int coven) {
         this.key = key;
         this.rite = rite;
@@ -89,6 +98,15 @@ public class ActiveRite {
         this.target = onde;
     }
 
+    public int stage() {
+        return this.stage;
+    }
+
+    /** Passa à fase seguinte e devolve a nova. */
+    public int advance() {
+        return ++this.stage;
+    }
+
     /** O que se ofereceu volta para o chão, onde estava. */
     public void refund(ServerLevel level) {
         for (Offered coisa : this.offered) {
@@ -108,7 +126,7 @@ public class ActiveRite {
      * tenha só para si, que nenhum dos ritos deste porte tem.
      */
     public record Saved(String key, int remaining, java.util.Optional<UUID> starter, int coven,
-                        List<Offered> offered, java.util.Optional<BlockPos> target) {
+                        List<Offered> offered, java.util.Optional<BlockPos> target, int stage) {
         public static final com.mojang.serialization.Codec<Offered> OFFERED_CODEC =
                 com.mojang.serialization.codecs.RecordCodecBuilder.create(i -> i.group(
                         ItemStack.OPTIONAL_CODEC.fieldOf("stack").forGetter(Offered::stack),
@@ -122,14 +140,15 @@ public class ActiveRite {
                         net.minecraft.core.UUIDUtil.CODEC.optionalFieldOf("starter").forGetter(Saved::starter),
                         com.mojang.serialization.Codec.INT.optionalFieldOf("coven", 0).forGetter(Saved::coven),
                         OFFERED_CODEC.listOf().optionalFieldOf("offered", List.of()).forGetter(Saved::offered),
-                        BlockPos.CODEC.optionalFieldOf("target").forGetter(Saved::target))
+                        BlockPos.CODEC.optionalFieldOf("target").forGetter(Saved::target),
+                        com.mojang.serialization.Codec.INT.optionalFieldOf("stage", 0).forGetter(Saved::stage))
                         .apply(i, Saved::new));
     }
 
     /** O que este rito é, para guardar. */
     public Saved save() {
         return new Saved(this.key, this.steps.size(), java.util.Optional.ofNullable(this.starter), this.coven,
-                List.copyOf(this.offered), java.util.Optional.ofNullable(this.target));
+                List.copyOf(this.offered), java.util.Optional.ofNullable(this.target), this.stage);
     }
 
     /** E o contrário: o rito de volta, ou nada se já não houver rito com aquele nome. */
@@ -148,6 +167,7 @@ public class ActiveRite {
                 guardado.starter().orElse(null), guardado.coven());
         rito.offered.addAll(guardado.offered());
         rito.target = guardado.target().orElse(null);
+        rito.stage = guardado.stage();
         return rito;
     }
 }

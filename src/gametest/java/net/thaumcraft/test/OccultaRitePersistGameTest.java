@@ -82,12 +82,12 @@ public class OccultaRitePersistGameTest {
     @GameTest
     public void aRiteThatNoLongerExistsIsDropped(GameTestHelper helper) {
         var inventado = new ActiveRite.Saved("tc.rite.que.nao.existe", 1, Optional.empty(), 0,
-                List.of(), Optional.empty());
+                List.of(), Optional.empty(), 0);
         if (ActiveRite.load(inventado) != null) helper.fail("rito que não existe não volta");
 
         // e um número de passos fora do que o rito tem também não volta
         RiteRegistry.Entry qual = RiteRegistry.all().getFirst();
-        var torto = new ActiveRite.Saved(qual.key(), 999, Optional.empty(), 0, List.of(), Optional.empty());
+        var torto = new ActiveRite.Saved(qual.key(), 999, Optional.empty(), 0, List.of(), Optional.empty(), 0);
         if (ActiveRite.load(torto) != null) helper.fail("nem uma fila maior do que o rito tem");
         helper.succeed();
     }

@@ -172,6 +172,7 @@ public final class OccultaTable {
         spirit();
         arthana();
         ghost();
+        worldRites();
     }
 
     /** O Caldeirão de Pote e os frascos que ele faz. */
@@ -290,6 +291,22 @@ public final class OccultaTable {
                         Page.text("tc.research_page.AO_GHOST.2"),
                         Page.text("tc.research_page.AO_GHOST.3"),
                         Page.text("tc.research_page.AO_GHOST.4"))
+                .register();
+    }
+
+    /** Os ritos que não fazem nada aparecer: mexem no mundo. */
+    private static void worldRites() {
+        ThaumcraftApi.research("AO_WORLD_RITES", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.EARTH, 5).add(Aspects.WEATHER, 4).add(Aspects.FIRE, 3)
+                        .add(Aspects.MAGIC, 2))
+                .at(-4, 8)
+                .icon(() -> new ItemStack(net.minecraft.world.item.Items.WOODEN_SWORD))
+                .parents("AO_CIRCLES")
+                .pages(Page.text("tc.research_page.AO_WORLD_RITES.1"),
+                        Page.text("tc.research_page.AO_WORLD_RITES.2"),
+                        Page.text("tc.research_page.AO_WORLD_RITES.3"),
+                        Page.text("tc.research_page.AO_WORLD_RITES.4"),
+                        Page.text("tc.research_page.AO_WORLD_RITES.5"))
                 .register();
     }
 

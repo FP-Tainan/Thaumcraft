@@ -115,7 +115,8 @@
       "net.thaumcraft.test.OccultaSpiritGameTest",
       "net.thaumcraft.test.OccultaArthanaGameTest",
       "net.thaumcraft.test.OccultaPortalGameTest",
-      "net.thaumcraft.test.OccultaRitePersistGameTest"
+      "net.thaumcraft.test.OccultaRitePersistGameTest",
+      "net.thaumcraft.test.OccultaWorldRitesGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",

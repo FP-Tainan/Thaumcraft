@@ -242,6 +242,315 @@ public final class Rites {
         }
     }
 
+    // ------------------------------------------------------------------ os ritos do tempo e da terra
+
+    /**
+     * O Rito da Tempestade: o {@code RiteWeatherCallStorm} do Witchery.
+     *
+     * <p>De trinta em trinta batidas cai um raio num anel em volta do círculo — nunca em cima dele, que é o que
+     * o raio de dentro serve para garantir. Na <b>quarta</b> vez, o céu fecha-se: começa uma trovoada que dura
+     * de cinco a quinze minutos. Depois disso caem raios a esmo até a conta chegar ao fim.
+     *
+     * @param minRadius de que distância para fora o raio pode cair
+     * @param maxRadius e até onde
+     * @param bolts     quantas fases o rito corre
+     */
+    public record Storm(int minRadius, int maxRadius, int bolts) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 30L != 0L) return RiteStep.Result.STARTING;
+
+                int fase = rito.advance();
+                switch (fase) {
+                    case 1, 2 -> bolt(level, onde);
+                    case 3 -> {
+                        bolt(level, onde);
+                        bolt(level, onde);
+                    }
+                    case 4 -> {
+                        if (!level.isThundering()) {
+                            // o tempo do mundo de hoje mora num guardado à parte, e não no ServerLevel
+                            int quanto = (300 + level.getRandom().nextInt(600)) * 20;
+                            var tempo = level.getWeatherData();
+                            tempo.setClearWeatherTime(0);
+                            tempo.setRainTime(quanto);
+                            tempo.setThunderTime(quanto);
+                            tempo.setRaining(true);
+                            tempo.setThundering(true);
+                        }
+                        bolt(level, onde);
+                    }
+                    default -> {
+                        int quantos = level.getRandom().nextInt(4);
+                        for (int i = 0; i < quantos; i++) {
+                            bolt(level, onde);
+                            if (i > 0) rito.advance();
+                        }
+                    }
+                }
+                return rito.stage() < this.bolts ? RiteStep.Result.STARTING : RiteStep.Result.COMPLETED;
+            });
+        }
+
+        /** Um raio num ponto do anel: a mesma conta do {@code spawnBolt}. */
+        private void bolt(ServerLevel level, BlockPos onde) {
+            int faixa = this.maxRadius - this.minRadius;
+            int dx = level.getRandom().nextInt(faixa * 2 + 1);
+            if (dx > faixa) dx += this.minRadius * 2;
+            int dz = level.getRandom().nextInt(faixa * 2 + 1);
+            if (dz > faixa) dz += this.minRadius * 2;
+
+            BlockPos casa = new BlockPos(onde.getX() - this.maxRadius + dx, onde.getY(),
+                    onde.getZ() - this.maxRadius + dz);
+            var raio = net.minecraft.world.entity.EntityTypes.LIGHTNING_BOLT.create(level,
+                    net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            if (raio == null) return;
+            raio.snapTo(net.minecraft.world.phys.Vec3.atBottomCenterOf(casa));
+            level.addFreshEntity(raio);
+        }
+    }
+
+    /**
+     * O Rito de Cozer: o {@code RiteCookItem} do Witchery.
+     *
+     * <p>Tudo o que for <b>comida</b> e estiver largado a cinco do círculo sai cozido. E parte queima: cada
+     * unidade tem oito por cento de virar <b>carvão vegetal</b>, que é o preço de cozer sem forno.
+     *
+     * <p>Não havendo nada que se coza, o rito desiste e devolve o que se ofereceu.
+     */
+    public record CookFood(double radius, double burnChance) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                int cozidos = 0;
+                AABB roda = new AABB(onde).inflate(this.radius);
+                for (ItemEntity largado : level.getEntitiesOfClass(ItemEntity.class, roda)) {
+                    ItemStack cru = largado.getItem();
+                    if (cru.isEmpty()) continue;
+                    var receita = level.recipeAccess().getRecipeFor(
+                            net.minecraft.world.item.crafting.RecipeType.SMELTING,
+                            new SingleRecipeInput(cru), level);
+                    if (receita.isEmpty()) continue;
+                    ItemStack cozido = receita.get().value().assemble(new SingleRecipeInput(cru));
+                    if (cozido.isEmpty() || cozido.get(net.minecraft.core.component.DataComponents.FOOD) == null) {
+                        continue;
+                    }
+
+                    int quantos = cru.getCount();
+                    int queimados = 0;
+                    for (int i = 0; i < quantos; i++) {
+                        if (level.getRandom().nextDouble() < this.burnChance) queimados++;
+                    }
+                    largado.discard();
+
+                    if (quantos - queimados > 0) {
+                        solta(level, onde, cozido.copyWithCount(quantos - queimados));
+                    }
+                    if (queimados > 0) {
+                        solta(level, onde, new ItemStack(Items.CHARCOAL, queimados));
+                    }
+                    cozidos++;
+                }
+
+                if (cozidos == 0) return RiteStep.Result.ABORTED_REFUND;
+                level.sendParticles(ParticleTypes.FLAME, onde.getX() + 0.5, onde.getY() + 1.0,
+                        onde.getZ() + 0.5, 48, 1.5, 1.0, 1.5, 0.02);
+                level.playSound(null, onde, SoundEvents.GHAST_SHOOT, SoundSource.BLOCKS, 0.8f, 1.2f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+
+        /** O que sai fica parado no meio do círculo, como no original. */
+        private static void solta(ServerLevel level, BlockPos onde, ItemStack coisa) {
+            var caiu = new ItemEntity(level, onde.getX() + 0.5, onde.getY() + 0.05, onde.getZ() + 0.5, coisa);
+            caiu.setDeltaMovement(0.0, 0.0, 0.0);
+            level.addFreshEntity(caiu);
+        }
+    }
+
+    /**
+     * O Rito de Erguer a Terra: o {@code RiteRaiseColumn} do Witchery.
+     *
+     * <p>De cinco em cinco batidas, um cilindro de terra <b>sobe uma casa</b> — bloco por bloco, de cima para
+     * baixo, com quem estiver em cima a subir com ele. Corre oito vezes, e no fim fica uma coluna.
+     *
+     * <p>A borda sai <b>desigual de propósito</b>: um bloco de beira em cada sete fica para trás, e é isso que
+     * faz a coluna parecer arrancada do chão e não cortada à régua.
+     *
+     * @param radius o raio, que cresce com o coven
+     * @param height quantas casas ela sobe
+     */
+    public record RaiseEarth(int radius, int height) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 5L != 0L) return RiteStep.Result.STARTING;
+
+                int fase = rito.advance();
+                if (fase == 1) {
+                    level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
+                            onde.getZ() + 0.5, 64, 1.0, 1.0, 1.0, 0.5);
+                    level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 0.8f);
+                }
+
+                int raio = this.radius + coven * 2;
+                int ar = this.radius * 2;
+                for (int y = onde.getY() + ar; y >= onde.getY() - this.height; y--) {
+                    circle(level, onde.getX(), y, onde.getZ(), raio, y == onde.getY() - 1);
+                }
+
+                AABB roda = new AABB(onde.getX() - raio, onde.getY(), onde.getZ() - raio,
+                        onde.getX() + raio, onde.getY() + ar, onde.getZ() + raio);
+                for (var quem : level.getEntities((net.minecraft.world.entity.Entity) null, roda, e -> true)) {
+                    double dx = quem.getX() - (onde.getX() + 0.5);
+                    double dz = quem.getZ() - (onde.getZ() + 0.5);
+                    if (dx * dx + dz * dz > (double) raio * raio) continue;
+                    quem.teleportTo(quem.getX(), quem.getY() + 1.0, quem.getZ());
+                }
+                return rito.stage() < this.height - 1 ? RiteStep.Result.UPKEEP : RiteStep.Result.COMPLETED;
+            });
+        }
+
+        /** Um círculo cheio de blocos que sobem uma casa: o rasterizador do original, ponto por ponto. */
+        private static void circle(ServerLevel level, int x0, int y, int z0, int raio, boolean topo) {
+            int x = raio;
+            int z = 0;
+            int erro = 1 - x;
+            while (x >= z) {
+                line(level, -x + x0, x + x0, y, z + z0, topo, raio, z0);
+                line(level, -z + x0, z + x0, y, x + z0, topo, raio, z0);
+                line(level, -x + x0, x + x0, y, -z + z0, topo, raio, z0);
+                line(level, -z + x0, z + x0, y, -x + z0, topo, raio, z0);
+                z++;
+                if (erro < 0) {
+                    erro += 2 * z + 1;
+                } else {
+                    x--;
+                    erro += 2 * (z - x + 1);
+                }
+            }
+        }
+
+        private static void line(ServerLevel level, int x1, int x2, int y, int z, boolean topo, int raio,
+                                 int meioZ) {
+            for (int x = x1; x <= x2; x++) {
+                BlockPos casa = new BlockPos(x, y, z);
+                var feitio = level.getBlockState(casa);
+                if (feitio.isAir() || feitio.hasBlockEntity()) continue;
+                if (feitio.getDestroySpeed(level, casa) < 0.0f) continue;
+                if (level.getBlockState(casa.above()).getDestroySpeed(level, casa.above()) < 0.0f) continue;
+
+                boolean beira = meioZ + raio == z || meioZ - raio == z;
+                boolean fica = !topo && (beira || x == x1 || x == x2) && level.getRandom().nextInt(7) == 0;
+                if (fica) continue;
+
+                level.setBlock(casa.above(), feitio, Block.UPDATE_CLIENTS);
+                level.setBlock(casa, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),
+                        Block.UPDATE_CLIENTS);
+            }
+        }
+    }
+
+    /**
+     * O Rito de Partir a Terra: o {@code RitePartEarth} do Witchery.
+     *
+     * <p>Ele abre uma <b>vala torta</b> a partir do círculo. Primeiro traça um caminho de sessenta passos, que
+     * anda quase sempre em frente e de vez em quando dobra; depois, batida a batida, cava um buraco redondo em
+     * cada ponto dele, de profundidade que varia. O que fica é uma rachadura no chão, e não um túnel de régua.
+     *
+     * <p><b>Desvio declarado:</b> no original o caminho sai do relógio de sorte do mundo, e por isso é diferente
+     * a cada vez — e perde-se ao desligar o mundo. Aqui ele sai de uma <b>sorte semeada pelo lugar do
+     * círculo</b>: é sempre o mesmo caminho para o mesmo círculo, e é isso que deixa o rito continuar de onde
+     * estava. O que se vê é igual; o que muda é que a mesma pedra dá sempre a mesma rachadura.
+     *
+     * @param length quantos passos tem o caminho
+     * @param width  o raio do buraco de cada passo, que cresce com o coven
+     * @param depth  e quão fundo ele vai
+     */
+    public record PartEarth(int length, int width, int depth) implements Rite {
+        /** Quantos passos do caminho ficam para trás do que se cava: o {@code DELAY} do original. */
+        public static final int DELAY = 4;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (rito.stage() == 0 && ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                int largura = this.width + (coven > 2 ? 2 : 0);
+                List<BlockPos> caminho = path(onde, this.length);
+                int fase = rito.advance();
+
+                int i = fase + DELAY;
+                if (i >= caminho.size()) return RiteStep.Result.COMPLETED;
+
+                var sorte = net.minecraft.util.RandomSource.create(onde.asLong() + fase);
+                BlockPos ponto = caminho.get(i);
+                dig(level, ponto, largura + (sorte.nextInt(3) == 0 ? 1 : 0),
+                        this.depth - 2 + sorte.nextInt(5));
+                return fase >= caminho.size() - DELAY - 1 ? RiteStep.Result.COMPLETED : RiteStep.Result.UPKEEP;
+            });
+        }
+
+        /** O caminho torto, semeado pelo lugar do círculo: o {@code move} do original, oito rumos. */
+        public static List<BlockPos> path(BlockPos meio, int passos) {
+            var sorte = net.minecraft.util.RandomSource.create(meio.asLong());
+            List<BlockPos> caminho = new ArrayList<>();
+            BlockPos cursor = meio.below();
+            caminho.add(cursor);
+
+            int rumo = 0;
+            for (int l = 0; l < passos - 1; l++) {
+                int chance = Math.max(20 - l / 2, 6);
+                int tirou = sorte.nextInt(chance);
+                if (tirou == 0) rumo = (rumo + 1) & 7;
+                else if (tirou == 1) rumo = (rumo + 7) & 7;
+                cursor = cursor.offset(RUMOS[rumo][0], 0, RUMOS[rumo][1]);
+                caminho.add(cursor);
+            }
+            return caminho;
+        }
+
+        /** Os oito rumos, do norte para a direita. */
+        private static final int[][] RUMOS = {
+                {0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
+
+        /** Um buraco redondo e fundo naquele ponto. */
+        private static void dig(ServerLevel level, BlockPos meio, int raio, int fundo) {
+            int x = raio;
+            int z = 0;
+            int erro = 1 - x;
+            while (x >= z) {
+                digLine(level, -x + meio.getX(), x + meio.getX(), z + meio.getZ(), meio.getY(), fundo);
+                digLine(level, -z + meio.getX(), z + meio.getX(), x + meio.getZ(), meio.getY(), fundo);
+                digLine(level, -x + meio.getX(), x + meio.getX(), -z + meio.getZ(), meio.getY(), fundo);
+                digLine(level, -z + meio.getX(), z + meio.getX(), -x + meio.getZ(), meio.getY(), fundo);
+                z++;
+                if (erro < 0) {
+                    erro += 2 * z + 1;
+                } else {
+                    x--;
+                    erro += 2 * (z - x + 1);
+                }
+            }
+        }
+
+        private static void digLine(ServerLevel level, int x1, int x2, int z, int y, int fundo) {
+            for (int x = x1; x <= x2; x++) {
+                for (int d = 0; d < fundo; d++) {
+                    BlockPos casa = new BlockPos(x, y - d, z);
+                    var feitio = level.getBlockState(casa);
+                    if (feitio.isAir() || feitio.hasBlockEntity()) continue;
+                    if (feitio.getDestroySpeed(level, casa) < 0.0f) continue;
+                    level.setBlock(casa, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),
+                            Block.UPDATE_CLIENTS);
+                }
+            }
+        }
+    }
+
     /**
      * Dar crédito de manifestação a quem começou o rito: o {@code RiteSetNBT} do original sobre o
      * {@code WITCManifestDuration}.
@@ -314,6 +623,33 @@ public final class Rites {
                         new Sacrifice.Power(3000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.DAY)));
+
+        // os ritos do tempo e da terra
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.storm", new Storm(0, 3, 8),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.WOODEN_SWORD, net.thaumcraft.occulta.OccultaItems.WOOD_ASH),
+                        new Sacrifice.Power(1000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cookfood", new CookFood(5.0, 0.08),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.BLAZE_ROD, net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
+                                Items.COAL),
+                        new Sacrifice.Power(1000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(16, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.raiseearth", new RaiseEarth(4, 8),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_SPROUTING,
+                        Items.CACTUS, Items.GUNPOWDER),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.partearth", new PartEarth(60, 1, 10),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_EROSION),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // o Rito da Manifestação, que não abre porta nenhuma: dá crédito de corpo no mundo de cá
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.manifest", new Manifest(),

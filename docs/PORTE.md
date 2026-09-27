@@ -4017,3 +4017,40 @@ rito tem — que é o que acontece a um mundo salvo com uma versão do mod em qu
 dos ritos deste porte tem: os passos leem do mundo, do círculo e do que está guardado no rito, e o que eles
 precisam de lembrar — o alvo — já mora no rito. O dia em que um passo precisar de memória própria, ele passa a
 escrevê-la; até lá, isto é tudo.
+
+### Os ritos do tempo e da terra (2026-09-27)
+
+**A tabela de ritos do original tem noventa e seis entradas, e este porte tinha oito.** Quase todas as que
+faltam pedem coisa que ainda não existe aqui; estas quatro não pediam nada.
+
+**O Rito da Tempestade** — o `RiteWeatherCallStorm` — chama o raio. De trinta em trinta batidas cai um num anel
+em volta do círculo, nunca em cima dele, e na **quarta** vez o céu fecha-se numa trovoada de cinco a quinze
+minutos. Depois disso caem raios a esmo até a conta acabar.
+
+**O Rito de Cozer** — o `RiteCookItem` — coze tudo o que for comida e estiver largado a cinco do círculo, e
+queima oito por cento em **carvão vegetal**. Não havendo nada que se coza, ele desiste e devolve o que se
+ofereceu, que é o que o original faz.
+
+**O Rito de Erguer a Terra** — o `RiteRaiseColumn` — levanta um cilindro de chão uma casa de cada vez, oito
+vezes, com quem estiver em cima a subir junto. A borda sai desigual de propósito: um bloco de beira em cada sete
+fica para trás.
+
+**E o Rito de Partir a Terra** — o `RitePartEarth` — abre uma vala torta de sessenta passos a partir do círculo,
+cavando um buraco fundo em cada um. É o mais barato de todos: pede um Cozimento de Erosão e mais nada.
+
+**A fase de um rito passou a morar no rito, e não no passo.** Estes quatro correm o mesmo passo muitas vezes e
+precisam de saber quantas já correram; se essa conta vivesse dentro do passo, um mundo desligado no meio de uma
+tempestade voltaria do começo. Ela mora no `ActiveRite`, guarda-se com ele, e há prova disso.
+
+**Desvios declarados.**
+
+1. **O caminho da vala é semeado pelo lugar do círculo**, e no original sai do relógio de sorte do mundo. Com o
+   relógio do mundo o caminho seria diferente a cada vez — e perder-se-ia ao desligar. Semeado pelo lugar, ele é
+   sempre o mesmo para o mesmo círculo, e é isso que deixa o rito continuar de onde estava. O que se vê é igual;
+   o que muda é que a mesma pedra dá sempre a mesma rachadura.
+2. **A Pedra de Caminho opcional fica de fora.** A Tempestade e o Erguer a Terra aceitam, no original, uma Pedra
+   de Caminho ligada como oferenda opcional, para o rito acontecer **onde ela aponta** em vez de no círculo. A
+   Pedra de Caminho não está portada; os dois ritos acontecem no círculo.
+3. **Ficam de fora, por dependerem da Pedra Sintonizada Carregada:** o Vulcão, as Barreiras e as versões
+   portáteis do Eclipse e da Tempestade. A pedra carregada sai de um rito que este porte já consegue pedir — é a
+   próxima fatia, e ela sozinha abre meia dúzia deles.
