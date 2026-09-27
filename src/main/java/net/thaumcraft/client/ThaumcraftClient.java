@@ -65,6 +65,29 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("summoning_altar"),
                 net.thaumcraft.mortuorum.client.SummoningAltarItemRenderer.Unbaked.CODEC);
+        // o Ars Occulta: os três bichos do ofício
+        for (var bicho : java.util.List.of(
+                java.util.Map.entry(net.thaumcraft.occulta.client.CreatureRenderers.MANDRAKE,
+                        (java.util.function.Supplier<net.minecraft.client.model.geom.builders.LayerDefinition>)
+                                net.thaumcraft.occulta.client.CreatureModels::mandrake),
+                java.util.Map.entry(net.thaumcraft.occulta.client.CreatureRenderers.MINEDRAKE,
+                        (java.util.function.Supplier<net.minecraft.client.model.geom.builders.LayerDefinition>)
+                                net.thaumcraft.occulta.client.CreatureModels::minedrake),
+                java.util.Map.entry(net.thaumcraft.occulta.client.CreatureRenderers.ENT,
+                        (java.util.function.Supplier<net.minecraft.client.model.geom.builders.LayerDefinition>)
+                                net.thaumcraft.occulta.client.CreatureModels::ent))) {
+            net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                    bicho.getKey(), bicho.getValue()::get);
+        }
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.MANDRAKE,
+                net.thaumcraft.occulta.client.CreatureRenderers.Mandrake::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.MINEDRAKE,
+                net.thaumcraft.occulta.client.CreatureRenderers.Minedrake::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.ENT,
+                net.thaumcraft.occulta.client.CreatureRenderers.Ent::new);
         // o Ars Occulta: o Caldeirão da Bruxa
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.WITCHES_CAULDRON_ENTITY,
@@ -401,6 +424,12 @@ net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                             net.minecraft.client.model.player.PlayerModel>) renderer;
                     helper.register(new net.thaumcraft.maleficium.client.HipSheathLayer(avatar));
                 });
+        // os abafadores do Ars Occulta, com o modelo do ModelEarmuffs
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.EarmuffsRenderer.LAYER,
+                net.thaumcraft.occulta.client.EarmuffsRenderer::createLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(
+                net.thaumcraft.occulta.client.EarmuffsRenderer::new, net.thaumcraft.occulta.OccultaItems.EARMUFFS);
         // a armadura de fortaleza, com o modelo do ModelFortressArmor
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.client.render.FortressArmorRenderer.LAYER,

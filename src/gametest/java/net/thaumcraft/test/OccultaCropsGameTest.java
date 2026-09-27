@@ -95,6 +95,62 @@ public class OccultaCropsGameTest {
         helper.succeed();
     }
 
+    /**
+     * Planta nenhuma serve de chão a outra — e a losna só se sustenta sobre si mesma, que é o que ela faz ao
+     * empilhar-se. É o aperto pedido, e é desvio do original, que aceitava planta em cima de planta.
+     */
+    @GameTest
+    public void noPlantStandsOnAnother(GameTestHelper helper) {
+        BlockPos onde = new BlockPos(1, 3, 1);
+        BlockPos chão = onde.below();
+        for (Block debaixo : AS_OITO) {
+            helper.setBlock(chão, debaixo);
+            for (Block emCima : AS_OITO) {
+                boolean pega = emCima.defaultBlockState().canSurvive(helper.getLevel(), helper.absolutePos(onde));
+                boolean vale = emCima == OccultaBlocks.WORMWOOD && debaixo == OccultaBlocks.WORMWOOD;
+                if (pega != vale) {
+                    helper.fail(vale ? "a losna sustenta a losna que subiu dela"
+                            : emCima + " não devia pegar sobre " + debaixo);
+                }
+            }
+        }
+        helper.setBlock(chão, Blocks.AIR);
+        helper.setBlock(onde, Blocks.AIR);
+        helper.succeed();
+    }
+
+    /** E a semente recusa o clique sobre planta, mesmo sobre a losna, que só se empilha sozinha. */
+    @GameTest
+    public void noSeedIsSownOnAPlant(GameTestHelper helper) {
+        BlockPos chão = new BlockPos(1, 2, 1);
+        BlockPos onde = chão.above();
+        helper.setBlock(chão.below(), Blocks.FARMLAND);
+        helper.setBlock(chão, OccultaBlocks.WORMWOOD);
+
+        var quemPlanta = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        quemPlanta.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,
+                new net.minecraft.world.item.ItemStack(OccultaItems.WORMWOOD_SEEDS));
+        helper.useBlock(chão, quemPlanta, new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(chão)),
+                net.minecraft.core.Direction.UP, helper.absolutePos(chão), false));
+        if (!helper.getLevel().getBlockState(helper.absolutePos(onde)).isAir()) {
+            helper.fail("não se semeia em cima de planta, nem a losna sobre losna");
+        }
+
+        // e o mesmo clique, em terra arada, planta: é o que mostra que a prova de cima não passou à toa
+        helper.setBlock(chão, Blocks.AIR);
+        helper.setBlock(chão.below(), Blocks.FARMLAND);
+        helper.useBlock(chão.below(), quemPlanta, new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(helper.absolutePos(chão.below())),
+                net.minecraft.core.Direction.UP, helper.absolutePos(chão.below()), false));
+        if (!helper.getLevel().getBlockState(helper.absolutePos(chão)).is(OccultaBlocks.WORMWOOD)) {
+            helper.fail("em terra arada a mesma semente devia plantar");
+        }
+
+        helper.setBlock(chão, Blocks.AIR);
+        helper.succeed();
+    }
+
     /** Planta verde larga uma semente e mais nada. */
     @GameTest
     public void anUnripePlantOnlyGivesBackItsSeed(GameTestHelper helper) {

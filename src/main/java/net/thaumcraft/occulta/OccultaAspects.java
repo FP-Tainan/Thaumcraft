@@ -117,6 +117,23 @@ public final class OccultaAspects {
                     .add(Aspects.MAGIC, 1));
             r.item("thaumcraft:witch_altar", new AspectList().add(Aspects.MAGIC, 3).add(Aspects.EARTH, 4)
                     .add(Aspects.MECHANISM, 3).add(Aspects.ENERGY, 3));
+
+            // ---------------------------------------------------------- o que anda com os bichos
+            r.item("thaumcraft:earmuffs", new AspectList().add(Aspects.SENSES, 1).add(Aspects.CLOTH, 1)
+                    .add(Aspects.BEAST, 1).add(Aspects.ARMOR, 1));
+            // o galho de Ent o original anota como o ramo de árvore que ele é
+            r.item("thaumcraft:ent_branch", new AspectList().add(Aspects.TREE, 2).add(Aspects.MAGIC, 1));
+        });
+
+        // e os bichos do ramo, para o thaumômetro os ler: são planta que anda, e o Ent é árvore.
+        // O original não os anotava — é do porte, e vai no tom do resto.
+        net.thaumcraft.research.EntityAspects.onRegister(r -> {
+            r.entity("thaumcraft:mandrake", null, null, new AspectList().add(Aspects.PLANT, 4).add(Aspects.MAN, 2)
+                    .add(Aspects.SENSES, 2));
+            r.entity("thaumcraft:minedrake", null, null, new AspectList().add(Aspects.PLANT, 4).add(Aspects.MAN, 2)
+                    .add(Aspects.FIRE, 2).add(Aspects.ENTROPY, 2));
+            r.entity("thaumcraft:ent", null, null, new AspectList().add(Aspects.TREE, 8).add(Aspects.PLANT, 4)
+                    .add(Aspects.MAGIC, 2).add(Aspects.BEAST, 2));
         });
     }
 }

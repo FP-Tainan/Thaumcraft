@@ -118,6 +118,20 @@ public final class OccultaItems {
     public static final Item MUTANDIS_EXTREMIS = register("mutandis_extremis",
             properties -> new MutandisItem(properties, true));
 
+    // ------------------------------------------------------------------ os bichos do ofício
+
+    /**
+     * Os Abafadores: o {@code ItemEarmuffs} do original, que tapam o grito da mandrágora.
+     *
+     * <p>Não protegem de golpe nenhum — são pano nas orelhas, e é só isso que fazem.
+     */
+    public static final Item EARMUFFS = register("earmuffs", properties ->
+            new Item(properties.humanoidArmor(OccultaMaterials.EARMUFFS,
+                    net.minecraft.world.item.equipment.ArmorType.HELMET)));
+
+    /** O Galho de Ent, que o Ent larga. */
+    public static final Item ENT_BRANCH = register("ent_branch", Item::new);
+
     /** O Altar da Bruxa, que junta o poder da natureza em volta. */
     public static final Item WITCH_ALTAR = register("witch_altar", properties ->
             new BlockItem(OccultaBlocks.WITCH_ALTAR, properties.useBlockDescriptionPrefix()));
@@ -156,7 +170,7 @@ public final class OccultaItems {
 
     /** Uma semente comum: planta a sua planta, e leva o nome de item, não o do bloco. */
     private static Item seeds(String name, net.minecraft.world.level.block.Block crop) {
-        return register(name, properties -> new BlockItem(crop, properties.useItemDescriptionPrefix()));
+        return register(name, properties -> new WitchSeedItem(crop, properties.useItemDescriptionPrefix()));
     }
 
     private static Item register(String name, Function<Item.Properties, Item> factory) {

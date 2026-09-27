@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -127,15 +128,21 @@ public class WitchCropBlock extends CropBlock {
     }
 
     /**
-     * O {@code canPlaceBlockOn} do original: a alcachofra-d'água mora sobre a água; as outras aceitam grama,
-     * terra, terra arada, outra da mesma planta e losna — a losna porque é sobre ela que a própria losna sobe.
+     * O {@code canPlaceBlockOn} do original, com <b>um aperto pedido</b>: a alcachofra-d'água mora sobre a água;
+     * as outras aceitam grama, terra e terra arada.
+     *
+     * <p><b>Desvio declarado.</b> O original também aceitava <i>outra da mesma planta</i> e <i>losna</i> como
+     * chão, e por isso dava para plantar semente em cima de semente — uma planta do ofício boiando um bloco
+     * acima da horta. Aqui só a <b>losna</b> se aceita debaixo de losna, que é o que ela faz sozinha ao
+     * empilhar-se; nenhuma outra planta serve de chão a nenhuma. Quem planta à mão fica barrado mais cedo, na
+     * própria semente (o {@link net.thaumcraft.occulta.WitchSeedItem}).
      */
     @Override
     protected boolean mayPlaceOn(BlockState chão, BlockGetter level, BlockPos pos) {
         if (this.traits.water()) return chão.is(Blocks.WATER);
         if (chão.is(Blocks.GRASS_BLOCK) || chão.is(Blocks.DIRT) || chão.is(Blocks.FARMLAND)) return true;
-        return chão.getBlock() instanceof WitchCropBlock outra
-                && (outra == this || outra.traits.stacks());
+        // só a losna que subiu de si mesma se sustenta sobre planta
+        return this.traits.stacks() && chão.is(this);
     }
 
     /**
@@ -168,9 +175,20 @@ public class WitchCropBlock extends CropBlock {
         return net.minecraft.util.Mth.nextInt(level.getRandom(), 2, this.getMaxAge());
     }
 
-    /** O {@code getDrops} do original, que não é o do trigo: está todo no {@link OccultaCrops}. */
+    /**
+     * O {@code getDrops} do original, que não é o do trigo: está todo no {@link OccultaCrops}.
+     *
+     * <p>E é aqui que a <b>mandrágora escapa</b>: quando a conta dela não deixa cair nada, é porque ela saiu do
+     * chão e foi embora gritando — o bicho nasce no lugar em que ela estava. Sair sem deixar nada é o único caso
+     * em que a colheita vem vazia, e por isso basta olhar para isso.
+     */
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
-        return OccultaCrops.drops(this, state, params);
+        List<ItemStack> saída = OccultaCrops.drops(this, state, params);
+        if (saída.isEmpty() && this == OccultaBlocks.MANDRAKE) {
+            var onde = params.getOptionalParameter(LootContextParams.ORIGIN);
+            if (onde != null) MandrakeEntity.spawn(params.getLevel(), BlockPos.containing(onde));
+        }
+        return saída;
     }
 }

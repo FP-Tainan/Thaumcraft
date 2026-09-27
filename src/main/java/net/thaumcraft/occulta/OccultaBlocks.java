@@ -146,9 +146,9 @@ public final class OccultaBlocks {
                 .pushReaction(PushReaction.DESTROY), traits, seed));
     }
 
-    /** Uma tora: dureza dois, como a madeira do jogo. */
+    /** Uma tora: dureza dois, como a madeira do jogo — e o Ent que às vezes acorda com o machado. */
     private static Block log(String name) {
-        return register(name, properties -> new net.minecraft.world.level.block.RotatedPillarBlock(properties
+        return register(name, properties -> new WitchLogBlock(properties
                 .mapColor(MapColor.WOOD).strength(2.0f).sound(SoundType.WOOD).ignitedByLava()));
     }
 

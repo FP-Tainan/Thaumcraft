@@ -11,6 +11,7 @@
     "OverworldBiomeBuilderMixin",
     "NoteBlockMixin",
     "ItemEntityBathSaltsMixin",
+    "ItemEntityMinedrakeMixin",
     "ItemEntityAccessor",
     "MobGoalAccessor",
     "LivingEntityHungerMixin",

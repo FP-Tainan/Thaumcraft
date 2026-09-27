@@ -22,6 +22,7 @@ public final class Occulta {
 
     public static void init() {
         OccultaBlocks.init();
+        OccultaEntities.init();
         OccultaItems.init();
         OccultaAspects.init();
         OccultaGrassSeeds.init();

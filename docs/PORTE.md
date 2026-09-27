@@ -3145,3 +3145,67 @@ resto do ramo (receitas, sombras, testes) continuar a funcionar sem mexer em mai
 
 **A aba do criativo do Magia Naturalis continua onde estava** — o que se juntou foi o livro, que é onde as duas
 histórias se encontram.
+
+### Os bichos do ofício (2026-09-27)
+
+Três criaturas, e nenhuma delas é caça: são o que as plantas e as árvores do ramo fazem quando alguém mexe com
+elas sem cuidado.
+
+**A Mandrágora** (`MandrakeEntity`, o `EntityMandrake`) é a raiz que se arrancou fora de hora. Quem colhe a
+planta feita de dia não leva raiz nenhuma: leva a mandrágora de pé, gritando atrás dele. O grito **cega** quem
+apanha o golpe — quinze segundos, do segundo grau — e a única defesa são os **Abafadores** na cabeça. Ela não dá
+experiência nenhuma, como no original: não é caça, é castigo. A fuga já estava contada nas plantas; o que se
+juntou aqui foi o bicho que nasce dela, no lugar em que ela estava.
+
+**A Mandrágora-de-Mina** (`MinedrakeEntity`, o `EntityMindrake`) nasce do **bulbo largado no chão**: três
+segundos e ele vira bicho — um por cada bulbo do monte —, e se quem o largou foi alguém, ela nasce dona dessa
+pessoa. Ela não morde: **estoura**. Ao alcançar quem persegue, explode e morre, e do chão queimado nasce uma
+papoula ou um dente-de-leão. Morta de outro jeito, estoura na mesma, um pouco menos. O que faz o bulbo acabar é
+um mixin no `ItemEntity`, que é onde o original punha o `onItemExpireEvent`.
+
+**O Ent** (`EntEntity`, o `EntityEnt`) sai de uma **tora do ofício quebrada**: uma em cem, mais uma por tora
+encostada nela, até cinco em cem — um bosque cerrado defende-se melhor que uma árvore sozinha. Duzentos de vida,
+quatro de dano, e nada o empurra. Onde ele pisa a terra melhora: de trezentas em trezentas batidas, o chão
+debaixo dele recebe farinha de osso. Ele não nasce em cima de quem corta — procura um lugar num raio de dezesseis
+blocos com três de céu livre, como no original.
+
+**Os Abafadores não são armadura de folha.** Isto custou uma foto vermelha: a folha do original é de 64 por 64 e
+tem tinta só em dois cantos, porque o que a lê é o `ModelEarmuffs` — cinco caixas presas à cabeça, as duas
+conchas nas orelhas e o arco de três pedaços por cima. Posta como folha de armadura do jogo de hoje, ela pintava
+o **corpo inteiro**. Agora vão pelo caminho da armadura de fortaleza: modelo próprio (`EarmuffsRenderer`), corpo
+todo escondido, e a folha em `textures/models`. As caixas são as do original, número por número.
+
+**Um defeito que apanhou dois itens.** Os Abafadores e a Cabeça de Isaac tinham durabilidade **zero**, na ideia de
+que zero era o mesmo que "não se gasta". Não é: o jogo de hoje olha para a peça que *tem* durabilidade, seja ela
+qual for, e a primeira pancada que o dono leva gasta um ponto dela — com conta zero, a peça desfaz-se no primeiro
+golpe. Na prática, quem levava um golpe da mandrágora perdia os abafadores nesse mesmo golpe e o grito seguinte
+já o alcançava. Os dois passaram a ter a durabilidade do original, que é tanta que nunca se gastam. Foi um teste
+que o apanhou.
+
+**O balanço.** Os três desenhistas do original mexem o corpo ao andar — seis graus e meio para um lado e para o
+outro, no compasso do passo. É o andar de uma planta que não tem pernas, e está portado.
+
+**De fora, declarado:** o dono que o Ent pode ter, no original, vem da poção de escravizar — coisa do caldeirão,
+que ainda não chegou. E os **aspectos** dos três são do porte: o original não os anotava, e sem eles o
+thaumômetro não teria o que ler numa criatura do mod.
+
+### Semente não se planta em cima de planta (2026-09-27)
+
+*Dá para plantar duas sementes uma sobre a outra — corrige isso.*
+
+**Desvio declarado, pedido.** O `canPlaceBlockOn` do `BlockWitchCrop` aceitava como chão, além de grama, terra e
+terra arada, **a própria planta** e a **losna** — e é por isso que dava para semear em cima do que já estava
+plantado, e ficava uma planta do ofício boiando um bloco acima da horta.
+
+Apertou-se dos dois lados:
+
+- **o chão**: planta nenhuma serve de chão a outra. A única exceção é a **losna debaixo de losna**, porque é
+  disso que ela precisa para se sustentar quando sobe sozinha;
+- **a semente**: o `WitchSeedItem` recusa o clique quando o que está debaixo do lugar é planta do ofício — até a
+  losna sobre losna, que só se empilha por conta própria, nunca pela mão de quem semeia.
+
+A losna continua a empilhar-se exatamente como antes: isso é do `randomTick`, não de quem planta.
+
+Há duas provas novas: uma percorre as oito plantas contra as oito e confere que só a losna sobre losna se
+sustenta; a outra dá a semente a um jogador de mentira e clica — recusa sobre a planta, planta em terra arada.
+A segunda metade existe para a primeira não passar à toa.

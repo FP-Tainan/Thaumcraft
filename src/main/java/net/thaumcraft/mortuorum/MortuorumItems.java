@@ -124,12 +124,16 @@ public final class MortuorumItems {
      *
      * <p>A encantabilidade do original é zero, e o jogo de hoje não aceita zero: aqui vai um, que é o mais perto
      * que se pode chegar.
+     *
+     * <p>A durabilidade é a do original, {@code Integer.MAX_VALUE}, e não zero: o jogo de hoje gasta um ponto da
+     * peça a cada pancada que o dono leva, e uma peça de conta zero desfaz-se no primeiro golpe. Com a conta do
+     * original, nunca se gasta — que é o que a máscara é.
      */
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> ISAAC_ASSET =
             ResourceKey.create(net.minecraft.world.item.equipment.EquipmentAssets.ROOT_ID, Thaumcraft.id("isaac_head"));
 
     public static final net.minecraft.world.item.equipment.ArmorMaterial ISAAC =
-            new net.minecraft.world.item.equipment.ArmorMaterial(0,
+            new net.minecraft.world.item.equipment.ArmorMaterial(Integer.MAX_VALUE / 16,
                     Map.of(net.minecraft.world.item.equipment.ArmorType.HELMET, 0),
                     1, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f,
                     net.minecraft.tags.TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_isaac")), ISAAC_ASSET);
