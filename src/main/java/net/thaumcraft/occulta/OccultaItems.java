@@ -234,18 +234,35 @@ public final class OccultaItems {
      *
      * <p>Come-se, e por um instante o fogo não pega: é o {@code Drinkable} com resistência ao fogo do original.
      */
-    public static final Item CREEPER_HEART = register("creeper_heart", properties -> new Item(properties.food(
-            new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.0f).build(),
-            net.minecraft.world.item.component.Consumables.defaultFood().onConsume(
-                    new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
-                            new net.minecraft.world.effect.MobEffectInstance(
-                                    net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE, 20, 0))).build())));
+    public static final Item CREEPER_HEART = register("creeper_heart", properties -> new CreeperHeartItem(
+            properties.food(new net.minecraft.world.food.FoodProperties.Builder()
+                    .nutrition(1).saturationModifier(0.0f).build(),
+                    net.minecraft.world.item.component.Consumables.defaultFood().onConsume(
+                            new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                                    new net.minecraft.world.effect.MobEffectInstance(
+                                            net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE, 20, 0)))
+                            .build())));
 
     /** E o Dedo de Sapo, que o sapo deixa. */
     public static final Item TOE_OF_FROG = register("toe_of_frog", Item::new);
 
     /** A Sopa de Redstone, que sai do pote e é a base dos óleos do ofício. */
     public static final Item REDSTONE_SOUP = register("redstone_soup", Item::new);
+
+    /** A Teia do ofício, que é a teia de aranha fiada a linha. */
+    public static final Item WITCH_WEB = register("witch_web", Item::new);
+
+    /** A Maçã Bichada, que é maçã, carne podre e açúcar. */
+    public static final Item WORMY_APPLE = register("wormy_apple", Item::new);
+
+    /**
+     * O Leite Purificado: leite passado pelo Odor de Pureza, em pote de barro.
+     *
+     * <p>Bebendo-o, uma vez em duas ele tira <b>um</b> efeito qualquer de quem o bebeu — o que der na telha.
+     */
+    public static final Item PURIFIED_MILK = register("purified_milk", properties -> new PurifiedMilkItem(
+            properties.food(new net.minecraft.world.food.FoodProperties.Builder()
+                    .nutrition(1).saturationModifier(0.0f).build())));
 
     // ------------------------------------------------------------------ os frascos do pote
 
@@ -269,6 +286,34 @@ public final class OccultaItems {
 
     /** E o de Erguer os Mortos, que levanta um morto onde bate. */
     public static final Item BREW_OF_RAISING = brew("brew_of_raising", net.thaumcraft.occulta.kettle.KettleBrews.Kind.RAISING);
+
+    /** O de Teias, que enche de teia a casa em que bate. */
+    public static final Item BREW_OF_WEBS = brew("brew_of_webs", net.thaumcraft.occulta.kettle.KettleBrews.Kind.WEBS);
+
+    /** O de Gelo, que congela a água, ergue escudo e engaiola quem apanha. */
+    public static final Item BREW_OF_ICE = brew("brew_of_ice", net.thaumcraft.occulta.kettle.KettleBrews.Kind.ICE);
+
+    /** O de Infecção, que apodrece a pedra e adoece quem apanha. */
+    public static final Item BREW_OF_INFECTION =
+            brew("brew_of_infection", net.thaumcraft.occulta.kettle.KettleBrews.Kind.INFECTION);
+
+    /** E o da Troca, que põe no chão o que está largado nele. */
+    public static final Item BREW_SUBSTITUTION =
+            brew("brew_substitution", net.thaumcraft.occulta.kettle.KettleBrews.Kind.SUBSTITUTION);
+
+    /**
+     * O Cozimento das Profundezas, que não se atira: bebe-se.
+     *
+     * <p>Quinze segundos de mar por casa — e de terra por morte.
+     */
+    public static final Item BREW_OF_THE_DEPTHS = register("brew_of_the_depths", properties -> new Item(properties
+            .stacksTo(1)
+            .food(new net.minecraft.world.food.FoodProperties.Builder()
+                    .nutrition(0).saturationModifier(0.0f).alwaysEdible().build(),
+                    net.minecraft.world.item.component.Consumables.defaultDrink().onConsume(
+                            new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                                    new net.minecraft.world.effect.MobEffectInstance(
+                                            OccultaEffects.DEPTHS, 300, 0))).build())));
 
     /** O Caldeirão de Pote, em item. */
     public static final Item WITCHES_KETTLE = register("witches_kettle", properties ->

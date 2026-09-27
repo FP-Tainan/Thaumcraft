@@ -52,6 +52,27 @@ public final class KettleTable {
                 OccultaItems.BAT_WOOL, OccultaItems.MUTANDIS, Items.REDSTONE,
                 OccultaItems.OIL_OF_VITRIOL, Items.BONE, Items.ROTTEN_FLESH);
 
+        KettleRecipes.add(OccultaItems.BREW_OF_WEBS, BREW_COUNT, 0xFFFFFFFF, 0.0f,
+                OccultaItems.WITCH_WEB, Items.BROWN_MUSHROOM, OccultaItems.BAT_WOOL,
+                Items.DANDELION, OccultaItems.WHIFF_OF_MAGIC, OccultaItems.BELLADONNA_FLOWER);
+
+        KettleRecipes.add(OccultaItems.BREW_OF_ICE, BREW_COUNT, 0xFF31A3FF, 1000.0f,
+                OccultaItems.ICY_NEEDLE, Items.SNOWBALL, OccultaItems.WATER_ARTICHOKE_GLOBE,
+                Items.MAGMA_CREAM, Items.BROWN_MUSHROOM, OccultaItems.ODOUR_OF_PURITY);
+
+        KettleRecipes.add(OccultaItems.BREW_OF_INFECTION, BREW_COUNT, 0xFF5A1F2E, 0.0f,
+                OccultaItems.TOE_OF_FROG, OccultaItems.CREEPER_HEART, OccultaItems.WORMY_APPLE,
+                OccultaItems.BELLADONNA_FLOWER, Items.ROTTEN_FLESH, OccultaItems.MUTANDIS);
+
+        KettleRecipes.add(OccultaItems.BREW_SUBSTITUTION, BREW_COUNT, 0xFF95E0E0, 0.0f,
+                OccultaItems.ENDER_DEW, OccultaItems.ENDER_DEW, OccultaItems.MUTANDIS_EXTREMIS,
+                Items.EGG, Items.GHAST_TEAR, OccultaItems.ENT_BRANCH);
+
+        // ---------------------------------------------------------- o que se bebe
+        KettleRecipes.add(OccultaItems.BREW_OF_THE_DEPTHS, BREW_COUNT, 0xFF17394A, 0.0f,
+                OccultaItems.MANDRAKE_ROOT, OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.ODOUR_OF_PURITY,
+                OccultaItems.TEAR_OF_THE_GODDESS, Items.VINE, Items.INK_SAC);
+
         // ---------------------------------------------------------- e a base dos óleos do ofício
         KettleRecipes.add(OccultaItems.REDSTONE_SOUP, 1, 0xFFFF1616, 1000.0f,
                 Items.REDSTONE, OccultaItems.DROP_OF_LUCK, OccultaItems.BAT_WOOL,

@@ -52,7 +52,15 @@ public final class KettleBrews {
         /** Bichos que se apaixonam. */
         LOVE,
         /** E os mortos que se levantam. */
-        RAISING;
+        RAISING,
+        /** Teia de aranha em cruz onde ele bate. */
+        WEBS,
+        /** Gelo: a agua que congela, o escudo que sobe e a gaiola em volta de quem apanha. */
+        ICE,
+        /** A pedra que apodrece em pedra-de-bicho, e a doenca em quem apanha. */
+        INFECTION,
+        /** E a troca: o que esta largado no chao toma o lugar do chao. */
+        SUBSTITUTION;
 
         /** O que este frasco faz. Devolve se houve efeito: não havendo, o frasco cai de volta no chão. */
         public boolean impact(ServerLevel level, HitResult onde, @Nullable LivingEntity quemAtirou) {
@@ -64,6 +72,10 @@ public final class KettleBrews {
                 case EROSION -> erosion(level, onde, quemAtirou);
                 case LOVE -> love(level, onde);
                 case RAISING -> raising(level, onde);
+                case WEBS -> webs(level, onde);
+                case ICE -> ice(level, onde, quemAtirou);
+                case INFECTION -> infection(level, onde, quemAtirou);
+                case SUBSTITUTION -> substitution(level, onde);
             };
         }
     }
@@ -99,7 +111,7 @@ public final class KettleBrews {
                     || cursor.getY() <= level.getMinY()) {
                 break;
             }
-            algo |= põe(level, cursor.relative(lado), vinha);
+            algo |= poe(level, cursor.relative(lado), vinha);
             cursor = cursor.below();
             if (!livre(level, cursor.relative(lado)) || !level.getBlockState(cursor).isSolidRender()) {
                 cursor = cursor.relative(lado);
@@ -118,7 +130,7 @@ public final class KettleBrews {
                     || cursor.getY() >= level.getMaxY()) {
                 break;
             }
-            algo |= põe(level, cursor.relative(lado), vinha);
+            algo |= poe(level, cursor.relative(lado), vinha);
             cursor = cursor.above();
             if (!level.getBlockState(cursor).isSolidRender()) cursor = cursor.relative(lado.getOpposite());
         }
@@ -131,7 +143,7 @@ public final class KettleBrews {
         return !feitio.isSolidRender() || feitio.is(BlockTags.LEAVES);
     }
 
-    private static boolean põe(ServerLevel level, BlockPos onde, BlockState feitio) {
+    private static boolean poe(ServerLevel level, BlockPos onde, BlockState feitio) {
         if (level.getBlockState(onde).isSolidRender()) return false;
         level.setBlock(onde, feitio, Block.UPDATE_ALL);
         level.sendParticles(ParticleTypes.EXPLOSION, onde.getX() + 0.5, onde.getY() + 0.5, onde.getZ() + 0.5,
@@ -182,7 +194,7 @@ public final class KettleBrews {
 
         boolean algo = false;
         for (int i = 1; i <= altura; i++) {
-            if (!põe(level, chão.above(i), Blocks.CACTUS.defaultBlockState())) break;
+            if (!poe(level, chão.above(i), Blocks.CACTUS.defaultBlockState())) break;
             algo = true;
         }
         return algo;
@@ -253,11 +265,11 @@ public final class KettleBrews {
         BlockPos ponta = base;
         for (; passo < BRANCH; passo++) {
             BlockPos lugar = base.relative(para, passo);
-            if (lugar.getY() >= level.getMaxY() || !põe(level, lugar, tronco)) break;
+            if (lugar.getY() >= level.getMaxY() || !poe(level, lugar, tronco)) break;
             ponta = lugar;
             feitos++;
             BlockPos ramo = folhaDeLado(level, lugar, para);
-            if (ramo != null) põe(level, ramo, folha);
+            if (ramo != null) poe(level, ramo, folha);
         }
         if (feitos == 0) return false;
 
@@ -404,5 +416,222 @@ public final class KettleBrews {
                 : BlockPos.containing(onde.getLocation());
         net.thaumcraft.occulta.brew.BrewWorldActions.Raising.raise(level, lugar);
         return true;
+    }
+    // ------------------------------------------------------------------ as teias
+
+    /** O {@code explodeWeb}: teia na casa em que ele bateu, nas quatro em volta e nas duas de cima e de baixo. */
+    private static boolean webs(ServerLevel level, HitResult onde) {
+        BlockPos meio = alvo(level, onde);
+        boolean algo = poe(level, meio, Blocks.COBWEB.defaultBlockState());
+        for (Direction lado : Direction.values()) {
+            algo |= poe(level, meio.relative(lado), Blocks.COBWEB.defaultBlockState());
+        }
+        return algo;
+    }
+
+    // ------------------------------------------------------------------ o gelo
+
+    /** Ate onde a agua congela em volta, e que altura tem as colunas do escudo. */
+    public static final int FREEZE_RANGE = 3;
+    public static final int SHIELD_HEIGHT = 3;
+    /** E que altura tem a gaiola de gelo em volta de quem apanha. */
+    public static final int CAGE_HEIGHT = 4;
+
+    /**
+     * O {@code impactIce}: havendo <b>agua</b> encostada, ela congela em volta; batendo numa face de cima ou de
+     * lado, sobem tres <b>colunas de gelo</b> a frente de quem atirou; e em quem apanha, uma <b>gaiola</b>.
+     *
+     * <p>Os que o gelo nao segura no original - o blaze, o wither, o golem de ferro, o dragao e o Ent - so
+     * recebem agua. E o creeper estoura ali mesmo.
+     */
+    private static boolean ice(ServerLevel level, HitResult onde, @Nullable LivingEntity quemAtirou) {
+        if (onde instanceof EntityHitResult apanhou) {
+            return cage(level, apanhou.getEntity());
+        }
+        if (!(onde instanceof BlockHitResult bateu)) return false;
+        BlockPos meio = bateu.getBlockPos();
+
+        for (Direction lado : Direction.values()) {
+            if (!level.getBlockState(meio.relative(lado)).is(Blocks.WATER)) continue;
+            return freeze(level, meio, meio, FREEZE_RANGE, new java.util.HashSet<>());
+        }
+        if (bateu.getDirection() == Direction.DOWN) return false;
+        return shield(level, meio.relative(bateu.getDirection()), quemAtirou);
+    }
+
+    /** O {@code freezeSurroundingWater}: a agua pega-se em gelo de casa em casa, ate onde o alcance for. */
+    private static boolean freeze(ServerLevel level, BlockPos onde, BlockPos meio, int alcance,
+                                  java.util.Set<BlockPos> vistos) {
+        if (Math.abs(meio.getX() - onde.getX()) >= alcance || Math.abs(meio.getY() - onde.getY()) >= alcance
+                || Math.abs(meio.getZ() - onde.getZ()) >= alcance) {
+            return false;
+        }
+        boolean algo = false;
+        for (Direction lado : Direction.values()) {
+            BlockPos vizinho = onde.relative(lado);
+            if (!vistos.add(vizinho)) continue;
+            if (!level.getBlockState(vizinho).is(Blocks.WATER)) continue;
+            level.setBlock(vizinho, Blocks.ICE.defaultBlockState(), Block.UPDATE_ALL);
+            algo = true;
+            algo |= freeze(level, vizinho, meio, alcance, vistos);
+        }
+        return algo;
+    }
+
+    /** O {@code explodeIceShield}: tres colunas de gelo, uma a frente e duas de lado. */
+    private static boolean shield(ServerLevel level, BlockPos onde, @Nullable LivingEntity quemAtirou) {
+        BlockPos base = level.getBlockState(onde).isSolidRender() ? onde : onde.below();
+        double giro = quemAtirou == null ? 0.0 : -quemAtirou.getYRot() * (Math.PI / 180.0) - Math.PI;
+        double dx = Math.sin(giro);
+        double dz = Math.cos(giro);
+        boolean algo = column(level, base.above(), SHIELD_HEIGHT);
+        for (double volta : new double[]{Math.PI / 2.0, -Math.PI / 2.0}) {
+            int nx = net.minecraft.util.Mth.floor(base.getX() + 0.5 + (dx * Math.cos(volta) - dz * Math.sin(volta)));
+            int nz = net.minecraft.util.Mth.floor(base.getZ() + 0.5 + (dx * Math.sin(volta) + dz * Math.cos(volta)));
+            algo |= column(level, new BlockPos(nx, base.getY() + 1, nz), SHIELD_HEIGHT);
+        }
+        return algo;
+    }
+
+    private static boolean column(ServerLevel level, BlockPos base, int altura) {
+        boolean algo = false;
+        for (int i = 0; i < altura; i++) algo |= poe(level, base.above(i), Blocks.ICE.defaultBlockState());
+        return algo;
+    }
+
+    /** O {@code explodeIceBlock}: a gaiola de gelo em volta de quem apanha. */
+    private static boolean cage(ServerLevel level, Entity quem) {
+        BlockPos meio = quem.blockPosition().below();
+        if (resistant(quem)) {
+            return poe(level, meio.above(), Blocks.WATER.defaultBlockState());
+        }
+        int[][] roda = {{-2, -1}, {-2, 0}, {-1, 1}, {0, 1}, {1, 0}, {1, -1},
+                {0, -2}, {-1, -2}, {-2, -2}, {-2, 1}, {1, 1}, {1, -2}};
+        boolean algo = false;
+        for (int i = 0; i < CAGE_HEIGHT; i++) {
+            for (int[] ponto : roda) {
+                algo |= poe(level, meio.offset(ponto[0], i, ponto[1]), Blocks.ICE.defaultBlockState());
+            }
+        }
+        algo |= poe(level, meio, Blocks.ICE.defaultBlockState());
+        algo |= poe(level, meio.above(CAGE_HEIGHT - 1), Blocks.ICE.defaultBlockState());
+        algo |= poe(level, meio.offset(-1, CAGE_HEIGHT - 1, -1), Blocks.ICE.defaultBlockState());
+        algo |= poe(level, meio.offset(-1, CAGE_HEIGHT - 1, 0), Blocks.ICE.defaultBlockState());
+        algo |= poe(level, meio.offset(0, CAGE_HEIGHT - 1, -1), Blocks.ICE.defaultBlockState());
+
+        if (quem instanceof net.minecraft.world.entity.monster.Creeper creeper) {
+            level.explode(creeper, creeper.getX(), creeper.getY(), creeper.getZ(),
+                    creeper.isPowered() ? 6.0f : 3.0f,
+                    net.minecraft.world.level.Level.ExplosionInteraction.MOB);
+            creeper.discard();
+        }
+        return algo;
+    }
+
+    /** Os que o gelo nao segura, no original: os que ardem, os que nao sao de carne e o dragao. */
+    private static boolean resistant(Entity quem) {
+        return quem instanceof net.minecraft.world.entity.monster.Blaze
+                || quem instanceof net.minecraft.world.entity.boss.wither.WitherBoss
+                || quem instanceof net.minecraft.world.entity.boss.enderdragon.EnderDragon
+                || quem instanceof net.minecraft.world.entity.animal.golem.IronGolem
+                || quem instanceof net.thaumcraft.occulta.EntEntity;
+    }
+
+    // ------------------------------------------------------------------ a infeccao
+
+    /** O que ela tira de quem apanha, e quanto tempo o deixa lerdo. */
+    public static final float WORM_DAMAGE = 1.0f;
+    public static final int WORM_SLOW = 100;
+
+    /**
+     * O {@code impactInfection}: a pedra apodrece em <b>pedra-de-bicho</b>, o aldeao vira zumbi, e quem mais
+     * apanhar leva um golpe e fica lerdo.
+     */
+    private static boolean infection(ServerLevel level, HitResult onde, @Nullable LivingEntity quemAtirou) {
+        if (onde instanceof BlockHitResult bateu) {
+            BlockState feitio = level.getBlockState(bateu.getBlockPos());
+            BlockState bichado = feitio.is(Blocks.STONE) ? Blocks.INFESTED_STONE.defaultBlockState()
+                    : feitio.is(Blocks.COBBLESTONE) ? Blocks.INFESTED_COBBLESTONE.defaultBlockState()
+                    : feitio.is(Blocks.STONE_BRICKS) ? Blocks.INFESTED_STONE_BRICKS.defaultBlockState() : null;
+            if (bichado == null) return false;
+            level.setBlock(bateu.getBlockPos(), bichado, Block.UPDATE_ALL);
+            return true;
+        }
+        if (!(onde instanceof EntityHitResult apanhou)
+                || !(apanhou.getEntity() instanceof LivingEntity vivo)) {
+            return false;
+        }
+        if (vivo instanceof net.minecraft.world.entity.npc.villager.Villager aldeao) {
+            return aldeao.convertTo(net.minecraft.world.entity.EntityTypes.ZOMBIE_VILLAGER,
+                    net.minecraft.world.entity.ConversionParams.single(aldeao, false, false),
+                    zumbi -> {
+                    }) != null;
+        }
+        vivo.hurtServer(level, level.damageSources().indirectMagic(quemAtirou, quemAtirou), WORM_DAMAGE);
+        vivo.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, WORM_SLOW, 8));
+        return true;
+    }
+
+    // ------------------------------------------------------------------ a troca
+
+    /** A que distancia ela troca. */
+    public static final int SWAP_RADIUS = 4;
+
+    /**
+     * O {@code brewSubstitution}: o que estiver <b>largado no chao</b> em roda toma o lugar do bloco em que o
+     * frasco bateu - casa por casa, do mais perto para o mais longe, ate acabarem os itens.
+     *
+     * <p><b>Desvio declarado:</b> no original a troca corre numa <b>espiral</b> desenhada pelo
+     * {@code EffectSpiral}, que e o que lhe da o ar de feitico. Aqui ela corre do meio para fora pela distancia,
+     * que e a mesma ordem sem o desenho - a espiral do original e um relogio de animacao, e nao uma regra do que
+     * se troca.
+     */
+    private static boolean substitution(ServerLevel level, HitResult onde) {
+        if (!(onde instanceof BlockHitResult bateu)) return false;
+        BlockState modelo = level.getBlockState(bateu.getBlockPos());
+        if (modelo.isAir()) return false;
+
+        var largados = new java.util.ArrayList<net.minecraft.world.entity.item.ItemEntity>();
+        for (var item : level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                new AABB(bateu.getBlockPos()).inflate(SWAP_RADIUS))) {
+            if (item.getItem().getItem() instanceof net.minecraft.world.item.BlockItem) largados.add(item);
+        }
+        if (largados.isEmpty()) return false;
+
+        var casas = new java.util.ArrayList<BlockPos>();
+        for (BlockPos casa : BlockPos.betweenClosed(
+                bateu.getBlockPos().offset(-SWAP_RADIUS, -SWAP_RADIUS, -SWAP_RADIUS),
+                bateu.getBlockPos().offset(SWAP_RADIUS, SWAP_RADIUS, SWAP_RADIUS))) {
+            if (casa.distSqr(bateu.getBlockPos()) > (double) SWAP_RADIUS * SWAP_RADIUS) continue;
+            if (!level.getBlockState(casa).equals(modelo)) continue;
+            casas.add(casa.immutable());
+        }
+        casas.sort(java.util.Comparator.comparingDouble(casa -> casa.distSqr(bateu.getBlockPos())));
+
+        int qual = 0;
+        boolean algo = false;
+        for (BlockPos casa : casas) {
+            while (qual < largados.size() && largados.get(qual).getItem().isEmpty()) qual++;
+            if (qual >= largados.size()) break;
+            var item = largados.get(qual);
+            var bloco = ((net.minecraft.world.item.BlockItem) item.getItem().getItem()).getBlock();
+            level.setBlock(casa, bloco.defaultBlockState(), Block.UPDATE_ALL);
+            level.sendParticles(ParticleTypes.HAPPY_VILLAGER, casa.getX() + 0.5, casa.getY() + 1.5,
+                    casa.getZ() + 0.5, 2, 0.3, 0.3, 0.3, 0.0);
+            item.getItem().shrink(1);
+            if (item.getItem().isEmpty()) item.discard();
+            algo = true;
+        }
+        return algo;
+    }
+
+    /** A casa em que um frasco bateu: a de fora do bloco, ou a de quem apanhou. */
+    private static BlockPos alvo(ServerLevel level, HitResult onde) {
+        if (onde instanceof BlockHitResult bateu) {
+            BlockPos fora = bateu.getBlockPos().relative(bateu.getDirection());
+            return bateu.getDirection() == Direction.UP
+                    && !level.getBlockState(bateu.getBlockPos()).isSolidRender() ? fora.below() : fora;
+        }
+        return BlockPos.containing(onde.getLocation());
     }
 }

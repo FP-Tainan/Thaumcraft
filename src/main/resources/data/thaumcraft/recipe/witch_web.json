@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " s ",
+    "sws",
+    " s "
+  ],
+  "key": {
+    "s": "minecraft:string",
+    "w": "minecraft:cobweb"
+  },
+  "result": {
+    "id": "thaumcraft:witch_web",
+    "count": 1
+  }
+}

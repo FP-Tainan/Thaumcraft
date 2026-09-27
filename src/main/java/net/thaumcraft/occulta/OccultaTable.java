@@ -186,6 +186,11 @@ public final class OccultaTable {
                         kettlePage(OccultaItems.BREW_OF_EROSION),
                         kettlePage(OccultaItems.BREW_OF_LOVE),
                         kettlePage(OccultaItems.BREW_OF_RAISING),
+                        kettlePage(OccultaItems.BREW_OF_WEBS),
+                        kettlePage(OccultaItems.BREW_OF_ICE),
+                        kettlePage(OccultaItems.BREW_OF_INFECTION),
+                        kettlePage(OccultaItems.BREW_SUBSTITUTION),
+                        kettlePage(OccultaItems.BREW_OF_THE_DEPTHS),
                         kettlePage(OccultaItems.REDSTONE_SOUP))
                 .register();
     }

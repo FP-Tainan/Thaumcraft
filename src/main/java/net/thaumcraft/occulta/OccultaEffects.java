@@ -288,6 +288,35 @@ public final class OccultaEffects {
     private OccultaEffects() {
     }
 
+    /**
+     * As Profundezas: o {@code witcheryDepths} do {@code Infusion} do original.
+     *
+     * <p>Quem bebe o Cozimento das Profundezas <b>respira debaixo da água</b> — e, fora dela, definha. É a troca
+     * do peixe: o mar passa a ser casa, e a terra deixa de ser.
+     */
+    public static final Holder<MobEffect> DEPTHS = register("depths",
+            new MobEffect(MobEffectCategory.NEUTRAL, 0x1B4F72) {
+                @Override
+                public boolean applyEffectTick(ServerLevel level, LivingEntity quem, int grau) {
+                    if (!quem.hasEffect(MobEffects.WATER_BREATHING)) {
+                        quem.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                                MobEffects.WATER_BREATHING, 6000, 0));
+                    }
+                    if (quem.isInWater()) {
+                        quem.removeEffect(MobEffects.WITHER);
+                    } else if (!quem.hasEffect(MobEffects.WITHER)) {
+                        quem.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                                MobEffects.WITHER, 100, 1));
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean shouldApplyEffectTickThisTick(int restante, int grau) {
+                    return true;
+                }
+            });
+
     private static Holder<MobEffect> register(String nome, MobEffect efeito) {
         return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, Thaumcraft.id(nome), efeito);
     }

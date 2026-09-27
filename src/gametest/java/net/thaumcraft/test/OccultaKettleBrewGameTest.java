@@ -26,7 +26,8 @@ public class OccultaKettleBrewGameTest {
     public void everyBrewKnowsItsKindAndHasARecipe(GameTestHelper helper) {
         var frascos = java.util.List.of(OccultaItems.BREW_OF_VINES, OccultaItems.BREW_OF_THORNS,
                 OccultaItems.BREW_OF_INK, OccultaItems.BREW_OF_SPROUTING, OccultaItems.BREW_OF_EROSION,
-                OccultaItems.BREW_OF_LOVE, OccultaItems.BREW_OF_RAISING);
+                OccultaItems.BREW_OF_LOVE, OccultaItems.BREW_OF_RAISING, OccultaItems.BREW_OF_WEBS,
+                OccultaItems.BREW_OF_ICE, OccultaItems.BREW_OF_INFECTION, OccultaItems.BREW_SUBSTITUTION);
         java.util.Set<KettleBrews.Kind> feitios = new java.util.HashSet<>();
         for (var frasco : frascos) {
             var qual = KettleBrewItem.kindOf(new ItemStack(frasco));
@@ -187,5 +188,97 @@ public class OccultaKettleBrewGameTest {
         OccultaItems.BREW_OF_INK.use(level, quem, net.minecraft.world.InteractionHand.MAIN_HAND);
         if (quem.getMainHandItem().getCount() != 1) helper.fail("atirar um frasco gasta um frasco");
         helper.succeed();
+    }
+    /** O de Teias enche de teia a casa em que bate e as seis em volta. */
+    @GameTest
+    public void websFillTheAirAround(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos chao = helper.absolutePos(new BlockPos(2, 2, 6));
+        level.setBlockAndUpdate(chao, Blocks.STONE.defaultBlockState());
+
+        var bateu = new BlockHitResult(Vec3.atCenterOf(chao.above()), Direction.UP, chao, false);
+        if (!KettleBrews.Kind.WEBS.impact(level, bateu, null)) helper.fail("a teia devia pegar");
+        if (!level.getBlockState(chao.above()).is(Blocks.COBWEB)) helper.fail("e enche a casa de cima");
+        if (!level.getBlockState(chao.above().north()).is(Blocks.COBWEB)) helper.fail("e as de volta");
+
+        for (var lado : Direction.values()) {
+            level.setBlockAndUpdate(chao.above().relative(lado), Blocks.AIR.defaultBlockState());
+        }
+        level.setBlockAndUpdate(chao.above(), Blocks.AIR.defaultBlockState());
+        level.setBlockAndUpdate(chao, Blocks.AIR.defaultBlockState());
+        helper.succeed();
+    }
+
+    /** O de Gelo congela a agua encostada, e ergue escudo onde nao ha agua. */
+    @GameTest
+    public void iceFreezesWaterAndRaisesAShield(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos chao = helper.absolutePos(new BlockPos(4, 2, 6));
+        level.setBlockAndUpdate(chao, Blocks.STONE.defaultBlockState());
+        level.setBlockAndUpdate(chao.north(), Blocks.WATER.defaultBlockState());
+
+        var bateu = new BlockHitResult(Vec3.atCenterOf(chao), Direction.UP, chao, false);
+        if (!KettleBrews.Kind.ICE.impact(level, bateu, null)) helper.fail("o gelo devia pegar na agua");
+        if (!level.getBlockState(chao.north()).is(Blocks.ICE)) helper.fail("e a agua fica gelo");
+
+        // sem agua encostada, sobe escudo
+        BlockPos seco = helper.absolutePos(new BlockPos(6, 2, 6));
+        level.setBlockAndUpdate(seco, Blocks.STONE.defaultBlockState());
+        var deCima = new BlockHitResult(Vec3.atCenterOf(seco.above()), Direction.UP, seco, false);
+        if (!KettleBrews.Kind.ICE.impact(level, deCima, null)) helper.fail("sem agua, o escudo sobe");
+        if (!level.getBlockState(seco.above()).is(Blocks.ICE)) helper.fail("e a primeira casa dele e gelo");
+
+        for (int dy = 0; dy <= KettleBrews.SHIELD_HEIGHT; dy++) {
+            level.setBlockAndUpdate(seco.above(dy), Blocks.AIR.defaultBlockState());
+        }
+        level.setBlockAndUpdate(chao, Blocks.AIR.defaultBlockState());
+        level.setBlockAndUpdate(chao.north(), Blocks.AIR.defaultBlockState());
+        level.setBlockAndUpdate(seco, Blocks.AIR.defaultBlockState());
+        helper.succeed();
+    }
+
+    /** O de Infeccao apodrece a pedra, e nao pega em terra. */
+    @GameTest
+    public void infectionRotsStone(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pedra = helper.absolutePos(new BlockPos(2, 2, 8));
+        level.setBlockAndUpdate(pedra, Blocks.STONE.defaultBlockState());
+
+        var bateu = new BlockHitResult(Vec3.atCenterOf(pedra), Direction.UP, pedra, false);
+        if (!KettleBrews.Kind.INFECTION.impact(level, bateu, null)) helper.fail("a pedra devia apodrecer");
+        if (!level.getBlockState(pedra).is(Blocks.INFESTED_STONE)) helper.fail("e vira pedra-de-bicho");
+
+        level.setBlockAndUpdate(pedra, Blocks.DIRT.defaultBlockState());
+        if (KettleBrews.Kind.INFECTION.impact(level, bateu, null)) helper.fail("mas em terra nao pega");
+
+        level.setBlockAndUpdate(pedra, Blocks.AIR.defaultBlockState());
+        helper.succeed();
+    }
+
+    /** A Troca poe no chao o que esta largado nele, e nao faz nada sem nada largado. */
+    @GameTest
+    public void substitutionSwapsWhatLiesAround(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos chao = helper.absolutePos(new BlockPos(6, 2, 8));
+        level.setBlockAndUpdate(chao, Blocks.DIRT.defaultBlockState());
+
+        var bateu = new BlockHitResult(Vec3.atCenterOf(chao), Direction.UP, chao, false);
+        if (KettleBrews.Kind.SUBSTITUTION.impact(level, bateu, null)) {
+            helper.fail("sem nada largado, a troca nao pega");
+        }
+
+        var largado = new net.minecraft.world.entity.item.ItemEntity(level, chao.getX() + 0.5,
+                chao.getY() + 1.5, chao.getZ() + 0.5, new ItemStack(Blocks.GOLD_BLOCK, 4));
+        level.addFreshEntity(largado);
+        helper.runAfterDelay(2, () -> {
+            if (!KettleBrews.Kind.SUBSTITUTION.impact(level, bateu, null)) {
+                helper.fail("com ouro largado, a troca pega");
+                return;
+            }
+            if (!level.getBlockState(chao).is(Blocks.GOLD_BLOCK)) helper.fail("e a terra vira ouro");
+            largado.discard();
+            level.setBlockAndUpdate(chao, Blocks.AIR.defaultBlockState());
+            helper.succeed();
+        });
     }
 }

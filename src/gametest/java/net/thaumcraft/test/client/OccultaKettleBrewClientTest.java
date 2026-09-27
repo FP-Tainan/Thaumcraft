@@ -26,7 +26,7 @@ public class OccultaKettleBrewClientTest implements FabricClientGameTest {
 
             // os sete frascos no cinto
             String[] frascos = {"brew_of_vines", "brew_of_thorns", "brew_of_ink", "brew_of_sprouting",
-                    "brew_of_erosion", "brew_of_love", "brew_of_raising"};
+                    "brew_of_erosion", "brew_of_love", "brew_of_raising", "brew_of_webs", "brew_of_ice"};
             for (int i = 0; i < frascos.length; i++) {
                 server.runCommand("item replace entity @p hotbar." + i + " with thaumcraft:" + frascos[i]);
             }
@@ -60,6 +60,38 @@ public class OccultaKettleBrewClientTest implements FabricClientGameTest {
             });
             context.waitTicks(30);
             context.takeScreenshot("ao_frascos_no_mundo");
+
+            // e os da segunda leva: a teia, o gelo na agua, o escudo e a pedra apodrecida
+            server.runOnServer(s -> {
+                var mundo = s.overworld();
+                BlockPos pe = s.getPlayerList().getPlayers().getFirst().blockPosition();
+
+                BlockPos teia = pe.offset(-4, -1, 4);
+                mundo.setBlockAndUpdate(teia, Blocks.STONE.defaultBlockState());
+                KettleBrews.Kind.WEBS.impact(mundo,
+                        new BlockHitResult(Vec3.atCenterOf(teia.above()), Direction.UP, teia, false), null);
+
+                BlockPos poca = pe.offset(-1, -1, 4);
+                for (int dx = 0; dx < 3; dx++) {
+                    for (int dz = 0; dz < 3; dz++) {
+                        mundo.setBlockAndUpdate(poca.offset(dx, 0, dz), Blocks.WATER.defaultBlockState());
+                    }
+                }
+                mundo.setBlockAndUpdate(poca.offset(1, -1, 1), Blocks.STONE.defaultBlockState());
+                KettleBrews.Kind.ICE.impact(mundo, new BlockHitResult(Vec3.atCenterOf(poca.offset(1, -1, 1)),
+                        Direction.UP, poca.offset(1, -1, 1), false), null);
+
+                BlockPos pedra = pe.offset(3, -1, 4);
+                for (int dx = 0; dx < 2; dx++) {
+                    mundo.setBlockAndUpdate(pedra.offset(dx, 0, 0), Blocks.STONE.defaultBlockState());
+                    KettleBrews.Kind.INFECTION.impact(mundo,
+                            new BlockHitResult(Vec3.atCenterOf(pedra.offset(dx, 0, 0)), Direction.UP,
+                                    pedra.offset(dx, 0, 0), false), null);
+                }
+            });
+            server.runCommand("item replace entity @p weapon.mainhand with thaumcraft:brew_of_ice");
+            context.waitTicks(30);
+            context.takeScreenshot("ao_frascos_segunda_leva");
         }
     }
 }

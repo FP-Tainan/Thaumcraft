@@ -3674,3 +3674,38 @@ junta o par de **aldeões** à força nem o de **zumbis escravizados** — o pri
 hoje, e o segundo pede a Poção de Escravizar. (3) Ficam para as próximas levas os outros vinte e nove frascos da
 tabela, e com eles a Teia do ofício, a Asa de Mocho, o Leite Purificado, a Fome Melíflua, o Fio Enfeitado, o
 Espírito Subjugado, a Pedra Sintonizada e o Coração de Demônio.
+
+### Os frascos do pote, segunda leva (2026-09-27)
+
+Mais cinco, e com eles três coisas que o pote pedia e não havia.
+
+- **Teias**: teia de aranha na casa em que bate e nas seis em volta.
+- **Gelo**: havendo **água** encostada, ela congela de casa em casa até três de distância; batendo em chão ou
+  parede seca, sobem **três colunas de gelo** à frente de quem atirou; e em quem apanha, uma **gaiola** de quatro
+  de alto. Os que o gelo não segura — o blaze, o wither, o golem de ferro, o dragão e o Ent — só recebem água, e
+  o creeper estoura ali mesmo, como no original.
+- **Infecção**: a pedra, o pedregulho e o tijolo de pedra apodrecem em **pedra-de-bicho**; o aldeão vira zumbi; e
+  quem mais apanhar leva um golpe e fica lerdo por cinco segundos.
+- **Troca**: o que estiver **largado no chão** em roda toma o lugar do bloco em que o frasco bateu, casa por
+  casa, do mais perto para o mais longe, até acabarem os itens.
+- **Profundezas**: este não se atira — **bebe-se**. Quinze segundos em que se respira debaixo da água e, fora
+  dela, se definha. É a troca do peixe: o mar passa a ser casa, e a terra deixa de ser.
+
+**As três coisas que vieram com eles**, todas de bancada, como no original: a **Teia do Ofício** (linha em cruz
+sobre uma teia de aranha), a **Maçã Bichada** (maçã, carne podre e açúcar) e o **Leite Purificado** (um balde de
+leite passado pelo Odor de Pureza, em três potes de barro) — que, bebido, tira **um** efeito qualquer de quem o
+bebeu, uma vez em duas.
+
+**E o Coração de Creeper passou a estourar ao ser comido**, que é o que ele faz no original e ficara por fazer na
+fatia de ontem. Fica também o instante de resistência ao fogo que o original declara — e que não serve de grande
+consolo.
+
+**Desvios declarados.** (1) A **Troca** corre do meio para fora pela distância; no original ela corre numa
+**espiral** desenhada pelo `EffectSpiral`, que é um relógio de animação, e não uma regra do que se troca.
+(2) O Coração de Creeper estoura **um e sem fogo**: é o manso dos dois que o original oferece, e o outro depende
+de um arquivo de ajustes que este mod não tem. (3) Ficam fora, por dependerem do que não existe aqui: o
+**Solidificar** (os quatro frascos que endurecem a poça de Lágrimas Ocas, que vem do Espírito Fluente), o
+**Grotesco** e o **Sono** (que pedem a Dobra e o Mundo dos Sonhos), o de **Morcegos** (que pede o Laço de Bicho),
+o **Revelar** e os **óleos** (que pedem casar poção com poção, e não item com item), e os três de **familiar** —
+o Salto Amaldiçoado, a Língua de Sapo e o Hitchcock —, que no original só se conseguem fazer com um familiar
+acordado.
