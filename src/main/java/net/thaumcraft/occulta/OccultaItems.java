@@ -67,7 +67,8 @@ public final class OccultaItems {
     public static final Item WOLFSBANE_SPRIG = register("wolfsbane_sprig", Item::new);
 
     /** A Agulha de Gelo, que sai de vez em quando ao colher a campainha-de-neve. */
-    public static final Item ICY_NEEDLE = register("icy_needle", Item::new);
+    public static final Item ICY_NEEDLE = register("icy_needle", properties ->
+            new net.thaumcraft.occulta.spirit.IcyNeedleItem(properties));
 
     // ------------------------------------------------------------------ o forno e o que sai dele
 
@@ -338,6 +339,90 @@ public final class OccultaItems {
     /** E o Crisol de Sangue. */
     public static final Item BLOOD_CRUCIBLE = register("blood_crucible", properties ->
             new BlockItem(OccultaBlocks.BLOOD_CRUCIBLE, properties.useBlockDescriptionPrefix()));
+
+    // ------------------------------------------------------------------ o que é de sonho
+
+    /**
+     * A Maçã do Sono: o {@code itemSleepingApple} do Witchery.
+     *
+     * <p>Come-se, e dorme-se — o corpo fica e o espírito levanta-se. É a porta do Mundo dos Espíritos, e ela abre
+     * sempre para o lado feio: quem a come sem um Apanhador de Sonhos por perto cai em pesadelo.
+     */
+    public static final Item SLEEPING_APPLE = register("sleeping_apple", properties ->
+            new net.thaumcraft.occulta.spirit.SleepingAppleItem(properties.stacksTo(1)
+                    .food(new net.minecraft.world.food.FoodProperties.Builder()
+                            .nutrition(3).saturationModifier(3.0f).alwaysEdible().build())));
+
+    /** O Algodão Sonhador, em item. */
+    public static final Item WISPY_COTTON = register("wispy_cotton", properties ->
+            new BlockItem(OccultaBlocks.WISPY_COTTON, properties.useBlockDescriptionPrefix()));
+
+    /** O Algodão Perturbado, que é o mesmo colhido em pesadelo. */
+    public static final Item DISTURBED_COTTON = register("disturbed_cotton", Item::new);
+
+    /** A Erva Cintilante, em item. */
+    public static final Item GLINT_WEED = register("glint_weed", properties ->
+            new BlockItem(OccultaBlocks.GLINT_WEED, properties.useBlockDescriptionPrefix()));
+
+    /** A Fome Melíflua, que só se tira de um pesadelo morto. */
+    public static final Item MELLIFLUOUS_HUNGER = register("mellifluous_hunger", Item::new);
+
+    /** O Fio Enfeitado, que a Roca fia do Algodão Sonhador. */
+    public static final Item FANCIFUL_THREAD = register("fanciful_thread", Item::new);
+
+    /** E o Cordel Atormentado, que ela fia do Perturbado. */
+    public static final Item TORMENTED_TWINE = register("tormented_twine", Item::new);
+
+    /**
+     * O Cozimento do Sono, que se bebe para passar ao outro lado.
+     *
+     * <p>Sai do Caldeirão de Pote, três de cada vez.
+     */
+    public static final Item BREW_OF_SLEEPING = register("brew_of_sleeping", properties ->
+            new net.thaumcraft.occulta.spirit.BrewOfSleepingItem(properties
+                    .rarity(net.minecraft.world.item.Rarity.UNCOMMON)
+                    .food(new net.minecraft.world.food.FoodProperties.Builder()
+                            .nutrition(0).saturationModifier(0.0f).alwaysEdible().build(),
+                            net.minecraft.world.item.component.Consumables.defaultDrink().build())));
+
+    /**
+     * O Cozimento do Espírito Corrente, que só se coze <b>do outro lado</b>.
+     *
+     * <p><b>Desvio declarado:</b> no original ele é um frasco de <b>fluido</b> — o {@code BrewFluid} que carrega
+     * o Espírito Corrente para a Destilaria. O fluido e a Destilaria são fatia à parte deste porte; até ela
+     * chegar, este frasco é o que o original também é na bancada: o ingrediente da Teia da Intensidade. Nada
+     * nele mente sobre o que faz, porque não faz mais nada.
+     */
+    public static final Item BREW_OF_FLOWING_SPIRIT = register("brew_of_flowing_spirit", properties ->
+            new Item(properties.rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
+    /** As cinco Teias de Sonho, uma por feitio de sonho. */
+    public static final Item DREAM_WEAVE_MOVE =
+            weave("dream_weave_move", net.thaumcraft.occulta.spirit.DreamWeaveItem.Weave.MOVE);
+    public static final Item DREAM_WEAVE_DIG =
+            weave("dream_weave_dig", net.thaumcraft.occulta.spirit.DreamWeaveItem.Weave.DIG);
+    public static final Item DREAM_WEAVE_EAT =
+            weave("dream_weave_eat", net.thaumcraft.occulta.spirit.DreamWeaveItem.Weave.EAT);
+    public static final Item DREAM_WEAVE_NIGHTMARE =
+            weave("dream_weave_nightmare", net.thaumcraft.occulta.spirit.DreamWeaveItem.Weave.NIGHTMARE);
+    public static final Item DREAM_WEAVE_INTENSITY =
+            weave("dream_weave_intensity", net.thaumcraft.occulta.spirit.DreamWeaveItem.Weave.INTENSITY);
+
+    /** A teia daquele feitio, para quem tiver o feitio e precisar do item. */
+    public static Item weave(net.thaumcraft.occulta.spirit.DreamWeaveItem.Weave qual) {
+        return switch (qual) {
+            case MOVE -> DREAM_WEAVE_MOVE;
+            case DIG -> DREAM_WEAVE_DIG;
+            case EAT -> DREAM_WEAVE_EAT;
+            case NIGHTMARE -> DREAM_WEAVE_NIGHTMARE;
+            case INTENSITY -> DREAM_WEAVE_INTENSITY;
+        };
+    }
+
+    private static Item weave(String name, net.thaumcraft.occulta.spirit.DreamWeaveItem.Weave qual) {
+        return register(name, properties ->
+                new net.thaumcraft.occulta.spirit.DreamWeaveItem(qual, properties.stacksTo(1)));
+    }
 
     /** O Caldeirão de Pote, em item. */
     public static final Item WITCHES_KETTLE = register("witches_kettle", properties ->

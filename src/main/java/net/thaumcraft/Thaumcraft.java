@@ -54,6 +54,7 @@ public class Thaumcraft implements ModInitializer {
                 net.thaumcraft.block.entity.ArcaneEarBlockEntity::endTick);
         net.thaumcraft.crafting.LabelMarkingRecipe.init();
         net.thaumcraft.occulta.PoppetBindingRecipe.init();
+        net.thaumcraft.occulta.spirit.DreamWeaveRecipe.init();
         net.thaumcraft.crafting.MutationRecipe.init();
         net.thaumcraft.crafting.TagSmeltingRecipe.init();
         net.thaumcraft.crafting.MetalIngotRecipe.init();

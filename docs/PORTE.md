@@ -2984,7 +2984,7 @@ pinheiro o Indício de Renascimento, a de bétula o Sopro da Deusa; a de selva n
 quê. Tudo o mais dá Fumo Fétido. Os outros três — Lufada de Magia, Fedor de Má Sorte e Odor de Pureza — vêm das
 três árvores do ofício, que ainda não chegaram; os itens já estão aqui à espera delas.
 
-**Os funis fazem duas coisas, e não a mesma.** Apressam a cozedura em vinte tiques cada um, dos cento e oitenta —
+**Os funis fazem duas coisas, e não a mesma.** Apressam o cozimento em vinte tiques cada um, dos cento e oitenta —
 e aí vale também o que está em cima do forno. Mas a **sorte** do cheiro só melhora com os dois dos lados: um
 quarto cada, ou três décimos se tiver filtro. Um funil virado para outro lado não serve para nada, como no
 original, onde a marca dele tinha de ser igual à do forno.
@@ -3706,7 +3706,8 @@ consolo.
 (2) O Coração de Creeper estoura **um e sem fogo**: é o manso dos dois que o original oferece, e o outro depende
 de um arquivo de ajustes que este mod não tem. (3) Ficam fora, por dependerem do que não existe aqui: o
 **Solidificar** (os quatro frascos que endurecem a poça de Lágrimas Ocas, que vem do Espírito Fluente), o
-**Grotesco** e o **Sono** (que pedem a Dobra e o Mundo dos Sonhos), o de **Morcegos** (que pede o Laço de Bicho),
+**Grotesco** e o ~~**Sono**~~ (que pedem a Dobra e o Mundo dos Sonhos — *o do Sono entrou com a fatia do
+Mundo dos Espíritos*), o de **Morcegos** (que pede o Laço de Bicho),
 o **Revelar** e os **óleos** (que pedem casar poção com poção, e não item com item), e os três de **familiar** —
 o Salto Amaldiçoado, a Língua de Sapo e o Hitchcock —, que no original só se conseguem fazer com um familiar
 acordado.
@@ -3729,7 +3730,8 @@ original faz.
 
 **Das quatro receitas dela, duas.** A **teia**, que é oito de linha e mais nada, e o **Fio Dourado**, que sai de um
 fardo de feno com um Sopro de Magia. As outras duas fiam o **algodão do sonho** — o Sonhador e o Perturbado —, que
-só nasce no Mundo dos Sonhos ao pé do Espírito Fluente; elas entram com ele.
+só nasce no Mundo dos Sonhos. *Resolvido na fatia seguinte: o Algodão Sonhador e o Perturbado nascem lá, e as
+quatro receitas da Roca estão todas de pé.*
 
 **O Braseiro** é o contrário de todas as outras máquinas do ofício: <b>não sai nada dele</b>. Põem-se três coisas,
 acende-se — com isqueiro ou com redstone — e o que ele faz é o que acontece <b>em volta</b> enquanto o fogo dura.
@@ -3757,3 +3759,99 @@ vampiro.
 Necrótica**, que sai de um rito que pede a Pedra Sintonizada e o **Pó Espectral** — e o Pó Espectral só cai de um
 bicho morto com a **Arthana**, que não está portada. No lugar dela vai a **Pedra Sintonizada**, e isso volta atrás
 quando a Arthana chegar.
+
+### O sono, o Mundo dos Espíritos e as Teias de Sonho (2026-09-27)
+
+**Há um lado de lá, e não se vai a ele: dorme-se para ele.** Esta fatia é o `WorldProviderDreamWorld` do Witchery
+inteiro, e é a primeira do porte em que o jogador **muda de mundo com o corpo ficando para trás**.
+
+**Como funciona.** Bebe-se o **Cozimento do Sono** — ou come-se a **Maçã do Sono** — e três coisas acontecem de
+uma vez: um **Corpo Adormecido** fica deitado no chão onde a pessoa estava, em carne e com tudo o que ela levava;
+a mochila, a vida e a fome são **trocadas** por um segundo conjunto guardado no próprio jogador; e o espírito
+acorda no **Mundo dos Espíritos**, no mesmo ponto do mapa, no chão alto de lá.
+
+**O mundo de lá é o daqui.** Ele abre-se com o **gerador do mundo de cima**, que é o que o original faz: o chão é
+o mesmo, monte por monte, e quem anda em espírito reconhece o caminho de casa. O que muda é que não há gente,
+e que nascem lá duas plantas que não nascem em mais nenhum lugar: o **Algodão Sonhador** e a **Erva Cintilante**.
+
+**Da travessia passa pouco**, e o original diz exatamente o quê: a **Agulha de Gelo** e o **Mutandis** vão; o
+Algodão, o Perturbado, a Agulha e a **Fome Melíflua** voltam. O resto fica com o corpo. Para acordar espeta-se a
+Agulha em si mesmo; sem ela, morre-se para acordar — e morrer do outro lado é acordar de mãos vazias.
+
+**A conta do pesadelo é a parte engenhosa, e é a que faz o quarto valer a pena.** O Cozimento do Sono passa uma
+chance de pesadelo de **0,998**, que é quase um. A Maçã passa **um redondo**. Sobre essa chance, o original olha
+os arredores de quem adormece — mas **só olha se houver um Apanhador de Sonhos com a teia dos pesadelos a menos de
+oito**. Sem ele, a chance é a que veio e não há nada a fazer. Com ele: o apanhador tira **meia**, cada Algodão
+Sonhador em volta tira **um décimo** até dois, e cada **fogo** aceso em volta acrescenta **um décimo** até três.
+É por isso que a primeira noite é feia e o quarto de sonho é uma coisa que se constrói.
+
+**Em pesadelo, o outro lado tem coisas que andam.** O **Pesadelo** — cem de vida, resistência a empurrão inteira,
+quatro de dano e a manha de arrombar porta — só nasce lá, só persegue quem está em pesadelo e desaparece quando o
+mundo já não é o dele. Deixa **Fome Melíflua**, duas vezes numa em cinco.
+
+**A teia é o apanhador.** Isto foi uma correção de fidelidade: no original não existe apanhador vazio, porque é a
+**Teia de Sonho** que se prega à parede e vira o bloco, com o feitio dela dentro — o `placeDreamCatcher` do
+`ItemGeneral`. Prega-se só **de lado**, nunca no chão nem no teto. Quebrado, devolve a teia. O item `dream_catcher`
+que esta fatia tinha inventado numa primeira passagem **foi tirado**.
+
+**Cada teia tem duas caras**, e é a mesma teia que dá as duas conforme a noite corra bem ou mal: o **passo ligeiro**
+(Rapidez ou Lentidão), a **mão rápida** (Pressa ou Fadiga), a **fartura** (Fartura ou Fome), os **pesadelos**
+(Fraqueza ou Cegueira) e a **intensidade** (Visão Noturna ou Cegueira). As duas últimas são as que mandam nas
+outras: a dos pesadelos faz o pesadelo, a da intensidade **aperta** o que houver — sobe o grau do efeito bom e
+encurta-lhe o tempo. Menos o da fartura, que em vez de subir de grau dura **dois minutos a mais**, porque grau de
+fartura não quer dizer nada. É a troca que o original faz.
+
+**As receitas das teias saíram decifradas, e não adivinhadas.** As oito `GameRegistry.addRecipe` do original põem
+nos dois cantos de cima **poções do jogo**, escritas em número de dano de 1.7.10. Decifrados: `16450` é Rapidez
+longa, `16458` Lentidão longa, `16457` Força longa, `16456` Fraqueza longa, `16421` Cura II, `16452` Veneno longo
+e `16454` Visão Noturna longa — todas **de atirar**, que é o que o bit `16384` diz. Cada par é o par de efeitos da
+sua teia, e por isso nada aqui foi escolhido por este porte.
+
+**E dois cozimentos novos**, os dois da tabela do pote do original: o **do Sono** (Leite Purificado, biscoito,
+Cozimento do Amor, Sopro de Magia, Agulha de Gelo e Globo de Alcachofra) e o **do Espírito Corrente**, que é o
+primeiro deste porte **preso a um mundo**: um pote fervido no mundo de cá nunca o dá. A **Maçã do Sono** deixou de
+pedir o Cozimento das Profundezas de mentira e passou a pedir o do Sono, que é o que o original pede.
+
+**Três furos, tapados aqui.** As provas de servidor desta fatia **nunca tinham corrido**: a classe delas não
+estava na lista de entrada do `fabric.mod.json`, e a suíte passava sem as ver. Registrada, ela põe a conta em
+seiscentas e vinte.
+
+Os outros dois são da fatia anterior. As três máquinas — a Roca, o Braseiro e o Crisol — tinham modelo
+de bloco mas **nenhum modelo de item**: na mão e no inventário não se via nada. Agora cada uma tem desenhista
+próprio, com o modelo do bloco parado e vazio, como o Caldeirão de Pote. E **nenhum dos blocos novos das duas
+fatias tinha tabela de despojo**: quebrar a Roca, o Braseiro, o Crisol, o Algodão ou a Erva não devolvia coisa
+nenhuma.
+
+**E a Maçã do Sono estava com os números trocados** — quatro de comida e três décimos de fartura, quando o
+original diz **três e três**. Corrigida.
+
+**Desvios declarados.**
+
+1. **Não há pesadelo demoníaco.** No original o **Coração de Demônio** *sobe* a chance em trinta e cinco por cento
+   cada, e é ele que torna o pesadelo demoníaco. É bloco de demônio, e o demônio não está portado.
+2. **O termo das poças de Espírito Fluente fica fora da conta.** No original cada poça tira dez por cento. O
+   fluido entra com a Destilaria, e o termo entra com ele.
+3. **O Algodão Sonhador é semeado por pedaço de mundo, e não por geração.** O Mundo dos Espíritos usa o gerador do
+   mundo de cima, que não conhece as plantas de lá; então, quando um pedaço de mundo é carregado pela primeira vez
+   do outro lado, três em cada quatro recebem uma mancha de doze algodões. O que se vê é o que o original mostra —
+   um mundo coberto deles — por outro caminho.
+
+   Isso traz uma regra que **não é escolha**: a moita não sai do pedaço, e o semeador não fala com o mundo. No
+   momento em que ele corre, o pedaço ainda não entrou na lista do mundo — quem lhe pedir um bloco *pelo mundo*
+   fica à espera de si mesmo; e pedir uma casa do pedaço ao lado faz o jogo gerá-lo ali, de dentro do carregamento
+   do primeiro, que dispara o seguinte. O servidor trava ao entrar no outro lado. Custou uma tarde a encontrar, e
+   há uma prova de servidor que impede a volta.
+4. **O Corpo Adormecido leva a pele de reserva, e não a de quem o deixou.** No original ela é baixada de um
+   servidor de peles. Este porte não baixa a pele de ninguém de fora; o corpo leva a mesma pele de reserva do
+   Reflexo.
+
+   E **deita-se com uma volta só**, noventa graus em Z, que é a com que o jogo de hoje deita um morto. O original
+   põe antes dela um `glTranslatef(0.9, 0.25, 0)` e uma segunda volta em Y: com as contas de agora esses números
+   atiram o corpo para o ar e para o lado. O que se vê é o que o original mostra — um corpo caído no chão.
+5. **A bancada das teias é uma receita de código, e não de arquivo.** Um ingrediente de receita do Minecraft de
+   hoje não sabe olhar os componentes de uma coisa, e portanto não distingue uma poção de Rapidez de uma de
+   Veneno. A conta está em `DreamWeaveRecipe`, com as poções exatas do original — e aceita os dois cantos nas duas
+   ordens, que é o que a receita moldada antiga fazia ao experimentar-se também espelhada.
+6. **O Cozimento do Espírito Corrente é item, e não frasco de fluido.** No original é um `BrewFluid`, que carrega
+   o Espírito Corrente para a Destilaria. Enquanto o fluido não entrar, ele é na bancada o que o original também é
+   ali: o ingrediente da Teia da Intensidade. Não faz mais nada, e não finge fazer.

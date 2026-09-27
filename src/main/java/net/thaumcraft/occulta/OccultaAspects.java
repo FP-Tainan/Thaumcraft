@@ -175,6 +175,21 @@ public final class OccultaAspects {
             r.item("thaumcraft:brazier", new AspectList().add(Aspects.FIRE, 4).add(Aspects.METAL, 3).add(Aspects.MAGIC, 2));
             r.item("thaumcraft:blood_crucible", new AspectList().add(Aspects.LIFE, 4).add(Aspects.EARTH, 3).add(Aspects.DEATH, 2));
 
+            // o que é de sonho
+            r.item("thaumcraft:wispy_cotton", new AspectList().add(Aspects.CLOTH, 2).add(Aspects.MIND, 2).add(Aspects.PLANT, 1));
+            r.item("thaumcraft:glint_weed", new AspectList().add(Aspects.LIGHT, 3).add(Aspects.PLANT, 2));
+            r.block("thaumcraft:dream_catcher", new AspectList().add(Aspects.MIND, 4).add(Aspects.CLOTH, 3)
+                    .add(Aspects.TRAP, 2));
+            r.item("thaumcraft:brew_of_sleeping", new AspectList().add(Aspects.MIND, 4).add(Aspects.MAGIC, 2)
+                    .add(Aspects.WATER, 1));
+            r.item("thaumcraft:brew_of_flowing_spirit", new AspectList().add(Aspects.SOUL, 4)
+                    .add(Aspects.MAGIC, 2).add(Aspects.WATER, 1));
+            r.item("thaumcraft:sleeping_apple", new AspectList().add(Aspects.MIND, 4).add(Aspects.LIFE, 2).add(Aspects.MAGIC, 2));
+            r.item("thaumcraft:disturbed_cotton", new AspectList().add(Aspects.CLOTH, 2).add(Aspects.MIND, 2).add(Aspects.DARKNESS, 2));
+            r.item("thaumcraft:mellifluous_hunger", new AspectList().add(Aspects.HUNGER, 4).add(Aspects.MIND, 2));
+            r.item("thaumcraft:fanciful_thread", new AspectList().add(Aspects.CLOTH, 3).add(Aspects.MIND, 2));
+            r.item("thaumcraft:tormented_twine", new AspectList().add(Aspects.CLOTH, 3).add(Aspects.DARKNESS, 2));
+
             // o espelho: o original não o anotava, e este é do porte. A superfície do Mundo do Espelho não entra
             // aqui porque não há item dela — ela não se apanha, e o thaumômetro não tem o que ler
             r.item("thaumcraft:witch_mirror", new AspectList().add(Aspects.SENSES, 4).add(Aspects.ELDRITCH, 4)
@@ -192,6 +207,10 @@ public final class OccultaAspects {
                     .add(Aspects.MAGIC, 2).add(Aspects.BEAST, 2));
             r.entity("thaumcraft:mirror_face", null, null, new AspectList().add(Aspects.SENSES, 4)
                     .add(Aspects.MIND, 2).add(Aspects.ELDRITCH, 2));
+            r.entity("thaumcraft:nightmare", null, null, new AspectList().add(Aspects.MIND, 6)
+                    .add(Aspects.DARKNESS, 4).add(Aspects.MAN, 2).add(Aspects.ELDRITCH, 2));
+            r.entity("thaumcraft:corpse", null, null, new AspectList().add(Aspects.FLESH, 6)
+                    .add(Aspects.MAN, 4).add(Aspects.SOUL, 2));
             r.entity("thaumcraft:reflection", null, null, new AspectList().add(Aspects.MAN, 6)
                     .add(Aspects.ELDRITCH, 4).add(Aspects.SOUL, 4).add(Aspects.MAGIC, 2));
         });

@@ -21,7 +21,7 @@ import net.minecraft.world.phys.BlockHitResult;
  * O Funil de Fumos: o {@code BlockFumeFunnel} do Witchery.
  *
  * <p>Posto ao lado do Forno das Bruxas, ou em cima dele, e virado para o mesmo lado que ele, o funil <b>apressa</b>
- * a cozedura e <b>melhora a sorte</b> de o cheiro ficar guardado. O que ele faz de verdade está no
+ * o cozimento e <b>melhora a sorte</b> de o cheiro ficar guardado. O que ele faz de verdade está no
  * {@link WitchesOvenBlockEntity}; aqui ele só se deixa assentar e repassa o clique para o forno a que serve.
  *
  * <p>O com filtro é o mesmo bloco com {@code filtered} ligado, como no original — lá eram duas classes iguais com

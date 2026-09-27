@@ -191,6 +191,32 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(
                             net.thaumcraft.occulta.brew.BrewFluidBlockEntity::new, java.util.Set.of(BREW_GAS)));
 
+    // ------------------------------------------------------------------ o que é de sonho
+
+    /** O Algodão Sonhador, que só nasce do outro lado. */
+    public static final Block WISPY_COTTON = register("wispy_cotton", properties ->
+            new net.thaumcraft.occulta.spirit.DreamPlantBlock(properties.mapColor(MapColor.SNOW)
+                    .noCollision().instabreak().randomTicks().sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY), true));
+
+    /** E a Erva Cintilante, que alumia o outro lado. */
+    public static final Block GLINT_WEED = register("glint_weed", properties ->
+            new net.thaumcraft.occulta.spirit.DreamPlantBlock(properties.mapColor(MapColor.COLOR_YELLOW)
+                    .noCollision().instabreak().randomTicks().lightLevel(state -> 15)
+                    .sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY), false));
+
+    /** O Apanhador de Sonhos, que diz o que se sonha a quem dorme perto dele. */
+    public static final Block DREAM_CATCHER = register("dream_catcher", properties ->
+            new net.thaumcraft.occulta.spirit.DreamCatcherBlock(properties.mapColor(MapColor.WOOD)
+                    .instabreak().sound(SoundType.WOOL).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.spirit.DreamCatcherBlockEntity> DREAM_CATCHER_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("dream_catcher"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.spirit.DreamCatcherBlockEntity::new,
+                            java.util.Set.of(DREAM_CATCHER)));
+
     // ------------------------------------------------------------------ a roca, o braseiro e o crisol
 
     /** A Roca, que fia o que não se fia à mão. */

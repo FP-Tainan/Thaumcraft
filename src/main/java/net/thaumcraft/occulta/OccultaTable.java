@@ -167,6 +167,8 @@ public final class OccultaTable {
         poppets();
         mirrors();
         kettle();
+        machines();
+        dreams();
     }
 
     /** O Caldeirão de Pote e os frascos que ele faz. */
@@ -192,6 +194,50 @@ public final class OccultaTable {
                         kettlePage(OccultaItems.BREW_SUBSTITUTION),
                         kettlePage(OccultaItems.BREW_OF_THE_DEPTHS),
                         kettlePage(OccultaItems.REDSTONE_SOUP))
+                .register();
+    }
+
+    /** A Roca, o Braseiro e o Crisol de Sangue: as três coisas que a Pedra Sintonizada abre. */
+    private static void machines() {
+        ThaumcraftApi.research("AO_MACHINES", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.CRAFT, 5).add(Aspects.MECHANISM, 4).add(Aspects.CLOTH, 3)
+                        .add(Aspects.MAGIC, 2))
+                .at(4, 6)
+                .icon(() -> new ItemStack(OccultaItems.SPINNING_WHEEL))
+                .parents("AO_KETTLE")
+                .pages(Page.text("tc.research_page.AO_MACHINES.1"),
+                        Page.crafting("AOAttunedStone"),
+                        Page.text("tc.research_page.AO_MACHINES.2"),
+                        Page.crafting("AOSpinningWheel"),
+                        Page.text("tc.research_page.AO_MACHINES.3"),
+                        Page.crafting("AOBrazier"),
+                        Page.text("tc.research_page.AO_MACHINES.4"),
+                        Page.crafting("AOBloodCrucible"),
+                        Page.text("tc.research_page.AO_MACHINES.5"))
+                .register();
+    }
+
+    /** O outro lado: o sono, o Mundo dos Espíritos e as teias que se pregam à parede. */
+    private static void dreams() {
+        ThaumcraftApi.research("AO_DREAMS", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MIND, 5).add(Aspects.SOUL, 4).add(Aspects.TRAVEL, 3)
+                        .add(Aspects.ELDRITCH, 2))
+                .at(4, 8)
+                .icon(() -> new ItemStack(OccultaItems.DREAM_WEAVE_MOVE))
+                .parents("AO_MACHINES")
+                .pages(Page.text("tc.research_page.AO_DREAMS.1"),
+                        kettlePage(OccultaItems.BREW_OF_SLEEPING),
+                        Page.text("tc.research_page.AO_DREAMS.2"),
+                        Page.crafting("AOSleepingApple"),
+                        Page.text("tc.research_page.AO_DREAMS.3"),
+                        kettlePage(OccultaItems.BREW_OF_FLOWING_SPIRIT),
+                        Page.text("tc.research_page.AO_DREAMS.4"),
+                        Page.crafting("AODreamWeaveMove"),
+                        Page.crafting("AODreamWeaveDig"),
+                        Page.crafting("AODreamWeaveEat"),
+                        Page.crafting("AODreamWeaveNightmare"),
+                        Page.crafting("AODreamWeaveIntensity"),
+                        Page.text("tc.research_page.AO_DREAMS.5"))
                 .register();
     }
 
@@ -439,6 +485,67 @@ public final class OccultaTable {
                         List.of(new ItemStack(OccultaItems.BELLADONNA_SEEDS)),
                         List.of(new ItemStack(OccultaItems.SNOWBELL_SEEDS)))));
 
+        // ------------------------------------------------ a Pedra Sintonizada e as três coisas dela
+        ThaumcraftApi.bookRecipe("AOAttunedStone", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.ATTUNED_STONE), 1, 3, List.of(
+                        List.of(new ItemStack(OccultaItems.WHIFF_OF_MAGIC)),
+                        List.of(new ItemStack(Items.DIAMOND)),
+                        List.of(new ItemStack(Items.LAVA_BUCKET)))));
+
+        ThaumcraftApi.bookRecipe("AOSpinningWheel", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.SPINNING_WHEEL), 3, 3, List.of(
+                        List.of(new ItemStack(Items.ITEM_FRAME)), List.of(new ItemStack(Items.ITEM_FRAME)),
+                        List.of(new ItemStack(Items.WOOL.pick(net.minecraft.world.item.DyeColor.WHITE))),
+                        List.of(new ItemStack(Items.ITEM_FRAME)), List.of(new ItemStack(Items.ITEM_FRAME)),
+                        List.of(new ItemStack(Items.STICK)),
+                        List.of(new ItemStack(Items.OAK_PLANKS)),
+                        List.of(new ItemStack(OccultaItems.ATTUNED_STONE)),
+                        List.of(new ItemStack(Items.OAK_PLANKS)))));
+
+        ThaumcraftApi.bookRecipe("AOBrazier", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.BRAZIER), 3, 3, List.of(
+                        List.of(new ItemStack(Items.IRON_INGOT)),
+                        List.of(new ItemStack(OccultaItems.ATTUNED_STONE)),
+                        List.of(new ItemStack(Items.IRON_INGOT)),
+                        List.of(new ItemStack(Items.STICK)), List.<ItemStack>of(), List.<ItemStack>of(),
+                        List.of(new ItemStack(Items.STICK)), List.of(new ItemStack(Items.STICK)),
+                        List.of(new ItemStack(Items.STICK)))));
+
+        ThaumcraftApi.bookRecipe("AOBloodCrucible", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.BLOOD_CRUCIBLE), 3, 2, List.of(
+                        List.of(new ItemStack(Items.STONE_BRICK_STAIRS)),
+                        List.of(new ItemStack(Items.STONE_BRICK_STAIRS)), List.<ItemStack>of(),
+                        List.of(new ItemStack(Items.STONE_BRICKS)),
+                        List.of(new ItemStack(Items.STONE_BRICK_SLAB)),
+                        List.of(new ItemStack(Items.STONE_BRICKS)))));
+
+        // ------------------------------------------------------------------ o sono e as teias
+        ThaumcraftApi.bookRecipe("AOSleepingApple", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.SLEEPING_APPLE), 3, 3, List.of(
+                        List.<ItemStack>of(), List.of(new ItemStack(OccultaItems.MUTANDIS)), List.<ItemStack>of(),
+                        List.of(new ItemStack(OccultaItems.REEK_OF_MISFORTUNE)),
+                        List.of(new ItemStack(OccultaItems.WORMY_APPLE)),
+                        List.of(new ItemStack(OccultaItems.REEK_OF_MISFORTUNE)),
+                        List.of(new ItemStack(OccultaItems.MUTANDIS)),
+                        List.of(new ItemStack(OccultaItems.BREW_OF_SLEEPING)),
+                        List.of(new ItemStack(OccultaItems.MUTANDIS)))));
+
+        weaveRecipe("AODreamWeaveMove", OccultaItems.DREAM_WEAVE_MOVE,
+                splash(net.minecraft.world.item.alchemy.Potions.LONG_SWIFTNESS),
+                splash(net.minecraft.world.item.alchemy.Potions.LONG_SLOWNESS), false);
+        weaveRecipe("AODreamWeaveDig", OccultaItems.DREAM_WEAVE_DIG,
+                splash(net.minecraft.world.item.alchemy.Potions.LONG_STRENGTH),
+                splash(net.minecraft.world.item.alchemy.Potions.LONG_WEAKNESS), false);
+        weaveRecipe("AODreamWeaveEat", OccultaItems.DREAM_WEAVE_EAT,
+                splash(net.minecraft.world.item.alchemy.Potions.STRONG_HEALING),
+                new ItemStack(OccultaItems.MELLIFLUOUS_HUNGER), false);
+        weaveRecipe("AODreamWeaveNightmare", OccultaItems.DREAM_WEAVE_NIGHTMARE,
+                splash(net.minecraft.world.item.alchemy.Potions.LONG_POISON),
+                splash(net.minecraft.world.item.alchemy.Potions.LONG_NIGHT_VISION), true);
+        weaveRecipe("AODreamWeaveIntensity", OccultaItems.DREAM_WEAVE_INTENSITY,
+                new ItemStack(OccultaItems.BREW_OF_FLOWING_SPIRIT),
+                new ItemStack(OccultaItems.BREW_OF_SLEEPING), false);
+
         ThaumcraftApi.bookRecipe("AORowanPlanks", ThaumcraftApi.crafting(
                 () -> new ItemStack(OccultaItems.WOOD.get("rowan_planks"), 4), 1, 1,
                 List.of(List.of(new ItemStack(OccultaItems.WOOD.get("rowan_log"))))));
@@ -453,6 +560,26 @@ public final class OccultaTable {
                         List.of(new ItemStack(Items.STONE_BRICKS)),
                         List.of(new ItemStack(Items.STONE_BRICKS)),
                         List.of(new ItemStack(OccultaItems.WOOD.get("rowan_log"))),
-                        List.of(new ItemStack(Items.STONE_BRICKS)))));
+                        List.of(new ItemStack(Items.STONE_BRICKS)))));    }
+
+    /** Uma poção de atirar daquele feitio, para a página do livro. */
+    private static ItemStack splash(net.minecraft.core.Holder<net.minecraft.world.item.alchemy.Potion> qual) {
+        return net.minecraft.world.item.alchemy.PotionContents.createItemStack(Items.SPLASH_POTION, qual);
+    }
+
+    /**
+     * A página de uma Teia de Sonho: a forma é sempre a mesma, e o que muda são os dois cantos de cima.
+     *
+     * @param cordel se a fileira do meio é de Cordel Atormentado, que é o caso só da teia dos pesadelos
+     */
+    private static void weaveRecipe(String nome, net.minecraft.world.item.Item teia, ItemStack esquerda,
+                                    ItemStack direita, boolean cordel) {
+        ItemStack lado = new ItemStack(cordel ? OccultaItems.TORMENTED_TWINE : OccultaItems.FANCIFUL_THREAD);
+        ThaumcraftApi.bookRecipe(nome, ThaumcraftApi.crafting(() -> new ItemStack(teia), 3, 3, List.of(
+                List.of(esquerda), List.of(new ItemStack(OccultaItems.DIAMOND_VAPOUR)), List.of(direita),
+                List.of(lado), List.of(new ItemStack(Items.ITEM_FRAME)), List.of(lado),
+                List.of(new ItemStack(Items.FEATHER)),
+                List.of(new ItemStack(OccultaItems.TORMENTED_TWINE)),
+                List.of(new ItemStack(Items.FEATHER)))));
     }
 }

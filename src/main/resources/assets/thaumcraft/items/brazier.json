@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/brazier",
+    "model": {
+      "type": "thaumcraft:brazier"
+    }
+  }
+}

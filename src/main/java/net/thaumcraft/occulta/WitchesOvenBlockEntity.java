@@ -38,7 +38,7 @@ public class WitchesOvenBlockEntity extends BaseContainerBlockEntity {
     public static final int INPUT = 0, FUEL = 1, OUTPUT = 2, BYPRODUCT = 3, JARS = 4;
     public static final int SIZE = 5;
 
-    /** Quanto tempo leva uma cozedura sem funil nenhum, e quanto cada funil tira. */
+    /** Quanto tempo leva um cozimento sem funil nenhum, e quanto cada funil tira. */
     public static final int COOK_TIME = 180;
     public static final int FUNNEL_HASTE = 20;
 

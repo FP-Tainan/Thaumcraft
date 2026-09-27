@@ -73,6 +73,17 @@ public final class KettleTable {
                 OccultaItems.MANDRAKE_ROOT, OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.ODOUR_OF_PURITY,
                 OccultaItems.TEAR_OF_THE_GODDESS, Items.VINE, Items.INK_SAC);
 
+        KettleRecipes.add(OccultaItems.BREW_OF_SLEEPING, BREW_COUNT, 0xFF8AB0B8, 0.0f,
+                OccultaItems.PURIFIED_MILK, Items.COOKIE, OccultaItems.BREW_OF_LOVE,
+                OccultaItems.WHIFF_OF_MAGIC, OccultaItems.ICY_NEEDLE, OccultaItems.WATER_ARTICHOKE_GLOBE);
+
+        // ------------------------------------------ e o que só se coze do outro lado
+        // O original prende este cozimento à dimensão do Sonho: um pote fervido no mundo de cá nunca o dá.
+        KettleRecipes.add(OccultaItems.BREW_OF_FLOWING_SPIRIT, BREW_COUNT, 0xFF00A0A6, 0.0f,
+                net.thaumcraft.occulta.spirit.SpiritWorld.LEVEL,
+                OccultaItems.FANCIFUL_THREAD, OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.MANDRAKE_ROOT,
+                OccultaItems.SPANISH_MOSS, OccultaItems.GLINT_WEED, OccultaItems.BAT_WOOL);
+
         // ---------------------------------------------------------- e a base dos óleos do ofício
         KettleRecipes.add(OccultaItems.REDSTONE_SOUP, 1, 0xFFFF1616, 1000.0f,
                 Items.REDSTONE, OccultaItems.DROP_OF_LUCK, OccultaItems.BAT_WOOL,

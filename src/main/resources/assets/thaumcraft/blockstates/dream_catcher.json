@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/dream_catcher"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/dream_catcher",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/dream_catcher",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/dream_catcher",
+      "y": 90
+    }
+  }
+}

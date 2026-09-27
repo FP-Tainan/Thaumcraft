@@ -67,7 +67,7 @@ public class WitchesOvenMenu extends AbstractContainerMenu {
         return this.data.get(WitchesOvenBlockEntity.DATA_BURN) * altura / total;
     }
 
-    /** O quanto da cozedura já andou, em pontos de uma largura. */
+    /** O quanto do cozimento já andou, em pontos de uma largura. */
     public int cookScaled(int largura) {
         return this.data.get(WitchesOvenBlockEntity.DATA_COOK) * largura / WitchesOvenBlockEntity.COOK_TIME;
     }

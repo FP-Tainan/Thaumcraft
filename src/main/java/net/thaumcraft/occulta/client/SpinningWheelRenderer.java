@@ -79,6 +79,11 @@ public class SpinningWheelRenderer
 
     @Override
     public void submit(State state, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
+        draw(pose, collector, state);
+    }
+
+    /** O desenho da roca, que serve ao bloco no mundo e à roca na mão. */
+    static void draw(PoseStack pose, SubmitNodeCollector collector, State state) {
         pose.pushPose();
         pose.translate(0.5f, 0.5f, 0.5f);
         pose.mulPose(Axis.ZP.rotationDegrees(180.0f));

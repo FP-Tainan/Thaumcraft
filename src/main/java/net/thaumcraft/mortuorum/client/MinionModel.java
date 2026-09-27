@@ -87,7 +87,7 @@ public class MinionModel extends EntityModel<MinionRenderState> {
         }
     }
 
-    // ------------------------------------------------------------- a cozedura
+    // ------------------------------------------------------------- o cozimento
 
     /** A camada de um bicho: um grupo por lugar do corpo, e dentro dele um filho por pedaço. */
     public static LayerDefinition createLayer(MinionModels.Mob mob) {

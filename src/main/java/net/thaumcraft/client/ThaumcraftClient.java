@@ -111,6 +111,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.KETTLE_BREW,
                 net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
 
+        // o Ars Occulta: o que anda no sonho
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.CORPSE,
+                net.thaumcraft.occulta.client.SpiritRenderers.Corpse::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.NIGHTMARE,
+                net.thaumcraft.occulta.client.SpiritRenderers.Nightmare::new);
+
         // o Ars Occulta: a Roca, o Braseiro e o Crisol de Sangue
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.SPINNING_WHEEL,
                 net.thaumcraft.occulta.client.SpinningWheelScreen::new);
@@ -123,6 +131,15 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.BLOOD_CRUCIBLE_ENTITY,
                 net.thaumcraft.occulta.client.BloodCrucibleRenderer::new);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("spinning_wheel"),
+                net.thaumcraft.occulta.client.SpinningWheelItemRenderer.Unbaked.CODEC);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("brazier"),
+                net.thaumcraft.occulta.client.BrazierItemRenderer.Unbaked.CODEC);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("blood_crucible"),
+                net.thaumcraft.occulta.client.BloodCrucibleItemRenderer.Unbaked.CODEC);
 
         // o Ars Occulta: o Caldeirão de Pote
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(

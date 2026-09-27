@@ -66,6 +66,20 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.kettle.KettleBrewProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
+    /** O corpo que fica deitado enquanto o espírito anda. */
+    public static final EntityType<net.thaumcraft.occulta.spirit.CorpseEntity> CORPSE =
+            register("corpse", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.spirit.CorpseEntity::new, MobCategory.MISC,
+                            mob -> mob.defaultAttributes(net.thaumcraft.occulta.spirit.CorpseEntity::attributes))
+                    .sized(0.6f, 0.6f).eyeHeight(0.4f).clientTrackingRange(10));
+
+    /** E o Pesadelo, que mora do outro lado quando a noite corre mal. */
+    public static final EntityType<net.thaumcraft.occulta.spirit.NightmareEntity> NIGHTMARE =
+            register("nightmare", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.spirit.NightmareEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(net.thaumcraft.occulta.spirit.NightmareEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(10));
+
     private OccultaEntities() {
     }
 
@@ -86,5 +100,9 @@ public final class OccultaEntities {
                 .register(MIRROR_FACE, net.thaumcraft.occulta.mirror.MirrorFaceEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(REFLECTION, net.thaumcraft.occulta.mirror.ReflectionEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(CORPSE, net.thaumcraft.occulta.spirit.CorpseEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(NIGHTMARE, net.thaumcraft.occulta.spirit.NightmareEntity.attributes());
     }
 }

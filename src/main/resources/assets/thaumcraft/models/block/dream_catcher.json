@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "catcher": "thaumcraft:block/dream_catcher",
+    "particle": "thaumcraft:block/dream_catcher"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        12.8
+      ],
+      "to": [
+        16,
+        16,
+        13.6
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#catcher"
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ],
+          "texture": "#catcher"
+        }
+      }
+    }
+  ]
+}

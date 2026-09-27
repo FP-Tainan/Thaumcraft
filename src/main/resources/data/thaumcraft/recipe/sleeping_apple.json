@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " g ",
+    "mam",
+    "gsg"
+  ],
+  "key": {
+    "a": "thaumcraft:wormy_apple",
+    "g": "thaumcraft:mutandis",
+    "m": "thaumcraft:reek_of_misfortune",
+    "s": "thaumcraft:brew_of_sleeping"
+  },
+  "result": {
+    "id": "thaumcraft:sleeping_apple",
+    "count": 1
+  }
+}

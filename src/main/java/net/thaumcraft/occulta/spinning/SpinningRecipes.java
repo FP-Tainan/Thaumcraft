@@ -77,12 +77,23 @@ public final class SpinningRecipes {
     /**
      * As receitas da roca, as do original.
      *
-     * <p>São quatro lá; duas aqui. As outras duas fiam o <b>algodão do sonho</b> — o Algodão Sonhador e o
-     * Algodão Perturbado —, que só nasce no Mundo dos Sonhos, ao pé do Espírito Fluente. Elas entram com ele.
+     * <p>São as quatro do original: a teia, o Fio Dourado, o Fio Enfeitado e o Cordel Atormentado. Os dois
+     * últimos fiam o <b>algodão do sonho</b>, que só se colhe no Mundo dos Espíritos.
      */
     public static void register() {
         // a teia, que é linha fiada grossa: oito de linha, e nenhum tempero
         add(net.minecraft.world.item.Items.COBWEB, 1, net.minecraft.world.item.Items.STRING, 8);
+
+        // o Fio Enfeitado e o Cordel Atormentado, que se fiam dos dois algodões do sonho
+        add(net.thaumcraft.occulta.OccultaItems.FANCIFUL_THREAD, 1,
+                net.thaumcraft.occulta.OccultaItems.WISPY_COTTON, 4,
+                net.minecraft.world.item.Items.STRING,
+                net.thaumcraft.occulta.OccultaItems.ODOUR_OF_PURITY);
+
+        add(net.thaumcraft.occulta.OccultaItems.TORMENTED_TWINE, 1,
+                net.thaumcraft.occulta.OccultaItems.DISTURBED_COTTON, 4,
+                net.minecraft.world.item.Items.STRING,
+                net.thaumcraft.occulta.OccultaItems.REEK_OF_MISFORTUNE);
 
         // e o Fio Dourado, que sai de um fardo de feno com um Sopro de Magia
         add(net.thaumcraft.occulta.OccultaItems.GOLDEN_THREAD, 3,

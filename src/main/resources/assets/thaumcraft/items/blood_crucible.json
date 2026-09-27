@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/blood_crucible",
+    "model": {
+      "type": "thaumcraft:blood_crucible"
+    }
+  }
+}

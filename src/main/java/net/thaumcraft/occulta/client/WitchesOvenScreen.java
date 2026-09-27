@@ -12,7 +12,7 @@ import net.thaumcraft.occulta.WitchesOvenMenu;
 /**
  * A tela do Forno das Bruxas: o {@code BlockWitchesOvenGUI} do Witchery, com a folha e as medidas dele.
  *
- * <p>A chama fica entre as duas casas da esquerda e encolhe conforme o combustível acaba; a seta da cozedura
+ * <p>A chama fica entre as duas casas da esquerda e encolhe conforme o combustível acaba; a seta do cozimento
  * corre da casa do meio para a de cima da direita. Os dois números saem da folha em (176, 12) e (176, 14), como
  * no original.
  */
@@ -22,7 +22,7 @@ public class WitchesOvenScreen extends AbstractContainerScreen<WitchesOvenMenu> 
     /** A chama: catorze por treze, desenhada de baixo para cima. */
     private static final int FLAME_X = 56, FLAME_Y = 36, FLAME_W = 14, FLAME_H = 12, FLAME_U = 176, FLAME_V = 0;
 
-    /** A seta da cozedura: vinte e quatro por dezesseis, da esquerda para a direita. */
+    /** A seta do cozimento: vinte e quatro por dezesseis, da esquerda para a direita. */
     private static final int COOK_X = 79, COOK_Y = 20, COOK_W = 24, COOK_H = 16, COOK_U = 176, COOK_V = 14;
 
     public WitchesOvenScreen(WitchesOvenMenu menu, Inventory inventory, Component title) {
