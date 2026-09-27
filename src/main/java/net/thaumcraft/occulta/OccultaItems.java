@@ -147,6 +147,14 @@ public final class OccultaItems {
                                     new java.util.LinkedHashSet<>(java.util.List.of(
                                             net.minecraft.core.component.DataComponents.DYED_COLOR))))));
 
+    /**
+     * A Lã de Morcego: o {@code itemBatWool} do original.
+     *
+     * <p>Sai de um morcego morto por alguém, uma vez em três. É ela que faz o cozimento virar <b>nuvem</b> em vez
+     * de estouro.
+     */
+    public static final Item BAT_WOOL = register("bat_wool", Item::new);
+
     /** O Galho de Ent, que o Ent larga. */
     public static final Item ENT_BRANCH = register("ent_branch", Item::new);
 

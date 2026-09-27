@@ -3307,3 +3307,31 @@ que as outras: o caldeirão tem de aceitar cada uma.
 porque quem o atira é uma varinha do Witchery — as varinhas não estão portadas. E os outros três jeitos de
 espalhar: o **gás** (lã de morcego), o **líquido** (losna) e o **gatilho** (cabeça de creeper), que pedem blocos
 próprios e vêm na fatia seguinte.
+
+### A névoa de cozimento (2026-09-27)
+
+O segundo dos quatro jeitos de espalhar: com **Lã de Morcego** na panela, o frasco não estoura — ele **abre**.
+É o `DispersalGas` com o `BlockBrewGas` e o `TileEntityBrewFluid` do Witchery.
+
+**A nuvem cresce sozinha**, de cinco em cinco batidas, com a chance que o original dá a cada direção: pouca para
+cima (duas em dez), mais para baixo (quatro) e bastante para os lados (oito). Cada passo conta um a mais no
+estágio dela, e ela para no alcance que o cozimento lhe deu — quatro, mais o que a cinza de madeira e o cacau
+alargarem, até dez.
+
+**E depois morre.** Cheia, tem a cada batida a chance de um sobre a duração de sumir; e ao fim de **cento e
+vinte** batidas some de qualquer jeito. É aí que a flor de beladona e o lápis-lazúli passam a ter o que fazer: a
+duração é `5 + lifetime² × 5`, a conta do original.
+
+**Quem passa dentro apanha fraco**: uma vez em dez, com um quarto da força e metade do tempo. Uma névoa não é um
+frasco na cara.
+
+**A Lã de Morcego** sai de um morcego morto por alguém, uma vez em três — e os aspectos dela são os do original
+(corpus 1, volatus 1), que estavam escritos no `ModHookThaumcraft4`. <b>Do original fica de fora, declarado:</b>
+a Arthana sobe essa chance para três em quatro, e a faca do ofício ainda não está portada.
+
+**A folha da nuvem é a do original**, e a marca de animação dela teve de ser reescrita: na 1.7.10 o
+`width: 1, height: 32` era a conta de <b>quadros</b>; hoje são <b>pixels</b>, e a folha é de 32 por 32 em trinta
+e dois quadros. A ordem em que eles passam é a do original, de trás para a frente.
+
+**A cor** sai do cozimento, como no caldeirão: é um pintor de bloco que lê a alma da nuvem, que é o
+`colorMultiplier` do original.

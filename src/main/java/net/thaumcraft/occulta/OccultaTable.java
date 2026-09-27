@@ -164,7 +164,11 @@ public final class OccultaTable {
                         brewPage(Items.NETHER_WART, Items.SPIDER_EYE, Items.GUNPOWDER),
                         brewPage(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.WOOD_ASH, Items.GUNPOWDER),
                         brewPage(Items.NETHER_WART, Items.GLISTERING_MELON_SLICE, Items.GUNPOWDER),
-                        brewPage(Items.NETHER_WART, Items.FERMENTED_SPIDER_EYE, Items.SUGAR, Items.GUNPOWDER))
+                        brewPage(Items.NETHER_WART, Items.FERMENTED_SPIDER_EYE, Items.SUGAR, Items.GUNPOWDER),
+                        Page.text("tc.research_page.AO_BREW_SPLASH.3"),
+                        brewPage(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.BAT_WOOL),
+                        brewPage(Items.NETHER_WART, Items.GHAST_TEAR, OccultaItems.BELLADONNA_FLOWER,
+                                OccultaItems.BAT_WOOL))
                 .register();
     }
 

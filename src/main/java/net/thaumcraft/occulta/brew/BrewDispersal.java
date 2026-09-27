@@ -66,4 +66,25 @@ public interface BrewDispersal {
             return "tc.brew.dispersal.splash";
         }
     }
+
+    /**
+     * Em nuvem: o {@code DispersalGas}.
+     *
+     * <p>O frasco não estoura — ele <b>abre</b>. Onde bateu fica uma nuvem que cresce sozinha e demora a sumir,
+     * e quem passa por dentro dela apanha o cozimento aos poucos.
+     */
+    class Gas implements BrewDispersal {
+        @Override
+        public void onImpact(ServerLevel level, List<Item> dentro, HitResult onde, BrewImpact espalha) {
+            net.minecraft.core.BlockPos lugar = BrewGasBlock.where(onde);
+            if (!BrewGasBlock.fits(level, lugar)) return;
+            level.setBlockAndUpdate(lugar, net.thaumcraft.occulta.OccultaBlocks.BREW_GAS.defaultBlockState());
+            if (level.getBlockEntity(lugar) instanceof BrewFluidBlockEntity nuvem) nuvem.start(dentro, espalha);
+        }
+
+        @Override
+        public String nameKey() {
+            return "tc.brew.dispersal.gas";
+        }
+    }
 }

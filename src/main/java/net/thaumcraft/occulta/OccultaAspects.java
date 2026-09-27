@@ -123,6 +123,8 @@ public final class OccultaAspects {
                     .add(Aspects.BEAST, 1).add(Aspects.ARMOR, 1));
             // o galho de Ent o original anota como o ramo de árvore que ele é
             r.item("thaumcraft:ent_branch", new AspectList().add(Aspects.TREE, 2).add(Aspects.MAGIC, 1));
+            // a lã de morcego: corpus 1 e volatus 1, que é o que o ModHookThaumcraft4 do original lhe dá
+            r.item("thaumcraft:bat_wool", new AspectList().add(Aspects.FLESH, 1).add(Aspects.FLIGHT, 1));
         });
 
         // e os bichos do ramo, para o thaumômetro os ler: são planta que anda, e o Ent é árvore.

@@ -375,4 +375,76 @@ public class OccultaBrewGameTest {
         voando.forEach(net.minecraft.world.entity.Entity::discard);
         helper.succeed();
     }
+
+    /** A lã de morcego faz o cozimento virar nuvem em vez de estouro. */
+    @GameTest
+    public void batWoolMakesACloud(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 3, 2));
+        List<Item> dentro = List.of(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.BAT_WOOL);
+        if (!Brew.splash(dentro)) helper.fail("a nuvem também se atira");
+
+        var bateu = new net.minecraft.world.phys.BlockHitResult(
+                net.minecraft.world.phys.Vec3.atCenterOf(onde.below()),
+                net.minecraft.core.Direction.UP, onde.below(), false);
+        if (!Brew.impact(level, dentro, bateu, null)) helper.fail("o frasco de névoa espalha");
+        if (!level.getBlockState(onde).is(OccultaBlocks.BREW_GAS)) {
+            helper.fail("e onde ele bateu fica uma nuvem; ficou " + level.getBlockState(onde));
+            return;
+        }
+        if (!(level.getBlockEntity(onde) instanceof net.thaumcraft.occulta.brew.BrewFluidBlockEntity nuvem)) {
+            helper.fail("a nuvem leva o cozimento dentro dela");
+            return;
+        }
+        if (!nuvem.contents().equals(dentro)) helper.fail("e leva tudo o que estava na panela");
+        if (nuvem.color() != Brew.color(dentro)) helper.fail("e a cor do que se cozeu");
+
+        level.setBlockAndUpdate(onde, Blocks.AIR.defaultBlockState());
+        helper.succeed();
+    }
+
+    /** A nuvem cresce sozinha, e quem passa dentro dela apanha o cozimento. */
+    @GameTest(maxTicks = 200)
+    public void theCloudSpreadsAndTouches(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 3, 2));
+        List<Item> dentro = List.of(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.BAT_WOOL);
+        level.setBlockAndUpdate(onde, OccultaBlocks.BREW_GAS.defaultBlockState());
+        if (level.getBlockEntity(onde) instanceof net.thaumcraft.occulta.brew.BrewFluidBlockEntity nuvem) {
+            nuvem.start(dentro, Brew.impact(dentro, null));
+        }
+
+        var bicho = helper.spawn(EntityTypes.PIG, new BlockPos(2, 3, 2));
+        helper.succeedWhen(() -> {
+            // cresceu para algum lado?
+            int quantas = 0;
+            for (var perto : BlockPos.betweenClosed(onde.offset(-3, -3, -3), onde.offset(3, 3, 3))) {
+                if (level.getBlockState(perto).is(OccultaBlocks.BREW_GAS)) quantas++;
+            }
+            if (quantas < 2) throw helper.assertionException("a nuvem ainda não cresceu; há " + quantas);
+            if (!bicho.hasEffect(MobEffects.POISON)) {
+                throw helper.assertionException("quem está dentro dela ainda não apanhou o cozimento");
+            }
+            bicho.discard();
+        });
+    }
+
+    /** E a nuvem some sozinha, que é o que a faz não durar para sempre. */
+    @GameTest(maxTicks = 400)
+    public void theCloudFadesAway(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 3, 2));
+        List<Item> dentro = List.of(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.BAT_WOOL);
+        level.setBlockAndUpdate(onde, OccultaBlocks.BREW_GAS.defaultBlockState());
+        if (level.getBlockEntity(onde) instanceof net.thaumcraft.occulta.brew.BrewFluidBlockEntity nuvem) {
+            nuvem.start(dentro, Brew.impact(dentro, null));
+        }
+        helper.succeedWhen(() -> {
+            for (var perto : BlockPos.betweenClosed(onde.offset(-6, -6, -6), onde.offset(6, 6, 6))) {
+                if (level.getBlockState(perto).is(OccultaBlocks.BREW_GAS)) {
+                    throw helper.assertionException("ainda há nuvem no ar");
+                }
+            }
+        });
+    }
 }

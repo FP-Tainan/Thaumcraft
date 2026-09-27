@@ -122,6 +122,19 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(WitchesCauldronBlockEntity::new,
                             java.util.Set.of(WITCHES_CAULDRON)));
 
+    // ------------------------------------------------------------------ a nuvem de cozimento
+
+    /** A nuvem que um frasco de gás deixa no chão: não se apanha, não se pisa, e some sozinha. */
+    public static final Block BREW_GAS = register("brew_gas", properties ->
+            new net.thaumcraft.occulta.brew.BrewGasBlock(properties.mapColor(MapColor.COLOR_LIGHT_BLUE)
+                    .replaceable().noLootTable().strength(100.0f).noOcclusion()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<net.thaumcraft.occulta.brew.BrewFluidBlockEntity> BREW_GAS_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("brew_gas"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.brew.BrewFluidBlockEntity::new, java.util.Set.of(BREW_GAS)));
+
     // ------------------------------------------------------------------ o altar
 
     /** O Altar da Bruxa: seis deles, dois por três, fazem um altar de verdade. */

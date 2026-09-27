@@ -43,6 +43,13 @@ public class OccultaBrewClientTest implements FabricClientGameTest {
             context.waitTicks(3);
             context.takeScreenshot("frasco_a_voar");
 
+            // a névoa no chão, da cor do que se cozeu
+            server.runCommand("setblock ~2 ~ ~5 thaumcraft:brew_gas");
+            server.runCommand("setblock ~3 ~ ~5 thaumcraft:brew_gas");
+            server.runCommand("setblock ~2 ~1 ~5 thaumcraft:brew_gas");
+            context.waitTicks(5);
+            context.takeScreenshot("nevoa_de_cozimento");
+
             // e o do meio na mão, com a descrição aberta
             context.getInput().pressKey(key -> key.keyInventory);
             context.waitTicks(10);

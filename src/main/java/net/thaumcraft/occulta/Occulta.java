@@ -27,6 +27,7 @@ public final class Occulta {
         OccultaItems.init();
         OccultaAspects.init();
         OccultaGrassSeeds.init();
+        OccultaBatWool.init();
         // a aba do ramo no livro
         net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
                 Thaumcraft.id("textures/item/mandrake_root.png"),
