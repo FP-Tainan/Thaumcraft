@@ -137,6 +137,18 @@ public final class OccultaAspects {
             // a lã de morcego: corpus 1 e volatus 1, que é o que o ModHookThaumcraft4 do original lhe dá
             r.item("thaumcraft:bat_wool", new AspectList().add(Aspects.FLESH, 1).add(Aspects.FLIGHT, 1));
 
+            // o pote e o que cai dos bichos, com os aspectos do ModHookThaumcraft4 do original
+            r.item("thaumcraft:witches_kettle", new AspectList().add(Aspects.WATER, 4).add(Aspects.FIRE, 2)
+                    .add(Aspects.METAL, 3).add(Aspects.CRAFT, 2));
+            r.item("thaumcraft:dog_tongue", new AspectList().add(Aspects.FLESH, 2).add(Aspects.BEAST, 1)
+                    .add(Aspects.SENSES, 1));
+            r.item("thaumcraft:creeper_heart", new AspectList().add(Aspects.FLESH, 2).add(Aspects.FIRE, 2)
+                    .add(Aspects.ENTROPY, 2));
+            r.item("thaumcraft:toe_of_frog", new AspectList().add(Aspects.FLESH, 1).add(Aspects.WATER, 1)
+                    .add(Aspects.BEAST, 1));
+            r.item("thaumcraft:redstone_soup", new AspectList().add(Aspects.ENERGY, 4).add(Aspects.MAGIC, 2)
+                    .add(Aspects.WATER, 1));
+
             // o espelho: o original não o anotava, e este é do porte. A superfície do Mundo do Espelho não entra
             // aqui porque não há item dela — ela não se apanha, e o thaumômetro não tem o que ler
             r.item("thaumcraft:witch_mirror", new AspectList().add(Aspects.SENSES, 4).add(Aspects.ELDRITCH, 4)

@@ -226,6 +226,31 @@ public final class OccultaItems {
     /** O Galho de Ent, que o Ent larga. */
     public static final Item ENT_BRANCH = register("ent_branch", Item::new);
 
+    /** A Língua de Cão, que o lobo morto deixa. */
+    public static final Item DOG_TONGUE = register("dog_tongue", Item::new);
+
+    /**
+     * O Coração de Creeper, que o creeper morto deixa.
+     *
+     * <p>Come-se, e por um instante o fogo não pega: é o {@code Drinkable} com resistência ao fogo do original.
+     */
+    public static final Item CREEPER_HEART = register("creeper_heart", properties -> new Item(properties.food(
+            new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0.0f).build(),
+            net.minecraft.world.item.component.Consumables.defaultFood().onConsume(
+                    new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                            new net.minecraft.world.effect.MobEffectInstance(
+                                    net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE, 20, 0))).build())));
+
+    /** E o Dedo de Sapo, que o sapo deixa. */
+    public static final Item TOE_OF_FROG = register("toe_of_frog", Item::new);
+
+    /** A Sopa de Redstone, que sai do pote e é a base dos óleos do ofício. */
+    public static final Item REDSTONE_SOUP = register("redstone_soup", Item::new);
+
+    /** O Caldeirão de Pote, em item. */
+    public static final Item WITCHES_KETTLE = register("witches_kettle", properties ->
+            new BlockItem(OccultaBlocks.WITCHES_KETTLE, properties.useBlockDescriptionPrefix()));
+
     /**
      * O Espelho, que se prega na parede.
      *

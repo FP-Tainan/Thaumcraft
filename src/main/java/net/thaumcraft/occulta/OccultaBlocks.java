@@ -191,6 +191,20 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(
                             net.thaumcraft.occulta.brew.BrewFluidBlockEntity::new, java.util.Set.of(BREW_GAS)));
 
+    // ------------------------------------------------------------------ o caldeirão de pote
+
+    /** O Caldeirão de Pote, pendurado nas correntes, onde se fazem os cozimentos de frasco. */
+    public static final Block WITCHES_KETTLE = register("witches_kettle", properties ->
+            new net.thaumcraft.occulta.kettle.KettleBlock(properties.mapColor(MapColor.METAL)
+                    .strength(2.0f).sound(SoundType.METAL).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.kettle.KettleBlockEntity> WITCHES_KETTLE_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("witches_kettle"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.kettle.KettleBlockEntity::new,
+                            java.util.Set.of(WITCHES_KETTLE)));
+
     // ------------------------------------------------------------------ os espelhos
 
     /** O Espelho, que se prega na parede e leva ao Mundo do Espelho. */

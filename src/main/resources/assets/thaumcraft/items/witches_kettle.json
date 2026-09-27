@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/witches_kettle",
+    "model": {
+      "type": "thaumcraft:witches_kettle"
+    }
+  }
+}

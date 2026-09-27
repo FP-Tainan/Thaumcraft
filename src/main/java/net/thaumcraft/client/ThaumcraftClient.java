@@ -106,6 +106,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                     }
                 }), net.thaumcraft.occulta.OccultaBlocks.BREW_GAS);
 
+        // o Ars Occulta: o Caldeirão de Pote
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.WITCHES_KETTLE_ENTITY,
+                net.thaumcraft.occulta.client.KettleRenderer::new);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("witches_kettle"),
+                net.thaumcraft.occulta.client.KettleItemRenderer.Unbaked.CODEC);
+
         // o Ars Occulta: os espelhos, a cara que aparece no vidro e o Reflexo
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.WITCH_MIRROR_ENTITY,

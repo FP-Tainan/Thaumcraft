@@ -29,10 +29,12 @@ public final class Occulta {
         OccultaAspects.init();
         OccultaGrassSeeds.init();
         OccultaBatWool.init();
+        OccultaDrops.init();
         OccultaEvents.init();
         Poppets.init();
         net.thaumcraft.occulta.mirror.MirrorTravel.init();
         net.thaumcraft.occulta.rite.Rites.register();
+        net.thaumcraft.occulta.kettle.KettleTable.register();
         // a aba do ramo no livro
         net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
                 Thaumcraft.id("textures/item/mandrake_root.png"),

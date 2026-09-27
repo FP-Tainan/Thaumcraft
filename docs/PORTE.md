@@ -3593,3 +3593,44 @@ paredes, o oval fecha.
 
 A correção vale para tudo o que usa o `BoxMesh` — a Destilaria, o Forno das Bruxas, o Caldeirão, os funis, a
 Máquina de Costura, o Altar de Convocação —, e a suíte de tela inteira correu depois dela.
+
+### O Caldeirão de Pote (2026-09-27)
+
+A segunda panela do ofício, e a que faz quase tudo o que o Witchery tem de beber e de atirar. Ela é o contrário
+do Caldeirão da Bruxa: ali a <b>ordem</b> das coisas é tudo; aqui não há ordem nenhuma — são <b>seis coisas</b>
+que ou fazem uma receita, ou estragam o pote.
+
+**O que se faz com ele:** assenta-se, acende-se lume por baixo, enche-se com um balde de água, atira-se o que
+entra lá para dentro e atiram-se frascos de vidro. Fechada a receita, o líquido toma a cor dela e fica pronto; aí
+chega-se com um frasco na mão e tira-se. Cada frasco que sai gasta um dos que estão no pote.
+
+**Errar tem preço**, e é o do original: coisa a mais, coisa que não casa com receita nenhuma, ou o lume que se
+apaga — e o pote estraga. Estragado, esvazia-se com um balde e começa-se de novo.
+
+**O casamento tem dois feitios**, como lá: <b>inteiro</b>, com as seis casas cheias, e <b>pela metade</b>, enquanto
+se enche — é o segundo que dá a cor ao líquido antes de a última coisa entrar, e é por ele que se sabe, olhando,
+que se está no caminho certo.
+
+**Com ele vieram três coisas que caem dos bichos** — a Língua de Cão do lobo (uma em três), o Coração de Creeper
+do creeper (duas em cem) e o Dedo de Sapo do sapo (uma em cinco) — e a **Sopa de Redstone**, que é a primeira
+receita do pote e a base dos óleos do ofício.
+
+**O modelo é o do original peça por peça:** as quatro paredes, o fundo, a barra de cima de onde ele pende, as
+quatro correntes e a tampa de líquido com as quatro figuras que se revezam de segundo em segundo, pintada da cor
+da receita — meia-luz enquanto cozinha, cor cheia quando fica pronta, e alaranjada quando estraga. A barra só se
+desenha quando não há bloco por cima, como lá.
+
+**Uma armadilha que a foto apanhou:** as correntes saíam para o lado errado, uma delas atravessando meio céu. O
+`ModelRenderer` de 2014 gira as peças na ordem <b>Z, depois Y, depois X</b>, e eu girava Y antes de Z. Com a ordem
+certa elas pendem como devem.
+
+**Desvios declarados.** (1) A água é <b>sim ou não</b>: um balde enche, um balde vazio esvazia. No original é um
+tanque de mil medidas que outros mods podem encher aos poucos; sem esses mods à volta, o que se vê é o mesmo. (2)
+Os dois acréscimos de frasco — o do <b>chapéu de bruxa</b> e o do <b>familiar de cozimento</b> — ficam de fora,
+porque nem o chapéu nem os familiares estão portados. (3) A tabela do original tem <b>trinta e sete</b> receitas;
+esta leva traz a que o mod já consegue dar. As outras esperam a Teia do ofício, a Asa de Mocho, o Leite
+Purificado, a Fome Melíflua, o Fio Enfeitado, o Espírito Subjugado, a Pedra Sintonizada, o Coração de Demônio —
+e, sobretudo, os <b>frascos que elas fazem</b>, que são fatia à parte: cada um tem o seu efeito ao bater, e isso é
+o `EntityWitchProjectile` inteiro. (4) A <b>Asa de Mocho</b> não entra porque o jogo de hoje não tem mocho, e o
+<b>Dedo de Sapo</b> cai do <b>sapo</b> do jogo de agora, que faz o mesmo papel do Toad do original. (5) A
+<b>Arthana</b>, que sobe todas estas chances de queda, ainda não está portada.
