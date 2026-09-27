@@ -224,6 +224,67 @@ public final class BrewWorldActions {
         }
     }
 
+    // ------------------------------------------------------------------ erguer os mortos
+
+    /**
+     * Erguer os Mortos: o {@code BrewActionRaising}, que vem de um osso na panela.
+     *
+     * <p>Onde o frasco bate levanta-se um morto — zumbi em seis de cada dez, esqueleto em quase todas as outras,
+     * e um porco-zumbi de vez em quando. Com força, levantam-se mais: um a mais por grau, cada um com a sua
+     * chance, e esses nascem de três blocos em volta, no primeiro chão que houver.
+     *
+     * <p><b>Do original fica de fora, declarado:</b> o morto erguido em ritual, que dura pouco e obedece a quem o
+     * ergueu — isso é a Manha Mortal e o escravizar, e nenhum dos dois está portado. Aqui ele se levanta e fica,
+     * como qualquer morto da noite.
+     */
+    public static class Raising extends WorldEffect {
+        /** A que distância os que vêm a mais nascem, e quanto se procura chão para cima e para baixo. */
+        public static final int SPREAD = 3;
+        public static final int DROP = 6;
+
+        public Raising(Item key, int power, int weight) {
+            super(key, new BrewName.Text("tc.brew.raising"), power, weight);
+        }
+
+        @Override
+        protected void onBlock(ServerLevel level, BlockPos onde, Direction lado, int raio, BrewModifiers temperos) {
+            BlockPos lugar = onde.relative(lado);
+            raise(level, lugar);
+
+            int força = temperos.getStrength();
+            int quantos = 0;
+            if (força >= 1 && level.getRandom().nextDouble() < força * 0.5) quantos++;
+            if (força >= 2 && level.getRandom().nextDouble() < força * 0.25) quantos++;
+            if (força >= 3 && level.getRandom().nextDouble() < força * 0.25) quantos++;
+
+            for (int i = 0; i < quantos; i++) {
+                int x = lugar.getX() - SPREAD + level.getRandom().nextInt(SPREAD * 2) + 1;
+                int z = lugar.getZ() - SPREAD + level.getRandom().nextInt(SPREAD * 2) + 1;
+                for (int y = lugar.getY() + DROP; y >= lugar.getY() - DROP; y--) {
+                    BlockPos tenta = new BlockPos(x, y, z);
+                    if (!level.getBlockState(tenta.below()).isSolidRender() || !level.isEmptyBlock(tenta)) continue;
+                    raise(level, tenta);
+                    break;
+                }
+            }
+        }
+
+        /** O {@code createUndeadCreature}: seis em dez zumbi, quase todo o resto esqueleto, e um porco-zumbi raro. */
+        private static void raise(ServerLevel level, BlockPos onde) {
+            double sorte = level.getRandom().nextDouble();
+            var tipo = sorte < 0.6 ? net.minecraft.world.entity.EntityTypes.ZOMBIE
+                    : (sorte < 0.97 ? net.minecraft.world.entity.EntityTypes.SKELETON
+                    : net.minecraft.world.entity.EntityTypes.ZOMBIFIED_PIGLIN);
+            var morto = tipo.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            if (morto == null) return;
+            morto.snapTo(onde.getX() + 0.5, onde.getY() + 0.1, onde.getZ() + 0.5, 0.0f, 0.0f);
+            morto.setPersistenceRequired();
+            level.addFreshEntity(morto);
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE,
+                    onde.getX() + 0.5, onde.getY() + 0.5, onde.getZ() + 0.5, 16, 0.5, 0.5, 0.5, 0.0);
+        }
+    }
+
     // ------------------------------------------------------------------ a praga
 
     /**

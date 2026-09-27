@@ -673,4 +673,24 @@ public class OccultaBrewGameTest {
             encostado.discard();
         });
     }
+
+    /** O osso levanta um morto onde o frasco bate. */
+    @GameTest
+    public void theBoneRaisesTheDead(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlockAndUpdate(onde, Blocks.STONE.defaultBlockState());
+
+        List<Item> dentro = List.of(Items.NETHER_WART, Items.DIAMOND, Items.BONE, Items.GUNPOWDER);
+        Brew.applyToBlock(level, dentro, onde, net.minecraft.core.Direction.UP, 3, new BrewModifiers());
+
+        var mortos = level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class,
+                new net.minecraft.world.phys.AABB(onde).inflate(4.0),
+                bicho -> bicho.getType() == EntityTypes.ZOMBIE || bicho.getType() == EntityTypes.SKELETON
+                        || bicho.getType() == EntityTypes.ZOMBIFIED_PIGLIN);
+        if (mortos.isEmpty()) helper.fail("devia ter-se levantado um morto");
+        mortos.forEach(net.minecraft.world.entity.Entity::discard);
+        level.setBlockAndUpdate(onde, Blocks.AIR.defaultBlockState());
+        helper.succeed();
+    }
 }

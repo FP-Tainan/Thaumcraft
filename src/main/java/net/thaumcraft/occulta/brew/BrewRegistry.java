@@ -200,6 +200,7 @@ public final class BrewRegistry {
         register(new BrewWorldActions.Lilify(Items.LILY_PAD, 200, LEVE));
         register(new BrewWorldActions.Planting(Items.WHEAT_SEEDS, 0, LEVE));
         register(new BrewWorldActions.Blight(Items.POISONOUS_POTATO, 2000, GRAVE));
+        register(new BrewWorldActions.Raising(Items.BONE, 2000, GRAVE));
 
         // ------------------------------------------------------------ os efeitos que são poções do jogo
         register(new BrewActions.Potion(Items.SPIDER_EYE, new BrewName.Text("tc.brew.poison"), 0,

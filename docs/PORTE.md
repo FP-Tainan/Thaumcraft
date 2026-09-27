@@ -3414,3 +3414,16 @@ o lugar de hoje para o que o original fazia no `IHandleLivingHurt`.
 de <b>um bloco</b> é estreito demais — o bicho tem 0,9 de largura e escorrega para fora dele à primeira sacudida.
 Agora a prova constrói uma sala de três por três, com as quinas fechadas, e põe o bicho no meio dela. Rodou duas
 vezes seguidas sem falhar.
+
+### Erguer os Mortos (2026-09-27)
+
+Um osso na panela, e o frasco que se atira levanta um morto onde bate: zumbi em seis de cada dez, esqueleto em
+quase todas as outras, e um porco-zumbi raro. Com força, levantam-se mais — um a mais por grau, cada um com a sua
+chance, nascidos de três blocos em volta, no primeiro chão que houver.
+
+**Do original fica de fora, declarado:** o morto erguido em <b>ritual</b>, que dura pouco e obedece a quem o
+ergueu — isso é a Manha Mortal e o escravizar, e nenhum dos dois está portado. Aqui ele se levanta e fica, como
+qualquer morto da noite.
+
+**E o Transpor fica para a fatia dos círculos:** ele é efeito de ritual, não de frasco — troca de lugar um pedaço
+de mundo entre dois círculos de giz, e sem eles não há o que portar.

@@ -200,7 +200,8 @@ public final class OccultaTable {
                         Page.text("tc.research_page.AO_BREW_WORLD.2"),
                         brewPage(Items.NETHER_WART, Items.WHEAT_SEEDS, Items.GUNPOWDER),
                         brewPage(Items.NETHER_WART, Items.LILY_PAD, Items.GUNPOWDER),
-                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.POISONOUS_POTATO, Items.GUNPOWDER))
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.POISONOUS_POTATO, Items.GUNPOWDER),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.BONE, Items.GUNPOWDER))
                 .register();
     }
 
