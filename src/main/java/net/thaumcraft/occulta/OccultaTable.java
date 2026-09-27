@@ -170,6 +170,7 @@ public final class OccultaTable {
         machines();
         dreams();
         spirit();
+        arthana();
     }
 
     /** O Caldeirão de Pote e os frascos que ele faz. */
@@ -205,7 +206,7 @@ public final class OccultaTable {
                         .add(Aspects.MAGIC, 2))
                 .at(4, 6)
                 .icon(() -> new ItemStack(OccultaItems.SPINNING_WHEEL))
-                .parents("AO_KETTLE")
+                .parents("AO_KETTLE", "AO_ARTHANA")
                 .pages(Page.text("tc.research_page.AO_MACHINES.1"),
                         Page.crafting("AOAttunedStone"),
                         Page.text("tc.research_page.AO_MACHINES.2"),
@@ -256,6 +257,23 @@ public final class OccultaTable {
                         Page.text("tc.research_page.AO_SPIRIT.3"),
                         kettlePage(OccultaItems.BREW_OF_SOLID_DIRT),
                         Page.text("tc.research_page.AO_SPIRIT.4"))
+                .register();
+    }
+
+    /** A faca do ofício, o que ela abre nos bichos e a pedra que sai do Rito de Necromancia. */
+    private static void arthana() {
+        ThaumcraftApi.research("AO_ARTHANA", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.WEAPON, 4).add(Aspects.DEATH, 4).add(Aspects.SOUL, 3)
+                        .add(Aspects.MAGIC, 2))
+                .at(0, 10)
+                .icon(() -> new ItemStack(OccultaItems.ARTHANA))
+                .parents("AO_CIRCLES", "AO_KETTLE")
+                .pages(Page.text("tc.research_page.AO_ARTHANA.1"),
+                        Page.crafting("AOArthana"),
+                        Page.text("tc.research_page.AO_ARTHANA.2"),
+                        Page.crafting("AOGraveyardDust"),
+                        Page.text("tc.research_page.AO_ARTHANA.3"),
+                        Page.text("tc.research_page.AO_ARTHANA.4"))
                 .register();
     }
 
@@ -523,7 +541,7 @@ public final class OccultaTable {
         ThaumcraftApi.bookRecipe("AOBrazier", ThaumcraftApi.crafting(
                 () -> new ItemStack(OccultaItems.BRAZIER), 3, 3, List.of(
                         List.of(new ItemStack(Items.IRON_INGOT)),
-                        List.of(new ItemStack(OccultaItems.ATTUNED_STONE)),
+                        List.of(new ItemStack(OccultaItems.NECROTIC_STONE)),
                         List.of(new ItemStack(Items.IRON_INGOT)),
                         List.of(new ItemStack(Items.STICK)), List.<ItemStack>of(), List.<ItemStack>of(),
                         List.of(new ItemStack(Items.STICK)), List.of(new ItemStack(Items.STICK)),
@@ -563,6 +581,19 @@ public final class OccultaTable {
         weaveRecipe("AODreamWeaveIntensity", OccultaItems.DREAM_WEAVE_INTENSITY,
                 new ItemStack(OccultaItems.BREW_OF_FLOWING_SPIRIT),
                 new ItemStack(OccultaItems.BREW_OF_SLEEPING), false);
+
+        ThaumcraftApi.bookRecipe("AOArthana", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.ARTHANA), 3, 3, List.of(
+                        List.<ItemStack>of(), List.of(new ItemStack(Items.GOLD_INGOT)), List.<ItemStack>of(),
+                        List.of(new ItemStack(Items.GOLD_NUGGET)), List.of(new ItemStack(Items.EMERALD)),
+                        List.of(new ItemStack(Items.GOLD_NUGGET)),
+                        List.<ItemStack>of(), List.of(new ItemStack(Items.STICK)), List.<ItemStack>of())));
+
+        ThaumcraftApi.bookRecipe("AOGraveyardDust", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.GRAVEYARD_DUST), 3, 1, List.of(
+                        List.of(new ItemStack(OccultaItems.SPECTRAL_DUST)),
+                        List.of(new ItemStack(Items.BONE_MEAL)),
+                        List.of(new ItemStack(OccultaItems.MUTANDIS)))));
 
         ThaumcraftApi.bookRecipe("AORowanPlanks", ThaumcraftApi.crafting(
                 () -> new ItemStack(OccultaItems.WOOD.get("rowan_planks"), 4), 1, 1,

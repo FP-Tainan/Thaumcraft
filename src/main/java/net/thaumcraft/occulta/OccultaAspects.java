@@ -187,6 +187,13 @@ public final class OccultaAspects {
             r.item("thaumcraft:brew_of_hollow_tears", new AspectList().add(Aspects.SOUL, 4)
                     .add(Aspects.DEATH, 2).add(Aspects.WATER, 1));
             r.item("thaumcraft:focused_will", new AspectList().add(Aspects.MIND, 5).add(Aspects.SOUL, 3));
+            r.item("thaumcraft:arthana", new AspectList().add(Aspects.WEAPON, 4).add(Aspects.METAL, 4)
+                    .add(Aspects.MAGIC, 3).add(Aspects.GREED, 2));
+            r.item("thaumcraft:spectral_dust", new AspectList().add(Aspects.SOUL, 4).add(Aspects.UNDEAD, 2));
+            r.item("thaumcraft:graveyard_dust", new AspectList().add(Aspects.DEATH, 4).add(Aspects.SOUL, 2)
+                    .add(Aspects.EARTH, 2));
+            r.item("thaumcraft:necrotic_stone", new AspectList().add(Aspects.DEATH, 5).add(Aspects.SOUL, 4)
+                    .add(Aspects.MAGIC, 3).add(Aspects.EARTH, 2));
             r.item("thaumcraft:condensed_fear", new AspectList().add(Aspects.MIND, 3).add(Aspects.DARKNESS, 3)
                     .add(Aspects.SOUL, 2));
             r.item("thaumcraft:bucket_flowing_spirit", new AspectList().add(Aspects.METAL, 6)

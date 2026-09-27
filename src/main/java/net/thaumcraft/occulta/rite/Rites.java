@@ -288,6 +288,17 @@ public final class Rites {
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.DAY)));
 
+        // o Rito de Necromancia, que faz a Pedra Necrótica — e é dele que o Braseiro nasce
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.necrostone",
+                new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.NECROTIC_STONE)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE,
+                                Items.BONE, Items.ROTTEN_FLESH, net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
+                                Items.IRON_SWORD, net.thaumcraft.occulta.OccultaItems.SPECTRAL_DUST),
+                        new Sacrifice.Power(1000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
+
         // o Rito de Infusão, que prende um demônio num espelho — e é de onde todo espelho vem
         RiteRegistry.register("tc.rite.mirror",
                 new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.WITCH_MIRROR)),

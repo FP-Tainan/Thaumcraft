@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " y ",
+    "xbx",
+    " a "
+  ],
+  "key": {
+    "a": "minecraft:stick",
+    "b": "minecraft:emerald",
+    "y": "minecraft:gold_ingot",
+    "x": "minecraft:gold_nugget"
+  },
+  "result": {
+    "id": "thaumcraft:arthana",
+    "count": 1
+  }
+}

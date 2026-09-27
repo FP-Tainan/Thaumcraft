@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:spectral_dust",
+    "minecraft:bone_meal",
+    "thaumcraft:mutandis"
+  ],
+  "result": {
+    "id": "thaumcraft:graveyard_dust",
+    "count": 1
+  }
+}

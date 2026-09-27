@@ -1,35 +1,65 @@
 package net.thaumcraft.occulta;
 
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.minecraft.advancements.predicates.entity.EntityEquipmentPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * O que os bichos do mundo deixam para quem mexe com o ofício: o {@code GenericEvents} do Witchery.
  *
- * <p>Três coisas que o Caldeirão de Pote pede e que não se plantam: a <b>Língua de Cão</b> do lobo, o
- * <b>Coração de Creeper</b> do creeper e o <b>Dedo de Sapo</b> do sapo. As contas são as do original, sem a faca.
+ * <p>São duas contas, e é a <b>Arthana na mão</b> que diz qual vale. Sem ela, o lobo dá a Língua de Cão uma vez
+ * em três, o creeper dá o Coração duas em cem e o sapo dá o Dedo uma em cinco. <b>Com ela</b>, a língua e a lã
+ * sobem para três em quatro, o dedo para uma em duas, o coração para oito em cem — e abrem-se coisas que sem
+ * faca não se abrem: a <b>caveira</b> do esqueleto, do zumbi e do creeper, e o <b>Pó Espectral</b> dos dois
+ * primeiros.
  *
- * <p><b>Do original fica de fora, declarado:</b> a <b>Arthana</b>, a faca do ofício, que sobe cada uma destas
- * chances — três em quatro na língua, oito em cem no coração — e que ainda não está portada. E a <b>Asa de
- * Mocho</b>, que lá cai do Mocho: o jogo de hoje não tem mocho, e inventar-lhe um dono seria pior do que esperar.
+ * <p>As chances são as do original, número por número, e cada uma é uma <b>pilha própria</b>: quem mata com a
+ * faca tira a conta grande, e quem mata sem ela tira a pequena.
+ *
+ * <p><b>Do original fica de fora, declarado:</b> a <b>Asa de Mocho</b>, que lá cai do Mocho — o jogo de hoje não
+ * tem mocho, e inventar-lhe um dono seria pior do que esperar. E a <b>caveira de quem se mata</b>, que o original
+ * dá a quem derruba outro jogador com a faca: ela pede o nome do morto escrito na caveira, e isso é conversa
+ * entre mundos que este porte não quer travar sozinho.
  *
  * <p><b>Uma escolha declarada:</b> o Dedo de Sapo cai do <b>sapo</b> do jogo de hoje. No original ele cai do Toad,
  * que é um bicho do próprio Witchery com o mesmo papel — e o jogo de agora traz o sapo de casa.
  */
 public final class OccultaDrops {
-    /** A chance da língua de cão: uma em três, a do original sem a faca. */
+    /** A chance da língua de cão sem a faca: uma em três. */
     public static final float TONGUE = 0.33f;
-    /** A do coração de creeper: duas em cem. */
+    /** E com ela: três em quatro. */
+    public static final float TONGUE_ARTHANA = 0.75f;
+    /** A do coração de creeper: duas em cem sem a faca, oito com ela. */
     public static final float HEART = 0.02f;
-    /** E a do dedo de sapo: uma em cinco. */
+    public static final float HEART_ARTHANA = 0.08f;
+    /** A do dedo de sapo: uma em cinco sem a faca, uma em duas com ela. */
     public static final float TOE = 0.2f;
+    public static final float TOE_ARTHANA = 0.5f;
+    /** A da lã de morcego: uma em três sem a faca, três em quatro com ela. */
+    public static final float BAT_WOOL = 0.33f;
+    public static final float BAT_WOOL_ARTHANA = 0.75f;
+
+    /** O Pó Espectral: quatro em cem do esqueleto, três do zumbi — e só com a faca. */
+    public static final float DUST_SKELETON = 0.04f;
+    public static final float DUST_ZOMBIE = 0.03f;
+
+    /** E as caveiras: cinco em cem do esqueleto, duas do zumbi, uma do creeper. */
+    public static final float SKULL_SKELETON = 0.05f;
+    public static final float SKULL_ZOMBIE = 0.02f;
+    public static final float SKULL_CREEPER = 0.01f;
 
     private OccultaDrops() {
     }
@@ -39,21 +69,69 @@ public final class OccultaDrops {
             if (!source.isBuiltin() || !key.identifier().getNamespace().equals("minecraft")) return;
             for (var queda : QUEDAS) {
                 if (!key.identifier().getPath().equals("entities/" + queda.bicho())) continue;
-                table.withPool(LootPool.lootPool()
+                var pilha = LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0f))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                         .when(LootItemRandomChanceCondition.randomChance(queda.chance()))
-                        .add(LootItem.lootTableItem(queda.deixa())));
+                        .add(LootItem.lootTableItem(queda.deixa()));
+                if (queda.arthana() != null) pilha.when(queda.arthana() ? comFaca() : semFaca());
+                table.withPool(pilha);
             }
         });
     }
 
-    /** Um bicho, o que ele deixa e quantas vezes em cem. */
-    private record Queda(String bicho, Item deixa, float chance) {
+    /** A prova de que quem matou trazia a Arthana na mão. */
+    private static LootItemCondition.Builder comFaca() {
+        return LootItemEntityPropertyCondition.hasProperties(net.minecraft.world.level.storage.loot.LootContext.EntityTarget.ATTACKING_PLAYER,
+                EntityPredicate.Builder.entity().equipment(EntityEquipmentPredicate.Builder.equipment()
+                        .mainhand(ItemPredicate.Builder.item().of(BuiltInRegistries.ITEM,
+                                OccultaItems.ARTHANA))
+                        .build()));
+    }
+
+    /** E a de que não trazia. */
+    private static LootItemCondition.Builder semFaca() {
+        return comFaca().invert();
+    }
+
+    /**
+     * Um bicho, o que ele deixa e com que chance.
+     *
+     * @param arthana {@code true} se esta queda só vale com a faca na mão, {@code false} se só sem ela, e nada
+     *                se vale das duas maneiras
+     */
+    private record Queda(String bicho, Item deixa, float chance, Boolean arthana) {
     }
 
     private static final List<Queda> QUEDAS = List.of(
-            new Queda("wolf", OccultaItems.DOG_TONGUE, TONGUE),
-            new Queda("creeper", OccultaItems.CREEPER_HEART, HEART),
-            new Queda("frog", OccultaItems.TOE_OF_FROG, TOE));
+            // o que o pote pede, nas duas contas
+            new Queda("wolf", OccultaItems.DOG_TONGUE, TONGUE, false),
+            new Queda("wolf", OccultaItems.DOG_TONGUE, TONGUE_ARTHANA, true),
+            new Queda("creeper", OccultaItems.CREEPER_HEART, HEART, false),
+            new Queda("creeper", OccultaItems.CREEPER_HEART, HEART_ARTHANA, true),
+            new Queda("frog", OccultaItems.TOE_OF_FROG, TOE, false),
+            new Queda("frog", OccultaItems.TOE_OF_FROG, TOE_ARTHANA, true),
+            new Queda("bat", OccultaItems.BAT_WOOL, BAT_WOOL, false),
+            new Queda("bat", OccultaItems.BAT_WOOL, BAT_WOOL_ARTHANA, true),
+
+            // e o que só a faca abre
+            new Queda("skeleton", OccultaItems.SPECTRAL_DUST, DUST_SKELETON, true),
+            new Queda("zombie", OccultaItems.SPECTRAL_DUST, DUST_ZOMBIE, true),
+            new Queda("skeleton", net.minecraft.world.item.Items.SKELETON_SKULL, SKULL_SKELETON, true),
+            new Queda("zombie", net.minecraft.world.item.Items.ZOMBIE_HEAD, SKULL_ZOMBIE, true),
+            new Queda("creeper", net.minecraft.world.item.Items.CREEPER_HEAD, SKULL_CREEPER, true));
+
+    /** Sem uso fora do porte: serve à prova para contar as quedas. */
+    public static int count() {
+        return QUEDAS.size();
+    }
+
+    /** E para saber se aquela queda existe, e com que chance. */
+    public static Optional<Float> chance(String bicho, Item deixa, boolean comFaca) {
+        return QUEDAS.stream()
+                .filter(q -> q.bicho().equals(bicho) && q.deixa() == deixa
+                        && (q.arthana() == null || q.arthana() == comFaca))
+                .map(Queda::chance)
+                .findFirst();
+    }
 }

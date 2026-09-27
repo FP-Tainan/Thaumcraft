@@ -420,6 +420,24 @@ public final class OccultaItems {
     public static final Item BREW_OF_SOLID_EROSION =
             brew("brew_of_solid_erosion", net.thaumcraft.occulta.kettle.KettleBrews.Kind.SOLID_EROSION);
 
+    // ------------------------------------------------------------------ a faca do ofício e o que ela abre
+
+    /** A Arthana, a faca de ouro com a vida do ferro. */
+    public static final Item ARTHANA = register("arthana", properties ->
+            new net.thaumcraft.occulta.ArthanaItem(properties
+                    .sword(net.thaumcraft.occulta.ArthanaItem.MATERIAL, 3.0f, -2.4f)
+                    .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
+    /** O Pó Espectral, que só sai de morto-vivo aberto pela Arthana. */
+    public static final Item SPECTRAL_DUST = register("spectral_dust", Item::new);
+
+    /** O Pó de Cemitério, que é o Espectral passado por farinha de osso e Mutandis. */
+    public static final Item GRAVEYARD_DUST = register("graveyard_dust", Item::new);
+
+    /** E a Pedra Necrótica, que o Rito de Necromancia faz e que o Braseiro pede. */
+    public static final Item NECROTIC_STONE = register("necrotic_stone", properties ->
+            new Item(properties.rarity(net.minecraft.world.item.Rarity.RARE)));
+
     /** Os dois baldes, que é como os líquidos se carregam de um lado para o outro. */
     public static final Item BUCKET_FLOWING_SPIRIT = register("bucket_flowing_spirit", properties ->
             new net.minecraft.world.item.BucketItem(net.thaumcraft.occulta.spirit.SpiritFluids.FLOWING_SPIRIT,

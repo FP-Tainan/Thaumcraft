@@ -3755,10 +3755,10 @@ vampiro.
 **Os três modelos são os do original, caixa por caixa**, tirados pelo gerador `wi-modelo.js`, que lê um
 `ModelX.java` de 2014 e escreve as linhas de `BoxMesh` — e que fica para os modelos que vierem.
 
-**Um desvio declarado, e é o único:** a receita de montagem do **Braseiro** pede, no original, uma **Pedra
+~~**Um desvio declarado, e é o único:** a receita de montagem do **Braseiro** pede, no original, uma **Pedra
 Necrótica**, que sai de um rito que pede a Pedra Sintonizada e o **Pó Espectral** — e o Pó Espectral só cai de um
-bicho morto com a **Arthana**, que não está portada. No lugar dela vai a **Pedra Sintonizada**, e isso volta atrás
-quando a Arthana chegar.
+bicho morto com a **Arthana**, que não está portada. No lugar dela vai a **Pedra Sintonizada**.~~
+*Resolvido na fatia da Arthana: a faca chegou, o pó com ela, e o Braseiro voltou a pedir a Pedra Necrótica.*
 
 ### O sono, o Mundo dos Espíritos e as Teias de Sonho (2026-09-27)
 
@@ -3914,3 +3914,44 @@ teto de quatro mil e noventa e seis casas.
 5. **Os baldes dos dois líquidos são coisa deste porte.** O original usa o balde universal do Forge, que não
    existe aqui; cada líquido ganhou o seu, com a figura do balde de sangue do Ars Mortuorum repintada da cor do
    que carrega.
+
+### A Arthana, o Pó Espectral e a Pedra Necrótica (2026-09-27)
+
+**A faca do ofício estava a faltar, e ela é a chave de meia dúzia de coisas.** A **Arthana** — o `ItemArthana` do
+Witchery — é de **ouro com a vida do ferro**, e o ouro é escolha do original: é o metal que não serve para lutar.
+Ela sai de uma bancada com um lingote de ouro, uma esmeralda, duas pepitas e uma vara. Nada nela é raro.
+
+**O que ela faz não é cortar melhor: é abrir o que os bichos guardam.** Com ela na mão, tudo o que o Caldeirão
+de Pote pede vem muito mais vezes — a Língua de Cão e a Lã de Morcego passam de **uma em três para três em
+quatro**, o Dedo de Sapo de **uma em cinco para uma em duas**, o Coração de Creeper de **duas em cem para
+oito**. E abre-se o que sem faca não se abre: a **caveira** do esqueleto, do zumbi e do creeper, e o **Pó
+Espectral**, que só sai de morto-vivo aberto por ela.
+
+**Isso é feito na tabela de despojos do jogo, e não num evento.** Cada queda é uma pilha própria com a sua
+condição: umas exigem a Arthana na mão de quem matou, outras exigem que ela **não** esteja lá. Há prova de
+servidor que mata um esqueleto quatrocentas vezes com a faca e quatrocentas sem, e confirma que o pó só sai de
+um dos dois lados.
+
+**E o pó abre uma pedra.** Passado por farinha de osso e Mutandis vira **Pó de Cemitério**; e num círculo de
+dezesseis glifos de ritual, **de noite**, com mil de poder, uma Pedra Sintonizada, um osso, carne podre, Cinza de
+Madeira, uma espada de ferro e o próprio pó, o **Rito de Necromancia** dá a **Pedra Necrótica**.
+
+**Com ela cai o desvio declarado do Braseiro.** Ele pedia a Pedra Sintonizada no lugar da Necrótica, porque a
+Necrótica dependia de um pó que dependia de uma faca que não existia. Agora pede o que o original pede, e é a
+única das três máquinas que exige o círculo antes da bancada — o que a pesquisa do livro passa a dizer.
+
+**Desvios declarados.**
+
+1. **A Arthana não se pousa no Altar.** No original ela tem um `BlockPlacedItem` que a deixa à vista em cima da
+   pedra. Esse bloco não está portado — nem para ela, nem para as outras coisas que o original pousa lá — e
+   entra quando ele entrar.
+2. **A caveira de quem se mata fica fora.** O original dá a quem derruba outro jogador com a faca uma caveira com
+   o nome do morto escrito nela. É conversa entre mundos que este porte não quer travar sozinho.
+3. **O Boline fica para a fatia das plantas dele.** É a outra faca — a de colher — e o que ela tem de próprio é
+   arrancar inteiras a Planta-Armadilha e a Rosa de Sangue, que não estão portadas. Sem elas seria só uma espada
+   de ferro com outro nome.
+4. **A Asa de Mocho continua fora**, pelo mesmo motivo de sempre: o jogo de hoje não tem mocho.
+5. **As quatro fumaças de espírito do Braseiro continuam por acender.** Elas agora têm os dois ingredientes que
+   lhes faltavam — o **Pó de Cemitério**, que esta fatia traz, e o **Medo Condensado**, que a do Espírito Fluente
+   trouxe —, mas o que elas chamam são o Espectro, a Banshee e o Poltergeist, e esses bichos não estão portados.
+   O que falta já não é ingrediente: é gente do outro lado.
