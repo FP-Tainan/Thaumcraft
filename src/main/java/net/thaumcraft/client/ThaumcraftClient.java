@@ -117,12 +117,20 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o Ars Occulta: o Forno das Bruxas e os funis
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.WITCHES_OVEN,
                 net.thaumcraft.occulta.client.WitchesOvenScreen::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.DISTILLERY,
+                net.thaumcraft.occulta.client.DistilleryScreen::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.WITCHES_OVEN_ENTITY,
                 net.thaumcraft.occulta.client.WitchesOvenRenderer::new);
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("witches_oven"),
                 net.thaumcraft.occulta.client.WitchesOvenItemRenderer.Unbaked.CODEC);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.DISTILLERY_ENTITY,
+                net.thaumcraft.occulta.client.DistilleryRenderer::new);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("distillery"),
+                net.thaumcraft.occulta.client.DistilleryItemRenderer.Unbaked.CODEC);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.FUME_FUNNEL_ENTITY,
                 net.thaumcraft.occulta.client.FumeFunnelRenderer::new);

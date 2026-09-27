@@ -162,6 +162,7 @@ public final class OccultaTable {
 
         splash();
         world();
+        distillery();
     }
 
 
@@ -185,6 +186,49 @@ public final class OccultaTable {
                 .register();
     }
 
+
+    /** A Destilaria, que separa uma coisa em quatro. */
+    private static void distillery() {
+        ThaumcraftApi.research("AO_DISTILLERY", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.WATER, 4).add(Aspects.FIRE, 3).add(Aspects.EXCHANGE, 3)
+                        .add(Aspects.CRAFT, 2))
+                .at(-2, 4)
+                .icon(() -> new ItemStack(OccultaItems.DISTILLERY))
+                .parents("AO_ALTAR")
+                .pages(Page.text("tc.research_page.AO_DISTILLERY.1"), Page.crafting("AODistillery"),
+                        Page.text("tc.research_page.AO_DISTILLERY.2"),
+                        stillPage(OccultaItems.BREATH_OF_THE_GODDESS, Items.LAPIS_LAZULI),
+                        stillPage(Items.DIAMOND, OccultaItems.OIL_OF_VITRIOL),
+                        stillPage(OccultaItems.DIAMOND_VAPOUR, Items.GHAST_TEAR),
+                        stillPage(Items.ENDER_PEARL),
+                        stillPage(OccultaItems.FOUL_FUME, OccultaItems.QUICKLIME))
+                .register();
+    }
+
+    /**
+     * Uma página de destilação, montada da própria tabela: o que sai e quantos potes se gastam saem de lá, e não
+     * da mão de quem escreve.
+     */
+    private static Page stillPage(net.minecraft.world.item.Item... entra) {
+        java.util.List<java.util.function.Supplier<ItemStack>> entram = new java.util.ArrayList<>();
+        for (var item : entra) entram.add(() -> new ItemStack(item));
+        return Page.distillery(java.util.List.copyOf(entram),
+                () -> {
+                    var receita = still(entra);
+                    return receita == null ? 0 : receita.jars();
+                },
+                () -> {
+                    var receita = still(entra);
+                    return receita == null ? java.util.List.of() : receita.outputs();
+                });
+    }
+
+    /** A receita daquilo, procurada na hora — cedo demais os itens ainda não existem. */
+    private static net.thaumcraft.occulta.DistilleryRecipes.Recipe still(net.minecraft.world.item.Item... entra) {
+        return net.thaumcraft.occulta.DistilleryRecipes.find(new ItemStack(entra[0]),
+                entra.length > 1 ? new ItemStack(entra[1]) : ItemStack.EMPTY,
+                new ItemStack(OccultaItems.CLAY_JAR, 64));
+    }
 
     /** Os cozimentos que não mexem em quem passa: mexem no lugar. */
     private static void world() {
@@ -228,6 +272,14 @@ public final class OccultaTable {
 
     /** As receitas que o livro mostra. Correm depois de tudo montado, porque pedem os itens prontos. */
     public static void recipes() {
+        ThaumcraftApi.bookRecipe("AODistillery", ThaumcraftApi.crafting(
+                () -> new ItemStack(OccultaItems.DISTILLERY), 3, 3, List.of(
+                        List.of(new ItemStack(OccultaItems.CLAY_JAR)), List.of(new ItemStack(Items.IRON_INGOT)),
+                        List.of(new ItemStack(OccultaItems.CLAY_JAR)),
+                        List.of(new ItemStack(Items.IRON_INGOT)), List.of(new ItemStack(Items.IRON_INGOT)),
+                        List.of(new ItemStack(Items.IRON_INGOT)),
+                        List.of(new ItemStack(Items.GOLD_INGOT)), List.of(new ItemStack(Items.DIAMOND)),
+                        List.of(new ItemStack(Items.GOLD_INGOT)))));
         ThaumcraftApi.bookRecipe("AOWitchesOven", ThaumcraftApi.crafting(
                 () -> new ItemStack(OccultaItems.WITCHES_OVEN), 3, 3, List.of(
                         List.<ItemStack>of(), List.of(new ItemStack(Items.IRON_BARS)), List.<ItemStack>of(),

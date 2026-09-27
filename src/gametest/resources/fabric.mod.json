@@ -104,7 +104,8 @@
       "net.thaumcraft.test.OccultaAltarGameTest",
       "net.thaumcraft.test.OccultaTableGameTest",
       "net.thaumcraft.test.OccultaCreaturesGameTest",
-      "net.thaumcraft.test.OccultaBrewGameTest"
+      "net.thaumcraft.test.OccultaBrewGameTest",
+      "net.thaumcraft.test.OccultaDistilleryGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",

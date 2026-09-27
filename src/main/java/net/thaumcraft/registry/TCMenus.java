@@ -34,6 +34,11 @@ public final class TCMenus {
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("witches_oven"),
                     new MenuType<>(net.thaumcraft.occulta.WitchesOvenMenu::new, FeatureFlags.VANILLA_SET));
 
+    /** A Destilaria do Ars Occulta. */
+    public static final MenuType<net.thaumcraft.occulta.DistilleryMenu> DISTILLERY =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("distillery"),
+                    new MenuType<>(net.thaumcraft.occulta.DistilleryMenu::new, FeatureFlags.VANILLA_SET));
+
     /** A Mesa de Transcrição do Magia Naturalis. */
     public static final MenuType<net.thaumcraft.inventory.TranscribingTableMenu> TRANSCRIBING_TABLE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("transcribing_table"),

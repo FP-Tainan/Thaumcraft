@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "bxb",
+    "xxx",
+    "yay"
+  ],
+  "key": {
+    "b": "thaumcraft:clay_jar",
+    "x": "minecraft:iron_ingot",
+    "y": "minecraft:gold_ingot",
+    "a": "minecraft:diamond"
+  },
+  "result": {
+    "id": "thaumcraft:distillery",
+    "count": 1
+  }
+}

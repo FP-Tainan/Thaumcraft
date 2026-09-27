@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:bone_meal",
+    "minecraft:bone_meal",
+    "thaumcraft:wood_ash"
+  ],
+  "result": {
+    "id": "thaumcraft:quicklime",
+    "count": 2
+  }
+}

@@ -39,6 +39,16 @@ public sealed interface Page {
                 int power) implements Page {
     }
 
+    /**
+     * Uma receita de destilaria: o que entra, quantos potes de barro se gastam e o que sai.
+     *
+     * <p>Como a do cozimento, não é do original — no Witchery quem mostra estas receitas é o NEI, que é outro mod.
+     * Aqui elas entram no Thaumonomicon como as outras.
+     */
+    record Distillery(List<Supplier<ItemStack>> inputs, java.util.function.IntSupplier jars,
+                      Supplier<List<ItemStack>> outputs) implements Page {
+    }
+
     /** Os aspectos conhecidos, quatro por página ({@code ASPECTS}): só a pesquisa "Aspectos" as tem, montadas na hora. */
     record Aspects(net.thaumcraft.api.aspects.AspectList aspects) implements Page {
     }
@@ -107,6 +117,12 @@ public sealed interface Page {
     static Page brew(Supplier<ItemStack> vessel, List<Supplier<ItemStack>> ingredients,
                      Supplier<ItemStack> result, int power) {
         return new Brew(vessel, ingredients, result, power);
+    }
+
+    /** Uma página de destilaria: o que entra, os potes e o que sai. */
+    static Page distillery(List<Supplier<ItemStack>> inputs, java.util.function.IntSupplier jars,
+                           Supplier<List<ItemStack>> outputs) {
+        return new Distillery(inputs, jars, outputs);
     }
 
     /** Uma página de fornalha: o que entra e o que sai. */

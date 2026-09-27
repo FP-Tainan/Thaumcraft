@@ -337,6 +337,7 @@ public class ResearchPageScreen extends Screen {
             case Page.Aspects aspects -> this.drawAspectPage(graphics, side, x - 8, y - 8, mx, my, aspects.aspects());
             case Page.Smelting smelting -> this.drawSmeltingPage(graphics, side, x - 4, y - 8, mx, my, smelting);
             case Page.Brew brew -> this.drawBrewPage(graphics, side, x - 4, y - 8, mx, my, brew);
+            case Page.Distillery still -> this.drawDistilleryPage(graphics, side, x - 4, y - 8, mx, my, still);
             case Page.Recipe recipe -> {
                 List<Object> list = this.resolved.computeIfAbsent(recipe, p -> BookPages.resolve((Page.Recipe) p));
                 if (list.isEmpty()) return;
@@ -657,6 +658,38 @@ public class ResearchPageScreen extends Screen {
         if (over(mx, my, x + 48 + start, fim)) this.itemTooltip(saiu, mx, my, false);
         Component poder = Component.translatable("tc.brew.altarpower", page.power());
         graphics.text(this.font, poder, x + start + 56 - this.font.width(poder) / 2, fim + 22, GREY, false);
+    }
+
+    /**
+     * A página de uma destilação: o que entra em cima, os potes de barro no meio e o que sai embaixo, em quadro.
+     */
+    private void drawDistilleryPage(GuiGraphicsExtractor graphics, int side, int x, int y, int mx, int my,
+                                    Page.Distillery page) {
+        int start = side * 152;
+        this.title(graphics, "recipe.type.distillery", x + start, y);
+
+        int quantos = page.inputs().size();
+        for (int i = 0; i < quantos; i++) {
+            ItemStack entra = page.inputs().get(i).get();
+            int px = x + start + 56 - (quantos * 20) / 2 + i * 20;
+            this.item(graphics, entra, px, y + 24, false);
+            if (over(mx, my, px, y + 24)) this.itemTooltip(entra, mx, my, true);
+        }
+
+        int potesGastos = page.jars().getAsInt();
+        if (potesGastos > 0) {
+            Component potes = Component.translatable("tc.distillery.jars", potesGastos);
+            graphics.text(this.font, potes, x + start + 56 - this.font.width(potes) / 2, y + 50, GREY, false);
+        }
+
+        var sai = page.outputs().get();
+        for (int i = 0; i < sai.size(); i++) {
+            ItemStack coisa = sai.get(i);
+            int px = x + start + 36 + (i % 2) * 24;
+            int py = y + 72 + (i / 2) * 24;
+            this.item(graphics, coisa, px, py, true);
+            if (over(mx, my, px, py)) this.itemTooltip(coisa, mx, my, false);
+        }
     }
 
     private void drawSmeltingPage(GuiGraphicsExtractor graphics, int side, int x, int y, int mx, int my, Page.Smelting page) {

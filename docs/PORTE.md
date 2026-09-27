@@ -3427,3 +3427,35 @@ qualquer morto da noite.
 
 **E o Transpor fica para a fatia dos círculos:** ele é efeito de ritual, não de frasco — troca de lugar um pedaço
 de mundo entre dois círculos de giz, e sem eles não há o que portar.
+
+### A Destilaria (2026-09-27)
+
+O que o forno junta num cheiro só, a Destilaria separa: **duas coisas entram, potes de barro se gastam, e saem
+até quatro** — cada uma no seu pote. É o `BlockDistillery` do Witchery, com os sete números dele: sete casas,
+oitocentos tiques por destilação e seis décimos de poder de altar por batida.
+
+**Ela não tem fogo.** Quem a move é o altar, e sem altar por perto ela para onde estava — e diz isso na tela, com
+o mesmo quadradinho de aviso do original.
+
+**O que ela traz de novo:** a Cal Virgem, o Gesso, o Óleo de Vitríolo, o Orvalho do Ender, o Mal Refinado e,
+sobretudo, a **Lágrima da Deusa** e o **Vapor de Diamante** — que abrem quatro e seis de espaço no caldeirão.
+Eram esses dois que faltavam para os cozimentos graves, e estavam declarados como buraco desde a fatia do motor.
+O buraco fechou.
+
+**O modelo é o do original, peça por peça:** o alambique de três andares com o cano torto (que é a única peça
+inclinada, dois vírgula três radianos) e a armação de quatro. E as **garrafas**: uma por pote de barro que
+estiver na casa deles, até quatro — as únicas caixas do modelo que ligam o espelho antes de a caixa entrar, que é
+quando ele vale.
+
+**Uma coisa que a foto apanhou:** as garrafas não apareciam. O desenhista lê o número de potes da alma do bloco, e
+<b>o que está dentro de uma alma não chega ao cliente sozinho</b>. A alma passou a mandar o bloco de novo quando
+esse número muda — e só quando muda, para não falar à toa.
+
+**Duas coisas do original ficam declaradas.** A receita de montagem pede uma <b>Pedra Sintonizada</b>, que este
+porte ainda não tem; no lugar dela vai um diamante, e isso volta atrás quando a pedra chegar. E a tabela de
+receitas é a parte que o mod alcança: faltam as que pedem o Coração de Demônio e o Cozimento de Espírito Fluente.
+
+**E o livro ganhou uma página de destilação**, como a de cozimento — com o que entra, os potes que se gastam e o
+que sai. O que ela mostra sai da <b>própria tabela</b>, e não da mão de quem escreve; e sai <b>na hora de
+desenhar</b>, porque no momento em que o livro se monta os itens ainda não existem — isso custou um tombo de
+arranque com um "Components not bound yet".

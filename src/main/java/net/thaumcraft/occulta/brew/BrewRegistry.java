@@ -28,9 +28,9 @@ import java.util.Map;
  * o frasco que se atira, o gás, o líquido e o gatilho —, os efeitos que mexem no mundo e os rituais de círculo de
  * giz. Cada um desses é uma fatia sua, e virá.
  *
- * <p><b>E o que não virá tal e qual</b>, por não existir no mod: a Lágrima da Deusa e o Vapor de Diamante abrem
- * espaço no original e ainda não estão feitos; o Pentáculo de Koboldite, que abre o maior de todos, é de uma parte
- * do Witchery que este porte não traz.
+ * <p><b>E o que não virá tal e qual</b>, por não existir no mod: o Pentáculo de Koboldite, que abre o maior
+ * espaço de todos, é de uma parte do Witchery que este porte não traz. A Lágrima da Deusa e o Vapor de Diamante,
+ * que faltavam, chegaram com a Destilaria.
  */
 public final class BrewRegistry {
     private static final Map<Item, BrewAction> TABELA = new LinkedHashMap<>();
@@ -82,6 +82,8 @@ public final class BrewRegistry {
         // ------------------------------------------------------------ os que abrem espaço
         register(BrewActions.Modifier.room(OccultaItems.MANDRAKE_ROOT, 0, 1, 1));
         register(BrewActions.Modifier.room(Items.NETHER_WART, 50, 2, 2));
+        register(BrewActions.Modifier.room(OccultaItems.TEAR_OF_THE_GODDESS, 100, 2, 4));
+        register(BrewActions.Modifier.room(OccultaItems.DIAMOND_VAPOUR, 150, 2, 6));
         register(BrewActions.Modifier.room(Items.DIAMOND, 150, 2, 8).yield(-2));
         register(new BrewActions.Modifier(Items.NETHER_STAR, new BrewName.Tweak(0, 0, false, 0, 0, true), 150,
                 espaço -> espaço.openIf(4, 10), temperos -> temperos.powerCeilingDisabled = true, 0));

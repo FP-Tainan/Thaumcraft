@@ -123,6 +123,17 @@ public final class OccultaAspects {
                     .add(Aspects.BEAST, 1).add(Aspects.ARMOR, 1));
             // o galho de Ent o original anota como o ramo de árvore que ele é
             r.item("thaumcraft:ent_branch", new AspectList().add(Aspects.TREE, 2).add(Aspects.MAGIC, 1));
+            // o que a destilaria come e o que ela faz, com os aspectos do ModHookThaumcraft4
+            r.item("thaumcraft:quicklime", new AspectList().add(Aspects.WEAPON, 1).add(Aspects.ENTROPY, 1));
+            r.item("thaumcraft:gypsum", new AspectList().add(Aspects.EARTH, 1));
+            r.item("thaumcraft:oil_of_vitriol", new AspectList().add(Aspects.WATER, 2).add(Aspects.ENTROPY, 4));
+            r.item("thaumcraft:tear_of_the_goddess", new AspectList().add(Aspects.WATER, 2)
+                    .add(Aspects.ORDER, 1).add(Aspects.SOUL, 2));
+            r.item("thaumcraft:diamond_vapour", new AspectList().add(Aspects.AIR, 3).add(Aspects.CRYSTAL, 1));
+            r.item("thaumcraft:ender_dew", new AspectList().add(Aspects.WATER, 2).add(Aspects.ELDRITCH, 2));
+            r.item("thaumcraft:refined_evil", new AspectList().add(Aspects.WATER, 2).add(Aspects.MIND, 2)
+                    .add(Aspects.ENTROPY, 2));
+
             // a lã de morcego: corpus 1 e volatus 1, que é o que o ModHookThaumcraft4 do original lhe dá
             r.item("thaumcraft:bat_wool", new AspectList().add(Aspects.FLESH, 1).add(Aspects.FLIGHT, 1));
         });

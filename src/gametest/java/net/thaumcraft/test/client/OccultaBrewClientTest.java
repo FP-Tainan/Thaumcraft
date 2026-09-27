@@ -43,6 +43,13 @@ public class OccultaBrewClientTest implements FabricClientGameTest {
             context.waitTicks(3);
             context.takeScreenshot("frasco_a_voar");
 
+            // a destilaria, com dois potes de barro dentro para as garrafas aparecerem
+            server.runCommand("setblock ~ ~ ~3 thaumcraft:distillery");
+            server.runCommand("item replace block ~ ~ ~3 container.2 with thaumcraft:clay_jar 2");
+            server.runCommand("tp @p ~ ~ ~ 0 20");
+            context.waitTicks(10);
+            context.takeScreenshot("destilaria");
+
             // a névoa no chão, da cor do que se cozeu
             server.runCommand("setblock ~2 ~ ~5 thaumcraft:brew_gas");
             server.runCommand("setblock ~3 ~ ~5 thaumcraft:brew_gas");

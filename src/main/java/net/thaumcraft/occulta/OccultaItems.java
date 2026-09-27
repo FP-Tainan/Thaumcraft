@@ -147,6 +147,32 @@ public final class OccultaItems {
                                     new java.util.LinkedHashSet<>(java.util.List.of(
                                             net.minecraft.core.component.DataComponents.DYED_COLOR))))));
 
+    /** A Cal Virgem, que a destilaria come. */
+    public static final Item QUICKLIME = register("quicklime", Item::new);
+
+    /** O Gesso, que sai dela. */
+    public static final Item GYPSUM = register("gypsum", Item::new);
+
+    /** O Óleo de Vitríolo, que come diamante. */
+    public static final Item OIL_OF_VITRIOL = register("oil_of_vitriol", Item::new);
+
+    /** A Lágrima da Deusa: abre quatro de espaço no caldeirão. */
+    public static final Item TEAR_OF_THE_GODDESS = register("tear_of_the_goddess", Item::new);
+
+    /** O Vapor de Diamante: abre seis. */
+    public static final Item DIAMOND_VAPOUR = register("diamond_vapour", Item::new);
+
+    /** O Orvalho do Ender. */
+    public static final Item ENDER_DEW = register("ender_dew", Item::new);
+
+    /** E o Mal Refinado, que é o que sobra do que era bom. */
+    public static final Item REFINED_EVIL = register("refined_evil", Item::new);
+
+    /** A Destilaria, em item. */
+    public static final Item DISTILLERY = register("distillery", properties ->
+            new net.minecraft.world.item.BlockItem(OccultaBlocks.DISTILLERY,
+                    properties.useBlockDescriptionPrefix()));
+
     /**
      * A Lã de Morcego: o {@code itemBatWool} do original.
      *

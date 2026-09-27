@@ -122,6 +122,18 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(WitchesCauldronBlockEntity::new,
                             java.util.Set.of(WITCHES_CAULDRON)));
 
+    // ------------------------------------------------------------------ a destilaria
+
+    /** A Destilaria, que separa uma coisa em quatro com o poder do altar. */
+    public static final Block DISTILLERY = register("distillery", properties ->
+            new DistilleryBlock(properties.mapColor(MapColor.STONE).strength(3.5f)
+                    .sound(SoundType.STONE).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<DistilleryBlockEntity> DISTILLERY_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("distillery"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(DistilleryBlockEntity::new,
+                            java.util.Set.of(DISTILLERY)));
+
     // ------------------------------------------------------------------ a nuvem de cozimento
 
     /** A nuvem que um frasco de gás deixa no chão: não se apanha, não se pisa, e some sozinha. */
