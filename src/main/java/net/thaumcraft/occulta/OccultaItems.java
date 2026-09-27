@@ -271,7 +271,7 @@ public final class OccultaItems {
     private static Item poppet(String name, PoppetItem.Kind kind) {
         return register(name, properties -> new PoppetItem(kind,
                 kind == PoppetItem.Kind.NONE || kind.breaks ? properties.stacksTo(16)
-                        : properties.durability(5000)));
+                        : properties.durability(1000)));
     }
 
     /**

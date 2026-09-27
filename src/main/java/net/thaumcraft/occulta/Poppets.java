@@ -148,7 +148,7 @@ public final class Poppets {
      * Gasta a boneca daquele feitio presa àquela pessoa, onde quer que ela esteja.
      *
      * <p>Primeiro na mochila de quem apanhou; depois nas prateleiras. As de proteção desfazem-se; as outras
-     * gastam-se de mil em mil, que é o que o original lhes tira de cada vez.
+     * gastam-se de mil em mil — que, tendo mil de aguento, é uma vez só, como no original.
      */
     public static boolean spend(ServerLevel level, Player quem, PoppetItem.Kind qual) {
         if (spendIn(level, quem, qual, quem.getInventory())) return true;

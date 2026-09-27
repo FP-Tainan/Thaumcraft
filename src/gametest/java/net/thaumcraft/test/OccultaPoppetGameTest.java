@@ -165,12 +165,40 @@ public class OccultaPoppetGameTest {
         Poppets.mend(level, quem);
         if (picareta.getDamageValue() != 0) helper.fail("com a boneca, a picareta volta a nova");
 
-        // e a boneca gasta-se, mas não se desfaz
+        // e a boneca gasta-se inteira num conserto só: mil de mil, que é a conta do original
         boolean aindaTem = false;
         for (int i = 0; i < quem.getInventory().getContainerSize(); i++) {
             if (quem.getInventory().getItem(i).getItem() instanceof PoppetItem) aindaTem = true;
         }
-        if (!aindaTem) helper.fail("a da ferramenta gasta-se aos poucos, não se desfaz de uma vez");
+        if (aindaTem) helper.fail("um conserto gasta a boneca toda");
+        helper.succeed();
+    }
+
+    /** A boneca de vodu empurra quem ela tem preso — e a Contra o Vodu guarda disso. */
+    @GameTest
+    public void theVoodooPoppetPushesAndTheGuardStops(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var quemUsa = helper.makeMockPlayer(GameType.SURVIVAL);
+        var bicho = helper.spawn(net.minecraft.world.entity.EntityTypes.PIG, new BlockPos(2, 2, 4));
+        bicho.setNoAi(true);
+
+        ItemStack vodu = new ItemStack(OccultaItems.VOODOO_POPPET);
+        TaglockItem.bind(vodu, bicho);
+        if (net.thaumcraft.occulta.Voodoo.bound(level, vodu) != bicho) {
+            helper.fail("a boneca devia achar quem ela tem preso");
+        }
+
+        // e sem ninguém preso, ela não acha nada
+        if (net.thaumcraft.occulta.Voodoo.bound(level, new ItemStack(OccultaItems.VOODOO_POPPET)) != null) {
+            helper.fail("uma boneca solta não tem a quem chegar");
+        }
+
+        // a agulha de osso gasta-se ao espetar
+        quemUsa.getInventory().add(new ItemStack(net.thaumcraft.mortuorum.MortuorumItems.BONE_NEEDLE));
+        if (!net.thaumcraft.occulta.Voodoo.takeNeedle(quemUsa)) helper.fail("a agulha gasta-se");
+        if (net.thaumcraft.occulta.Voodoo.takeNeedle(quemUsa)) helper.fail("e não se gasta duas vezes");
+
+        bicho.discard();
         helper.succeed();
     }
 }

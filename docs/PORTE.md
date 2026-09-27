@@ -3516,6 +3516,11 @@ e sai ao ser desfeita, para não haver de varrer o mundo à procura.
 Espanhol, o Musgo de Brasa (que queima quem lhe pisa) e a **Gota de Sorte**, que sai do caldeirão com Mutandis
 Extremis por chave.
 
+**A boneca de vodu** faz o que se lhe fizer: apontada para <b>lava</b>, a pessoa arde e a boneca desfaz-se; <b>de
+pé</b>, empurra-a para onde se olha, com a força do tempo que se segurou; <b>agachado</b>, com uma agulha de osso
+na mochila, espeta — meio coração, e a agulha gasta-se. Quem traz a <b>Contra o Vodu</b> não sente nada disso, e
+uma vez em quatro cai um raio em cima de quem tentou.
+
 **Dois desvios declarados.** O giz: no original uma receita dá <b>duas</b> varas de sessenta e quatro riscos que
 se empilham — na 1.7.10 uma coisa gasta ainda empilhava, hoje não. A receita dá <b>uma</b> de cento e vinte e
 oito, que é o mesmo giz na mesma conta. E a boneca da ferramenta: no original ela conserta no momento em que se
