@@ -7,6 +7,7 @@ import net.minecraft.world.item.Items;
 import net.thaumcraft.occulta.OccultaItems;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -84,6 +85,41 @@ public final class BrewRegistry {
         register(BrewActions.Modifier.room(Items.DIAMOND, 150, 2, 8).yield(-2));
         register(new BrewActions.Modifier(Items.NETHER_STAR, new BrewName.Tweak(0, 0, false, 0, 0, true), 150,
                 espaço -> espaço.openIf(4, 10), temperos -> temperos.powerCeilingDisabled = true, 0));
+
+        // ------------------------------------------------------------ o jeito de se espalhar
+        // A pólvora e o globo de alcachofra fazem o cozimento se atirar. Um espalhamento desfaz o outro: dois
+        // não convivem na mesma panela, e é por isso que cada um apaga todos (inclusive outro igual).
+        for (Item qual : List.of(Items.GUNPOWDER, OccultaItems.WATER_ARTICHOKE_GLOBE)) {
+            BrewAction ação = new BrewActions.Dispersal(qual, 0, new BrewDispersal.Instant());
+            for (Item outro : List.of(Items.GUNPOWDER, OccultaItems.WATER_ARTICHOKE_GLOBE,
+                    OccultaItems.WORMWOOD_SPRIG)) {
+                ação.nullifies(outro, false);
+            }
+            register(ação);
+        }
+
+        // ------------------------------------------------------------ o alcance e a duração do que se espalha
+        // o alcance alarga o estouro; a duração é para o gás e o líquido, que ainda não chegaram
+        register(BrewActions.Modifier.impact(OccultaItems.WOOD_ASH, new BrewName.Tweak(0, 0, false, 1, 0), 50,
+                espalha -> {
+                    if (espalha.extent < 1) espalha.extent++;
+                }));
+        register(BrewActions.Modifier.impact(Items.COCOA_BEANS, new BrewName.Tweak(0, 0, false, 1, 0), 100,
+                espalha -> {
+                    if (espalha.extent < 2) espalha.extent++;
+                }));
+        register(BrewActions.Modifier.impact(OccultaItems.BELLADONNA_FLOWER, new BrewName.Tweak(0, 0, false, 0, 1),
+                50, espalha -> {
+                    if (espalha.lifetime < 1) espalha.lifetime++;
+                }));
+        register(BrewActions.Modifier.impact(Items.LAPIS_LAZULI, new BrewName.Tweak(0, 0, false, 0, 1), 100,
+                espalha -> {
+                    if (espalha.lifetime < 2) espalha.lifetime++;
+                }));
+        register(BrewActions.Modifier.impact(Items.END_STONE, new BrewName.Tweak(0, 0, false, 0, 1), 150,
+                espalha -> {
+                    if (espalha.lifetime < 3) espalha.lifetime++;
+                }));
 
         // ------------------------------------------------------------ os temperos
         // a pepita de ouro tira as fagulhas do efeito

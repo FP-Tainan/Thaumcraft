@@ -26,6 +26,7 @@ public final class BrewActions {
         private final java.util.function.Consumer<BrewCapacity> espaço;
         private final java.util.function.Consumer<BrewModifiers> tempero;
         private final int drinkSpeed;
+        private java.util.function.Consumer<BrewImpact> espalhamento;
 
         public Modifier(Item key, BrewName.Part namePart, int power,
                         java.util.function.Consumer<BrewCapacity> espaço,
@@ -47,6 +48,14 @@ public final class BrewActions {
             return new Modifier(key, null, power, espaço -> espaço.openIf(quanto, teto), null, 0);
         }
 
+        /** Um tempero do espalhamento: alarga o estouro ou o tempo que a coisa fica no chão. */
+        public static Modifier impact(Item key, BrewName.Part namePart, int power,
+                                      java.util.function.Consumer<BrewImpact> espalha) {
+            Modifier feito = new Modifier(key, namePart, power, null, null, 0);
+            feito.espalhamento = espalha;
+            return feito;
+        }
+
         /** E um que só muda o tempo que se leva a beber. */
         public static Modifier drink(Item key, int power, int quanto) {
             return new Modifier(key, null, power, null, null, quanto);
@@ -61,6 +70,11 @@ public final class BrewActions {
         @Override
         public void augmentModifiers(BrewModifiers temperos) {
             if (this.tempero != null) this.tempero.accept(temperos);
+        }
+
+        @Override
+        public void prepareImpact(BrewImpact espalha) {
+            if (this.espalhamento != null) this.espalhamento.accept(espalha);
         }
 
         @Override
@@ -137,6 +151,37 @@ public final class BrewActions {
             }
             quem.addEffect(new MobEffectInstance(qual, temperos.modifiedDuration(duração), força,
                     false, !temperos.noParticles));
+        }
+    }
+
+    /**
+     * O ingrediente que diz <b>como</b> o cozimento se espalha: o {@code BrewActionDispersal}.
+     *
+     * <p>Ele não gasta espaço nenhum e não tempera nada — só manda no jeito. Põe um pedaço na frente do nome
+     * ("Cozimento Arremessável de...") e faz o frasco se atirar em vez de se beber.
+     *
+     * <p>Um espalhamento novo <b>desfaz</b> o anterior: dois não convivem no mesmo caldeirão.
+     */
+    public static class Dispersal extends BrewAction {
+        private final BrewDispersal jeito;
+
+        public Dispersal(Item key, int power, BrewDispersal jeito) {
+            super(key, new BrewName.Text(jeito.nameKey(), BrewName.Position.PREFIX), power, true, -1);
+            this.jeito = jeito;
+        }
+
+        public BrewDispersal jeito() {
+            return this.jeito;
+        }
+
+        @Override
+        public boolean augmentCapacity(BrewCapacity espaço) {
+            return true;
+        }
+
+        @Override
+        public void prepareImpact(BrewImpact espalha) {
+            espalha.setDispersal(this.jeito);
         }
     }
 

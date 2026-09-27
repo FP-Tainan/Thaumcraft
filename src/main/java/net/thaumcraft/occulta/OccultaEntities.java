@@ -35,6 +35,16 @@ public final class OccultaEntities {
                             mob -> mob.defaultAttributes(EntEntity::attributes))
                     .sized(1.2f, 3.0f).eyeHeight(2.7f).clientTrackingRange(10));
 
+    /**
+     * O frasco de cozimento atirado.
+     *
+     * <p>Não é bicho: é o {@code EntityBrew}, que voa como uma poção de arremesso e arrebenta onde bate.
+     */
+    public static final EntityType<net.thaumcraft.occulta.brew.BrewProjectile> BREW = register("brew",
+            EntityType.Builder.<net.thaumcraft.occulta.brew.BrewProjectile>of(
+                            net.thaumcraft.occulta.brew.BrewProjectile::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
+
     private OccultaEntities() {
     }
 

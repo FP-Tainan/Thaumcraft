@@ -3278,3 +3278,32 @@ que faz o ramo se parecer com o resto do mod.
 há uma prova que percorre <b>todas</b> as receitas do livro, ingrediente por ingrediente, e confere que o
 caldeirão aceita cada uma, que o poder escrito bate com o do motor e que nenhuma delas é uma receita que não faz
 nada. O livro não pode ensinar o que a panela recusa.
+
+### O frasco que se atira (2026-09-27)
+
+Uma pitada de pólvora muda o que um cozimento é: ele deixa de se beber e passa a se **atirar**. É o
+`BrewActionDispersal` com o `DispersalInstant` do Witchery, e é o primeiro dos quatro jeitos de espalhar.
+
+**Onde o frasco bate, arrebenta.** O que estiver a três blocos (mais o alcance) apanha o cozimento, e apanha
+menos quanto mais longe estiver — a conta do original é `1 − distância / raio`. Em quem levou o frasco em cheio,
+vale inteiro. Atirado, o cozimento dura **metade** do que duraria na boca de quem o bebesse.
+
+**Dois jeitos de espalhar não convivem** na mesma panela: o que cair depois desfaz o que estava lá. É o
+`addNullifier` do original, e cada espalhamento apaga todos os outros — inclusive outro igual.
+
+**O alcance** vem da cinza de madeira (um) e das sementes de cacau (mais um), cada uma com o seu teto. A
+**duração** — a flor de beladona, o lápis-lazúli e a pedra do fim — entra na conta desde já, mas só terá o que
+fazer quando o gás e o líquido chegarem; fica declarado.
+
+**O nome mudou de feitio, e por causa do português.** No original o prefixo entra antes de "Brew of" e sai
+"Splash Brew of Poison". Em português a mesma ordem daria "Arremessável Cozimento de Veneno", que ninguém diz.
+Agora há duas chaves: com prefixo, o miolo é outro — em inglês continua "Brew of", e em português é vazio, porque
+o próprio prefixo já diz "Cozimento Arremessável de". Sai "Cozimento Arremessável de Veneno".
+
+**No livro** há uma pesquisa nova, *O Frasco que se Atira*, com quatro receitas — e elas passam pela mesma prova
+que as outras: o caldeirão tem de aceitar cada uma.
+
+**Do original fica de fora, declarado:** o modo de feitiço do `EntityBrew`, em que o frasco voa reto e sem peso
+porque quem o atira é uma varinha do Witchery — as varinhas não estão portadas. E os outros três jeitos de
+espalhar: o **gás** (lã de morcego), o **líquido** (losna) e o **gatilho** (cabeça de creeper), que pedem blocos
+próprios e vêm na fatia seguinte.

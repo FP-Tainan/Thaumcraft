@@ -118,6 +118,40 @@ public final class Brew {
         return montador.lines();
     }
 
+    /** O jeito de espalhar deste cozimento, e as contas de alcance e duração que os temperos lhe deram. */
+    public static BrewImpact impact(List<Item> dentro, net.minecraft.world.entity.LivingEntity quemAtirou) {
+        BrewImpact espalha = new BrewImpact(quemAtirou);
+        for (BrewAction ação : actions(dentro)) ação.prepareImpact(espalha);
+        return espalha;
+    }
+
+    /**
+     * O frasco arrebentou: o que estiver perto apanha o cozimento, pelo jeito que ele tem de se espalhar.
+     *
+     * <p>É o {@code impactSplashPotion} do original. Sem jeito de espalhar não há frasco atirado nenhum, e por
+     * isso isto não faz nada.
+     */
+    public static boolean impact(net.minecraft.server.level.ServerLevel level, List<Item> dentro,
+                                 net.minecraft.world.phys.HitResult onde,
+                                 net.minecraft.world.entity.LivingEntity quemAtirou) {
+        BrewImpact espalha = impact(dentro, quemAtirou);
+        BrewDispersal jeito = espalha.dispersal();
+        if (jeito == null) return false;
+        jeito.onImpact(level, dentro, onde, espalha);
+        return true;
+    }
+
+    /** O que o cozimento faz ao lugar onde se derramou. */
+    public static void applyToBlock(net.minecraft.server.level.ServerLevel level, List<Item> dentro,
+                                    net.minecraft.core.BlockPos onde, net.minecraft.core.Direction lado,
+                                    int raio, BrewModifiers temperos) {
+        for (BrewAction ação : actions(dentro)) {
+            if (!ação.augmentCapacity(temperos.capacity())) continue;
+            ação.augmentModifiers(temperos);
+            ação.applyToBlock(level, onde, lado, raio, temperos);
+        }
+    }
+
     /**
      * O que o cozimento faz em quem o bebe.
      *

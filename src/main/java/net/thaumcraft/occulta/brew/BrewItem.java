@@ -66,6 +66,33 @@ public class BrewItem extends Item {
         Brew.lines(dentro).forEach(linha);
     }
 
+    // ------------------------------------------------------------------ atirar, ou beber
+
+    /**
+     * O que a mão faz com o frasco: atira-o, se o cozimento for de atirar; bebe-o, se não for.
+     *
+     * <p>É a diferença entre a poção e a poção de arremesso do jogo — só que aqui não são dois itens, é o mesmo
+     * frasco com uma pólvora a mais dentro.
+     */
+    @Override
+    public net.minecraft.world.InteractionResult use(Level level, Player quem,
+                                                     net.minecraft.world.InteractionHand mão) {
+        ItemStack frasco = quem.getItemInHand(mão);
+        if (!Brew.splash(contents(frasco))) return super.use(level, quem, mão);
+
+        if (level instanceof net.minecraft.server.level.ServerLevel server) {
+            var atirado = new BrewProjectile(server, quem, frasco.copyWithCount(1));
+            atirado.shootFromRotation(quem, quem.getXRot(), quem.getYRot(), -20.0f, 0.5f, 1.0f);
+            server.addFreshEntity(atirado);
+        }
+        level.playSound(null, quem.getX(), quem.getY(), quem.getZ(),
+                net.minecraft.sounds.SoundEvents.SPLASH_POTION_THROW, net.minecraft.sounds.SoundSource.PLAYERS,
+                0.5f, 0.4f / (level.getRandom().nextFloat() * 0.4f + 0.8f));
+        quem.awardStat(net.minecraft.stats.Stats.ITEM_USED.get(this));
+        if (!quem.hasInfiniteMaterials()) frasco.shrink(1);
+        return net.minecraft.world.InteractionResult.SUCCESS;
+    }
+
     // ------------------------------------------------------------------ beber
 
     /**

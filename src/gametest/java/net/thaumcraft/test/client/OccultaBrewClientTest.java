@@ -30,8 +30,18 @@ public class OccultaBrewClientTest implements FabricClientGameTest {
                     + "thaumcraft:brew=[\"minecraft:nether_wart\",\"minecraft:diamond\","
                     + "\"minecraft:fermented_spider_eye\",\"minecraft:golden_carrot\","
                     + "\"minecraft:redstone\",\"minecraft:ghast_tear\"],dyed_color=5046016]");
+            // e um de atirar, que leva pólvora dentro
+            server.runCommand("item replace entity @p hotbar.3 with thaumcraft:brew["
+                    + "thaumcraft:brew=[\"minecraft:nether_wart\",\"minecraft:spider_eye\","
+                    + "\"minecraft:gunpowder\"],dyed_color=7864145]");
             context.waitTicks(10);
             context.takeScreenshot("frascos_de_cozimento");
+
+            // o frasco atirado a voar, que é o item em pessoa
+            server.runCommand("summon thaumcraft:brew ~ ~1 ~4 {Item:{id:\"thaumcraft:brew\",count:1,"
+                    + "components:{\"minecraft:dyed_color\":7864145}}}");
+            context.waitTicks(3);
+            context.takeScreenshot("frasco_a_voar");
 
             // e o do meio na mão, com a descrição aberta
             context.getInput().pressKey(key -> key.keyInventory);

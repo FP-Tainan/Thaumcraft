@@ -281,4 +281,98 @@ public class OccultaBrewGameTest {
         if (quantas < 16) helper.fail("as quatro ramificações têm dezesseis receitas; achei " + quantas);
         helper.succeed();
     }
+
+    /** A pólvora faz o cozimento de atirar, e o nome dele muda. */
+    @GameTest
+    public void gunpowderMakesItThrowable(GameTestHelper helper) {
+        List<Item> bebido = List.of(Items.NETHER_WART, Items.SPIDER_EYE);
+        List<Item> atirado = List.of(Items.NETHER_WART, Items.SPIDER_EYE, Items.GUNPOWDER);
+        if (Brew.splash(bebido)) helper.fail("sem pólvora, o cozimento se bebe");
+        if (!Brew.splash(atirado)) helper.fail("com pólvora, o cozimento se atira");
+        String nome = Brew.name(atirado).getString();
+        if (!nome.contains("Splash") && !nome.contains("Arremess")) {
+            helper.fail("e o nome dele diz que se atira; veio " + nome);
+        }
+        // o globo de alcachofra faz o mesmo
+        if (!Brew.splash(List.of(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.WATER_ARTICHOKE_GLOBE))) {
+            helper.fail("o globo de alcachofra também faz o cozimento se atirar");
+        }
+        helper.succeed();
+    }
+
+    /** Dois jeitos de espalhar não convivem: o novo desfaz o velho. */
+    @GameTest
+    public void oneDispersalUndoesTheOther(GameTestHelper helper) {
+        List<Item> dentro = Brew.add(List.of(Items.NETHER_WART, Items.SPIDER_EYE), Items.GUNPOWDER);
+        if (!dentro.contains(Items.GUNPOWDER)) helper.fail("a pólvora entrou");
+        List<Item> depois = Brew.add(dentro, OccultaItems.WATER_ARTICHOKE_GLOBE);
+        if (depois.contains(Items.GUNPOWDER)) {
+            helper.fail("o globo desfaz a pólvora que estava lá; ficou " + depois);
+        }
+        if (!depois.contains(OccultaItems.WATER_ARTICHOKE_GLOBE)) helper.fail("e fica ele no lugar");
+        helper.succeed();
+    }
+
+    /** A cinza de madeira e o cacau alargam o estouro; a flor e o lápis esticam o que fica no chão. */
+    @GameTest
+    public void ashAndCocoaWidenTheSplash(GameTestHelper helper) {
+        var nu = Brew.impact(List.of(Items.GUNPOWDER), null);
+        if (nu.extent != 0) helper.fail("sem tempero, o estouro é o de sempre");
+        var comCinza = Brew.impact(List.of(OccultaItems.WOOD_ASH, Items.GUNPOWDER), null);
+        if (comCinza.extent != 1) helper.fail("a cinza de madeira alarga um; deu " + comCinza.extent);
+        var comAmbos = Brew.impact(List.of(OccultaItems.WOOD_ASH, Items.COCOA_BEANS, Items.GUNPOWDER), null);
+        if (comAmbos.extent != 2) helper.fail("cinza e cacau alargam dois; deu " + comAmbos.extent);
+        var duasCinzas = Brew.impact(List.of(OccultaItems.WOOD_ASH, OccultaItems.WOOD_ASH, Items.GUNPOWDER), null);
+        if (duasCinzas.extent != 1) helper.fail("duas cinzas não valem duas: a segunda vê o teto dela");
+        var comLápis = Brew.impact(List.of(Items.LAPIS_LAZULI, Items.GUNPOWDER), null);
+        if (comLápis.lifetime != 1) helper.fail("o lápis-lazúli estica um; deu " + comLápis.lifetime);
+        helper.succeed();
+    }
+
+    /** O frasco atirado arrebenta e o que estiver perto apanha o cozimento. */
+    @GameTest
+    public void theThrownBottleCatchesWhoIsNear(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var perto = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 2));
+        var longe = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 6));
+
+        List<Item> dentro = List.of(Items.NETHER_WART, Items.SPIDER_EYE, Items.GUNPOWDER);
+        var onde = new net.minecraft.world.phys.BlockHitResult(
+                perto.position(), net.minecraft.core.Direction.UP,
+                helper.absolutePos(new BlockPos(2, 1, 2)), false);
+        if (!Brew.impact(level, dentro, onde, null)) helper.fail("o frasco com pólvora espalha");
+
+        if (!perto.hasEffect(MobEffects.POISON)) helper.fail("quem estava no estouro apanha o veneno");
+        if (longe.hasEffect(MobEffects.POISON)) {
+            helper.fail("e quem estava a quatro blocos, não: o estouro alcança três");
+        }
+
+        // e sem jeito de espalhar não há estouro nenhum
+        if (Brew.impact(level, List.of(Items.NETHER_WART, Items.SPIDER_EYE), onde, null)) {
+            helper.fail("sem pólvora não há frasco atirado");
+        }
+        perto.discard();
+        longe.discard();
+        helper.succeed();
+    }
+
+    /** E o frasco de atirar voa da mão em vez de se beber. */
+    @GameTest
+    public void theBottleFliesFromTheHand(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var quem = helper.makeMockServerPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack frasco = BrewItem.of(OccultaItems.BREW,
+                List.of(Items.NETHER_WART, Items.SPIDER_EYE, Items.GUNPOWDER));
+        quem.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, frasco);
+        frasco.getItem().use(level, quem, net.minecraft.world.InteractionHand.MAIN_HAND);
+
+        var voando = level.getEntitiesOfClass(net.thaumcraft.occulta.brew.BrewProjectile.class,
+                new net.minecraft.world.phys.AABB(quem.blockPosition()).inflate(8.0));
+        if (voando.isEmpty()) helper.fail("o frasco de atirar sai da mão a voar");
+        else if (!BrewItem.contents(voando.getFirst().getItem()).contains(Items.SPIDER_EYE)) {
+            helper.fail("e leva o cozimento com ele");
+        }
+        voando.forEach(net.minecraft.world.entity.Entity::discard);
+        helper.succeed();
+    }
 }

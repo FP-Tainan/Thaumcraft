@@ -88,6 +88,10 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.ENT,
                 net.thaumcraft.occulta.client.CreatureRenderers.Ent::new);
+        // o frasco atirado é o próprio item a voar, como a poção de arremesso do jogo
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.BREW,
+                net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
         // o Ars Occulta: o Caldeirão da Bruxa
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.WITCHES_CAULDRON_ENTITY,

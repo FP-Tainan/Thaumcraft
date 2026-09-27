@@ -147,6 +147,25 @@ public final class OccultaTable {
                         brewPage(Items.NETHER_WART, Items.DIAMOND, Items.WITHER_SKELETON_SKULL),
                         brewPage(Items.NETHER_WART, Items.DIAMOND, Items.INK_SAC))
                 .register();
+
+        splash();
+    }
+
+
+    /** O que muda quando a pólvora entra: o cozimento deixa de se beber e passa a se atirar. */
+    private static void splash() {
+        ThaumcraftApi.research("AO_BREW_SPLASH", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.FIRE, 4).add(Aspects.MOTION, 3).add(Aspects.ENTROPY, 2))
+                .at(0, 6)
+                .icon(() -> brewStack(Items.NETHER_WART, Items.SPIDER_EYE, Items.GUNPOWDER))
+                .parents("AO_POTIONS")
+                .pages(Page.text("tc.research_page.AO_BREW_SPLASH.1"),
+                        Page.text("tc.research_page.AO_BREW_SPLASH.2"),
+                        brewPage(Items.NETHER_WART, Items.SPIDER_EYE, Items.GUNPOWDER),
+                        brewPage(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.WOOD_ASH, Items.GUNPOWDER),
+                        brewPage(Items.NETHER_WART, Items.GLISTERING_MELON_SLICE, Items.GUNPOWDER),
+                        brewPage(Items.NETHER_WART, Items.FERMENTED_SPIDER_EYE, Items.SUGAR, Items.GUNPOWDER))
+                .register();
     }
 
     /**

@@ -125,6 +125,10 @@ public abstract class BrewAction {
     /** O {@code augmentEffectLevels}: abre ou gasta espaço, e diz se coube. */
     public abstract boolean augmentCapacity(BrewCapacity espaço);
 
+    /** O {@code prepareSplashPotion}: quem manda no jeito de espalhar diz aqui qual é. */
+    public void prepareImpact(BrewImpact espalha) {
+    }
+
     /** O {@code augmentEffectModifiers}: o tempero que espera pelo efeito seguinte. */
     public void augmentModifiers(BrewModifiers temperos) {
     }

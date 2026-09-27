@@ -174,7 +174,10 @@ public final class BrewName {
             MutableComponent saída = Component.empty();
             boolean splash = !this.prefixes.isEmpty();
             for (Component prefixo : this.prefixes) saída.append(prefixo).append(" ");
-            saída.append(Component.translatable("tc.brew.of")).append(" ");
+            // com prefixo a frase muda de feitio: em inglês fica "Splash Brew of", em português o prefixo já
+            // diz "Cozimento Arremessável de" e o miolo some. Por isso há duas chaves, e a vazia não se escreve.
+            Component miolo = Component.translatable(splash ? "tc.brew.of_prefixed" : "tc.brew.of");
+            if (!miolo.getString().isBlank()) saída.append(miolo).append(" ");
             if (this.pieces.isEmpty()) {
                 saída.append(Component.translatable("tc.brew.water"));
             } else {
