@@ -961,10 +961,43 @@ public final class Rites {
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.eclipse", new Eclipse(),
                 new Sacrifice.Both(
-                        new Sacrifice.Items(Items.STONE_SWORD, net.thaumcraft.occulta.OccultaItems.QUICKLIME),
+                        new Sacrifice.Items(Items.STONE_AXE, net.thaumcraft.occulta.OccultaItems.QUICKLIME),
                         new Sacrifice.Power(3000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.DAY)));
+
+        // as versões maiores e as portáteis: o mesmo rito com outra escala e outro preço
+        // A escada das ferramentas é a do original e é deliberada: pau para o pequeno, pedra para o maior,
+        // ferro para o portátil — e o portátil troca o poder do Altar pela Pedra Sintonizada Carregada.
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.stormlarge", new Storm(3, 7, 18),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.STONE_SWORD, net.thaumcraft.occulta.OccultaItems.WOOD_ASH),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.stormportable", new Storm(3, 7, 18),
+                new Sacrifice.Items(Items.IRON_SWORD, net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.eclipseportable", new Eclipse(),
+                new Sacrifice.Items(Items.IRON_AXE, net.thaumcraft.occulta.OccultaItems.QUICKLIME,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.of(RiteRegistry.When.DAY)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.fertilityportable", new Fertility(50, 15),
+                new Sacrifice.Items(Items.BONE_MEAL,
+                        net.thaumcraft.occulta.OccultaItems.HINT_OF_REBIRTH,
+                        net.thaumcraft.occulta.OccultaItems.DIAMOND_VAPOUR,
+                        net.thaumcraft.occulta.OccultaItems.QUICKLIME,
+                        net.thaumcraft.occulta.OccultaItems.GYPSUM,
+                        net.thaumcraft.occulta.OccultaItems.MUTANDIS_EXTREMIS,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // as três barreiras, que se sustentam enquanto houver poder
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.barrier",

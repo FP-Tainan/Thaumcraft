@@ -256,4 +256,95 @@ public class OccultaWorldRitesGameTest {
         if (Rites.Volcano.lavaBelow(level, meio)) helper.fail("um pingo de lava não é poça");
         helper.succeed();
     }
+
+    // ------------------------------------------------------------------ as maiores e as portáteis
+
+    /**
+     * A escada das ferramentas é a do original: pau para o pequeno, pedra para o maior, ferro para o portátil.
+     *
+     * <p>É o jeito que o original tem de dizer, sem escrever, qual é qual.
+     */
+    @GameTest
+    public void theToolLadderIsTheOriginals(GameTestHelper helper) {
+        record Degrau(String chave, net.minecraft.world.item.Item pede) {
+        }
+        for (Degrau d : List.of(
+                new Degrau("tc.rite.storm", Items.WOODEN_SWORD),
+                new Degrau("tc.rite.stormlarge", Items.STONE_SWORD),
+                new Degrau("tc.rite.stormportable", Items.IRON_SWORD),
+                new Degrau("tc.rite.eclipse", Items.STONE_AXE),
+                new Degrau("tc.rite.eclipseportable", Items.IRON_AXE))) {
+            var rito = RiteRegistry.all().stream()
+                    .filter(r -> r.key().equals(d.chave())).findFirst().orElse(null);
+            if (rito == null) {
+                helper.fail("falta o rito " + d.chave());
+                return;
+            }
+            if (Rites.shown(rito).stream().noneMatch(c -> c.is(d.pede()))) {
+                helper.fail(d.chave() + " pede " + d.pede());
+            }
+        }
+        helper.succeed();
+    }
+
+    /** As portáteis trocam o poder do Altar pela pedra carregada, e as outras não. */
+    @GameTest
+    public void thePortableOnesPayWithTheStone(GameTestHelper helper) {
+        for (String chave : List.of("tc.rite.stormportable", "tc.rite.eclipseportable",
+                "tc.rite.fertilityportable", "tc.rite.barrierportable")) {
+            var rito = RiteRegistry.all().stream()
+                    .filter(r -> r.key().equals(chave)).findFirst().orElse(null);
+            if (rito == null) {
+                helper.fail("falta o rito " + chave);
+                return;
+            }
+            if (Rites.shown(rito).stream().noneMatch(c -> c.is(OccultaItems.ATTUNED_STONE_CHARGED))) {
+                helper.fail(chave + " paga com a pedra carregada");
+            }
+        }
+        for (String chave : List.of("tc.rite.storm", "tc.rite.stormlarge", "tc.rite.eclipse",
+                "tc.rite.fertility")) {
+            var rito = RiteRegistry.all().stream()
+                    .filter(r -> r.key().equals(chave)).findFirst().orElseThrow();
+            if (Rites.shown(rito).stream().anyMatch(c -> c.is(OccultaItems.ATTUNED_STONE_CHARGED))) {
+                helper.fail(chave + " não paga com ela: paga com poder");
+            }
+        }
+        helper.succeed();
+    }
+
+    /** A Tempestade Maior tem mais alcance e mais fases do que a pequena. */
+    @GameTest
+    public void theGreaterStormIsGreater(GameTestHelper helper) {
+        var pequena = RiteRegistry.all().stream()
+                .filter(r -> r.key().equals("tc.rite.storm")).findFirst().orElseThrow();
+        var maior = RiteRegistry.all().stream()
+                .filter(r -> r.key().equals("tc.rite.stormlarge")).findFirst().orElseThrow();
+        if (!(pequena.rite() instanceof Rites.Storm a) || !(maior.rite() instanceof Rites.Storm b)) {
+            helper.fail("as duas são tempestades");
+            return;
+        }
+        if (b.maxRadius() <= a.maxRadius()) helper.fail("a maior alcança mais longe");
+        if (b.bolts() <= a.bolts()) helper.fail("e corre mais fases");
+        helper.succeed();
+    }
+
+    /** E a Fertilidade Portátil pede o Mutandis Extremis, e não o comum. */
+    @GameTest
+    public void thePortableFertilityAsksForTheStrongerMutandis(GameTestHelper helper) {
+        var rito = RiteRegistry.all().stream()
+                .filter(r -> r.key().equals("tc.rite.fertilityportable")).findFirst().orElse(null);
+        if (rito == null) {
+            helper.fail("o rito devia existir");
+            return;
+        }
+        var pede = Rites.shown(rito);
+        if (pede.stream().noneMatch(c -> c.is(OccultaItems.MUTANDIS_EXTREMIS))) {
+            helper.fail("ela pede o Mutandis Extremis");
+        }
+        if (pede.stream().anyMatch(c -> c.is(OccultaItems.MUTANDIS))) {
+            helper.fail("e não o comum");
+        }
+        helper.succeed();
+    }
 }

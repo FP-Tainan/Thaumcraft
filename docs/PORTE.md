@@ -4109,3 +4109,24 @@ não come nada e dura um minuto certo — é a que se leva para onde não há al
 2. **A fonte de poder é procurada de novo a cada batida.** O original guarda o altar que achou e só volta a
    procurar uma vez em cinco, para poupar trabalho. Aqui a procura é a mesma que todos os outros ritos já fazem,
    e não valeu a pena duplicar o cache por isso.
+
+### As versões maiores e as portáteis (2026-09-27)
+
+**O original tem o mesmo rito três vezes, e a diferença não está escrita em lado nenhum: está na ferramenta.**
+A Tempestade pede uma espada de **pau**; a Maior, uma de **pedra**; a Portátil, uma de **ferro**. O Eclipse pede
+um machado de pedra e o Portátil um de ferro. É a escada que diz, sem palavras, qual é qual.
+
+**E a diferença de verdade é como se paga.** As versões normais e maiores comem **poder do Altar** — dois mil
+na Tempestade Maior, três mil no Eclipse. As portáteis não comem nada: pagam com a **Pedra Sintonizada
+Carregada**, que se gasta ali. São as que se levam para onde não há altar.
+
+**Quatro entraram**: a Tempestade Maior (que alcança sete de raio em vez de três, e corre dezoito fases em vez
+de oito), a Tempestade Portátil, o Eclipse Portátil e a Fertilidade Portátil — esta última trocando, como no
+original, o Mutandis comum pelo **Extremis**.
+
+**Uma correção de fidelidade no caminho:** o Eclipse pedia uma **espada** de pedra neste porte, e o original pede
+um **machado**. O nome ofuscado (`Items.field_151049_t`) não diz qual ferramenta é; o que o diz é a escada — o
+Eclipse Portátil pede um machado de ferro, e os dois têm de ser do mesmo feitio. Corrigido.
+
+**Desvio declarado.** A Pedra de Caminho opcional continua de fora nas duas Tempestades, pelo mesmo motivo de
+sempre: ela não está portada.
