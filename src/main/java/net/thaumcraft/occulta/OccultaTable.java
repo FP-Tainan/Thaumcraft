@@ -149,6 +149,7 @@ public final class OccultaTable {
                 .register();
 
         splash();
+        world();
     }
 
 
@@ -169,6 +170,25 @@ public final class OccultaTable {
                         brewPage(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.BAT_WOOL),
                         brewPage(Items.NETHER_WART, Items.GHAST_TEAR, OccultaItems.BELLADONNA_FLOWER,
                                 OccultaItems.BAT_WOOL))
+                .register();
+    }
+
+
+    /** Os cozimentos que não mexem em quem passa: mexem no lugar. */
+    private static void world() {
+        ThaumcraftApi.research("AO_BREW_WORLD", Occulta.CATEGORY)
+                .aspects(new AspectList().add(Aspects.EARTH, 4).add(Aspects.PLANT, 3).add(Aspects.CRAFT, 2))
+                .at(0, 8)
+                .icon(() -> brewStack(Items.NETHER_WART, Items.FLINT, Items.GUNPOWDER))
+                .parents("AO_BREW_SPLASH")
+                .pages(Page.text("tc.research_page.AO_BREW_WORLD.1"),
+                        brewPage(Items.NETHER_WART, Items.STRING, Items.GUNPOWDER),
+                        brewPage(Items.NETHER_WART, Items.BROWN_MUSHROOM, Items.GUNPOWDER),
+                        brewPage(Items.NETHER_WART, Items.FLINT, Items.GUNPOWDER),
+                        Page.text("tc.research_page.AO_BREW_WORLD.2"),
+                        brewPage(Items.NETHER_WART, Items.WHEAT_SEEDS, Items.GUNPOWDER),
+                        brewPage(Items.NETHER_WART, Items.LILY_PAD, Items.GUNPOWDER),
+                        brewPage(Items.NETHER_WART, Items.DIAMOND, Items.POISONOUS_POTATO, Items.GUNPOWDER))
                 .register();
     }
 

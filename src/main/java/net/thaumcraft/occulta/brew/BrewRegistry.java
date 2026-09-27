@@ -163,6 +163,15 @@ public final class BrewRegistry {
         register(BrewActions.Modifier.tempering(Items.TROPICAL_FISH, null, 200,
                 temperos -> temperos.strengthCeilingDisabled = true));
 
+        // ------------------------------------------------------------ os efeitos que mexem no lugar
+        // só acontecem no cozimento atirado, porque é aí que há um lugar onde ele bateu
+        register(new BrewWorldActions.Felling(Items.STRING, 0, 0, LEVE));
+        register(new BrewWorldActions.Pruning(Items.BROWN_MUSHROOM, 0, LEVE));
+        register(new BrewWorldActions.Pulverisation(Items.FLINT, 250, LEVE));
+        register(new BrewWorldActions.Lilify(Items.LILY_PAD, 200, LEVE));
+        register(new BrewWorldActions.Planting(Items.WHEAT_SEEDS, 0, LEVE));
+        register(new BrewWorldActions.Blight(Items.POISONOUS_POTATO, 2000, GRAVE));
+
         // ------------------------------------------------------------ os efeitos que são poções do jogo
         register(new BrewActions.Potion(Items.SPIDER_EYE, new BrewName.Text("tc.brew.poison"), 0,
                 MobEffects.POISON, secs(45), COMUM));

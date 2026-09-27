@@ -408,20 +408,25 @@ public class OccultaBrewGameTest {
     public void theCloudSpreadsAndTouches(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos onde = helper.absolutePos(new BlockPos(2, 3, 2));
-        List<Item> dentro = List.of(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.BAT_WOOL);
+        // com a flor de beladona ela dura mais, e assim a prova não fica no sorteio de quando ela morre
+        List<Item> dentro = List.of(Items.NETHER_WART, Items.SPIDER_EYE, OccultaItems.BELLADONNA_FLOWER,
+                OccultaItems.BAT_WOOL);
         level.setBlockAndUpdate(onde, OccultaBlocks.BREW_GAS.defaultBlockState());
         if (level.getBlockEntity(onde) instanceof net.thaumcraft.occulta.brew.BrewFluidBlockEntity nuvem) {
             nuvem.start(dentro, Brew.impact(dentro, null));
         }
 
         var bicho = helper.spawn(EntityTypes.PIG, new BlockPos(2, 3, 2));
+        bicho.setNoAi(true);
+        // guarda-se o maior que já se viu: a nuvem cresce e some, e o que importa é que ela cresceu
+        int[] maior = new int[1];
         helper.succeedWhen(() -> {
-            // cresceu para algum lado?
             int quantas = 0;
-            for (var perto : BlockPos.betweenClosed(onde.offset(-3, -3, -3), onde.offset(3, 3, 3))) {
+            for (var perto : BlockPos.betweenClosed(onde.offset(-4, -4, -4), onde.offset(4, 4, 4))) {
                 if (level.getBlockState(perto).is(OccultaBlocks.BREW_GAS)) quantas++;
             }
-            if (quantas < 2) throw helper.assertionException("a nuvem ainda não cresceu; há " + quantas);
+            maior[0] = Math.max(maior[0], quantas);
+            if (maior[0] < 2) throw helper.assertionException("a nuvem ainda não cresceu; há " + quantas);
             if (!bicho.hasEffect(MobEffects.POISON)) {
                 throw helper.assertionException("quem está dentro dela ainda não apanhou o cozimento");
             }
@@ -446,5 +451,86 @@ public class OccultaBrewGameTest {
                 }
             }
         });
+    }
+
+    /** A derrubada leva os troncos que estiverem por perto. */
+    @GameTest
+    public void fellingTakesTheLogs(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlockAndUpdate(onde.above(), Blocks.OAK_LOG.defaultBlockState());
+        level.setBlockAndUpdate(onde.above(2), Blocks.OAK_LOG.defaultBlockState());
+        level.setBlockAndUpdate(onde.north(), Blocks.OAK_LOG.defaultBlockState());
+
+        List<Item> dentro = List.of(Items.NETHER_WART, Items.STRING, Items.GUNPOWDER);
+        Brew.applyToBlock(level, dentro, onde, net.minecraft.core.Direction.UP, 3, new BrewModifiers());
+
+        if (!level.getBlockState(onde.above()).isAir()) helper.fail("o tronco em cima devia ter caído");
+        if (!level.getBlockState(onde.north()).isAir()) helper.fail("e o do lado também");
+        level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                new net.minecraft.world.phys.AABB(onde).inflate(6.0))
+                .forEach(net.minecraft.world.entity.Entity::discard);
+        helper.succeed();
+    }
+
+    /** A pulverização desfaz a pedra um degrau de cada vez. */
+    @GameTest
+    public void pulverisationGrindsTheStone(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlockAndUpdate(onde, Blocks.STONE.defaultBlockState());
+        level.setBlockAndUpdate(onde.north(), Blocks.COBBLESTONE.defaultBlockState());
+        level.setBlockAndUpdate(onde.south(), Blocks.GRAVEL.defaultBlockState());
+
+        List<Item> dentro = List.of(Items.NETHER_WART, Items.FLINT, Items.GUNPOWDER);
+        Brew.applyToBlock(level, dentro, onde, net.minecraft.core.Direction.UP, 2, new BrewModifiers());
+
+        if (!level.getBlockState(onde).is(Blocks.COBBLESTONE)) helper.fail("pedra vira pedregulho");
+        if (!level.getBlockState(onde.north()).is(Blocks.GRAVEL)) helper.fail("pedregulho vira cascalho");
+        if (!level.getBlockState(onde.south()).is(Blocks.SAND)) helper.fail("e cascalho vira areia");
+
+        for (var lugar : BlockPos.betweenClosed(onde.offset(-3, -3, -3), onde.offset(3, 3, 3))) {
+            if (!level.getBlockState(lugar).isAir()) level.setBlockAndUpdate(lugar, Blocks.AIR.defaultBlockState());
+        }
+        helper.succeed();
+    }
+
+    /** A praga seca o mato e apodrece o chão. */
+    @GameTest
+    public void blightWithersTheGround(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlockAndUpdate(onde, Blocks.GRASS_BLOCK.defaultBlockState());
+        level.setBlockAndUpdate(onde.above(), Blocks.SHORT_GRASS.defaultBlockState());
+        level.setBlockAndUpdate(onde.north(), Blocks.GRASS_BLOCK.defaultBlockState());
+        level.setBlockAndUpdate(onde.north().above(), Blocks.DANDELION.defaultBlockState());
+
+        List<Item> dentro = List.of(Items.NETHER_WART, Items.DIAMOND, Items.POISONOUS_POTATO, Items.GUNPOWDER);
+        Brew.applyToBlock(level, dentro, onde.above(), net.minecraft.core.Direction.UP, 3, new BrewModifiers());
+
+        if (!level.getBlockState(onde.above()).isAir()) helper.fail("o mato some");
+        if (!level.getBlockState(onde.north().above()).is(Blocks.DEAD_BUSH)) {
+            helper.fail("e a flor vira arbusto seco; ficou " + level.getBlockState(onde.north().above()));
+        }
+        for (var lugar : BlockPos.betweenClosed(onde.offset(-4, -1, -4), onde.offset(4, 2, 4))) {
+            level.setBlockAndUpdate(lugar, Blocks.AIR.defaultBlockState());
+        }
+        helper.succeed();
+    }
+
+    /** E estes efeitos só acontecem no frasco atirado: bebidos, não fazem nada ao lugar. */
+    @GameTest
+    public void theseOnlyHappenWhenThrown(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlockAndUpdate(onde.above(), Blocks.OAK_LOG.defaultBlockState());
+        var bicho = helper.spawn(EntityTypes.PIG, new BlockPos(2, 2, 3));
+        Brew.apply(level, bicho, List.of(Items.NETHER_WART, Items.STRING), new BrewModifiers());
+        if (level.getBlockState(onde.above()).isAir()) {
+            helper.fail("bebida, a derrubada não derruba nada");
+        }
+        level.setBlockAndUpdate(onde.above(), Blocks.AIR.defaultBlockState());
+        bicho.discard();
+        helper.succeed();
     }
 }

@@ -87,9 +87,13 @@ public class BrewGasBlock extends BaseEntityBlock {
         return Shapes.empty();
     }
 
+    /**
+     * A caixa dela é a do bloco inteiro, ainda que não se esbarre nela: é assim que o jogo sabe que alguém está
+     * <b>dentro</b> dela — o mesmo que o portal do Nether faz.
+     */
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Shapes.empty();
+        return Shapes.block();
     }
 
     @Override

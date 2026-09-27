@@ -3335,3 +3335,31 @@ e dois quadros. A ordem em que eles passam é a do original, de trás para a fre
 
 **A cor** sai do cozimento, como no caldeirão: é um pintor de bloco que lê a alma da nuvem, que é o
 `colorMultiplier` do original.
+
+### Os cozimentos que mexem no lugar (2026-09-27)
+
+Até aqui um cozimento só fazia coisa a quem o bebia ou apanhava. Estes seis fazem coisa ao **chão** — e por isso
+só valem atirados: bebidos, não têm onde pegar. São os `BrewAction*` da pasta `action/effect` do Witchery.
+
+- **Derrubada** (um fio): todo tronco na bola cai, largando o que largaria a quem o cortasse.
+- **Poda** (cogumelo marrom): folha e mato de roldão.
+- **Pulverização** (pederneira): pedra → pedregulho → cascalho → areia, e a areia se solta do chão.
+- **Vitória-régia** (uma vitória-régia): sobe até achar água com céu livre e põe folha nela.
+- **Plantio** (sementes de trigo): não traz semente nenhuma — planta **o que já estiver largado** em volta, uma
+  de cada vez, onde couber.
+- **Praga** (batata venenosa, dois mil de poder): o mato some, a flor vira arbusto seco, a terra arada vira
+  areia, e o chão apodrece — uma vez em cinco para areia, uma em cinco para terra. Em quem apanha, o aldeão vira
+  zumbi e a vaca vira vaca-cogumelo; os outros bichos levam vinte.
+
+**Os ingredientes saíram do original por dedução**, porque o decompilado só tem os nomes ofuscados: o
+`field_151170_bI` da praga fica entre a batata cozida e o mapa na ordem de registro da 1.7.10, e os vizinhos dele
+(cenoura dourada e crânio) já estavam confirmados por outras receitas. É batata venenosa.
+
+**A geometria é a do original.** O círculo cheio que a praga e o plantio desenham é riscado pelo método de
+Bresenham, como no `BlockActionCircle`, e não por conta de distância: a diferença aparece na borda, e um porte
+que a mudasse desenharia outra coisa.
+
+**E uma prova apanhou um defeito de verdade:** a nuvem de gás tinha caixa vazia, e por isso <b>ninguém contava
+como estando dentro dela</b> — o gás nunca tocaria em quem passasse. A caixa passou a ser a do bloco inteiro,
+como a do portal do Nether, que é o que faz o jogo saber que alguém está dentro. A colisão continua vazia: não se
+esbarra numa névoa.
