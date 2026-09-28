@@ -72,5 +72,23 @@ public final class ManaClock {
             agora = agora.withBurnout(agora.burnout() - desce);
         }
         if (!agora.equals(era)) Mana.set(quem, agora);
+
+        recoverFalloff(quem);
+    }
+
+    /**
+     * E o retorno decrescente da Afinidade sobe: o {@code tickDiminishingReturns}.
+     *
+     * <p><b>Desvio declarado.</b> No original isto corre <b>a cada batida</b>, somando 0,005 — 0,1 por
+     * segundo, e o 1,2 volta cheio em 12 segundos a quem o esvaziou. Aqui corre junto com o relógio da mana,
+     * de 20 em 20, somando os mesmos 0,005 <b>vinte vezes</b>. Dá no mesmo, e poupa um laço por batida em
+     * cima de todo mundo que está no servidor.
+     */
+    public static void recoverFalloff(ServerPlayer quem) {
+        AffinityData era = AffinityData.of(quem);
+        if (era.falloff() >= AffinityData.MAX_FALLOFF) return;
+        AffinityData agora = era;
+        for (int i = 0; i < EVERY; i++) agora = agora.recovered();
+        AffinityData.set(quem, agora);
     }
 }

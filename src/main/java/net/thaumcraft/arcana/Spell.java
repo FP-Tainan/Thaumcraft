@@ -124,6 +124,38 @@ public record Spell(List<Stage> stages) {
         return custo;
     }
 
+    /**
+     * A <b>Afinidade</b> do feitiço inteiro: o {@code mainAffinityFor} do original.
+     *
+     * <p>Ela não está escrita em lugar nenhum — ela se <b>conta</b>. Passa-se por todas as etapas, somando uma
+     * marca para cada Afinidade que cada Essência puxa, e a que aparecer mais vezes é a do feitiço. Empate
+     * fica com a primeira que apareceu, que é o que o original faz ao varrer o mapa em ordem.
+     *
+     * <p>É ela que dá a figura e a cor a um projétil, e é por isso que um feitiço de fogo <i>parece</i> um
+     * feitiço de fogo sem ninguém ter escolhido isso.
+     */
+    public Affinity mainAffinity() {
+        var contas = new java.util.EnumMap<Affinity, Integer>(Affinity.class);
+        for (Stage etapa : this.stages) {
+            for (SpellPart.Essence essência : etapa.essences()) {
+                for (Affinity qual : essência.affinities()) {
+                    if (qual == Affinity.NONE) continue;
+                    contas.merge(qual, 1, Integer::sum);
+                }
+            }
+        }
+
+        Affinity maior = Affinity.NONE;
+        int quantas = 0;
+        for (var par : contas.entrySet()) {
+            if (par.getValue() > quantas) {
+                maior = par.getKey();
+                quantas = par.getValue();
+            }
+        }
+        return maior;
+    }
+
     /** E o desgaste que ela deixa. */
     public float burnout() {
         Stage etapa = this.first();

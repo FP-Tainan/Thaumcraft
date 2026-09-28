@@ -84,6 +84,26 @@ public interface SpellPart {
         default float burnout() {
             return 0.0f;
         }
+
+        /**
+         * Para que <b>Afinidade</b> ela puxa quem a lança: o {@code getAffinity} do original.
+         *
+         * <p>Quase toda Essência puxa para uma só. A Luz não puxa para lado nenhum — ela é a Afinidade
+         * nenhuma, e lançá-la não muda quem a lança.
+         */
+        default java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.NONE);
+        }
+
+        /**
+         * E o quanto ela puxa por vez: o {@code getAffinityShift}.
+         *
+         * <p>Os números do original são miúdos de propósito — um centésimo para os danos, cinco centésimos
+         * para a Cura, um milésimo para o Escavar. Uma Afinidade é coisa de muitos dias.
+         */
+        default float affinityShift() {
+            return 0.0f;
+        }
     }
 
     /**

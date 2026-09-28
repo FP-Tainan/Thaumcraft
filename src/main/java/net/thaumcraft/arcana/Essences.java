@@ -48,6 +48,17 @@ public final class Essences {
             return "fire_damage";
         }
 
+        /** Ela puxa para o Fogo. */
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.FIRE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
         @Override
         public float manaCost() {
             return MANA;
@@ -88,6 +99,17 @@ public final class Essences {
         @Override
         public String name() {
             return "heal";
+        }
+
+        /** Ela puxa para a Vida — e ela puxa cinco vezes mais que os danos. */
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.LIFE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.05f;
         }
 
         @Override
@@ -135,6 +157,17 @@ public final class Essences {
             return "light";
         }
 
+        /** Ela puxa para lado nenhum: a Luz é a Afinidade nenhuma no original. */
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.NONE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
         @Override
         public float manaCost() {
             return MANA;
@@ -179,6 +212,17 @@ public final class Essences {
             return "dig";
         }
 
+        /** Ela puxa para a Terra, e de leve: um milésimo por vez. */
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.EARTH);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.001f;
+        }
+
         @Override
         public float manaCost() {
             return MANA;
@@ -219,6 +263,17 @@ public final class Essences {
         @Override
         public String name() {
             return "frost_damage";
+        }
+
+        /** Ela puxa para o Gelo. */
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ICE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
         }
 
         @Override

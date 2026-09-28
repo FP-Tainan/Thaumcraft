@@ -2645,7 +2645,7 @@ estados** — pouco o bastante para a planificação se fazer à mão e por inte
 
 O formato de saída é o mais simples que serve: cabeçalho, paleta de estados em texto — que o `BlockStateParser` lê
 —, e o corpo em pares de *quantas casas seguidas, qual entrada da paleta*. Estas salas são quase todas ar, e ar
-seguido comprime-se a nada: as **oito milhões de casas das cento e dezasseis salas cabem em 311 KiB**.
+seguido comprime-se a nada: as **oito milhões de posições das 116 salas cabem em 311 KiB**.
 
 As portas do mod viraram as nossas na tradução, e os tecidos também. Quer dizer que **as salas já vêm com as
 saídas desenhadas nas paredes**: a primeira passa a ser a de volta, as outras ficam por apontar, e quem as
@@ -2674,7 +2674,7 @@ a baixo. A racha é um buraco de verdade — alfa zero —, e porque as portas s
 ela é o vão que já estava desenhado por trás da folha. Não foi preciso mexer no vão; ele sempre esteve ali, era a
 folha que o tapava toda.
 
-A racha corre pelas duas metades sem dar um salto no meio, e por isso monta-se numa folha de dezasseis por trinta
+A racha corre pelas duas metades sem dar um salto no meio, e por isso se monta numa folha de dezesseis por trinta
 e dois e corta-se depois (`scratchpad/Rachar.java`). **Desvio declarado:** as quatro continuam a distinguir-se,
 mas só pelo metal do aro — ferro, ouro, quartzo e o escuro da arcana —, porque as salas do original usam as
 quatro e seria pena ficarem todas iguais.
@@ -4198,8 +4198,7 @@ devolver `EFFECT_FAILED` antes de tirar mana. Curar quem está com a vida cheia 
    melhor:** um feitiço escrito num mundo continua legível noutro.
 2. **O feitiço mora num componente, e não espalhado pelo NBT.** O original guarda `NumStages`,
    `ShapeOrdinal_0`, `SpellComponentIDs_0` e companhia em chaves separadas. Aqui é uma coisa só.
-3. **Sem Afinidade, por ora.** O uso repetido de uma família de magia muda o praticante — é o `Affinity` do
-   original e a ponte que a lore promete para o Ars Transmutatio. É fatia própria.
+3. **A Afinidade entrou na fatia 3.** (Ficava aqui a nota de que ela faltava.)
 4. **Sem árvore de perícias, sem mesa de escrever e sem os Rituais de Obelisco.** A Essência sabe fazer o que
    sabe; o que ainda não há é o lugar onde se aprende a escrevê-la nem onde se escreve. Os feitiços prontos da
    aba do criativo servem para experimentar a gramática enquanto isso.
@@ -4258,9 +4257,66 @@ primeiro que apanhar. O dois é o que *cada* Perfuração acrescenta.
    haver com que o ligar.
 4. **O refletir feitiços ficou de fora**, porque depende da lista de bênçãos (`BuffList.spellReflect`), que não
    está portada. No original, um alvo com essa bênção manda o projétil de volta a quem o lançou.
-5. **A figura e a cor por Afinidade ficaram de fora**, porque dependem da Afinidade. Todo projétil sai com a
-   figura e a cor que o original dá à Afinidade nenhuma: a `lens_flare`, branca.
+5. **A figura e a cor por Afinidade entraram na fatia 3.** (Ficava aqui a nota de que faltavam.)
 6. **O desenho anda a tira ele mesmo.** A `lens_flare` é uma tira de 13 quadros com um `.mcmeta` de animação,
    e no original ela vive no atlas dos itens, onde o jogo anima ela sozinho. Aqui ela é a textura da entidade, que
    não passa pelo atlas, e por isso o desenho avança um quadro por batida — que é o que o `.mcmeta` sem tempo
    declarado pede, e dá a mesma coisa na tela.
+
+### Fatia 3 — a Afinidade (2026-09-27)
+
+**A ideia mais bonita do ramo, e a que mais o separa de tudo o que já está portado: lançar feitiços muda quem
+os lança.** Quem só atira fogo não vira um mago melhor — vira um mago *de fogo*, e vai perdendo o gelo pelo
+caminho. A Afinidade não se escolhe em lugar nenhum: ela é o registro do que a pessoa fez.
+
+São **dez**, mais a Afinidade nenhuma: Arcano, Água, Fogo, Terra, Ar, Relâmpago, Gelo, Natureza, Vida e Ender.
+
+**A roda.** Cada uma tem quatro relações com as outras, e é a soma delas que faz a roda girar: a **oposta
+direta**, que perde tanto quanto esta ganha; quatro **opostas maiores**, que perdem três quartos; duas
+**menores**, que perdem metade; e duas **vizinhas**, que perdem um quarto — porque mesmo o que é parecido se
+afasta.
+
+**A conta não fecha em zero, e é de propósito.** Quem soma **um** numa Afinidade tira
+1 + 4×0,75 + 2×0,5 + 2×0,25 = **5,5** das outras: o saldo é de **menos 4,5** por ponto ganho. Não é para
+render; é para doer escolher. Há uma prova que guarda esse número, porque ele parece erro e não é.
+
+**O tranco.** Quem chega aos 100 numa delas fica preso ali para sempre — o `isLocked` do original. É a única
+coisa deste ramo que não tem volta.
+
+**O retorno decrescente** é o que impede alguém de ganhar uma Afinidade numa tarde. Ele começa em **1,2**,
+perde **0,3** por feitiço lançado (0,1 se for canalizado) e volta a subir **0,005** por batida. Quatro feitiços
+seguidos zeram o ganho: a Afinidade vem de lançar ao longo de muitos dias, que é exatamente o que ela devia
+significar.
+
+**O deslocamento por feitiço é miúdo de propósito.** Cada Essência puxa para a Afinidade dela — Fogo e Gelo
+0,01, Cura 0,05, Escavar 0,001, Luz nada —, e isso é multiplicado pelo retorno decrescente e por **cinco**. Uma
+cura lançada com o retorno cheio move a Vida em **0,3** de 100.
+
+**Um feitiço que falha não puxa nada**, e nem gasta o retorno decrescente: quem errou não aprendeu.
+
+**A Afinidade de um feitiço se conta, não se escreve.** Passa-se por todas as etapas somando uma marca para
+cada Afinidade que cada Essência puxa, e a que aparecer mais vezes é a do feitiço — o `mainAffinityFor` do
+original. É dela que saem a figura e a cor de um projétil, e é isso que faz um feitiço de fogo *parecer* um
+feitiço de fogo sem ninguém ter escolhido.
+
+**As onze figuras vieram do jar**, uma por Afinidade, com o número de quadros de cada uma: o estouro do Fogo
+tem 24, o relâmpago 20, a pedra da Terra 16, o vento do Ar 10, a `lens_flare` da nenhuma e a planta da Natureza
+13, o arcano 8 — e a brasa do Gelo, o brilho da Vida e a bola de Água são quadros soltos, sem animação. As três
+cores que o original escreve à mão (Ender, Gelo, Vida) vieram junto; as outras sete saem brancas, porque a
+figura delas já vem colorida.
+
+**Desvios declarados.**
+
+1. **As relações não são simétricas, e isso é do original.** O Arcano tem a Vida como oposta direta, mas a Vida
+   tem o Ender; o Relâmpago tem o Gelo, e a Natureza também tem o Relâmpago, que já está tomado. Parece erro de
+   digitação de 2014 e pode bem ser, mas mexer nisso mudaria a roda inteira. Fica como está, e há uma prova
+   que fixa a assimetria para quem vier "consertar" ter de ler antes.
+2. **O retorno decrescente sobe de 20 em 20 batidas, e não a cada uma.** No original o `tickDiminishingReturns`
+   corre todo tique somando 0,005. Aqui corre junto com o relógio da mana, somando os mesmos 0,005 vinte vezes.
+   Dá no mesmo, e poupa um laço por batida em cima de todo mundo que está no servidor.
+3. **Os efeitos passivos de Afinidade ficaram de fora.** O `AffinityHelper` do original é enorme: nadar
+   depressa e respirar debaixo d'água com Água, resistir ao fogo e queimar quem se aproxima com Fogo, andar no
+   teto e comer do sol com Natureza, a ponte de gelo, o salto do Ar, a visão noturna do Ender, o relâmpago do
+   Relâmpago. São a recompensa de ter uma Afinidade, e são fatia própria — a roda tinha de existir primeiro.
+4. **O livro da Afinidade e o Orbe de Essência ficaram de fora**, porque são a mesa de escrever feitiços e o
+   ritual de obelisco, que não estão portados.

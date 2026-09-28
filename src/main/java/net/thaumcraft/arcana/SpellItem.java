@@ -79,6 +79,13 @@ public class SpellItem extends Item {
                         .withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
             }
         }
+        // a Afinidade não está escrita em lugar nenhum: ela se conta das Essências
+        Affinity puxa = feitiço.mainAffinity();
+        if (puxa != Affinity.NONE) {
+            linha.accept(Component.translatable("tc.spell.affinity",
+                            Component.translatable(puxa.key()))
+                    .withStyle(estilo -> estilo.withColor(puxa.color)));
+        }
         linha.accept(Component.translatable("tc.spell.cost",
                         String.format(java.util.Locale.ROOT, "%.0f", feitiço.manaCost(null, null)))
                 .withStyle(net.minecraft.ChatFormatting.BLUE));

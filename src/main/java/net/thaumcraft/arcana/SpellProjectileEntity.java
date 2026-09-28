@@ -34,11 +34,10 @@ import java.util.Set;
  * saltos é capaz, o de Ricochete. Cada bicho e cada bloco só contam <b>uma vez</b>: o original guarda a lista do
  * que já pegou, para um projétil que atravessa não bater três vezes no mesmo zumbi.
  *
- * <p><b>Desvios declarados.</b> Ficaram de fora três coisas do original, todas presas ao que ainda não está
+ * <p><b>Desvios declarados.</b> Ficaram de fora duas coisas do original, todas presas ao que ainda não está
  * portado: o <b>perseguir</b> ({@code setHoming}) — que no original é <i>código morto</i>, porque não existe
  * nenhum modificador que ligue o {@code HOMING}; o <b>refletir feitiços</b>, que depende da lista de bênçãos
- * ({@code BuffList.spellReflect}); e a <b>figura e a cor por Afinidade</b>, que depende da Afinidade. Sem
- * Afinidade, todo projétil sai com a figura e a cor que o original dá à Afinidade nenhuma.
+ * ({@code BuffList.spellReflect}), que depende da lista de bênçãos.
  */
 public class SpellProjectileEntity extends Projectile {
     /**
@@ -82,7 +81,7 @@ public class SpellProjectileEntity extends Projectile {
     public SpellProjectileEntity(ServerLevel level, LivingEntity quem, Spell feitiço, double velocidade) {
         this(ArcanaEntities.SPELL_PROJECTILE, level);
         this.setOwner(quem);
-        this.spell = feitiço;
+        this.setSpell(feitiço);
 
         float giro = quem.getYRot();
         float mira = quem.getXRot();
@@ -116,6 +115,7 @@ public class SpellProjectileEntity extends Projectile {
 
     public void setSpell(Spell feitiço) {
         this.spell = feitiço;
+        this.entityData.set(AFFINITY, feitiço.mainAffinity().ordinal());
     }
 
     public void setGravity(double quanto) {
@@ -134,8 +134,36 @@ public class SpellProjectileEntity extends Projectile {
         this.targetNonSolid = sim;
     }
 
+    /**
+     * A Afinidade que ele mostra, mandada ao cliente: os {@code DW_ICON_NAME} e {@code DW_COLOR} do original,
+     * num número só.
+     *
+     * <p>O feitiço inteiro não vai para o cliente — ele não precisa dele para nada, e ir seria mandar uma
+     * frase por projétil. O que vai é a Afinidade, que é o que decide a figura e a cor.
+     */
+    private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> AFFINITY =
+            net.minecraft.network.syncher.SynchedEntityData.defineId(SpellProjectileEntity.class,
+                    net.minecraft.network.syncher.EntityDataSerializers.INT);
+
     @Override
     protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
+        builder.define(AFFINITY, Affinity.NONE.ordinal());
+    }
+
+    /**
+     * Força a Afinidade com que ele se desenha, sem olhar para o feitiço.
+     *
+     * <p>É o {@code ForcedAffinity} do original, que lá vive numa chave do NBT do item e serve para um
+     * feitiço escrito sair com a cara que quem o escreveu quis. Aqui ela existe para o mesmo, e as provas de
+     * tela usam-na para pôr as dez lado a lado.
+     */
+    public void forceAffinity(Affinity qual) {
+        this.entityData.set(AFFINITY, qual.ordinal());
+    }
+
+    /** A Afinidade com que ele se desenha. */
+    public Affinity affinity() {
+        return Affinity.values()[Math.clamp(this.entityData.get(AFFINITY), 0, Affinity.values().length - 1)];
     }
 
     // ------------------------------------------------------------------ o voo
@@ -292,7 +320,7 @@ public class SpellProjectileEntity extends Projectile {
     @Override
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
-        this.spell = input.read("spell", Spell.CODEC).orElse(Spell.EMPTY);
+        this.setSpell(input.read("spell", Spell.CODEC).orElse(Spell.EMPTY));
         this.gravity = input.getDoubleOr("gravity", 0.0);
         this.bounces = input.getIntOr("bounces", 0);
         this.pierces = input.getIntOr("pierces", 0);

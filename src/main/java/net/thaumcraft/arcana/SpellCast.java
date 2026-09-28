@@ -58,7 +58,10 @@ public final class SpellCast {
         }
 
         Result saiu = etapa.shape().begin(level, feitiço, quem, alvo, onde);
-        if (saiu.ok()) charge(quem, custo, desgaste);
+        if (saiu.ok()) {
+            charge(quem, custo, desgaste);
+            shiftAffinity(quem, etapa);
+        }
         return saiu;
     }
 
@@ -107,6 +110,41 @@ public final class SpellCast {
         if (!(quem instanceof Player gente) || gente.hasInfiniteMaterials()) return;
         Mana.set(gente, Mana.of(gente).spend(mana, burnout));
     }
+
+    // ------------------------------------------------------------------ a Afinidade
+
+    /**
+     * O quanto o feitiço que pegou puxa quem o lançou: o trecho do {@code SpellUtils.doAffinityShift}.
+     *
+     * <p>Cada Essência da etapa puxa para a Afinidade dela, e o quanto ela puxa é multiplicado pelo
+     * <b>retorno decrescente</b> de quem lançou e por <b>cinco</b> — o {@code × 5.0F} do original. Feitiço
+     * canalizado puxa um quarto disso.
+     *
+     * <p>E no fim, o retorno decrescente <b>desce</b>: quem despeja feitiços seguidos não ganha Afinidade
+     * nenhuma. Ela vem de lançar ao longo de muitos dias, que é o que ela devia significar.
+     */
+    public static void shiftAffinity(LivingEntity quem, Spell.Stage etapa) {
+        if (!(quem instanceof Player gente)) return;
+
+        AffinityData era = AffinityData.of(gente);
+        AffinityData agora = era;
+        boolean canalizado = etapa.shape().channeled();
+
+        for (SpellPart.Essence essência : etapa.essences()) {
+            float puxa = essência.affinityShift() * era.falloff() * AFFINITY_FACTOR;
+            if (canalizado) puxa /= 4.0f;
+            if (puxa <= 0.0f) continue;
+            for (Affinity qual : essência.affinities()) {
+                agora = agora.increment(qual, puxa);
+            }
+        }
+
+        agora = agora.spent(canalizado);
+        if (!agora.equals(era)) AffinityData.set(gente, agora);
+    }
+
+    /** O {@code × 5.0F} com que o original multiplica todo deslocamento de Afinidade. */
+    public static final float AFFINITY_FACTOR = 5.0f;
 
     private static Mana manaOf(LivingEntity quem) {
         return quem instanceof Player gente ? Mana.of(gente) : Mana.NONE;
