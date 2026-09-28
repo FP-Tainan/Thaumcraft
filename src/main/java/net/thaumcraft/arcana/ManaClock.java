@@ -45,9 +45,12 @@ public final class ManaClock {
 
     public static void init() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
-            if (server.getTickCount() % EVERY != 0) return;
+            // os efeitos de Afinidade correm a cada batida, porque são sobre o agora: molhado, ao sol,
+            // agachado. O relógio da mana é que corre de vinte em vinte.
+            boolean relógio = server.getTickCount() % EVERY == 0;
             for (ServerPlayer quem : server.getPlayerList().getPlayers()) {
-                tick(quem);
+                AffinityEffects.tick(quem);
+                if (relógio) tick(quem);
             }
         });
     }

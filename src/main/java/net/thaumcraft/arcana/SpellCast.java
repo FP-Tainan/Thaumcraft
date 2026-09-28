@@ -51,8 +51,10 @@ public final class SpellCast {
         Spell.Stage etapa = feitiço.first();
         if (etapa == null) return Result.MALFORMED;
 
-        float custo = feitiço.manaCost(quem, alvo);
-        float desgaste = feitiço.burnout();
+        // o Arcano desconta cinco por cento da mana e do desgaste, acima de meio
+        float desconto = AffinityEffects.manaDiscount(quem);
+        float custo = feitiço.manaCost(quem, alvo) * desconto;
+        float desgaste = feitiço.burnout() * desconto;
         if (!affords(quem, custo, desgaste)) {
             return manaOf(quem).canBurn(desgaste) ? Result.NOT_ENOUGH_MANA : Result.BURNED_OUT;
         }

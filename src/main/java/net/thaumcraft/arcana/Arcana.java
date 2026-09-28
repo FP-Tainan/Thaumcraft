@@ -32,6 +32,7 @@ public final class Arcana {
     public static void init() {
         ArcanaComponents.init();
         ArcanaEntities.init();
+        AffinityPools.init();
         // a ordem importa: as peças se registram ao carregar a classe, e os feitiços leem-nas pelo nome
         Shapes.init();
         Essences.init();

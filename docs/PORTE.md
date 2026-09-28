@@ -4314,9 +4314,61 @@ figura delas já vem colorida.
 2. **O retorno decrescente sobe de 20 em 20 batidas, e não a cada uma.** No original o `tickDiminishingReturns`
    corre todo tique somando 0,005. Aqui corre junto com o relógio da mana, somando os mesmos 0,005 vinte vezes.
    Dá no mesmo, e poupa um laço por batida em cima de todo mundo que está no servidor.
-3. **Os efeitos passivos de Afinidade ficaram de fora.** O `AffinityHelper` do original é enorme: nadar
-   depressa e respirar debaixo d'água com Água, resistir ao fogo e queimar quem se aproxima com Fogo, andar no
-   teto e comer do sol com Natureza, a ponte de gelo, o salto do Ar, a visão noturna do Ender, o relâmpago do
-   Relâmpago. São a recompensa de ter uma Afinidade, e são fatia própria — a roda tinha de existir primeiro.
+3. **Os efeitos passivos de Afinidade entraram na fatia 4.** (Ficava aqui a nota de que faltavam.)
 4. **O livro da Afinidade e o Orbe de Essência ficaram de fora**, porque são a mesa de escrever feitiços e o
    ritual de obelisco, que não estão portados.
+
+### Fatia 4 — o que ter Afinidade faz de você (2026-09-27)
+
+A fatia anterior trouxe a roda; esta traz a **recompensa** dela — e, o que é mais interessante, o **preço**.
+
+**O que a Afinidade te dá.** O Relâmpago acima de 0,65 mais que dobra a velocidade e acima de 0,5 dá passada de
+bloco inteiro. A Água acima de 0,5 nada depressa e acima de 0,4 repõe o fôlego sozinha. O Fogo cheio tira 60%
+do dano de fogo, e o Ender tira 75% do dano mágico. A Vida devolve vida sozinha, 0,025 × profundidade por
+batida. A Natureza cheia come do sol e **sobe parede**. O Ar acima de 0,5 pula mais alto e cai mais leve. O
+Ender acima de 0,75 enxerga no escuro, e cheio faz **enderman não te encarar**. O Gelo agachado **congela a
+água à frente dos pés** — e cheio endurece a lava, obsidiana na fonte e pedregulho na corrente.
+
+**E o que ela te cobra.** Quase toda uma tem um preço, e é isso que faz a roda valer:
+
+- quem é de **Natureza** anda 10% mais devagar, porque criou raiz;
+- quem é de **Gelo** anda 10% mais devagar **fora do gelo** — sangue frio —, e basta um décimo de Gelo;
+- quem é de **Fogo**, **Ender** ou **Relâmpago** perde **um quarto da vida** quando está molhado;
+- quem é de **Água** perde um quarto quando arde ou está no Nether;
+- quem é de **Ender** perde um quarto **sob o sol**;
+- quem é de **Arcano** leva **10% a mais** de todo dano — é o preço de pagar 5% menos de mana;
+- quem é de **Terra** afunda na água;
+- quem é de **Relâmpago** acima de 0,25 **queima 100 de mana por batida** quando está molhado, e entre 0,5 e
+  0,8 faz **dinamite por perto acender sozinha**;
+- e quem é de **Vida** acima de 0,6 fica cego, faminto, lento e fraco **cada vez que mata** algo que estava
+  vivo. Mortos-vivos não contam.
+
+**A coisa mais bem pensada do original está nos intervalos.** Olhe as fraquezas: elas valem de **0,5 a 0,9**, e
+**somem acima disso**. Não é engano — é o original dizendo que quem *chegou ao fim* de uma Afinidade passou da
+parte que dói. É o que faz valer a pena ir até lá em vez de ficar no meio, e é o motivo de o tranco em 100
+existir. Há uma prova que fixa esse intervalo.
+
+**Os baldes.** A vida que volta (0,025 por batida) e a comida que o sol dá (0,02) não existem em pedaço menor
+que um. O original guarda o resto num balde e, quando ele passa de um, dá um e tira um. É o que faz a
+regeneração ser lenta e contínua em vez de pular de meio em meio coração.
+
+**Onde isto entra no jogo de hoje.** O Forge de 2014 tinha `LivingUpdateEvent`, `LivingHurtEvent`,
+`LivingFallEvent`, `LivingJumpEvent` e `LivingDeathEvent`. O jogo de hoje não tem nenhum, então são quatro
+mixins: `actuallyHurt` (em `LivingEntity` e em `Player`, que tem o seu próprio), `jumpFromGround`,
+`causeFallDamage` e `die`. O tique corre no `END_SERVER_TICK`, a cada batida — porque quase tudo aqui é sobre
+o agora: se a pessoa está molhada, se está ao sol, se está agachada.
+
+**Desvios declarados.**
+
+1. **O nadar depressa usa a Graça do Golfinho do jogo**, no lugar do `BuffEffectSwiftSwim` do original, que é
+   um efeito próprio do sistema de bênçãos do Ars Magica 2 — que não está portado. O efeito no jogo é o mesmo:
+   nada-se mais depressa.
+2. **A visão noturna do Ender está sempre ligada** acima de 0,75. No original ela tem um interruptor
+   (`hasActivatedNightVision`) numa tecla própria, e o sistema de teclas do ramo não está portado.
+3. **A bênção da Clareza ficou de fora.** No original, quem é de Arcano acima de 0,4 tem 5% de chance de ganhar
+   Clareza a cada feitiço, e com ela o feitiço seguinte é **de graça**. Depende da lista de bênçãos.
+4. **O movimento reverso na água ficou de fora.** O original reescreve o empurrão da corrente para quem é de
+   Água acima de 0,5, o que lá dá para **nadar contra a corrente**. No jogo de hoje a correnteza funciona de
+   outra maneira, e a Graça do Golfinho já cobre a intenção.
+5. **A ponte de gelo olha um bloco à frente**, e não a lista de blocos do `GetHorizontalBlocksInFrontOfCharacter`
+   do original, que varre um leque. O efeito é o mesmo em quem anda: a água à frente dos pés vira gelo.
