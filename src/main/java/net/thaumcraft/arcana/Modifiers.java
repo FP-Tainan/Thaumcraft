@@ -135,6 +135,15 @@ public final class Modifiers {
     public static final SpellPart.Modifier TARGET_NONSOLID_BLOCKS = SpellParts.modifier(
             new Grátis("target_nonsolid_blocks", SpellModifierKind.TARGET_NONSOLID_BLOCKS, 1.0f));
 
+    /**
+     * <b>Repetições</b>: soma <b>quatro</b> às vezes que uma coisa acontece, por 65 por cento a mais por vez.
+     *
+     * <p>Ele só vale para quem conta vezes — hoje, a Runa. Uma Runa com uma Repetição aguenta cinco pisadas
+     * em vez de uma.
+     */
+    public static final SpellPart.Modifier PROCS = SpellParts.modifier(
+            new Simple("procs", SpellModifierKind.PROCS, 4.0f, 1.65f));
+
     /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela os Modificadores a se registrarem. */
     public static void init() {
     }

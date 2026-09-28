@@ -1,0 +1,37 @@
+{
+  "variants": {
+    "affinity=0": {
+      "model": "thaumcraft:block/spell_rune_none"
+    },
+    "affinity=1": {
+      "model": "thaumcraft:block/spell_rune_arcane"
+    },
+    "affinity=2": {
+      "model": "thaumcraft:block/spell_rune_water"
+    },
+    "affinity=3": {
+      "model": "thaumcraft:block/spell_rune_fire"
+    },
+    "affinity=4": {
+      "model": "thaumcraft:block/spell_rune_earth"
+    },
+    "affinity=5": {
+      "model": "thaumcraft:block/spell_rune_air"
+    },
+    "affinity=6": {
+      "model": "thaumcraft:block/spell_rune_lightning"
+    },
+    "affinity=7": {
+      "model": "thaumcraft:block/spell_rune_ice"
+    },
+    "affinity=8": {
+      "model": "thaumcraft:block/spell_rune_nature"
+    },
+    "affinity=9": {
+      "model": "thaumcraft:block/spell_rune_life"
+    },
+    "affinity=10": {
+      "model": "thaumcraft:block/spell_rune_ender"
+    }
+  }
+}

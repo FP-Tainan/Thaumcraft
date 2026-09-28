@@ -4202,8 +4202,7 @@ devolver `EFFECT_FAILED` antes de tirar mana. Curar quem está com a vida cheia 
 4. **Sem árvore de perícias, sem mesa de escrever e sem os Rituais de Obelisco.** A Essência sabe fazer o que
    sabe; o que ainda não há é o lugar onde se aprende a escrevê-la nem onde se escreve. Os feitiços prontos da
    aba do criativo servem para experimentar a gramática enquanto isso.
-5. **A Zona, a Parede e a Onda entraram na fatia 5.** Faltam ainda o Facho, a Runa, a Corrente, o Vínculo e as
-   Contingências.
+5. **As Formas entraram todas até a fatia 6**, menos o Vínculo, que depende das ferramentas vinculadas.
 
 ### Fatia 2 — o relógio da mana e o Projétil (2026-09-27)
 
@@ -4381,7 +4380,8 @@ corre a frase vezes sem conta enquanto durar.
 
 **A Zona** é um disco parado: dois blocos de raio, cinco segundos, e de segundo em segundo ela manda as
 Essências do que sobrou da frase em quem estiver dentro **e** lança o que sobrou dali. É a Forma de quem quer
-segurar um corredor, e é a mais cara do ramo: **4,5×**.
+segurar um corredor, e é a mais cara das que atingem alguma coisa: **4,5×**. (Só as Contingências da fatia
+6, que não atingem nada e só esperam, custam mais.)
 
 **A Parede** é uma linha atravessada no caminho. Três blocos de raio para cada lado, e ela não é uma caixa: é
 um **segmento de reta**, e cada bicho é medido contra ele. Só pega quem estiver a menos de 0,75 de bloco da
@@ -4424,3 +4424,59 @@ chão por onde passa em vez de no ar onde está.
    É fatia própria, junto com as outras partículas do ramo.
 4. **A Chuva de Fogo e a Nevasca ficaram de fora.** A mesma entidade do original tem mais dois feitios
    (`TYPE_ROF` e `TYPE_BLIZ`), que não são Formas: são efeitos de itens e de rituais que não estão portados.
+
+### Fatia 6 — a Corrente, o Facho, a Runa e as Contingências (2026-09-28)
+
+As Formas que faltavam, menos uma. Com esta fatia o ramo tem **quatorze** das quinze do original.
+
+**A Corrente** salta de um alvo para o seguinte: pega quem o mago está olhando e, dali, procura o vivo mais
+perto que ainda não foi pego — e outra vez, até três. Cada salto alcança quatro blocos. Em cada um dos alvos
+ela faz duas coisas: manda as Essências desta etapa **e** lança o que sobra da frase dali, o que faz de uma
+Corrente seguida de Área uma Área em cada bicho da corrente. **Quem lançou nunca entra na corrente.**
+
+**O Facho** é a única Forma que se **segura** em vez de se lançar. Enquanto o botão estiver preso ela aponta
+para onde o mago olha e corre de novo a cada batida — mas só **fere de dez em dez**. É o que separa o facho de
+um moedor: ele queima devagar e sem parar. Por isso custa a **décima parte** de uma Forma comum: o preço é por
+batida, e ao fim de dez batidas somou o de um feitiço inteiro. Segurar um facho é gastar mana o tempo todo, e
+ele para sozinho quando a mana acaba.
+
+Isso obrigou a trazer o **canalizar** para o ramo: o item passou a ter `getUseDuration`, `onUseTick` e uma
+Forma passou a poder saber **há quantas batidas** está sendo segurada. É o `useCount` do original, e só o
+Facho olha para ele.
+
+**A Runa** é um feitiço que **espera**. Ela fica desenhada no chão e não faz nada até alguém pisar — e então
+corre a frase naquela pessoa e se gasta. Quantas vezes aguenta, di-lo o modificador de Repetições (uma só, sem
+ele). **Quem a pôs não a dispara**, o que é o que a torna usável para guardar uma porta. Ela guarda a
+Afinidade num estado do bloco, e é daí que sai a cor: vieram as **onze figuras** do original, uma por
+Afinidade, e uma runa de fogo é vermelha sem ninguém ter escolhido.
+
+**As cinco Contingências** são a única coisa do ramo que corre **sozinha**. Lançar uma não faz nada de
+visível: ela escreve a frase dentro de quem a levou e ali fica, calada, até acontecer a coisa que espera —
+**cair**, **levar dano**, **pegar fogo**, **ficar com um terço da vida** ou **morrer**. Uma Contingência de
+Morte com uma Cura é uma segunda vida; uma de Queda com uma Pena Suave é um paraquedas que ninguém precisa
+lembrar de abrir. Elas custam **dez vezes** uma Forma comum, que é o preço de um feitiço que espera.
+
+**Duas coisas bem pensadas do original, nas Contingências.** Primeiro: **uma de cada vez** — quem já tem uma
+guardada e lança outra perde a primeira, o que impede alguém de andar com cinco redes de segurança. Segundo:
+ela **se gasta antes de correr**, e é isso que impede uma Contingência de Dano de entrar num laço sem fim
+quando o feitiço dela fere quem a levava.
+
+**E a de Queda não dispara quando se começa a cair.** Ela espera o **chão estar perto demais** para o que
+falta cair: a distância até o chão tem de ser menor que oito vezes a velocidade de queda. É o que faz dela um
+paraquedas e não um planador — deixa cair à vontade e só age no fim.
+
+**Onde isto entra no jogo de hoje.** Três das cinco Contingências têm um momento certo (a pancada, a vida a
+descer, a morte) e ficam num mixin em `actuallyHurt` e `die`. As outras duas são **estados** — estar ardendo,
+estar caindo — e por isso é preciso olhar para elas a cada batida, num mixin em `tick`.
+
+**Desvios declarados.**
+
+1. **O Vínculo ficou de fora.** Ele transforma um feitiço escrito numa **ferramenta vinculada** — picareta,
+   machado ou espada —, e essas três não estão portadas. É a única das quinze Formas do original que falta, e
+   ela é fatia própria junto com as ferramentas.
+2. **A Runa não solta nada ao ser quebrada.** No original ela também não: ou dispara e se gasta, ou fica.
+3. **O feitiço de uma Runa é lançado por quem pisa nela**, e não por um jogador de mentira de nível 99 como
+   no original. Como o gasto de mana só sai de quem lança em modo de sobrevivência e a runa já foi paga
+   quando foi desenhada, o efeito no jogo é o mesmo sem inventar um jogador.
+4. **Sem as partículas da Corrente.** O original desenha um facho entre cada elo da corrente. Ela funciona; o
+   que falta é vê-la.

@@ -171,6 +171,151 @@ public final class Shapes {
     public static void init() {
     }
 
+    /**
+     * <b>Corrente</b>: o {@code Chain}, o feitiço que <b>salta de um alvo para o seguinte</b>.
+     *
+     * <p>Ela pega em quem o mago está olhando e, dali, procura o vivo mais perto que ainda não tenha sido
+     * pego — e outra vez, e outra, até três. Cada salto alcança quatro blocos.
+     *
+     * <p>E em cada um dos alvos ela faz <b>duas coisas</b>: manda as Essências desta etapa <i>e</i> lança o
+     * que sobra da frase dali. Uma Corrente seguida de uma Área abre uma Área em cada bicho da corrente.
+     *
+     * <p><b>Quem lançou nunca entra na corrente.</b> É o original, e é o que a torna segura de usar no meio
+     * de uma briga.
+     */
+    public static final SpellPart.Shape CHAIN = SpellParts.shape(new SpellPart.Shape() {
+        /** O quanto cada salto alcança: os quatro blocos do original. */
+        public static final double BASE_RANGE = 4.0;
+        /** E quantos alvos a corrente pega: os três. */
+        public static final int BASE_TARGETS = 3;
+        /** Até onde o mago pode estar olhando para começar a corrente. */
+        public static final double LOOK = 8.0;
+
+        @Override
+        public String name() {
+            return "chain";
+        }
+
+        @Override
+        public float manaMultiplier() {
+            return 1.5f;
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde) {
+            double salto = feitiço.mul(SpellModifierKind.RANGE, BASE_RANGE);
+            int quantos = (int) feitiço.add(SpellModifierKind.PROCS, BASE_TARGETS);
+
+            // o primeiro é quem já estava apontado, ou quem o mago está olhando
+            Entity primeiro = alvo;
+            if (primeiro == null) {
+                HitResult bateu = look(level, quem, LOOK,
+                        feitiço.has(SpellModifierKind.TARGET_NONSOLID_BLOCKS));
+                if (bateu instanceof EntityHitResult nele) primeiro = nele.getEntity();
+            }
+            if (!(primeiro instanceof LivingEntity)) return SpellCast.Result.EFFECT_FAILED;
+
+            var corrente = new java.util.ArrayList<Entity>();
+            Entity atual = primeiro;
+            while (atual != null && corrente.size() < quantos) {
+                corrente.add(atual);
+                atual = maisPerto(level, atual, quem, corrente, salto);
+            }
+
+            Spell sobra = feitiço.pop();
+            boolean pegou = false;
+            for (Entity nele : corrente) {
+                if (nele == quem) continue;
+                if (SpellCast.onEntity(level, feitiço, quem, nele).ok()) pegou = true;
+                SpellCast.cast(level, sobra, quem, nele, nele.position());
+            }
+            return pegou ? SpellCast.Result.SUCCESS : SpellCast.Result.EFFECT_FAILED;
+        }
+    });
+
+    /**
+     * O vivo mais perto daquele que ainda não está na corrente, e que não é quem lançou.
+     *
+     * <p>É o laço do {@code Chain}: de cada elo, o próximo é o mais perto que sobrou.
+     */
+    private static @Nullable Entity maisPerto(ServerLevel level, Entity de, LivingEntity quem,
+                                              java.util.List<Entity> já, double alcance) {
+        Entity achado = null;
+        double perto = Double.MAX_VALUE;
+        for (Entity outro : level.getEntitiesOfClass(LivingEntity.class,
+                de.getBoundingBox().inflate(alcance))) {
+            if (outro == quem || já.contains(outro)) continue;
+            double d = outro.distanceToSqr(de);
+            if (d < perto) {
+                perto = d;
+                achado = outro;
+            }
+        }
+        return achado;
+    }
+
+    /**
+     * <b>Facho</b>: o {@code Beam}, a única Forma que se <b>segura</b> em vez de se lançar.
+     *
+     * <p>Enquanto o botão estiver preso, ela aponta para onde o mago olha e corre de novo a cada batida —
+     * mas só <b>fere de dez em dez</b>. É o {@code useCount % 10} do original, e é o que separa o facho de um
+     * moedor: ele queima devagar e sem parar, e não tudo de uma vez.
+     *
+     * <p>Por isso ela custa a <b>décima parte</b> de uma Forma comum: o preço é por batida, e ao fim de dez
+     * batidas somou o de um feitiço inteiro. Segurar um facho é gastar mana o tempo todo.
+     */
+    public static final SpellPart.Shape BEAM = SpellParts.shape(new SpellPart.Shape() {
+        /** De quantas em quantas batidas ele fere. */
+        public static final int EVERY = 10;
+
+        @Override
+        public String name() {
+            return "beam";
+        }
+
+        @Override
+        public float manaMultiplier() {
+            return 0.1f;
+        }
+
+        @Override
+        public boolean channeled() {
+            return true;
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde) {
+            return this.begin(level, feitiço, quem, alvo, onde, 0);
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde, int batidas) {
+            double alcance = feitiço.add(SpellModifierKind.RANGE, SpellModifierKind.RANGE.base);
+            HitResult bateu = look(level, quem, alcance,
+                    feitiço.has(SpellModifierKind.TARGET_NONSOLID_BLOCKS));
+
+            // o facho existe todo tique, mas só dói de dez em dez
+            boolean dói = batidas % EVERY == 0;
+            if (!dói) return SpellCast.Result.SUCCESS;
+            if (bateu == null) return SpellCast.Result.EFFECT_FAILED;
+
+            if (bateu instanceof EntityHitResult nele) {
+                SpellCast.Result saiu = SpellCast.onEntity(level, feitiço, quem, nele.getEntity());
+                if (!saiu.ok()) return saiu;
+                return SpellCast.cast(level, feitiço.pop(), quem, nele.getEntity(), bateu.getLocation());
+            }
+
+            BlockHitResult nisso = (BlockHitResult) bateu;
+            SpellCast.Result saiu = SpellCast.onBlock(level, feitiço, quem, nisso.getBlockPos(),
+                    nisso.getDirection(), nisso.getLocation());
+            if (!saiu.ok()) return saiu;
+            return SpellCast.cast(level, feitiço.pop(), quem, null, bateu.getLocation());
+        }
+    });
+
     // ------------------------------------------------------------------ as que ficam
 
     /**
@@ -193,7 +338,8 @@ public final class Shapes {
      * <p>Dois blocos de raio, cinco segundos de vida, e a cada segundo ela manda as Essências do que sobrou
      * em quem estiver dentro <b>e</b> lança o que sobrou dali. É a Forma de quem quer segurar um corredor.
      *
-     * <p>Ela é a mais cara do ramo: <b>quatro vezes e meia</b>.
+     * <p>Ela é a mais cara das que atingem alguma coisa: <b>quatro vezes e meia</b>. Só as Contingências,
+     * que não atingem nada e só esperam, custam mais.
      */
     public static final SpellPart.Shape ZONE = SpellParts.shape(new SpellPart.Shape() {
         /** O raio de fábrica: os dois blocos do original. */
@@ -330,6 +476,134 @@ public final class Shapes {
             return SpellCast.Result.SUCCESS;
         }
     });
+
+    /**
+     * <b>Runa</b>: o {@code Rune}, o feitiço que se deixa no chão à espera de quem pise nele.
+     *
+     * <p>Ela é <b>principum</b> como as três de área, e pela mesma razão: o que fica desenhado no chão é o
+     * <i>resto</i> da frase, e é ele que corre quando alguém pisa. Uma Runa sozinha não é armadilha nenhuma.
+     *
+     * <p>Quantas vezes ela aguenta, di-lo o modificador de <b>Repetições</b>: uma só, se não houver nenhum.
+     * E <b>quem a pôs não a dispara</b>, o que é o que a torna usável para guardar uma porta.
+     *
+     * <p>Ela nasce <b>em cima</b> do bloco que o mago está olhando, e só se ele estiver olhando para um bloco
+     * — apontar para um bicho não deixa runa nenhuma.
+     */
+    public static final SpellPart.Shape RUNE = SpellParts.shape(new SpellPart.Shape() {
+        /** Quantas vezes ela aguenta de fábrica: a uma do original. */
+        public static final int BASE_TRIGGERS = 1;
+        /** Até onde o mago pode estar olhando para a deixar. */
+        public static final double LOOK = 8.0;
+
+        @Override
+        public String name() {
+            return "rune";
+        }
+
+        @Override
+        public float manaMultiplier() {
+            return 1.1f;
+        }
+
+        @Override
+        public boolean principum() {
+            return true;
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde) {
+            SpellCast.Result mal = precisaDeMais(feitiço);
+            if (mal != null) return mal;
+
+            HitResult bateu = look(level, quem, LOOK,
+                    feitiço.has(SpellModifierKind.TARGET_NONSOLID_BLOCKS));
+            if (!(bateu instanceof BlockHitResult nisso)) return SpellCast.Result.EFFECT_FAILED;
+
+            BlockPos casa = nisso.getBlockPos().above();
+            var runa = ArcanaBlocks.SPELL_RUNE.defaultBlockState()
+                    .setValue(SpellRuneBlock.AFFINITY, feitiço.mainAffinity().ordinal());
+            if (!runa.canSurvive(level, casa)) return SpellCast.Result.EFFECT_FAILED;
+            if (!level.getBlockState(casa).canBeReplaced()) return SpellCast.Result.EFFECT_FAILED;
+
+            level.setBlockAndUpdate(casa, runa);
+            if (!(level.getBlockEntity(casa) instanceof SpellRuneBlockEntity guarda)) {
+                return SpellCast.Result.EFFECT_FAILED;
+            }
+            guarda.setSpell(feitiço.pop());
+            guarda.setTriggers((int) feitiço.add(SpellModifierKind.PROCS, BASE_TRIGGERS));
+            guarda.setPlacedBy(quem);
+            return SpellCast.Result.SUCCESS;
+        }
+    });
+
+    // ------------------------------------------------------------------ as que esperam
+
+    /**
+     * As cinco <b>Contingências</b>: as {@code Contingency_*} do Ars Magica 2.
+     *
+     * <p>Elas são a única coisa do ramo que corre <b>sozinha</b>. Lançar uma não faz nada de visível: ela
+     * escreve a frase dentro de quem a levou e ali fica, calada, até acontecer a coisa que espera.
+     *
+     * <p>Todas são <b>principum</b> — o que fica guardado é o <i>resto</i> da frase — e todas custam
+     * <b>dez vezes</b> uma Forma comum, que é o preço de um feitiço que espera.
+     *
+     * <p>Se houver alvo, é <b>nele</b> que a Contingência fica, e não em quem a lançou. É o que deixa pôr um
+     * paraquedas em outra pessoa.
+     */
+    private static SpellPart.Shape contingency(String nome, Contingency.Kind espera) {
+        return SpellParts.shape(new SpellPart.Shape() {
+            @Override
+            public String name() {
+                return nome;
+            }
+
+            @Override
+            public float manaMultiplier() {
+                return Contingency.MANA_MULTIPLIER;
+            }
+
+            @Override
+            public boolean principum() {
+                return true;
+            }
+
+            @Override
+            public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                          @Nullable Entity alvo, Vec3 onde) {
+                SpellCast.Result mal = precisaDeMais(feitiço);
+                if (mal != null) return mal;
+
+                LivingEntity nele = alvo instanceof LivingEntity vivo ? vivo : quem;
+                Contingency.arm(nele, espera, feitiço.pop());
+                return SpellCast.Result.SUCCESS;
+            }
+        });
+    }
+
+    /** <b>Contingência: Queda</b>. Dispara quando o chão está perto demais para o que falta cair. */
+    public static final SpellPart.Shape CONTINGENCY_FALL =
+            contingency("contingency_fall", Contingency.Kind.FALL);
+
+    /** <b>Contingência: Dano</b>. Dispara em qualquer pancada que chegue. */
+    public static final SpellPart.Shape CONTINGENCY_DAMAGE =
+            contingency("contingency_damage", Contingency.Kind.DAMAGE_TAKEN);
+
+    /** <b>Contingência: Fogo</b>. Dispara enquanto se estiver ardendo. */
+    public static final SpellPart.Shape CONTINGENCY_FIRE =
+            contingency("contingency_fire", Contingency.Kind.ON_FIRE);
+
+    /** <b>Contingência: Vida Baixa</b>. Dispara ao cair a um terço da vida. */
+    public static final SpellPart.Shape CONTINGENCY_HEALTH =
+            contingency("contingency_health", Contingency.Kind.HEALTH_LOW);
+
+    /**
+     * <b>Contingência: Morte</b>. Dispara no instante em que se morre, <b>antes</b> de morrer de verdade.
+     *
+     * <p>É a mais valiosa das cinco: com uma Cura atrás dela, é uma segunda vida.
+     */
+    public static final SpellPart.Shape CONTINGENCY_DEATH =
+            contingency("contingency_death", Contingency.Kind.DEATH);
 
     // ------------------------------------------------------------------ a mira
 

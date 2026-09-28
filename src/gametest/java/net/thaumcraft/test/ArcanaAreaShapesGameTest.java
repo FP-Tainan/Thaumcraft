@@ -239,11 +239,15 @@ public class ArcanaAreaShapesGameTest {
                         + ", e custa " + par.getKey().manaMultiplier());
             }
         }
-        // a Zona é a mais cara do ramo
-        for (var forma : net.thaumcraft.arcana.SpellParts.shapes()) {
+        // a Zona é a mais cara das três que criam área — só as Contingências, a 10×, custam mais
+        for (var forma : List.of(Shapes.SELF, Shapes.TOUCH, Shapes.AOE, Shapes.PROJECTILE,
+                Shapes.WALL, Shapes.WAVE, Shapes.CHAIN, Shapes.BEAM, Shapes.RUNE)) {
             if (forma.manaMultiplier() > Shapes.ZONE.manaMultiplier()) {
-                helper.fail("a Zona devia ser a mais cara, e a " + forma.name() + " custa mais");
+                helper.fail("a Zona devia custar mais que a " + forma.name());
             }
+        }
+        if (Shapes.CONTINGENCY_DEATH.manaMultiplier() <= Shapes.ZONE.manaMultiplier()) {
+            helper.fail("e as Contingências, que esperam, custam mais que ela");
         }
         helper.succeed();
     }

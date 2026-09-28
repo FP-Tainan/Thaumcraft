@@ -4,9 +4,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
@@ -35,11 +37,39 @@ public class SpellItem extends Item {
         return coisa;
     }
 
+    /**
+     * Quanto tempo se pode segurar um feitiço canalizado: tanto quanto se quiser.
+     *
+     * <p>O que o faz parar não é o tempo — é a mana acabar, ou quem o segura soltar.
+     */
+    @Override
+    public int getUseDuration(ItemStack coisa, LivingEntity quem) {
+        return 72000;
+    }
+
+    @Override
+    public ItemUseAnimation getUseAnimation(ItemStack coisa) {
+        return ItemUseAnimation.BOW;
+    }
+
+    /** Se a primeira Forma da frase é das que se seguram. */
+    public static boolean isChanneled(Spell feitiço) {
+        Spell.Stage etapa = feitiço.first();
+        return etapa != null && etapa.shape().channeled();
+    }
+
     @Override
     public InteractionResult use(Level level, Player quem, InteractionHand mão) {
         ItemStack naMão = quem.getItemInHand(mão);
         Spell feitiço = spellOf(naMão);
         if (feitiço.isEmpty()) return InteractionResult.PASS;
+
+        // um feitiço canalizado não se lança: segura-se, e quem o corre é o onUseTick
+        if (isChanneled(feitiço)) {
+            quem.startUsingItem(mão);
+            return InteractionResult.CONSUME;
+        }
+
         if (!(level instanceof ServerLevel server)) return InteractionResult.SUCCESS;
 
         SpellCast.Result saiu = SpellCast.cast(server, feitiço, quem, null, quem.getEyePosition());
@@ -49,6 +79,34 @@ public class SpellItem extends Item {
             return InteractionResult.FAIL;
         }
         return InteractionResult.SUCCESS;
+    }
+
+    /**
+     * Cada batida de um feitiço segurado: o {@code onUsingTick} do original.
+     *
+     * <p>Ele corre a frase de novo, dizendo <b>há quantas batidas</b> se está segurando — e é a Forma quem
+     * decide o que fazer com esse número. O Facho fere de dez em dez.
+     *
+     * <p>Quando a mana acaba ou o desgaste enche, o feitiço para sozinho: solta-se a mão de quem o segura.
+     */
+    @Override
+    public void onUseTick(Level level, LivingEntity quem, ItemStack coisa, int falta) {
+        if (!(level instanceof ServerLevel server)) return;
+        Spell feitiço = spellOf(coisa);
+        if (feitiço.isEmpty() || !isChanneled(feitiço)) {
+            quem.stopUsingItem();
+            return;
+        }
+
+        int batidas = this.getUseDuration(coisa, quem) - falta;
+        SpellCast.Result saiu = SpellCast.cast(server, feitiço, quem, null, quem.getEyePosition(), batidas);
+        if (saiu == SpellCast.Result.NOT_ENOUGH_MANA || saiu == SpellCast.Result.BURNED_OUT) {
+            if (quem instanceof Player gente) {
+                gente.sendSystemMessage(Component.translatable("tc.spell."
+                        + saiu.name().toLowerCase(java.util.Locale.ROOT)));
+            }
+            quem.stopUsingItem();
+        }
     }
 
     /** O que ele diz de si: a frase escrita nele, etapa a etapa. */

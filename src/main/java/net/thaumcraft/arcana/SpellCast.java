@@ -47,6 +47,17 @@ public final class SpellCast {
      */
     public static Result cast(ServerLevel level, Spell feitiço, LivingEntity quem, @Nullable Entity alvo,
                               Vec3 onde) {
+        return cast(level, feitiço, quem, alvo, onde, 0);
+    }
+
+    /**
+     * A mesma coisa, dizendo há quantas batidas se está segurando um feitiço canalizado.
+     *
+     * <p>Um feitiço comum é lançado com zero e nunca olha para esse número. O Facho olha, e é o que lhe
+     * deixa ferir de dez em dez batidas em vez de a cada uma.
+     */
+    public static Result cast(ServerLevel level, Spell feitiço, LivingEntity quem, @Nullable Entity alvo,
+                              Vec3 onde, int batidas) {
         if (feitiço.isEmpty()) return Result.SUCCESS;
         Spell.Stage etapa = feitiço.first();
         if (etapa == null) return Result.MALFORMED;
@@ -59,7 +70,7 @@ public final class SpellCast {
             return manaOf(quem).canBurn(desgaste) ? Result.NOT_ENOUGH_MANA : Result.BURNED_OUT;
         }
 
-        Result saiu = etapa.shape().begin(level, feitiço, quem, alvo, onde);
+        Result saiu = etapa.shape().begin(level, feitiço, quem, alvo, onde, batidas);
         if (saiu.ok()) {
             charge(quem, custo, desgaste);
             shiftAffinity(quem, etapa);

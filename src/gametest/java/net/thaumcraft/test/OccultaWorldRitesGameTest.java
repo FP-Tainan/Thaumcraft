@@ -90,7 +90,9 @@ public class OccultaWorldRitesGameTest {
     /** O caminho da terra que se parte é sempre o mesmo para o mesmo círculo, e é isso que o deixa continuar. */
     @GameTest
     public void thePathIsTheSameForTheSameCircle(GameTestHelper helper) {
-        BlockPos meio = helper.absolutePos(new BlockPos(2, 2, 2));
+        // lugares fixos, e não os da construção: o caminho é conta pura, e a construção nasce onde calha.
+        // Com a posição da arena, a semente mudava a cada corrida e a prova era um sorteio.
+        BlockPos meio = new BlockPos(1000, 64, 1000);
         List<BlockPos> uma = Rites.PartEarth.path(meio, 60);
         List<BlockPos> outra = Rites.PartEarth.path(meio, 60);
         if (uma.size() != 60) helper.fail("o caminho tem sessenta passos, e tem " + uma.size());
@@ -99,9 +101,21 @@ public class OccultaWorldRitesGameTest {
         List<BlockPos> doLado = Rites.PartEarth.path(meio.offset(40, 0, 40), 60);
         if (uma.equals(doLado)) helper.fail("e diferente para outro lugar");
 
-        // e ele anda mesmo: o fim está longe do começo
-        BlockPos fim = uma.getLast();
-        if (fim.distSqr(meio) < 100.0) helper.fail("e o caminho afasta-se do círculo");
+        // ele é um passeio de verdade: cada passo anda um bloco, e nenhum fica parado
+        for (int i = 1; i < uma.size(); i++) {
+            BlockPos antes = uma.get(i - 1);
+            BlockPos agora = uma.get(i);
+            int dx = Math.abs(agora.getX() - antes.getX());
+            int dz = Math.abs(agora.getZ() - antes.getZ());
+            if (antes.getY() != agora.getY()) helper.fail("o caminho não sobe nem desce");
+            if (dx > 1 || dz > 1) helper.fail("e não dá saltos: passo " + i);
+            if (dx == 0 && dz == 0) helper.fail("e não fica parado: passo " + i);
+        }
+
+        // e, para este lugar, ele afasta-se do círculo — o número é o desta semente
+        if (uma.getLast().distSqr(meio) < 100.0) {
+            helper.fail("e o caminho afasta-se do círculo: " + uma.getLast().distSqr(meio));
+        }
         helper.succeed();
     }
 

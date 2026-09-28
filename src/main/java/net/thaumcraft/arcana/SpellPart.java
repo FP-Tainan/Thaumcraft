@@ -58,6 +58,17 @@ public interface SpellPart {
             return false;
         }
         /**
+         * A mesma coisa, sabendo <b>há quantas batidas</b> se está segurando: o {@code useCount} do original.
+         *
+         * <p>Só o Facho se importa com isso, e é o que lhe deixa doer de dez em dez batidas em vez de a cada
+         * uma. Quem não é canalizado ignora a contagem.
+         */
+        default SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                       @Nullable Entity alvo, Vec3 onde, int batidas) {
+            return this.begin(level, feitiço, quem, alvo, onde);
+        }
+
+        /**
          * Se ela é <b>principum</b>: uma Forma que só serve de começo, e que pede outra depois.
          *
          * <p>A Zona, a Parede e a Onda são assim. Elas não fazem nada por si: criam um lugar, e quem faz

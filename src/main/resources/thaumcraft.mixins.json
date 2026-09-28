@@ -5,6 +5,7 @@
   "mixins": [
     "EnderManAffinityMixin",
     "LivingEntityAffinityMixin",
+    "LivingEntityContingencyMixin",
     "PlayerAffinityMixin",
     "LivingEntityArmorMixin",
     "LivingEntityChampionMixin",
