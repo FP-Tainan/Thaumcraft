@@ -96,6 +96,22 @@ public record Spell(List<Stage> stages) {
         return valor;
     }
 
+    /**
+     * Quantas vezes esta etapa traz aquele modificador: o {@code countModifiers} do original.
+     *
+     * <p>Há números que não se somam nem se multiplicam — eles se <b>contam</b>. A Onda desce meio bloco por
+     * batida <i>por cada</i> Gravidade posta, e é isto que conta quantas são.
+     */
+    public int count(SpellModifierKind qual) {
+        Stage etapa = this.first();
+        if (etapa == null) return 0;
+        int quantas = 0;
+        for (SpellPart.Modifier mod : etapa.modifiers()) {
+            if (mod.modifies().contains(qual)) quantas++;
+        }
+        return quantas;
+    }
+
     /** Se esta etapa traz algum modificador daquele feitio. */
     public boolean has(SpellModifierKind qual) {
         Stage etapa = this.first();

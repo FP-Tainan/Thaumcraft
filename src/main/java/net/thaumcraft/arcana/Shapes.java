@@ -171,6 +171,166 @@ public final class Shapes {
     public static void init() {
     }
 
+    // ------------------------------------------------------------------ as que ficam
+
+    /**
+     * As três Formas que criam área são <b>principum</b>: elas pedem outra Forma depois.
+     *
+     * <p>Uma Zona sozinha não faz nada — ela cria o lugar, e quem faz alguma coisa é a frase que vem a
+     * seguir. No original, quem impede de escrever uma Zona no fim de uma frase é a Mesa de Inscrição; aqui,
+     * que ainda não a tem, quem impede é isto.
+     *
+     * <p><b>Desvio declarado:</b> o original deixa lançar e cobra a mana de um feitiço que não faz nada. Aqui
+     * a frase é recusada como malformada, de graça. É uma armadilha a menos e nenhuma perda.
+     */
+    private static @Nullable SpellCast.Result precisaDeMais(Spell feitiço) {
+        return feitiço.pop().isEmpty() ? SpellCast.Result.MALFORMED : null;
+    }
+
+    /**
+     * <b>Zona</b>: o {@code Zone}, um disco parado que corre a frase de segundo em segundo.
+     *
+     * <p>Dois blocos de raio, cinco segundos de vida, e a cada segundo ela manda as Essências do que sobrou
+     * em quem estiver dentro <b>e</b> lança o que sobrou dali. É a Forma de quem quer segurar um corredor.
+     *
+     * <p>Ela é a mais cara do ramo: <b>quatro vezes e meia</b>.
+     */
+    public static final SpellPart.Shape ZONE = SpellParts.shape(new SpellPart.Shape() {
+        /** O raio de fábrica: os dois blocos do original. */
+        public static final double BASE_RADIUS = 2.0;
+        /** E quanto ela dura: as 100 batidas. */
+        public static final int BASE_LIFE = 100;
+
+        @Override
+        public String name() {
+            return "zone";
+        }
+
+        @Override
+        public float manaMultiplier() {
+            return 4.5f;
+        }
+
+        @Override
+        public boolean principum() {
+            return true;
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde) {
+            SpellCast.Result mal = precisaDeMais(feitiço);
+            if (mal != null) return mal;
+
+            var área = new SpellEffectEntity(level, quem, feitiço.pop(), SpellEffectEntity.Kind.ZONE);
+            área.setRadius((float) feitiço.add(SpellModifierKind.RADIUS, BASE_RADIUS));
+            área.setGravity(feitiço.add(SpellModifierKind.GRAVITY, 0.0));
+            área.setLife((int) feitiço.mul(SpellModifierKind.DURATION, BASE_LIFE));
+            área.snapTo(onde.x, onde.y, onde.z, quem.getYRot(), 0.0f);
+            level.addFreshEntity(área);
+            return SpellCast.Result.SUCCESS;
+        }
+    });
+
+    /**
+     * <b>Parede</b>: o {@code Wall}, uma linha atravessada no caminho de quem vem.
+     *
+     * <p>Três blocos de raio para cada lado — seis de ponta a ponta —, cinco segundos, e ela corre a frase em
+     * quem a cruzar. Ela nasce <b>atravessada ao olhar</b> de quem a lançou, que é o que a põe no caminho e
+     * não ao longo dele.
+     *
+     * <p>Repare que o raio dela <b>multiplica</b> e o da Zona <b>soma</b>. É o original, e é o que faz o
+     * modificador de Raio — que encolhe — apertar muito mais uma Parede do que uma Zona.
+     */
+    public static final SpellPart.Shape WALL = SpellParts.shape(new SpellPart.Shape() {
+        public static final double BASE_RADIUS = 3.0;
+        public static final int BASE_LIFE = 100;
+
+        @Override
+        public String name() {
+            return "wall";
+        }
+
+        @Override
+        public float manaMultiplier() {
+            return 2.5f;
+        }
+
+        @Override
+        public boolean principum() {
+            return true;
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde) {
+            SpellCast.Result mal = precisaDeMais(feitiço);
+            if (mal != null) return mal;
+
+            var área = new SpellEffectEntity(level, quem, feitiço.pop(), SpellEffectEntity.Kind.WALL);
+            área.setRadius((float) feitiço.mul(SpellModifierKind.RADIUS, BASE_RADIUS));
+            área.setGravity(feitiço.add(SpellModifierKind.GRAVITY, 0.0));
+            área.setLife((int) feitiço.mul(SpellModifierKind.DURATION, BASE_LIFE));
+            área.snapTo(onde.x, onde.y, onde.z, quem.getYRot(), 0.0f);
+            área.setWall(quem.getYRot());
+            level.addFreshEntity(área);
+            return SpellCast.Result.SUCCESS;
+        }
+    });
+
+    /**
+     * <b>Onda</b>: o {@code Wave}, a mesma Parede <b>andando para a frente</b>.
+     *
+     * <p>Um bloco de raio, um segundo de vida, meio bloco por batida. Ela é curta e rápida de propósito: o
+     * que ela faz não é segurar um lugar, é <b>varrer</b> um. E é a única das três que mexe no mundo — ela
+     * corre a frase em cada bloco por onde passa, e é por isso que uma Onda de Escavar abre uma vala.
+     *
+     * <p>A Perfuração aqui não faz o que o nome diz: ela deixa a Onda <b>atravessar paredes</b>. E cada
+     * Gravidade posta faz a Onda descer <b>meio bloco</b> por batida, o que a manda escada abaixo.
+     */
+    public static final SpellPart.Shape WAVE = SpellParts.shape(new SpellPart.Shape() {
+        public static final double BASE_RADIUS = 1.0;
+        public static final int BASE_LIFE = 20;
+        /** A velocidade dela é a do modificador, pela metade. */
+        public static final double SPEED_FACTOR = 0.5;
+
+        @Override
+        public String name() {
+            return "wave";
+        }
+
+        @Override
+        public float manaMultiplier() {
+            return 3.0f;
+        }
+
+        @Override
+        public boolean principum() {
+            return true;
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde) {
+            SpellCast.Result mal = precisaDeMais(feitiço);
+            if (mal != null) return mal;
+
+            var área = new SpellEffectEntity(level, quem, feitiço.pop(), SpellEffectEntity.Kind.WAVE);
+            área.setRadius((float) feitiço.add(SpellModifierKind.RADIUS, BASE_RADIUS));
+            área.setLife((int) feitiço.mul(SpellModifierKind.DURATION, BASE_LIFE));
+            área.noPhysics = feitiço.has(SpellModifierKind.PIERCING);
+
+            // cada Gravidade posta faz a Onda descer meio bloco por batida
+            int gravidades = feitiço.count(SpellModifierKind.GRAVITY);
+            área.setGravity(-gravidades * 0.5);
+
+            área.snapTo(onde.x, onde.y + 1.0, onde.z, quem.getYRot(), 0.0f);
+            área.setWave(quem.getYRot(), feitiço.add(SpellModifierKind.SPEED, 1.0) * SPEED_FACTOR);
+            level.addFreshEntity(área);
+            return SpellCast.Result.SUCCESS;
+        }
+    });
+
     // ------------------------------------------------------------------ a mira
 
     /**

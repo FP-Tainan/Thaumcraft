@@ -57,6 +57,15 @@ public interface SpellPart {
         default boolean terminus() {
             return false;
         }
+        /**
+         * Se ela é <b>principum</b>: uma Forma que só serve de começo, e que pede outra depois.
+         *
+         * <p>A Zona, a Parede e a Onda são assim. Elas não fazem nada por si: criam um lugar, e quem faz
+         * alguma coisa é a frase que vem a seguir. Uma Zona no fim de uma frase é uma frase incompleta.
+         */
+        default boolean principum() {
+            return false;
+        }
     }
 
     /**

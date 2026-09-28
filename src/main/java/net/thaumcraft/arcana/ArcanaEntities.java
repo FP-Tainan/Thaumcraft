@@ -28,6 +28,18 @@ public final class ArcanaEntities {
                     .clientTrackingRange(4)
                     .updateInterval(1));
 
+    /**
+     * A <b>área que fica</b>: a {@code EntitySpellEffect}.
+     *
+     * <p>Ela não se vê e não se toca: é um ponto invisível que corre o feitiço em quem estiver dentro do raio
+     * dela. A Zona, a Parede e a Onda são todas ela, com um feitio diferente.
+     */
+    public static final EntityType<SpellEffectEntity> SPELL_EFFECT = register("spell_effect",
+            EntityType.Builder.<SpellEffectEntity>of(SpellEffectEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f)
+                    .clientTrackingRange(8)
+                    .updateInterval(20));
+
     private ArcanaEntities() {
     }
 

@@ -4202,8 +4202,8 @@ devolver `EFFECT_FAILED` antes de tirar mana. Curar quem está com a vida cheia 
 4. **Sem árvore de perícias, sem mesa de escrever e sem os Rituais de Obelisco.** A Essência sabe fazer o que
    sabe; o que ainda não há é o lugar onde se aprende a escrevê-la nem onde se escreve. Os feitiços prontos da
    aba do criativo servem para experimentar a gramática enquanto isso.
-5. **Sem as outras Formas.** Falta o Facho, a Parede, a Zona, a Runa, a Corrente, o Vínculo, a Onda e as
-   Contingências. Cada uma traz um jeito diferente de um feitiço entrar no mundo, e cada uma é fatia própria.
+5. **A Zona, a Parede e a Onda entraram na fatia 5.** Faltam ainda o Facho, a Runa, a Corrente, o Vínculo e as
+   Contingências.
 
 ### Fatia 2 — o relógio da mana e o Projétil (2026-09-27)
 
@@ -4372,3 +4372,55 @@ o agora: se a pessoa está molhada, se está ao sol, se está agachada.
    outra maneira, e a Graça do Golfinho já cobre a intenção.
 5. **A ponte de gelo olha um bloco à frente**, e não a lista de blocos do `GetHorizontalBlocksInFrontOfCharacter`
    do original, que varre um leque. O efeito é o mesmo em quem anda: a água à frente dos pés vira gelo.
+
+### Fatia 5 — a área que fica (2026-09-27)
+
+Até aqui todo feitiço acontecia **num instante**: o toque pega, o projétil bate, a área explode. Esta fatia
+traz as três Formas que fazem a magia **ficar** — a `EntitySpellEffect` do original, que mora num lugar e
+corre a frase vezes sem conta enquanto durar.
+
+**A Zona** é um disco parado: dois blocos de raio, cinco segundos, e de segundo em segundo ela manda as
+Essências do que sobrou da frase em quem estiver dentro **e** lança o que sobrou dali. É a Forma de quem quer
+segurar um corredor, e é a mais cara do ramo: **4,5×**.
+
+**A Parede** é uma linha atravessada no caminho. Três blocos de raio para cada lado, e ela não é uma caixa: é
+um **segmento de reta**, e cada bicho é medido contra ele. Só pega quem estiver a menos de 0,75 de bloco da
+linha e a menos de 2 de altura — quem passa por cima ou por longe atravessa sem sentir nada. Ela nasce
+atravessada ao olhar de quem a lançou, o que a põe *no* caminho e não *ao longo* dele.
+
+**A Onda** é a mesma Parede **andando**: um bloco de raio, um segundo de vida, meio bloco por batida. Curta e
+rápida de propósito — o que ela faz não é segurar um lugar, é **varrer** um. E é a única das três que mexe no
+mundo: ela corre a frase em cada bloco por onde passa, e é por isso que uma Onda de Escavar abre uma vala e
+uma Onda de Luz deixa um rastro aceso.
+
+**As três são *principum*, e isso é a coisa mais interessante desta fatia.** Elas não fazem nada por si:
+criam um lugar, e quem faz alguma coisa é a frase que vem a seguir. Elas **tiram a etapa delas** antes de
+entregar à entidade, e por isso uma Zona seguida de Toque e Dano de Fogo é uma Zona que, de segundo em
+segundo, corre "Toque + Dano de Fogo" no lugar onde está. Uma Zona sozinha no fim de uma frase é uma frase
+incompleta.
+
+**Dois números que parecem iguais e não são.** O raio da Zona **soma** e o da Parede **multiplica**. Não é
+descuido do original: o modificador de Raio multiplica por 0,7, ou seja *encolhe*, e numa Parede ele aperta de
+verdade enquanto numa Zona quase não se sente.
+
+**E dois modificadores que não fazem o que o nome diz, na Onda.** A **Perfuração** não perfura nada: ela faz
+a Onda **atravessar paredes**. E cada **Gravidade** posta faz a Onda descer **meio bloco por batida**, o que a
+manda escada abaixo — é o `countModifiers` do original, um número que não se soma nem se multiplica, se conta.
+
+**Uma manha do original que vale guardar:** quando a gravidade de uma Zona é **negativa** e não é a primeira
+volta, ela lança o feitiço **um bloco abaixo** de si. É o que faz uma Zona que afunda ir deixando efeito no
+chão por onde passa em vez de no ar onde está.
+
+**Desvios declarados.**
+
+1. **Uma Forma principum sozinha é recusada como malformada, de graça.** O original deixa lançar e cobra a
+   mana de um feitiço que não faz nada, porque quem impediria de escrevê-lo é a Mesa de Inscrição — que não
+   está portada. É uma armadilha a menos e nenhuma perda.
+2. **Sem o jogador de mentira.** O original guarda um `DummyEntityPlayer` na entidade, para o feitiço ter de
+   quem partir depois de quem o lançou já ter ido embora. Aqui, se quem lançou sumiu, a área morre — o que é
+   mais simples e não deixa um jogador fantasma no mundo.
+3. **Sem partículas, por ora.** O original desenha a Zona com quatro partículas girando no raio e a Parede com
+   uma fila delas ao longo da linha, ambas na cor da Afinidade. A área existe e funciona; o que falta é vê-la.
+   É fatia própria, junto com as outras partículas do ramo.
+4. **A Chuva de Fogo e a Nevasca ficaram de fora.** A mesma entidade do original tem mais dois feitios
+   (`TYPE_ROF` e `TYPE_BLIZ`), que não são Formas: são efeitos de itens e de rituais que não estão portados.

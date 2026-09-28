@@ -1,0 +1,322 @@
+package net.thaumcraft.arcana;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * A magia que <b>fica</b>: a {@code EntitySpellEffect} do Ars Magica 2.
+ *
+ * <p>Enquanto o Projétil leva o feitiço a um lugar e morre, esta entidade <b>mora</b> num lugar e corre o
+ * feitiço vezes sem conta enquanto durar. É dela que saem as três Formas que criam área: a <b>Zona</b>, que é
+ * um disco parado; a <b>Parede</b>, que é uma linha; e a <b>Onda</b>, que é a mesma linha andando.
+ *
+ * <p><b>Ela leva o que sobra da frase, e não a frase inteira.</b> As três Formas tiram a etapa delas antes de
+ * entregar — por isso são <i>principum</i>, e por isso pedem outra Forma depois. Uma Zona seguida de Toque e
+ * Dano de Fogo é uma Zona que, de segundo em segundo, corre "Toque + Dano de Fogo" no lugar onde está.
+ *
+ * <p>E ela faz <b>duas coisas</b> de cada vez: manda as Essências do que sobrou em cada bicho que estiver
+ * dentro dela, <b>e</b> lança o que sobrou dali. É o que faz uma Zona ferir quem entra e, ao mesmo tempo,
+ * acender o chão embaixo dela.
+ */
+public class SpellEffectEntity extends Entity {
+    /** O que ela é: as três que este porte traz. */
+    public enum Kind {
+        /** Um disco parado, que pega tudo à volta. */
+        ZONE,
+        /** Uma linha atravessada, que pega quem a cruza. */
+        WALL,
+        /** E a mesma linha, andando para a frente. */
+        WAVE
+    }
+
+    /** De quantas em quantas batidas a Zona age: as 20 do original. */
+    public static final int ZONE_RATE = 20;
+
+    /** E a Parede, que é mais apertada: de cinco em cinco. */
+    public static final int WALL_RATE = 5;
+
+    /** A Onda age <b>a cada batida</b>, porque anda e não pode deixar buraco por onde passou. */
+    public static final int WAVE_RATE = 1;
+
+    /** Quão perto da linha um bicho tem de estar para a Parede o pegar. */
+    public static final double WALL_REACH = 0.75;
+
+    /** E quão perto na vertical. */
+    public static final double WALL_HEIGHT = 2.0;
+
+    private Spell spell = Spell.EMPTY;
+    private Kind kind = Kind.ZONE;
+    private float radius = 3.0f;
+    private double gravity;
+    private double speed;
+    private int life = 100;
+    private int untilNext;
+    private @Nullable LivingEntity caster;
+    private int casterId = -1;
+
+    /** Se a primeira volta já correu: o {@code firstApply} do original. */
+    private boolean firstApply = true;
+
+    public SpellEffectEntity(EntityType<? extends SpellEffectEntity> type, Level level) {
+        super(type, level);
+        this.noPhysics = false;
+    }
+
+    public SpellEffectEntity(ServerLevel level, LivingEntity quem, Spell sobra, Kind qual) {
+        this(ArcanaEntities.SPELL_EFFECT, level);
+        this.caster = quem;
+        this.casterId = quem.getId();
+        this.spell = sobra;
+        this.kind = qual;
+        this.untilNext = rate();
+    }
+
+    private int rate() {
+        return switch (this.kind) {
+            case ZONE -> ZONE_RATE;
+            case WALL -> WALL_RATE;
+            case WAVE -> WAVE_RATE;
+        };
+    }
+
+    public Spell spell() {
+        return this.spell;
+    }
+
+    public Kind kind() {
+        return this.kind;
+    }
+
+    public float radius() {
+        return this.radius;
+    }
+
+    public void setRadius(float quanto) {
+        this.radius = quanto;
+    }
+
+    public void setGravity(double quanto) {
+        this.gravity = quanto;
+    }
+
+    public void setLife(int batidas) {
+        this.life = batidas;
+    }
+
+    /** A velocidade com que a Onda anda, e o giro para onde ela vai. */
+    public void setWave(float giro, double velocidade) {
+        this.kind = Kind.WAVE;
+        this.speed = velocidade;
+        this.untilNext = WAVE_RATE;
+        this.setYRot(giro);
+    }
+
+    /** O giro da Parede, que é o que decide para que lado ela se estende. */
+    public void setWall(float giro) {
+        this.kind = Kind.WALL;
+        this.untilNext = WALL_RATE;
+        this.setYRot(giro);
+    }
+
+    @Override
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
+    }
+
+    // ------------------------------------------------------------------ a vida dela
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!(this.level() instanceof ServerLevel level)) return;
+
+        if (this.tickCount >= this.life || this.spell.isEmpty()) {
+            this.discard();
+            return;
+        }
+
+        switch (this.kind) {
+            case ZONE -> zone(level);
+            case WALL -> wall(level);
+            case WAVE -> wave(level);
+        }
+    }
+
+    /**
+     * A <b>Zona</b>: um disco parado que, de segundo em segundo, corre o que sobrou da frase.
+     *
+     * <p>Ela sobe ou desce pela gravidade que lhe deram — e há uma manha do original aqui: quando a gravidade
+     * é <b>negativa</b> e não é a primeira volta, ela lança o feitiço <b>um bloco abaixo</b> de si. É o que faz
+     * uma Zona que afunda ir deixando efeito no chão por onde passa em vez de no ar onde está.
+     */
+    private void zone(ServerLevel level) {
+        if (this.gravity != 0.0) this.setPos(this.getX(), this.getY() + this.gravity, this.getZ());
+
+        if (--this.untilNext > 0) return;
+        this.untilNext = ZONE_RATE;
+
+        for (Entity quem : level.getEntities(this, caixa())) {
+            if (quem instanceof LivingEntity) SpellCast.onEntity(level, this.spell, quemLançou(), quem);
+        }
+
+        double y = this.gravity < 0.0 && !this.firstApply ? this.getY() - 1.0 : this.getY();
+        SpellCast.cast(level, this.spell, quemLançou(), null, new Vec3(this.getX(), y, this.getZ()));
+        this.firstApply = false;
+    }
+
+    /**
+     * A <b>Parede</b>: uma linha atravessada no caminho, que corre o feitiço em quem a cruzar.
+     *
+     * <p>Ela não é uma caixa: é um <b>segmento de reta</b>, e cada bicho que entra na caixa larga é medido
+     * contra ela. Só pega quem estiver a menos de três quartos de bloco da linha e a menos de dois de altura —
+     * quem passa por cima ou por longe atravessa sem sentir nada.
+     */
+    private void wall(ServerLevel level) {
+        if (--this.untilNext > 0) return;
+        this.untilNext = this.kind == Kind.WAVE ? WAVE_RATE : WALL_RATE;
+
+        double dx = Math.cos(Math.toRadians(this.getYRot()));
+        double dz = Math.sin(Math.toRadians(this.getYRot()));
+        Vec3 a = new Vec3(this.getX() - dx * this.radius, this.getY(), this.getZ() - dz * this.radius);
+        Vec3 b = new Vec3(this.getX() + dx * this.radius, this.getY(), this.getZ() + dz * this.radius);
+
+        for (Entity quem : level.getEntities(this, caixa())) {
+            if (!(quem instanceof LivingEntity)) continue;
+            if (quem.getId() == this.casterId) continue;
+
+            Vec3 perto = naLinha(a, b, quem.position());
+            double deLado = Math.hypot(perto.x - quem.getX(), perto.z - quem.getZ());
+            double deAltura = Math.abs(this.getY() - quem.getY());
+            if (deLado < WALL_REACH && deAltura < WALL_HEIGHT) {
+                SpellCast.cast(level, this.spell, quemLançou(), quem, this.position());
+            }
+        }
+    }
+
+    /**
+     * A <b>Onda</b>: a mesma Parede, andando — e deixando o feitiço no chão por onde passa.
+     *
+     * <p>É a única das três que mexe no mundo: ela corre o feitiço em <b>cada bloco</b> da linha que acabou de
+     * atravessar, e é por isso que uma Onda de Escavar abre uma vala e uma Onda de Luz deixa um rastro aceso.
+     */
+    private void wave(ServerLevel level) {
+        wall(level);
+        if (this.isRemoved()) return;
+
+        double dx = Math.cos(Math.toRadians(this.getYRot() + 90.0f));
+        double dz = Math.sin(Math.toRadians(this.getYRot() + 90.0f));
+        this.setPos(this.getX() + dx * this.speed, this.getY() + this.gravity, this.getZ() + dz * this.speed);
+
+        double hx = Math.cos(Math.toRadians(this.getYRot()));
+        double hz = Math.sin(Math.toRadians(this.getYRot()));
+        Vec3 a = new Vec3(this.getX() - hx * this.radius, this.getY(), this.getZ() - hz * this.radius);
+        Vec3 b = new Vec3(this.getX() + hx * this.radius, this.getY(), this.getZ() + hz * this.radius);
+
+        for (BlockPos onde : entre(a, b)) {
+            SpellCast.onBlock(level, this.spell, quemLançou(), onde, Direction.UP, Vec3.atCenterOf(onde));
+        }
+    }
+
+    // ------------------------------------------------------------------ a geometria
+
+    /** A caixa em que ela procura: o raio em volta, um bloco abaixo e três acima. */
+    private AABB caixa() {
+        return new AABB(this.getX() - this.radius, this.getY() - 1.0, this.getZ() - this.radius,
+                this.getX() + this.radius, this.getY() + 3.0, this.getZ() + this.radius);
+    }
+
+    /** O ponto do segmento {@code a—b} mais perto daquele: o {@code closestPointOnLine} do original. */
+    public static Vec3 naLinha(Vec3 a, Vec3 b, Vec3 onde) {
+        Vec3 reta = b.subtract(a);
+        double comprimento = reta.lengthSqr();
+        if (comprimento == 0.0) return a;
+        double t = Math.clamp(onde.subtract(a).dot(reta) / comprimento, 0.0, 1.0);
+        return a.add(reta.scale(t));
+    }
+
+    /** Os blocos que a linha atravessa: o {@code getAllBlockLocationsBetween}. */
+    public static java.util.List<BlockPos> entre(Vec3 a, Vec3 b) {
+        var saco = new java.util.LinkedHashSet<BlockPos>();
+        double comprimento = a.distanceTo(b);
+        int passos = Math.max(1, (int) Math.ceil(comprimento * 2.0));
+        for (int i = 0; i <= passos; i++) {
+            Vec3 onde = a.add(b.subtract(a).scale((double) i / passos));
+            saco.add(BlockPos.containing(onde));
+        }
+        return java.util.List.copyOf(saco);
+    }
+
+    /**
+     * Quem lançou, ou um substituto.
+     *
+     * <p>No original isto é um {@code DummyEntityPlayer}: um jogador de mentira que existe só para o feitiço
+     * ter de quem partir depois de quem o lançou já ter ido embora. Aqui, se quem lançou sumiu, a área morre —
+     * o que é mais simples e não deixa um jogador fantasma no mundo.
+     */
+    private LivingEntity quemLançou() {
+        if (this.caster == null || this.caster.isRemoved()) {
+            if (this.level() instanceof ServerLevel level && this.casterId >= 0
+                    && level.getEntity(this.casterId) instanceof LivingEntity achado) {
+                this.caster = achado;
+            }
+        }
+        if (this.caster == null || this.caster.isRemoved()) {
+            this.discard();
+            return null;
+        }
+        return this.caster;
+    }
+
+    /** Ela não se toca e não se fere: é um ponto invisível, e não uma coisa no mundo. */
+    @Override
+    public boolean hurtServer(net.minecraft.server.level.ServerLevel level,
+                              net.minecraft.world.damagesource.DamageSource fonte, float dano) {
+        return false;
+    }
+
+    @Override
+    public boolean isPickable() {
+        return false;
+    }
+
+    // ------------------------------------------------------------------ guardar
+
+    @Override
+    protected void addAdditionalSaveData(ValueOutput output) {
+        output.store("spell", Spell.CODEC, this.spell);
+        output.putString("kind", this.kind.name().toLowerCase(java.util.Locale.ROOT));
+        output.putFloat("radius", this.radius);
+        output.putDouble("gravity", this.gravity);
+        output.putDouble("speed", this.speed);
+        output.putInt("life", this.life);
+        output.putInt("until_next", this.untilNext);
+        output.putInt("caster", this.casterId);
+        output.putBoolean("first_apply", this.firstApply);
+    }
+
+    @Override
+    protected void readAdditionalSaveData(ValueInput input) {
+        this.spell = input.read("spell", Spell.CODEC).orElse(Spell.EMPTY);
+        this.kind = switch (input.getStringOr("kind", "zone")) {
+            case "wall" -> Kind.WALL;
+            case "wave" -> Kind.WAVE;
+            default -> Kind.ZONE;
+        };
+        this.radius = input.getFloatOr("radius", 3.0f);
+        this.gravity = input.getDoubleOr("gravity", 0.0);
+        this.speed = input.getDoubleOr("speed", 0.0);
+        this.life = input.getIntOr("life", 100);
+        this.untilNext = input.getIntOr("until_next", rate());
+        this.casterId = input.getIntOr("caster", -1);
+        this.firstApply = input.getBooleanOr("first_apply", true);
+    }
+}

@@ -121,7 +121,8 @@
       "net.thaumcraft.test.ArcanaSpellGameTest",
       "net.thaumcraft.test.ArcanaProjectileGameTest",
       "net.thaumcraft.test.ArcanaAffinityGameTest",
-      "net.thaumcraft.test.ArcanaAffinityEffectsGameTest"
+      "net.thaumcraft.test.ArcanaAffinityEffectsGameTest",
+      "net.thaumcraft.test.ArcanaAreaShapesGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
