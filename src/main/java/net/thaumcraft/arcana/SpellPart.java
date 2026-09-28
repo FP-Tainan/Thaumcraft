@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  * outro. Um feitiço é uma frase escrita com elas.
  *
  * <p>Toda peça tem um <b>nome</b>, e é por ele que um feitiço guardado num item volta a ser um feitiço: o
- * original guarda números de registo, que mudam de instalação para instalação; aqui guarda-se o nome, que não
+ * original guarda números de registo, que mudam de instalação para instalação; aqui se guarda o nome, que não
  * muda. <b>Desvio declarado, e é de propósito:</b> um feitiço escrito num mundo continua legível noutro.
  */
 public interface SpellPart {

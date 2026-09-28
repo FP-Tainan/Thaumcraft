@@ -31,10 +31,12 @@ public final class Arcana {
 
     public static void init() {
         ArcanaComponents.init();
-        // a ordem importa: as peças registam-se ao carregar a classe, e os feitiços leem-nas pelo nome
-        Shapes.class.getName();
+        ArcanaEntities.init();
+        // a ordem importa: as peças se registram ao carregar a classe, e os feitiços leem-nas pelo nome
+        Shapes.init();
         Essences.init();
         Modifiers.init();
         ArcanaItems.init();
+        ManaClock.init();
     }
 }

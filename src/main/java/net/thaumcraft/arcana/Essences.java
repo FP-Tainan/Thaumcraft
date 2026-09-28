@@ -19,7 +19,7 @@ import java.util.Set;
  * As Essências: as {@code am2.spell.components} do Ars Magica 2.
  *
  * <p>São elas que fazem alguma coisa acontecer. Os números são os do original, e a conta do desgaste também:
- * <b>trinta e oito por cento do que o feitiço custa de mana</b>, que é o {@code getBurnoutFromMana}.
+ * <b>38 por cento do que o feitiço custa de mana</b>, que é o {@code getBurnoutFromMana}.
  */
 public final class Essences {
     /** O desgaste sai do custo: o {@code getBurnoutFromMana} do original. */
@@ -246,7 +246,7 @@ public final class Essences {
         }
     });
 
-    /** Sem uso fora do porte: obriga a classe a carregar-se, e com ela as Essências a registarem-se. */
+    /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela as Essências a se registrarem. */
     public static void init() {
     }
 

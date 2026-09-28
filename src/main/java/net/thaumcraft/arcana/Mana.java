@@ -14,17 +14,17 @@ import net.thaumcraft.Thaumcraft;
  * o quanto um corpo consegue puxar e organizar dela de uma vez. Um arcanista pode secar a mana no meio de uma
  * aura cheia — a energia existe, o cano é que chegou ao fim.
  *
- * <p>Há <b>três</b> números. O <b>nível</b>, de zero a noventa e nove, que diz quanto o mago cresceu; a
+ * <p>Há <b>três</b> números. O <b>nível</b>, de zero a 99, que diz quanto o mago cresceu; a
  * <b>mana</b>, que se gasta e volta; e o <b>desgaste</b> — o {@code fatigue} do original —, que sobe a cada
  * feitiço e que, cheio, impede de lançar. É o que impede alguém de despejar feitiços sem parar por ter mana
  * de sobra.
  *
- * @param level   de zero a noventa e nove
+ * @param level   de zero a 99
  * @param mana    quanto há agora
  * @param burnout e quanto de desgaste há agora
  */
 public record Mana(int level, float mana, float burnout) {
-    /** O nível mais alto que se chega: o noventa e nove do original. */
+    /** O nível mais alto que se chega: o 99 do original. */
     public static final int MAX_LEVEL = 99;
 
     public static final Mana NONE = new Mana(0, 0.0f, 0.0f);
@@ -53,7 +53,7 @@ public record Mana(int level, float mana, float burnout) {
      * Quanta mana um mago daquele nível aguenta: a conta do {@code setMagicLevelWithMana}, tal e qual.
      *
      * <p>{@code nível^1,5 × (85 × nível/99) + 500}. Ela é lenta no começo e dispara no fim — um mago de nível
-     * dez aguenta pouco mais do que um de nível zero, e um de noventa e nove aguenta dezenas de vezes mais.
+     * dez aguenta pouco mais do que um de nível zero, e um de 99 aguenta dezenas de vezes mais.
      */
     public static float maxManaFor(int level) {
         int nível = Math.clamp(level, 0, MAX_LEVEL);

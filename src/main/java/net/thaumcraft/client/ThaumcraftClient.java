@@ -215,6 +215,10 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.BREW,
                 net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+        // o Ars Arcana: o feitiço a voar, um quadrado de luz virado para a câmara
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.arcana.ArcanaEntities.SPELL_PROJECTILE,
+                net.thaumcraft.arcana.client.SpellProjectileRenderer::new);
         // o Ars Occulta: o Caldeirão da Bruxa
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.WITCHES_CAULDRON_ENTITY,

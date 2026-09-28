@@ -1612,7 +1612,7 @@ desenhistas deles, `EntityPermanentItem`, o `createOculus` do `WandManager`.
 
 Descompilados do jar: `EntityEldritchGolem`, `EntityEldritchWarden`, `EntityTaintacleGiant`, `RenderEldritchGolem`,
 `ModelEldritchGolem`, o ramo do guardião-mor do `RenderEldritchGuardian`/`ModelEldritchGuardian`, o `RenderTaintacle` de
-catorze gomos, os números 10 e 11 do `BlockAiry`, e o fim das salas de chefe do `TileEldritchLock`.
+quatorze gomos, os números 10 e 11 do `BlockAiry`, e o fim das salas de chefe do `TileEldritchLock`.
 
 - **Construto eldritch**: 250 de vida, seis de armadura, imune a fogo; esmaga urnas e caixotes e derruba o que é mole. O
   golpe que o mataria arranca a cabeça numa explosão e não passa; sem cabeça, o pescoço solta vapor, faíscas e arcos até
@@ -2173,7 +2173,7 @@ feitios juntos antes de os retratar um a um, que é a única cena em que isso ap
 
 O `BlockJarRenderer` do original desenha o jarro em duas caixas — o corpo, de três a treze e doze de alto, e a
 tampinha, de cinco a onze e mais dois — com a pele do lado do Magia Naturalis e o topo e o fundo do jarro do
-Thaumcraft. O modelo daqui era um caixote de doze por catorze, sem as coordenadas de figura e sem vidro. Agora ele
+Thaumcraft. O modelo daqui era um caixote de doze por quatorze, sem as coordenadas de figura e sem vidro. Agora ele
 é o mesmo modelo do jarro do Thaumcraft, com a pele do ramo, e o vidro voltou a ser vidro.
 
 E ele cintila: o `randomDisplayTick` do original solta, uma vez em quatro, uma faísca dourada
@@ -2379,7 +2379,7 @@ A fenda solta era invisível: estava lá, comia o mundo em volta e levava quem a
 tem o rosto do original — um **rabisco de dragão pintado de preto**, pendurado no ar, que treme.
 
 O desenho vem de um **sistema-L**: quatro rabiscos (o terdragão, o dragão, o dragão duplo e o vórtice) em várias
-gerações, catorze ao todo, e cada fenda escolhe o seu quando nasce, junto com o lado a que fica virada. Três
+gerações, quatorze ao todo, e cada fenda escolhe o seu quando nasce, junto com o lado a que fica virada. Três
 coisas mexem nele ao mesmo tempo, e são as três do original: o **tremor**, que abana o rasgão inteiro e cresce com
 o cubo do tamanho dele; o **esvoaçar**, que mexe cada canto por conta própria com dez ondas a correr; e o
 **giro**. O tempo de cada fenda é o dela — a conta leva um número tirado do lugar onde ela está, de modo que duas
@@ -2391,7 +2391,7 @@ rasgão cresce com ele. Presa pelo Firma-Fendas, para.
 **Três diferenças declaradas**, todas de dentro:
 
 - O original monta os sistemas-L ao arrancar e recorta o contorno de cada rabisco com uma biblioteca de Delaunay.
-  Aqui as catorze formas vêm prontas num arquivo de dados, feito por `scratchpad/dd-curvas.js` com o mesmo
+  Aqui as quatorze formas vêm prontas num arquivo de dados, feito por `scratchpad/dd-curvas.js` com o mesmo
   sistema-L e a mesma ordem; e em vez de recortar o contorno, pintam-se as casas que o rabisco ocupa, juntas em
   tiras deitadas. A silhueta é a mesma — o rabisco é uma união de quadradinhos, toda da mesma cor — e fica sem os
   buracos que o corte deixa onde o contorno toca em si mesmo.
@@ -2494,7 +2494,7 @@ O `VeilSight` é o irmão do `Revealing`: aquele diz quem vê os nós de aura, e
 mundo. Tem a etiqueta `thaumcraft:sees_the_veil`, por onde um mod de fora mete o elmo dele, e os Óculos do Véu
 entram também na `thaumcraft:revealing` — são os da Descoberta melhorados, e não perdem nada do que eles faziam.
 
-**Uma manha que vale guardar:** o `animateTick` do `FloatingRiftBlock` também tinha de saber quem está a olhar, e
+**Uma manha que vale guardar:** o `animateTick` do `FloatingRiftBlock` também tinha de saber quem está olhando, e
 é código comum — no servidor dedicado a classe `Minecraft` não existe. Em vez de lhe tocar, o `VeilSight` tem um
 `localPlayer` que quem corre do lado de quem joga preenche no arranque, que é o mesmo jeito do `clientTrail` dos
 orbes de foco. Sem isso, as fagulhas denunciavam a fenda a quem não a devia ver.
@@ -2685,7 +2685,7 @@ E: *precisa colocar também umas portas antigas pelo mundo que só dê pra ver d
 ombreira de pedra de pé num descampado, vazia; e, com os óculos, uma porta dentro dela.
 
 A **Porta Antiga** é a única do ramo que não se desenha como bloco. O `AncientDoorBlock` diz que não tem desenho
-nenhum, e quem a põe de pé é o desenhista do vão, que já sabia quem está a olhar: uma caixa de três dedos com a
+nenhum, e quem a põe de pé é o desenhista do vão, que já sabia quem está olhando: uma caixa de três dedos com a
 folha rachada nas duas caras, de recorte, e o vão a brilhar pela racha. A ombreira nasce no mundo de cima, uma em
 cada quatrocentos e vinte pedaços, com o lajedo já comido pelo tempo.
 
@@ -2695,7 +2695,7 @@ cada quatrocentos e vinte pedaços, com o lajedo já comido pelo tempo.
   não tem os óculos atravessa a ombreira e não dá por nada.
 * **Nem contorno.** A caixa de ver ainda aparecia quando o rato lhe passava por cima, e a porta denunciava-se. A
   forma de um bloco não costuma saber quem a pediu, mas a conta traz quem pediu: sem os óculos, ela devolve
-  forma nenhuma. É a única parte disto que olha para quem está do outro lado do ecrã.
+  forma nenhuma. É a única parte disto que olha para quem está do outro lado da tela.
 
 **Guarda:** `theAncientDoorIsOnlyThereForWhoSeesIt` — sem desenho, sem corpo, e fechada a quem não a vê.
 
@@ -4174,7 +4174,7 @@ consegue puxar dela de uma vez. Um arcanista seca no meio de uma aura cheia: a e
 acabou. A conta do teto é a do original, tal e qual — `nível^1,5 × (85 × nível/99) + 500` —, lenta no começo e
 disparando no fim.
 
-**E há o desgaste**, o `fatigue` do original: cada feitiço deixa **trinta e oito por cento** do que custou, e
+**E há o desgaste**, o `fatigue` do original: cada feitiço deixa **38 por cento** do que custou, e
 cheio ele impede de lançar. É o que impede alguém com mana de sobra de despejar feitiços sem parar.
 
 **O que entrou de cada classe.** Três Formas — **Autoconjuração** (metade do preço), **Toque** (duas casas e
@@ -4203,5 +4203,64 @@ devolver `EFFECT_FAILED` antes de tirar mana. Curar quem está com a vida cheia 
 4. **Sem árvore de perícias, sem mesa de escrever e sem os Rituais de Obelisco.** A Essência sabe fazer o que
    sabe; o que ainda não há é o lugar onde se aprende a escrevê-la nem onde se escreve. Os feitiços prontos da
    aba do criativo servem para experimentar a gramática enquanto isso.
-5. **A regeneração da mana ainda não corre.** O original enche-a devagar, num relógio que depende do nível. Ela
-   gasta-se e fica gasta; encher volta a ser possível na fatia que trouxer o relógio.
+5. **Sem as outras Formas.** Falta o Facho, a Parede, a Zona, a Runa, a Corrente, o Vínculo, a Onda e as
+   Contingências. Cada uma traz um jeito diferente de um feitiço entrar no mundo, e cada uma é fatia própria.
+
+### Fatia 2 — o relógio da mana e o Projétil (2026-09-27)
+
+**O relógio.** De vinte em vinte batidas a mana sobe um pouco e o desgaste desce outro. Encher por inteiro leva
+**1800 batidas** a quem não tem nível, e **1200** a quem chegou ao 99: um
+minuto e meio, ou um minuto. É esse tempo que faz a mana valer alguma coisa — quem a gastou espera.
+
+**E o desgaste desce com o nível, e é só isso que o faz.** A conta é `0,01 × nível × batidas`. Com nível zero
+ela dá **zero**: um arcanista sem nível que se gastou **fica gasto**. Não é que tenha pouca mana — é que não se
+recupera. É o original, e é a razão mais forte que o Ars Magica 2 dá para subir de nível.
+
+**Quem joga em criativo enche na hora**, como no original.
+
+**O Projétil.** A Forma que define o ramo para quem o joga. Ela não procura alvo: **atira**. O feitiço inteiro
+entra numa entidade que voa e que, ao bater, corre as Essências daquela etapa e **lança dali o que sobra da
+frase**. É o que faz um Projétil seguido de uma Área explodir no sítio da batida e não na mão de quem lançou.
+
+Ele **não tem física do jogo**: se move à mão, sem arrasto, sem gravidade a não ser a que o modificador der. Um
+projétil sem modificadores voa a direito a um bloco por batida até bater ou até acabarem as **100 batidas** de
+vida. Ele **atravessa** (Perfuração) e **salta** (Ricochete, com 0,8 da velocidade a cada salto), e
+cada bicho e cada bloco só contam uma vez — o original guarda a lista do que já apanhou.
+
+**Ela dá sempre por boa**: atirar custa mana mesmo que o projétil nunca venha a bater em nada, porque o que
+pegou foi o atirar.
+
+**Cinco Modificadores novos**, com os números do original: **Velocidade** (multiplica por 2,6, 15 por cento
+a mais por vez), **Gravidade** (soma **−0,06** — o sinal negativo é o que a faz cair, porque o
+projétil lê a gravidade ao contrário do que o nome sugere), **Ricochete** (dois saltos), **Perfuração** (dois a
+mais) e **Alvos Não Sólidos** (pega em água e no que não tem caixa).
+
+**A Gravidade e os Alvos Não Sólidos são de graça.** No original os dois devolvem `1.0F` *sem* multiplicar pela
+quantidade, ao contrário de todos os outros. Não é descuido: são os dois modificadores que mudam *como* o
+feitiço se comporta e não *quanto* ele faz.
+
+**A conta de quem atravessa parte de zero** e não do dois que o feitio traz: um projétil sem Perfuração morre no
+primeiro que apanhar. O dois é o que *cada* Perfuração acrescenta.
+
+**Desvios declarados.**
+
+1. **A Duração num Projétil não faz nada — e é um erro do original que este porte mantém.** A Forma lê o
+   modificador de Duração para decidir a vida do projétil e **joga o número fora**: o campo que a guardaria é
+   final e nasce a menos um, e o tique troca o menos um por 100. Fica como está, porque corrigi-lo mudava o
+   alcance de todo feitiço de projétil do jogo.
+2. **A divisão do relógio é corrigida.** A conta do original é `2400 × (0,75 − 0,25 × (nível/99))` com `nível` e
+   `99` **inteiros**: essa divisão dá zero para todo nível abaixo de 99, e o nível não conta para
+   nada. Aqui é feita em vírgula flutuante, que é o que a fórmula claramente queria. **É uma correção e não uma
+   escolha de gosto:** sem ela, metade da frase do original (`0,25 × …`) seria código morto.
+3. **O perseguir ficou de fora, porque no original é código morto.** A entidade sabe perseguir
+   (`setHoming`, busca num raio de 15 blocos, vira 60 graus por batida), mas **não existe nenhum
+   modificador** que ligue o `HOMING` — não há `Homing.java` entre os modificadores do jar. Fica de fora até
+   haver com que o ligar.
+4. **O refletir feitiços ficou de fora**, porque depende da lista de bênçãos (`BuffList.spellReflect`), que não
+   está portada. No original, um alvo com essa bênção manda o projétil de volta a quem o lançou.
+5. **A figura e a cor por Afinidade ficaram de fora**, porque dependem da Afinidade. Todo projétil sai com a
+   figura e a cor que o original dá à Afinidade nenhuma: a `lens_flare`, branca.
+6. **O desenho anda a tira ele mesmo.** A `lens_flare` é uma tira de 13 quadros com um `.mcmeta` de animação,
+   e no original ela vive no atlas dos itens, onde o jogo anima ela sozinho. Aqui ela é a textura da entidade, que
+   não passa pelo atlas, e por isso o desenho avança um quadro por batida — que é o que o `.mcmeta` sem tempo
+   declarado pede, e dá a mesma coisa na tela.

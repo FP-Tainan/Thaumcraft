@@ -139,7 +139,7 @@ public class ArcanaSpellGameTest {
         }
         if (Mana.maxManaFor(50) <= Mana.maxManaFor(10)) helper.fail("e cresce com o nível");
         if (Mana.maxManaFor(99) <= Mana.maxManaFor(50)) helper.fail("e dispara no fim");
-        if (Mana.maxManaFor(200) != Mana.maxManaFor(99)) helper.fail("e para no noventa e nove");
+        if (Mana.maxManaFor(200) != Mana.maxManaFor(99)) helper.fail("e para no 99");
         helper.succeed();
     }
 
@@ -152,7 +152,7 @@ public class ArcanaSpellGameTest {
 
         conta = conta.spend(100.0f, 38.0f);
         if (Math.abs(conta.mana() - (tinha - 100.0f)) > 0.01f) helper.fail("gastou cem de mana");
-        if (Math.abs(conta.burnout() - 38.0f) > 0.01f) helper.fail("e deixou trinta e oito de desgaste");
+        if (Math.abs(conta.burnout() - 38.0f) > 0.01f) helper.fail("e deixou 38 de desgaste");
 
         // e nada passa do chão nem do teto
         conta = conta.spend(999999.0f, 999999.0f);
@@ -161,11 +161,11 @@ public class ArcanaSpellGameTest {
         helper.succeed();
     }
 
-    /** O desgaste é trinta e oito por cento do custo: o {@code getBurnoutFromMana}. */
+    /** O desgaste é 38 por cento do custo: o {@code getBurnoutFromMana}. */
     @GameTest
     public void burnoutIsAShareOfTheCost(GameTestHelper helper) {
         if (Math.abs(Essences.burnoutFromMana(100.0f) - 38.0f) > 0.01f) {
-            helper.fail("trinta e oito por cento de cem é trinta e oito");
+            helper.fail("38 por cento de cem é 38");
         }
         if (Math.abs(Essences.HEAL.burnout() - Essences.burnoutFromMana(Essences.HEAL.manaCost())) > 0.01f) {
             helper.fail("e a Cura segue a mesma conta");

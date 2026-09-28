@@ -49,11 +49,11 @@ public final class Shapes {
     /**
      * <b>Toque</b>: o {@code Touch}.
      *
-     * <p>Ela olha para onde o mago está a olhar, a duas casas e meia, e pega no primeiro que achar — bicho ou
+     * <p>Ela olha para onde o mago está olhando, a dois blocos e meio, e pega no primeiro que achar — bicho ou
      * bloco. Tendo um alvo já dado, usa esse.
      */
     public static final SpellPart.Shape TOUCH = SpellParts.shape(new SpellPart.Shape() {
-        /** Até onde a mão chega: as duas casas e meia do original. */
+        /** Até onde a mão chega: as dois blocos e meio do original. */
         public static final double REACH = 2.5;
 
         @Override
@@ -94,7 +94,7 @@ public final class Shapes {
      * modificadores mexem. É a Forma que se usa quando o que importa é o lugar e não o alvo.
      */
     public static final SpellPart.Shape AOE = SpellParts.shape(new SpellPart.Shape() {
-        /** O raio de fábrica dela: as três casas do original. */
+        /** O raio de fábrica dela: as três blocos do original. */
         public static final double BASE_RADIUS = 3.0;
 
         @Override
@@ -128,10 +128,85 @@ public final class Shapes {
         }
     });
 
+    /**
+     * <b>Projétil</b>: o {@code Projectile}, e a Forma que define o Ars Magica 2 para quem o joga.
+     *
+     * <p>Ela não procura alvo nenhum: <b>atira</b>. O feitiço inteiro entra numa entidade que voa e que, ao
+     * bater, corre as Essências desta etapa e lança dali o que sobra da frase. É a Forma que faz o projétil
+     * seguido de Área explodir no sítio da batida.
+     *
+     * <p>Ela lê cinco modificadores: <b>Velocidade</b> (multiplica), <b>Gravidade</b> (soma — e o valor dela é
+     * negativo, que é o que faz cair), <b>Ricochete</b> e <b>Perfuração</b> (somam) e <b>Alvos Não Sólidos</b>.
+     * Sem nenhum deles, o projétil sai a um bloco por batida, a direito, e morre no primeiro que pegar.
+     *
+     * <p>Ela <b>dá sempre por boa</b>: lançar um projétil custa mana mesmo que ele nunca venha a bater em nada,
+     * porque o que pegou foi o atirar. É o que o original faz ao devolver {@code SUCCESS} sem olhar para nada.
+     */
+    public static final SpellPart.Shape PROJECTILE = SpellParts.shape(new SpellPart.Shape() {
+        @Override
+        public String name() {
+            return "projectile";
+        }
+
+        @Override
+        public float manaMultiplier() {
+            return 1.25f;
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde) {
+            double velocidade = feitiço.mul(SpellModifierKind.SPEED, SpellModifierKind.SPEED.base);
+            var voa = new SpellProjectileEntity(level, quem, feitiço, velocidade);
+            voa.setGravity(feitiço.add(SpellModifierKind.GRAVITY, SpellModifierKind.GRAVITY.base));
+            voa.setBounces((int) feitiço.add(SpellModifierKind.BOUNCE, SpellModifierKind.BOUNCE.base));
+            voa.setPierces((int) feitiço.add(SpellModifierKind.PIERCING, 0.0));
+            voa.setTargetNonSolid(feitiço.has(SpellModifierKind.TARGET_NONSOLID_BLOCKS));
+            level.addFreshEntity(voa);
+            return SpellCast.Result.SUCCESS;
+        }
+    });
+
+    /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela as Formas a se registrarem. */
+    public static void init() {
+    }
+
     // ------------------------------------------------------------------ a mira
 
     /**
-     * O que o mago está a olhar, até àquela distância: o {@code getMovingObjectPosition} do original.
+     * O bicho mais perto no caminho de um ponto a outro: a varredura do {@code EntitySpellProjectile}.
+     *
+     * <p>Ela infla a caixa de cada bicho em <b>três décimos</b>, que é o número do original, e escolhe o que o
+     * segmento corta primeiro. Está escrita à mão de propósito: o ajudante do jogo infla pelo raio de escolha do
+     * bicho, que num porco é zero, e assim um projétil fino passava ao lado.
+     */
+    public static @Nullable EntityHitResult nearest(net.minecraft.world.level.Level level, Entity quem,
+                                                   Vec3 daqui, Vec3 até,
+                                                   java.util.function.Predicate<Entity> serve) {
+        /** O quanto o original engorda a caixa de quem pode levar. */
+        final double FOLGA = 0.3;
+
+        var roda = new net.minecraft.world.phys.AABB(daqui, até).inflate(1.0);
+        Entity achado = null;
+        Vec3 onde = null;
+        double perto = 0.0;
+
+        for (Entity outro : level.getEntities(quem, roda, serve)) {
+            var caixa = outro.getBoundingBox().inflate(FOLGA);
+            var corte = caixa.clip(daqui, até);
+            if (corte.isEmpty()) continue;
+            double distância = daqui.distanceTo(corte.get());
+            if (achado == null || distância < perto) {
+                achado = outro;
+                onde = corte.get();
+                perto = distância;
+            }
+        }
+        return achado == null ? null : new EntityHitResult(achado, onde);
+    }
+
+    /**
+     * O que o mago está olhando, até àquela distância: o {@code getMovingObjectPosition} do original.
      *
      * <p>Ele olha bicho <b>e</b> bloco e devolve o que estiver mais perto, que é o que faz um feitiço de toque
      * pegar no bicho à frente da parede e não na parede atrás dele.
@@ -146,10 +221,8 @@ public final class Shapes {
                 líquidos ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, quem));
         Vec3 até = bloco.getType() == HitResult.Type.MISS ? fim : bloco.getLocation();
 
-        var roda = quem.getBoundingBox().expandTowards(quem.getLookAngle().scale(alcance)).inflate(1.0);
-        EntityHitResult bicho = net.minecraft.world.entity.projectile.ProjectileUtil
-                .getEntityHitResult(quem, olho, até, roda,
-                        e -> !e.isSpectator() && e.isPickable(), olho.distanceToSqr(até));
+        EntityHitResult bicho = nearest(level, quem, olho, até,
+                e -> !e.isSpectator() && e.isPickable());
 
         if (bicho != null) return bicho;
         return bloco.getType() == HitResult.Type.MISS ? null : bloco;

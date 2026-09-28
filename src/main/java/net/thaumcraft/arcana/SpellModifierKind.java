@@ -25,7 +25,7 @@ public enum SpellModifierKind {
     DURATION(1.0),
     /** Quantas vezes acontece. */
     PROCS(1.0),
-    /** E até onde chega: oito casas, que é o alcance da mão estendida. */
+    /** E até onde chega: oito blocos, que é o alcance da mão estendida. */
     RANGE(8.0),
     /** Se ele pega em água e coisa que não é sólida. */
     TARGET_NONSOLID_BLOCKS(0.0),

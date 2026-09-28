@@ -10,7 +10,7 @@ import java.util.Map;
  * A lista de todas as peças de feitiço: o {@code SkillManager} do Ars Magica 2.
  *
  * <p>O original guarda cada peça por <b>número</b>, somando mil às essências e cinco mil aos modificadores para
- * as separar. Aqui guardam-se por <b>nome</b>, e a separação é o próprio tipo da peça — um feitiço não se
+ * as separar. Aqui se guardam por <b>nome</b>, e a separação é o próprio tipo da peça — um feitiço não se
  * estraga porque outro mod entrou no meio e empurrou os números.
  */
 public final class SpellParts {

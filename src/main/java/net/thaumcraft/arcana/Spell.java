@@ -106,8 +106,8 @@ public record Spell(List<Stage> stages) {
     /**
      * O que a etapa da frente custa de mana.
      *
-     * <p>A conta do original: soma-se o que cada essência custa, multiplica-se pelo que a Forma pede, e
-     * multiplica-se outra vez por cada modificador — contado pelo <b>número de vezes</b> que ele aparece, que é
+     * <p>A conta do original: se soma o que cada essência custa, se multiplica pelo que a Forma pede, e se
+     * multiplica outra vez por cada modificador — contado pelo <b>número de vezes</b> que ele aparece, que é
      * o que torna um feitiço muito modificado caro de verdade.
      */
     public float manaCost(@Nullable LivingEntity quem, @Nullable Entity alvo) {

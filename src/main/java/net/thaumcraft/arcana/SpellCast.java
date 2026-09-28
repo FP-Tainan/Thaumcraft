@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Lançar um feitiço: o {@code SpellHelper} do Ars Magica 2.
  *
- * <p>A conta é sempre a mesma e corre nesta ordem: vê-se se dá (mana e desgaste), corre-se a <b>Forma</b> da
+ * <p>A conta é sempre a mesma e corre nesta ordem: se vê se dá (mana e desgaste), se corre a <b>Forma</b> da
  * etapa da frente, e é ela que acha o alvo e chama as <b>Essências</b>. Só se cobra <b>depois</b> de a etapa
  * pegar — um feitiço que não achou nada não custa nada, que é o que o original faz ao devolver
  * {@code EFFECT_FAILED} antes de tirar mana.
