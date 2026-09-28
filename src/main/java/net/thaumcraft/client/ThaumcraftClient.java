@@ -215,6 +215,11 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.BREW,
                 net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+        // o Ars Arcana: a área que fica não se vê — mas sem desenhista o cliente quebra assim que
+        // uma nasce, porque o jogo pede um a toda entidade que entra no mundo
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.arcana.ArcanaEntities.SPELL_EFFECT,
+                net.minecraft.client.renderer.entity.NoopRenderer::new);
         // o Ars Arcana: o feitiço a voar, um quadrado de luz virado para a câmara
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.arcana.ArcanaEntities.SPELL_PROJECTILE,
@@ -679,6 +684,9 @@ net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
         // o vapor do cano que sangra, com os tufos de fumaça do próprio mod
         net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(
                 net.thaumcraft.registry.TCParticles.VENT, net.thaumcraft.client.particle.VentParticle.Provider::new);
+        net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(
+                net.thaumcraft.registry.TCParticles.SPELL,
+                net.thaumcraft.client.particle.SpellParticle.Provider::new);
         net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(
                 net.thaumcraft.registry.TCParticles.VENT_LARGE, sprites -> new net.thaumcraft.client.particle.VentParticle.Provider(sprites, 2.0f));
 

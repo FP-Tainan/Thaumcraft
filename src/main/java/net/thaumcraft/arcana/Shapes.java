@@ -225,8 +225,18 @@ public final class Shapes {
 
             Spell sobra = feitiço.pop();
             boolean pegou = false;
+            Entity anterior = null;
             for (Entity nele : corrente) {
                 if (nele == quem) continue;
+
+                // o facho de um elo ao seguinte; o primeiro parte de quem lançou
+                Vec3 daqui = anterior == null
+                        ? quem.position().add(0.0, quem.getBbHeight() / 2.0, 0.0)
+                        : anterior.position().add(0.0, anterior.getBbHeight() / 2.0, 0.0);
+                SpellFx.chain(level, feitiço, daqui,
+                        nele.position().add(0.0, nele.getBbHeight() / 2.0, 0.0));
+                anterior = nele;
+
                 if (SpellCast.onEntity(level, feitiço, quem, nele).ok()) pegou = true;
                 SpellCast.cast(level, sobra, quem, nele, nele.position());
             }

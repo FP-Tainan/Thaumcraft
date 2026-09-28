@@ -29,6 +29,16 @@ public final class TCParticles {
             BuiltInRegistries.PARTICLE_TYPE, Thaumcraft.id("vent_large"),
             FabricParticleTypes.complex(ColorParticleOption::codec, ColorParticleOption::streamCodec));
 
+    /**
+     * O <b>pó de feitiço</b> do Ars Arcana: o mote que a Zona, a Parede, a Onda e a Corrente deixam no ar.
+     *
+     * <p>No original cada Afinidade tem a sua figura de partícula; aqui é uma só, e a cor vem da Afinidade
+     * do feitiço, que viaja na própria partícula. Declarado no {@code docs/PORTE.md}.
+     */
+    public static final ParticleType<ColorParticleOption> SPELL = Registry.register(
+            BuiltInRegistries.PARTICLE_TYPE, Thaumcraft.id("spell"),
+            FabricParticleTypes.complex(ColorParticleOption::codec, ColorParticleOption::streamCodec));
+
     private TCParticles() {
     }
 

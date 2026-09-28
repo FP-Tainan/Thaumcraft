@@ -160,6 +160,7 @@ public class SpellEffectEntity extends Entity {
      */
     private void zone(ServerLevel level) {
         if (this.gravity != 0.0) this.setPos(this.getX(), this.getY() + this.gravity, this.getZ());
+        SpellFx.zone(level, this.spell, this.position(), this.radius, this.tickCount);
 
         if (--this.untilNext > 0) return;
         this.untilNext = ZONE_RATE;
@@ -188,6 +189,7 @@ public class SpellEffectEntity extends Entity {
         double dz = Math.sin(Math.toRadians(this.getYRot()));
         Vec3 a = new Vec3(this.getX() - dx * this.radius, this.getY(), this.getZ() - dz * this.radius);
         Vec3 b = new Vec3(this.getX() + dx * this.radius, this.getY(), this.getZ() + dz * this.radius);
+        SpellFx.line(level, this.spell, a, b);
 
         for (Entity quem : level.getEntities(this, caixa())) {
             if (!(quem instanceof LivingEntity)) continue;

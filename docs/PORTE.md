@@ -4417,9 +4417,7 @@ chão por onde passa em vez de no ar onde está.
 2. **Sem o jogador de mentira.** O original guarda um `DummyEntityPlayer` na entidade, para o feitiço ter de
    quem partir depois de quem o lançou já ter ido embora. Aqui, se quem lançou sumiu, a área morre — o que é
    mais simples e não deixa um jogador fantasma no mundo.
-3. **Sem partículas, por ora.** O original desenha a Zona com quatro partículas girando no raio e a Parede com
-   uma fila delas ao longo da linha, ambas na cor da Afinidade. A área existe e funciona; o que falta é vê-la.
-   É fatia própria, junto com as outras partículas do ramo.
+3. **As partículas entraram na fatia 9.** (Ficava aqui a nota de que faltavam.)
 4. **A Chuva de Fogo e a Nevasca ficaram de fora.** A mesma entidade do original tem mais dois feitios
    (`TYPE_ROF` e `TYPE_BLIZ`), que não são Formas: são efeitos de itens e de rituais que não estão portados.
 
@@ -4476,8 +4474,7 @@ estar caindo — e por isso é preciso olhar para elas a cada batida, num mixin 
 3. **O feitiço de uma Runa é lançado por quem pisa nela**, e não por um jogador de mentira de nível 99 como
    no original. Como o gasto de mana só sai de quem lança em modo de sobrevivência e a runa já foi paga
    quando foi desenhada, o efeito no jogo é o mesmo sem inventar um jogador.
-4. **Sem as partículas da Corrente.** O original desenha um facho entre cada elo da corrente. Ela funciona; o
-   que falta é vê-la.
+4. **As partículas da Corrente entraram na fatia 9.**
 
 ### Fatia 7 — a Mesa de Inscrição (2026-09-28)
 
@@ -4579,3 +4576,39 @@ porte estão na árvore do Ars Magica 2, com coordenada, ramo, cor e pré-requis
    prova que fixa o comportamento.
 7. **O Óculus é um cubo com figuras do jogo.** O original tem um modelo próprio com textura de 64×32, que não
    é de face de bloco; usá-la num cubo ficaria torta. É fatia própria, junto com os outros modelos do ramo.
+
+### Fatia 9 — o pó que os feitiços deixam no ar (2026-09-28)
+
+As Formas funcionavam e não se viam. Esta fatia dá cara a elas.
+
+**Um mote, e a cor vem da Afinidade.** É a mesma partícula para tudo — um ponto de luz que sobe devagar e
+apaga em vinte batidas —, e a cor viaja nela, como a do efeito de poção do jogo. É o que faz uma Zona de fogo
+ser vermelha e uma Parede de gelo ser azul **sem ninguém ter escolhido**: a cor sai da frase.
+
+**Cada Forma põe o pó onde lhe convém**, com os ritmos do original: a **Zona** põe quatro motes de duas em
+duas batidas, girando dez graus de cada vez; a **Parede** e a **Onda** põem um a cada meio bloco da linha,
+com um bloco de tremor — o `addRandomOffset(1,1,1)`, que é o que faz a parede parecer uma cortina e não um
+fio; a **Corrente** põe uma fila bem junta de um elo ao seguinte; e o **Projétil** deixa um rastro.
+
+**Um erro de verdade, achado por esta fatia.** A entidade da área — Zona, Parede e Onda — **não tinha
+desenhista registrado**, e o cliente quebrava com um `NullPointerException` assim que uma nascia. O jogo pede
+um desenhista a *toda* entidade que entra no mundo, mesmo às que não se veem. Isso estava em pé desde a fatia
+5 e passou por três fatias sem ninguém dar por isso, porque **as provas de servidor não desenham**. Foi a
+prova de tela nova que pegou. Entrou um `NoopRenderer`.
+
+**Desvios declarados.**
+
+1. **Uma figura de partícula só, e não onze.** O original tem uma por Afinidade — a `lens_flare`, a
+   `explosion_2`, a `ember` e por aí. Aqui é o `sparkle` dele para todas, e quem separa uma Afinidade da
+   outra é a **cor**. As onze figuras estão no porte (o Projétil usa-as), mas como partícula elas dariam onze
+   folhas de animação para pouca diferença na tela.
+2. **O tamanho do mote foi afinado pelo que se vê.** O original diz `setParticleScale(0.15F)`, mas esse número
+   é da escala do motor de partículas *dele*; no do jogo de hoje, o mesmo 0,15 dá um ponto quase invisível.
+   Portar um número de aparência entre dois motores diferentes pelo valor escrito seria fidelidade falsa — o
+   que se porta é o que aparece.
+3. **O facho da Corrente é uma fila de motes.** O original desenha um facho de verdade — uma tira contínua
+   entre os dois pontos, e um *raio* se a Afinidade for a do Relâmpago. A fila dá a mesma leitura e não
+   precisa de um desenhista próprio.
+4. **A Zona não orbita.** No original os quatro motes dela dão voltas em torno do centro enquanto sobem
+   (`ParticleOrbitPoint`). Aqui eles nascem já girados e sobem a direito: o anel gira porque o ângulo sai da
+   idade, e não porque cada mote ande em volta.
