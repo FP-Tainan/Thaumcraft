@@ -23,7 +23,12 @@ import net.thaumcraft.Thaumcraft;
  * @param mana    quanto há agora
  * @param burnout e quanto de desgaste há agora
  */
-public record Mana(int level, float mana, float burnout) {
+public record Mana(int level, float mana, float burnout, float xp) {
+    /** A conta velha, sem experiência: continua a valer, e a experiência começa em zero. */
+    public Mana(int level, float mana, float burnout) {
+        this(level, mana, burnout, 0.0f);
+    }
+
     /** O nível mais alto que se chega: o 99 do original. */
     public static final int MAX_LEVEL = 99;
 
@@ -32,7 +37,8 @@ public record Mana(int level, float mana, float burnout) {
     public static final Codec<Mana> CODEC = RecordCodecBuilder.create(i -> i.group(
             Codec.INT.optionalFieldOf("level", 0).forGetter(Mana::level),
             Codec.FLOAT.optionalFieldOf("mana", 0.0f).forGetter(Mana::mana),
-            Codec.FLOAT.optionalFieldOf("burnout", 0.0f).forGetter(Mana::burnout))
+            Codec.FLOAT.optionalFieldOf("burnout", 0.0f).forGetter(Mana::burnout),
+            Codec.FLOAT.optionalFieldOf("xp", 0.0f).forGetter(Mana::xp))
             .apply(i, Mana::new));
 
     public static final AttachmentType<Mana> DATA = AttachmentRegistry.<Mana>builder()
@@ -85,15 +91,15 @@ public record Mana(int level, float mana, float burnout) {
 
     public Mana withLevel(int level) {
         int novo = Math.clamp(level, 0, MAX_LEVEL);
-        return new Mana(novo, Math.min(this.mana, maxManaFor(novo)), this.burnout);
+        return new Mana(novo, Math.min(this.mana, maxManaFor(novo)), this.burnout, this.xp);
     }
 
     public Mana withMana(float mana) {
-        return new Mana(this.level, Math.clamp(mana, 0.0f, this.maxMana()), this.burnout);
+        return new Mana(this.level, Math.clamp(mana, 0.0f, this.maxMana()), this.burnout, this.xp);
     }
 
     public Mana withBurnout(float burnout) {
-        return new Mana(this.level, this.mana, Math.clamp(burnout, 0.0f, this.maxBurnout()));
+        return new Mana(this.level, this.mana, Math.clamp(burnout, 0.0f, this.maxBurnout()), this.xp);
     }
 
     /** Gasta o que o feitiço pede e soma o desgaste que ele deixa. */
@@ -101,9 +107,38 @@ public record Mana(int level, float mana, float burnout) {
         return this.withMana(this.mana - mana).withBurnout(this.burnout + burnout);
     }
 
-    /** Sobe um nível e enche a mana, como o original faz. */
+    /** Sobe um nível e enche a mana, como o original faz — e a experiência volta a zero. */
     public Mana levelUp() {
         int novo = Math.min(this.level + 1, MAX_LEVEL);
-        return new Mana(novo, maxManaFor(novo), 0.0f);
+        return new Mana(novo, maxManaFor(novo), 0.0f, 0.0f);
+    }
+
+    /**
+     * Quanta experiência falta para o nível seguinte: o {@code getXPToNextLevel} do original.
+     *
+     * <p>{@code (nível × 0,25)^1,5}. Ela cresce devagar no começo — do nível um para o dois basta um oitavo
+     * de ponto — e vira uma parede no fim: do noventa e oito para o noventa e nove são quase 120.
+     */
+    public float xpToNextLevel() {
+        return (float) Math.pow(this.level * 0.25f, 1.5);
+    }
+
+    /**
+     * Soma experiência mágica, subindo <b>um</b> nível se der.
+     *
+     * <p><b>O que sobra perde-se</b>, e é o original: o {@code addMagicXP} zera a experiência ao subir, sem
+     * guardar o excesso e sem tornar a olhar. Quem ganhasse de uma vez o bastante para dois níveis só
+     * subiria um.
+     *
+     * <p>Na prática quase nunca se nota, porque a experiência chega de cinco em cinco centésimos — mas nos
+     * primeiros níveis, em que o que falta é um oitavo de ponto, ela chega a perder metade do que se ganhou.
+     * Fica assim porque mexer nisso mudaria o ritmo de todo o começo do ramo.
+     *
+     * <p>No noventa e nove ela para: o original não deixa passar dali.
+     */
+    public Mana addXp(float quanto) {
+        if (this.level >= MAX_LEVEL || quanto <= 0.0f) return this;
+        Mana agora = new Mana(this.level, this.mana, this.burnout, this.xp + quanto);
+        return agora.xp() >= agora.xpToNextLevel() ? agora.levelUp() : agora;
     }
 }

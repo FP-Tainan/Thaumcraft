@@ -56,6 +56,10 @@ public final class ArcanaItems {
     public static final Item INSCRIPTION_TABLE = register("inscription_table", properties ->
             new net.minecraft.world.item.BlockItem(ArcanaBlocks.INSCRIPTION_TABLE, properties));
 
+    /** O item do Óculus. */
+    public static final Item OCCULUS = register("occulus", properties ->
+            new net.minecraft.world.item.BlockItem(ArcanaBlocks.OCCULUS, properties));
+
     private static void registerParts() {
         for (SpellPart.Shape forma : SpellParts.shapes()) part(forma);
         for (SpellPart.Essence essência : SpellParts.essences()) part(essência);

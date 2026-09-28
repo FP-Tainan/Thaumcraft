@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GSG",
+    "SBS",
+    "SSS"
+  ],
+  "key": {
+    "G": "minecraft:glass",
+    "S": "minecraft:stone",
+    "B": "minecraft:book"
+  },
+  "result": {
+    "id": "thaumcraft:occulus",
+    "count": 1
+  }
+}

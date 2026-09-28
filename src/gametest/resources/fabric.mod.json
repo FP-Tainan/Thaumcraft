@@ -125,7 +125,8 @@
       "net.thaumcraft.test.ArcanaAreaShapesGameTest",
       "net.thaumcraft.test.ArcanaChainBeamRuneGameTest",
       "net.thaumcraft.test.ArcanaContingencyGameTest",
-      "net.thaumcraft.test.ArcanaInscriptionGameTest"
+      "net.thaumcraft.test.ArcanaInscriptionGameTest",
+      "net.thaumcraft.test.ArcanaSkillTreeGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",

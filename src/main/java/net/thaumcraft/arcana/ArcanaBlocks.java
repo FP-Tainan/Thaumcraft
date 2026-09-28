@@ -55,6 +55,18 @@ public final class ArcanaBlocks {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("inscription_table"),
                     new BlockEntityType<>(InscriptionTableBlockEntity::new, Set.of(INSCRIPTION_TABLE)));
 
+    /**
+     * O <b>Óculus</b>: o pedestal onde se olha para o que se pode aprender.
+     *
+     * <p>De pedra, e acende um pouco, porque o olho dele é de vidro e guarda luz.
+     */
+    public static final Block OCCULUS = register("occulus", properties ->
+            new OcculusBlock(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0f)
+                    .sound(SoundType.STONE)
+                    .lightLevel(estado -> 7)));
+
     private ArcanaBlocks() {
     }
 

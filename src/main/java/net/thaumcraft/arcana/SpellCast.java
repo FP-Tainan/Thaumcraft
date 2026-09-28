@@ -150,10 +150,52 @@ public final class SpellCast {
             for (Affinity qual : essência.affinities()) {
                 agora = agora.increment(qual, puxa);
             }
+
+            // e o mesmo feitiço que puxa a Afinidade ensina alguma coisa a quem o lançou
+            float aprende = XP_PER_ESSENCE * era.falloff();
+            if (canalizado) aprende /= 4.0f;
+            learn(gente, aprende);
         }
 
         agora = agora.spent(canalizado);
         if (!agora.equals(era)) AffinityData.set(gente, agora);
+    }
+
+    /**
+     * Quanta experiência mágica dá cada Essência lançada: os cinco centésimos do original.
+     *
+     * <p>Como o deslocamento de Afinidade, ela é multiplicada pelo retorno decrescente — quem despeja
+     * feitiços seguidos não aprende nada. Subir de nível é coisa de muitos dias, e é de propósito.
+     */
+    public static final float XP_PER_ESSENCE = 0.05f;
+
+    /**
+     * Soma experiência mágica a quem lançou, e dá o ponto se ele subiu de nível.
+     *
+     * <p>O original dá <b>um ponto a cada dois níveis</b>, e a cor dele depende de onde se está: azul até o
+     * vinte, verde até o quarenta, vermelho até o cinquenta. Aqui os pontos não se guardam — eles se
+     * <b>contam</b> do nível, e o que se guarda é quantos já se gastaram. Dá no mesmo e não há como os
+     * perder.
+     */
+    public static void learn(Player quem, float quanto) {
+        if (quem.hasInfiniteMaterials() || quanto <= 0.0f) return;
+        Mana era = Mana.of(quem);
+        Mana agora = era.addXp(quanto);
+        if (agora.equals(era)) return;
+        Mana.set(quem, agora);
+
+        if (agora.level() > era.level() && quem instanceof net.minecraft.server.level.ServerPlayer gente) {
+            gente.sendSystemMessage(net.minecraft.network.chat.Component.translatable(
+                    "tc.spell.level_up", agora.level()));
+            for (int nível = era.level() + 1; nível <= agora.level(); nível++) {
+                SkillTree.Point ponto = SkillTree.pointFor(nível);
+                if (ponto == null) continue;
+                gente.sendSystemMessage(net.minecraft.network.chat.Component.translatable(
+                        "tc.spell.point_gained",
+                        net.minecraft.network.chat.Component.translatable(ponto.key()))
+                        .withStyle(estilo -> estilo.withColor(ponto.color)));
+            }
+        }
     }
 
     /** O {@code × 5.0F} com que o original multiplica todo deslocamento de Afinidade. */

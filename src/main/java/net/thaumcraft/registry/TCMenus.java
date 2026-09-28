@@ -44,6 +44,11 @@ public final class TCMenus {
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("distillery"),
                     new MenuType<>(net.thaumcraft.occulta.DistilleryMenu::new, FeatureFlags.VANILLA_SET));
 
+    /** O Óculus do Ars Arcana, onde se gastam os pontos de perícia. */
+    public static final MenuType<net.thaumcraft.arcana.OcculusMenu> OCCULUS =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("occulus"),
+                    new MenuType<>(net.thaumcraft.arcana.OcculusMenu::new, FeatureFlags.VANILLA_SET));
+
     /** A Mesa de Inscrição do Ars Arcana, onde se escrevem os feitiços. */
     public static final MenuType<net.thaumcraft.arcana.InscriptionMenu> INSCRIPTION_TABLE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("inscription_table"),

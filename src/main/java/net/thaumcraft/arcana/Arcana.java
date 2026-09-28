@@ -35,6 +35,8 @@ public final class Arcana {
         ArcanaEntities.init();
         AffinityPools.init();
         Contingency.init();
+        SkillData.init();
+        SkillTree.init();
         // a ordem importa: as peças se registram ao carregar a classe, e os feitiços leem-nas pelo nome
         Shapes.init();
         Essences.init();

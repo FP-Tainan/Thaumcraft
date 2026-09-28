@@ -4199,7 +4199,7 @@ devolver `EFFECT_FAILED` antes de tirar mana. Curar quem está com a vida cheia 
 2. **O feitiço mora num componente, e não espalhado pelo NBT.** O original guarda `NumStages`,
    `ShapeOrdinal_0`, `SpellComponentIDs_0` e companhia em chaves separadas. Aqui é uma coisa só.
 3. **A Afinidade entrou na fatia 3.** (Ficava aqui a nota de que ela faltava.)
-4. **A Mesa de Inscrição entrou na fatia 7.** Faltam ainda a árvore de perícias e os Rituais de Obelisco.
+4. **A Mesa de Inscrição entrou na fatia 7 e a árvore de perícias na fatia 8.** Faltam os Rituais de Obelisco.
 5. **As Formas entraram todas até a fatia 6**, menos o Vínculo, que depende das ferramentas vinculadas.
 
 ### Fatia 2 — o relógio da mana e o Projétil (2026-09-27)
@@ -4526,3 +4526,56 @@ Uma frase **vazia** não é errada: é só uma frase que ainda não se escreveu,
 5. **A mesa é um cubo.** O original tem um modelo próprio, de duas metades — `ModelInscriptionTableLeft` e
    `ModelInscriptionTableRight` —, que são dois blocos lado a lado. Aqui é um bloco só, com a figura do
    original nas faces. É fatia própria, junto com os outros modelos do ramo.
+
+### Fatia 8 — a árvore de perícias (2026-09-28)
+
+É o que dava **curva** ao ramo, e o que faltava para ele estar fechado. Sem ela um arcanista nascia sabendo
+tudo; com ela, começa sabendo três Formas e compra o resto com o que aprende lançando.
+
+**Três ramos e três cores.** Ofensa, Defesa e Utilidade; e o ponto **azul**, que se ganha até o nível vinte, o
+**verde**, do vinte ao quarenta, e o **vermelho**, do quarenta ao cinquenta. Uma perícia vermelha não se
+compra cedo por mais pontos azuis que se tenha, e é isso que faz o ramo ter começo, meio e fim.
+
+**Ganha-se um ponto a cada dois níveis, e só até o cinquenta.** Depois disso o nível ainda sobe — e ainda
+enche a mana e apressa o relógio — mas não compra mais nada. São **25 pontos** ao todo (3 azuis de começo,
+mais 10 azuis, 10 verdes e 5 vermelhos) para **32 perícias**: **não dá para ter tudo**, e é de propósito. Há
+uma prova que guarda esse número.
+
+**A experiência vem de lançar.** Cada Essência lançada dá 0,05 de experiência mágica, multiplicada pelo
+retorno decrescente — o mesmo que rege a Afinidade. Quem despeja feitiços seguidos não aprende nada. E a conta
+do que falta para o nível seguinte é a do original, `(nível × 0,25)^1,5`: devagar no começo, uma parede no
+fim.
+
+**O Óculus** é onde os pontos viram peças. Um pedestal, e a primeira coisa que um arcanista constrói depois da
+Mesa de Inscrição.
+
+**As posições, os ramos, as cores e a forma do grafo são as do original**, lidas do jar: 31 das 32 peças deste
+porte estão na árvore do Ars Magica 2, com coordenada, ramo, cor e pré-requisitos.
+
+**Desvios declarados.**
+
+1. **Os pré-requisitos foram refeitos, e esta é a deviação que mais importa.** A árvore do original tem **120**
+   perícias, e os caminhos entre as minhas 32 passam por **89** que este porte não tem — se eu copiasse os
+   pré-requisitos ao pé da letra, quase nada seria comprável. Então cada perícia pede os **ancestrais portados
+   mais próximos**, subindo o grafo do original até achá-los. A *forma* da árvore fica: Projétil → Fogo/Gelo →
+   Área → Facho → Dano/Onda; Autoconjuração → Cura → Curar; Toque → Escavar → Luz → Corrente/Alcance/Raio.
+   **Há uma prova que confere que toda perícia se alcança de uma raiz** — sem ela, uma peça inalcançável
+   passaria despercebida a quem jogasse.
+2. **Os Alvos Não Sólidos não estão na árvore do original.** Aqui são raiz e custam um azul, porque sem eles o
+   Projétil e a Onda não sabem pegar em água.
+3. **Saber é receber.** Comprar uma perícia dá a **peça como item**, porque neste porte as peças são itens (ver
+   a fatia 7). No original saber já basta, porque lá elas não são coisas.
+4. **Os pontos não se guardam: contam-se do nível.** O original guarda quantos pontos a pessoa tem; aqui
+   guarda-se quantos já se **gastaram**, e os que sobram saem da conta do nível. Dá no mesmo e não há como os
+   perder num mundo que se corrompeu.
+5. **A tela tem três abas e não seis**, e o quadro é encolhido para caber inteiro sem rolar. As outras três
+   abas do original (talentos, familiares, afinidade) são sistemas que não estão portados, e as 120 perícias
+   dele não caberiam numa tela — as 32 destas cabem.
+6. **A experiência que sobra ao subir de nível perde-se — e é um erro do original que este porte mantém.** O
+   `addMagicXP` zera a experiência ao subir, sem guardar o excesso e sem tornar a olhar: quem ganhasse de uma
+   vez o bastante para dois níveis só subiria um. Quase nunca se nota, porque a experiência chega de cinco em
+   cinco centésimos, mas nos primeiros níveis — em que o que falta é um oitavo de ponto — chega a perder
+   metade do que se ganhou. Fica assim porque mexer nisso mudaria o ritmo de todo o começo do ramo, e há uma
+   prova que fixa o comportamento.
+7. **O Óculus é um cubo com figuras do jogo.** O original tem um modelo próprio com textura de 64×32, que não
+   é de face de bloco; usá-la num cubo ficaria torta. É fatia própria, junto com os outros modelos do ramo.
