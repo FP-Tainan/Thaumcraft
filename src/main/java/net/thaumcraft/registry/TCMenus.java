@@ -44,6 +44,11 @@ public final class TCMenus {
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("distillery"),
                     new MenuType<>(net.thaumcraft.occulta.DistilleryMenu::new, FeatureFlags.VANILLA_SET));
 
+    /** A Mesa de Inscrição do Ars Arcana, onde se escrevem os feitiços. */
+    public static final MenuType<net.thaumcraft.arcana.InscriptionMenu> INSCRIPTION_TABLE =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("inscription_table"),
+                    new MenuType<>(net.thaumcraft.arcana.InscriptionMenu::new, FeatureFlags.VANILLA_SET));
+
     /** A Mesa de Transcrição do Magia Naturalis. */
     public static final MenuType<net.thaumcraft.inventory.TranscribingTableMenu> TRANSCRIBING_TABLE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("transcribing_table"),

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PIP",
+    "WBW",
+    "W W"
+  ],
+  "key": {
+    "P": "minecraft:paper",
+    "I": "minecraft:ink_sac",
+    "W": "#minecraft:planks",
+    "B": "minecraft:book"
+  },
+  "result": {
+    "id": "thaumcraft:inscription_table",
+    "count": 1
+  }
+}

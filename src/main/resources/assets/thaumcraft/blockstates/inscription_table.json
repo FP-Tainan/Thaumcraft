@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/inscription_table"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/inscription_table",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/inscription_table",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/inscription_table",
+      "y": 270
+    }
+  }
+}

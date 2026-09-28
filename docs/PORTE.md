@@ -4199,9 +4199,7 @@ devolver `EFFECT_FAILED` antes de tirar mana. Curar quem está com a vida cheia 
 2. **O feitiço mora num componente, e não espalhado pelo NBT.** O original guarda `NumStages`,
    `ShapeOrdinal_0`, `SpellComponentIDs_0` e companhia em chaves separadas. Aqui é uma coisa só.
 3. **A Afinidade entrou na fatia 3.** (Ficava aqui a nota de que ela faltava.)
-4. **Sem árvore de perícias, sem mesa de escrever e sem os Rituais de Obelisco.** A Essência sabe fazer o que
-   sabe; o que ainda não há é o lugar onde se aprende a escrevê-la nem onde se escreve. Os feitiços prontos da
-   aba do criativo servem para experimentar a gramática enquanto isso.
+4. **A Mesa de Inscrição entrou na fatia 7.** Faltam ainda a árvore de perícias e os Rituais de Obelisco.
 5. **As Formas entraram todas até a fatia 6**, menos o Vínculo, que depende das ferramentas vinculadas.
 
 ### Fatia 2 — o relógio da mana e o Projétil (2026-09-27)
@@ -4480,3 +4478,51 @@ estar caindo — e por isso é preciso olhar para elas a cada batida, num mixin 
    quando foi desenhada, o efeito no jogo é o mesmo sem inventar um jogador.
 4. **Sem as partículas da Corrente.** O original desenha um facho entre cada elo da corrente. Ela funciona; o
    que falta é vê-la.
+
+### Fatia 7 — a Mesa de Inscrição (2026-09-28)
+
+Até aqui os feitiços vinham prontos da aba do criativo: a gramática existia, mas não havia onde escrever com
+ela. Esta fatia traz a bancada do arcanista — e, com ela, a coisa que faltava para o ramo ser **jogável**.
+
+**As peças viraram itens.** Uma por palavra da gramática: 15 Formas, 5 Essências e 12 Modificadores, 32 ao
+todo, cada uma com a figura do original. Elas não fazem nada na mão — não se lançam, não se comem, não se põem
+no chão. O que elas servem é para ser escritas numa frase.
+
+**A mesa lê a fila e escreve o feitiço.** Nove casas, da esquerda para a direita, porque é a *ordem* que
+separa as etapas: cada Forma começa uma etapa nova, e o que vier depois dela — Essências e Modificadores — é
+dessa etapa. É o `splitToStages` do original, e é por isso que escrever um feitiço é escrever uma lista e não
+preencher um formulário.
+
+**E ela diz o que está errado.** Esta é a parte que faz a mesa valer a pena. Até agora uma frase malformada só
+dava em nada ao ser lançada; agora há quem diga **por quê**, em vermelho, com o nome da peça que a estragou.
+É onde a gramática deixa de ser uma regra escondida no código e vira uma coisa que se aprende jogando.
+
+**As quatro regras do `SpellValidator`, todas do original:**
+
+1. toda etapa tem **uma Forma**;
+2. a **última** etapa tem ao menos uma Essência — as do meio não precisam, porque quem faz alguma coisa é o
+   fim da frase;
+3. uma Forma **principum** não pode ser a última: ela cria um lugar e pede quem o use;
+4. e uma Forma **terminus** só pode ser a última.
+
+Uma frase **vazia** não é errada: é só uma frase que ainda não se escreveu, e a mesa fica calada.
+
+**Desvios declarados.**
+
+1. **As peças são itens, e no original são perícias.** Lá elas se aprendem numa árvore, e quem as sabe escreve
+   com elas quantos feitiços quiser. A árvore não está portada, então elas viraram coisas — mas o espírito
+   fica: **a mesa não gasta as peças**. Tirar o feitiço da casa de saída deixa a frase escrita, e a mesa
+   escreve outro igual na hora. Até a árvore existir, a aba do criativo dá todas as 32.
+2. **A tela é de casas, e não de arrastar e soltar.** A do original é uma tela própria, com as peças numa
+   lista de onde se arrastam para a frase, e com *grupos de Forma* — um segundo lugar onde se guardam Formas
+   para reusar. Aqui a frase é uma fila de casas de inventário, que é o que faz sentido quando as peças são
+   itens, e não há grupos de Forma.
+3. **O fundo da tela é desenhado com retângulos**, e não com uma folha de figura, pela mesma razão: a folha do
+   original é daquela tela de arrastar e soltar.
+4. **Sem escrever o feitiço num livro.** O original tem um `writeRecipeAndDataToBook` que põe a receita num
+   livro-e-pena para se passar a outra pessoa — com um livro, papel, pena e tinta nas quatro casas da mesa.
+   Como aqui as peças são itens que se podem dar a alguém, a receita já se passa de mão em mão; o livro fica
+   para quando a árvore de perícias entrar e as peças deixarem de ser coisas.
+5. **A mesa é um cubo.** O original tem um modelo próprio, de duas metades — `ModelInscriptionTableLeft` e
+   `ModelInscriptionTableRight` —, que são dois blocos lado a lado. Aqui é um bloco só, com a figura do
+   original nas faces. É fatia própria, junto com os outros modelos do ramo.

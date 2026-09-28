@@ -38,6 +38,23 @@ public final class ArcanaBlocks {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("spell_rune"),
                     new BlockEntityType<>(SpellRuneBlockEntity::new, Set.of(SPELL_RUNE)));
 
+    /**
+     * A <b>Mesa de Inscrição</b>: a bancada do arcanista, onde as peças viram frase.
+     *
+     * <p>De madeira e pedra, como no original, e com a resistência de uma bancada de verdade — quem a põe
+     * quer que ela fique.
+     */
+    public static final Block INSCRIPTION_TABLE = register("inscription_table", properties ->
+            new InscriptionTableBlock(properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5f)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()));
+
+    public static final BlockEntityType<InscriptionTableBlockEntity> INSCRIPTION_TABLE_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("inscription_table"),
+                    new BlockEntityType<>(InscriptionTableBlockEntity::new, Set.of(INSCRIPTION_TABLE)));
+
     private ArcanaBlocks() {
     }
 

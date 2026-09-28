@@ -226,6 +226,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o Ars Occulta: o Forno das Bruxas e os funis
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.WITCHES_OVEN,
                 net.thaumcraft.occulta.client.WitchesOvenScreen::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(
+                net.thaumcraft.registry.TCMenus.INSCRIPTION_TABLE,
+                net.thaumcraft.arcana.client.InscriptionScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.DISTILLERY,
                 net.thaumcraft.occulta.client.DistilleryScreen::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "thaumcraft:block/inscription_table",
+    "side": "thaumcraft:block/inscription_table",
+    "bottom": "minecraft:block/oak_planks"
+  }
+}
