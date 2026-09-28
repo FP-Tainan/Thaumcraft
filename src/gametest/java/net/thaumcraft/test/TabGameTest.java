@@ -28,6 +28,7 @@ public class TabGameTest {
             if (net.thaumcraft.mortuorum.MortuorumItems.shown().contains(item)) continue;
             if (net.thaumcraft.shattered.ShatteredItems.shown().contains(item)) continue;
             if (net.thaumcraft.occulta.OccultaItems.shown().contains(item)) continue;
+            if (net.thaumcraft.arcana.ArcanaItems.shown().contains(item)) continue;
             ours++;
         }
         if (ours < 60) helper.fail("o mod devia ter mais itens que isso: " + ours);

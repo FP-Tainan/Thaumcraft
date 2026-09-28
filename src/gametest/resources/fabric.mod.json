@@ -117,7 +117,8 @@
       "net.thaumcraft.test.OccultaPortalGameTest",
       "net.thaumcraft.test.OccultaRitePersistGameTest",
       "net.thaumcraft.test.OccultaWorldRitesGameTest",
-      "net.thaumcraft.test.OccultaBarrierGameTest"
+      "net.thaumcraft.test.OccultaBarrierGameTest",
+      "net.thaumcraft.test.ArcanaSpellGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -218,7 +219,8 @@
       "net.thaumcraft.test.client.OccultaArthanaClientTest",
       "net.thaumcraft.test.client.OccultaPortalClientTest",
       "net.thaumcraft.test.client.OccultaVolcanoClientTest",
-      "net.thaumcraft.test.client.OccultaBarrierClientTest"
+      "net.thaumcraft.test.client.OccultaBarrierClientTest",
+      "net.thaumcraft.test.client.ArcanaSpellClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

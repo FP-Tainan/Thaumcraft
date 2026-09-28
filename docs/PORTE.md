@@ -4149,3 +4149,59 @@ está <b>naquele anel</b>: quem já ficou para trás não leva outra vez, e quem
    portado, e a maldição corre sem consequência.
 2. **O familiar de maldição não dobra o escuro.** No original, uma bruxa com esse familiar acordado faz o escuro
    durar cinco minutos em vez de dois. Os familiares não estão portados; ficam os dois minutos.
+
+## Ars Arcana — o Ars Magica 2
+
+O quarto ramo de fora: o **Ars Magica 2 1.4.0.009**, de Mithion (919 classes), que a lore de quem joga chama de
+**Ars Arcana — a Gramática da Magia**.
+
+**Onde os outros perguntam outra coisa.** A Thaumaturgia pergunta *por que a magia funciona*. O Ars Occulta
+pergunta *que vínculo faz o mundo responder*. O Ars Arcana pergunta **como construir exatamente o efeito que se
+quer** — e a resposta dele é que um feitiço não é uma receita, é uma **frase**.
+
+### Fatia 1 — a gramática, a mana e o lançar (2026-09-27)
+
+**Três classes de palavra, e o feitiço é a frase.** A **Forma** diz como o efeito entra no mundo; a **Essência**
+diz o que ele faz; os **Modificadores** mudam os números de uma e de outra. Trocar uma palavra faz outro
+feitiço, e é isso que separa este ramo de tudo o que já está portado: não há lista de feitiços, há gramática.
+
+**Uma frase pode ter mais de uma etapa**, e é a própria Forma que passa adiante: acabada a dela, ela tira a
+etapa da frente e lança o que sobra. É por isso que um Toque seguido de uma Área encadeia sem ninguém escrever
+um laço — o toque que pega acorda a área que vem depois.
+
+**A Mana não é Vis, e a lore insiste nisso.** Vis é a energia que existe no mundo; Mana é o quanto um corpo
+consegue puxar dela de uma vez. Um arcanista seca no meio de uma aura cheia: a energia está lá, o cano é que
+acabou. A conta do teto é a do original, tal e qual — `nível^1,5 × (85 × nível/99) + 500` —, lenta no começo e
+disparando no fim.
+
+**E há o desgaste**, o `fatigue` do original: cada feitiço deixa **trinta e oito por cento** do que custou, e
+cheio ele impede de lançar. É o que impede alguém com mana de sobra de despejar feitiços sem parar.
+
+**O que entrou de cada classe.** Três Formas — **Autoconjuração** (metade do preço), **Toque** (duas casas e
+meia à frente, bicho ou bloco, o que estiver mais perto) e **Área** (tudo em roda, três casas). Cinco Essências
+— **Dano de Fogo**, **Dano Gélido**, **Cura**, **Luz** e **Escavar**. E seis Modificadores — **Dano**,
+**Alcance**, **Duração**, **Raio**, **Cura** e **Força de Mineração**.
+
+**Os números são todos do original**, incluindo os que surpreendem: o modificador de **Raio** multiplica por
+**0,7**, ou seja **encolhe** — no Ars Magica 2 ele custa duas vezes e meia por vez e serve para *apertar* uma
+área, para o feitiço não apanhar quem não devia. E o **Dano** **soma** 2,2 em vez de multiplicar, que é o que
+impede um feitiço de dano de crescer sem fim.
+
+**Um feitiço que falha é de graça.** Só se cobra depois de a etapa pegar, que é o que o original faz ao
+devolver `EFFECT_FAILED` antes de tirar mana. Curar quem está com a vida cheia não custa nada.
+
+**Desvios declarados.**
+
+1. **As peças guardam-se por nome, e não por número.** O original numera cada peça e soma mil às Essências e
+   cinco mil aos Modificadores para as separar; um feitiço escrito numa instalação fica ilegível noutra em que
+   os números tenham andado. Aqui guarda-se o nome, e a separação é o próprio tipo da peça. **É de propósito e é
+   melhor:** um feitiço escrito num mundo continua legível noutro.
+2. **O feitiço mora num componente, e não espalhado pelo NBT.** O original guarda `NumStages`,
+   `ShapeOrdinal_0`, `SpellComponentIDs_0` e companhia em chaves separadas. Aqui é uma coisa só.
+3. **Sem Afinidade, por ora.** O uso repetido de uma família de magia muda o praticante — é o `Affinity` do
+   original e a ponte que a lore promete para o Ars Transmutatio. É fatia própria.
+4. **Sem árvore de perícias, sem mesa de escrever e sem os Rituais de Obelisco.** A Essência sabe fazer o que
+   sabe; o que ainda não há é o lugar onde se aprende a escrevê-la nem onde se escreve. Os feitiços prontos da
+   aba do criativo servem para experimentar a gramática enquanto isso.
+5. **A regeneração da mana ainda não corre.** O original enche-a devagar, num relógio que depende do nível. Ela
+   gasta-se e fica gasta; encher volta a ser possível na fatia que trouxer o relógio.
