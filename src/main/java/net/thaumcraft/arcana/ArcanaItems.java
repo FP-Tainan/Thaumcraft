@@ -60,6 +60,48 @@ public final class ArcanaItems {
     public static final Item OCCULUS = register("occulus", properties ->
             new net.minecraft.world.item.BlockItem(ArcanaBlocks.OCCULUS, properties));
 
+    /**
+     * As <b>ferramentas vinculadas</b>: um feitiço que virou ferramenta.
+     *
+     * <p>Elas não se fabricam — quem as faz é a Forma do Vínculo, e quem as desfaz é a mana acabar. Não
+     * empilham, porque cada uma leva dentro de si o feitiço que era.
+     */
+    public static final java.util.Map<BoundToolItem.Kind, Item> BOUND =
+            new java.util.EnumMap<>(BoundToolItem.Kind.class);
+
+    private static void registerBound() {
+        for (BoundToolItem.Kind qual : BoundToolItem.Kind.values()) {
+            Item item = register(qual.id(), properties -> new BoundToolItem(feitio(qual, properties), qual));
+            BOUND.put(qual, item);
+        }
+    }
+
+    /**
+     * O feitio de cada ferramenta vinculada: o metal, o que ela quebra e o quanto ela bate.
+     *
+     * <p>Os metais são os do original — diamante para a picareta, o machado e a espada, ferro para a pá, e
+     * pedra para a enxada —, e é o metal que decide quanto ela custa de manter.
+     *
+     * <p>Quem monta isto é o {@code ToolMaterial} do jogo, e não uma peça escrita à mão: ele sabe esperar as
+     * etiquetas de bloco carregarem, que na hora de registrar um item ainda não existem.
+     */
+    private static Item.Properties feitio(BoundToolItem.Kind qual, Item.Properties properties) {
+        // ela não se gasta: o que a mantém é a mana, e por isso não tem durabilidade nenhuma
+        Item.Properties nua = properties.stacksTo(1);
+
+        return switch (qual) {
+            case PICKAXE -> net.minecraft.world.item.ToolMaterial.DIAMOND.applyToolProperties(
+                    nua, net.minecraft.tags.BlockTags.MINEABLE_WITH_PICKAXE, 1.0f, -2.8f, 0.0f);
+            case AXE -> net.minecraft.world.item.ToolMaterial.DIAMOND.applyToolProperties(
+                    nua, net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE, 5.0f, -3.0f, 0.0f);
+            case SWORD -> net.minecraft.world.item.ToolMaterial.DIAMOND.applySwordProperties(
+                    nua, 3.0f, -2.4f);
+            case SHOVEL -> net.minecraft.world.item.ToolMaterial.IRON.applyToolProperties(
+                    nua, net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL, 1.5f, -3.0f, 0.0f);
+            case HOE -> net.minecraft.world.item.ToolMaterial.STONE.applyToolProperties(
+                    nua, net.minecraft.tags.BlockTags.MINEABLE_WITH_HOE, -1.0f, -2.0f, 0.0f);
+        };
+    }
     private static void registerParts() {
         for (SpellPart.Shape forma : SpellParts.shapes()) part(forma);
         for (SpellPart.Essence essência : SpellParts.essences()) part(essência);
@@ -94,6 +136,7 @@ public final class ArcanaItems {
 
     /** A aba do criativo do ramo, com um feitiço de cada Forma para se experimentar. */
     public static void init() {
+        registerBound();
         registerParts();
 
         CreativeModeTab tab = CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)

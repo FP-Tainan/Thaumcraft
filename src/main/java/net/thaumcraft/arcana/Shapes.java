@@ -547,6 +547,70 @@ public final class Shapes {
         }
     });
 
+    // ------------------------------------------------------------------ a que vira ferramenta
+
+    /**
+     * O <b>Vínculo</b>: o {@code Binding} do Ars Magica 2, e a última das quinze Formas.
+     *
+     * <p>Ela não lança nada. O que ela faz é <b>trocar o feitiço na mão por uma ferramenta</b> — e essa
+     * ferramenta custa mana a cada batida para se manter, e volta a ser o feitiço quando a mana acaba.
+     *
+     * <p>O feitiço vai <b>dentro</b> da ferramenta, e é por isso que desfazer e refazer não perde a frase.
+     *
+     * <p><b>Desvio declarado.</b> No original há <b>uma</b> Forma de Vínculo, e qual ferramenta ela faz sai
+     * de um número guardado no feitiço, escolhido na Mesa de Inscrição. Este porte não tem números guardados
+     * nas peças — cada peça é um item —, então <b>cada ferramenta é a sua própria Forma</b>. Escolher a peça
+     * é escolher a ferramenta, que é como tudo o mais funciona aqui.
+     */
+    private static SpellPart.Shape binding(BoundToolItem.Kind qual) {
+        return SpellParts.shape(new SpellPart.Shape() {
+            @Override
+            public String name() {
+                return "binding_" + qual.name().toLowerCase(java.util.Locale.ROOT);
+            }
+
+            @Override
+            public float manaMultiplier() {
+                return 1.0f;
+            }
+
+            @Override
+            public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                          @Nullable Entity alvo, Vec3 onde) {
+                if (!(quem instanceof net.minecraft.world.entity.player.Player gente)) {
+                    return SpellCast.Result.EFFECT_FAILED;
+                }
+
+                // ela só vale sobre o próprio feitiço que a lançou, e na mão
+                var naMão = gente.getMainHandItem();
+                if (!(naMão.getItem() instanceof SpellItem)) return SpellCast.Result.EFFECT_FAILED;
+
+                var item = ArcanaItems.BOUND.get(qual);
+                if (item == null) return SpellCast.Result.EFFECT_FAILED;
+
+                var ferramenta = new net.minecraft.world.item.ItemStack(item);
+                ferramenta.set(ArcanaComponents.SPELL, feitiço);
+                gente.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, ferramenta);
+                return SpellCast.Result.SUCCESS;
+            }
+        });
+    }
+
+    /** <b>Vínculo: Picareta</b>, de diamante. Um inteiro de mana por batida. */
+    public static final SpellPart.Shape BINDING_PICKAXE = binding(BoundToolItem.Kind.PICKAXE);
+
+    /** <b>Vínculo: Machado</b>, de diamante. */
+    public static final SpellPart.Shape BINDING_AXE = binding(BoundToolItem.Kind.AXE);
+
+    /** <b>Vínculo: Espada</b>, de diamante. */
+    public static final SpellPart.Shape BINDING_SWORD = binding(BoundToolItem.Kind.SWORD);
+
+    /** <b>Vínculo: Pá</b>, de ferro. Quatro décimos por batida. */
+    public static final SpellPart.Shape BINDING_SHOVEL = binding(BoundToolItem.Kind.SHOVEL);
+
+    /** <b>Vínculo: Enxada</b>, de pedra. Um décimo por batida, a mais barata de manter. */
+    public static final SpellPart.Shape BINDING_HOE = binding(BoundToolItem.Kind.HOE);
+
     // ------------------------------------------------------------------ as que esperam
 
     /**

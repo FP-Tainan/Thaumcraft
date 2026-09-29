@@ -4200,7 +4200,7 @@ devolver `EFFECT_FAILED` antes de tirar mana. Curar quem está com a vida cheia 
    `ShapeOrdinal_0`, `SpellComponentIDs_0` e companhia em chaves separadas. Aqui é uma coisa só.
 3. **A Afinidade entrou na fatia 3.** (Ficava aqui a nota de que ela faltava.)
 4. **A Mesa de Inscrição entrou na fatia 7 e a árvore de perícias na fatia 8.** Faltam os Rituais de Obelisco.
-5. **As Formas entraram todas até a fatia 6**, menos o Vínculo, que depende das ferramentas vinculadas.
+5. **As quinze Formas entraram**, a última delas — o Vínculo — na fatia 10.
 
 ### Fatia 2 — o relógio da mana e o Projétil (2026-09-27)
 
@@ -4467,9 +4467,7 @@ estar caindo — e por isso é preciso olhar para elas a cada batida, num mixin 
 
 **Desvios declarados.**
 
-1. **O Vínculo ficou de fora.** Ele transforma um feitiço escrito numa **ferramenta vinculada** — picareta,
-   machado ou espada —, e essas três não estão portadas. É a única das quinze Formas do original que falta, e
-   ela é fatia própria junto com as ferramentas.
+1. **O Vínculo entrou na fatia 10.** (Ficava aqui a nota de que faltava.)
 2. **A Runa não solta nada ao ser quebrada.** No original ela também não: ou dispara e se gasta, ou fica.
 3. **O feitiço de uma Runa é lançado por quem pisa nela**, e não por um jogador de mentira de nível 99 como
    no original. Como o gasto de mana só sai de quem lança em modo de sobrevivência e a runa já foi paga
@@ -4612,3 +4610,34 @@ prova de tela nova que pegou. Entrou um `NoopRenderer`.
 4. **A Zona não orbita.** No original os quatro motes dela dão voltas em torno do centro enquanto sobem
    (`ParticleOrbitPoint`). Aqui eles nascem já girados e sobem a direito: o anel gira porque o ângulo sai da
    idade, e não porque cada mote ande em volta.
+
+### Fatia 10 — o Vínculo, e as quinze Formas fechadas (2026-09-29)
+
+A última. Com ela o ramo tem **as quinze Formas** do Ars Magica 2.
+
+**O Vínculo não lança nada.** O que ele faz é trocar o feitiço na mão por uma **ferramenta** — e essa
+ferramenta custa mana **a cada batida** para se manter, e volta a ser o feitiço quando a mana acaba. É a ideia
+mais bonita do ramo depois da Afinidade: uma ferramenta que só existe enquanto se pode pagar por ela.
+
+**Em troca, ela nunca se gasta.** O original conserta-a um ponto por batida enquanto a mantém. Uma picareta
+vinculada de diamante não quebra nunca — mas come **um ponto de mana por batida**, que são **vinte por
+segundo**, e ninguém a carrega sem pensar.
+
+**O preço depende do metal**, e são os três números do `IBoundItem`: **0,1** por batida para a pedra (a
+enxada), **0,4** para o ferro (a pá) e **1,0** para o diamante (a picareta, o machado e a espada). É a única
+escolha que a ferramenta dá: quanto ela vale contra quanto ela custa.
+
+**O feitiço vai dentro da ferramenta**, e é por isso que desfazer e refazer não perde a frase.
+
+**Desvios declarados.**
+
+1. **Cada ferramenta é a sua própria Forma, e no original há uma só.** Lá o Vínculo é uma perícia única, e
+   qual ferramenta ele faz sai de um **número guardado no feitiço**, escolhido na Mesa de Inscrição. Este
+   porte não tem números guardados nas peças — cada peça é um item —, então são **cinco Formas**, uma por
+   ferramenta. Escolher a peça é escolher a ferramenta, que é como tudo o mais funciona aqui. Na árvore, a
+   primeira fica exatamente onde o Vínculo do original ficava (275, 210, azul, depois da Luz) e as outras
+   quatro abrem em leque a partir dela.
+2. **O arco vinculado ficou de fora.** O original tem seis tipos, e o sexto é um arco — que precisa da lógica
+   de flecha e de um `ItemBoundBow` próprio. As cinco ferramentas que entraram são as que cavam e batem.
+3. **A árvore ficou com 37 perícias para 25 pontos.** Aperta mais do que antes, e é o que se queria: escolher
+   o que deixar de lado é o ramo inteiro.

@@ -147,6 +147,14 @@ public final class SkillTree {
         put(Modifiers.RADIUS, Branch.UTILITY, Point.RED, 275, 390, Essences.LIGHT);
         put(Shapes.CONTINGENCY_DEATH, Branch.UTILITY, Point.RED, 198, 524, Essences.LIGHT);
 
+        // O Vínculo, que no original é uma perícia só em (275, 210), azul, depois da Luz. Aqui são cinco —
+        // uma por ferramenta —, postas em leque a partir do lugar dele. A primeira fica onde ele ficava.
+        put(Shapes.BINDING_PICKAXE, Branch.UTILITY, Point.BLUE, 275, 210, Essences.LIGHT);
+        put(Shapes.BINDING_AXE, Branch.UTILITY, Point.BLUE, 320, 232, Shapes.BINDING_PICKAXE);
+        put(Shapes.BINDING_SWORD, Branch.UTILITY, Point.BLUE, 230, 232, Shapes.BINDING_PICKAXE);
+        put(Shapes.BINDING_SHOVEL, Branch.UTILITY, Point.GREEN, 342, 268, Shapes.BINDING_AXE);
+        put(Shapes.BINDING_HOE, Branch.UTILITY, Point.GREEN, 208, 268, Shapes.BINDING_SWORD);
+
         // Os Alvos Não Sólidos não estão na árvore do original — declarado. Aqui são raiz e de graça em azul,
         // porque sem eles o Projétil e a Onda não sabem pegar em água.
         put(Modifiers.TARGET_NONSOLID_BLOCKS, Branch.UTILITY, Point.BLUE, 87, 45);
