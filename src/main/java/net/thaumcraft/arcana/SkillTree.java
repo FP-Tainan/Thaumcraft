@@ -154,6 +154,7 @@ public final class SkillTree {
         put(Shapes.BINDING_SWORD, Branch.UTILITY, Point.BLUE, 230, 232, Shapes.BINDING_PICKAXE);
         put(Shapes.BINDING_SHOVEL, Branch.UTILITY, Point.GREEN, 342, 268, Shapes.BINDING_AXE);
         put(Shapes.BINDING_HOE, Branch.UTILITY, Point.GREEN, 208, 268, Shapes.BINDING_SWORD);
+        put(Shapes.BINDING_BOW, Branch.UTILITY, Point.RED, 275, 292, Shapes.BINDING_PICKAXE);
 
         // Os Alvos Não Sólidos não estão na árvore do original — declarado. Aqui são raiz e de graça em azul,
         // porque sem eles o Projétil e a Onda não sabem pegar em água.

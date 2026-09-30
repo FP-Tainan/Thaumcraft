@@ -1,5 +1,7 @@
 package net.thaumcraft.arcana;
 
+import net.thaumcraft.Thaumcraft;
+
 /**
  * O Ars Arcana — o Ars Magica 2 1.4.0.009, de Mithion, com o nome que a lore de quem joga lhe dá.
  *
@@ -43,5 +45,13 @@ public final class Arcana {
         Modifiers.init();
         ArcanaItems.init();
         ManaClock.init();
+
+        // a aba do ramo no livro: sem ela o ramo existia e ninguém dava por ele
+        net.thaumcraft.api.ThaumcraftApi.category(CATEGORY,
+                Thaumcraft.id("textures/item/spell.png"),
+                Thaumcraft.id("textures/gui/gui_researchback.png"));
+        ArcanaTable.research();
+        // as receitas do livro pedem itens prontos, e por isso esperam a montagem acabar
+        net.thaumcraft.api.ThaumcraftApi.onSetup(ArcanaTable::recipes);
     }
 }

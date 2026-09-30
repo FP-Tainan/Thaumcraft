@@ -611,6 +611,9 @@ public final class Shapes {
     /** <b>Vínculo: Enxada</b>, de pedra. Um décimo por batida, a mais barata de manter. */
     public static final SpellPart.Shape BINDING_HOE = binding(BoundToolItem.Kind.HOE);
 
+    /** <b>Vínculo: Arco</b>, de ferro. O único que atira em vez de cavar ou bater. */
+    public static final SpellPart.Shape BINDING_BOW = binding(BoundToolItem.Kind.BOW);
+
     // ------------------------------------------------------------------ as que esperam
 
     /**

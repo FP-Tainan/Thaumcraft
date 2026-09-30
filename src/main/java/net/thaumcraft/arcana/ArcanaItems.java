@@ -71,7 +71,10 @@ public final class ArcanaItems {
 
     private static void registerBound() {
         for (BoundToolItem.Kind qual : BoundToolItem.Kind.values()) {
-            Item item = register(qual.id(), properties -> new BoundToolItem(feitio(qual, properties), qual));
+            // o arco é de outra classe, porque um arco do jogo tem de herdar o BowItem
+            Item item = qual == BoundToolItem.Kind.BOW
+                    ? register(qual.id(), properties -> new BoundBowItem(properties.stacksTo(1)))
+                    : register(qual.id(), properties -> new BoundToolItem(feitio(qual, properties), qual));
             BOUND.put(qual, item);
         }
     }
@@ -100,6 +103,8 @@ public final class ArcanaItems {
                     nua, net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL, 1.5f, -3.0f, 0.0f);
             case HOE -> net.minecraft.world.item.ToolMaterial.STONE.applyToolProperties(
                     nua, net.minecraft.tags.BlockTags.MINEABLE_WITH_HOE, -1.0f, -2.0f, 0.0f);
+            // o arco não passa por aqui: ele é do BoundBowItem, e um arco não tem feitio de ferramenta
+            case BOW -> nua;
         };
     }
     private static void registerParts() {

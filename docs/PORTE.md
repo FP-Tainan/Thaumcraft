@@ -4637,7 +4637,45 @@ escolha que a ferramenta dá: quanto ela vale contra quanto ela custa.
    ferramenta. Escolher a peça é escolher a ferramenta, que é como tudo o mais funciona aqui. Na árvore, a
    primeira fica exatamente onde o Vínculo do original ficava (275, 210, azul, depois da Luz) e as outras
    quatro abrem em leque a partir dela.
-2. **O arco vinculado ficou de fora.** O original tem seis tipos, e o sexto é um arco — que precisa da lógica
-   de flecha e de um `ItemBoundBow` próprio. As cinco ferramentas que entraram são as que cavam e batem.
+2. **O arco vinculado entrou na fatia 11.** (Ficava aqui a nota de que faltava.)
 3. **A árvore ficou com 37 perícias para 25 pontos.** Aperta mais do que antes, e é o que se queria: escolher
    o que deixar de lado é o ramo inteiro.
+
+### Fatia 11 — a aba do livro, e o arco (2026-09-30)
+
+**O ramo existia e ninguém dava por ele.** Esta foi a lacuna real que sobrou, e não os obeliscos: o Ars Arcana
+tinha dez fatias de código, 775 provas, e **zero páginas no Thaumonomicon**. A categoria `ARCANA` estava
+declarada numa constante e nunca era registrada. Quem jogasse não tinha caminho nenhum até o ramo — as peças
+estavam na aba do criativo e mais nada.
+
+**Sete pesquisas, na ordem do que se faz**, que é a única ordem que ensina alguma coisa:
+
+1. **A Gramática da Magia** — o degrau de entrada: um feitiço é uma frase, não uma receita.
+2. **O Óculus** — onde se vê o que se pode aprender, e onde os pontos viram peças.
+3. **A Mesa de Inscrição** — onde as peças viram frase, e onde a mesa diz o que está errado.
+4. **A Mana e o Desgaste** — o cano e não a água, e por que o nível importa.
+5. **A Afinidade** — lançar muda quem lança, e o que isso dá e cobra.
+6. **As Formas** — as quinze maneiras de um feitiço entrar no mundo.
+7. **O Vínculo** — o fim da estrada.
+
+O texto é o do caderno de quem escreve o Thaumonomicon: alguém que topou com um ofício que não é o dele e
+acha a gramática elegante e um pouco incômoda. Ele explica **as contas** — a fórmula da mana, os 38% de
+desgaste, a roda de Afinidade que perde 5,5 por ponto ganho, os 25 pontos para 38 perícias — porque este é um
+ramo em que os números *são* o desenho.
+
+**E o arco vinculado**, que fecha os seis tipos do original. Ele é de **ferro** — quatro décimos por batida,
+como a pá — e não de diamante, o que é uma escolha do original que faz sentido: um arco que nunca se gasta já
+vale muito por si. Ele é uma classe à parte das outras cinco porque um arco do jogo tem de herdar o `BowItem`
+para saber puxar a corda; o que ele repete das outras é só o relógio da mana.
+
+**Sobre os Rituais de Obelisco, e por que eles não entram.**
+
+Ficou escrito em fatias anteriores que eles faltavam. Lendo o original com cuidado, eles **não são uma fatia
+deste ramo**: o Obelisco é uma fonte de energia (`PowerNodeRegistry`, `PowerTypes.NEUTRAL`) para a maquinaria
+do Ars Magica 2, e os rituais — que são feitiços lançados sobre um padrão de blocos com reagentes no chão —
+produzem justamente essa maquinaria: `blackAurem`, `inertSpawner`, `tarmaRoot`.
+
+Este porte trouxe **o sistema de feitiços** do AM2. A maquinaria e a rede de energia são a outra metade do mod,
+e portá-las seria um trabalho do tamanho de um mod inteiro — com o detalhe de que, sozinhos, o Obelisco não
+teria o que alimentar e os rituais não teriam o que construir. Fica declarado como **escolha de escopo**, e
+não como pendência.

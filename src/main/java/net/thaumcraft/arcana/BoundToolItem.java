@@ -38,8 +38,15 @@ public class BoundToolItem extends Item {
         SWORD(1.0f),
         /** A pá, de ferro. */
         SHOVEL(0.4f),
-        /** E a enxada, de pedra: a mais barata de manter. */
-        HOE(0.1f);
+        /** A enxada, de pedra: a mais barata de manter. */
+        HOE(0.1f),
+        /**
+         * E o <b>arco</b>, de ferro.
+         *
+         * <p>Ele é o único que não cava nem bate, e o único que não é desta classe: um arco do jogo tem de
+         * herdar o {@code BowItem} para saber puxar a corda. Quem o faz é o {@link BoundBowItem}.
+         */
+        BOW(0.4f);
 
         /** O que ela come de mana por batida: o {@code maintainCost} do original. */
         public final float maintain;

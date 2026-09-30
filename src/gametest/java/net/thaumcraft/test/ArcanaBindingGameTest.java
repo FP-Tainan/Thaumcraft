@@ -27,11 +27,11 @@ import java.util.List;
  * o feitiço quando a mana acaba.
  */
 public class ArcanaBindingGameTest {
-    /** As cinco existem, uma por ferramenta, e cada uma tem a sua. */
+    /** As seis existem, uma por ferramenta, e cada uma tem a sua. */
     @GameTest
     public void thereIsOneBindingPerTool(GameTestHelper helper) {
         var cinco = List.of(Shapes.BINDING_PICKAXE, Shapes.BINDING_AXE, Shapes.BINDING_SWORD,
-                Shapes.BINDING_SHOVEL, Shapes.BINDING_HOE);
+                Shapes.BINDING_SHOVEL, Shapes.BINDING_HOE, Shapes.BINDING_BOW);
         if (cinco.size() != BoundToolItem.Kind.values().length) {
             helper.fail("há " + BoundToolItem.Kind.values().length + " ferramentas e " + cinco.size()
                     + " Formas");
@@ -62,6 +62,7 @@ public class ArcanaBindingGameTest {
         if (BoundToolItem.Kind.PICKAXE.maintain != 1.0f) helper.fail("a picareta é de diamante: um inteiro");
         if (BoundToolItem.Kind.AXE.maintain != 1.0f) helper.fail("o machado também");
         if (BoundToolItem.Kind.SWORD.maintain != 1.0f) helper.fail("e a espada também");
+        if (BoundToolItem.Kind.BOW.maintain != 0.4f) helper.fail("e o arco é de ferro: quatro décimos");
         helper.succeed();
     }
 
@@ -144,11 +145,11 @@ public class ArcanaBindingGameTest {
         helper.succeed();
     }
 
-    /** As cinco estão na árvore, e todas depois da Luz. */
+    /** As seis estão na árvore, e todas descendem da Luz. */
     @GameTest
     public void theFiveAreInTheTree(GameTestHelper helper) {
         for (var forma : List.of(Shapes.BINDING_PICKAXE, Shapes.BINDING_AXE, Shapes.BINDING_SWORD,
-                Shapes.BINDING_SHOVEL, Shapes.BINDING_HOE)) {
+                Shapes.BINDING_SHOVEL, Shapes.BINDING_HOE, Shapes.BINDING_BOW)) {
             var perícia = SkillTree.of(forma);
             if (perícia == null) {
                 helper.fail(forma.name() + " devia estar na árvore");
@@ -169,7 +170,7 @@ public class ArcanaBindingGameTest {
     }
 
     /**
-     * Com o Vínculo, aperta ainda mais: são <b>trinta e sete</b> perícias para vinte e cinco pontos.
+     * Com o Vínculo, aperta ainda mais: são <b>trinta e oito</b> perícias para vinte e cinco pontos.
      *
      * <p>Escolher o que deixar de lado é o ramo inteiro.
      */
@@ -177,8 +178,8 @@ public class ArcanaBindingGameTest {
     public void thereAreStillFewerPointsThanSkills(GameTestHelper helper) {
         int todos = 0;
         for (var cor : SkillTree.Point.values()) todos += SkillTree.pointsUpTo(cor, SkillTree.RED_UNTIL);
-        if (SkillTree.entries().size() != 37) {
-            helper.fail("devia haver trinta e sete perícias, e há " + SkillTree.entries().size());
+        if (SkillTree.entries().size() != 38) {
+            helper.fail("devia haver trinta e oito perícias, e há " + SkillTree.entries().size());
         }
         if (todos >= SkillTree.entries().size()) {
             helper.fail("e menos pontos (" + todos + ") que perícias");
