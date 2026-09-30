@@ -233,7 +233,8 @@
       "net.thaumcraft.test.client.ArcanaProjectileClientTest",
       "net.thaumcraft.test.client.ArcanaAffinityClientTest",
       "net.thaumcraft.test.client.ArcanaInscriptionClientTest",
-      "net.thaumcraft.test.client.ArcanaParticlesClientTest"
+      "net.thaumcraft.test.client.ArcanaParticlesClientTest",
+      "net.thaumcraft.test.client.ArcanaBlocksClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

@@ -4518,9 +4518,7 @@ Uma frase **vazia** não é errada: é só uma frase que ainda não se escreveu,
    livro-e-pena para se passar a outra pessoa — com um livro, papel, pena e tinta nas quatro casas da mesa.
    Como aqui as peças são itens que se podem dar a alguém, a receita já se passa de mão em mão; o livro fica
    para quando a árvore de perícias entrar e as peças deixarem de ser coisas.
-5. **A mesa é um cubo.** O original tem um modelo próprio, de duas metades — `ModelInscriptionTableLeft` e
-   `ModelInscriptionTableRight` —, que são dois blocos lado a lado. Aqui é um bloco só, com a figura do
-   original nas faces. É fatia própria, junto com os outros modelos do ramo.
+5. **A Mesa ganhou o modelo do original na fatia 12.** Continua sendo um bloco só, e não dois.
 
 ### Fatia 8 — a árvore de perícias (2026-09-28)
 
@@ -4679,3 +4677,41 @@ Este porte trouxe **o sistema de feitiços** do AM2. A maquinaria e a rede de en
 e portá-las seria um trabalho do tamanho de um mod inteiro — com o detalhe de que, sozinhos, o Obelisco não
 teria o que alimentar e os rituais não teriam o que construir. Fica declarado como **escolha de escopo**, e
 não como pendência.
+
+### Fatia 12 — os modelos do original (2026-09-30)
+
+O Óculus e a Mesa de Inscrição eram cubos. Agora são o que o original desenhou.
+
+**As caixas vêm dos modelos Techne do Ars Magica 2**, convertidas uma a uma: **28** no Óculus
+(`ModelOcculus` — o pedestal, as garras e o olho) e **15** na Mesa (`ModelInscriptionTableLeft` — a
+escrivaninha, o livro e o pano).
+
+**A conta da conversão** é a mesma de todo modelo de bicho montado num bloco, e vale escrever porque ela
+volta sempre: o desenhista do original põe o modelo em (0,5; 1,5; 0,5) e gira **180° em Z**, porque o Y do
+Techne cresce para baixo. Depois disso, para uma caixa em `ponto + caixa`:
+
+```
+X = 8 − (ponto.x + caixa.x)   e ela cresce para −X
+Y = 24 − (ponto.y + caixa.y)  e cresce para −Y
+Z = 8 + (ponto.z + caixa.z)   e cresce para +Z
+```
+
+**Dois erros que só a foto acharia**, e que nenhuma das 775 provas de servidor pegaria:
+
+1. **O modelo do Óculus não carregava**, e o bloco saía como o cubo roxo de textura perdida. A causa é do
+   original: a caixa `Stand4` tem um mapa de figura que **passa da borda da folha** — chega a `u=65` numa
+   folha de 64. No 1.7.10 a figura dava a volta e mostrava uma lasca da outra ponta; o jogo de hoje recusa o
+   modelo inteiro com um `Cannot compute translucency out of bounds`. As coordenadas ficam **presas na
+   borda**: perde-se um pixel no fundo do pilar do meio e ganha-se um modelo que carrega.
+2. **As caixas giradas do livro não cabem num modelo JSON.** Ele só aceita **um eixo** e **cinco ângulos**
+   (0, ±22,5, ±45), e o original gira em radianos quaisquer. As duas da Mesa foram encaixadas na mais
+   próxima: −13,6° virou −22,5° e 29° virou 22,5°. As páginas do livro ficam um pouco mais abertas do que no
+   original.
+
+**Desvios declarados.**
+
+1. **A Mesa continua sendo um bloco só.** No original ela são **dois** — `Left` e `Right`, cada um preenchendo
+   o seu bloco. Aqui usa-se a metade esquerda, que é a da escrivaninha com o livro e já se lê como uma mesa
+   inteira. Fazer dela um bloco duplo mudaria o bloco, a receita e o menu.
+2. **Os dois modelos passam da altura do bloco** — o olho do Óculus chega a `y=25` e a Mesa a `y=20`. É o que
+   o original faz, e o jogo de hoje aceita até 32.
