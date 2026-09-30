@@ -170,16 +170,18 @@ public class ArcanaBindingGameTest {
     }
 
     /**
-     * Com o Vínculo, aperta ainda mais: são <b>trinta e oito</b> perícias para vinte e cinco pontos.
+     * Com o Vínculo, aperta ainda mais — e cada fatia que entra aperta outro tanto.
      *
-     * <p>Escolher o que deixar de lado é o ramo inteiro.
+     * <p>O número de perícias já não se escreve aqui à mão: ele cresce a cada peça portada, e o que <b>tem</b>
+     * de continuar verdadeiro é que os pontos <b>não chegam para todas</b>. Escolher o que deixar de lado é o
+     * ramo inteiro, e no dia em que chegassem o ramo deixava de ter escolha nenhuma.
      */
     @GameTest
     public void thereAreStillFewerPointsThanSkills(GameTestHelper helper) {
         int todos = 0;
         for (var cor : SkillTree.Point.values()) todos += SkillTree.pointsUpTo(cor, SkillTree.RED_UNTIL);
-        if (SkillTree.entries().size() != 38) {
-            helper.fail("devia haver trinta e oito perícias, e há " + SkillTree.entries().size());
+        if (SkillTree.entries().size() < 38) {
+            helper.fail("o quadro não encolhe: havia 38 perícias e há " + SkillTree.entries().size());
         }
         if (todos >= SkillTree.entries().size()) {
             helper.fail("e menos pontos (" + todos + ") que perícias");

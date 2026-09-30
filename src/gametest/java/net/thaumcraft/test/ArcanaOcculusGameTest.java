@@ -81,14 +81,17 @@ public class ArcanaOcculusGameTest {
         Mana.set(quem, Mana.NONE);
         var menu = new OcculusMenu(1, quem.getInventory());
 
-        // o Dano de Fogo precisa do Projétil antes
+        // o Dano de Fogo precisa do Dano Físico, e esse precisa do Projétil
         int fogo = SkillTree.entries().indexOf(
                 SkillTree.of(net.thaumcraft.arcana.Essences.FIRE_DAMAGE));
-        if (menu.clickMenuButton(quem, fogo)) helper.fail("o Dano de Fogo precisa do Projétil antes");
+        if (menu.clickMenuButton(quem, fogo)) helper.fail("o Dano de Fogo pede coisas antes");
 
-        // comprando o Projétil, ele abre
         int projetil = SkillTree.entries().indexOf(SkillTree.of(Shapes.PROJECTILE));
-        if (!menu.clickMenuButton(quem, projetil)) helper.fail("o Projétil é raiz e compra-se");
+        if (!menu.clickMenuButton(quem, projetil)) helper.fail("o Projétil é raiz e se compra");
+
+        int físico = SkillTree.entries().indexOf(
+                SkillTree.of(net.thaumcraft.arcana.Essences.PHYSICAL_DAMAGE));
+        if (!menu.clickMenuButton(quem, físico)) helper.fail("e o Dano Físico vem depois dele");
         if (!menu.clickMenuButton(quem, fogo)) helper.fail("e então o Dano de Fogo abre");
 
         limpa(quem);

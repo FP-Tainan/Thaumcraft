@@ -139,6 +139,17 @@ public interface SpellPart {
         /** Por quanto ele mexe naquele feitio. */
         float value(SpellModifierKind qual);
 
+        /**
+         * A mesma coisa, <b>sabendo em que mundo</b>: o {@code getModifier(..., World, ...)} do original.
+         *
+         * <p>Quase nenhum modificador se importa com isso — dois somam quatro blocos de alcance e é o fim da
+         * conversa. Mas o <b>Solar</b> e o <b>Lunar</b> só existem por causa disto: o que eles valem depende da
+         * hora do dia e da fase da lua, e sem o mundo eles não têm o que ler.
+         */
+        default float value(SpellModifierKind qual, @Nullable net.minecraft.world.level.Level mundo) {
+            return this.value(qual);
+        }
+
         /** E o quanto ele multiplica o custo, por vez que aparece. */
         default float manaMultiplier(int quantas) {
             return 1.0f;

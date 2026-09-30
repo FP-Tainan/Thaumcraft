@@ -1,5 +1,7 @@
 package net.thaumcraft.arcana;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Set;
 
 /**
@@ -143,6 +145,153 @@ public final class Modifiers {
      */
     public static final SpellPart.Modifier PROCS = SpellParts.modifier(
             new Simple("procs", SpellModifierKind.PROCS, 4.0f, 1.65f));
+
+    /**
+     * <b>Prosperidade</b>: põe <b>Fortuna</b> no que o feitiço quebrar, por vinte e cinco por cento a mais.
+     *
+     * <p>Ela não muda nada do feitiço: muda o que <i>cai</i> do que ele quebra. O original faz isso encantando
+     * a vara invisível com que o Escavar colhe o bloco — uma Prosperidade é Fortuna I, duas é Fortuna II.
+     */
+    public static final SpellPart.Modifier PROSPERITY = SpellParts.modifier(
+            new Simple("prosperity", SpellModifierKind.FORTUNE_LEVEL, 1.0f, 1.25f));
+
+    /**
+     * <b>Toque de Pena</b>: põe <b>Toque Suave</b> no que o feitiço quebrar, pelo mesmo preço.
+     *
+     * <p>Estar lá é o que conta, como no original: pôr dois não faz Toque Suave II, que não existe. E ele
+     * <b>manda na Prosperidade</b> — um bloco colhido com seda cai como ele é, e a Fortuna não tem o que
+     * multiplicar.
+     */
+    public static final SpellPart.Modifier FEATHER_TOUCH = SpellParts.modifier(
+            new Simple("feather_touch", SpellModifierKind.SILKTOUCH_LEVEL, 1.0f, 1.25f));
+
+    /**
+     * Um modificador do <b>céu</b>: o {@code Solar} e o {@code Lunar} do original.
+     *
+     * <p>São os dois únicos que mudam de valor <i>enquanto se joga</i>. Os outros valem sempre o mesmo; estes
+     * leem a hora do dia e a fase da lua, e o que eles dão de manhã não é o que dão à meia-noite. É por isso
+     * que o modificador precisa de saber em que mundo está — e é por isso que
+     * {@link SpellPart.Modifier#value(SpellModifierKind, net.minecraft.world.level.Level)} existe.
+     *
+     * <p>Custam <b>quatro vezes</b> por vez, que é o preço mais alto de todos os modificadores do original.
+     *
+     * <p><b>As contas são as do original, com as esquisitices que ele tem</b>, e duas merecem ser ditas:
+     *
+     * <ol>
+     *   <li>Ele passa o ângulo por {@code × 180/π} <i>antes</i> de chamar o seno — ou seja, converte de
+     *       radianos para graus e entrega graus a uma função que espera radianos. O resultado não é a onda
+     *       suave que o nome sugere: é uma coisa que salta. Mantido, porque é o que o jogo faz.</li>
+     *   <li>O Solar pergunta se a hora está <b>depois de 23500 e antes de 12500</b>, que nenhum número é. A
+     *       pergunta é sempre não, e o alcance e o raio dele valem sempre {@code |3 − 1| = 2}. É um engano do
+     *       original de 2014, e o porte o mantém: consertá-lo mudaria o feitiço de quem joga.</li>
+     * </ol>
+     */
+    private record Céu(String name, boolean solar) implements SpellPart.Modifier {
+        /** Quatro vezes por vez: o preço mais alto do quadro. */
+        private static final float CUSTO = 4.0f;
+
+        @Override
+        public Set<SpellModifierKind> modifies() {
+            return Set.of(SpellModifierKind.RANGE, SpellModifierKind.RADIUS, SpellModifierKind.DAMAGE,
+                    SpellModifierKind.DURATION, SpellModifierKind.HEALING);
+        }
+
+        /** O que ele daria sem céu nenhum: o valor de partida, sem a hora e sem a lua. */
+        @Override
+        public float value(SpellModifierKind qual) {
+            return this.value(qual, null);
+        }
+
+        @Override
+        public float value(SpellModifierKind qual, @Nullable net.minecraft.world.level.Level mundo) {
+            return switch (qual) {
+                case RANGE, RADIUS -> this.pelaLua(mundo, 3.0f);
+                case DAMAGE -> this.pelaHora(mundo, 2.4f);
+                case DURATION -> this.pelaHora(mundo, 5.0f);
+                case HEALING -> this.pelaHora(mundo, 2.0f);
+                default -> 1.0f;
+            };
+        }
+
+        @Override
+        public float manaMultiplier(int quantas) {
+            return CUSTO * quantas;
+        }
+
+        /** O valor pela hora do dia. Sem mundo, a onda vale um e o valor fica como está. */
+        private float pelaHora(@Nullable net.minecraft.world.level.Level mundo, float valor) {
+            if (mundo == null) return valor;
+            float x = mundo.getOverworldClockTime() % 24000L;
+            double ângulo = this.solar
+                    ? (x / 3800.0f * (x / 24000.0f) - 13000.0f) * (180.0 / Math.PI)
+                    : (x / 4600.0f * (x / 21000.0f) - 900.0f) * (180.0 / Math.PI);
+            float onda = (float) (this.solar ? Math.cos(ângulo) * 1.5 : Math.sin(ângulo) * 3.0) + 1.0f;
+            if (onda < 0.0f) onda *= -0.5f;
+            return valor * onda;
+        }
+
+        /** E o valor pela fase da lua — que no Solar nunca chega a ser perguntado, como no original. */
+        private float pelaLua(@Nullable net.minecraft.world.level.Level mundo, float valor) {
+            if (mundo == null) return valor;
+            long hora = mundo.getOverworldClockTime() % 24000L;
+            int lua = mundo.environmentAttributes()
+                    .getDimensionValue(net.minecraft.world.attribute.EnvironmentAttributes.MOON_PHASE).index();
+            int fase = this.solar ? 8 - (8 - lua) : 8 - lua;
+            boolean naHora = this.solar
+                    // o engano do original: nenhum número é maior que 23500 e menor que 12500
+                    ? hora > 23500L && hora < 12500L
+                    : hora > 12500L && hora < 23500L;
+            return naHora ? valor + fase / 2 : Math.abs(valor - 1.0f);
+        }
+    }
+
+    /**
+     * <b>Lunar</b>: o que ele dá depende da <b>noite</b> e da fase da lua.
+     *
+     * <p>Entre o anoitecer e o amanhecer ele soma metade da fase ao alcance e ao raio; de dia ele vale dois, e
+     * é só. O dano, a duração e a cura seguem a hora, e a conta do original os faz saltar.
+     */
+    public static final SpellPart.Modifier LUNAR = SpellParts.modifier(new Céu("lunar", false));
+
+    /**
+     * <b>Solar</b>: o irmão de dia, com o engano do original guardado.
+     *
+     * <p>Ele devia ser o contrário do Lunar. A pergunta que ele faz sobre a hora não tem resposta possível, e
+     * por isso o alcance e o raio dele valem <b>sempre dois</b>. O dano, a duração e a cura seguem a hora, com
+     * um cosseno de amplitude menor — esses funcionam.
+     */
+    public static final SpellPart.Modifier SOLAR = SpellParts.modifier(new Céu("solar", true));
+
+    /**
+     * <b>Poder de Bênção</b>: sobe um grau em todo efeito que a frase puser, por vinte e cinco por cento a mais.
+     *
+     * <p>É o modificador que faz a Pressa ser Pressa II e o Congelar prender de verdade. Ele não tem valor
+     * nenhum: o que conta é <b>quantas vezes</b> aparece, e é isso que vira o grau do efeito.
+     *
+     * <p>É uma das dez perícias <b>prateadas</b> do original — não se compra com nível, se descobre.
+     */
+    public static final SpellPart.Modifier BUFF_POWER = SpellParts.modifier(
+            new Simple("buff_power", SpellModifierKind.BUFF_POWER, 1.0f, 1.25f));
+
+    /**
+     * <b>Desmembramento</b>: <b>cinco por cento</b> de chance de a cabeça cair, por vinte e cinco por cento a mais.
+     *
+     * <p>E só a quem tem cabeça para cair: esqueleto, esqueleto do Nether, zumbi, creeper e gente. Ele não
+     * muda o dano — ele só importa no instante em que alguém morre do feitiço.
+     *
+     * <p>Também é <b>prateado</b>.
+     */
+    public static final SpellPart.Modifier DISMEMBERING = SpellParts.modifier(
+            new Simple("dismembering", SpellModifierKind.DISMEMBERING_LEVEL, 0.05f, 1.25f));
+
+    /**
+     * <b>Velocidade Acrescentada</b>: soma <b>meio</b> ao empurrão, por trinta por cento a mais por vez.
+     *
+     * <p>Ele não mexe no que voa — isso é a Velocidade. Ele mexe no que <b>empurra</b>: o Arremesso, o
+     * Empurrão e o Repelir. É a diferença entre atirar alguém ao ar e atirar alguém para longe.
+     */
+    public static final SpellPart.Modifier VELOCITY_ADDED = SpellParts.modifier(
+            new Simple("velocity_added", SpellModifierKind.VELOCITY_ADDED, 0.5f, 1.3f));
 
     /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela os Modificadores a se registrarem. */
     public static void init() {

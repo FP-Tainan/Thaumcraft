@@ -4742,3 +4742,139 @@ o cliente ainda não conhecia e **caía no chão sem um pio**: sem erro, sem avi
 registram no `init`, e as três vão pela rede com `syncWith`.
 
 A prova de tela passou a **exigir** o que o servidor sabe: se o nível não chegar ao cliente, ela quebra.
+
+### Fatia 14 — os modificadores do céu, a sorte e a seda (2026-09-30)
+
+Quatro modificadores que faltavam, e uma coisa que o porte não sabia fazer.
+
+**O que ele não sabia fazer** era deixar um modificador **olhar o mundo**. Todos os outros valem sempre o
+mesmo — o Alcance soma quatro blocos e é o fim da conversa —, mas o **Solar** e o **Lunar** só existem por
+causa da hora e da fase da lua. A conta do feitiço (`Spell.mul` e `Spell.add`) passou a levar o mundo, e os
+25 lugares que a chamam passaram a passá-lo.
+
+**As contas do Solar e do Lunar são as do original, com as esquisitices que ele tem**, e duas merecem ser
+ditas porque um leitor honesto acharia que são erro do porte:
+
+1. O original converte o ângulo de **radianos para graus** e depois entrega esses graus ao seno, que espera
+   radianos. O que sai não é a onda suave que o nome promete: é uma coisa que salta. Fica.
+2. O Solar pergunta se a hora está **depois de 23500 e antes de 12500** — o que nenhum número é. A pergunta
+   é sempre não, e por isso o alcance e o raio dele valem **sempre dois**. É um engano de 2014 do Ars Magica
+   2, e consertá-lo mudaria o feitiço de quem joga. Fica, e fica escrito.
+
+**A Prosperidade e o Toque de Pena** não mexem no feitiço: mexem no que **cai** do que ele quebra. O original
+encanta com elas a ferramenta invisível com que o Escavar colhe o bloco — uma Prosperidade é Fortuna I, duas
+é Fortuna II, e a seda manda na sorte. O Escavar passou a colher assim.
+
+**E entrou a quarta cor de ponto: a prateada.** Ela não se ganha subindo de nível — se ganha **descobrindo**.
+Lançar um feitiço com a combinação certa de peças destranca uma das dez perícias prateadas do original e dá o
+ponto para a comprar. A cor, a conta e o lugar delas no quadro entram agora; **quem as destranca é uma fatia
+própria**, porque as combinações pedem peças que ainda não estão portadas. Até lá a Prosperidade aparece no
+quadro e não se compra, que é exatamente o que ela é no original antes de se descobrir o segredo.
+
+### Fatia 15 — os danos, e o fator do nível (2026-09-30)
+
+Nove essências novas, e **a conta mais importante do ramo, que faltava**.
+
+**O fator do nível.** Todo dano de feitiço do Ars Magica 2 passa pelo `modifyDamage`, e ele multiplica: quem
+está no nível **zero fere metade** do que está escrito na peça, quem chegou ao **vinte fere o escrito**, e
+quem chegou ao **99 fere o dobro**. Isto não estava portado — o dano saía sempre igual, e subir de nível não
+mudava nada para quem já tinha as peças. Agora todo dano passa pelo `Essences.fere`, e é lá que a conta mora.
+
+**Os tipos de dano do ramo.** O original tem os seus: quem morre de um feitiço de gelo não morreu afogado, e
+o texto do chat é outro. Entraram seis — fogo, gelo, raio, vento, luz e afogamento — e todos são
+**absolutos**, como no original: nem armadura, nem encanto, nem poção os diminuem.
+
+**As nove essências.** Dano Físico (8, e o mais barato), Dano Arcano (6), Dano de Raio (12, o mais alto),
+Afogar (12, e não pega em morto-vivo nem em golem de ferro), Drenar Vida, Vida por Mana, Drenar Mana,
+Ignição e Derreter Armadura.
+
+**Dois enganos do original mantidos, e declarados:**
+
+1. **Drenar Vida cobra o feitiço a quem atira em morto-vivo.** Ele devolve `true` sem ferir e sem curar, o
+   que quer dizer que a mana sai na mesma. Fica.
+2. **Derreter Armadura não está no quadro de perícias.** O original registra a peça, dá-lhe figura e nome, e
+   **esquece-se de a pôr na árvore** — quem joga o original nunca a pode comprar. O porte guarda o engano, e
+   a prova `everyPartIsInTheTree` tem agora uma lista de órfãs onde ele fica escrito.
+
+**E a corrente do quadro voltou a ser a do original.** Enquanto faltavam os danos, o Fogo e o Gelo pendiam do
+Projétil porque o antepassado verdadeiro deles não existia. Agora existe: o **Dano Físico** é a raiz, o Fogo
+e o Arcano vêm dele, e o Raio, o Gelo e o Afogar vêm desses. A Área voltou a pedir **os cinco danos**.
+
+### Fatia 16 — os efeitos, as bênçãos, e o quadro inteiro do original (2026-09-30)
+
+A maior fatia do ramo. Entram **24 efeitos**, **29 essências** que os põem, **dois modificadores**, e o
+**quadro de perícias do original, inteiro e gerado**.
+
+**Os 24 efeitos.** No Ars Magica 2 cada um é uma classe `BuffEffect` com um `applyEffect` e um `stopEffect`,
+e quase todos são **marcos vazios**: o que eles fazem está escrito no `AMEventHandler`, num punhado de
+métodos gigantes que olham para todos de uma vez. Aqui o efeito é o que o jogo de hoje chama de efeito, e o
+que ele faz está **junto dele**, nos quatro lugares por onde um efeito pode mexer em alguém — a **batida**, o
+**dano**, a **queda** e o **pulo**.
+
+O original tem mais cinco — a Agilidade, a Clareza, a Regeneração de Mana, o Aumento de Mana e a Redução de
+Desgaste. Quem os dá são as **máquinas** dele: o Obelisco, o Prisma Celeste, as garrafas. Essa metade não é
+deste ramo, e um efeito que ninguém pode ganhar é peso morto: ficam de fora, declarados.
+
+**Os ícones vieram das duas folhas do original**, recortados com a conta do 1.7.10: o jogo daquela época
+guardava os ícones de poção a partir de `y=198`, em quadrados de 18 por 18, e o índice sai de
+`setIconIndex(coluna, linha)`. Vinte e quatro quadrados, conferidos numa foto — porque se a conta estivesse
+errada por um quadrado, **todos** sairiam trocados e as provas de servidor continuariam verdes.
+
+**O ícone do Embaralhar de Sinapses sai em branco**, e é assim no original: o `BuffList` manda buscá-lo à
+linha 1, coluna 7 da segunda folha, e essa casa está vazia. Quem joga o Ars Magica 2 vê um quadrado vazio, e
+quem jogar este vê o mesmo. Está na foto.
+
+**As bênçãos são uma só peça de código.** Vinte e tal essências do original são a mesma coisa escrita vinte e
+tal vezes: contam a duração — **600 batidas**, que a Duração multiplica —, contam quantos **Poderes de
+Bênção** há na frase, e põem o efeito com essa duração e esse grau. Aqui é um `record` chamado `Bênção`, e
+cada essência é uma linha.
+
+**Dois números do original que valem ser ditos:**
+
+1. **A Lentidão e o Congelar são o mesmo efeito por preços diferentes.** Os dois põem o `BuffEffectFrostSlowed`
+   com a mesma duração e o mesmo grau; o que muda é o preço — **80** contra **29** — e a Afinidade que cada um
+   puxa. Não é engano de leitura, e fica.
+2. **Os degraus da Pressa não são uma escada de passos iguais**: 0,2, depois 0,45, depois 0,9. Por isso eles
+   não podem ser um modificador de atributo comum, que o jogo multiplicaria pelo grau — o efeito põe o seu à
+   mão, no gancho por onde o jogo aplica os modificadores.
+
+**E o quadro de perícias passou a ser gerado do original.** Até aqui ele era escrito à mão, fatia a fatia, e
+as correntes iam sendo remendadas à medida que as peças chegavam. Agora as 79 linhas saem do
+`SkillTreeManager` do Ars Magica 2, lidas uma a uma: cada perícia no ramo, na cor e no lugar em que ele a pôs.
+
+O que muda é o que **não está portado**. O original tem 120 perícias em quatro ramos; o quarto — os
+**Talentos**, com a regeneração de mana, as faixas de mago e os ganhos de afinidade — não é feito de peças de
+feitiço e não é deste ramo. E dos outros três falta o que ainda não foi portado. Quando uma perícia
+desaparece assim, os filhos dela passam a pender do **antepassado portado mais próximo**.
+
+**Três peças são órfãs, e são órfãs no original.** O **Derreter Armadura**, a **Náusea** e o **Embaralhar
+Sinapses** têm peça, figura, nome e receita, e **não estão em ramo nenhum** da árvore do Ars Magica 2 — quem
+o joga nunca as pode comprar. O porte guarda o engano, e a prova `everyPartIsInTheTree` é onde ele fica
+escrito.
+
+### Fatia 17 — as que empurram (2026-09-30)
+
+Sete essências e o modificador que faltava. Nenhuma delas fere ninguém: o que elas fazem é **mexer em quem já
+lá está** — e num jogo em que se cai de alturas e se morre disso, empurrar é uma arma tão boa como outra.
+
+**Arremesso** (1,05 para cima), **Empurrão** (1,5 na horizontal e 0,325 para cima, na linha que sai de quem
+lança), **Repelir**, **Telecinese**, **Atrair**, **Acelerar** e **Desarmar**. E a **Velocidade Acrescentada**,
+que soma meio ao empurrão — não ao que voa, que isso é a Velocidade.
+
+**O Repelir tem força fixa, e a conta do original engana.** Ele divide a linha entre os dois por 2,5 **e pela
+distância** — e dividir uma linha pelo seu próprio comprimento dá uma linha de comprimento um. O empurrão sai
+sempre com **0,4**, e o que muda é só o rumo. Há ainda um décimo somado à distância antes da divisão, e por
+causa dele quem está *colado* é empurrado um pouco **menos** do que quem está a dois blocos. Apontado a quem o
+lança, ele pega tudo o que estiver a **dois blocos**.
+
+**Três coisas do original mantidas, e declaradas:**
+
+1. **O Atrair e a Telecinese são a mesma conta.** Os dois chamam o `doTK_Extrapolated` com os mesmos números
+   — dezesseis blocos de distância, três de altura, 0,15 de velocidade, e nada sobe. O que muda é o preço,
+   que é menos de metade, e a Afinidade. Ficam os dois.
+2. **O Acelerar quase não faz nada.** O original multiplica por 1,6 a velocidade de passo da inteligência do
+   bicho — o número que o jogo recalcula a cada batida. Num bicho ele salta uma vez; **numa pessoa não faz
+   nada de nada**. Seis de mana, a essência mais barata do ramo. Fica como está: consertá-lo seria inventar
+   um feitiço que o Ars Magica 2 não tem.
+3. **A arma que o Desarmar faz cair cai gasta** — entre 80 e 99 por cento da durabilidade —, para desarmar
+   esqueletos não ser uma maneira de ganhar arcos.

@@ -32,7 +32,9 @@ public final class SpellCast {
         /** A frase não faz sentido: sem etapa, ou com uma Forma que não devia estar ali. */
         MALFORMED,
         /** Correu, mas não achou nada em que pegar. */
-        EFFECT_FAILED;
+        EFFECT_FAILED,
+        /** Quem ia lançar está <b>calado</b>: tem o Silêncio, e não lança nada. */
+        SILENCED;
 
         public boolean ok() {
             return this == SUCCESS;
@@ -61,6 +63,9 @@ public final class SpellCast {
         if (feitiço.isEmpty()) return Result.SUCCESS;
         Spell.Stage etapa = feitiço.first();
         if (etapa == null) return Result.MALFORMED;
+
+        // e quem está calado não lança nada, nem paga nada por isso
+        if (ArcanaEffects.silenced(quem)) return Result.SILENCED;
 
         // o Arcano desconta cinco por cento da mana e do desgaste, acima de meio
         float desconto = AffinityEffects.manaDiscount(quem);

@@ -76,22 +76,38 @@ public record Spell(List<Stage> stages) {
      * <p>O mesmo modificador posto duas vezes multiplica duas vezes, que é o que faz valer a pena repeti-lo.
      */
     public double mul(SpellModifierKind qual, double base) {
+        return this.mul(null, qual, base);
+    }
+
+    /**
+     * O mesmo, <b>sabendo em que mundo</b> se lança.
+     *
+     * <p>É esta a forma que o porte usa em todo lugar onde há um mundo à mão, e é por causa do <b>Solar</b> e
+     * do <b>Lunar</b>: o que eles valem depende da hora e da fase da lua. Quem chama sem mundo — as provas, e
+     * os números que nenhum modificador do céu mexe — recebe o que os outros modificadores dão.
+     */
+    public double mul(@Nullable net.minecraft.world.level.Level mundo, SpellModifierKind qual, double base) {
         Stage etapa = this.first();
         if (etapa == null) return base;
         double valor = base;
         for (SpellPart.Modifier mod : etapa.modifiers()) {
-            if (mod.modifies().contains(qual)) valor *= mod.value(qual);
+            if (mod.modifies().contains(qual)) valor *= mod.value(qual, mundo);
         }
         return valor;
     }
 
     /** E o mesmo, <b>somando</b>: o {@code getModifiedDouble_Add}. */
     public double add(SpellModifierKind qual, double base) {
+        return this.add(null, qual, base);
+    }
+
+    /** Somando, e sabendo em que mundo. */
+    public double add(@Nullable net.minecraft.world.level.Level mundo, SpellModifierKind qual, double base) {
         Stage etapa = this.first();
         if (etapa == null) return base;
         double valor = base;
         for (SpellPart.Modifier mod : etapa.modifiers()) {
-            if (mod.modifies().contains(qual)) valor += mod.value(qual);
+            if (mod.modifies().contains(qual)) valor += mod.value(qual, mundo);
         }
         return valor;
     }

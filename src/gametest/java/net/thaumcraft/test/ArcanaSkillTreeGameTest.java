@@ -24,20 +24,46 @@ import java.util.HashSet;
 public class ArcanaSkillTreeGameTest {
     // ------------------------------------------------------------------ o quadro
 
-    /** Toda peça da gramática está na árvore, e toda perícia da árvore é uma peça. */
+    /**
+     * Toda peça da gramática está na árvore, e toda perícia da árvore é uma peça.
+     *
+     * <p>Menos as <b>órfãs</b>, e elas são órfãs no original também: o Ars Magica 2 registra a peça, dá-lhe
+     * figura e nome, e depois <b>esquece-se de a pôr no quadro</b>. Quem joga o original nunca a pode comprar.
+     * O porte guarda o engano em vez de o consertar, e esta prova é o lugar onde ele fica escrito.
+     */
     @GameTest
     public void everyPartIsInTheTree(GameTestHelper helper) {
         for (SpellPart peça : SpellParts.shapes()) esperada(helper, peça);
         for (SpellPart peça : SpellParts.essences()) esperada(helper, peça);
         for (SpellPart peça : SpellParts.modifiers()) esperada(helper, peça);
 
-        if (SkillTree.entries().size() != SpellParts.count()) {
-            helper.fail("há " + SpellParts.count() + " peças e " + SkillTree.entries().size() + " perícias");
+        for (SpellPart órfã : ÓRFÃS) {
+            if (SkillTree.of(órfã) != null) {
+                helper.fail(órfã.name() + " não está no quadro do original, e não devia estar neste");
+            }
+        }
+
+        if (SkillTree.entries().size() != SpellParts.count() - ÓRFÃS.size()) {
+            helper.fail("há " + SpellParts.count() + " peças, " + ÓRFÃS.size() + " órfãs e "
+                    + SkillTree.entries().size() + " perícias");
         }
         helper.succeed();
     }
 
+    /**
+     * As peças que o original registra e nunca põe no quadro.
+     *
+     * <p>São três, e são três enganos do Ars Magica 2: o Derreter Armadura, a Náusea e o Embaralhar Sinapses
+     * têm peça, figura, nome e receita, e <b>não estão em ramo nenhum</b> da árvore dele. Quem joga o original
+     * nunca as pode comprar.
+     */
+    private static final java.util.List<SpellPart> ÓRFÃS = java.util.List.of(
+            net.thaumcraft.arcana.Essences.MELT_ARMOR,
+            net.thaumcraft.arcana.Essences.NAUSEATE,
+            net.thaumcraft.arcana.Essences.SCRAMBLE_SYNAPSES);
+
     private static void esperada(GameTestHelper helper, SpellPart peça) {
+        if (ÓRFÃS.contains(peça)) return;
         if (SkillTree.of(peça) == null) helper.fail(peça.name() + " devia estar na árvore");
     }
 
@@ -171,17 +197,21 @@ public class ArcanaSkillTreeGameTest {
     public void youCannotLearnWhatYouCannot(GameTestHelper helper) {
         SkillData sabe = SkillData.NONE;
 
-        // o Dano de Fogo precisa do Projétil
+        // o Dano de Fogo precisa do Dano Físico, que precisa do Projétil
         var fogo = SkillTree.of(Essences.FIRE_DAMAGE);
-        if (sabe.canLearn(fogo, 10)) helper.fail("o Dano de Fogo precisa do Projétil antes");
+        if (sabe.canLearn(fogo, 10)) helper.fail("o Dano de Fogo precisa do Dano Físico antes");
 
         sabe = sabe.learn(SkillTree.of(Shapes.PROJECTILE), 10);
         if (!sabe.knows(Shapes.PROJECTILE)) helper.fail("o Projétil aprende-se");
+        if (sabe.canLearn(fogo, 10)) helper.fail("e ainda falta o Dano Físico");
+
+        sabe = sabe.learn(SkillTree.of(Essences.PHYSICAL_DAMAGE), 10);
         if (!sabe.canLearn(fogo, 10)) helper.fail("e agora o Dano de Fogo está ao alcance");
 
-        // e não se aprende duas vezes
+        // e não se aprende duas vezes: dois azuis foram gastos — o Projétil e o Dano Físico — e o
+        // Projétil comprado outra vez não gasta um terceiro
         sabe = sabe.learn(SkillTree.of(Shapes.PROJECTILE), 10);
-        if (sabe.used(SkillTree.Point.BLUE) != 1) helper.fail("aprender duas vezes não gasta dois pontos");
+        if (sabe.used(SkillTree.Point.BLUE) != 2) helper.fail("aprender duas vezes não gasta outro ponto");
 
         // uma vermelha não se compra cedo por mais azuis que se tenha
         var dano = SkillTree.of(net.thaumcraft.arcana.Modifiers.DAMAGE);

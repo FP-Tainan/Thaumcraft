@@ -27,8 +27,13 @@ import java.util.Set;
  * @param known as perícias sabidas, pelo nome da peça
  * @param spent quantos pontos de cada cor já se gastaram
  */
-public record SkillData(Set<String> known, Map<SkillTree.Point, Integer> spent) {
-    public static final SkillData NONE = new SkillData(Set.of(), Map.of());
+public record SkillData(Set<String> known, Map<SkillTree.Point, Integer> spent, int silver) {
+    /** A conta velha, de quando não havia pontos prateados. */
+    public SkillData(Set<String> known, Map<SkillTree.Point, Integer> spent) {
+        this(known, spent, 0);
+    }
+
+    public static final SkillData NONE = new SkillData(Set.of(), Map.of(), 0);
 
     public static final Codec<SkillData> CODEC = RecordCodecBuilder.create(i -> i.group(
             Codec.STRING.listOf().optionalFieldOf("known", List.of())
@@ -39,12 +44,21 @@ public record SkillData(Set<String> known, Map<SkillTree.Point, Integer> spent) 
                                     n -> SkillTree.Point.valueOf(n.toUpperCase(Locale.ROOT)),
                                     p -> p.name().toLowerCase(Locale.ROOT)),
                             Codec.INT)
-                    .optionalFieldOf("spent", Map.of()).forGetter(SkillData::spent))
-            .apply(i, (sabidas, gastos) -> new SkillData(Set.copyOf(sabidas), gastos)));
+                    .optionalFieldOf("spent", Map.of()).forGetter(SkillData::spent),
+            Codec.INT.optionalFieldOf("silver", 0).forGetter(SkillData::silver))
+            .apply(i, (sabidas, gastos, prata) -> new SkillData(Set.copyOf(sabidas), gastos, prata)));
+
+    /** O mesmo, para ir pela rede: o Óculus e a barra desenham do lado de quem joga. */
+    public static final net.minecraft.network.codec.StreamCodec<
+            net.minecraft.network.RegistryFriendlyByteBuf, SkillData> STREAM_CODEC =
+            net.minecraft.network.codec.ByteBufCodecs.fromCodecWithRegistries(CODEC);
 
     public static final AttachmentType<SkillData> DATA = AttachmentRegistry.<SkillData>builder()
             .initializer(() -> NONE)
             .persistent(CODEC)
+            // o Óculus desenha o que se sabe e o que sobra de pontos
+            .syncWith(STREAM_CODEC,
+                    net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate.targetOnly())
             .copyOnDeath()
             .buildAndRegister(Thaumcraft.id("skills"));
 
@@ -80,7 +94,7 @@ public record SkillData(Set<String> known, Map<SkillTree.Point, Integer> spent) 
         var gastos = new EnumMap<SkillTree.Point, Integer>(SkillTree.Point.class);
         gastos.putAll(this.spent);
         gastos.merge(qual.point(), 1, Integer::sum);
-        return new SkillData(Set.copyOf(sabidas), Map.copyOf(gastos));
+        return new SkillData(Set.copyOf(sabidas), Map.copyOf(gastos), this.silver);
     }
 
     /** A mesma prova, sabendo de que nível é quem quer aprender. */
@@ -104,9 +118,19 @@ public record SkillData(Set<String> known, Map<SkillTree.Point, Integer> spent) 
         return this.free(qual, SkillTree.RED_UNTIL);
     }
 
-    /** E quantos sobram a quem é daquele nível. */
+    /**
+     * E quantos sobram a quem é daquele nível.
+     *
+     * <p>O prateado não conta o nível: conta quantos segredos já se descobriu.
+     */
     public int free(SkillTree.Point qual, int level) {
-        return SkillTree.pointsUpTo(qual, level) - this.used(qual);
+        int ganhos = qual == SkillTree.Point.SILVER ? this.silver : SkillTree.pointsUpTo(qual, level);
+        return ganhos - this.used(qual);
+    }
+
+    /** Mais um ponto prateado, que é o que um segredo descoberto dá. */
+    public SkillData withSilver(int quantos) {
+        return new SkillData(this.known, this.spent, Math.max(0, quantos));
     }
 
     /** Tudo o que se sabe, como peças. */

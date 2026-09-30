@@ -110,7 +110,7 @@ public final class Shapes {
         @Override
         public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
                                       @Nullable Entity alvo, Vec3 onde) {
-            double raio = feitiço.mul(SpellModifierKind.RADIUS, BASE_RADIUS);
+            double raio = feitiço.mul(level, SpellModifierKind.RADIUS, BASE_RADIUS);
             var roda = new net.minecraft.world.phys.AABB(onde, onde).inflate(raio);
 
             boolean pegou = false;
@@ -156,11 +156,11 @@ public final class Shapes {
         @Override
         public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
                                       @Nullable Entity alvo, Vec3 onde) {
-            double velocidade = feitiço.mul(SpellModifierKind.SPEED, SpellModifierKind.SPEED.base);
+            double velocidade = feitiço.mul(level, SpellModifierKind.SPEED, SpellModifierKind.SPEED.base);
             var voa = new SpellProjectileEntity(level, quem, feitiço, velocidade);
-            voa.setGravity(feitiço.add(SpellModifierKind.GRAVITY, SpellModifierKind.GRAVITY.base));
-            voa.setBounces((int) feitiço.add(SpellModifierKind.BOUNCE, SpellModifierKind.BOUNCE.base));
-            voa.setPierces((int) feitiço.add(SpellModifierKind.PIERCING, 0.0));
+            voa.setGravity(feitiço.add(level, SpellModifierKind.GRAVITY, SpellModifierKind.GRAVITY.base));
+            voa.setBounces((int) feitiço.add(level, SpellModifierKind.BOUNCE, SpellModifierKind.BOUNCE.base));
+            voa.setPierces((int) feitiço.add(level, SpellModifierKind.PIERCING, 0.0));
             voa.setTargetNonSolid(feitiço.has(SpellModifierKind.TARGET_NONSOLID_BLOCKS));
             level.addFreshEntity(voa);
             return SpellCast.Result.SUCCESS;
@@ -204,8 +204,8 @@ public final class Shapes {
         @Override
         public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
                                       @Nullable Entity alvo, Vec3 onde) {
-            double salto = feitiço.mul(SpellModifierKind.RANGE, BASE_RANGE);
-            int quantos = (int) feitiço.add(SpellModifierKind.PROCS, BASE_TARGETS);
+            double salto = feitiço.mul(level, SpellModifierKind.RANGE, BASE_RANGE);
+            int quantos = (int) feitiço.add(level, SpellModifierKind.PROCS, BASE_TARGETS);
 
             // o primeiro é quem já estava apontado, ou quem o mago está olhando
             Entity primeiro = alvo;
@@ -303,7 +303,7 @@ public final class Shapes {
         @Override
         public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
                                       @Nullable Entity alvo, Vec3 onde, int batidas) {
-            double alcance = feitiço.add(SpellModifierKind.RANGE, SpellModifierKind.RANGE.base);
+            double alcance = feitiço.add(level, SpellModifierKind.RANGE, SpellModifierKind.RANGE.base);
             HitResult bateu = look(level, quem, alcance,
                     feitiço.has(SpellModifierKind.TARGET_NONSOLID_BLOCKS));
 
@@ -379,9 +379,9 @@ public final class Shapes {
             if (mal != null) return mal;
 
             var área = new SpellEffectEntity(level, quem, feitiço.pop(), SpellEffectEntity.Kind.ZONE);
-            área.setRadius((float) feitiço.add(SpellModifierKind.RADIUS, BASE_RADIUS));
-            área.setGravity(feitiço.add(SpellModifierKind.GRAVITY, 0.0));
-            área.setLife((int) feitiço.mul(SpellModifierKind.DURATION, BASE_LIFE));
+            área.setRadius((float) feitiço.add(level, SpellModifierKind.RADIUS, BASE_RADIUS));
+            área.setGravity(feitiço.add(level, SpellModifierKind.GRAVITY, 0.0));
+            área.setLife((int) feitiço.mul(level, SpellModifierKind.DURATION, BASE_LIFE));
             área.snapTo(onde.x, onde.y, onde.z, quem.getYRot(), 0.0f);
             level.addFreshEntity(área);
             return SpellCast.Result.SUCCESS;
@@ -424,9 +424,9 @@ public final class Shapes {
             if (mal != null) return mal;
 
             var área = new SpellEffectEntity(level, quem, feitiço.pop(), SpellEffectEntity.Kind.WALL);
-            área.setRadius((float) feitiço.mul(SpellModifierKind.RADIUS, BASE_RADIUS));
-            área.setGravity(feitiço.add(SpellModifierKind.GRAVITY, 0.0));
-            área.setLife((int) feitiço.mul(SpellModifierKind.DURATION, BASE_LIFE));
+            área.setRadius((float) feitiço.mul(level, SpellModifierKind.RADIUS, BASE_RADIUS));
+            área.setGravity(feitiço.add(level, SpellModifierKind.GRAVITY, 0.0));
+            área.setLife((int) feitiço.mul(level, SpellModifierKind.DURATION, BASE_LIFE));
             área.snapTo(onde.x, onde.y, onde.z, quem.getYRot(), 0.0f);
             área.setWall(quem.getYRot());
             level.addFreshEntity(área);
@@ -472,8 +472,8 @@ public final class Shapes {
             if (mal != null) return mal;
 
             var área = new SpellEffectEntity(level, quem, feitiço.pop(), SpellEffectEntity.Kind.WAVE);
-            área.setRadius((float) feitiço.add(SpellModifierKind.RADIUS, BASE_RADIUS));
-            área.setLife((int) feitiço.mul(SpellModifierKind.DURATION, BASE_LIFE));
+            área.setRadius((float) feitiço.add(level, SpellModifierKind.RADIUS, BASE_RADIUS));
+            área.setLife((int) feitiço.mul(level, SpellModifierKind.DURATION, BASE_LIFE));
             área.noPhysics = feitiço.has(SpellModifierKind.PIERCING);
 
             // cada Gravidade posta faz a Onda descer meio bloco por batida
@@ -481,7 +481,7 @@ public final class Shapes {
             área.setGravity(-gravidades * 0.5);
 
             área.snapTo(onde.x, onde.y + 1.0, onde.z, quem.getYRot(), 0.0f);
-            área.setWave(quem.getYRot(), feitiço.add(SpellModifierKind.SPEED, 1.0) * SPEED_FACTOR);
+            área.setWave(quem.getYRot(), feitiço.add(level, SpellModifierKind.SPEED, 1.0) * SPEED_FACTOR);
             level.addFreshEntity(área);
             return SpellCast.Result.SUCCESS;
         }
@@ -541,7 +541,7 @@ public final class Shapes {
                 return SpellCast.Result.EFFECT_FAILED;
             }
             guarda.setSpell(feitiço.pop());
-            guarda.setTriggers((int) feitiço.add(SpellModifierKind.PROCS, BASE_TRIGGERS));
+            guarda.setTriggers((int) feitiço.add(level, SpellModifierKind.PROCS, BASE_TRIGGERS));
             guarda.setPlacedBy(quem);
             return SpellCast.Result.SUCCESS;
         }

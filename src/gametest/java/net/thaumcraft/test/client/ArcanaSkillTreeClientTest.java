@@ -44,8 +44,9 @@ public class ArcanaSkillTreeClientTest implements FabricClientGameTest {
                 var jogador = s.getPlayerList().getPlayers().getFirst();
                 Mana.set(jogador, new Mana(50, 0.0f, 0.0f, 0.0f));
                 SkillData sabe = SkillData.NONE;
-                for (var qual : java.util.List.of(Shapes.PROJECTILE, Essences.FIRE_DAMAGE,
-                        Essences.FROST_DAMAGE, Shapes.AOE)) {
+                // a corrente do original: o Projétil, o Dano Físico e os dois que pendem dele
+                for (var qual : java.util.List.of(Shapes.PROJECTILE, Essences.PHYSICAL_DAMAGE,
+                        Essences.FIRE_DAMAGE, Essences.LIGHTNING_DAMAGE)) {
                     sabe = sabe.learn(SkillTree.of(qual), 50);
                 }
                 SkillData.set(jogador, sabe);

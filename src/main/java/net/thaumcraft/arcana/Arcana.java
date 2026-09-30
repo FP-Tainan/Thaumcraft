@@ -35,6 +35,7 @@ public final class Arcana {
         ArcanaComponents.init();
         ArcanaBlocks.init();
         ArcanaEntities.init();
+        ArcanaEffects.init();
         AffinityPools.init();
         Contingency.init();
         // as três coisas que um arcanista carrega: têm de se registrar aqui, e não quando alguém as usa —

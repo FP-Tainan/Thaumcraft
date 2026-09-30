@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumcraft:firearrow"
+    "thaumcraft:firearrow",
+    "thaumcraft:aa_fire"
   ]
 }
