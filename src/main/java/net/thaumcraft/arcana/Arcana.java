@@ -37,6 +37,10 @@ public final class Arcana {
         ArcanaEntities.init();
         AffinityPools.init();
         Contingency.init();
+        // as três coisas que um arcanista carrega: têm de se registrar aqui, e não quando alguém as usa —
+        // um anexo registrado tarde não chega à máquina de quem joga
+        Mana.init();
+        AffinityData.init();
         SkillData.init();
         SkillTree.init();
         // a ordem importa: as peças se registram ao carregar a classe, e os feitiços leem-nas pelo nome

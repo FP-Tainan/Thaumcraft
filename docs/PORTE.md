@@ -4715,3 +4715,30 @@ Z = 8 + (ponto.z + caixa.z)   e cresce para +Z
    inteira. Fazer dela um bloco duplo mudaria o bloco, a receita e o menu.
 2. **Os dois modelos passam da altura do bloco** — o olho do Óculus chega a `y=25` e a Mesa a `y=20`. É o que
    o original faz, e o jogo de hoje aceita até 32.
+
+### Fatia 13 — comprar uma perícia, e ver o quadro (2026-09-30)
+
+Doze fatias e **a compra de perícia nunca tinha sido provada**. As provas da árvore conferiam a *conta* — se
+o ponto chega, se o pré-requisito está sabido — e nenhuma delas passava pelo **caminho**: o botão da tela, o
+número que ele manda, o servidor que prova tudo outra vez, a peça que chega à mochila. Agora passam cinco.
+
+E a tela da árvore **nunca tinha sido fotografada**. Três fotos depois, três defeitos:
+
+1. **Os textos saíam fora do painel.** O nome das abas, o nível e os pontos ficavam pendurados por cima e à
+   esquerda da janela, no vazio. A causa é que no jogo de hoje o `extractBackground` desenha em pixel de
+   **tela** e o `extractLabels` em pixel do **painel** — e o código subtraía o canto em quem não devia.
+2. **O ramo de Utilidade transbordava por baixo.** O quadro do original desce até `y=524` nesse ramo e até
+   `y=360` no de Defesa; com um encolhimento fixo, ou um ficava minúsculo ou o outro saía da tela. Agora
+   cada ramo é **medido e encaixado**: encolhe-se até caber, nunca mais do que 0,42, e centra-se o que sobra.
+3. **E o pior: o nível e a mana nunca chegavam à máquina de quem joga.** O Óculus mostrava *Nível 0* e *três
+   pontos azuis* a quem estava no nível cinquenta, e por isso mostrava também **menos um** ponto verde — a
+   conta de pontos gastos vinha do servidor e a de pontos ganhos vinha de um nível que era zero.
+
+**A causa do terceiro é uma armadilha que vale escrever**, porque ela não se vê lendo o código: um anexo de
+jogador (`AttachmentType`) só se **registra quando a classe carrega**. A `SkillData` carregava no arranque,
+porque o `Arcana.init()` a chamava; a `Mana` e a `AffinityData` não — elas só carregavam quando alguém as
+usava, e do lado do cliente isso é **depois de entrar no mundo**. O pacote de sincronia chegava a um nome que
+o cliente ainda não conhecia e **caía no chão sem um pio**: sem erro, sem aviso, sem nada. As três agora se
+registram no `init`, e as três vão pela rede com `syncWith`.
+
+A prova de tela passou a **exigir** o que o servidor sabe: se o nível não chegar ao cliente, ela quebra.

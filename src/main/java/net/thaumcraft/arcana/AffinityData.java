@@ -54,14 +54,32 @@ public record AffinityData(Map<Affinity, Float> depths, float falloff, boolean l
             Codec.BOOL.optionalFieldOf("locked", false).forGetter(AffinityData::locked))
             .apply(i, AffinityData::new));
 
+    /** O mesmo, para ir pela rede: o Óculus e a barra desenham do lado de quem joga. */
+    public static final net.minecraft.network.codec.StreamCodec<
+            net.minecraft.network.RegistryFriendlyByteBuf, AffinityData> STREAM_CODEC =
+            net.minecraft.network.codec.ByteBufCodecs.fromCodecWithRegistries(CODEC);
+
     public static final AttachmentType<AffinityData> DATA = AttachmentRegistry.<AffinityData>builder()
             .initializer(() -> NONE)
             .persistent(CODEC)
+            // a roda das Afinidades é desenhada do lado de cá
+            .syncWith(STREAM_CODEC,
+                    net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate.targetOnly())
             .copyOnDeath()
             .buildAndRegister(Thaumcraft.id("affinity"));
 
     public static AffinityData of(Player quem) {
         return quem.getAttachedOrCreate(DATA);
+    }
+
+/**
+     * Sem uso fora do porte: <b>obriga a classe a carregar</b>, e com ela o anexo a se registrar.
+     *
+     * <p>Isto não é enfeite. Um anexo que só se registra quando alguém o usa fica registrado <b>tarde demais</b>
+     * do lado de quem joga: o servidor manda as afinidades, o cliente ainda não conhece o nome, e o pacote cai no chão
+     * sem um pio. O mesmo que aconteceu com a mana aconteceria aqui, e ninguém veria a roda mexer.
+     */
+    public static void init() {
     }
 
     public static void set(Player quem, AffinityData agora) {

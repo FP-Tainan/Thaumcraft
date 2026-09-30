@@ -127,7 +127,8 @@
       "net.thaumcraft.test.ArcanaContingencyGameTest",
       "net.thaumcraft.test.ArcanaInscriptionGameTest",
       "net.thaumcraft.test.ArcanaSkillTreeGameTest",
-      "net.thaumcraft.test.ArcanaBindingGameTest"
+      "net.thaumcraft.test.ArcanaBindingGameTest",
+      "net.thaumcraft.test.ArcanaOcculusGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -234,7 +235,8 @@
       "net.thaumcraft.test.client.ArcanaAffinityClientTest",
       "net.thaumcraft.test.client.ArcanaInscriptionClientTest",
       "net.thaumcraft.test.client.ArcanaParticlesClientTest",
-      "net.thaumcraft.test.client.ArcanaBlocksClientTest"
+      "net.thaumcraft.test.client.ArcanaBlocksClientTest",
+      "net.thaumcraft.test.client.ArcanaSkillTreeClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

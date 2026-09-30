@@ -24,13 +24,23 @@ import java.util.List;
  * trancada. A cor da moldura é a do ponto que ela custa — azul, verde ou vermelho —, e é ela que diz quando
  * ela vai estar ao alcance: o azul até o nível vinte, o verde até o quarenta, o vermelho até o cinquenta.
  *
- * <p><b>Desvio declarado:</b> a do original rola livremente e tem seis abas, com as perícias que não são peças
- * de feitiço (talentos, familiares, afinidade). Aqui são três abas e o quadro é encolhido para caber inteiro
- * na tela, porque as 32 peças deste porte cabem — as 120 do original não caberiam.
+ * <p><b>Desvio declarado:</b> a do original <b>rola livremente</b> e tem seis abas, com as perícias que não são
+ * peças de feitiço (talentos, familiares, afinidade). Aqui são três abas e o quadro é <b>encolhido até caber
+ * inteiro</b> na tela, ramo a ramo — porque as 32 peças deste porte cabem, e as 120 do original não caberiam.
  */
 public class SkillTreeScreen extends AbstractContainerScreen<OcculusMenu> {
-    /** O quanto o quadro do original é encolhido para caber. */
-    private static final float ESCALA = 0.42f;
+    /** O quanto o quadro do original pode ser encolhido, no máximo: um ramo pequeno não se estica além disto. */
+    private static final float ESCALA_MÁXIMA = 0.42f;
+
+    /** A folga que o quadro deixa dos lados, e em cima das abas e por baixo dos pontos. */
+    private static final int MARGEM = 10;
+    private static final int TOPO = 28;
+    private static final int RODAPÉ = 22;
+
+    /** O quanto este ramo está encolhido, e para onde ele foi empurrado. Refeito a cada quadro desenhado. */
+    private float escala = ESCALA_MÁXIMA;
+    private int offX;
+    private int offY;
 
     /** O tamanho de cada perícia desenhada. */
     private static final int PEÇA = 16;
@@ -55,15 +65,60 @@ public class SkillTreeScreen extends AbstractContainerScreen<OcculusMenu> {
         this.inventoryLabelY = -1000;
     }
 
+    /** Troca de aba. Sem uso no jogo — quem as troca é o clique —, mas as provas de tela precisam. */
+    public void showBranch(SkillTree.Branch qual) {
+        this.aba = qual;
+    }
+
     // ------------------------------------------------------------------ o quadro
 
     /** Onde uma perícia fica na tela, do lugar que ela tem no quadro do original. */
     private int telaX(SkillTree.Entry qual) {
-        return this.leftPos + 10 + Math.round(qual.x() * ESCALA);
+        return this.offX + Math.round(qual.x() * this.escala);
     }
 
     private int telaY(SkillTree.Entry qual) {
-        return this.topPos + 30 + Math.round(qual.y() * ESCALA);
+        return this.offY + Math.round(qual.y() * this.escala);
+    }
+
+    /**
+     * Encolhe e empurra o ramo até ele <b>caber inteiro</b> no painel.
+     *
+     * <p>Isto é o que o original não precisa de fazer, porque a tela dele rola. Aqui o quadro é parado, e os
+     * ramos não têm o mesmo tamanho — o de Utilidade desce até {@code y=524} no quadro do original, quase o
+     * dobro do de Defesa. Com um encolhimento fixo, ou um ramo ficava minúsculo ou o outro saía por baixo da
+     * tela: aconteceu, e foi uma foto que mostrou.
+     *
+     * <p>Então se mede o ramo, se acha o encolhimento que o faz caber — nunca maior do que o
+     * {@link #ESCALA_MÁXIMA}, para um ramo de três perícias não ficar gigante — e se centra o que sobrar.
+     */
+    private void ajusta(List<SkillTree.Entry> doRamo) {
+        int largura = this.imageWidth - 2 * MARGEM - PEÇA;
+        int altura = this.imageHeight - TOPO - RODAPÉ - PEÇA;
+        if (doRamo.isEmpty()) {
+            this.escala = ESCALA_MÁXIMA;
+            this.offX = this.leftPos + MARGEM;
+            this.offY = this.topPos + TOPO;
+            return;
+        }
+
+        int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE;
+        int minY = Integer.MAX_VALUE, maxY = Integer.MIN_VALUE;
+        for (SkillTree.Entry perícia : doRamo) {
+            minX = Math.min(minX, perícia.x());
+            maxX = Math.max(maxX, perícia.x());
+            minY = Math.min(minY, perícia.y());
+            maxY = Math.max(maxY, perícia.y());
+        }
+
+        float cabeX = maxX > minX ? (float) largura / (maxX - minX) : ESCALA_MÁXIMA;
+        float cabeY = maxY > minY ? (float) altura / (maxY - minY) : ESCALA_MÁXIMA;
+        this.escala = Math.min(ESCALA_MÁXIMA, Math.min(cabeX, cabeY));
+
+        int sobraX = largura - Math.round((maxX - minX) * this.escala);
+        int sobraY = altura - Math.round((maxY - minY) * this.escala);
+        this.offX = this.leftPos + MARGEM + sobraX / 2 - Math.round(minX * this.escala);
+        this.offY = this.topPos + TOPO + sobraY / 2 - Math.round(minY * this.escala);
     }
 
     @Override
@@ -85,6 +140,7 @@ public class SkillTreeScreen extends AbstractContainerScreen<OcculusMenu> {
 
         List<SkillTree.Entry> quadro = SkillTree.entries();
         List<SkillTree.Entry> doRamo = SkillTree.of(this.aba);
+        ajusta(doRamo);
 
         // primeiro as linhas, para ficarem por baixo
         for (SkillTree.Entry perícia : doRamo) {
@@ -138,7 +194,7 @@ public class SkillTreeScreen extends AbstractContainerScreen<OcculusMenu> {
             int ax = x + 8 + i * 84;
             g.fill(ax, y + 6, ax + 80, y + 22, ramo == this.aba ? ABA_ATIVA : ABA_PARADA);
             Component nome = Component.translatable(ramo.key());
-            g.text(this.font, nome, ax + 40 - this.font.width(nome) / 2 - this.leftPos, y + 11 - this.topPos,
+            g.text(this.font, nome, ax + 40 - this.font.width(nome) / 2, y + 11,
                     ramo == this.aba ? 0xFFFFFFFF : 0xFF888888, false);
             i++;
         }
@@ -147,14 +203,14 @@ public class SkillTreeScreen extends AbstractContainerScreen<OcculusMenu> {
     /** Os pontos que sobram de cada cor, e o nível de quem olha. */
     private void pontos(GuiGraphicsExtractor g, int x, int y, SkillData sabe, int nível) {
         Component fala = Component.translatable("tc.spell.level", nível);
-        g.text(this.font, fala, this.imageWidth - this.font.width(fala) - 8, 11, 0xFFAAAAAA, false);
+        g.text(this.font, fala, x + this.imageWidth - this.font.width(fala) - 8, y + 11, 0xFFAAAAAA, false);
 
         int px = 8;
         for (SkillTree.Point cor : SkillTree.Point.values()) {
             Component quantos = Component.literal(String.valueOf(sabe.free(cor, nível)));
             g.fill(x + px, y + this.imageHeight - 16, x + px + 8, y + this.imageHeight - 8,
                     cor.color | 0xFF000000);
-            g.text(this.font, quantos, px + 11, this.imageHeight - 16, 0xFFFFFFFF, false);
+            g.text(this.font, quantos, x + px + 11, y + this.imageHeight - 16, 0xFFFFFFFF, false);
             px += 11 + this.font.width(quantos) + 8;
         }
     }

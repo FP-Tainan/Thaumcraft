@@ -41,14 +41,32 @@ public record Mana(int level, float mana, float burnout, float xp) {
             Codec.FLOAT.optionalFieldOf("xp", 0.0f).forGetter(Mana::xp))
             .apply(i, Mana::new));
 
+    /** O mesmo, para ir pela rede: o Óculus e a barra desenham do lado de quem joga. */
+    public static final net.minecraft.network.codec.StreamCodec<
+            net.minecraft.network.RegistryFriendlyByteBuf, Mana> STREAM_CODEC =
+            net.minecraft.network.codec.ByteBufCodecs.fromCodecWithRegistries(CODEC);
+
     public static final AttachmentType<Mana> DATA = AttachmentRegistry.<Mana>builder()
             .initializer(() -> NONE)
             .persistent(CODEC)
+            // o Óculus e a barra de mana leem isto do lado de cá
+            .syncWith(STREAM_CODEC,
+                    net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate.targetOnly())
             .copyOnDeath()
             .buildAndRegister(Thaumcraft.id("mana"));
 
     public static Mana of(Player quem) {
         return quem.getAttachedOrCreate(DATA);
+    }
+
+/**
+     * Sem uso fora do porte: <b>obriga a classe a carregar</b>, e com ela o anexo a se registrar.
+     *
+     * <p>Isto não é enfeite. Um anexo que só se registra quando alguém o usa fica registrado <b>tarde demais</b>
+     * do lado de quem joga: o servidor manda a mana no primeiro segundo, o cliente ainda não conhece o nome, e o pacote cai no chão
+     * sem um pio. Foi assim que o Óculus mostrou nível zero a quem tinha cinquenta, e só uma foto disse.
+     */
+    public static void init() {
     }
 
     public static void set(Player quem, Mana agora) {
