@@ -34,7 +34,9 @@ public final class SpellCast {
         /** Correu, mas não achou nada em que pegar. */
         EFFECT_FAILED,
         /** Quem ia lançar está <b>calado</b>: tem o Silêncio, e não lança nada. */
-        SILENCED;
+        SILENCED,
+        /** A frase leva uma essência que quem a lança <b>ainda não descobriu</b>. */
+        UNDISCOVERED;
 
         public boolean ok() {
             return this == SUCCESS;
@@ -66,6 +68,12 @@ public final class SpellCast {
 
         // e quem está calado não lança nada, nem paga nada por isso
         if (ArcanaEffects.silenced(quem)) return Result.SILENCED;
+
+        // uma essência de segredo não sai da mão de quem não a descobriu
+        if (SpellUnlocks.tranca(feitiço, quem)) return Result.UNDISCOVERED;
+
+        // e uma frase com a combinação certa abre o segredo, pegue ela em alguma coisa ou não
+        SpellUnlocks.descobre(feitiço, quem);
 
         // o Arcano desconta cinco por cento da mana e do desgaste, acima de meio
         float desconto = AffinityEffects.manaDiscount(quem);

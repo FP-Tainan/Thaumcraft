@@ -3072,5 +3072,10 @@
   "item.thaumcraft.spell_part_banish_rain": "Banish Rain",
   "item.thaumcraft.spell_part_storm": "Storm",
   "item.thaumcraft.spell_part_daylight": "Daylight",
-  "item.thaumcraft.spell_part_moonrise": "Moonrise"
+  "item.thaumcraft.spell_part_moonrise": "Moonrise",
+  "tc.spell.undiscovered": "This spell holds something you have not discovered yet.",
+  "tc.spell.secret_found": "You have discovered %s!",
+  "item.thaumcraft.spell_part_blizzard": "Blizzard",
+  "item.thaumcraft.spell_part_fire_rain": "Rain of Fire",
+  "item.thaumcraft.spell_part_channel": "Channel"
 }

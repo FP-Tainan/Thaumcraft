@@ -106,16 +106,18 @@ public class ArcanaChainBeamRuneGameTest {
 
     /** O Facho é a única Forma que se segura, e custa a décima parte de uma comum. */
     @GameTest
-    public void theBeamIsTheOnlyChanneledOne(GameTestHelper helper) {
+    public void theBeamIsTheCheapChanneledOne(GameTestHelper helper) {
         if (!Shapes.BEAM.channeled()) helper.fail("o Facho se segura");
         if (Math.abs(Shapes.BEAM.manaMultiplier() - 0.1f) > 0.001f) {
             helper.fail("e custa a décima parte, e custa " + Shapes.BEAM.manaMultiplier());
         }
+        // e são só duas as que se seguram: o Facho e o Canal, que entrou na fatia 23
         for (var forma : net.thaumcraft.arcana.SpellParts.shapes()) {
-            if (forma != Shapes.BEAM && forma.channeled()) {
-                helper.fail("e é a única: a " + forma.name() + " também se segura");
+            if (forma != Shapes.BEAM && forma != Shapes.CHANNEL && forma.channeled()) {
+                helper.fail("só o Facho e o Canal se seguram, e a " + forma.name() + " também");
             }
         }
+        if (!Shapes.CHANNEL.channeled()) helper.fail("e o Canal se segura");
         // e o item sabe disso
         if (!SpellItem.isChanneled(Spell.of(Shapes.BEAM, Essences.FIRE_DAMAGE))) {
             helper.fail("o item devia saber que um Facho se segura");

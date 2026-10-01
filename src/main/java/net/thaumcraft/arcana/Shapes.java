@@ -167,6 +167,56 @@ public final class Shapes {
         }
     });
 
+    /**
+     * O <b>Canal</b>: a Autoconjuração que se <b>segura</b>.
+     *
+     * <p>Ela corre a etapa em quem a lança, como a Autoconjuração — mas só <b>de dez em dez batidas</b>, e
+     * enquanto o botão estiver apertado. É a Forma de quem quer um efeito contínuo e barato em vez de um caro
+     * de uma vez: uma Telecinese canalizada varre o chão enquanto se anda.
+     *
+     * <p>E há uma exceção do original: com a <b>Telecinese</b> ou o <b>Atrair</b> na frase, ela corre <b>a
+     * cada batida</b>. As duas são essências que puxam coisas devagar, e de dez em dez batidas elas quase não
+     * se notariam.
+     */
+    public static final SpellPart.Shape CHANNEL = SpellParts.shape(new SpellPart.Shape() {
+        /** De dez em dez batidas, como no original. */
+        public static final int EVERY = 10;
+
+        @Override
+        public String name() {
+            return "channel";
+        }
+
+        @Override
+        public boolean channeled() {
+            return true;
+        }
+
+        @Override
+        public boolean terminus() {
+            return true;
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde) {
+            return this.begin(level, feitiço, quem, alvo, onde, 0);
+        }
+
+        @Override
+        public SpellCast.Result begin(ServerLevel level, Spell feitiço, LivingEntity quem,
+                                      @Nullable Entity alvo, Vec3 onde, int batidas) {
+            Spell.Stage etapa = feitiço.first();
+            if (etapa == null) return SpellCast.Result.MALFORMED;
+
+            boolean depressa = etapa.essences().contains(Essences.TELEKINESIS)
+                    || etapa.essences().contains(Essences.ATTRACT);
+            if (!depressa && batidas % EVERY != 0) return SpellCast.Result.EFFECT_FAILED;
+
+            return SpellCast.onEntity(level, feitiço, quem, quem);
+        }
+    });
+
     /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela as Formas a se registrarem. */
     public static void init() {
     }

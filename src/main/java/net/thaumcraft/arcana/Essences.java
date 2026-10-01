@@ -2625,6 +2625,107 @@ public final class Essences {
         }
     });
 
+    // ------------------------------------------------------------------ as duas que são um feitiço inteiro
+
+    /**
+     * Uma essência de <b>temporal</b>: a Nevasca e a Chuva de Fogo.
+     *
+     * <p>Elas não são Formas nem Essências no sentido comum — são <b>um feitiço inteiro numa peça só</b>.
+     * Postas numa frase, criam no lugar uma área que fere por si, a cada batida, e vai deixando neve ou fogo
+     * no chão. É por isso que as duas são perícias <b>prateadas</b> no original: não se compram, descobrem-se.
+     *
+     * <p>E as duas recusam se já houver uma igual a <b>dez blocos</b>. Duas nevascas no mesmo lugar seriam o
+     * dobro do dano pelo dobro do preço, e o original não quer isso.
+     *
+     * @param raioBase o raio de partida, que o Raio soma
+     * @param metade   se o raio é dividido por dois depois de somado, como a Chuva de Fogo faz
+     */
+    private record Temporal(String name, SpellEffectEntity.Kind qual, float mana,
+                            java.util.Set<Affinity> afinidades, float puxa, int raioBase, boolean metade)
+            implements SpellPart.Essence {
+        /** A que distância uma igual impede outra. */
+        public static final double PERTO = 10.0;
+
+        /** E quanto tempo ela fica, antes da Duração. */
+        public static final int BASE_TEMPO = 100;
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return this.afinidades;
+        }
+
+        @Override
+        public float affinityShift() {
+            return this.puxa;
+        }
+
+        @Override
+        public float manaCost() {
+            return this.mana;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(this.mana);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            return nasce(level, feitiço, quem, alvo.position());
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            return nasce(level, feitiço, quem, batida);
+        }
+
+        private boolean nasce(ServerLevel level, Spell feitiço, LivingEntity quem, Vec3 onde) {
+            var perto = new net.minecraft.world.phys.AABB(
+                    onde.x - PERTO, onde.y - PERTO, onde.z - PERTO,
+                    onde.x + PERTO, onde.y + PERTO, onde.z + PERTO);
+            for (var outra : level.getEntities(ArcanaEntities.SPELL_EFFECT, perto, e -> true)) {
+                if (outra.kind() == this.qual) return false;
+            }
+
+            int raio = (int) feitiço.add(level, SpellModifierKind.RADIUS, this.raioBase);
+            if (this.metade) raio = raio / 2 + 1;
+
+            // ela não leva feitiço nenhum adiante: o que ela faz, faz por si
+            var área = new SpellEffectEntity(level, quem, Spell.of(Shapes.SELF), this.qual);
+            área.setWeather(this.qual);
+            área.setRadius(raio);
+            área.setDamageBonus((float) feitiço.mul(level, SpellModifierKind.DAMAGE, 1.0));
+            área.setLife((int) feitiço.mul(level, SpellModifierKind.DURATION, BASE_TEMPO));
+            área.snapTo(onde);
+            level.addFreshEntity(área);
+            return true;
+        }
+    }
+
+    /**
+     * <b>Nevasca</b>: um temporal de gelo parado num lugar.
+     *
+     * <p>Fere <b>um</b> de gelo por batida e prende quem estiver dentro com o Gelado no terceiro grau — que é
+     * o mais forte que ele tem. E vai deixando <b>neve no chão</b>, duas batidas em cada dez.
+     *
+     * <p>1200 de mana, e é uma das dez perícias prateadas.
+     */
+    public static final SpellPart.Essence BLIZZARD = SpellParts.essence(new Temporal("blizzard",
+            SpellEffectEntity.Kind.BLIZZARD, 1200.0f, java.util.Set.of(Affinity.ICE), 0.1f, 2, false));
+
+    /**
+     * <b>Chuva de Fogo</b>: a irmã da Nevasca.
+     *
+     * <p>Fere <b>três quartos</b> por batida em vez de um, e vai pondo <b>fogo no chão</b> em vez de neve. E o
+     * raio dela é outro: o original soma o Raio ao dois e depois <b>divide por dois e soma um</b> — uma Chuva
+     * de Fogo é sempre mais apertada do que uma Nevasca com os mesmos modificadores.
+     *
+     * <p><b>Três mil</b> de mana, e também é prateada.
+     */
+    public static final SpellPart.Essence FIRE_RAIN = SpellParts.essence(new Temporal("fire_rain",
+            SpellEffectEntity.Kind.FIRE_RAIN, 3000.0f, java.util.Set.of(Affinity.FIRE), 0.1f, 2, true));
+
     /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela as Essências a se registrarem. */
     public static void init() {
     }

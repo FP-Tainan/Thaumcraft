@@ -162,6 +162,19 @@ public final class SkillTree {
      * é a única maneira de o quadro continuar inteiro — sem isso haveria peças penduradas no nada, que ninguém
      * poderia comprar nunca.
      */
+    /**
+     * O quadro, tal como o original o escreve.
+     *
+     * <p>Estas linhas <b>não foram escritas à mão</b>: saíram do {@code SkillTreeManager} do Ars Magica 2,
+     * lidas uma a uma. Cada perícia fica no ramo, na cor e no lugar em que ele a pôs.
+     *
+     * <p>O que muda é o que <b>não está portado</b>. O original tem 120 perícias em quatro ramos; o quarto —
+     * os <b>Talentos</b>, com a regeneração de mana, as faixas de mago e os ganhos de afinidade — não é feito
+     * de peças de feitiço e não é deste ramo. E dos outros três falta o que ainda não foi portado. Quando uma
+     * perícia desaparece assim, os filhos dela passam a pender do <b>antepassado portado mais próximo</b>, que
+     * é a única maneira de o quadro continuar inteiro — sem isso haveria peças penduradas no nada, que ninguém
+     * poderia comprar nunca.
+     */
     static {
 
         // ------------------------------------------------------------------ Ofensa
@@ -196,6 +209,8 @@ public final class SkillTree {
         put(Modifiers.DAMAGE, Branch.OFFENSE, Point.RED, 300, 315, Shapes.BEAM);
         put(Essences.FURY, Branch.OFFENSE, Point.RED, 255, 315, Shapes.BEAM, Essences.STORM);
         put(Shapes.WAVE, Branch.OFFENSE, Point.RED, 367, 315, Shapes.BEAM, Essences.FLING);
+        put(Essences.BLIZZARD, Branch.OFFENSE, Point.SILVER, 75, 45);
+        put(Essences.FIRE_RAIN, Branch.OFFENSE, Point.SILVER, 75, 135);
         put(Modifiers.DISMEMBERING, Branch.OFFENSE, Point.SILVER, 75, 180);
 
         // ------------------------------------------------------------------ Defesa
@@ -264,7 +279,8 @@ public final class SkillTree {
         put(Essences.TELEKINESIS, Branch.UTILITY, Point.GREEN, 305, 300, Shapes.BINDING_PICKAXE);
         put(Essences.BLINK, Branch.UTILITY, Point.GREEN, 185, 345, Essences.RANDOM_TELEPORT);
         put(Modifiers.RANGE, Branch.UTILITY, Point.RED, 140, 345, Essences.BLINK);
-        put(Modifiers.RADIUS, Branch.UTILITY, Point.RED, 275, 390, Essences.ATTRACT, Essences.TELEKINESIS);
+        put(Shapes.CHANNEL, Branch.UTILITY, Point.GREEN, 275, 345, Essences.ATTRACT, Essences.TELEKINESIS);
+        put(Modifiers.RADIUS, Branch.UTILITY, Point.RED, 275, 390, Shapes.CHANNEL);
         put(Essences.TRANSPLACE, Branch.UTILITY, Point.BLUE, 185, 390, Essences.BLINK);
         put(Essences.MARK, Branch.UTILITY, Point.GREEN, 155, 435, Essences.TRANSPLACE);
         put(Essences.RECALL, Branch.UTILITY, Point.GREEN, 215, 435, Essences.TRANSPLACE);

@@ -4930,3 +4930,56 @@ amanhecer, e mais 13250 para o anoitecer. O jogo de hoje já não deixa mexer no
 
 **E o tempo mora noutro sítio.** No 1.7.10 a chuva estava no próprio mundo; hoje está num guardado à parte,
 o `WeatherData`. A conta é a mesma, o lugar é outro.
+
+### Fatia 21 — a Nevasca e a Chuva de Fogo (2026-09-30)
+
+Duas essências que não são essências: são **um feitiço inteiro numa peça só**. Postas numa frase, criam no
+lugar uma área que fere por si, a cada batida, e vai deixando **neve** ou **fogo** no chão. É por isso que as
+duas são perícias prateadas no original — não se compram, se descobrem.
+
+A entidade de área ganhou duas famílias novas por causa delas. As três de antes — a Zona, a Parede e a Onda —
+acham quem está lá e passam-lhe **o resto da frase**; estas duas não passam nada: fazem o que fazem e mais
+nada. E fazem uma coisa que nenhuma outra faz: **desfazem o empurrão** que a pancada daria, senão quem
+estivesse dentro saltaria para fora na primeira batida e a nevasca não seria nevasca nenhuma.
+
+**Os números são os do original**: a Nevasca fere **um** por batida e prende com o Gelado no terceiro grau —
+o mais forte que ele tem —, a Chuva de Fogo fere **três quartos**, e as duas deixam alguma coisa no chão em
+**duas batidas de cada dez**. O raio da Chuva de Fogo é somado ao Raio e depois **dividido por dois mais um**:
+ela é sempre mais apertada do que uma Nevasca com os mesmos modificadores.
+
+**E as duas recusam se já houver uma igual a dez blocos.** Duas nevascas no mesmo lugar seriam o dobro do
+dano pelo dobro do preço, e o original não quer isso.
+
+**O que se vê delas** são vinte flocos por batida numa e dez chamas na outra, caindo de **dez blocos acima**.
+A entidade é invisível, como a da Zona — sem as partículas, as duas seriam dois círculos de nada. Está na
+foto, que é o único lugar onde isso se podia ver.
+
+### Fatia 22 — os segredos (2026-09-30)
+
+**Dez perícias do original não se compram com nível nenhum.** Elas estão no quadro, de prateado, e ficam lá
+trancadas até alguém **tropeçar nelas** — lançando um feitiço que tenha, **numa mesma etapa**, a combinação
+certa de peças. Aí a perícia é aprendida na hora e o ponto prateado aparece para a pagar.
+
+Ninguém diz a quem joga que elas existem. Não há dica, não há página no livro, não há receita: há um feitiço
+que alguém escreveu por outra razão e que, ao ser lançado, abre uma porta.
+
+**As combinações são as do original**, e valem ser lidas: a **Nevasca** sai de uma Tempestade com Dano Gélido,
+Congelar e Dano; a **Chuva de Fogo**, da mesma Tempestade com Dano de Fogo e Ignição; o **Poder de Bênção**,
+de um feitiço que junte **cinco bênçãos** de uma vez; a **Prosperidade**, de um Escavar com Toque de Pena e
+Força de Mineração. Nenhuma é um acaso: são feitiços que alguém escreveria de propósito, se tivesse a ideia.
+
+**E há o outro lado**: um feitiço que leve uma dessas **essências** sem que quem o lança a tenha descoberto
+**não sai** — não falha, nem começa. Um **modificador** de segredo não tranca nada, e é o original que faz
+essa distinção: um modificador não faz nada sozinho, e deixá-lo passar não estraga a surpresa.
+
+**Oito dos dez entram agora.** Faltam os dois cuja peça ainda não está portada — a **Estrela Cadente**, que
+pede uma entidade própria, e o **Elo de Mana**, que pede mexer no cano da mana.
+
+### Fatia 23 — o Canal (2026-09-30)
+
+A Forma que faltava das dezessete do original, e tinha passado despercebida porque o nome dela parece o de
+outra: o **Canal** não é o Facho. Ele é a **Autoconjuração que se segura** — corre a etapa em quem a lança, de
+**dez em dez batidas**, enquanto o botão estiver apertado.
+
+**Com a Telecinese ou o Atrair na frase, ele corre a cada batida.** É a exceção do original, e faz sentido:
+as duas são essências que puxam coisas devagar, e de dez em dez batidas quase não se notariam.

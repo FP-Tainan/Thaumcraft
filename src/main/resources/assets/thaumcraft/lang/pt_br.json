@@ -3070,5 +3070,10 @@
   "item.thaumcraft.spell_part_banish_rain": "Afastar a Chuva",
   "item.thaumcraft.spell_part_storm": "Tempestade",
   "item.thaumcraft.spell_part_daylight": "Luz do Dia",
-  "item.thaumcraft.spell_part_moonrise": "Anoitecer"
+  "item.thaumcraft.spell_part_moonrise": "Anoitecer",
+  "tc.spell.undiscovered": "Este feitiço tem dentro alguma coisa que você ainda não descobriu.",
+  "tc.spell.secret_found": "Você descobriu %s!",
+  "item.thaumcraft.spell_part_blizzard": "Nevasca",
+  "item.thaumcraft.spell_part_fire_rain": "Chuva de Fogo",
+  "item.thaumcraft.spell_part_channel": "Canal"
 }

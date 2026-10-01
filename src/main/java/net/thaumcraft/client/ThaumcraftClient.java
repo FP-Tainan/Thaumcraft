@@ -106,7 +106,7 @@ public class ThaumcraftClient implements ClientModInitializer {
                     }
                 }), net.thaumcraft.occulta.OccultaBlocks.BREW_GAS);
 
-        // o frasco do pote a voar é o próprio item, como a poção de arremesso do jogo
+        // o frasco do pote voando é o próprio item, como a poção de arremesso do jogo
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.KETTLE_BREW,
                 net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
@@ -211,7 +211,7 @@ public class ThaumcraftClient implements ClientModInitializer {
                     }
                 }), net.thaumcraft.occulta.OccultaBlocks.SPIRIT_PORTAL);
 
-        // o frasco atirado é o próprio item a voar, como a poção de arremesso do jogo
+        // o frasco atirado é o próprio item voando, como a poção de arremesso do jogo
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.BREW,
                 net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
@@ -220,7 +220,7 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.arcana.ArcanaEntities.SPELL_EFFECT,
                 net.minecraft.client.renderer.entity.NoopRenderer::new);
-        // o Ars Arcana: o feitiço a voar, um quadrado de luz virado para a câmara
+        // o Ars Arcana: o feitiço voando, um quadrado de luz virado para a câmera
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.arcana.ArcanaEntities.SPELL_PROJECTILE,
                 net.thaumcraft.arcana.client.SpellProjectileRenderer::new);

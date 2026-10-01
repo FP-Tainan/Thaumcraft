@@ -29,15 +29,45 @@ import org.jetbrains.annotations.Nullable;
  * acender o chão embaixo dela.
  */
 public class SpellEffectEntity extends Entity {
-    /** O que ela é: as três que este porte traz. */
+    /** O que ela é: as cinco que este porte traz. */
     public enum Kind {
         /** Um disco parado, que pega tudo à volta. */
         ZONE,
         /** Uma linha atravessada, que pega quem a cruza. */
         WALL,
-        /** E a mesma linha, andando para a frente. */
-        WAVE
+        /** A mesma linha, andando para a frente. */
+        WAVE,
+        /**
+         * A <b>Nevasca</b>: um temporal de gelo parado num lugar.
+         *
+         * <p>Ao contrário das três de cima, ela não corre o feitiço em ninguém — ela <b>faz o que faz</b>, a
+         * cada batida: fere de gelo, prende, e vai deixando neve no chão. É por isso que ela é uma das dez
+         * perícias prateadas: não é uma Forma, é um feitiço inteiro numa peça só.
+         */
+        BLIZZARD,
+        /** E a <b>Chuva de Fogo</b>, a irmã dela: fere de fogo e vai pondo fogo no chão. */
+        FIRE_RAIN
     }
+
+    /** A Nevasca e a Chuva de Fogo agem <b>a cada batida</b>, como no original. */
+    public static final int WEATHER_RATE = 1;
+
+    /** O que a Nevasca fere por batida, antes do modificador de dano. */
+    public static final float BLIZZARD_DAMAGE = 1.0f;
+
+    /** E a Chuva de Fogo, que fere menos. */
+    public static final float FIRE_RAIN_DAMAGE = 0.75f;
+
+    /** Quantas batidas o gelo prende quem ele pega, e com que força. */
+    public static final int BLIZZARD_HOLD = 80;
+    public static final int BLIZZARD_HOLD_LEVEL = 3;
+
+    /** De quantas em quantas batidas, mais ou menos, elas deixam alguma coisa no chão: duas em dez. */
+    public static final int LEAVES_BEHIND = 2;
+
+    /** De que altura cai o que se vê delas, e com que pressa. */
+    public static final double CAI_DE = 10.0;
+    public static final double VELOCIDADE = 0.6;
 
     /** De quantas em quantas batidas a Zona age: as 20 do original. */
     public static final int ZONE_RATE = 20;
@@ -85,8 +115,21 @@ public class SpellEffectEntity extends Entity {
         return switch (this.kind) {
             case ZONE -> ZONE_RATE;
             case WALL -> WALL_RATE;
-            case WAVE -> WAVE_RATE;
+            case WAVE, BLIZZARD, FIRE_RAIN -> WEATHER_RATE;
         };
+    }
+
+    /** O quanto o dano dela foi multiplicado: o {@code damageBonus} do original. */
+    private float damageBonus = 1.0f;
+
+    public void setDamageBonus(float quanto) {
+        this.damageBonus = quanto;
+    }
+
+    /** Faz dela uma Nevasca, ou uma Chuva de Fogo. */
+    public void setWeather(Kind qual) {
+        this.kind = qual;
+        this.untilNext = WEATHER_RATE;
     }
 
     public Spell spell() {
@@ -148,6 +191,60 @@ public class SpellEffectEntity extends Entity {
             case ZONE -> zone(level);
             case WALL -> wall(level);
             case WAVE -> wave(level);
+            case BLIZZARD, FIRE_RAIN -> temporal(level);
+        }
+    }
+
+    /**
+     * A <b>Nevasca</b> e a <b>Chuva de Fogo</b>: as duas que não correm feitiço nenhum.
+     *
+     * <p>Elas são a exceção desta entidade. As outras três acham quem está lá e passam-lhe o resto da frase;
+     * estas duas <b>fazem o que fazem</b> e mais nada — ferem, prendem ou queimam, e vão deixando neve ou
+     * fogo no chão. No original são duas perícias prateadas, e é isso que elas são: um feitiço inteiro numa
+     * peça só.
+     *
+     * <p>E as duas fazem uma coisa que nenhuma outra faz: <b>desfazem o empurrão</b> que a pancada daria.
+     * Sem isso, quem estivesse dentro saltaria para fora na primeira batida e a nevasca não seria nevasca
+     * nenhuma.
+     */
+    private void temporal(ServerLevel level) {
+        boolean gelo = this.kind == Kind.BLIZZARD;
+        chuva(level, gelo);
+
+        float dano = (gelo ? BLIZZARD_DAMAGE : FIRE_RAIN_DAMAGE) * this.damageBonus;
+
+        var caixa = this.getBoundingBox().inflate(this.radius, 1.0, this.radius);
+        for (LivingEntity quem : level.getEntitiesOfClass(LivingEntity.class, caixa)) {
+            if (quem == this.caster) continue;
+
+            Vec3 antes = quem.getDeltaMovement();
+            if (gelo) {
+                quem.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                        ArcanaEffects.FROST_SLOW, BLIZZARD_HOLD, BLIZZARD_HOLD_LEVEL));
+            }
+            var fonte = gelo
+                    ? ArcanaDamage.frost(level, this.caster == null ? quem : this.caster)
+                    : ArcanaDamage.fire(level, this.caster == null ? quem : this.caster);
+            if (quem.hurtServer(level, fonte, dano) && !(quem instanceof net.minecraft.world.entity.player.Player)) {
+                quem.invulnerableTime = gelo ? 15 : 10;
+            }
+            // desfaz o empurrão que a pancada deu
+            quem.setDeltaMovement(antes);
+        }
+
+        if (level.getRandom().nextInt(10) >= LEAVES_BEHIND) return;
+        int raio = Math.max(1, (int) Math.ceil(this.radius));
+        BlockPos onde = BlockPos.containing(
+                this.getX() - raio + level.getRandom().nextInt(raio * 2),
+                this.getY() + (gelo ? level.getRandom().nextInt(2) : 0),
+                this.getZ() - raio + level.getRandom().nextInt(raio * 2));
+
+        if (!level.getBlockState(onde).isAir()) return;
+        if (gelo) {
+            if (level.getBlockState(onde.below()).isAir()) return;
+            level.setBlockAndUpdate(onde, net.minecraft.world.level.block.Blocks.SNOW.defaultBlockState());
+        } else {
+            level.setBlockAndUpdate(onde, net.minecraft.world.level.block.Blocks.FIRE.defaultBlockState());
         }
     }
 
@@ -303,6 +400,28 @@ public class SpellEffectEntity extends Entity {
         output.putInt("until_next", this.untilNext);
         output.putInt("caster", this.casterId);
         output.putBoolean("first_apply", this.firstApply);
+        output.putFloat("damage_bonus", this.damageBonus);
+    }
+
+    /**
+     * O que se vê de uma Nevasca ou de uma Chuva de Fogo: coisa a cair de dez blocos acima.
+     *
+     * <p>O original lança <b>vinte</b> partículas por batida na Nevasca e <b>dez</b> na Chuva de Fogo, de
+     * {@code y + 10} para baixo, espalhadas pelo raio. É o que faz as duas parecerem tempo e não um círculo
+     * desenhado no chão — e sem isto elas seriam invisíveis, porque esta entidade não tem desenho nenhum.
+     */
+    private void chuva(ServerLevel level, boolean gelo) {
+        int quantas = gelo ? 20 : 10;
+        var qual = gelo ? net.minecraft.core.particles.ParticleTypes.SNOWFLAKE
+                : net.minecraft.core.particles.ParticleTypes.FLAME;
+
+        // uma a uma, e cada uma com rumo próprio: mandá-las em monte deixa-as paradas no ar, e o que faz
+        // isto parecer tempo é elas caírem
+        for (int i = 0; i < quantas; i++) {
+            double x = this.getX() - this.radius + level.getRandom().nextDouble() * this.radius * 2.0;
+            double z = this.getZ() - this.radius + level.getRandom().nextDouble() * this.radius * 2.0;
+            level.sendParticles(qual, x, this.getY() + CAI_DE, z, 0, 0.0, -VELOCIDADE, 0.0, 1.0);
+        }
     }
 
     @Override
@@ -311,8 +430,11 @@ public class SpellEffectEntity extends Entity {
         this.kind = switch (input.getStringOr("kind", "zone")) {
             case "wall" -> Kind.WALL;
             case "wave" -> Kind.WAVE;
+            case "blizzard" -> Kind.BLIZZARD;
+            case "fire_rain" -> Kind.FIRE_RAIN;
             default -> Kind.ZONE;
         };
+        this.damageBonus = input.getFloatOr("damage_bonus", 1.0f);
         this.radius = input.getFloatOr("radius", 3.0f);
         this.gravity = input.getDoubleOr("gravity", 0.0);
         this.speed = input.getDoubleOr("speed", 0.0);
