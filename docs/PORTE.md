@@ -5029,3 +5029,39 @@ existem também nunca vai procurar, e aí o segredo deixa de ser segredo e passa
 A página resolve isso dizendo **que elas existem e como se abrem**, e **não dizendo quais são**: as dez
 combinações continuam por descobrir. O que ela dá é a direção — frases que juntam coisas que ninguém junta —
 e o aviso de que um feitiço emprestado com uma delas dentro não sai da mão de quem não a descobriu.
+
+### Fatia 27 — as três que pedem uma escolha (2026-09-30)
+
+As três que tinham ficado para trás. Quase toda peça do ramo diz tudo o que é; estas não: a **Cor** não diz
+*qual* cor, e o **Colocar Bloco** e a **Apropriação** não dizem *qual* bloco. Cada uma responde à sua maneira,
+e são duas maneiras diferentes — porque no original também são.
+
+**A etapa ganhou um dado.** No Ars Magica 2 isto são `byte[]` guardados no NBT da varinha com chaves como
+`SpellModifierMeta_14_0_0`; aqui é um **número por nome de peça, por etapa**, que é o alcance que o original
+lhes dá. Hoje só a Cor tem um.
+
+**A Cor responde na Mesa.** Põe-se uma **tinta** na casa logo a seguir à peça, e é ela que manda — que é o
+mesmo lugar que a tinta tem no original, onde ela é ingrediente da receita da Mesa, lido da esquerda para a
+direita. Sem tinta **a Mesa recusa a frase e diz porquê**: no original a receita simplesmente não casa, e
+aqui achei melhor dizer do que deixar sair um feitiço preto que ninguém pediu.
+
+**As dezesseis cores são as do original**, a tabela `ItemDye.dyeColors` do 1.7.10. O jogo de hoje tem outras
+três tabelas de cor de tinta — a da ovelha, a do fogo de artifício, a do texto — e nenhuma delas dá estes
+números. Como o que se vê é o ponto da peça, ficam os dele.
+
+**E ela pinta sem trocar a cara.** O projétil leva a cor à parte da Afinidade, como o `DW_COLOR` do original:
+a Afinidade continua a decidir a **figura**, e a Cor só a pinta. Está na foto — cinco projéteis de fogo lado
+a lado, um sem Cor e quatro com tintas, todos com a mesma figura. O de tinta branca sai igual ao sem Cor, e
+é o que tem de ser: o branco do original é `0xF0F0F0`.
+
+**As outras duas perguntam ao mundo.** O **Colocar Bloco** aprende **agachado** — lançado assim contra um
+bloco, fica sabendo aquele bloco; de pé, põe um igual e gasta um da mochila. É a única peça do ramo que muda
+de trabalho conforme a pessoa está agachada, e é do original.
+
+**A Apropriação tira a coisa do mundo e leva-a dentro.** Um bloco **com o que ele tem dentro** — um baú
+apropriado volta com as coisas lá — ou um bicho inteiro, com o nome e a vida que tinha. Enquanto estiver
+guardado, aquilo **não existe** em lugar nenhum senão no feitiço. Uma coisa de cada vez, e gente não: o
+original recusa gente e chefes, e este recusa também.
+
+Com estas três, **todas as peças de feitiço do Ars Magica 2 que não dependem da outra metade do mod estão
+portadas**.

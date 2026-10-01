@@ -188,6 +188,19 @@ public final class SkillTree {
      * é a única maneira de o quadro continuar inteiro — sem isso haveria peças penduradas no nada, que ninguém
      * poderia comprar nunca.
      */
+    /**
+     * O quadro, tal como o original o escreve.
+     *
+     * <p>Estas linhas <b>não foram escritas à mão</b>: saíram do {@code SkillTreeManager} do Ars Magica 2,
+     * lidas uma a uma. Cada perícia fica no ramo, na cor e no lugar em que ele a pôs.
+     *
+     * <p>O que muda é o que <b>não está portado</b>. O original tem 120 perícias em quatro ramos; o quarto —
+     * os <b>Talentos</b>, com a regeneração de mana, as faixas de mago e os ganhos de afinidade — não é feito
+     * de peças de feitiço e não é deste ramo. E dos outros três falta o que ainda não foi portado. Quando uma
+     * perícia desaparece assim, os filhos dela passam a pender do <b>antepassado portado mais próximo</b>, que
+     * é a única maneira de o quadro continuar inteiro — sem isso haveria peças penduradas no nada, que ninguém
+     * poderia comprar nunca.
+     */
     static {
 
         // ------------------------------------------------------------------ Ofensa
@@ -251,6 +264,7 @@ public final class SkillTree {
         put(Shapes.WALL, Branch.DEFENSE, Point.GREEN, 87, 200, Essences.REPEL);
         put(Essences.ACCELERATE, Branch.DEFENSE, Point.GREEN, 177, 245, Essences.SWIFT_SWIM);
         put(Essences.ENTANGLE, Branch.DEFENSE, Point.GREEN, 132, 245, Essences.REPEL);
+        put(Essences.APPROPRIATION, Branch.DEFENSE, Point.RED, 87, 245, Essences.ENTANGLE);
         put(Essences.FLIGHT, Branch.DEFENSE, Point.RED, 222, 270, Essences.LEVITATION);
         put(Essences.SHIELD, Branch.DEFENSE, Point.BLUE, 357, 270, Shapes.ZONE);
         put(Shapes.CONTINGENCY_HEALTH, Branch.DEFENSE, Point.RED, 402, 270, Essences.SHIELD);
@@ -269,6 +283,7 @@ public final class SkillTree {
         put(Essences.DIG, Branch.UTILITY, Point.BLUE, 275, 120, Shapes.TOUCH);
         put(Essences.WIZARDS_AUTUMN, Branch.UTILITY, Point.BLUE, 315, 120, Essences.DIG);
         put(Modifiers.TARGET_NONSOLID_BLOCKS, Branch.UTILITY, Point.BLUE, 230, 75, Shapes.TOUCH);
+        put(Essences.PLACE_BLOCK, Branch.UTILITY, Point.BLUE, 185, 93, Essences.DIG);
         put(Modifiers.FEATHER_TOUCH, Branch.UTILITY, Point.BLUE, 230, 137, Essences.DIG);
         put(Modifiers.MINING_POWER, Branch.UTILITY, Point.GREEN, 185, 137, Modifiers.FEATHER_TOUCH);
         put(Essences.LIGHT, Branch.UTILITY, Point.BLUE, 275, 165, Essences.DIG);
@@ -305,6 +320,10 @@ public final class SkillTree {
         put(Essences.DAYLIGHT, Branch.UTILITY, Point.SILVER, 75, 45);
         put(Essences.MOONRISE, Branch.UTILITY, Point.SILVER, 75, 90);
         put(Modifiers.PROSPERITY, Branch.UTILITY, Point.SILVER, 75, 135);
+
+        // A Cor mora no quarto ramo do original — o dos Talentos, que não é feito de peças de feitiço e
+        // não está portado. Fica na Utilidade, ao pé do Toque, que é onde um arcanista a acharia cedo.
+        put(Modifiers.COLOUR, Branch.UTILITY, Point.BLUE, 155, 75, Shapes.TOUCH);
 
         // As outras cinco ferramentas vinculadas. No original o Vínculo é UMA perícia que dá
         // a ferramenta conforme o que se estiver segurando; aqui são seis peças, e as outras

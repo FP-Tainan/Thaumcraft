@@ -3092,5 +3092,17 @@
   "tc.research_name.AA_SECRETS": "What Cannot Be Bought",
   "tc.research_text.AA_SECRETS": "And no one teaches",
   "tc.research_page.AA_SECRETS.1": "The Occulus shows everything there is to learn. §aThat is not true.§r<BR><BR>There are things on the board that no point buys — they sit aside, lit in §asilver§r, and no level opens them. No master teaches them. No page carries them.<BR><BR>They open §aby themselves§r, the moment someone casts a spell that contains them without knowing. You need the §aright combination of parts in the same stage§r of a sentence. Whoever writes that sentence for some other reason will open the door without noticing there was one.",
-  "tc.research_page.AA_SECRETS.2": "There are §aten§r, and I will not write down which.<BR><BR>Not out of spite: because writing them ends them. What makes one of those skills worth what it is worth is the day it appears unasked — and that happens once per person.<BR><BR>What I can say is where to look: they come from sentences that §ajoin things no one joins§r. Four essences at once. A modifier where it seems useless. A storm asked of someone who has already called the rain.<BR><BR>And if someone lends you a spell with one of them inside, it §awill not leave your hand§r. You do not cast what you have not discovered."
+  "tc.research_page.AA_SECRETS.2": "There are §aten§r, and I will not write down which.<BR><BR>Not out of spite: because writing them ends them. What makes one of those skills worth what it is worth is the day it appears unasked — and that happens once per person.<BR><BR>What I can say is where to look: they come from sentences that §ajoin things no one joins§r. Four essences at once. A modifier where it seems useless. A storm asked of someone who has already called the rain.<BR><BR>And if someone lends you a spell with one of them inside, it §awill not leave your hand§r. You do not cast what you have not discovered.",
+  "tc.spell.validate.needs_dye": "This one needs a dye beside it.",
+  "item.thaumcraft.spell_part_colour": "Colour",
+  "item.thaumcraft.spell_part_place_block": "Place Block",
+  "item.thaumcraft.spell_part_appropriation": "Appropriation",
+  "tc.spell.place_block": "Places: %s",
+  "tc.spell.appropriated_block": "Holding: %s",
+  "tc.spell.appropriated_entity": "Holding: %s",
+  "tc.spell.appropriated_empty": "Holding nothing yet.",
+  "tc.research_name.AA_CHOICE": "The Three That Ask",
+  "tc.research_text.AA_CHOICE": "And how you answer them",
+  "tc.research_page.AA_CHOICE.1": "Nearly every part says everything it is. Three do not.<BR><BR>§aColour§r does not say §owhich§r colour. You answer at the Table: put a §adye§r in the slot right after the part, and that is what decides. Without a dye the Table refuses the sentence and says why.<BR><BR>And it changes no number. A fire spell painted blue still burns: what it stops doing is §olooking§r like a fire spell.",
+  "tc.research_page.AA_CHOICE.2": "The other two do not ask at the Table: they ask the §aworld§r.<BR><BR>§aPlace Block§r learns while §acrouching§r — cast that way at a block, it comes to know that block; cast standing, it places one where you point, spending one from your bag.<BR><BR>§aAppropriation§r is the strangest of this craft: it §atakes the thing out of the world§r and carries it inside. A chest goes with what is in it; a beast goes with the name and the life it had. While it is held, that thing §odoes not exist§r anywhere but in the spell — and casting again puts it back.<BR><BR>One thing at a time. And no people."
 }

@@ -128,6 +128,16 @@ public final class ArcanaTable {
                         Page.text("tc.research_page.AA_SECRETS.2"))
                 .register();
 
+        // as três peças que pedem uma escolha
+        ThaumcraftApi.research("AA_CHOICE", Arcana.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAGIC, 4).add(Aspects.EXCHANGE, 4).add(Aspects.CRAFT, 2))
+                .at(-4, 2)
+                .icon(() -> new ItemStack(ArcanaItems.itemOf(Modifiers.COLOUR)))
+                .parents("AA_INSCRIPTION")
+                .pages(Page.text("tc.research_page.AA_CHOICE.1"),
+                        Page.text("tc.research_page.AA_CHOICE.2"))
+                .register();
+
         // e o Vínculo, que é o fim da estrada
         ThaumcraftApi.research("AA_BINDING", Arcana.CATEGORY)
                 .aspects(new AspectList().add(Aspects.MAGIC, 5).add(Aspects.TOOL, 4).add(Aspects.EXCHANGE, 3))

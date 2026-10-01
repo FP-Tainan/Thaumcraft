@@ -3090,5 +3090,17 @@
   "tc.research_name.AA_SECRETS": "O que não se compra",
   "tc.research_text.AA_SECRETS": "E que ninguém ensina",
   "tc.research_page.AA_SECRETS.1": "O Óculus mostra tudo o que há para aprender. §aNão é verdade.§r<BR><BR>Há coisas no quadro que nenhum ponto compra — elas ficam de lado, acesas de §aprateado§r, e não há nível que as abra. Nenhum mestre as ensina. Nenhuma página as traz.<BR><BR>Abrem-se §asozinhas§r, no instante em que alguém lança um feitiço que as contenha sem saber. Não é preciso acertar numa palavra escondida: é preciso ter a §acombinação certa de peças na mesma etapa§r de uma frase. Quem escrever a frase certa por outra razão qualquer vai abrir a porta sem perceber que havia porta.",
-  "tc.research_page.AA_SECRETS.2": "São §adez§r, e não vou escrever quais.<BR><BR>Não por teimosia: porque escrever acaba com elas. O que faz uma dessas perícias valer o que vale é o dia em que ela aparece sem ninguém ter pedido — e isso só acontece uma vez por pessoa.<BR><BR>O que posso dizer é por onde procurar: elas saem de frases que §ajuntam coisas que ninguém junta§r. Quatro essências de uma vez. Um modificador onde ele não parece servir. Um temporal pedido a quem já chamou a chuva.<BR><BR>E se alguém lhe emprestar um feitiço com uma delas lá dentro, ele §anão vai sair da sua mão§r. Não se lança o que não se descobriu."
+  "tc.research_page.AA_SECRETS.2": "São §adez§r, e não vou escrever quais.<BR><BR>Não por teimosia: porque escrever acaba com elas. O que faz uma dessas perícias valer o que vale é o dia em que ela aparece sem ninguém ter pedido — e isso só acontece uma vez por pessoa.<BR><BR>O que posso dizer é por onde procurar: elas saem de frases que §ajuntam coisas que ninguém junta§r. Quatro essências de uma vez. Um modificador onde ele não parece servir. Um temporal pedido a quem já chamou a chuva.<BR><BR>E se alguém lhe emprestar um feitiço com uma delas lá dentro, ele §anão vai sair da sua mão§r. Não se lança o que não se descobriu.",
+  "tc.spell.validate.needs_dye": "Esta aqui pede uma tinta ao lado.",
+  "item.thaumcraft.spell_part_colour": "Cor",
+  "item.thaumcraft.spell_part_place_block": "Colocar Bloco",
+  "item.thaumcraft.spell_part_appropriation": "Apropriação",
+  "tc.spell.place_block": "Põe: %s",
+  "tc.spell.appropriated_block": "Leva dentro: %s",
+  "tc.spell.appropriated_entity": "Leva dentro: %s",
+  "tc.spell.appropriated_empty": "Ainda não leva nada dentro.",
+  "tc.research_name.AA_CHOICE": "As três que perguntam",
+  "tc.research_text.AA_CHOICE": "E como se lhes responde",
+  "tc.research_page.AA_CHOICE.1": "Quase toda peça diz tudo o que é. Três não dizem.<BR><BR>A §aCor§r não diz §oqual§r cor. Responde-se na Mesa: põe-se uma §atinta§r na casa logo a seguir à peça, e é ela que manda. Sem tinta a Mesa recusa a frase e diz porquê — melhor do que escrever um feitiço que sai preto sem ninguém ter pedido.<BR><BR>E ela não muda número nenhum. Um feitiço de fogo pintado de azul continua queimando: o que ele deixa de fazer é §oparecer§r um feitiço de fogo.",
+  "tc.research_page.AA_CHOICE.2": "As outras duas não perguntam na Mesa: perguntam ao §amundo§r.<BR><BR>O §aColocar Bloco§r aprende §aagachado§r — lançado assim contra um bloco, fica sabendo aquele bloco; lançado de pé, põe um igual onde se apontar, gastando um da mochila.<BR><BR>A §aApropriação§r é a mais estranha deste ofício: ela §atira a coisa do mundo§r e leva-a dentro. Um baú vai com o que tem lá; um bicho vai com o nome e a vida que tinha. Enquanto estiver guardado, aquilo §onão existe§r em lugar nenhum senão no feitiço — e lançá-lo outra vez põe de volta.<BR><BR>Uma coisa de cada vez. E gente, não."
 }

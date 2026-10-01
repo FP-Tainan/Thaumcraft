@@ -25,18 +25,32 @@ public record Spell(List<Stage> stages) {
     /**
      * Uma etapa da frase.
      *
+     * <p>O <b>dado</b> é a coisa que uma peça não consegue dizer sozinha: a Cor precisa de saber <i>qual</i>
+     * cor, e isso não está na peça, está na tinta que se pôs ao lado dela na Mesa. No original isto são
+     * {@code byte[]} guardados no NBT da varinha com chaves como {@code SpellModifierMeta_14_0_0}; aqui é um
+     * número por nome de peça, e por etapa — que é o alcance que o original lhes dá.
+     *
      * @param shape      a Forma, que diz como o efeito entra no mundo
      * @param essences   o que ele faz
      * @param modifiers  e o que muda os números dele
+     * @param data       e o que foi escolhido para as peças que precisam de escolha
      */
     public record Stage(SpellPart.Shape shape, List<SpellPart.Essence> essences,
-                        List<SpellPart.Modifier> modifiers) {
+                        List<SpellPart.Modifier> modifiers, java.util.Map<String, Integer> data) {
+        /** A conta velha, de quando nenhuma peça pedia escolha. */
+        public Stage(SpellPart.Shape shape, List<SpellPart.Essence> essences,
+                     List<SpellPart.Modifier> modifiers) {
+            this(shape, essences, modifiers, java.util.Map.of());
+        }
+
         public static final Codec<Stage> CODEC = RecordCodecBuilder.create(i -> i.group(
                 SpellParts.SHAPE_CODEC.fieldOf("shape").forGetter(Stage::shape),
                 SpellParts.ESSENCE_CODEC.listOf().optionalFieldOf("essences", List.of())
                         .forGetter(Stage::essences),
                 SpellParts.MODIFIER_CODEC.listOf().optionalFieldOf("modifiers", List.of())
-                        .forGetter(Stage::modifiers))
+                        .forGetter(Stage::modifiers),
+                Codec.unboundedMap(Codec.STRING, Codec.INT).optionalFieldOf("data", java.util.Map.of())
+                        .forGetter(Stage::data))
                 .apply(i, Stage::new));
     }
 
@@ -126,6 +140,16 @@ public record Spell(List<Stage> stages) {
             if (mod.modifies().contains(qual)) quantas++;
         }
         return quantas;
+    }
+
+    /**
+     * O número que se escolheu para aquela peça, na etapa da frente — ou nada.
+     *
+     * <p>Hoje só a <b>Cor</b> tem um, e é a tinta que se pôs ao lado dela na Mesa de Inscrição.
+     */
+    public @Nullable Integer data(String peça) {
+        Stage etapa = this.first();
+        return etapa == null ? null : etapa.data().get(peça);
     }
 
     /** Se esta etapa traz algum modificador daquele feitio. */

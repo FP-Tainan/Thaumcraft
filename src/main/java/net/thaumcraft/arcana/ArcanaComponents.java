@@ -18,6 +18,23 @@ public final class ArcanaComponents {
     public static final DataComponentType<Spell> SPELL = register("spell",
             builder -> builder.persistent(Spell.CODEC).networkSynchronized(Spell.STREAM_CODEC));
 
+    /**
+     * O bloco que o <b>Colocar Bloco</b> aprendeu a pôr.
+     *
+     * <p>No original é um par de números no NBT da varinha ({@code PlaceBlockID} e {@code PlaceMeta}); aqui é
+     * o feitio do bloco inteiro, que é o que o jogo de hoje tem no lugar da metadata.
+     */
+    public static final DataComponentType<net.minecraft.world.level.block.state.BlockState> PLACE_BLOCK =
+            register("place_block", builder -> builder
+                    .persistent(net.minecraft.world.level.block.state.BlockState.CODEC)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.fromCodecWithRegistries(
+                            net.minecraft.world.level.block.state.BlockState.CODEC)));
+
+    /** E o que a <b>Apropriação</b> levou consigo: o {@code stored_data}. */
+    public static final DataComponentType<Appropriated> APPROPRIATED = register("appropriated",
+            builder -> builder.persistent(Appropriated.CODEC)
+                    .networkSynchronized(Appropriated.STREAM_CODEC));
+
     private ArcanaComponents() {
     }
 

@@ -31,8 +31,15 @@ public final class SpellFx {
     private SpellFx() {
     }
 
-    /** A cor com que um feitiço pinta o seu pó. */
+    /**
+     * A cor com que um feitiço pinta o seu pó.
+     *
+     * <p>Por omissão é a da <b>Afinidade</b> — e é isso que faz um feitiço de fogo parecer um feitiço de fogo
+     * sem ninguém ter escolhido nada. Com a <b>Cor</b> na frase, é a da tinta.
+     */
     public static int color(Spell feitiço) {
+        Integer escolhida = feitiço.data(Modifiers.COLOUR.name());
+        if (escolhida != null) return escolhida;
         Affinity qual = feitiço.mainAffinity();
         return qual == Affinity.NONE ? Affinity.NONE.color : qual.color;
     }

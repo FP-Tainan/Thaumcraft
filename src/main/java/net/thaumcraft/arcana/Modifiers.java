@@ -293,6 +293,69 @@ public final class Modifiers {
     public static final SpellPart.Modifier VELOCITY_ADDED = SpellParts.modifier(
             new Simple("velocity_added", SpellModifierKind.VELOCITY_ADDED, 0.5f, 1.3f));
 
+    /**
+     * <b>Cor</b>: pinta o pó do feitiço da cor que se quiser, <b>de graça</b>.
+     *
+     * <p>Ele não muda número nenhum — muda o que se <b>vê</b>. Um feitiço de fogo com a Cor azul continua
+     * queimando: o que ele deixa de fazer é <i>parecer</i> um feitiço de fogo.
+     *
+     * <p>É a única peça do ramo que precisa de uma <b>escolha</b> para valer alguma coisa, e a escolha é a
+     * <b>tinta</b> que se põe ao lado dela na Mesa de Inscrição. Sem tinta ela não vira feitiço: a Mesa
+     * recusa a frase e diz porquê.
+     *
+     * <p><b>Desvio declarado quanto ao lugar:</b> no original ela mora no quarto ramo do quadro, o dos
+     * <b>Talentos</b> — que não é feito de peças de feitiço e não está portado. Aqui fica na Utilidade, ao pé
+     * do Toque, que é onde um arcanista a encontraria cedo.
+     */
+    public static final SpellPart.Modifier COLOUR = SpellParts.modifier(
+            new Grátis("colour", SpellModifierKind.COLOR, 1.0f));
+
+    /**
+     * As dezesseis cores das tintas, <b>tal como o original as escreve</b>.
+     *
+     * <p>São a tabela {@code ItemDye.dyeColors} do 1.7.10, na ordem dos danos de tinta daquela versão. O jogo
+     * de hoje tem outras tabelas — a da ovelha, a do fogo de artifício, a do texto — e nenhuma delas dá estes
+     * números. Como o que se vê é o ponto desta peça, ficam os do original.
+     */
+    private static final java.util.Map<net.minecraft.world.item.DyeColor, Integer> TINTAS =
+            new java.util.EnumMap<>(java.util.Map.ofEntries(
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.BLACK, 1973019),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.RED, 11743532),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.GREEN, 3887386),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.BROWN, 5320730),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.BLUE, 2437522),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.PURPLE, 8073150),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.CYAN, 2651799),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.LIGHT_GRAY, 11250603),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.GRAY, 4408131),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.PINK, 14188952),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.LIME, 4312372),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.YELLOW, 14602026),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.LIGHT_BLUE, 6719955),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.MAGENTA, 12801229),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.ORANGE, 15435844),
+                    java.util.Map.entry(net.minecraft.world.item.DyeColor.WHITE, 15790320)));
+
+    /**
+     * A cor daquela tinta, ou nada se aquele item não for tinta.
+     *
+     * <p>O jogo de hoje já não tem como perguntar a um item de tinta qual é a cor dele: as dezesseis vivem
+     * numa coleção por cor, e quem quer o caminho de volta faz o seu próprio.
+     */
+    public static @Nullable Integer dye(net.minecraft.world.item.ItemStack coisa) {
+        return DE_VOLTA.get(coisa.getItem());
+    }
+
+    private static final java.util.Map<net.minecraft.world.item.Item, Integer> DE_VOLTA = deVolta();
+
+    private static java.util.Map<net.minecraft.world.item.Item, Integer> deVolta() {
+        var mapa = new java.util.IdentityHashMap<net.minecraft.world.item.Item, Integer>();
+        for (var par : TINTAS.entrySet()) {
+            mapa.put(net.minecraft.world.item.Items.DYE.pick(par.getKey()), par.getValue());
+        }
+        return java.util.Map.copyOf(mapa);
+    }
+
     /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela os Modificadores a se registrarem. */
     public static void init() {
     }

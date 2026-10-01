@@ -132,9 +132,33 @@ public class SpellItem extends Item {
                         .withStyle(net.minecraft.ChatFormatting.GRAY));
             }
             for (SpellPart.Modifier mod : etapa.modifiers()) {
-                linha.accept(Component.literal("  + ").append(
-                                Component.translatable("tc.spell.modifier." + mod.name()))
-                        .withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
+                // a Cor diz-se a si mesma: a linha dela sai pintada da cor que escolheram
+                Integer cor = etapa.data().get(mod.name());
+                var nome = Component.literal("  + ").append(
+                        Component.translatable("tc.spell.modifier." + mod.name()));
+                linha.accept(cor == null
+                        ? nome.withStyle(net.minecraft.ChatFormatting.DARK_AQUA)
+                        : nome.withStyle(estilo -> estilo.withColor(cor)));
+            }
+        }
+
+        // e o que este feitiço aprendeu no mundo, que não está na frase
+        var põe = coisa.get(ArcanaComponents.PLACE_BLOCK);
+        if (põe != null) {
+            linha.accept(Component.translatable("tc.spell.place_block",
+                            põe.getBlock().getName())
+                    .withStyle(net.minecraft.ChatFormatting.GREEN));
+        }
+        var leva = coisa.get(ArcanaComponents.APPROPRIATED);
+        if (leva != null) {
+            if (leva.bloco().isPresent()) {
+                linha.accept(Component.translatable("tc.spell.appropriated_block",
+                                leva.bloco().get().getBlock().getName())
+                        .withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
+            } else if (leva.bicho().isPresent()) {
+                linha.accept(Component.translatable("tc.spell.appropriated_entity",
+                                Component.literal(leva.bicho().get().getStringOr("id", "?")))
+                        .withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
             }
         }
         // a Afinidade não está escrita em lugar nenhum: ela se conta das Essências

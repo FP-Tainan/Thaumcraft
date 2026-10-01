@@ -116,6 +116,8 @@ public class SpellProjectileEntity extends Projectile {
     public void setSpell(Spell feitiço) {
         this.spell = feitiço;
         this.entityData.set(AFFINITY, feitiço.mainAffinity().ordinal());
+        Integer cor = feitiço.data(Modifiers.COLOUR.name());
+        this.entityData.set(COLOR, cor == null ? SEM_COR : cor);
     }
 
     public void setGravity(double quanto) {
@@ -145,9 +147,33 @@ public class SpellProjectileEntity extends Projectile {
             net.minecraft.network.syncher.SynchedEntityData.defineId(SpellProjectileEntity.class,
                     net.minecraft.network.syncher.EntityDataSerializers.INT);
 
+    /**
+     * E a <b>cor escolhida</b>, se a frase trouxer a Cor: o {@code DW_COLOR} do original.
+     *
+     * <p>Vai à parte da Afinidade porque são duas coisas diferentes: a Afinidade decide a <b>figura</b>, e a
+     * cor só a pinta. Um projétil de fogo com a Cor azul continua com a cara do fogo.
+     */
+    private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> COLOR =
+            net.minecraft.network.syncher.SynchedEntityData.defineId(SpellProjectileEntity.class,
+                    net.minecraft.network.syncher.EntityDataSerializers.INT);
+
+    /** O valor que quer dizer "ninguém escolheu cor": o {@code -1} do original. */
+    public static final int SEM_COR = -1;
+
     @Override
     protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
         builder.define(AFFINITY, Affinity.NONE.ordinal());
+        builder.define(COLOR, SEM_COR);
+    }
+
+    /** A cor escolhida, ou {@link #SEM_COR} se a frase não trouxer a Cor. */
+    public int color() {
+        return this.entityData.get(COLOR);
+    }
+
+    /** Força a cor com que ele se desenha, sem olhar para o feitiço — como o {@link #forceAffinity}. */
+    public void forceColor(int cor) {
+        this.entityData.set(COLOR, cor);
     }
 
     /**

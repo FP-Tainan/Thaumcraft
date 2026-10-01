@@ -49,12 +49,36 @@ public class InscriptionTableBlockEntity extends BlockEntity implements Containe
 
     /** As peças que estão na mesa, em fila, sem os buracos. */
     public List<SpellPart> recipe() {
-        var peças = new ArrayList<SpellPart>();
-        for (int i = 0; i < RECIPE_SIZE; i++) {
-            SpellPart qual = SpellPartItem.of(this.itens.get(i));
-            if (qual != null) peças.add(qual);
+        return SpellValidator.onlyParts(this.postas());
+    }
+
+    /**
+     * As casas da mesa já lidas: cada peça com o que se pôs <b>ao lado dela</b>.
+     *
+     * <p>Uma casa com <b>tinta</b> não é uma peça: é a escolha da peça que vier antes. Lê-se da esquerda para
+     * a direita, como a frase.
+     */
+    public List<SpellValidator.Posta> postas() {
+        return ler(this.itens, RECIPE_SIZE);
+    }
+
+    /** A mesma leitura, para quem tiver as casas noutro lugar — a tela do lado de quem joga, por exemplo. */
+    public static List<SpellValidator.Posta> ler(List<ItemStack> casas, int quantas) {
+        var postas = new ArrayList<SpellValidator.Posta>();
+        for (int i = 0; i < quantas; i++) {
+            ItemStack coisa = casas.get(i);
+            SpellPart qual = SpellPartItem.of(coisa);
+            if (qual != null) {
+                postas.add(new SpellValidator.Posta(qual));
+                continue;
+            }
+            Integer tinta = Modifiers.dye(coisa);
+            if (tinta != null && !postas.isEmpty()) {
+                var antes = postas.removeLast();
+                postas.add(new SpellValidator.Posta(antes.peça(), tinta));
+            }
         }
-        return List.copyOf(peças);
+        return List.copyOf(postas);
     }
 
     /** O que a mesa acha da frase que está nela. */
@@ -69,13 +93,13 @@ public class InscriptionTableBlockEntity extends BlockEntity implements Containe
      * fim.
      */
     public void reread() {
-        List<SpellPart> peças = this.recipe();
-        this.leitura = SpellValidator.validate(peças);
+        List<SpellValidator.Posta> postas = this.postas();
+        this.leitura = SpellValidator.validateWithData(postas);
 
         if (!this.leitura.ok()) {
             this.itens.set(RESULT, ItemStack.EMPTY);
         } else {
-            Spell feitiço = SpellValidator.build(peças);
+            Spell feitiço = SpellValidator.buildWithData(postas);
             this.itens.set(RESULT,
                     SpellItem.write(new ItemStack(ArcanaItems.SPELL), feitiço));
         }

@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
@@ -2838,6 +2839,217 @@ public final class Essences {
             if (!(quem instanceof net.minecraft.world.entity.player.Player lançou)) return false;
 
             ManaLinks.set(levou, ManaLinks.of(levou).alterna(lançou.getUUID()));
+            return true;
+        }
+    });
+
+    // ------------------------------------------------------------------ as duas que aprendem no mundo
+
+    /**
+     * O feitiço que está na mão de quem lança, para as essências que <b>escrevem nele</b>.
+     *
+     * <p>Duas delas fazem isso — o Colocar Bloco e a Apropriação —, e é o {@code getOriginalSpellStack} do
+     * original: elas não mudam o mundo com o que sabem, elas <b>aprendem</b> e guardam o que aprenderam no
+     * próprio item. Um feitiço desses na mochila de outra pessoa continua sabendo o que aprendeu.
+     */
+    private static @Nullable ItemStack naMão(LivingEntity quem) {
+        if (!(quem instanceof net.minecraft.world.entity.player.Player gente)) return null;
+        for (net.minecraft.world.InteractionHand mão : net.minecraft.world.InteractionHand.values()) {
+            ItemStack coisa = gente.getItemInHand(mão);
+            if (coisa.getItem() instanceof SpellItem) return coisa;
+        }
+        return null;
+    }
+
+    /**
+     * <b>Colocar Bloco</b>: põe no mundo o bloco que o feitiço aprendeu.
+     *
+     * <p>E ele aprende <b>agachado</b>: lançar o feitiço agachado contra um bloco ensina-lhe aquele bloco;
+     * lançá-lo de pé põe um igual onde se apontar. É o original inteiro, e é a única peça do ramo que muda de
+     * trabalho conforme a pessoa está agachada ou não.
+     *
+     * <p><b>E ele gasta o bloco da mochila</b> — quem não o tiver não põe nada. Em criativo põe sempre, como
+     * tudo o resto.
+     */
+    public static final SpellPart.Essence PLACE_BLOCK = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 5.0f;
+
+        @Override
+        public String name() {
+            return "place_block";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.EARTH, Affinity.ENDER);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.05f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            ItemStack coisa = naMão(quem);
+            if (coisa == null) return false;
+            if (!(quem instanceof net.minecraft.world.entity.player.Player gente)) return false;
+
+            // agachado, ele aprende
+            if (quem.isShiftKeyDown()) {
+                var feitio = level.getBlockState(onde);
+                if (feitio.isAir()) return false;
+                coisa.set(ArcanaComponents.PLACE_BLOCK, feitio);
+                return true;
+            }
+
+            var guardado = coisa.get(ArcanaComponents.PLACE_BLOCK);
+            if (guardado == null) return false;
+
+            BlockPos lugar = level.getBlockState(onde).isSolidRender() ? onde.relative(face) : onde;
+            if (!level.getBlockState(lugar).canBeReplaced()) return false;
+
+            // e gasta um da mochila, se não for criativo
+            ItemStack custa = new ItemStack(guardado.getBlock());
+            if (!gente.hasInfiniteMaterials()) {
+                int qual = gente.getInventory().findSlotMatchingItem(custa);
+                if (qual < 0) return false;
+                gente.getInventory().removeItem(qual, 1);
+            }
+
+            level.setBlockAndUpdate(lugar, guardado);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Apropriação</b>: tira uma coisa do mundo e leva-a consigo.
+     *
+     * <p>Um bloco <b>com o que ele tem dentro</b> — um baú apropriado volta com as coisas lá — ou um bicho
+     * inteiro, com a vida e o nome que tinha. Enquanto estiver guardado, aquilo <b>não existe</b> em lugar
+     * nenhum senão no feitiço; lançá-lo outra vez põe de volta.
+     *
+     * <p>Leva <b>uma coisa de cada vez</b>: com alguma coisa dentro, o feitiço só sabe devolvê-la.
+     *
+     * <p>O original recusa gente e chefes, e isto também — um feitiço que guardasse uma pessoa seria outra
+     * coisa, e não esta.
+     */
+    public static final SpellPart.Essence APPROPRIATION = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 415.0f;
+
+        @Override
+        public String name() {
+            return "appropriation";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.WATER);
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            ItemStack coisa = naMão(quem);
+            if (coisa == null) return false;
+
+            var guardado = coisa.get(ArcanaComponents.APPROPRIATED);
+            if (guardado != null) return devolve(level, coisa, guardado, onde, face, batida);
+
+            var feitio = level.getBlockState(onde);
+            if (feitio.isAir()) return false;
+            if (feitio.getDestroySpeed(level, onde) < 0.0f) return false;
+
+            var dentro = java.util.Optional.<net.minecraft.nbt.CompoundTag>empty();
+            var bloco = level.getBlockEntity(onde);
+            if (bloco != null) {
+                dentro = java.util.Optional.of(bloco.saveWithoutMetadata(level.registryAccess()));
+                level.removeBlockEntity(onde);
+            }
+            coisa.set(ArcanaComponents.APPROPRIATED, Appropriated.of(feitio, dentro));
+            level.removeBlock(onde, false);
+            return true;
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            ItemStack coisa = naMão(quem);
+            if (coisa == null) return false;
+
+            var guardado = coisa.get(ArcanaComponents.APPROPRIATED);
+            if (guardado != null) {
+                return devolve(level, coisa, guardado,
+                        alvo.blockPosition(), Direction.UP, alvo.position());
+            }
+
+            if (alvo instanceof net.minecraft.world.entity.player.Player) return false;
+            if (!(alvo instanceof LivingEntity)) return false;
+
+            net.minecraft.nbt.CompoundTag escrito;
+            try (var escopo = new net.minecraft.util.ProblemReporter.ScopedCollector(
+                    net.thaumcraft.Thaumcraft.LOGGER)) {
+                var saída = net.minecraft.world.level.storage.TagValueOutput.createWithContext(
+                        escopo, level.registryAccess());
+                if (!alvo.save(saída)) return false;
+                escrito = saída.buildResult();
+            }
+
+            coisa.set(ArcanaComponents.APPROPRIATED, Appropriated.of(escrito));
+            alvo.discard();
+            return true;
+        }
+
+        /** E o caminho de volta: o que estava guardado volta ao mundo, e o feitiço esvazia. */
+        private boolean devolve(ServerLevel level, ItemStack coisa, Appropriated guardado,
+                                BlockPos onde, Direction face, Vec3 batida) {
+            if (guardado.bicho().isPresent()) {
+                var bicho = net.minecraft.world.entity.EntityType.loadEntityRecursive(
+                        guardado.bicho().get(), level,
+                        new net.minecraft.world.entity.EntitySpawnRequest(
+                                net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED, true),
+                        e -> {
+                            e.snapTo(batida.x, batida.y, batida.z, e.getYRot(), e.getXRot());
+                            return e;
+                        });
+                if (bicho == null) return false;
+                level.addFreshEntity(bicho);
+                coisa.remove(ArcanaComponents.APPROPRIATED);
+                return true;
+            }
+
+            if (guardado.bloco().isEmpty()) return false;
+            BlockPos lugar = level.getBlockState(onde).isSolidRender() ? onde.relative(face) : onde;
+            if (!level.getBlockState(lugar).canBeReplaced()) return false;
+
+            level.setBlockAndUpdate(lugar, guardado.bloco().get());
+            if (guardado.dentro().isPresent() && level.getBlockEntity(lugar) != null) {
+                level.getBlockEntity(lugar).loadWithComponents(
+                        net.minecraft.world.level.storage.TagValueInput.create(
+                                net.minecraft.util.ProblemReporter.DISCARDING, level.registryAccess(),
+                                guardado.dentro().get()));
+            }
+            coisa.remove(ArcanaComponents.APPROPRIATED);
             return true;
         }
     });

@@ -52,6 +52,24 @@ public class ArcanaInscriptionClientTest implements FabricClientGameTest {
                 mesa.setItem(1, new ItemStack(ArcanaItems.itemOf(Essences.FIRE_DAMAGE)));
             });
             context.takeScreenshot("aa_mesa_ruim");
+
+            // 4) e a Cor com a tinta ao lado: a casa da tinta não é peça, é a escolha da peça anterior
+            abre(context, server, onde, mesa -> {
+                mesa.setItem(0, new ItemStack(ArcanaItems.itemOf(Shapes.PROJECTILE)));
+                mesa.setItem(1, new ItemStack(ArcanaItems.itemOf(Essences.FIRE_DAMAGE)));
+                mesa.setItem(2, new ItemStack(ArcanaItems.itemOf(Modifiers.COLOUR)));
+                mesa.setItem(3, new ItemStack(net.minecraft.world.item.Items.DYE.pick(
+                        net.minecraft.world.item.DyeColor.BLUE)));
+            });
+            context.takeScreenshot("aa_mesa_cor");
+
+            // 5) e a mesma frase sem a tinta, que a Mesa recusa
+            abre(context, server, onde, mesa -> {
+                mesa.setItem(0, new ItemStack(ArcanaItems.itemOf(Shapes.PROJECTILE)));
+                mesa.setItem(1, new ItemStack(ArcanaItems.itemOf(Essences.FIRE_DAMAGE)));
+                mesa.setItem(2, new ItemStack(ArcanaItems.itemOf(Modifiers.COLOUR)));
+            });
+            context.takeScreenshot("aa_mesa_cor_sem_tinta");
         }
     }
 

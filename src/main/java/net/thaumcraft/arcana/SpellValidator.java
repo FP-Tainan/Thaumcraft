@@ -54,6 +54,27 @@ public final class SpellValidator {
     }
 
     /**
+     * Uma casa da Mesa já lida: a peça, e o que se pôs <b>ao lado dela</b>.
+     *
+     * <p>Quase nenhuma peça precisa de alguma coisa ao lado. A <b>Cor</b> precisa: ela não diz <i>qual</i>
+     * cor, e quem diz é a tinta. No original essa tinta está entre os itens da receita da Mesa, e aqui está
+     * numa casa logo a seguir à peça — que é o mesmo lugar, lido da esquerda para a direita.
+     *
+     * @param peça a peça de feitiço
+     * @param dado o número que a tinta ao lado dela deu, ou nada
+     */
+    public record Posta(SpellPart peça, @Nullable Integer dado) {
+        public Posta(SpellPart peça) {
+            this(peça, null);
+        }
+    }
+
+    /** Só as peças, que é o que a gramática olha. */
+    public static List<SpellPart> onlyParts(List<Posta> postas) {
+        return postas.stream().map(Posta::peça).toList();
+    }
+
+    /**
      * Separa uma lista de peças em etapas: o {@code splitToStages}.
      *
      * <p>Cada Forma começa uma etapa nova. Peças soltas antes da primeira Forma ficam numa etapa sem Forma —
@@ -74,6 +95,22 @@ public final class SpellValidator {
     public static Result validate(List<SpellPart> receita) {
         if (receita.isEmpty()) return Result.EMPTY;
         return validateStages(split(receita));
+    }
+
+    /**
+     * A prova de uma frase com o que se pôs ao lado de cada peça.
+     *
+     * <p>É a mesma de sempre, mais uma regra: <b>a Cor pede uma tinta</b>. Sem ela a peça não sabe o que
+     * fazer, e o original resolve isso na receita — lá a tinta é ingrediente. Aqui a Mesa recusa e diz porquê,
+     * que é melhor do que escrever um feitiço que sai preto sem ninguém ter pedido.
+     */
+    public static Result validateWithData(List<Posta> postas) {
+        for (Posta posta : postas) {
+            if (posta.peça() == Modifiers.COLOUR && posta.dado() == null) {
+                return Result.bad(posta.peça(), "tc.spell.validate.needs_dye");
+            }
+        }
+        return validate(onlyParts(postas));
     }
 
     /** E a mesma prova, com as etapas já separadas. */
@@ -153,6 +190,43 @@ public final class SpellValidator {
             }
             if (forma == null) continue;
             etapas.add(new Spell.Stage(forma, List.copyOf(essências), List.copyOf(modificadores)));
+        }
+        return new Spell(List.copyOf(etapas));
+    }
+
+    /**
+     * Monta o feitiço, levando o que se pôs ao lado de cada peça.
+     *
+     * <p>O dado vai para a <b>etapa</b> a que a peça pertence, com o nome dela por chave — que é o alcance
+     * que o original dá a esses números.
+     */
+    public static Spell buildWithData(List<Posta> postas) {
+        // a divisão em etapas é a mesma, e feita sobre as peças; o que se guarda aqui é de que etapa é cada uma
+        var porEtapa = new ArrayList<List<Posta>>();
+        for (Posta posta : postas) {
+            if (posta.peça() instanceof SpellPart.Shape || porEtapa.isEmpty()) {
+                porEtapa.add(new ArrayList<>());
+            }
+            porEtapa.getLast().add(posta);
+        }
+
+        var etapas = new ArrayList<Spell.Stage>();
+        for (List<Posta> etapa : porEtapa) {
+            SpellPart.Shape forma = null;
+            var essências = new ArrayList<SpellPart.Essence>();
+            var modificadores = new ArrayList<SpellPart.Modifier>();
+            var dados = new java.util.LinkedHashMap<String, Integer>();
+
+            for (Posta posta : etapa) {
+                SpellPart peça = posta.peça();
+                if (peça instanceof SpellPart.Shape qual && forma == null) forma = qual;
+                else if (peça instanceof SpellPart.Essence qual) essências.add(qual);
+                else if (peça instanceof SpellPart.Modifier qual) modificadores.add(qual);
+                if (posta.dado() != null) dados.put(peça.name(), posta.dado());
+            }
+            if (forma == null) continue;
+            etapas.add(new Spell.Stage(forma, List.copyOf(essências), List.copyOf(modificadores),
+                    java.util.Map.copyOf(dados)));
         }
         return new Spell(List.copyOf(etapas));
     }

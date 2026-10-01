@@ -40,9 +40,15 @@ public class InscriptionMenu extends AbstractContainerMenu {
 
         for (int i = 0; i < InscriptionTableBlockEntity.RECIPE_SIZE; i++) {
             this.addSlot(new Slot(mesa, i, RECIPE_X + i * 18, RECIPE_Y) {
+                /**
+                 * Peças — e <b>tinta</b>, que é a escolha da Cor.
+                 *
+                 * <p>No original a tinta é ingrediente da receita da Mesa, ao lado das peças. Aqui ela fica
+                 * numa casa logo a seguir à Cor, que é o mesmo lugar lido da esquerda para a direita.
+                 */
                 @Override
                 public boolean mayPlace(ItemStack isso) {
-                    return isso.getItem() instanceof SpellPartItem;
+                    return isso.getItem() instanceof SpellPartItem || Modifiers.dye(isso) != null;
                 }
             });
         }
@@ -83,17 +89,21 @@ public class InscriptionMenu extends AbstractContainerMenu {
      * o resultado pela rede.
      */
     public SpellValidator.Result reading() {
-        return SpellValidator.validate(this.recipe());
+        return SpellValidator.validateWithData(this.postas());
     }
 
-    /** As peças que estão nas casas da frase, em fila, sem os buracos. */
-    public java.util.List<SpellPart> recipe() {
-        var peças = new java.util.ArrayList<SpellPart>();
+    /** As casas da frase já lidas, com a tinta junto da peça a que ela pertence. */
+    public java.util.List<SpellValidator.Posta> postas() {
+        var casas = new java.util.ArrayList<ItemStack>();
         for (int i = 0; i < InscriptionTableBlockEntity.RECIPE_SIZE; i++) {
-            SpellPart qual = SpellPartItem.of(this.mesa.getItem(i));
-            if (qual != null) peças.add(qual);
+            casas.add(this.mesa.getItem(i));
         }
-        return java.util.List.copyOf(peças);
+        return InscriptionTableBlockEntity.ler(casas, InscriptionTableBlockEntity.RECIPE_SIZE);
+    }
+
+    /** E só as peças, para quem só quiser a gramática. */
+    public java.util.List<SpellPart> recipe() {
+        return SpellValidator.onlyParts(this.postas());
     }
 
     @Override
@@ -110,8 +120,10 @@ public class InscriptionMenu extends AbstractContainerMenu {
             if (!this.moveItemStackTo(pilha, mesaFim, this.slots.size(), true)) return ItemStack.EMPTY;
             casa.onQuickCraft(pilha, cópia);
         } else {
-            // e da mochila para as casas da frase, se for peça
-            if (!(pilha.getItem() instanceof SpellPartItem)) return ItemStack.EMPTY;
+            // e da mochila para as casas da frase, se for peça ou tinta
+            if (!(pilha.getItem() instanceof SpellPartItem) && Modifiers.dye(pilha) == null) {
+                return ItemStack.EMPTY;
+            }
             if (!this.moveItemStackTo(pilha, 0, InscriptionTableBlockEntity.RECIPE_SIZE, false)) {
                 return ItemStack.EMPTY;
             }

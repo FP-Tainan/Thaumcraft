@@ -82,6 +82,8 @@ public class SpellProjectileRenderer
     public static class State extends EntityRenderState {
         Affinity affinity = Affinity.NONE;
         int frame;
+        /** A cor que a frase escolheu, ou {@link SpellProjectileEntity#SEM_COR}. */
+        int cor = SpellProjectileEntity.SEM_COR;
     }
 
     public SpellProjectileRenderer(EntityRendererProvider.Context context) {
@@ -99,6 +101,7 @@ public class SpellProjectileRenderer
         super.extractRenderState(entity, state, partial);
         state.affinity = entity.affinity();
         state.frame = entity.tickCount % FRAMES.getOrDefault(state.affinity, 1);
+        state.cor = entity.color();
     }
 
     @Override
@@ -106,7 +109,9 @@ public class SpellProjectileRenderer
         int quadros = FRAMES.getOrDefault(state.affinity, 1);
         float v0 = (float) state.frame / quadros;
         float v1 = (float) (state.frame + 1) / quadros;
-        int cor = 0xFF000000 | COLORS.getOrDefault(state.affinity, 0xFFFFFF);
+        // a Cor, se a frase trouxer uma; senão a da Afinidade, que é o que o original faz
+        int cor = 0xFF000000 | (state.cor != SpellProjectileEntity.SEM_COR
+                ? state.cor : COLORS.getOrDefault(state.affinity, 0xFFFFFF));
         RenderType porta = AdditiveGlow.blended(TEXTURES.get(state.affinity));
 
         pose.pushPose();
