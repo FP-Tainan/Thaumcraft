@@ -229,8 +229,23 @@ public final class ArcanaEffects {
 
     // ------------------------------------------------------------------ os quatro lugares por onde eles mexem
 
-    /** A batida de quem tem efeitos do ramo: o que o {@code onLivingUpdate} do original faz com eles. */
+    /**
+     * A batida de quem tem efeitos do ramo: o que o {@code onLivingUpdate} do original faz com eles.
+     *
+     * <p>Ela corre em <b>toda</b> criatura viva do mundo, a cada batida — e por isso a primeira coisa que faz
+     * é sair quando não há nada a fazer. Sem essa saída seriam oito perguntas por bicho por batida, numa
+     * coisa que num servidor cheio corre milhares de vezes por segundo.
+     *
+     * <p>As duas listas entram na conta de propósito: quem recebeu asas ou quem deixou uma luz pelo caminho
+     * ainda tem de ser arrumado <b>depois</b> de o efeito acabar, e nessa batida ele já não tem efeito nenhum.
+     */
     public static void tick(ServerLevel level, LivingEntity quem) {
+        if (quem.getActiveEffects().isEmpty()
+                && !COM_ASAS.contains(quem.getUUID())
+                && !LUZES.containsKey(quem.getUUID())) {
+            return;
+        }
+
         voo(quem);
 
         if (quem.hasEffect(ENTANGLED)) {
@@ -321,6 +336,19 @@ public final class ArcanaEffects {
         if (!level.getBlockState(onde).isAir()) return;
         level.setBlock(onde, net.minecraft.world.level.block.Blocks.LIGHT.defaultBlockState(), 2);
         LUZES.put(quem.getUUID(), onde);
+    }
+
+    /**
+     * Esquece esta pessoa: apaga a luz dela e tira-a das listas.
+     *
+     * <p>É chamado quando ela sai do mundo — morreu, foi embora, foi desfeita. Sem isto, quem morresse
+     * iluminado deixaria <b>um bloco de luz invisível aceso para sempre</b>, e ninguém saberia que ele estava
+     * lá nem como o tirar. O bloco do original se apaga sozinho cinco batidas depois e nunca tem este
+     * problema; o do jogo de hoje não, e por isso há esta conta.
+     */
+    public static void esquece(ServerLevel level, LivingEntity quem) {
+        apaga(level, quem);
+        COM_ASAS.remove(quem.getUUID());
     }
 
     /** E apaga a que ficou para trás, quando ela já não serve. */

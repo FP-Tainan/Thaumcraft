@@ -134,7 +134,8 @@
       "net.thaumcraft.test.ArcanaPushGameTest",
       "net.thaumcraft.test.ArcanaWorldGameTest",
       "net.thaumcraft.test.ArcanaSecretsGameTest",
-      "net.thaumcraft.test.ArcanaWeatherGameTest"
+      "net.thaumcraft.test.ArcanaWeatherGameTest",
+      "net.thaumcraft.test.ArcanaStarAndLinkGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -244,7 +245,8 @@
       "net.thaumcraft.test.client.ArcanaBlocksClientTest",
       "net.thaumcraft.test.client.ArcanaSkillTreeClientTest",
       "net.thaumcraft.test.client.ArcanaEffectsClientTest",
-      "net.thaumcraft.test.client.ArcanaWeatherClientTest"
+      "net.thaumcraft.test.client.ArcanaWeatherClientTest",
+      "net.thaumcraft.test.client.ArcanaStarClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

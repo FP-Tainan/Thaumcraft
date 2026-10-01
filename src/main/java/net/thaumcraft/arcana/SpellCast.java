@@ -123,18 +123,38 @@ public final class SpellCast {
 
     // ------------------------------------------------------------------ o preço
 
-    /** Se quem lança tem com que pagar. Quem está em criativo paga sempre. */
+    /**
+     * Se quem lança tem com que pagar. Quem está em criativo paga sempre.
+     *
+     * <p>E a mana dos <b>elos</b> conta: um arcanista com um Elo de Mana posto em alguém ao pé dele lança
+     * feitiços que a mana dele sozinha não pagaria.
+     */
     public static boolean affords(LivingEntity quem, float mana, float burnout) {
         if (quem instanceof Player gente && gente.hasInfiniteMaterials()) return true;
         if (!(quem instanceof Player gente)) return true;
         Mana conta = Mana.of(gente);
-        return conta.has(mana) && conta.canBurn(burnout);
+        if (!conta.canBurn(burnout)) return false;
+        if (conta.has(mana)) return true;
+
+        if (!(gente.level() instanceof ServerLevel level)) return false;
+        return conta.mana() + ManaLinks.extra(level, gente) >= mana;
     }
 
-    /** E cobra. */
+    /**
+     * E cobra — a mana própria primeiro, e o que faltar sai dos elos.
+     *
+     * <p>É a ordem do {@code deductMana} do original, e é ela que faz do Elo uma rede de emergência em vez de
+     * uma torneira: só se puxa da mana de outra pessoa quando a própria já acabou.
+     */
     public static void charge(LivingEntity quem, float mana, float burnout) {
         if (!(quem instanceof Player gente) || gente.hasInfiniteMaterials()) return;
-        Mana.set(gente, Mana.of(gente).spend(mana, burnout));
+
+        Mana conta = Mana.of(gente);
+        float falta = mana - conta.mana();
+        Mana.set(gente, conta.spend(mana, burnout));
+        if (falta > 0.0f && gente.level() instanceof ServerLevel level) {
+            ManaLinks.paga(level, gente, falta);
+        }
     }
 
     // ------------------------------------------------------------------ a Afinidade

@@ -2726,6 +2726,122 @@ public final class Essences {
     public static final SpellPart.Essence FIRE_RAIN = SpellParts.essence(new Temporal("fire_rain",
             SpellEffectEntity.Kind.FIRE_RAIN, 3000.0f, java.util.Set.of(Affinity.FIRE), 0.1f, 2, true));
 
+    /**
+     * <b>Estrela Cadente</b>: chama uma do teto do mundo.
+     *
+     * <p>Ela cai no lugar que o feitiço marcou e, ao chegar, fere <b>tudo o que estiver a cinco blocos</b> e
+     * tiver linha de vista para ela. O dano é <b>dois vezes quinze</b> — trinta —, e o modificador de Dano
+     * multiplica os quinze antes de os dobrar, que é a conta do original e é por isso que ela cresce depressa.
+     *
+     * <p>E recusa se já houver uma a dez blocos: uma estrela de cada vez.
+     *
+     * <p>É uma das dez perícias <b>prateadas</b> do original.
+     */
+    public static final SpellPart.Essence FALLING_STAR = SpellParts.essence(new SpellPart.Essence() {
+        /** O quinze do original, que o Dano multiplica — e que depois é dobrado. */
+        public static final int BASE = 15;
+        public static final double PERTO = 10.0;
+
+        /** E a cinquenta blocos acima do ponto: o {@code impactY + 50.0} do original. */
+        public static final double ACIMA = 50.0;
+        public static final float MANA = 400.0f;
+
+        @Override
+        public String name() {
+            return "falling_star";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ARCANE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.05f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            return chama(level, feitiço, quem, alvo.position());
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            return chama(level, feitiço, quem, batida);
+        }
+
+        private boolean chama(ServerLevel level, Spell feitiço, LivingEntity quem, Vec3 onde) {
+            // o original procura uma estrela já chamada a dez blocos de (x, onde.y + 50, z) — e a estrela
+            // nasce no teto do mundo. Quer dizer que a guarda só pega quando se chama uma perto do teto;
+            // ao nível do chão ela nunca acha nada, e uma segunda estrela sai. É assim no original.
+            var perto = new net.minecraft.world.phys.AABB(
+                    onde.x, onde.y + ACIMA, onde.z, onde.x, onde.y + ACIMA, onde.z).inflate(PERTO);
+            if (!level.getEntities(ArcanaEntities.SHOOTING_STAR, perto, e -> true).isEmpty()) return false;
+
+            int força = (int) feitiço.mul(level, SpellModifierKind.DAMAGE, BASE);
+            var estrela = new ShootingStarEntity(level, quem, 2.0f * força);
+            // ela nasce no teto do mundo, por cima do lugar marcado
+            estrela.snapTo(onde.x, level.getMaxY(), onde.z);
+            level.addFreshEntity(estrela);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Elo de Mana</b>: põe a sua mana ao alcance de outra pessoa.
+     *
+     * <p>Lê-se mal e é o que o original faz: quem ganha o elo é <b>quem leva o feitiço</b>. Lançar o Elo em
+     * alguém é <b>dar-lhe</b> a sua mana, e não tomar a dele — e só enquanto estiverem perto.
+     *
+     * <p>Não custa mana nenhuma, e <b>alterna</b>: lançado outra vez no mesmo, desfaz o elo. E puxa <b>um
+     * quarto</b> de Afinidade por vez, repartido por três — o Raio, o Fim e o Arcano —, que é a puxada mais
+     * forte de todo o ramo.
+     *
+     * <p>É uma das dez perícias prateadas.
+     */
+    public static final SpellPart.Essence MANA_LINK = SpellParts.essence(new SpellPart.Essence() {
+        @Override
+        public String name() {
+            return "mana_link";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.LIGHTNING, Affinity.ENDER, Affinity.ARCANE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.25f;
+        }
+
+        @Override
+        public float manaCost() {
+            return 0.0f;
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            if (!(alvo instanceof net.minecraft.world.entity.player.Player levou)) return false;
+            if (!(quem instanceof net.minecraft.world.entity.player.Player lançou)) return false;
+
+            ManaLinks.set(levou, ManaLinks.of(levou).alterna(lançou.getUUID()));
+            return true;
+        }
+    });
+
     /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela as Essências a se registrarem. */
     public static void init() {
     }

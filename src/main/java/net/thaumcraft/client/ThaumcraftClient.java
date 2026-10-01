@@ -220,6 +220,10 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.arcana.ArcanaEntities.SPELL_EFFECT,
                 net.minecraft.client.renderer.entity.NoopRenderer::new);
+        // a Estrela Cadente também não se desenha: no original o desenhista dela desiste se for uma estrela
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.arcana.ArcanaEntities.SHOOTING_STAR,
+                net.minecraft.client.renderer.entity.NoopRenderer::new);
         // o Ars Arcana: o feitiço voando, um quadrado de luz virado para a câmera
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.arcana.ArcanaEntities.SPELL_PROJECTILE,

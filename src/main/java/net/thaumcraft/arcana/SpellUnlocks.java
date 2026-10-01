@@ -32,14 +32,19 @@ public final class SpellUnlocks {
     }
 
     /**
-     * Os dez do original — menos os que pedem peças que este porte ainda não tem.
+     * Os dez do original, todos.
      *
      * <p>As combinações são as dele, tal e qual, e valem ser lidas: a <b>Nevasca</b> sai de uma Tempestade com
-     * Dano Gélido, Congelar e Dano; a <b>Chuva de Fogo</b>, da mesma Tempestade com Dano de Fogo e Ignição; o
-     * <b>Poder de Bênção</b>, de um feitiço que junte cinco bênçãos de uma vez. Nenhuma delas é um acaso: são
-     * feitiços que alguém escreveria de propósito, se tivesse a ideia.
+     * Dano Gélido, Congelar e Dano; a <b>Chuva de Fogo</b>, da mesma Tempestade com Dano de Fogo e Ignição; a
+     * <b>Estrela Cadente</b>, de Dano Arcano com Gravidade e Distorção Astral — uma coisa pesada vinda de
+     * longe, que é exatamente o que ela é; e o <b>Poder de Bênção</b>, de um feitiço que junte cinco bênçãos
+     * de uma vez. Nenhuma delas é um acaso: são feitiços que alguém escreveria de propósito, se tivesse a
+     * ideia.
      */
     private static final List<Segredo> SEGREDOS = List.of(
+            new Segredo(Essences.FALLING_STAR, List.of(Essences.MAGIC_DAMAGE, Modifiers.GRAVITY,
+                    Essences.ASTRAL_DISTORTION)),
+            new Segredo(Essences.MANA_LINK, List.of(Essences.MANA_DRAIN, Essences.ENTANGLE)),
             new Segredo(Essences.BLIZZARD, List.of(Essences.STORM, Essences.FROST_DAMAGE,
                     Essences.FREEZE, Modifiers.DAMAGE)),
             new Segredo(Essences.FIRE_RAIN, List.of(Essences.STORM, Essences.FIRE_DAMAGE,

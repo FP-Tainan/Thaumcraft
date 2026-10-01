@@ -42,4 +42,17 @@ public abstract class LivingEntityArcanaEffectsMixin {
         LivingEntity self = (LivingEntity) (Object) this;
         if (self.level() instanceof ServerLevel level) ArcanaEffects.tick(level, self);
     }
+
+    /**
+     * E quando ela sai do mundo, arruma o que ficou.
+     *
+     * <p>Quem morre iluminado deixaria um bloco de luz invisível aceso para sempre, e ninguém saberia que ele
+     * estava lá nem como o tirar.
+     */
+    @Inject(method = "remove", at = @At("HEAD"))
+    private void thaumcraft$arcanaRemoved(net.minecraft.world.entity.Entity.RemovalReason porquê,
+                                          CallbackInfo ci) {
+        LivingEntity self = (LivingEntity) (Object) this;
+        if (self.level() instanceof ServerLevel level) ArcanaEffects.esquece(level, self);
+    }
 }

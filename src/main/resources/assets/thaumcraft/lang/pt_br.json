@@ -3075,5 +3075,20 @@
   "tc.spell.secret_found": "Você descobriu %s!",
   "item.thaumcraft.spell_part_blizzard": "Nevasca",
   "item.thaumcraft.spell_part_fire_rain": "Chuva de Fogo",
-  "item.thaumcraft.spell_part_channel": "Canal"
+  "item.thaumcraft.spell_part_channel": "Canal",
+  "item.thaumcraft.spell_part_falling_star": "Estrela Cadente",
+  "item.thaumcraft.spell_part_mana_link": "Elo de Mana",
+  "entity.thaumcraft.shooting_star": "Estrela Cadente",
+  "tc.research_name.AA_EFFECTS": "O que fica depois",
+  "tc.research_text.AA_EFFECTS": "As bênçãos e os males",
+  "tc.research_page.AA_EFFECTS.1": "Metade das essências deste ofício não faz nada no instante em que pega. Elas §adeixam alguma coisa§r — e é essa coisa que trabalha, enquanto durar.<BR><BR>Meio minuto de base, e a §aDuração§r multiplica-o. E há uma peça que não muda número nenhum e muda tudo: o §aPoder de Bênção§r, que sobe o §agrau§r do efeito.<BR><BR>Os graus não são uma escada de passos iguais. A Pressa dá 0,2, depois 0,45, depois 0,9: o segundo vale mais do que dois primeiros. Quem quiser pressa de verdade tem de ir ao terceiro.",
+  "tc.research_page.AA_EFFECTS.2": "Alguns deles valem ser ditos.<BR><BR>O §aEscudo§r deixa tudo o que dói a §aum quarto§r, e não tem teto nenhum. O §aEscudo de Mana§r leva a pancada na mana, a 250 por ponto — e quem tiver mana de sobra não sente nada.<BR><BR>O §aSilêncio§r é o pior que se pode fazer a um arcanista: quem o tem não lança feitiço nenhum. E o §aDissipar§r tira o que couber num orçamento de seis, contado pelo grau de cada efeito — um de grau zero sai de graça, um de grau três come metade. Não é um botão de apagar tudo.",
+  "tc.research_name.AA_WEATHER": "Mexer no céu",
+  "tc.research_text.AA_WEATHER": "E o preço de o fazer",
+  "tc.research_page.AA_WEATHER.1": "Há quatro essências que não mexem em ninguém: mexem no §acéu§r.<BR><BR>A §aTempestade§r chama a chuva — e, se ela já estiver batendo com força, chama o §araio§r num monstro a cinquenta blocos. Quinze de mana, que é quase nada para o que faz.<BR><BR>§aAfastar a Chuva§r acaba com ela e garante um dia inteiro de sol. Custa setecentos e cinquenta, e puxa §atrês décimos§r de Afinidade da Água por lançamento — trinta vezes o que um dano puxa. Quem a usa muito deixa de ser quem era.",
+  "tc.research_page.AA_WEATHER.2": "E há as duas do relógio: a §aLuz do Dia§r e o §aAnoitecer§r.<BR><BR>Custam §avinte e cinco mil§r de mana cada uma. Não é engano: é mais do que qualquer arcanista tem antes do nível alto, e mais do que qualquer outra essência deste ofício custa.<BR><BR>Empurrar o sol é a coisa mais cara que se pode fazer com um feitiço, e me parece justo que seja.",
+  "tc.research_name.AA_SECRETS": "O que não se compra",
+  "tc.research_text.AA_SECRETS": "E que ninguém ensina",
+  "tc.research_page.AA_SECRETS.1": "O Óculus mostra tudo o que há para aprender. §aNão é verdade.§r<BR><BR>Há coisas no quadro que nenhum ponto compra — elas ficam de lado, acesas de §aprateado§r, e não há nível que as abra. Nenhum mestre as ensina. Nenhuma página as traz.<BR><BR>Abrem-se §asozinhas§r, no instante em que alguém lança um feitiço que as contenha sem saber. Não é preciso acertar numa palavra escondida: é preciso ter a §acombinação certa de peças na mesma etapa§r de uma frase. Quem escrever a frase certa por outra razão qualquer vai abrir a porta sem perceber que havia porta.",
+  "tc.research_page.AA_SECRETS.2": "São §adez§r, e não vou escrever quais.<BR><BR>Não por teimosia: porque escrever acaba com elas. O que faz uma dessas perícias valer o que vale é o dia em que ela aparece sem ninguém ter pedido — e isso só acontece uma vez por pessoa.<BR><BR>O que posso dizer é por onde procurar: elas saem de frases que §ajuntam coisas que ninguém junta§r. Quatro essências de uma vez. Um modificador onde ele não parece servir. Um temporal pedido a quem já chamou a chuva.<BR><BR>E se alguém lhe emprestar um feitiço com uma delas lá dentro, ele §anão vai sair da sua mão§r. Não se lança o que não se descobriu."
 }

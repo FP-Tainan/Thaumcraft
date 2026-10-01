@@ -3077,5 +3077,20 @@
   "tc.spell.secret_found": "You have discovered %s!",
   "item.thaumcraft.spell_part_blizzard": "Blizzard",
   "item.thaumcraft.spell_part_fire_rain": "Rain of Fire",
-  "item.thaumcraft.spell_part_channel": "Channel"
+  "item.thaumcraft.spell_part_channel": "Channel",
+  "item.thaumcraft.spell_part_falling_star": "Falling Star",
+  "item.thaumcraft.spell_part_mana_link": "Mana Link",
+  "entity.thaumcraft.shooting_star": "Falling Star",
+  "tc.research_name.AA_EFFECTS": "What Lingers",
+  "tc.research_text.AA_EFFECTS": "Blessings and banes",
+  "tc.research_page.AA_EFFECTS.1": "Half the essences of this craft do nothing at the moment they land. They §aleave something behind§r — and it is that which works, for as long as it lasts.<BR><BR>Half a minute by default, and §aDuration§r multiplies it. And there is one part that changes no number and changes everything: §aBuff Power§r, which raises the §agrade§r of the effect.<BR><BR>The grades are not an even ladder. Haste gives 0.2, then 0.45, then 0.9: the second is worth more than two firsts.",
+  "tc.research_page.AA_EFFECTS.2": "Some are worth naming.<BR><BR>§aShield§r leaves everything that hurts at §aone quarter§r, with no cap at all. §aMana Shield§r takes the blow in mana, at 250 per point.<BR><BR>§aSilence§r is the worst thing you can do to a spellcaster. And §aDispel§r removes only what fits a budget of six, counted by the grade of each effect — it is not a button that wipes everything.",
+  "tc.research_name.AA_WEATHER": "Moving the Sky",
+  "tc.research_text.AA_WEATHER": "And what it costs",
+  "tc.research_page.AA_WEATHER.1": "Four essences touch no one: they touch the §asky§r.<BR><BR>§aStorm§r calls the rain — and if it is already falling hard, it calls §alightning§r down on a monster fifty blocks away. Fifteen mana, which is almost nothing for what it does.<BR><BR>§aBanish Rain§r ends it and grants a full day of sun. It costs seven hundred and fifty, and pulls §athree tenths§r of Water affinity each time you cast it — thirty times what damage pulls.",
+  "tc.research_page.AA_WEATHER.2": "And there are the two that move the clock: §aDaylight§r and §aMoonrise§r.<BR><BR>They cost §atwenty-five thousand§r mana each. That is not a mistake: it is more than any caster holds before the high levels, and more than any other essence of this craft.<BR><BR>Pushing the sun is the most expensive thing a spell can do, and that seems right to me.",
+  "tc.research_name.AA_SECRETS": "What Cannot Be Bought",
+  "tc.research_text.AA_SECRETS": "And no one teaches",
+  "tc.research_page.AA_SECRETS.1": "The Occulus shows everything there is to learn. §aThat is not true.§r<BR><BR>There are things on the board that no point buys — they sit aside, lit in §asilver§r, and no level opens them. No master teaches them. No page carries them.<BR><BR>They open §aby themselves§r, the moment someone casts a spell that contains them without knowing. You need the §aright combination of parts in the same stage§r of a sentence. Whoever writes that sentence for some other reason will open the door without noticing there was one.",
+  "tc.research_page.AA_SECRETS.2": "There are §aten§r, and I will not write down which.<BR><BR>Not out of spite: because writing them ends them. What makes one of those skills worth what it is worth is the day it appears unasked — and that happens once per person.<BR><BR>What I can say is where to look: they come from sentences that §ajoin things no one joins§r. Four essences at once. A modifier where it seems useless. A storm asked of someone who has already called the rain.<BR><BR>And if someone lends you a spell with one of them inside, it §awill not leave your hand§r. You do not cast what you have not discovered."
 }

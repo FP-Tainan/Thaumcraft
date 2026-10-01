@@ -44,6 +44,9 @@ public class BookPagesClientTest implements FabricClientGameTest {
             shot(context, "THAUMATORIUM", kind(Page.Kind.COMPOUND), "montagem_taumatorio");
             shot(context, "RUNICAUGMENTATION", kind(Page.Kind.RUNIC), "runico");
             shot(context, "ASPECTS", p -> p instanceof Page.Aspects, "aspectos");
+            // a página dos segredos do Ars Arcana: é a única coisa do ramo que o livro TEM de contar que
+            // existe, porque nada mais no jogo diz a quem joga que há perícias que não se compram
+            shot(context, "AA_SECRETS", p -> p instanceof Page.Text, "aa_segredos");
 
             // o cursor sobre um ingrediente: o tooltip com o "clique para pesquisar"
             shot(context, "WARDEDARCANA", kind(Page.Kind.ARCANE), "arcana");

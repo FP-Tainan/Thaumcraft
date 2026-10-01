@@ -40,6 +40,19 @@ public final class ArcanaEntities {
                     .clientTrackingRange(8)
                     .updateInterval(20));
 
+    /**
+     * A <b>Estrela Cadente</b>: a {@code EntityThrownRock} no feitio de estrela.
+     *
+     * <p>Ela cai do teto do mundo e <b>não se vê</b> — o desenhista do original pergunta se é uma estrela e,
+     * se for, não desenha nada. O que se vê é o rastro de brasas, e por isso ela precisa de alcance de vista
+     * largo: quem está longe tem de ver a estrela chegar.
+     */
+    public static final EntityType<ShootingStarEntity> SHOOTING_STAR = register("shooting_star",
+            EntityType.Builder.<ShootingStarEntity>of(ShootingStarEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(16)
+                    .updateInterval(1));
+
     private ArcanaEntities() {
     }
 

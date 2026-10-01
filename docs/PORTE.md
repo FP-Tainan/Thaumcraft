@@ -4983,3 +4983,49 @@ outra: o **Canal** não é o Facho. Ele é a **Autoconjuração que se segura** 
 
 **Com a Telecinese ou o Atrair na frase, ele corre a cada batida.** É a exceção do original, e faz sentido:
 as duas são essências que puxam coisas devagar, e de dez em dez batidas quase não se notariam.
+
+### Fatia 24 — a Estrela Cadente (2026-09-30)
+
+Ela cai do teto do mundo no lugar que o feitiço marcou e, ao chegar, fere **tudo o que estiver a cinco
+blocos** e tiver linha de vista para ela. O dano é **dois vezes quinze** — e o modificador de Dano multiplica
+os quinze **antes** de eles serem dobrados, que é a conta do original e é por isso que ela cresce depressa.
+
+**Ela não se vê, e isso é do original.** A mesma entidade, usada pelo Guardião da Terra, é uma pedra de três
+caixas com a pele dele — mas o desenhista dela começa por perguntar se é uma estrela cadente e, se for,
+**não desenha nada**. O que se vê é só o rastro: brasas azuladas ao longo do caminho, uma a cada décimo de
+bloco que ela desce. A cor é a do original, `0.24, 0.58, 0.71` — um azul de madrugada.
+
+**E ela acelera**: um décimo por batida, até ao teto de dois blocos por batida. Uma estrela chamada de muito
+alto chega a cair mais depressa do que se vê.
+
+### Fatia 25 — o Elo de Mana (2026-09-30)
+
+A última peça do ramo, e a que mexe no cano por onde a mana sai.
+
+**Um elo põe a sua mana ao alcance de outra pessoa.** Quando a dela acaba no meio de um feitiço, o que falta
+sai da sua — e só enquanto estiverem perto.
+
+**Quem ganha o elo é quem leva o feitiço, e não quem o lança.** Lê-se mal e é o que o original faz
+(`For(target).updateManaLink(caster)`): lançar o Elo em alguém é **dar-lhe** a sua mana, e não tomar a dele.
+É um feitiço de quem joga acompanhado.
+
+**O alcance é curto**: vinte de distância **ao quadrado**, que é como o original mede — pouco mais de quatro
+blocos e meio. Um elo não é uma corda comprida.
+
+**E a ordem importa**: gasta-se a mana própria primeiro, e só o que sobrar é que sai das emprestadas. É o que
+faz do Elo uma rede de emergência em vez de uma torneira.
+
+Com ele, **os dez segredos do original estão todos no lugar**.
+
+### Fatia 26 — o livro conta o que o jogo não conta (2026-09-30)
+
+Três páginas novas na aba do ramo: **o que fica depois** (os efeitos e as bênçãos), **mexer no céu** (e o
+preço de o fazer) e **o que não se compra**.
+
+A terceira é a que tinha de existir. **Nada no jogo diz a quem joga que há perícias que não se compram** — e
+é assim de propósito, porque descobri-las é o que elas valem. Mas um jogador que nunca souber que elas
+existem também nunca vai procurar, e aí o segredo deixa de ser segredo e passa a ser conteúdo morto.
+
+A página resolve isso dizendo **que elas existem e como se abrem**, e **não dizendo quais são**: as dez
+combinações continuam por descobrir. O que ela dá é a direção — frases que juntam coisas que ninguém junta —
+e o aviso de que um feitiço emprestado com uma delas dentro não sai da mão de quem não a descobriu.

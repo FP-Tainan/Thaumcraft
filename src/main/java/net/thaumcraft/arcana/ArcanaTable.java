@@ -96,6 +96,38 @@ public final class ArcanaTable {
                         Page.text("tc.research_page.AA_SHAPES.3"))
                 .register();
 
+        // os efeitos: o que um feitiço deixa em quem o leva
+        ThaumcraftApi.research("AA_EFFECTS", Arcana.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAGIC, 4).add(Aspects.LIFE, 3).add(Aspects.MIND, 2))
+                .at(2, -2)
+                .icon(() -> new ItemStack(ArcanaItems.itemOf(Essences.HASTE)))
+                .parents("AA_INSCRIPTION")
+                .pages(Page.text("tc.research_page.AA_EFFECTS.1"),
+                        Page.text("tc.research_page.AA_EFFECTS.2"))
+                .register();
+
+        // o céu e os temporais
+        ThaumcraftApi.research("AA_WEATHER", Arcana.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAGIC, 5).add(Aspects.WEATHER, 4).add(Aspects.AIR, 3))
+                .at(-2, 4)
+                .icon(() -> new ItemStack(ArcanaItems.itemOf(Essences.STORM)))
+                .parents("AA_AFFINITY")
+                .pages(Page.text("tc.research_page.AA_WEATHER.1"),
+                        Page.text("tc.research_page.AA_WEATHER.2"))
+                .register();
+
+        // e os segredos, que são a única coisa deste ramo que o livro TEM de contar que existe
+        ThaumcraftApi.research("AA_SECRETS", Arcana.CATEGORY)
+                .aspects(new AspectList().add(Aspects.MAGIC, 6).add(Aspects.MIND, 5).add(Aspects.VOID, 3))
+                .at(0, 3)
+                .icon(() -> new ItemStack(ArcanaItems.itemOf(Essences.BLIZZARD)))
+                .parents("AA_AFFINITY", "AA_SHAPES")
+                .round()
+                .special()
+                .pages(Page.text("tc.research_page.AA_SECRETS.1"),
+                        Page.text("tc.research_page.AA_SECRETS.2"))
+                .register();
+
         // e o Vínculo, que é o fim da estrada
         ThaumcraftApi.research("AA_BINDING", Arcana.CATEGORY)
                 .aspects(new AspectList().add(Aspects.MAGIC, 5).add(Aspects.TOOL, 4).add(Aspects.EXCHANGE, 3))
