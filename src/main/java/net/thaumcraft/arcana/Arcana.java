@@ -42,6 +42,7 @@ public final class Arcana {
         // um anexo registrado tarde não chega à máquina de quem joga
         Mana.init();
         AffinityData.init();
+        MarkData.init();
         SkillData.init();
         SkillTree.init();
         // a ordem importa: as peças se registram ao carregar a classe, e os feitiços leem-nas pelo nome

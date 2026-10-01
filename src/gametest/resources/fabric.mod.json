@@ -131,7 +131,8 @@
       "net.thaumcraft.test.ArcanaOcculusGameTest",
       "net.thaumcraft.test.ArcanaDamageGameTest",
       "net.thaumcraft.test.ArcanaEffectsGameTest",
-      "net.thaumcraft.test.ArcanaPushGameTest"
+      "net.thaumcraft.test.ArcanaPushGameTest",
+      "net.thaumcraft.test.ArcanaWorldGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",

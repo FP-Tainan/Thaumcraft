@@ -4878,3 +4878,55 @@ lança, ele pega tudo o que estiver a **dois blocos**.
    um feitiço que o Ars Magica 2 não tem.
 3. **A arma que o Desarmar faz cair cai gasta** — entre 80 e 99 por cento da durabilidade —, para desarmar
    esqueletos não ser uma maneira de ganhar arcos.
+
+### Fatia 18 — as que deslocam (2026-09-30)
+
+Sete essências, e um lugar novo onde um arcanista guarda coisa: a **Marca**.
+
+**Piscar** (doze blocos à frente), **Teleporte Aleatório** (nove de lado, que o Alcance multiplica),
+**Marca**, **Chamado**, **Trocar de Lugar**, **Intervenção Divina** (leva a casa) e **Intervenção do Fim**
+(leva ao Nether).
+
+**O Piscar não atira ninguém: ele procura.** Parte da distância cheia e vai descendo um bloco de cada vez até
+achar um lugar onde caibam duas casas de ar — e em cada distância prova **doze** lugares: os quatro cantos em
+roda do ponto, e os mesmos um acima e um abaixo. É por isso que um Piscar contra uma parede põe a pessoa
+**encostada** à parede, e não dentro dela.
+
+**A Marca e o Chamado são um par e não valem nada um sem o outro.** Se marca **um lugar só** — marcar outra
+vez apaga o anterior — e o Chamado **não atravessa mundos**: uma marca feita na superfície não traz ninguém
+do Nether, e o original recusa dizendo porquê. O lugar marcado mora num anexo próprio, que vai pela rede como
+a mana e as afinidades.
+
+**A Distorção Astral prende tudo isto**: com ela posta, nenhuma das sete desloca ninguém — e todas **cobram
+na mesma**, que é o que o original faz ao devolver verdadeiro sem fazer nada.
+
+### Fatia 19 — as que mexem no mundo (2026-09-30)
+
+Oito essências de lavoura e de pedreira: **Criar Água** (e enche o caldeirão, se for num caldeirão),
+**Arar**, **Plantar**, **Colher**, **Crescer** (que é o pó de osso), **Forja** (que cozinha o bloco como um
+forno, e faz do gelo água), **Outono do Mago** (derruba as folhas a dois blocos de raio) e **Seca**.
+
+**A lista da Seca é a do original, nesta ordem**: a flor e a erva alta viram erva morta; a grama, o micélio,
+o arenito e a terra viram areia; a pedra vira pedregulho; o tijolo de pedra racha; e a água desaparece.
+
+**Duas ficam de fora, e é a mesma razão da Cor.** O **Colocar Bloco** e a **Apropriação** guardam um bloco
+**dentro do feitiço** — o original escreve-o no NBT da varinha na hora de inscrever. Este porte guarda os
+feitiços por nome de peça e não tem ainda onde pôr um dado desses. É fatia própria, com a Cor.
+
+### Fatia 20 — as que mexem no céu (2026-09-30)
+
+Quatro, e são as mais caras do ramo inteiro.
+
+**Afastar a Chuva** (750 de mana, e **três décimos** de Afinidade da Água por lançamento — trinta vezes o que
+um dano puxa), **Tempestade** (quinze de mana: com tempo bom começa a chover, e com a chuva já forte há uma
+em cinco de cair um raio num monstro a cinquenta blocos), **Luz do Dia** e **Anoitecer**.
+
+**As duas do relógio custam vinte e cinco mil de mana cada uma** — mais do que qualquer arcanista tem antes
+do nível alto, e mais do que qualquer outra essência por larga margem. Mexer no céu é caro, e é de propósito.
+
+**Desvio declarado: o relógio.** O original escreve a batida à mão — o dia em curso vezes 24000 para o
+amanhecer, e mais 13250 para o anoitecer. O jogo de hoje já não deixa mexer no relógio assim: ele tem
+**marcos**, e quem quer o amanhecer pede o marco do amanhecer. Dá no mesmo lugar do céu.
+
+**E o tempo mora noutro sítio.** No 1.7.10 a chuva estava no próprio mundo; hoje está num guardado à parte,
+o `WeatherData`. A conta é a mesma, o lugar é outro.

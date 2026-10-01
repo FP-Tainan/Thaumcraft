@@ -1525,6 +1525,1106 @@ public final class Essences {
         }
     });
 
+    // ------------------------------------------------------------------ as que deslocam
+
+    /**
+     * <b>Piscar</b>: passa para a frente, doze blocos, sem atravessar nada.
+     *
+     * <p>O original não atira ninguém: ele <b>procura</b>. Parte da distância cheia e vai <b>descendo um
+     * bloco de cada vez</b> até achar um lugar onde caibam duas casas de ar — e em cada distância prova doze
+     * lugares: os quatro cantos em roda do ponto, e os mesmos um acima e um abaixo. Por isso um Piscar contra
+     * uma parede põe a pessoa <b>encostada à parede</b>, e não dentro dela.
+     */
+    public static final SpellPart.Essence BLINK = SpellParts.essence(new SpellPart.Essence() {
+        /** Os doze blocos do original, que o Alcance soma. */
+        public static final double BASE = 12.0;
+        public static final float MANA = 160.0f;
+
+        @Override
+        public String name() {
+            return "blink";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ENDER);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.05f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            if (!(alvo instanceof LivingEntity vivo)) return false;
+            if (ArcanaEffects.blocksTeleport(vivo)) return true;
+
+            double distância = feitiço.add(level, SpellModifierKind.RANGE, BASE);
+            Vec3 rumo = vivo.getLookAngle().normalize();
+            while (distância > 0.0) {
+                Vec3 tenta = vivo.position().add(rumo.scale(distância));
+                Vec3 achou = cabe(level, tenta);
+                if (achou != null) {
+                    vivo.teleportTo(achou.x, achou.y, achou.z);
+                    level.sendParticles(ParticleTypes.PORTAL, achou.x, achou.y + 1.0, achou.z,
+                            24, 0.4, 0.8, 0.4, 0.1);
+                    return true;
+                }
+                distância -= 1.0;
+            }
+            return false;
+        }
+
+        /**
+         * Um lugar onde caibam duas casas de ar, dos doze que o original prova.
+         *
+         * <p>Os quatro cantos em roda do ponto — o de baixo e o de cima de cada coordenada —, e os mesmos
+         * um bloco abaixo e um bloco acima.
+         */
+        private Vec3 cabe(ServerLevel level, Vec3 onde) {
+            int[] xs = {(int) Math.floor(onde.x), (int) Math.ceil(onde.x)};
+            int[] zs = {(int) Math.floor(onde.z), (int) Math.ceil(onde.z)};
+            for (int dy : new int[]{0, -1, 1}) {
+                int y = (int) onde.y + dy;
+                for (int x : xs) {
+                    for (int z : zs) {
+                        if (livre(level, x, y, z)) return new Vec3(x + 0.5, y, z + 0.5);
+                    }
+                }
+            }
+            return null;
+        }
+
+        /** Duas casas de ar, uma sobre a outra: o {@code CheckCoords} do original. */
+        private boolean livre(ServerLevel level, int x, int y, int z) {
+            if (y < level.getMinY()) return false;
+            var baixo = new BlockPos(x, y, z);
+            var cima = baixo.above();
+            return level.getBlockState(baixo).getCollisionShape(level, baixo).isEmpty()
+                    && level.getBlockState(cima).getCollisionShape(level, cima).isEmpty();
+        }
+    });
+
+    /**
+     * <b>Teleporte Aleatório</b>: atira para um lugar qualquer ali perto.
+     *
+     * <p><b>Nove blocos</b> de lado, e o Alcance multiplica-os. O original não procura chão nenhum — ele
+     * sorteia e manda, e quem cair dentro de pedra que se desenrasque. Fica assim.
+     */
+    public static final SpellPart.Essence RANDOM_TELEPORT = SpellParts.essence(new SpellPart.Essence() {
+        /** Os nove blocos do original, que o Alcance multiplica. */
+        public static final double BASE = 9.0;
+        public static final float MANA = 52.5f;
+
+        @Override
+        public String name() {
+            return "random_teleport";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ENDER);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            if (alvo instanceof LivingEntity vivo && ArcanaEffects.blocksTeleport(vivo)) return true;
+            double lado = feitiço.mul(level, SpellModifierKind.RANGE, BASE);
+            var sorte = level.getRandom();
+            alvo.teleportTo(
+                    alvo.getX() + (sorte.nextDouble() - 0.5) * lado,
+                    alvo.getY() + (sorte.nextDouble() - 0.5) * lado,
+                    alvo.getZ() + (sorte.nextDouble() - 0.5) * lado);
+            level.sendParticles(ParticleTypes.PORTAL, alvo.getX(), alvo.getY() + 1.0, alvo.getZ(),
+                    24, 0.4, 0.8, 0.4, 0.1);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Marca</b>: guarda este lugar.
+     *
+     * <p>Cinco de mana, e não faz mais nada — o que ela vale está no <b>Chamado</b>, que traz de volta aqui.
+     * Marca-se <b>um lugar só</b>: marcar outra vez apaga o de antes.
+     */
+    public static final SpellPart.Essence MARK = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 5.0f;
+
+        @Override
+        public String name() {
+            return "mark";
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            return marca(level, quem, alvo.position());
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            return marca(level, quem, batida);
+        }
+
+        private boolean marca(ServerLevel level, LivingEntity quem, Vec3 onde) {
+            if (!(quem instanceof net.minecraft.world.entity.player.Player gente)) return false;
+            MarkData.set(gente, new MarkData(onde, level.dimension()));
+            return true;
+        }
+    });
+
+    /**
+     * <b>Chamado</b>: traz de volta ao lugar marcado.
+     *
+     * <p>Quinhentos de mana, e duas recusas do original: sem marca posta não acontece nada, e uma marca de
+     * outro mundo também não serve. As duas dizem porquê, como no original.
+     */
+    public static final SpellPart.Essence RECALL = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 500.0f;
+
+        @Override
+        public String name() {
+            return "recall";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ARCANE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.1f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            if (!(quem instanceof net.minecraft.world.entity.player.Player gente)) return false;
+            if (!(alvo instanceof LivingEntity vivo)) return false;
+            if (ArcanaEffects.blocksTeleport(quem) || ArcanaEffects.blocksTeleport(vivo)) return true;
+
+            MarkData marca = MarkData.of(gente);
+            if (!marca.posta()) {
+                gente.sendSystemMessage(net.minecraft.network.chat.Component.translatable("tc.spell.no_mark"));
+                return false;
+            }
+            if (!marca.mundo().equals(level.dimension())) {
+                gente.sendSystemMessage(
+                        net.minecraft.network.chat.Component.translatable("tc.spell.mark_elsewhere"));
+                return false;
+            }
+
+            vivo.teleportTo(marca.onde().x, marca.onde().y, marca.onde().z);
+            level.sendParticles(ParticleTypes.PORTAL, marca.onde().x, marca.onde().y + 1.0,
+                    marca.onde().z, 32, 0.4, 0.8, 0.4, 0.1);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Trocar de Lugar</b>: quem lança vai para onde o outro está, e o outro para onde quem lançou estava.
+     *
+     * <p>Cem de mana, e é o feitiço mais perigoso de levar: quem o leva pode ser atirado para onde quem o
+     * lançou não queria estar.
+     */
+    public static final SpellPart.Essence TRANSPLACE = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 100.0f;
+
+        @Override
+        public String name() {
+            return "transplace";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ENDER);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.02f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            if (alvo.isRemoved()) return false;
+            if (ArcanaEffects.blocksTeleport(quem)) return true;
+
+            Vec3 dele = alvo.position();
+            Vec3 meu = quem.position();
+            quem.teleportTo(dele.x, dele.y, dele.z);
+            alvo.teleportTo(meu.x, meu.y, meu.z);
+            level.sendParticles(ParticleTypes.PORTAL, dele.x, dele.y + 1.0, dele.z, 16, 0.4, 0.8, 0.4, 0.1);
+            level.sendParticles(ParticleTypes.PORTAL, meu.x, meu.y + 1.0, meu.z, 16, 0.4, 0.8, 0.4, 0.1);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Intervenção Divina</b>: leva a casa.
+     *
+     * <p>À cama de quem a lança, ou ao ponto de partida do mundo se não houver cama. No Fim não faz nada — o
+     * original diz <i>Nothing happens...</i> e devolve verdadeiro, quer dizer que <b>cobra na mesma</b>.
+     */
+    public static final SpellPart.Essence DIVINE_INTERVENTION = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 400.0f;
+
+        @Override
+        public String name() {
+            return "divine_intervention";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ENDER);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.4f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            if (!(alvo instanceof net.minecraft.server.level.ServerPlayer gente)) return false;
+            if (ArcanaEffects.blocksTeleport(gente)) {
+                gente.sendSystemMessage(
+                        net.minecraft.network.chat.Component.translatable("tc.spell.distortion_blocks"));
+                return true;
+            }
+            if (level.dimension().equals(net.minecraft.world.level.Level.END)) {
+                gente.sendSystemMessage(
+                        net.minecraft.network.chat.Component.translatable("tc.spell.nothing_happens"));
+                return true;
+            }
+
+            ServerLevel casa = level.getServer().getLevel(net.minecraft.world.level.Level.OVERWORLD);
+            if (casa == null) return false;
+
+            // a cama, se houver uma na superfície; senão, o lugar por onde o mundo começou
+            var cama = gente.getRespawnConfig();
+            Vec3 onde = cama != null
+                    && cama.respawnData().dimension().equals(net.minecraft.world.level.Level.OVERWORLD)
+                    ? Vec3.atBottomCenterOf(cama.respawnData().globalPos().pos())
+                    : Vec3.atBottomCenterOf(casa.getRespawnData().globalPos().pos());
+
+            gente.teleportTo(casa, onde.x, onde.y, onde.z, java.util.Set.of(),
+                    gente.getYRot(), gente.getXRot(), false);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Intervenção do Fim</b>: leva ao Nether.
+     *
+     * <p>A irmã da outra, e o original escreve-a quase igual: no Fim não faz nada, e a quem já está no Nether
+     * responde que já lá está — e essa recusa, ao contrário das outras, devolve <b>falso</b> e sai de graça.
+     */
+    public static final SpellPart.Essence ENDER_INTERVENTION = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 400.0f;
+
+        @Override
+        public String name() {
+            return "ender_intervention";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ENDER);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.4f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            if (!(alvo instanceof net.minecraft.server.level.ServerPlayer gente)) return false;
+            if (ArcanaEffects.blocksTeleport(gente)) {
+                gente.sendSystemMessage(
+                        net.minecraft.network.chat.Component.translatable("tc.spell.distortion_blocks"));
+                return true;
+            }
+            if (level.dimension().equals(net.minecraft.world.level.Level.END)) {
+                gente.sendSystemMessage(
+                        net.minecraft.network.chat.Component.translatable("tc.spell.nothing_happens"));
+                return true;
+            }
+            if (level.dimension().equals(net.minecraft.world.level.Level.NETHER)) {
+                gente.sendSystemMessage(
+                        net.minecraft.network.chat.Component.translatable("tc.spell.already_nether"));
+                return false;
+            }
+
+            ServerLevel nether = level.getServer().getLevel(net.minecraft.world.level.Level.NETHER);
+            if (nether == null) return false;
+            gente.teleportTo(nether, gente.getX() / 8.0, gente.getY(), gente.getZ() / 8.0,
+                    java.util.Set.of(), gente.getYRot(), gente.getXRot(), false);
+            return true;
+        }
+    });
+
+    // ------------------------------------------------------------------ as que mexem no mundo
+
+    /**
+     * <b>Criar Água</b>: põe água onde bateu — ou enche o caldeirão, se for num caldeirão.
+     *
+     * <p>Vinte e cinco de mana. O original põe água <b>na face em que bateu</b>, e não dentro do bloco: é a
+     * mesma conta de quem põe um balde.
+     */
+    public static final SpellPart.Essence CREATE_WATER = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 25.0f;
+
+        @Override
+        public String name() {
+            return "create_water";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.WATER);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.001f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            var feitio = level.getBlockState(onde);
+            if (feitio.is(net.minecraft.world.level.block.Blocks.CAULDRON)
+                    || feitio.is(net.minecraft.world.level.block.Blocks.WATER_CAULDRON)) {
+                level.setBlockAndUpdate(onde, net.minecraft.world.level.block.Blocks.WATER_CAULDRON
+                        .defaultBlockState().setValue(
+                                net.minecraft.world.level.block.LayeredCauldronBlock.LEVEL, 3));
+                return true;
+            }
+
+            BlockPos lugar = onde.relative(face);
+            if (!level.getBlockState(lugar).canBeReplaced()) return false;
+            level.setBlockAndUpdate(lugar,
+                    net.minecraft.world.level.block.Blocks.WATER.defaultBlockState());
+            return true;
+        }
+    });
+
+    /** <b>Arar</b>: terra e grama viram terra arada. E mais nada vira. */
+    public static final SpellPart.Essence PLOW = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 75.0f;
+
+        @Override
+        public String name() {
+            return "plow";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.EARTH);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            var feitio = level.getBlockState(onde);
+            if (!feitio.is(net.minecraft.world.level.block.Blocks.DIRT)
+                    && !feitio.is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK)) {
+                return false;
+            }
+            level.setBlockAndUpdate(onde,
+                    net.minecraft.world.level.block.Blocks.FARMLAND.defaultBlockState());
+            return true;
+        }
+    });
+
+    /**
+     * <b>Plantar</b>: planta a primeira semente que houver na mochila de quem lança.
+     *
+     * <p>A <b>primeira</b>, e não a que se escolher: o original varre o inventário e usa a que achar. E gasta
+     * uma, como quem planta à mão.
+     */
+    public static final SpellPart.Essence PLANT = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 80.0f;
+
+        @Override
+        public String name() {
+            return "plant";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.NATURE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            if (!(quem instanceof net.minecraft.world.entity.player.Player gente)) return false;
+            if (!level.getBlockState(onde.above()).canBeReplaced()) return false;
+
+            var mochila = gente.getInventory();
+            for (int i = 0; i < mochila.getContainerSize(); i++) {
+                ItemStack coisa = mochila.getItem(i);
+                if (!(coisa.getItem() instanceof net.minecraft.world.item.BlockItem semente)) continue;
+                var planta = semente.getBlock().defaultBlockState();
+                if (!planta.canSurvive(level, onde.above())) continue;
+                // a planta do jogo de hoje é um VegetationBlock: a lavoura, a flor e a erva vêm dele
+                if (!(semente.getBlock() instanceof net.minecraft.world.level.block.VegetationBlock)) {
+                    continue;
+                }
+
+                level.setBlockAndUpdate(onde.above(), planta);
+                coisa.shrink(1);
+                return true;
+            }
+            return false;
+        }
+    });
+
+    /**
+     * <b>Colher</b>: tira a planta e deixa cair o que ela daria.
+     *
+     * <p>E colhe <b>o que estiver lá</b>, crescido ou não — o original não olha para a idade da planta.
+     */
+    public static final SpellPart.Essence HARVEST_PLANTS = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 60.0f;
+
+        @Override
+        public String name() {
+            return "harvest_plants";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.NATURE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.02f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            var feitio = level.getBlockState(onde);
+            if (!(feitio.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock)) {
+                return false;
+            }
+            level.destroyBlock(onde, true, quem);
+            return true;
+        }
+    });
+
+    /** <b>Crescer</b>: o mesmo que o pó de osso, e pelo mesmo preço de quase nada. */
+    public static final SpellPart.Essence GROW = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 17.4f;
+
+        @Override
+        public String name() {
+            return "grow";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.NATURE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.02f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            var feitio = level.getBlockState(onde);
+            if (!(feitio.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock planta)) {
+                return false;
+            }
+            if (!planta.isValidBonemealTarget(level, onde, feitio)) return false;
+            if (!planta.isBonemealSuccess(level, level.getRandom(), onde, feitio)) return true;
+            planta.performBonemeal(level, level.getRandom(), onde, feitio);
+            level.levelEvent(2005, onde, 0);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Forja</b>: cozinha o bloco onde bateu, como se ele estivesse num forno.
+     *
+     * <p>Areia vira vidro, minério vira lingote, e <b>gelo vira água</b> — esse último é caso à parte no
+     * original, porque gelo não tem receita de forno. Se o que sai não for bloco, ele cai no chão como item.
+     */
+    public static final SpellPart.Essence FORGE = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 55.0f;
+
+        @Override
+        public String name() {
+            return "forge";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.FIRE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            var feitio = level.getBlockState(onde);
+            if (feitio.isAir()) return false;
+
+            if (feitio.is(net.minecraft.world.level.block.Blocks.ICE)) {
+                level.setBlockAndUpdate(onde, net.minecraft.world.level.block.Blocks.WATER.defaultBlockState());
+                return true;
+            }
+
+            var entrada = new ItemStack(feitio.getBlock());
+            if (entrada.isEmpty()) return false;
+            var receita = level.recipeAccess().getRecipeFor(
+                    net.minecraft.world.item.crafting.RecipeType.SMELTING,
+                    new net.minecraft.world.item.crafting.SingleRecipeInput(entrada), level);
+            if (receita.isEmpty()) return false;
+
+            ItemStack saiu = receita.get().value().assemble(
+                    new net.minecraft.world.item.crafting.SingleRecipeInput(entrada));
+            if (saiu.isEmpty()) return false;
+
+            if (saiu.getItem() instanceof net.minecraft.world.item.BlockItem virado) {
+                level.setBlockAndUpdate(onde, virado.getBlock().defaultBlockState());
+            } else {
+                level.removeBlock(onde, false);
+                net.minecraft.world.level.block.Block.popResource(level, onde, saiu);
+            }
+            level.playSound(null, onde, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
+                    net.minecraft.sounds.SoundSource.BLOCKS, 0.5f, 2.0f);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Outono do Mago</b>: derruba as folhas em roda, e deixa cair o que elas dariam.
+     *
+     * <p><b>Dois blocos</b> de raio, que o Raio soma. Quinze de mana. É a maneira do arcanista de pegar
+     * mudas e maçãs sem trepar a árvore.
+     */
+    public static final SpellPart.Essence WIZARDS_AUTUMN = SpellParts.essence(new SpellPart.Essence() {
+        /** Os dois blocos do original, que o Raio soma. */
+        public static final int BASE_RAIO = 2;
+        public static final float MANA = 15.0f;
+
+        @Override
+        public String name() {
+            return "wizards_autumn";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.NATURE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            int raio = (int) feitiço.add(level, SpellModifierKind.RADIUS, BASE_RAIO);
+            boolean pegou = false;
+            for (int i = -raio; i <= raio; i++) {
+                for (int j = -raio; j <= raio; j++) {
+                    for (int k = -raio; k <= raio; k++) {
+                        BlockPos aqui = onde.offset(i, j, k);
+                        if (!level.getBlockState(aqui).is(net.minecraft.tags.BlockTags.LEAVES)) continue;
+                        level.destroyBlock(aqui, true, quem);
+                        pegou = true;
+                    }
+                }
+            }
+            return pegou;
+        }
+    });
+
+    /**
+     * <b>Seca</b>: tira a água do que ela tocar.
+     *
+     * <p>A flor e a erva alta viram erva morta; a grama, o micélio, o arenito e a terra viram areia; a pedra
+     * vira pedregulho; o tijolo de pedra racha; e a água <b>desaparece</b>. É a lista do original, nesta
+     * ordem.
+     */
+    public static final SpellPart.Essence DROUGHT = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 60.0f;
+
+        @Override
+        public String name() {
+            return "drought";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.FIRE, Affinity.AIR);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            var feitio = level.getBlockState(onde);
+
+            if (feitio.getBlock() instanceof net.minecraft.world.level.block.FlowerBlock
+                    || feitio.is(Blocks.SHORT_GRASS) || feitio.is(Blocks.TALL_GRASS)
+                    || feitio.is(Blocks.FERN)) {
+                level.setBlockAndUpdate(onde, Blocks.DEAD_BUSH.defaultBlockState());
+                return true;
+            }
+            if (feitio.is(Blocks.GRASS_BLOCK) || feitio.is(Blocks.MYCELIUM)
+                    || feitio.is(Blocks.SANDSTONE) || feitio.is(Blocks.DIRT)) {
+                level.setBlockAndUpdate(onde, Blocks.SAND.defaultBlockState());
+                return true;
+            }
+            if (feitio.is(Blocks.STONE)) {
+                level.setBlockAndUpdate(onde, Blocks.COBBLESTONE.defaultBlockState());
+                return true;
+            }
+            if (feitio.is(Blocks.STONE_BRICKS)) {
+                level.setBlockAndUpdate(onde, Blocks.CRACKED_STONE_BRICKS.defaultBlockState());
+                return true;
+            }
+            if (feitio.is(Blocks.WATER)) {
+                level.setBlockAndUpdate(onde, Blocks.AIR.defaultBlockState());
+                return true;
+            }
+
+            // e se não for nada disso, a água do lado em que bateu também some
+            BlockPos lado = onde.relative(face);
+            if (level.getBlockState(lado).is(Blocks.WATER)) {
+                level.setBlockAndUpdate(lado, Blocks.AIR.defaultBlockState());
+                return true;
+            }
+            return false;
+        }
+    });
+
+    // ------------------------------------------------------------------ as que mexem no céu
+
+    /**
+     * <b>Afastar a Chuva</b>: acaba com ela, e garante um dia inteiro de sol.
+     *
+     * <p><b>750</b> de mana, e <b>três décimos</b> de Afinidade da Água por lançamento — trinta vezes o que um
+     * dano puxa. É a essência que mais depressa faz de alguém um filho da água, e nem é preciso querer.
+     *
+     * <p>Se não estiver chovendo, ela não faz nada e não cobra.
+     */
+    public static final SpellPart.Essence BANISH_RAIN = SpellParts.essence(new SpellPart.Essence() {
+        /** O dia inteiro de sol que ela deixa. */
+        public static final int SOL = 24000;
+        public static final float MANA = 750.0f;
+
+        @Override
+        public String name() {
+            return "banish_rain";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.WATER);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.3f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            return afasta(level);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            return afasta(level);
+        }
+
+        private boolean afasta(ServerLevel level) {
+            if (!level.isRaining()) return false;
+            // no jogo de hoje o tempo mora num guardado à parte, e não no mundo
+            var tempo = level.getWeatherData();
+            tempo.setClearWeatherTime(SOL);
+            tempo.setRainTime(0);
+            tempo.setRaining(false);
+            tempo.setThundering(false);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Tempestade</b>: chama a chuva — e, se ela já estiver forte, chama o raio.
+     *
+     * <p>Quinze de mana, que é quase nada para o que ela faz. E o que ela faz depende do céu: com tempo bom,
+     * <b>começa a chover</b>; com a chuva já a bater com força, há <b>uma em cinco</b> de cair um raio num
+     * monstro a cinquenta blocos. Lançá-la duas vezes não é lançá-la duas vezes.
+     */
+    public static final SpellPart.Essence STORM = SpellParts.essence(new SpellPart.Essence() {
+        /** A cinquenta blocos, que é onde ela procura em quem cair o raio. */
+        public static final int LONGE = 50;
+        /** Uma em cinco: o {@code nextInt(100) < 20} do original. */
+        public static final int CHANCE = 20;
+        public static final float MANA = 15.0f;
+
+        @Override
+        public String name() {
+            return "storm";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.LIGHTNING, Affinity.NATURE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            return tempo(level, quem);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            return tempo(level, quem);
+        }
+
+        private boolean tempo(ServerLevel level, LivingEntity quem) {
+            if (level.getRainLevel(1.0f) <= 0.9f) {
+                var tempo = level.getWeatherData();
+                tempo.setClearWeatherTime(0);
+                tempo.setRainTime(12000);
+                tempo.setRaining(true);
+                return true;
+            }
+            if (level.getRandom().nextInt(100) >= CHANCE) return true;
+
+            var monstros = level.getEntitiesOfClass(net.minecraft.world.entity.monster.Monster.class,
+                    quem.getBoundingBox().inflate(LONGE, 10.0, LONGE));
+            if (monstros.isEmpty()) return true;
+
+            var coitado = monstros.get(level.getRandom().nextInt(monstros.size()));
+            if (!level.canSeeSky(coitado.blockPosition())) return true;
+
+            var raio = net.minecraft.world.entity.EntityTypes.LIGHTNING_BOLT.create(
+                    level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            if (raio == null) return true;
+            raio.snapTo(coitado.position());
+            level.addFreshEntity(raio);
+            return true;
+        }
+    });
+
+    /**
+     * <b>Luz do Dia</b>: faz o sol nascer.
+     *
+     * <p><b>Vinte e cinco mil</b> de mana — mais do que qualquer arcanista tem antes do nível alto, e mais do
+     * que qualquer outra essência do ramo custa por larga margem. Mexer no céu é caro.
+     *
+     * <p>Se já for dia, não faz nada e não cobra. E é uma das dez perícias <b>prateadas</b>: se descobre.
+     */
+    public static final SpellPart.Essence DAYLIGHT = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 25000.0f;
+
+        @Override
+        public String name() {
+            return "daylight";
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            return amanhece(level);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            return amanhece(level);
+        }
+
+        /**
+         * Faz o sol nascer.
+         *
+         * <p><b>Desvio declarado.</b> O original escreve a batida à mão: o dia em curso arredondado para
+         * cima, vezes 24000. O jogo de hoje já não deixa mexer no relógio assim — ele tem <b>marcos</b>, e
+         * quem quer o amanhecer pede o marco do amanhecer. Dá no mesmo lugar do céu e é o que o jogo entende.
+         */
+        private boolean amanhece(ServerLevel level) {
+            if (level.isBrightOutside()) return false;
+            return level.dimensionType().defaultClock().map(relógio -> {
+                level.clockManager().moveToTimeMarker(relógio,
+                        net.minecraft.world.clock.ClockTimeMarkers.DAY);
+                return true;
+            }).orElse(false);
+        }
+    });
+
+    /**
+     * <b>Anoitecer</b>: faz a noite cair.
+     *
+     * <p>A irmã do outro, pelo mesmo preço de <b>vinte e cinco mil</b>. No original a conta é o dia em curso,
+     * arredondado para baixo, mais <b>13250</b> — a batida em que o sol se põe; aqui é o marco da noite, pela
+     * mesma razão que o outro.
+     */
+    public static final SpellPart.Essence MOONRISE = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 25000.0f;
+
+        @Override
+        public String name() {
+            return "moonrise";
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return burnoutFromMana(MANA);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            return anoitece(level);
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            return anoitece(level);
+        }
+
+        /** E a noite cair, pelo marco da noite — o mesmo desvio que o do amanhecer. */
+        private boolean anoitece(ServerLevel level) {
+            if (!level.isBrightOutside()) return false;
+            return level.dimensionType().defaultClock().map(relógio -> {
+                level.clockManager().moveToTimeMarker(relógio,
+                        net.minecraft.world.clock.ClockTimeMarkers.NIGHT);
+                return true;
+            }).orElse(false);
+        }
+    });
+
     /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela as Essências a se registrarem. */
     public static void init() {
     }

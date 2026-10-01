@@ -149,6 +149,19 @@ public final class SkillTree {
      * é a única maneira de o quadro continuar inteiro — sem isso haveria peças penduradas no nada, que ninguém
      * poderia comprar nunca.
      */
+    /**
+     * O quadro, tal como o original o escreve.
+     *
+     * <p>Estas linhas <b>não foram escritas à mão</b>: saíram do {@code SkillTreeManager} do Ars Magica 2,
+     * lidas uma a uma. Cada perícia fica no ramo, na cor e no lugar em que ele a pôs.
+     *
+     * <p>O que muda é o que <b>não está portado</b>. O original tem 120 perícias em quatro ramos; o quarto —
+     * os <b>Talentos</b>, com a regeneração de mana, as faixas de mago e os ganhos de afinidade — não é feito
+     * de peças de feitiço e não é deste ramo. E dos outros três falta o que ainda não foi portado. Quando uma
+     * perícia desaparece assim, os filhos dela passam a pender do <b>antepassado portado mais próximo</b>, que
+     * é a única maneira de o quadro continuar inteiro — sem isso haveria peças penduradas no nada, que ninguém
+     * poderia comprar nunca.
+     */
     static {
 
         // ------------------------------------------------------------------ Ofensa
@@ -159,6 +172,7 @@ public final class SkillTree {
         put(Essences.FIRE_DAMAGE, Branch.OFFENSE, Point.BLUE, 210, 135, Essences.PHYSICAL_DAMAGE);
         put(Essences.LIGHTNING_DAMAGE, Branch.OFFENSE, Point.BLUE, 255, 135, Essences.FIRE_DAMAGE);
         put(Essences.IGNITION, Branch.OFFENSE, Point.GREEN, 165, 135, Essences.FIRE_DAMAGE);
+        put(Essences.FORGE, Branch.OFFENSE, Point.GREEN, 120, 135, Essences.IGNITION);
         put(Shapes.CONTINGENCY_FIRE, Branch.OFFENSE, Point.GREEN, 165, 180, Essences.IGNITION);
         put(Essences.MAGIC_DAMAGE, Branch.OFFENSE, Point.BLUE, 390, 135, Essences.PHYSICAL_DAMAGE);
         put(Essences.FROST_DAMAGE, Branch.OFFENSE, Point.BLUE, 345, 135, Essences.MAGIC_DAMAGE);
@@ -170,6 +184,7 @@ public final class SkillTree {
         put(Essences.FREEZE, Branch.OFFENSE, Point.GREEN, 345, 180, Essences.FROST_DAMAGE);
         put(Essences.KNOCKBACK, Branch.OFFENSE, Point.GREEN, 390, 180, Essences.MAGIC_DAMAGE);
         put(Modifiers.SOLAR, Branch.OFFENSE, Point.RED, 210, 225, Essences.BLIND);
+        put(Essences.STORM, Branch.OFFENSE, Point.RED, 255, 225, Essences.LIGHTNING_DAMAGE);
         put(Essences.ASTRAL_DISTORTION, Branch.OFFENSE, Point.GREEN, 367, 215,
                 Essences.MAGIC_DAMAGE, Essences.FROST_DAMAGE);
         put(Essences.SILENCE, Branch.OFFENSE, Point.RED, 345, 245, Essences.ASTRAL_DISTORTION);
@@ -179,7 +194,7 @@ public final class SkillTree {
         put(Modifiers.PIERCING, Branch.OFFENSE, Point.RED, 323, 215, Essences.FREEZE);
         put(Shapes.BEAM, Branch.OFFENSE, Point.RED, 300, 270, Shapes.AOE);
         put(Modifiers.DAMAGE, Branch.OFFENSE, Point.RED, 300, 315, Shapes.BEAM);
-        put(Essences.FURY, Branch.OFFENSE, Point.RED, 255, 315, Shapes.BEAM, Essences.LIGHTNING_DAMAGE);
+        put(Essences.FURY, Branch.OFFENSE, Point.RED, 255, 315, Shapes.BEAM, Essences.STORM);
         put(Shapes.WAVE, Branch.OFFENSE, Point.RED, 367, 315, Shapes.BEAM, Essences.FLING);
         put(Modifiers.DISMEMBERING, Branch.OFFENSE, Point.SILVER, 75, 180);
 
@@ -222,6 +237,7 @@ public final class SkillTree {
         // ------------------------------------------------------------------ Utilidade
         put(Shapes.TOUCH, Branch.UTILITY, Point.BLUE, 275, 75);
         put(Essences.DIG, Branch.UTILITY, Point.BLUE, 275, 120, Shapes.TOUCH);
+        put(Essences.WIZARDS_AUTUMN, Branch.UTILITY, Point.BLUE, 315, 120, Essences.DIG);
         put(Modifiers.TARGET_NONSOLID_BLOCKS, Branch.UTILITY, Point.BLUE, 230, 75, Shapes.TOUCH);
         put(Modifiers.FEATHER_TOUCH, Branch.UTILITY, Point.BLUE, 230, 137, Essences.DIG);
         put(Modifiers.MINING_POWER, Branch.UTILITY, Point.GREEN, 185, 137, Modifiers.FEATHER_TOUCH);
@@ -232,14 +248,31 @@ public final class SkillTree {
         put(Essences.CHARM, Branch.UTILITY, Point.BLUE, 315, 235, Shapes.BINDING_PICKAXE);
         put(Essences.TRUE_SIGHT, Branch.UTILITY, Point.BLUE, 185, 210, Essences.NIGHT_VISION);
         put(Modifiers.LUNAR, Branch.UTILITY, Point.RED, 145, 210, Essences.TRUE_SIGHT);
-        put(Essences.WATER_BREATHING, Branch.UTILITY, Point.BLUE, 410, 345, Shapes.BINDING_PICKAXE);
-        put(Shapes.CHAIN, Branch.UTILITY, Point.RED, 455, 210, Shapes.BINDING_PICKAXE);
+        put(Essences.HARVEST_PLANTS, Branch.UTILITY, Point.GREEN, 365, 120, Shapes.BINDING_PICKAXE);
+        put(Essences.PLOW, Branch.UTILITY, Point.BLUE, 365, 165, Shapes.BINDING_PICKAXE);
+        put(Essences.PLANT, Branch.UTILITY, Point.BLUE, 365, 210, Shapes.BINDING_PICKAXE);
+        put(Essences.CREATE_WATER, Branch.UTILITY, Point.GREEN, 365, 255, Shapes.BINDING_PICKAXE);
+        put(Essences.DROUGHT, Branch.UTILITY, Point.GREEN, 365, 300, Shapes.BINDING_PICKAXE);
+        put(Essences.BANISH_RAIN, Branch.UTILITY, Point.GREEN, 365, 345, Essences.DROUGHT);
+        put(Essences.WATER_BREATHING, Branch.UTILITY, Point.BLUE, 410, 345, Essences.DROUGHT);
+        put(Essences.GROW, Branch.UTILITY, Point.RED, 410, 210,
+                Essences.DROUGHT, Essences.CREATE_WATER, Essences.PLANT, Essences.PLOW, Essences.HARVEST_PLANTS);
+        put(Shapes.CHAIN, Branch.UTILITY, Point.RED, 455, 210, Essences.GROW);
         put(Essences.INVISIBILITY, Branch.UTILITY, Point.GREEN, 185, 255, Essences.TRUE_SIGHT);
+        put(Essences.RANDOM_TELEPORT, Branch.UTILITY, Point.BLUE, 185, 300, Essences.INVISIBILITY);
         put(Essences.ATTRACT, Branch.UTILITY, Point.GREEN, 245, 300, Shapes.BINDING_PICKAXE);
         put(Essences.TELEKINESIS, Branch.UTILITY, Point.GREEN, 305, 300, Shapes.BINDING_PICKAXE);
-        put(Modifiers.RANGE, Branch.UTILITY, Point.RED, 140, 345, Essences.INVISIBILITY);
+        put(Essences.BLINK, Branch.UTILITY, Point.GREEN, 185, 345, Essences.RANDOM_TELEPORT);
+        put(Modifiers.RANGE, Branch.UTILITY, Point.RED, 140, 345, Essences.BLINK);
         put(Modifiers.RADIUS, Branch.UTILITY, Point.RED, 275, 390, Essences.ATTRACT, Essences.TELEKINESIS);
-        put(Shapes.CONTINGENCY_DEATH, Branch.UTILITY, Point.RED, 198, 524, Essences.INVISIBILITY);
+        put(Essences.TRANSPLACE, Branch.UTILITY, Point.BLUE, 185, 390, Essences.BLINK);
+        put(Essences.MARK, Branch.UTILITY, Point.GREEN, 155, 435, Essences.TRANSPLACE);
+        put(Essences.RECALL, Branch.UTILITY, Point.GREEN, 215, 435, Essences.TRANSPLACE);
+        put(Essences.DIVINE_INTERVENTION, Branch.UTILITY, Point.RED, 172, 480, Essences.RECALL, Essences.MARK);
+        put(Essences.ENDER_INTERVENTION, Branch.UTILITY, Point.RED, 198, 480, Essences.RECALL, Essences.MARK);
+        put(Shapes.CONTINGENCY_DEATH, Branch.UTILITY, Point.RED, 198, 524, Essences.ENDER_INTERVENTION);
+        put(Essences.DAYLIGHT, Branch.UTILITY, Point.SILVER, 75, 45);
+        put(Essences.MOONRISE, Branch.UTILITY, Point.SILVER, 75, 90);
         put(Modifiers.PROSPERITY, Branch.UTILITY, Point.SILVER, 75, 135);
 
         // As outras cinco ferramentas vinculadas. No original o Vínculo é UMA perícia que dá
