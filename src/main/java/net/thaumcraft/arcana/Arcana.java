@@ -46,6 +46,7 @@ public final class Arcana {
         ManaLinks.init();
         SkillData.init();
         SkillTree.init();
+        Summons.init();
         // a ordem importa: as peças se registram ao carregar a classe, e os feitiços leem-nas pelo nome
         Shapes.init();
         Essences.init();

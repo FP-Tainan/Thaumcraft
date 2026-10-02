@@ -126,6 +126,7 @@
       "net.thaumcraft.test.OccultaWorldRitesGameTest",
       "net.thaumcraft.test.OccultaBarrierGameTest",
       "net.thaumcraft.test.ArcanaSpellGameTest",
+      "net.thaumcraft.test.ArcanaSummonGameTest",
       "net.thaumcraft.test.ArcanaProjectileGameTest",
       "net.thaumcraft.test.ArcanaAffinityGameTest",
       "net.thaumcraft.test.ArcanaAffinityEffectsGameTest",

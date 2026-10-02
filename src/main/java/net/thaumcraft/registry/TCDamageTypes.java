@@ -21,11 +21,26 @@ public final class TCDamageTypes {
     /** O {@code nightshade} do Maleficium: o veneno da beladona. */
     public static final ResourceKey<DamageType> NIGHTSHADE = ResourceKey.create(Registries.DAMAGE_TYPE, Thaumcraft.id("nightshade"));
 
+    /**
+     * O {@code am2.backfire} do {@code DamageSourceUnsummon}: o que desfaz uma invocação.
+     *
+     * <p>Uma invocação acabada <b>morre</b>, e não desaparece — o original lhe dá cinco mil de dano, que é mais
+     * do que qualquer bicho tem. Morre, deixa o que tinha para deixar, e conta na morte de quem a matou.
+     *
+     * <p>Ele passa por cima da <b>invulnerabilidade</b>, e só dela: o original liga uma bandeira só — a que
+     * vale em modo criativo —, e não liga a que ignora armadura, que os outros danos dele ligam.
+     */
+    public static final ResourceKey<DamageType> UNSUMMON = ResourceKey.create(Registries.DAMAGE_TYPE, Thaumcraft.id("unsummon"));
+
     private TCDamageTypes() {
     }
 
     public static DamageSource dissolve(Level level) {
         return new DamageSource(level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(DISSOLVE));
+    }
+
+    public static DamageSource unsummon(Level level) {
+        return new DamageSource(level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(UNSUMMON));
     }
 
     public static DamageSource taint(Level level) {

@@ -254,6 +254,7 @@ public final class SkillTree {
         put(Essences.SLOW, Branch.DEFENSE, Point.BLUE, 132, 155, Essences.SLOWFALL);
         put(Essences.GRAVITY_WELL, Branch.DEFENSE, Point.GREEN, 222, 180, Essences.SLOWFALL);
         put(Essences.LIFE_DRAIN, Branch.DEFENSE, Point.GREEN, 312, 180, Essences.LIFE_TAP);
+        put(Essences.SUMMON, Branch.DEFENSE, Point.GREEN, 267, 135, Essences.LIFE_TAP);
         put(Essences.DISPEL, Branch.DEFENSE, Point.GREEN, 357, 180, Essences.HEAL);
         put(Shapes.CONTINGENCY_FALL, Branch.DEFENSE, Point.GREEN, 267, 180, Essences.GRAVITY_WELL);
         put(Essences.SWIFT_SWIM, Branch.DEFENSE, Point.BLUE, 177, 200, Essences.HASTE);

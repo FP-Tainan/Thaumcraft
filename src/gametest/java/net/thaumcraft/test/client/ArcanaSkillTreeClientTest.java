@@ -74,6 +74,27 @@ public class ArcanaSkillTreeClientTest implements FabricClientGameTest {
             });
             context.waitTicks(10);
             context.takeScreenshot("aa_arvore_utilidade");
+
+            // 4) e a aba de Defesa, que é onde a Invocação entrou — ela pende do Vida por Mana, e a
+            //    foto é para se ver a linha entre os dois acesa no lugar que o original lhe deu
+            server.runOnServer(s -> {
+                var jogador = s.getPlayerList().getPlayers().getFirst();
+                Mana.set(jogador, new Mana(50, 0.0f, 0.0f, 0.0f));
+                SkillData sabe = SkillData.NONE;
+                for (var qual : java.util.List.of(Essences.HEAL, Essences.LIFE_TAP, Essences.SUMMON)) {
+                    sabe = sabe.learn(SkillTree.of(qual), 50);
+                }
+                SkillData.set(jogador, sabe);
+                jogador.openMenu(OcculusBlock.provider());
+            });
+            context.waitTicks(20);
+            context.runOnClient(minecraft -> {
+                if (minecraft.gui.screen() instanceof net.thaumcraft.arcana.client.SkillTreeScreen tela) {
+                    tela.showBranch(SkillTree.Branch.DEFENSE);
+                }
+            });
+            context.waitTicks(10);
+            context.takeScreenshot("aa_arvore_defesa");
         }
     }
 }

@@ -3054,6 +3054,104 @@ public final class Essences {
         }
     });
 
+    // ------------------------------------------------------------------ a que chama alguém
+
+    /**
+     * <b>Invocação</b>: chama uma criatura, e ela briga por quem a chamou.
+     *
+     * <p><b>O resto da etapa cai nela.</b> É a coisa mais bonita desta peça, e é do original: as outras
+     * essências da mesma etapa não vão ao mundo, vão <b>à criatura invocada</b>. Uma Invocação com Pressa
+     * chama um esqueleto rápido; com Escudo, um esqueleto duro. É assim que se melhora o que se chama.
+     *
+     * <p>E por isso ela <b>recusa quem já é invocado</b>: sem essa recusa, a Invocação chamaria a si mesma em
+     * cadeia quando o resto da etapa caísse sobre o que ela acabou de chamar. É a mesma guarda do original.
+     *
+     * <p><b>Esqueleto</b>, e com arco na mão — é o padrão do original, e aqui é o único. No Ars Magica 2 quem
+     * escolhe outro bicho é o <b>Filactério de Cristal</b>, que se enche no <b>Invocador</b>: um bloco da rede
+     * de energia do mod, que é a metade que este porte não trouxe. Declarado no {@code PORTE.md}.
+     *
+     * <p>Quatro minutos de prazo, que o modificador de Duração multiplica, e <b>uma de cada vez</b>.
+     */
+    public static final SpellPart.Essence SUMMON = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 400.0f;
+        public static final float DESGASTE = 120.0f;
+
+        @Override
+        public String name() {
+            return "summon";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ENDER, Affinity.LIFE);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return DESGASTE;
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            return chama(level, feitiço, quem, batida);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            // nunca em cima de uma invocação: é o que impede a cadeia
+            if (Summons.éInvocado(alvo)) return false;
+            return chama(level, feitiço, quem, alvo.position());
+        }
+
+        /**
+         * Chama uma, se couber.
+         *
+         * <p><b>Cheio, ela dá certo de qualquer jeito</b> — e avisa. É do original, e é fácil de ler ao avesso:
+         * o {@code applyEffectBlock} dele só devolve {@code false} quando a criatura <b>não nasceu</b>; com o
+         * teto cheio ele manda a frase e devolve {@code true}, ou seja <b>a mana se gasta</b>. É um castigo por
+         * lançar sem olhar, e é de propósito.
+         */
+        private boolean chama(ServerLevel level, Spell feitiço, LivingEntity quem, Vec3 onde) {
+            if (!Summons.cabeMais(level, quem)) {
+                if (quem instanceof net.minecraft.world.entity.player.Player gente) {
+                    gente.sendSystemMessage(
+                            net.minecraft.network.chat.Component.translatable("message.thaumcraft.no_more_summons"));
+                }
+                return true;
+            }
+
+            var bicho = net.minecraft.world.entity.EntityTypes.SKELETON.create(
+                    level, net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED);
+            if (bicho == null) return false;
+
+            bicho.snapTo(onde.x, onde.y, onde.z, quem.getYRot(), 0.0f);
+            bicho.finalizeSpawn(level, level.getCurrentDifficultyAt(bicho.blockPosition()),
+                    net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED, null);
+            // o esqueleto do original vem com arco na mão
+            bicho.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND,
+                    new ItemStack(net.minecraft.world.item.Items.BOW));
+
+            int prazo = (int) feitiço.mul(level, SpellModifierKind.DURATION, Summons.PRAZO);
+            Summons.marca(level, bicho, quem, prazo);
+            level.addFreshEntity(bicho);
+
+            // e o resto da etapa cai NELA, que é o applyStageToEntity do original
+            SpellCast.onEntity(level, feitiço, quem, bicho);
+            return true;
+        }
+    });
+
     /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela as Essências a se registrarem. */
     public static void init() {
     }

@@ -5668,7 +5668,7 @@ sapo antes de negociar, e ganhou uma irmã: a que confere que **sem familiar a b
 
 **O espelho, outra vez.** Os dois modelos ligam o `mirror` em cada parte, mas só vale onde é ligado **antes**
 das caixas: na cabeça e nas pernas do sapo, e na cabeça da coruja. Nas outras partes é o espelho morto que este
-porte já encontrou às centenas, e aqui ele está só onde de facto valia.
+porte já encontrou às centenas, e aqui ele está só onde de fato valia.
 
 **Guardas:** `OccultaFamiliarGameTest`, com cinco — os três números do original e as três listas de doze nomes;
 só domado e só dos três feitios vira familiar (e o **lobo** é a prova pelo avesso: domável, do jogo, e não
@@ -5676,3 +5676,93 @@ serve); vincular dá nome e é **um de cada vez**; cada bicho destranca a sua ma
 perde o fio sem perder o bicho.
 
 **A foto:** os três lado a lado — o gato do jogo e os dois do ofício.
+
+## Fatia H — a Invocação do Ars Magica 2
+
+A **Invocação** é a peça 61 do Ars Magica 2, e é a primeira deste porte que põe um **bicho** no mundo em vez de
+pôr um efeito em quem já lá está. Lançada num ponto do chão, ela traz um **esqueleto com arco**; lançada em
+cima de alguém, traz o esqueleto no lugar dele e **o resto da etapa cai na invocação**, que é o
+`applyStageToEntity` do original — uma frase que diga *Invocação + Cura* cura o que acabou de chegar.
+
+**Ela custa 400 de mana e 120 de desgaste**, e puxa **Fim** e **Vida**, com 0,01 de deslocamento. São os
+números do `Summon.java`.
+
+### O que faz dela uma invocação, e não um esqueleto nascido na cara do mago
+
+Esta é a parte que é fácil portar errado, e que esteve errada neste arquivo antes de haver prova. O original
+não se contenta em criar o bicho: ele chama o `makeSummon_PlayerFaction`, que **troca o lado dele**.
+
+- **A lista de alvos é limpa e refeita.** Bate em quem bater nela (`HurtByTargetGoal`), e procura **monstro,
+  geleia e ghast**.
+- **Mas nunca outra invocação.** É o `SummonEntitySelector`, uma linha só no original, e é o que impede duas
+  invocações do mesmo mago de se matarem.
+- **E ela anda atrás de quem a chamou.** É o `EntityAISummonFollowOwner`, traduzido inteiro no
+  `SummonFollowOwnerGoal`: segue a partir de dez blocos, desiste aos vinte, e **teleporta** para a moldura de
+  cinco por cinco em volta do dono quando o caminho não deu e ela está a doze blocos ou mais. Sem isso, uma
+  invocação fica presa atrás da primeira parede.
+
+**Um desvio aqui, declarado:** no jogo de 2014 havia também de se trocar o `EntityAIAttackOnCollide`, porque lá
+a vontade de bater trazia o alvo **dentro** dela. Hoje quem escolhe o alvo é só a lista de alvos, e por isso a
+troca de lado é essa lista e mais nada — a vontade de bater que o bicho já tem bate em quem a lista der.
+
+### O prazo, e a trela
+
+**Quatro mil e oitocentas batidas**, que são quatro minutos, multiplicadas pelo modificador de Duração — um
+deles dá 10560. Acabado o prazo, ela **morre**: cinco mil de dano do `unsummon`, que é mais do que qualquer
+bicho tem. Morre, e não desaparece calada — é o `DamageSourceUnsummon` do original.
+
+**E o tipo de dano novo passa por cima da invulnerabilidade, e só dela.** O original liga uma única bandeira no
+`DamageSourceUnsummon` — a que vale em modo criativo —, e **não** liga a que ignora armadura, que os outros
+danos dele (Fogo, Gélido, Relâmpago, Vento) ligam. Com cinco mil de dano a diferença não se vê em bicho nenhum,
+mas a bandeira é a dele.
+
+E ela morre também se quem a chamou **morreu, saiu do mundo, ou está a mais de trinta blocos** — os 900 ao
+quadrado do `AMEventHandler`. É a trela, e é o que faz a invocação ser companhia e não um bicho largado no
+mapa.
+
+**Menos se ela tiver nome próprio.** Aí ela não morre: **solta-se**. Perde o dono, perde o prazo, e fica no
+mundo como bicho de ninguém. É o `revertAI` do original, com uma diferença declarada: lá as vontades antigas
+voltam de uma cópia que ele guardou antes de as trocar, e aqui ela se solta com as vontades que tem.
+
+**O relógio é do mundo, e não do bicho.** O original conta o prazo na batida de cada criatura; aqui olha-se de
+**vinte em vinte batidas**, para todo o mundo de uma vez. Varrer todo bicho a cada batida é caro para nada: o
+prazo tem 4800 batidas e a trela tem trinta blocos, e um segundo de folga em qualquer dos dois não se vê.
+
+### O teto é um, e cheio ela ainda gasta a mana
+
+No original o teto sobe para dois com a perícia **`ExtraSummon`** — que está no ramo dos **Talentos**, em
+(230, 210). Esse ramo **não está portado**, e não está por uma razão que já está escrita neste documento: a
+árvore deste porte só sabe guardar **peças de feitiço**, e os Talentos não são peças. Fica o um.
+
+**E com o teto cheio ela ainda dá certo.** O original lê-se ao avesso: o `applyEffectBlock` dele só devolve
+`false` quando a criatura **não nasceu**; com o teto cheio ele manda a frase *"Você não pode ter mais
+invocações."* e devolve `true` — ou seja, **a mana se gasta**. É castigo por lançar sem olhar, e é de propósito.
+
+### O que fica de fora, declarado
+
+**O Filactério de Cristal e o Invocador.** No original, o que vem não é sempre um esqueleto: põe-se um
+**filactério** na receita do feitiço, e o bicho que está preso nele é o que nasce. Só que encher um filactério
+exige o `TileEntitySummoner` — uma **máquina ligada à rede de energia do Ars Magica 2**, que é a metade do mod
+que este porte não trouxe. Sem ela, o filactério é um item que ninguém consegue usar.
+
+O código do original já responde a isso sozinho: *"se o tipo não foi escrito, é `Skeleton`"*. **Este porte fica
+nesse padrão**, que é o mesmo que quem joga o Ars Magica 2 vê enquanto não tem a máquina. Inventar outro jeito
+de encher o filactério seria acréscimo, e acréscimo é outra fatia.
+
+Ficam de fora, pela mesma razão: a **galinha de batalha** e a **vaca do inferno**, que são dois bichos próprios
+do original que só aparecem quando se invoca galinha ou vaca com modificadores certos — e não há como invocar
+galinha ou vaca sem filactério.
+
+### Onde ela está na árvore
+
+Ramo da **Defesa**, ponto **verde**, em **(267, 135)**, pendurada no **Vida por Mana**. São as coordenadas do
+`SkillTreeManager`, lidas lá.
+
+**Guardas:** `ArcanaSummonGameTest`, com oito — o esqueleto com arco que não mira quem o chamou; que ele caça o
+zumbi ao lado; o teto de um e a segunda que só avisa; que não se invoca em cima de uma invocação; o prazo e a
+Duração; a morte ao fim do prazo; a trela, com a sem nome que se desfaz e a batizada que se solta; e o lugar
+dela na árvore.
+
+**A foto:** a aba de **Defesa** do Óculus, com o Vida por Mana e a Invocação acesos e a linha entre os dois —
+que é o que diz que ela está no lugar certo e com a figura certa. A figura é a do original, o
+`components/Summon.png`.

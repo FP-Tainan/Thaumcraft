@@ -13,4 +13,11 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface MobGoalAccessor {
     @Accessor("goalSelector")
     GoalSelector thaumcraft$goalSelector();
+
+    /**
+     * E a lista de <b>alvos</b>, que é outra: é por ela que uma invocação do Ars Arcana troca de lado e
+     * passa a bater em monstro em vez de bater em quem a chamou.
+     */
+    @Accessor("targetSelector")
+    GoalSelector thaumcraft$targetSelector();
 }
