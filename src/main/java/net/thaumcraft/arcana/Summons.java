@@ -49,7 +49,7 @@ import java.util.UUID;
  * peça de feitiço nenhuma, e a árvore deste porte só sabe guardar peças. Fica o um, declarado no
  * {@code PORTE.md}.
  */
-public record Summons(UUID dono, long acabaEm) {
+public record Summons(UUID dono, long acabaEm, boolean montaria) {
     /** O prazo base: as quatro mil e oitocentas batidas do original. */
     public static final int PRAZO = 4800;
 
@@ -73,8 +73,15 @@ public record Summons(UUID dono, long acabaEm) {
 
     public static final Codec<Summons> CODEC = RecordCodecBuilder.create(i -> i.group(
             UUIDUtil.CODEC.fieldOf("dono").forGetter(Summons::dono),
-            Codec.LONG.fieldOf("acabaEm").forGetter(Summons::acabaEm))
+            Codec.LONG.fieldOf("acabaEm").forGetter(Summons::acabaEm),
+            // sem valor é falso: o que foi guardado antes do necromante eram todos soldados
+            Codec.BOOL.optionalFieldOf("montaria", false).forGetter(Summons::montaria))
             .apply(i, Summons::new));
+
+    /** Quem chama de fora sem dizer nada chama um soldado. */
+    public Summons(UUID dono, long acabaEm) {
+        this(dono, acabaEm, false);
+    }
 
     public static final AttachmentType<Summons> DATA = AttachmentRegistry.<Summons>builder()
             .initializer(() -> null)
@@ -108,8 +115,24 @@ public record Summons(UUID dono, long acabaEm) {
      * lista de alvos nova, e a vontade de seguir.
      */
     public static void marca(ServerLevel level, Entity bicho, LivingEntity quem, int prazo) {
+        marca(level, bicho, quem, prazo, false);
+    }
+
+    /**
+     * Uma <b>montaria</b>: tudo igual ao soldado, menos a vaga.
+     *
+     * <p>É do acréscimo do necromante, e está declarado no {@code PORTE.md}: ela tem o mesmo prazo e a mesma
+     * trela, mas não conta no teto — uma montaria não é um soldado, e fazê-la contar seria dizer que um
+     * necromante a cavalo tem metade do exército.
+     */
+    public static void marcaMontaria(ServerLevel level, Entity bicho, LivingEntity quem, int prazo) {
+        marca(level, bicho, quem, prazo, true);
+    }
+
+    private static void marca(ServerLevel level, Entity bicho, LivingEntity quem, int prazo,
+                              boolean montaria) {
         if (!(quem instanceof Player gente)) return;
-        bicho.setAttached(DATA, new Summons(gente.getUUID(), level.getGameTime() + prazo));
+        bicho.setAttached(DATA, new Summons(gente.getUUID(), level.getGameTime() + prazo, montaria));
         if (!(bicho instanceof Mob mob)) return;
 
         mob.setPersistenceRequired();
@@ -162,15 +185,29 @@ public record Summons(UUID dono, long acabaEm) {
         int conta = 0;
         for (Entity bicho : level.getAllEntities()) {
             Summons dado = bicho.getAttached(DATA);
-            if (dado != null && dado.dono().equals(gente.getUUID()) && bicho.isAlive()) conta++;
+            // a montaria não ocupa vaga: é do acréscimo do necromante, declarado no PORTE.md
+            if (dado != null && !dado.montaria() && dado.dono().equals(gente.getUUID())
+                    && bicho.isAlive()) {
+                conta++;
+            }
         }
         return conta;
     }
 
-    /** Se ainda cabe mais uma: o {@code getCanHaveMoreSummons} do original. */
+    /** Se ainda cabe mais uma, com o teto do original: o {@code getCanHaveMoreSummons}. */
     public static boolean cabeMais(ServerLevel level, LivingEntity quem) {
+        return cabeMais(level, quem, TETO);
+    }
+
+    /**
+     * E a mesma pergunta com <b>outro teto</b>, que é o que a Legião do necromante sobe.
+     *
+     * <p>No original não há esta pergunta, porque lá o teto só muda com uma perícia passiva. Declarado no
+     * {@code PORTE.md}.
+     */
+    public static boolean cabeMais(ServerLevel level, LivingEntity quem, int teto) {
         if (!(quem instanceof Player gente)) return false;
-        return quantas(level, gente) < TETO;
+        return quantas(level, gente) < teto;
     }
 
     /**

@@ -70,6 +70,23 @@ public final class Modifiers {
     public static final SpellPart.Modifier DAMAGE = SpellParts.modifier(
             new Simple("damage", SpellModifierKind.DAMAGE, 2.2f, 1.3f));
 
+    /**
+     * <b>Legião</b>: mais uma invocação de pé, por cópia — e <b>dobra</b> a conta da etapa de cada vez.
+     *
+     * <p><b>Isto é acréscimo, e não porte.</b> O Ars Magica 2 sobe o teto com a perícia {@code ExtraSummon},
+     * que é do ramo dos Talentos — um ramo que não é feito de peças de feitiço e que este porte não trouxe.
+     * Trazê-la como <b>peça</b> é a única forma de ela caber na árvore daqui, e de caminho responde à pergunta
+     * que a Invocação deixa no ar: e se o mago quisesse um exército?
+     *
+     * <p><b>O preço é o maior de todos, e é de propósito.</b> Cada cópia dobra o que a etapa custa, e uma
+     * Invocação já custa 400 de mana: dois soldados custam 1600, três custam 3200. Um exército tem de doer,
+     * senão não é uma escolha — é só o que se faz sempre.
+     *
+     * <p>A figura é a do próprio Ars Magica 2: a da perícia {@code ExtraSummon}, que é esta ideia na arte dele.
+     */
+    public static final SpellPart.Modifier LEGION = SpellParts.modifier(
+            new Simple("legion", SpellModifierKind.SUMMON_COUNT, 1.0f, 2.0f));
+
     /** <b>Alcance</b>: soma quatro blocos, por vinte por cento a mais. */
     public static final SpellPart.Modifier RANGE = SpellParts.modifier(
             new Simple("range", SpellModifierKind.RANGE, 4.0f, 1.2f));

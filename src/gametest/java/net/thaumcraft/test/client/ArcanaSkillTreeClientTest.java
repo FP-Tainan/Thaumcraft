@@ -81,7 +81,9 @@ public class ArcanaSkillTreeClientTest implements FabricClientGameTest {
                 var jogador = s.getPlayerList().getPlayers().getFirst();
                 Mana.set(jogador, new Mana(50, 0.0f, 0.0f, 0.0f));
                 SkillData sabe = SkillData.NONE;
-                for (var qual : java.util.List.of(Essences.HEAL, Essences.LIFE_TAP, Essences.SUMMON)) {
+                for (var qual : java.util.List.<net.thaumcraft.arcana.SpellPart>of(Essences.HEAL,
+                        Essences.LIFE_TAP, Essences.SUMMON, Essences.RAISE_DEAD,
+                        net.thaumcraft.arcana.Modifiers.LEGION)) {
                     sabe = sabe.learn(SkillTree.of(qual), 50);
                 }
                 SkillData.set(jogador, sabe);

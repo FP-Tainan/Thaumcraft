@@ -5766,3 +5766,97 @@ dela na árvore.
 **A foto:** a aba de **Defesa** do Óculus, com o Vida por Mana e a Invocação acesos e a linha entre os dois —
 que é o que diz que ela está no lugar certo e com a figura certa. A figura é a do original, o
 `components/Summon.png`.
+
+## Fatia I — o Necromante (acréscimo)
+
+**Esta fatia não é porte.** Tudo o que está aqui foi acrescentado, e está escrito separado por isso: quem vier
+conferir o Ars Magica 2 não vai achar nada disto lá.
+
+Ela existe por uma pergunta que a [fatia anterior](#fatia-h--a-invocação-do-ars-magica-2) deixou no ar. A
+Invocação do original é boa e fica pequena: traz **um** bicho, **nu**, e sempre o **mesmo** — e fica assim
+porque a parte que a abria, o Filactério de Cristal, precisa de uma máquina que este porte não trouxe. Metade
+da ideia dela ficou sem uso.
+
+O acréscimo devolve as três coisas que faltavam — **quantos**, **o quê** e **com o quê** —, e devolve cada uma
+por um caminho diferente, de propósito.
+
+### Quantos: a Legião
+
+Um modificador novo. Cada cópia sobe o teto em **um**, e **dobra** a conta da etapa. Uma Invocação já custa 400
+de mana: dois soldados custam 1600, três custam 3200.
+
+**O preço é o maior do mod, e é o ponto.** Um exército tem de doer, senão não é uma escolha — é só o que se faz
+sempre. O que se quer é que o mago pese se quer três esqueletos ou se quer poder lançar outra coisa no mesmo
+minuto.
+
+No original isto é a perícia **`ExtraSummon`**, que sobe o teto de um para dois e **não é peça de feitiço**: ela
+é do ramo dos **Talentos**, que não está portado porque a árvore daqui só guarda peças. Trazê-la como peça é a
+única forma de ela caber — e a figura é a dela, a do próprio Ars Magica 2.
+
+### O quê: Erguer os Mortos
+
+Uma essência nova, irmã da Invocação: traz **zumbi com espada** em vez de esqueleto com arco.
+
+**Nem um é melhor que o outro**, e isso foi medido: mesmo preço, mesmo desgaste, mesmo prazo, mesma vaga. Um
+atira de longe, o outro bate de perto, e é só isso. Se um fosse melhor, a escolha não seria escolha.
+
+Afinidade só do **Fim**. A Invocação do original puxa Fim **e Vida**, e a Vida está lá porque o que ela traz é
+uma criatura viva; um morto que se ergue não é.
+
+A figura é a da Invocação do original com o **miolo tingido de verde** — a moldura dourada fica, que é o que
+faz as peças serem da mesma família. Um acréscimo não tem figura de origem, e inventar uma de fora destoaria
+de 117 outras.
+
+### Com o quê: a panóplia, que não se compra
+
+E esta é a parte de que a fatia gosta. **A armadura, a arma e a montaria não são peças**: elas vêm da
+**Afinidade** de quem chama.
+
+Porque é o que o Ars Magica 2 faria. A Afinidade dele não se compra — ela **pega**, sozinha, de tanto lançar a
+mesma coisa —, e já é assim que o mod dá a respiração a quem nada e a resistência a quem anda no fim. **Um
+necromante não vira necromante comprando uma perícia; ele vira de tanto chamar mortos.**
+
+O que conta é a profundidade no **Fim**, que é a Afinidade da própria Invocação:
+
+| Fim | o que vem |
+|---|---|
+| abaixo de 0,25 | nada: nu, como no original |
+| 0,25 | couro, e a espada de pedra |
+| 0,50 | ferro |
+| 0,75 | diamante |
+| 0,90 | e a **montaria**: um cavalo esquelético, já montado |
+
+**O arco não sobe de grau**, porque não há arco de ferro. O que o esqueleto ganha com a panóplia é a armadura —
+e é o que faz dele um atirador que **aguenta**, em vez de um atirador melhor. A arma nua vem sempre, nos dois
+casos: é ela que diz o que cada um é.
+
+**Nada do que vem vestido cai.** Uma invocação que largasse diamante ao fim do prazo seria uma fábrica de
+diamante, e o prazo é de quatro minutos.
+
+**E um elmo não deixa queimar ao sol.** É regra do próprio jogo, e não foi preciso escrever nada para ela
+valer: a partir do couro, o exército do necromante deixa de evaporar ao meio-dia. Quem está raso ainda vê o
+esqueleto pegar fogo, que é o que o Ars Magica 2 sempre fez.
+
+### Três decisões que ficam escritas
+
+1. **A montaria não ocupa vaga.** Ela tem o mesmo prazo e a mesma trela do que a monta, mas não conta no teto —
+   fazê-la contar seria dizer que um necromante a cavalo tem metade do exército.
+2. **O teto do original continua a ser o teto do original.** Sem Legião nenhuma, é **um**. O acréscimo não mexe
+   em nada de quem não o usa.
+3. **O apego ganhou um campo**, a bandeira de montaria, e ele é **opcional no disco**: o que foi guardado antes
+   desta fatia volta como soldado, que é o que era.
+
+### Onde elas estão na árvore
+
+Penduradas na Invocação, em (267, 135): **Erguer os Mortos** logo acima, em (267, 90), de verde; e a **Legião**
+ao lado, em (312, 90), de **vermelho** — o último degrau, que é onde um exército pertence.
+
+**Guardas:** `ArcanaNecromancyGameTest`, com oito — o zumbi com espada que não mira quem o ergueu; a Legião que
+sobe o teto um por cópia e a quarta que não entra; o preço que dobra de cada vez; os quatro degraus da
+panóplia; o ferro no meio do caminho; o arco que nunca sobe; a montaria que não ocupa vaga; e o lugar das duas
+na árvore.
+
+**As fotos:** a Invocação **nua**, que é a do original, e ao lado o exército — três a cavalo, de diamante, onde
+o original deixa um esqueleto de mãos a abanar. E a prova de tela **confere o que fotografa**: se faltar um
+soldado, uma montaria ou um cavaleiro, ela falha em vez de tirar uma foto ruim em silêncio — o que foi
+exatamente o que aconteceu da primeira vez que ela correu.

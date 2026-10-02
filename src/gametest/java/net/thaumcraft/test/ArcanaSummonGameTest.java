@@ -56,10 +56,14 @@ public class ArcanaSummonGameTest {
      * <p>O de quem lançou, e não um esqueleto invocado qualquer: as provas correm todas no mesmo mundo, e
      * {@code getAllEntities} vê as arenas das vizinhas. Procurar sem o dono acha a invocação de outra prova e
      * mede a coisa errada — o que já aconteceu aqui.
+     *
+     * <p>E tem de estar <b>viva</b>: um esqueleto que acabou de cair ainda aparece no {@code getAllEntities}
+     * da mesma batida, e a prova da trela chama duas vezes seguidas. Sem este cuidado, a segunda chamada
+     * achava a primeira, já morta, e a prova falhava a dizer que a com nome tinha morrido.
      */
     private static Skeleton oEsqueleto(GameTestHelper helper, ServerPlayer quem) {
         for (var bicho : helper.getLevel().getAllEntities()) {
-            if (!(bicho instanceof Skeleton osso)) continue;
+            if (!(bicho instanceof Skeleton osso) || !osso.isAlive()) continue;
             var dado = osso.getAttached(Summons.DATA);
             if (dado != null && dado.dono().equals(quem.getUUID())) return osso;
         }

@@ -255,6 +255,9 @@ public final class SkillTree {
         put(Essences.GRAVITY_WELL, Branch.DEFENSE, Point.GREEN, 222, 180, Essences.SLOWFALL);
         put(Essences.LIFE_DRAIN, Branch.DEFENSE, Point.GREEN, 312, 180, Essences.LIFE_TAP);
         put(Essences.SUMMON, Branch.DEFENSE, Point.GREEN, 267, 135, Essences.LIFE_TAP);
+        // as duas do necromante, acrescentadas: penduram-se na Invocação e sobem dali
+        put(Essences.RAISE_DEAD, Branch.DEFENSE, Point.GREEN, 267, 90, Essences.SUMMON);
+        put(Modifiers.LEGION, Branch.DEFENSE, Point.RED, 312, 90, Essences.SUMMON);
         put(Essences.DISPEL, Branch.DEFENSE, Point.GREEN, 357, 180, Essences.HEAL);
         put(Shapes.CONTINGENCY_FALL, Branch.DEFENSE, Point.GREEN, 267, 180, Essences.GRAVITY_WELL);
         put(Essences.SWIFT_SWIM, Branch.DEFENSE, Point.BLUE, 177, 200, Essences.HASTE);

@@ -43,7 +43,15 @@ public enum SpellModifierKind {
     /** E o grau do bem que ele faz. */
     BUFF_POWER(1.0),
     /** Se ele persegue quem mira. */
-    HOMING(0.0);
+    HOMING(0.0),
+    /**
+     * Quantas invocações cabem de pé: o teto da {@link Modifiers#LEGION}.
+     *
+     * <p><b>Este não é do original.</b> No Ars Magica 2 o teto não é número de feitiço nenhum — ele sai de uma
+     * perícia passiva, a {@code ExtraSummon}, do ramo dos Talentos que este porte não trouxe. É do acréscimo do
+     * necromante, declarado no {@code PORTE.md}.
+     */
+    SUMMON_COUNT(0.0);
 
     /** O valor de fábrica deste feitio. */
     public final double base;

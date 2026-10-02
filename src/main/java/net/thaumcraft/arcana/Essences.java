@@ -3123,34 +3123,105 @@ public final class Essences {
          * lançar sem olhar, e é de propósito.
          */
         private boolean chama(ServerLevel level, Spell feitiço, LivingEntity quem, Vec3 onde) {
-            if (!Summons.cabeMais(level, quem)) {
-                if (quem instanceof net.minecraft.world.entity.player.Player gente) {
-                    gente.sendSystemMessage(
-                            net.minecraft.network.chat.Component.translatable("message.thaumcraft.no_more_summons"));
-                }
-                return true;
-            }
-
-            var bicho = net.minecraft.world.entity.EntityTypes.SKELETON.create(
-                    level, net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED);
-            if (bicho == null) return false;
-
-            bicho.snapTo(onde.x, onde.y, onde.z, quem.getYRot(), 0.0f);
-            bicho.finalizeSpawn(level, level.getCurrentDifficultyAt(bicho.blockPosition()),
-                    net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED, null);
-            // o esqueleto do original vem com arco na mão
-            bicho.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND,
-                    new ItemStack(net.minecraft.world.item.Items.BOW));
-
-            int prazo = (int) feitiço.mul(level, SpellModifierKind.DURATION, Summons.PRAZO);
-            Summons.marca(level, bicho, quem, prazo);
-            level.addFreshEntity(bicho);
-
-            // e o resto da etapa cai NELA, que é o applyStageToEntity do original
-            SpellCast.onEntity(level, feitiço, quem, bicho);
-            return true;
+            return Essences.invoca(level, feitiço, quem, onde, Necromancy.Qual.ESQUELETO);
         }
     });
+
+    /**
+     * <b>Erguer os Mortos</b>: a mesma chamada, mas quem vem é um <b>zumbi com espada</b>.
+     *
+     * <p><b>Isto é acréscimo, e não porte.</b> No Ars Magica 2 quem escolhe a criatura é o <b>Filactério de
+     * Cristal</b>, e enchê-lo exige o Invocador — um bloco da rede de energia que este porte não trouxe. Sem
+     * ele, a Invocação do original é para sempre um esqueleto, e metade da ideia dela fica sem uso.
+     *
+     * <p>Esta peça devolve a <b>escolha</b>, que é o que se perdeu, sem devolver a máquina. E devolve só a
+     * escolha: <b>nem um é melhor que o outro</b>. Custam o mesmo, duram o mesmo, ocupam a mesma vaga; um
+     * atira de longe e o outro bate de perto, e é isso.
+     *
+     * <p>Afinidade só do <b>Fim</b>. A Invocação do original puxa Fim e Vida, e a Vida está lá porque o que ela
+     * traz é uma criatura viva. Um morto que se ergue não é, e por isso aqui fica só o Fim. Declarado no
+     * {@code PORTE.md}.
+     */
+    public static final SpellPart.Essence RAISE_DEAD = SpellParts.essence(new SpellPart.Essence() {
+        public static final float MANA = 400.0f;
+        public static final float DESGASTE = 120.0f;
+
+        @Override
+        public String name() {
+            return "raise_dead";
+        }
+
+        @Override
+        public java.util.Set<Affinity> affinities() {
+            return java.util.Set.of(Affinity.ENDER);
+        }
+
+        @Override
+        public float affinityShift() {
+            return 0.01f;
+        }
+
+        @Override
+        public float manaCost() {
+            return MANA;
+        }
+
+        @Override
+        public float burnout() {
+            return DESGASTE;
+        }
+
+        @Override
+        public boolean onBlock(ServerLevel level, Spell feitiço, LivingEntity quem, BlockPos onde,
+                               Direction face, Vec3 batida) {
+            return Essences.invoca(level, feitiço, quem, batida, Necromancy.Qual.ZUMBI);
+        }
+
+        @Override
+        public boolean onEntity(ServerLevel level, Spell feitiço, LivingEntity quem, Entity alvo) {
+            if (Summons.éInvocado(alvo)) return false;
+            return Essences.invoca(level, feitiço, quem, alvo.position(), Necromancy.Qual.ZUMBI);
+        }
+    });
+
+    /**
+     * O caminho de uma invocação, seja ela qual for.
+     *
+     * <p>É o {@code summonCreature} do original, com as três coisas do necromante enxertadas e declaradas: o
+     * <b>teto</b> que a Legião sobe, a <b>panóplia</b> que a Afinidade dá, e a <b>montaria</b>. Tirando essas
+     * três, o que está aqui é o dele, linha por linha.
+     */
+    private static boolean invoca(ServerLevel level, Spell feitiço, LivingEntity quem, Vec3 onde,
+                                  Necromancy.Qual qual) {
+        // o teto do original, mais uma vaga por Legião — e o aviso é o dele
+        int teto = Summons.TETO + feitiço.count(SpellModifierKind.SUMMON_COUNT);
+        if (!Summons.cabeMais(level, quem, teto)) {
+            if (quem instanceof net.minecraft.world.entity.player.Player gente) {
+                gente.sendSystemMessage(
+                        net.minecraft.network.chat.Component.translatable("message.thaumcraft.no_more_summons"));
+            }
+            return true;
+        }
+
+        var bicho = qual.tipo().create(level, net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED);
+        if (bicho == null) return false;
+
+        bicho.snapTo(onde.x, onde.y, onde.z, quem.getYRot(), 0.0f);
+        bicho.finalizeSpawn(level, level.getCurrentDifficultyAt(bicho.blockPosition()),
+                net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED, null);
+        // a arma vem sempre — é ela que diz o que cada um é —, e a armadura vem da Afinidade
+        Necromancy.veste(bicho, qual, Necromancy.panóplia(quem));
+
+        int prazo = (int) feitiço.mul(level, SpellModifierKind.DURATION, Summons.PRAZO);
+        Summons.marca(level, bicho, quem, prazo);
+        level.addFreshEntity(bicho);
+
+        if (Necromancy.temMontaria(quem)) Necromancy.monta(level, bicho, quem, prazo);
+
+        // e o resto da etapa cai NELA, que é o applyStageToEntity do original
+        SpellCast.onEntity(level, feitiço, quem, bicho);
+        return true;
+    }
 
     /** Sem uso fora do porte: obriga a classe a ser carregada, e com ela as Essências a se registrarem. */
     public static void init() {
