@@ -26,7 +26,8 @@ public class OccultaVillagePiecesGameTest {
             new Peça("watchtower", 20, 9, 24, 9),
             new Peça("keep", 5, 17, 27, 17),
             new Peça("apothecary", 15, 10, 10, 8),
-            new Peça("bookshop", 15, 11, 9, 10));
+            new Peça("bookshop", 15, 11, 9, 10),
+            new Peça("wall_gen", 12, 3, 8, 3));
 
     /**
      * As peças entraram nas cinco aldeias, com o peso de cada uma.

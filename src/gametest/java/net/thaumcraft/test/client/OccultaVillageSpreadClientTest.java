@@ -53,6 +53,7 @@ public class OccultaVillageSpreadClientTest implements FabricClientGameTest {
             server.runCommand("tp @a 45 " + (chão[0] + 75) + " 45 facing 0 " + chão[0] + " 0");
             context.waitTicks(100);
             context.takeScreenshot("aldeia_maior");
+
         }
     }
 }

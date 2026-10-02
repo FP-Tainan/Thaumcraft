@@ -66,6 +66,19 @@ public final class VillagePieces {
     /** E a Livraria, também com peso 15: o handler dela é gêmeo do do Boticário. */
     private static final int PESO_LIVRARIA = 15;
 
+    /**
+     * O marcador da Muralha, com peso 12.
+     *
+     * <p>No original ele tem <b>peso 100 e no máximo um por aldeia</b>, como o Forte — e pela mesma razão o
+     * número não passa: o salto-de-encaixe não sabe limitar quantidade. Doze é o que faz sair <b>à volta de
+     * uma</b> muralha por aldeia.
+     *
+     * <p><b>E duas não estragam nada</b>, que é por isso que aqui se pode arriscar um número mais alto que o do
+     * Forte: desenhar a muralha outra vez é quase de graça — só se troca o que é trocável, e tijolo não é —, e
+     * a guarnição não dobra porque cada guarda confere se já há um ali.
+     */
+    private static final int PESO_MURALHA = 12;
+
     /** As cinco variantes de aldeia, que são as cinco piscinas de casas a mexer. */
     private static final List<String> VARIANTES =
             List.of("plains", "desert", "savanna", "snowy", "taiga");
@@ -93,6 +106,8 @@ public final class VillagePieces {
                     PESO_BOTICARIO, semRetoque);
             acrescenta(piscinas, variante, Thaumcraft.id("village/bookshop_" + variante),
                     PESO_LIVRARIA, semRetoque);
+            acrescenta(piscinas, variante, Thaumcraft.id("village/wall_gen_" + variante),
+                    PESO_MURALHA, semRetoque);
         }
     }
 

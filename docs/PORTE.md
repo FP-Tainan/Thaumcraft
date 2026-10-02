@@ -5443,3 +5443,65 @@ e o encaixe apontado à rua da sua aldeia.
 Livraria **de cima, sem telhado**. O telhado sai por um `fill` só para a foto: acertar uma câmera entre as
 paredes de uma loja fechada custou mais tentativas do que tirar o teto, e o que se quer ver são os quatro
 quadros.
+
+## A aldeia do Ars Occulta — Fatia C4: a Muralha
+
+A peça que fecha a conta da aldeia, e a única que **não é um prédio**.
+
+**Uma muralha precisa saber onde a aldeia acaba**, e isso só se sabe depois de a aldeia estar desenhada. Por
+isso, no original, a "peça" da muralha é um marcador de três por oito por três que põe **um bloco invisível** —
+o `BlockVillageWallGen` —, e quem levanta a muralha é o bloco-entidade dele, quarenta tiques mais tarde. Aqui é
+o mesmo: o molde tem o marcador e nada mais.
+
+**O algoritmo, que é o coração dela.** Pega só as **ruas** — as casas ficam todas dentro delas —, engorda cada
+uma sete além das pontas e vinte para cada lado, une tudo num mapa de duas dimensões, **fecha os vãos de até
+sete** que tenham sobrado entre ruas soltas, e depois **apaga o miolo**: toda célula cujas oito vizinhas estejam
+ocupadas deixa de contar. O que sobra é a borda, e é nela que a muralha se levanta.
+
+**E os portões saem de graça**: as três células do meio da **ponta** de cada rua engordada ficam marcadas à
+parte. É por ali que a estrada sai da aldeia, e é ali que a muralha se abre.
+
+**A altura é sondada e suavizada.** Para cada pedaço desce-se contando blocos sólidos à volta até achar nove —
+é o que impede a muralha de nascer sobre uma copa de árvore —, e a altura é depois puxada **um degrau de cada
+vez** contra a da vizinha já feita. É isso que a faz acompanhar o relevo em vez de flutuar.
+
+**Onde isto melhora o original, declarado.** Lá o bloco recebia a lista de peças pela mão de quem o criou. Aqui
+ele **pergunta ao mundo** — o `getStructureWithPieceAt` dá a aldeia inteira a partir da posição dele. Não
+depende de ninguém lhe entregar nada, e por isso funciona mesmo que o trecho seja carregado de novo mais tarde.
+
+**Desvios declarados.**
+
+1. **A muralha não come parede de casa.** O original troca ar, folha, planta **e madeira** — e "madeira" ali
+   queria dizer árvore no caminho. Hoje não há "material"; ficaram folha e tronco. Tábua fica de fora: uma
+   muralha que abre buraco na casa de alguém é defeito, não fidelidade.
+2. **Rua reconhece-se pelo nome do molde.** A classe `Path` de 2014 não existe; o que distingue uma rua hoje é
+   o molde dela viver em `village/<variante>/streets/`. É mais frágil do que por tipo, e é o que há.
+3. **Peso 12, e não os 100 do original.** Mesmo caso do Forte: o salto-de-encaixe não sabe limitar quantidade.
+   Mas aqui pode-se arriscar um número mais alto, porque **duas muralhas não estragam nada** — desenhar outra
+   vez é quase de graça (só se troca o que é trocável, e tijolo não é) e a guarnição não dobra, porque cada
+   guarda confere se já há um a oito blocos.
+
+### Duas coisas que esta fatia ensinou sobre as próprias provas
+
+**O `/place structure` não registra a aldeia.** Ele desenha os blocos, mas não deixa o trecho a saber que há ali
+uma aldeia — e o marcador, que pergunta exatamente isso, não acha ruas nenhumas e desiste. A primeira tentativa
+da foto saiu com a aldeia e **sem muralha**, e o diagnóstico disse porquê: `INVALID_START`. A prova passou a
+**procurar uma aldeia de verdade** com o `findNearestMapStructure`.
+
+**E o mundo das provas de cliente é superplano.** O `setConsistentSettings` do Fabric força o preset FLAT — é o
+que faz as fotos ficarem iguais entre execuções, e é por isso que o chão de todas as outras é liso. Num
+superplano não nasce aldeia nenhuma. Esta foto pede um mundo normal **de semente fixa**, que é o jeito de ter
+aldeia sem perder a repetibilidade.
+
+**Guardas:** `OccultaVillageWallGameTest`, com quatro — e nenhuma delas escreve um bloco no mundo. A muralha de
+verdade cerca centenas de blocos e não cabe numa arena de oito por oito, mas **a forma dela sai toda da
+planta**, e planta é conta pura. Provam-se o miolo apagado, o portão na ponta certa da rua, duas ruas cruzadas
+a darem **uma** mancha só, e a aldeia sem rua que não ganha muralha.
+
+Uma delas apanhou-me: eu tinha escrito a expectativa do portão pela conta que **me parecia certa** — o meio da
+rua — em vez da que o original faz. Ele calcula `altura / 2 + mínimo - 1`, e esse `-1` com a divisão inteira
+cai **um bloco antes do centro**. O código estava fiel; a régua é que era minha. Ficou escrito no comentário
+dela, porque é o terceiro descuido do original que encontro nesta conta e a tentação de "corrigir" é real.
+
+**A foto:** a aldeia murada vista de cima — a muralha a acompanhar o relevo em degraus, as ameias, o portão por
+onde a estrada sai, e a torre de vigia lá dentro.

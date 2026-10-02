@@ -287,6 +287,24 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(
                             BloodCrucibleBlockEntity::new, java.util.Set.of(BLOOD_CRUCIBLE)));
 
+    // ------------------------------------------------------------------ o marcador da muralha
+
+    /**
+     * O marcador invisível que levanta a muralha da aldeia e depois se apaga.
+     *
+     * <p>Não se vê, não se pega e não se fabrica: ele só nasce com a aldeia.
+     */
+    public static final Block VILLAGE_WALL_GEN = register("village_wall_gen", properties ->
+            new net.thaumcraft.occulta.village.VillageWallGenBlock(
+                    properties.strength(-1.0f, 3600000.0f).noOcclusion().noLootTable()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.village.VillageWallGenBlockEntity> VILLAGE_WALL_GEN_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("village_wall_gen"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.village.VillageWallGenBlockEntity::new,
+                            java.util.Set.of(VILLAGE_WALL_GEN)));
+
     // ------------------------------------------------------------------ o caldeirão de pote
 
     /** O Caldeirão de Pote, pendurado nas correntes, onde se fazem os cozimentos de frasco. */
