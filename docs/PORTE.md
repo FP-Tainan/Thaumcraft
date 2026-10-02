@@ -5224,3 +5224,71 @@ custou quatro tentativas, e as três pedras ficaram escritas no javadoc dela: o 
 senão o trecho não está carregado e não se planta nada; a altura pergunta-se ao mapa de alturas, senão a aldeia
 nasce enterrada; e **`gamemode` pede alvo** — corre a partir do console, que não é jogador nenhum, e sem `@a`
 não faz nada (quem for posto no ar cai e morre).
+
+## A aldeia do Ars Occulta — Fatia C1: a Torre de Vigia, e a máquina que põe prédios na aldeia
+
+A fatia C é a maior da conta — muralha, forte, torre, boticário e livraria —, e por isso vai por partes. Esta
+primeira traz **uma** peça e, com ela, toda a máquina que as outras vão usar.
+
+**O problema, em uma frase:** o original constrói cada prédio **bloco a bloco em código** e registra a classe no
+gerador de aldeia; o jogo de hoje monta aldeia por **salto-de-encaixe**, e as peças dele são moldes `.nbt` que
+vivem em piscinas carregadas do disco. Nem a forma nem o registro passam diretos.
+
+### Traduzir código procedural em molde
+
+O `ComponentVillageWatchTower` é uma sequência de `fillWithBlocks` e `placeBlock`. O que se fez foi escrever um
+**gerador** que repete as mesmas chamadas, na mesma ordem, e assa um molde. O leitor e o escritor de NBT foram
+escritos para isto.
+
+**A regra que faz a tradução ser fiel: o que o original não toca vira `structure_void`, e não ar.** Um molde
+nasce cheio de alguma coisa, e se essa coisa for ar o prédio arrasa o terreno à volta e as peças vizinhas. O
+original só punha os blocos que punha; o resto ficava como estava. O ar **que ele põe de propósito** — o vão da
+escada, as frestas, as portas — continua ar.
+
+**As medidas e a metadata.** Nove por vinte e quatro por nove, que é o `(0,0,0 .. 8,23,8)` do original. As
+escadas vêm por número no 1.7.10 — 0 leste, 1 oeste, 2 sul, 3 norte —, e foi desse número que a propriedade
+`facing` de hoje nasceu; a tabela é a mesma. O `getMetadataWithOffset` do original, que girava a peça conforme a
+orientação dela, **não se traduz**: aqui quem gira o molde é o salto-de-encaixe, e por isso o molde é escrito
+sempre na orientação base.
+
+**O que ficou de fora, declarado:** o `fillColumnDown` e o `clearCurrentPositionBlocksUpwards`, que o original
+usava para assentar a torre no terreno e limpar o que estivesse por cima. Os dois mexem **fora** da caixa do
+molde e não têm como ser escritos nele; hoje quem faz esse trabalho é o `terrain_adaptation: beard_thin` que a
+aldeia já traz.
+
+### Somar peças às piscinas do jogo
+
+A piscina de casas de cada variante é um arquivo do jogo, e arquivo de dados **substitui**. Copiar os cinco
+arquivos inteiros e colar as nossas peças no fim seria dez mil bytes de dados do jogo duplicados por variante,
+velhos no dia em que a Mojang mexer numa casa. Em vez disso há um mixin de acesso, e as peças somam-se à
+**piscina já carregada**, ao servidor arrancar — depois de o disco ser lido e antes de se gerar qualquer trecho.
+
+**São duas listas, e as duas têm de mudar.** A `templates` é a lista já esticada pelo peso, de onde o sorteio
+tira; a `rawTemplates` é a de pares peça-peso, que é a que o `getMaxSize` lê para saber de quanto espaço a
+aldeia precisa. **Mexer só na primeira faz a peça nascer e ficar cortada ao meio** — e isso está escrito no
+javadoc do mixin, porque é o erro que se comete uma vez.
+
+### A torre
+
+**Peso 20**, o do original. Lá ela entra em quatro grupos de zero a um, que no gerador de então era o jeito de
+dizer "até quatro torres, e talvez nenhuma"; aqui a profundidade do salto decide quantas peças cabem e o peso
+decide quantas vezes esta é sorteada entre as candidatas. **Desvio declarado:** o número de torres por aldeia
+não é mais garantido entre zero e quatro.
+
+**O baú** tem a tabela do original, as dezoito entradas com os pesos dele e os dois a cinco sorteios — pão,
+maçã e peixe pesados 15; a malha e o ferro pesados 5; o couro 6; arco e flechas 8; sela 3; e as duas armaduras
+de cavalo pesadas 1.
+
+**E são quatro guardas, não três.** O original chama `spawnGuards(..., 3)` e o laço dele é
+`for (n = 0; n <= 3; n++)` — quatro voltas. É descuido do original, e vai assim. Eles entram na lista de
+entidades do molde, **com a persistência posta**, que é o que o `enablePersistence()` do original fazia e o que
+a fatia A já tinha deixado escrito como requisito.
+
+**Guardas:** `OccultaWatchtowerGameTest`, com duas — a torre nas cinco piscinas com peso 20, e o molde que
+carrega com nove por vinte e quatro por nove. A primeira confere também que **as casas do jogo continuam lá**:
+somar na piscina errada faria aldeias só de torres, e uma prova que olhasse só a torre diria que está tudo bem.
+A segunda existe porque um molde que não carrega **não dá erro nenhum** — a peça simplesmente não nasce.
+
+**As fotos:** `OccultaWatchtowerClientTest`, duas — a torre inteira de fora e o mirante de perto, com os
+guardas lá dentro. Elas são o que julga o molde de verdade: a prova de servidor passa igual se o telhado
+estiver virado do avesso.

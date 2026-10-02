@@ -17,6 +17,7 @@
     "ItemEntityBathSaltsMixin",
     "ItemEntityMinedrakeMixin",
     "ItemEntityAccessor",
+    "StructureTemplatePoolAccessor",
     "MobGoalAccessor",
     "LivingEntityHungerMixin",
     "LivingEntityIncurableMixin",
