@@ -24,7 +24,9 @@ public class OccultaVillagePiecesGameTest {
 
     private static final List<Peça> PEÇAS = List.of(
             new Peça("watchtower", 20, 9, 24, 9),
-            new Peça("keep", 5, 17, 27, 17));
+            new Peça("keep", 5, 17, 27, 17),
+            new Peça("apothecary", 15, 10, 10, 8),
+            new Peça("bookshop", 15, 11, 9, 10));
 
     /**
      * As peças entraram nas cinco aldeias, com o peso de cada uma.

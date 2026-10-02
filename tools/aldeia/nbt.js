@@ -101,6 +101,11 @@ class Escritor {
         for (const x of v) this.valor(t, x);
         return;
       }
+      case INTS: {
+        this.int(v.length);
+        for (const x of v) this.int(x);
+        return;
+      }
       case COMPOSTO: {
         for (const [nome, x] of Object.entries(v)) {
           if (nome.startsWith('__')) continue;
@@ -124,6 +129,8 @@ const marca = {
   byte: v => new Marca(BYTE, v),
   int: v => new Marca(INT, v),
   lista: (tipo, itens) => { const a = itens.slice(); a.__tipo = tipo; return a; },
+  /** Vetor de inteiros, que é como o BlockPos.CODEC escreve uma posição. */
+  ints: v => new Marca(INTS, v),
 };
 
 function escreveArquivo(caminho, raiz, comprime = true) {

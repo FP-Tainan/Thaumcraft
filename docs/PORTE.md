@@ -5389,3 +5389,57 @@ Esta última entrou no lugar de uma que eu ia escrever e não dava: contar os gu
 acessor público. E saiu melhor do que a que eu queria, porque pega exatamente o engano que escapou na C1 —
 encaixe faltando, ou apontando à piscina de outra variante. **Nenhuma das duas coisas dá erro**: a aldeia só sai
 sem a peça, calada.
+
+## A aldeia do Ars Occulta — Fatia C3: o Boticário e a Livraria
+
+As duas casas da aldeia, e as duas que trouxeram coisa que as peças anteriores não tinham: o Boticário tem
+**porta, placa com o nome e um morador**, e a Livraria tem **quatro quadros com livros** na parede do fundo.
+
+**Os pesos não precisaram ser inventados.** Cada uma tem um handler próprio no original — o
+`WorldHandlerVillageApothecary` e o `WorldHandlerVillageBookShop` —, e os dois dizem `PieceWeight(classe, 15,
+1 + (tamanho > 2 ? sorteio(2) : 0))`: **peso 15**, uma ou duas por aldeia.
+
+### Dois erros que só a foto apanhou
+
+Os dois são do mesmo feitio — coisa que mudou de 2014 para hoje e que **falha calada** —, e nenhuma prova de
+servidor os teria mostrado.
+
+**1. Os quadros nasciam dentro da parede.** No 1.7.10 a posição de um quadro é o bloco em que ele se **prende**;
+hoje é o bloco que ele **ocupa**, com a parede atrás. O original pendura em `3..6, 3, 6`, e o 6 é a madeira:
+traduzido ao pé da letra, o quadro nasce dentro dela e não se vê. Aqui vai em `5`, que é o ar à frente da mesma
+parede.
+
+**2. As chaves do NBT de um quadro mudaram.** Hoje é `Facing` com F grande, escrito pelo
+`Direction.LEGACY_ID_CODEC`, e `block_pos` como **vetor de inteiros** — e não o `TileX`/`TileY`/`TileZ` de
+então. Com as chaves erradas o quadro simplesmente não nasce, sem erro nenhum. (Foi por isto que o escritor de
+NBT do `tools/aldeia` aprendeu a escrever vetor de inteiros.)
+
+### Desvios declarados
+
+1. **O morador do Boticário é um clérigo.** O original dá-lhe uma profissão sua, o `ApothecaryVillagerID 2435`,
+   com as trocas dela; isso é um sistema de aldeão que não está portado. Clérigo é a profissão do jogo mais
+   perto de quem vende poções.
+2. **A placa fez o molde crescer um bloco.** O original declara a caixa do Boticário como `(0,0,0 .. 9,9,6)` e
+   depois põe a placa e o degrau da porta em **z = -1**, fora dela — no gerador de 2014 a conta era feita contra
+   o pedaço de mundo a gerar e não contra a caixa da peça, e por isso funcionava. Um molde não tem coordenada
+   negativa: o molde é um bloco mais fundo e tudo anda um em z. O corpo fica literal como o original o escreveu,
+   e quem desloca é o `ponha`.
+3. **A Livraria perdeu o baú vampírico.** No original ele é livro comum mais **três entradas de página de livro
+   vampírico** (pesos 3, 2 e 1) e um **Livro Vampírico** garantido. O sistema de vampiro não está portado —
+   é o mesmo que já tinha tirado o sangue do Guarda —, e por isso ficam de fora. Sobram o livro, o livro de
+   escrever e **o Thaumonomicon**.
+4. **E o Thaumonomicon está ali de propósito.** A lista de livros do Config do original inclui
+   `Thaumcraft:ItemThaumonomicon`: quando o Thaumcraft estava instalado, a livraria da aldeia vendia-o. Aqui os
+   dois **são o mesmo mod**, então ele está sempre lá — no baú e no quadro do meio.
+5. **Os quadros têm livro fixo.** O original sorteia um da tabela da loja para cada quadro; um molde é estático
+   e não sorteia. A escolha ficou: livro, Thaumonomicon, livro, livro de escrever.
+6. **O degrau da porta deixou de ser condicional.** O original só o põe se houver um desnível à frente da porta.
+   Num molde não há condição; ele é sempre o `final_state` do bloco de encaixe, que é onde a rua encosta.
+
+**Guardas:** as três provas de `OccultaVillagePiecesGameTest` passam a cobrir **as quatro peças** — peso, medidas
+e o encaixe apontado à rua da sua aldeia.
+
+**As fotos:** o Boticário de frente, onde se veem a porta, a placa por cima dela e o morador pela janela; e a
+Livraria **de cima, sem telhado**. O telhado sai por um `fill` só para a foto: acertar uma câmera entre as
+paredes de uma loja fechada custou mais tentativas do que tirar o teto, e o que se quer ver são os quatro
+quadros.

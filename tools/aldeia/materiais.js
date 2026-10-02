@@ -22,6 +22,7 @@ const COMUM = {
   escadaPedra: 'minecraft:cobblestone_stairs',
   tora: 'minecraft:oak_log',
   lajePedra: 'minecraft:cobblestone_slab',
+  escadaBetula: 'minecraft:birch_stairs',
 };
 
 /** E o do deserto: arenito e bétula. */
@@ -34,6 +35,7 @@ const DESERTO = {
   escadaPedra: 'minecraft:sandstone_stairs',
   tora: 'minecraft:sandstone',
   lajePedra: 'minecraft:sandstone_slab',
+  escadaBetula: 'minecraft:birch_stairs',
 };
 
 module.exports = { COMUM, DESERTO };

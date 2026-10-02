@@ -61,6 +61,24 @@ public class OccultaWatchtowerClientTest implements FabricClientGameTest {
             server.runCommand("tp @a -8 " + (chão[0] + 26) + " 30 facing -32 " + (chão[0] + 10) + " 8");
             context.waitTicks(80);
             context.takeScreenshot("forte");
+
+            // e o Boticário, que é a casa com porta, placa e morador
+            server.runCommand("place template thaumcraft:village/apothecary_plains 0 " + chão[0] + " -30");
+            context.waitTicks(60);
+            server.runCommand("tp @a 2 " + (chão[0] + 5) + " -38 facing 3 " + (chão[0] + 3) + " -29");
+            context.waitTicks(80);
+            context.takeScreenshot("boticario");
+
+            // e a Livraria. O que ela tem de seu são os quatro quadros na parede do fundo, e eles ficam
+            // dentro de uma loja fechada: para a foto tira-se o telhado com um fill e olha-se de cima, que é
+            // mais honesto do que acertar uma câmera entre as paredes.
+            server.runCommand("place template thaumcraft:village/bookshop_plains 20 " + chão[0] + " -30");
+            context.waitTicks(60);
+            server.runCommand("fill 20 " + (chão[0] + 5) + " -30 30 " + (chão[0] + 9) + " -21 air");
+            context.waitTicks(20);
+            server.runCommand("tp @a 25 " + (chão[0] + 11) + " -32 facing 25 " + (chão[0] + 3) + " -25");
+            context.waitTicks(60);
+            context.takeScreenshot("livraria");
         }
     }
 }

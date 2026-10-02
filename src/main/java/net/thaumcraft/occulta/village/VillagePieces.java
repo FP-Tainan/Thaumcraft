@@ -55,6 +55,17 @@ public final class VillagePieces {
      */
     private static final int PESO_FORTE = 5;
 
+    /**
+     * O Boticário, com peso 15.
+     *
+     * <p>No original ele tem um <b>handler próprio</b> — o {@code WorldHandlerVillageApothecary} —, e não entra
+     * pela tabela {@code townParts}. O peso dele vive nesse handler.
+     */
+    private static final int PESO_BOTICARIO = 15;
+
+    /** E a Livraria, também com peso 15: o handler dela é gêmeo do do Boticário. */
+    private static final int PESO_LIVRARIA = 15;
+
     /** As cinco variantes de aldeia, que são as cinco piscinas de casas a mexer. */
     private static final List<String> VARIANTES =
             List.of("plains", "desert", "savanna", "snowy", "taiga");
@@ -78,6 +89,10 @@ public final class VillagePieces {
                     PESO_TORRE, semRetoque);
             acrescenta(piscinas, variante, Thaumcraft.id("village/keep_" + variante),
                     PESO_FORTE, semRetoque);
+            acrescenta(piscinas, variante, Thaumcraft.id("village/apothecary_" + variante),
+                    PESO_BOTICARIO, semRetoque);
+            acrescenta(piscinas, variante, Thaumcraft.id("village/bookshop_" + variante),
+                    PESO_LIVRARIA, semRetoque);
         }
     }
 
