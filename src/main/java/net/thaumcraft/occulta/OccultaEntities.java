@@ -94,6 +94,18 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.village.VillageGuardEntity::attributes))
                     .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(10));
 
+    /**
+     * A <b>Bruxa do Coven</b>: com quem se negocia para ter coven.
+     *
+     * <p>Trinta de vida, atira poções como a bruxa do jogo e não ataca quem não a ataca.
+     */
+    public static final EntityType<net.thaumcraft.occulta.coven.CovenWitchEntity> COVEN_WITCH =
+            register("coven_witch", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.coven.CovenWitchEntity::new, MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.coven.CovenWitchEntity::attributes))
+                    .sized(0.6f, 1.95f).eyeHeight(1.62f).clientTrackingRange(8));
+
     private OccultaEntities() {
     }
 
@@ -120,5 +132,8 @@ public final class OccultaEntities {
                 .register(NIGHTMARE, net.thaumcraft.occulta.spirit.NightmareEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(VILLAGE_GUARD, net.thaumcraft.occulta.village.VillageGuardEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(COVEN_WITCH, net.thaumcraft.occulta.coven.CovenWitchEntity.attributes());
+        net.thaumcraft.occulta.coven.Coven.init();
     }
 }

@@ -62,9 +62,14 @@ public class CircleHeartBlockEntity extends BlockEntity {
             return;
         }
 
+        // O tamanho do coven de quem começou. Até a fatia da Bruxa do Coven isto era um zero escrito na mão,
+        // porque não havia quem respondesse: o Rite.steps(int coven) estava aqui à espera desde que os
+        // círculos entraram, e todo rito que cresce com bruxas em volta corria no mínimo. Agora há.
+        int coven = quem == null ? 0 : net.thaumcraft.occulta.coven.Coven.tamanho(quem);
+
         for (RiteRegistry.Entry rito : achados) {
-            this.running.add(new ActiveRite(rito.key(), rito.rite(), rito.steps(0),
-                    quem == null ? null : quem.getUUID(), 0));
+            this.running.add(new ActiveRite(rito.key(), rito.rite(), rito.steps(coven),
+                    quem == null ? null : quem.getUUID(), coven));
         }
         level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0f, 1.2f);
         this.setChanged();

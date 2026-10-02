@@ -5505,3 +5505,51 @@ dela, porque é o terceiro descuido do original que encontro nesta conta e a ten
 
 **A foto:** a aldeia murada vista de cima — a muralha a acompanhar o relevo em degraus, as ameias, o portão por
 onde a estrada sai, e a torre de vigia lá dentro.
+
+## Fatia D — a Bruxa do Coven, e o zero que saiu dos círculos
+
+Esta fatia fecha um buraco que estava **escrito no código à espera** desde que os círculos de giz entraram: o
+`Rite.steps(int coven)` existia, e o `CircleHeartBlockEntity` passava-lhe **zero na mão**, porque não havia quem
+respondesse. Todo rito do ofício que faz mais com mais bruxas em volta corria no mínimo.
+
+**A Bruxa do Coven não é monstro nem aldeã — é alguém com quem se negocia.** Fala-se com ela e ela pede uma
+coisa; aceita-se, e ela espera; trazido o que pediu, **entra no coven de quem trouxe**. Seis é o teto, e a mesma
+bruxa não entra duas vezes.
+
+**Ela ganha nome ao ser falada**, e não ao nascer — é do original, e faz diferença: uma bruxa com quem ninguém
+falou não tem nome nenhum. São as duas listas do original, **duzentos e setenta e dois primeiros nomes e
+trezentos e noventa e oito sobrenomes**: cento e oito mil bruxas diferentes. Não foram mexidas, porque trocá-las
+seria trocar o sotaque do mod.
+
+**E tem uma de cinco caras**, sorteada ao nascer. O corpo é o da bruxa do próprio jogo — o original usa o
+`ModelWitch` tal e qual —, e é a pele que muda. É o que faz um coven de seis parecer **seis pessoas** e não seis
+cópias.
+
+**Trinta de vida, e não ataca quem não a atacou.** A poção dela é a da bruxa do jogo: no original a conta é a
+mesma, feita com os números de 2014, e por isso aqui se copiou a de hoje em vez de traduzir metadata de poção.
+Quem a enganar — aceitar e voltar com o coven já cheio — faz dela inimiga, que é o `tricked` do original.
+
+### Desvios declarados
+
+1. **Três dos sete pedidos.** O original pede, além do que está aqui, um **Coração de Demônio**, uma **Bola de
+   Cristal**, cinco **Cozimentos Grotescos** e uma **Pedra Necro** — e nenhuma dessas quatro coisas está
+   portada. O Coração de Demônio e o Grotesco já estavam escritos como buraco neste documento antes desta
+   fatia. Ficam a brigar com aranha, brigar com zumbi e trazer trinta ossos; as outras voltam com os itens.
+2. **O familiar virou costura, e não desvio.** No original ela só negocia com quem tem um familiar acordado, e
+   os familiares são a fatia seguinte. Em vez de tirar a regra, ela está num método — o `temFamiliar` — que
+   hoje responde sempre que sim. Quando os familiares chegarem, **é essa a única linha que muda**, e nada
+   precisa ser reescrito.
+
+### Um erro meu que vale ficar escrito
+
+**Escrevi as falas dela em português de Portugal.** "O teu coven", "volta quando tiveres", "traz-me trinta
+ossos", "tu enganaste-me". A regra deste porte é português do Brasil, e eu furei-a — reescrevi tudo, e conferi
+que o arquivo de língua continua com as mesmas três mil cento e dezenove chaves, para não ter perdido nada no
+caminho. Fica escrito porque o deslize é fácil justamente num texto de personagem, onde a tentação de "soar
+antigo" puxa para o lado errado.
+
+**Guardas:** `OccultaCovenGameTest`, com seis — as duas listas de nomes inteiras, o nome que só vem quando
+falam com ela, o caminho completo de um pedido de buscar (pede, aceita, de mão vazia recusa, com os trinta
+ossos entra e fica com eles), o teto de seis, a mesma bruxa que não entra duas vezes, e os três pedidos que há.
+
+**A foto:** as cinco caras lado a lado. Uma sozinha não diria nada.
