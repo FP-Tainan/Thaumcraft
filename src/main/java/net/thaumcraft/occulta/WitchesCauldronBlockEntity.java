@@ -202,10 +202,16 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
      * caldeirão esteja <b>cheio</b> — o original tira uma garrafa por caldeirão a quem ainda não sabe engarrafar,
      * e é aí que este porte está.
      *
-     * <p><b>Do original fica de fora, declarado:</b> o rendimento maior de quem tem prática, chapéu de bruxa,
-     * túnica e familiar — nada disso existe ainda; quem engarrafa aqui é sempre alguém que está a aprender.
+     * <p><b>E quem tem sapo tira um frasco a mais.</b> É o {@code hasActiveBrewMasteryFamiliar} do original, e é
+     * a maestria que o sapo dá. Esteve escrito aqui como buraco enquanto os familiares não existiam.
+     *
+     * <p><b>Do original ficam de fora, declarados:</b> o rendimento maior de quem tem prática, chapéu de bruxa
+     * e túnica — nenhuma dessas três coisas existe ainda.
+     *
+     * @param quem quem está a engarrafar, ou nulo quando não é ninguém (uma prova, um funil)
      */
-    public ItemStack bottle(ServerLevel level, BlockPos pos) {
+    public ItemStack bottle(ServerLevel level, BlockPos pos,
+                            @org.jetbrains.annotations.Nullable net.minecraft.world.entity.player.Player quem) {
         if (!this.isBoiling() || !this.isBrewing() || !this.isFull()) return ItemStack.EMPTY;
         int poder = this.brewPower();
         if (poder > 0) {
@@ -213,6 +219,7 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
             if (altar == null || !altar.consume(poder)) return ItemStack.EMPTY;
         }
         ItemStack frasco = net.thaumcraft.occulta.brew.BrewItem.of(OccultaItems.BREW, this.inside);
+        if (net.thaumcraft.occulta.familiar.Familiars.temMaestriaDeCozimento(quem)) frasco.grow(1);
         this.empty();
         return frasco;
     }

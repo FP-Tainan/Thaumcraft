@@ -99,7 +99,7 @@ public class WitchesCauldronBlock extends BaseEntityBlock {
         // a garrafa de vidro tira o cozimento do caldeirão
         if (held.is(Items.GLASS_BOTTLE)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
-            ItemStack frasco = caldeirão.bottle((net.minecraft.server.level.ServerLevel) level, pos);
+            ItemStack frasco = caldeirão.bottle((net.minecraft.server.level.ServerLevel) level, pos, player);
             if (frasco.isEmpty()) return InteractionResult.CONSUME;
             if (!player.hasInfiniteMaterials()) held.shrink(1);
             if (!player.getInventory().add(frasco)) player.drop(frasco, false);

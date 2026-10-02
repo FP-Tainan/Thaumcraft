@@ -84,6 +84,14 @@ public class OccultaCovenGameTest {
         quem.snapTo(helper.absoluteVec(new Vec3(3.5, 2, 2.5)));
         if (Coven.tamanho(quem) != 0) helper.fail("ninguém começa com coven");
 
+        // ela só negocia com quem tem familiar, e por isso a prova arranja um primeiro
+        var sapo = helper.spawn(net.thaumcraft.occulta.OccultaEntities.TOAD,
+                new net.minecraft.core.BlockPos(5, 2, 5));
+        sapo.tame(quem);
+        if (!net.thaumcraft.occulta.familiar.Familiars.vincula(quem, sapo)) {
+            helper.fail("o sapo devia vincular-se");
+        }
+
         // procura-se uma bruxa que peça o de buscar, que é o que esta prova sabe resolver
         CovenWitchEntity bruxa = null;
         for (int tentativa = 0; tentativa < 40 && bruxa == null; tentativa++) {
@@ -113,6 +121,30 @@ public class OccultaCovenGameTest {
         if (quem.getMainHandItem().getCount() != 0) {
             helper.fail("e ela fica com os ossos, sobraram " + quem.getMainHandItem().getCount());
         }
+
+        bruxa.discard();
+        sapo.discard();
+        helper.succeed();
+    }
+
+    /**
+     * E <b>sem familiar ela não negocia</b>: é a tranca do original, que esteve costurada enquanto os
+     * familiares não existiam e voltou a valer com a fatia deles.
+     */
+    @GameTest(maxTicks = 20)
+    public void withoutAFamiliarSheWillNotTalkBusiness(GameTestHelper helper) {
+        piso(helper);
+        var quem = helper.makeMockPlayer(GameType.SURVIVAL);
+        quem.snapTo(helper.absoluteVec(new Vec3(3.5, 2, 2.5)));
+        if (net.thaumcraft.occulta.familiar.Familiars.temAlgum(quem)) {
+            helper.fail("esta prova começa sem familiar");
+        }
+
+        var bruxa = bruxa(helper, 2, 2, 2);
+        bruxa.mobInteract(quem, InteractionHand.MAIN_HAND);
+        if (bruxa.pedidoÉDeBuscar()) helper.fail("sem familiar ela não chega a pedir nada");
+        bruxa.mobInteract(quem, InteractionHand.MAIN_HAND);
+        if (Coven.tamanho(quem) != 0) helper.fail("e não entra em coven nenhum");
 
         bruxa.discard();
         helper.succeed();

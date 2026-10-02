@@ -18,6 +18,7 @@
     "ItemEntityMinedrakeMixin",
     "ItemEntityAccessor",
     "StructureTemplatePoolAccessor",
+    "PlayerFamiliarMixin",
     "MobGoalAccessor",
     "LivingEntityHungerMixin",
     "LivingEntityIncurableMixin",

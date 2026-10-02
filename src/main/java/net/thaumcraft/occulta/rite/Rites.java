@@ -599,13 +599,19 @@ public final class Rites {
      * <p>Ela pára de vez se alguém no anel trouxer uma <b>boneca de proteção contra vodu</b>: a boneca gasta-se
      * e o rito morre. É a única defesa que há contra ela, e é a que o original dá.
      *
+     * <p><b>E quem tem gato vê o escuro durar mais:</b> dois minutos viram <b>cinco</b>. É o
+     * {@code hasActiveCurseMasteryFamiliar} do original, e é a maestria que o gato dá. Esteve escrito aqui como
+     * buraco enquanto os familiares não existiam; agora existe.
+     *
      * <p><b>Do original fica de fora, declarado:</b> o <b>Caçador de Bruxas</b>, que lá é avisado de que alguém
-     * fez magia negra e vem atrás de quem a fez; e o <b>familiar de maldição</b>, que lá dobra o tempo do escuro
-     * para cinco minutos. Nenhum dos dois está portado.
+     * fez magia negra e vem atrás de quem a fez. Esse não está portado.
      */
     public static class CurseOfBlindness extends Expanding {
         /** Quanto tempo o escuro dura: os dois minutos do original. */
         public static final int BLIND_TICKS = 2 * 1200;
+
+        /** E os cinco de quem tem gato por familiar. */
+        public static final int BLIND_TICKS_WITH_CAT = 5 * 1200;
 
         public CurseOfBlindness(int maxRadius, int height) {
             super(maxRadius, height, true);
@@ -631,7 +637,9 @@ public final class Rites {
                     return false;
                 }
                 if (vítima.hasEffect(MobEffects.BLINDNESS)) continue;
-                vítima.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, BLIND_TICKS, 0));
+                int quanto = net.thaumcraft.occulta.familiar.Familiars.temMaestriaDeMaldicao(quem)
+                        ? BLIND_TICKS_WITH_CAT : BLIND_TICKS;
+                vítima.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, quanto, 0));
             }
             return true;
         }

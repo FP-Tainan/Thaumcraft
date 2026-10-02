@@ -5618,3 +5618,61 @@ volta.
 
 **Guardas:** `OccultaSwampCovenGameTest`, com três — a estrutura de uma peça só (ela não cresce como aldeia), o
 pântano que tem e a planície que não, e o molde com a clareira inteira.
+
+## Fatia G — os Familiares
+
+A fatia que **destranca três coisas que estavam escritas neste documento como buraco** desde muito antes dela.
+
+**Um familiar não é bicho de estimação.** Ele <b>leva pancada por quem o tem</b> — um por cento do golpe de
+longe, **dez por cento** a menos de vinte e quatro blocos —, e **ele não morre**: se fosse morrer, quem o tem
+leva o dobro da própria vida e cai no lugar dele. Sem dono por perto, o bicho fica com um de vida e continua.
+É o vínculo do original, e é o que explica por que ter um custa alguma coisa.
+
+**E ele não vai com quem morre:** a morte desfaz o vínculo, e o bicho fica no mundo, solto.
+
+### Os três, e o que cada um destranca
+
+| bicho | maestria | o que ela faz aqui |
+| --- | --- | --- |
+| **gato** | maldição | o escuro de uma maldição passa de **dois** minutos para **cinco** |
+| **sapo** | cozimento | sai **um frasco a mais** de cada caldeirão |
+| **coruja** | vassoura | nada ainda — **a vassoura não está portada** |
+
+As duas primeiras fechavam buracos que já estavam escritos: a Maldição da Cegueira dizia *"o familiar de
+maldição não dobra o escuro... não estão portados"*, e o engarrafar dizia *"quem engarrafa aqui é sempre alguém
+que está a aprender"*. Os dois passam a responder.
+
+**A coruja entra mesmo sem destrancar nada**, porque é um dos três do original e porque, no dia em que a
+vassoura vier, ela já está aqui — a pergunta existe e é só ligá-la.
+
+### E a costura da Bruxa do Coven fechou com uma linha
+
+A fatia dela deixou o `temFamiliar` a responder sempre que sim, com a nota de que seria **a única linha a
+mudar** quando os familiares chegassem. Foi exatamente isso: o método passou a perguntar de verdade, e mais
+nada se mexeu.
+
+**A prova do coven quebrou com essa mudança, e quebrou certo** — ela negociava sem familiar nenhum. Arranjou um
+sapo antes de negociar, e ganhou uma irmã: a que confere que **sem familiar a bruxa não fala de negócio**.
+
+### Desvios declarados
+
+1. **O gato é o do próprio jogo.** O original tem um `EntityWitchCat` seu, mas aceita também a <b>jaguatirica
+   do jogo</b> — e quem herdou esse papel hoje é o gato, que até tem a variante **preta** que um gato de bruxa
+   pede. Portar um bicho novo cuja única diferença é ser sempre preto, num jogo que já tem gatos pretos, seria
+   peso sem ganho.
+2. **O macaco-voador fica de fora.** Ele está no original, mas **não é familiar**: não entra no
+   `canBecomeFamiliar` nem dá maestria nenhuma. É outra coisa, para outra fatia.
+3. **As animações são as do jogo, não as do original.** Lá há contas sobre os campos do bicho de 2014 — a
+   coruja abre as asas quando voa. Aqui ficam a cabeça que acompanha quem olha e o passo. É menos do que o
+   original fazia.
+
+**O espelho, outra vez.** Os dois modelos ligam o `mirror` em cada parte, mas só vale onde é ligado **antes**
+das caixas: na cabeça e nas pernas do sapo, e na cabeça da coruja. Nas outras partes é o espelho morto que este
+porte já encontrou às centenas, e aqui ele está só onde de facto valia.
+
+**Guardas:** `OccultaFamiliarGameTest`, com cinco — os três números do original e as três listas de doze nomes;
+só domado e só dos três feitios vira familiar (e o **lobo** é a prova pelo avesso: domável, do jogo, e não
+serve); vincular dá nome e é **um de cada vez**; cada bicho destranca a sua maestria **e só a sua**; e quem cai
+perde o fio sem perder o bicho.
+
+**A foto:** os três lado a lado — o gato do jogo e os dois do ofício.

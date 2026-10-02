@@ -51,9 +51,8 @@ import net.minecraft.world.phys.Vec3;
  * <p>Trinta de vida, atira poções como a bruxa do próprio jogo, e <b>não ataca quem não a ataca</b>. Mas quem a
  * enganar — aceitar e trazer o pedido com o coven já cheio — faz dela inimiga, e aí ela vira.
  *
- * <p><b>Uma costura declarada:</b> no original ela só negocia com quem tem um <b>familiar</b> acordado. Os
- * familiares são a fatia seguinte deste porte; até lá o {@link #temFamiliar} responde sempre que sim. Quando
- * eles chegarem, é essa a única linha que muda.
+ * <p><b>Ela só negocia com quem tem familiar</b>, como no original. Isto esteve costurado — um método que
+ * respondia sempre que sim — enquanto os familiares não existiam; com a fatia deles, a tranca ficou de pé.
  */
 public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
     /** As cinco caras do original. */
@@ -122,14 +121,14 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
     // ------------------------------------------------------------------ a conversa
 
     /**
-     * Se esta pessoa pode ter coven.
+     * Se esta pessoa pode ter coven: ela só negocia com quem tem <b>familiar</b>.
      *
-     * <p><b>A costura dos familiares.</b> No original ela recusa quem não tem um familiar acordado, e os
-     * familiares ainda não estão portados. Enquanto não estiverem, isto responde sempre que sim; quando
-     * chegarem, é aqui que a tranca do original volta — e em mais lado nenhum.
+     * <p>Esta era a costura que a fatia da Bruxa do Coven deixou — um método que respondia sempre que sim,
+     * porque os familiares ainda não existiam. <b>Agora existem</b>, e a tranca do original está de pé: foi a
+     * única linha que mudou, como estava escrito que seria.
      */
     private static boolean temFamiliar(Player quem) {
-        return true;
+        return net.thaumcraft.occulta.familiar.Familiars.temAlgum(quem);
     }
 
     @Override

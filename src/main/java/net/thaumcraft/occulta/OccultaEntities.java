@@ -106,6 +106,22 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.coven.CovenWitchEntity::attributes))
                     .sized(0.6f, 1.95f).eyeHeight(1.62f).clientTrackingRange(8));
 
+    /** O <b>Sapo</b>: o familiar do cozimento. */
+    public static final EntityType<net.thaumcraft.occulta.familiar.ToadEntity> TOAD =
+            register("toad", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.familiar.ToadEntity::new, MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.familiar.ToadEntity::attributes))
+                    .sized(0.8f, 0.8f).eyeHeight(0.6f).clientTrackingRange(8));
+
+    /** E a <b>Coruja</b>: a da vassoura, que ainda não tem vassoura. */
+    public static final EntityType<net.thaumcraft.occulta.familiar.OwlEntity> OWL =
+            register("owl", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.familiar.OwlEntity::new, MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.familiar.OwlEntity::attributes))
+                    .sized(0.6f, 0.8f).eyeHeight(0.6f).clientTrackingRange(8));
+
     private OccultaEntities() {
     }
 
@@ -134,6 +150,11 @@ public final class OccultaEntities {
                 .register(VILLAGE_GUARD, net.thaumcraft.occulta.village.VillageGuardEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(COVEN_WITCH, net.thaumcraft.occulta.coven.CovenWitchEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(TOAD, net.thaumcraft.occulta.familiar.ToadEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(OWL, net.thaumcraft.occulta.familiar.OwlEntity.attributes());
         net.thaumcraft.occulta.coven.Coven.init();
+        net.thaumcraft.occulta.familiar.FamiliarData.init();
     }
 }

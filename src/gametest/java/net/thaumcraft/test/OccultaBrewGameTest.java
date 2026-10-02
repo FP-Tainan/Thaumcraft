@@ -180,7 +180,7 @@ public class OccultaBrewGameTest {
         BlockPos ondeCom = helper.absolutePos(new BlockPos(3, 2, 1));
 
         // frio não se engarrafa
-        if (!semPoder.bottle(level, ondeSem).isEmpty()) helper.fail("caldeirão frio não dá frasco nenhum");
+        if (!semPoder.bottle(level, ondeSem, null).isEmpty()) helper.fail("caldeirão frio não dá frasco nenhum");
 
         // espera-se ferver de uma vez: dentro de um succeedWhen, um helper.fail seria engolido como "ainda não"
         helper.runAfterDelay(WitchesCauldronBlockEntity.TICKS_TO_BOIL + 20, () -> {
@@ -193,14 +193,14 @@ public class OccultaBrewGameTest {
             comPoder.addItem(new ItemStack(Items.NETHER_WART));
             comPoder.addItem(new ItemStack(Items.SPIDER_EYE));
             if (comPoder.brewPower() != 50) helper.fail("este cozimento pede cinquenta de poder");
-            if (!comPoder.bottle(level, ondeCom).isEmpty()) {
+            if (!comPoder.bottle(level, ondeCom, null).isEmpty()) {
                 helper.fail("sem altar por perto, o cozimento que pede poder não sai");
             }
 
             // e o que não pede nada sai
             semPoder.addItem(new ItemStack(OccultaItems.MANDRAKE_ROOT));
             if (semPoder.brewPower() != 0) helper.fail("a raiz de mandrágora não custa poder nenhum");
-            ItemStack frasco = semPoder.bottle(level, ondeSem);
+            ItemStack frasco = semPoder.bottle(level, ondeSem, null);
             if (frasco.isEmpty()) {
                 helper.fail("sem poder pedido, o frasco sai");
                 return;

@@ -27,6 +27,7 @@ public final class Occulta {
         OccultaBlocks.init();
         OccultaEntities.init();
         net.thaumcraft.occulta.village.VillagePieces.init();
+        net.thaumcraft.occulta.familiar.FamiliarEvents.init();
         OccultaItems.init();
         OccultaAspects.init();
         OccultaGrassSeeds.init();
