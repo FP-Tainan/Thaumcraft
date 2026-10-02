@@ -40,7 +40,7 @@ public class OccultaPortalClientTest implements FabricClientGameTest {
                         mundo.setBlockAndUpdate(pé.offset(l, y, 0), Blocks.AIR.defaultBlockState());
                     }
                 }
-                // e acende-se, como o Espírito Fluente acenderia do outro lado
+                // e se acende, como o Espírito Fluente acenderia do outro lado
                 SpiritPortalBlock.tryToCreate(mundo, pé.above());
                 if (!mundo.getBlockState(pé.above()).is(OccultaBlocks.SPIRIT_PORTAL)) {
                     throw new IllegalStateException("o portal devia ter acendido");

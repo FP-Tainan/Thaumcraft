@@ -25,10 +25,10 @@ import java.util.Set;
  * O Monólito: o {@code EntityMonolith} das Portas Dimensionais.
  *
  * <p>Uma lousa preta que paira nos Reinos Fragmentados e no Limbo, e que não faz nada senão olhar. Quanto mais
- * tempo se fica no campo de vista dela, mais ela abre o olho — e chegando ao fim, quem estava a olhar acorda no
+ * tempo se fica no campo de vista dela, mais ela abre o olho — e chegando ao fim, quem estava olhando acorda no
  * Limbo, a setecentos blocos de altura, a cair.
  *
- * <p>Não se mata, não se empurra, não se atravessa e não morre: o original dá-lhe 57005 de vida e diz que nunca
+ * <p>Não se mata, não se empurra, não se atravessa e não morre: o original lhe dá 57005 de vida e diz que nunca
  * está viva. Fora dos mundos do ramo, ela some.
  */
 public class MonolithEntity extends Mob implements Enemy {
@@ -163,7 +163,7 @@ public class MonolithEntity extends Mob implements Enemy {
                 SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 13.0f, 1.0f);
     }
 
-    /** Ela vira-se para quem a olha, e inclina-se. */
+    /** Ela se vira para quem a olha, e se inclina. */
     private void facePlayer(Player quem) {
         double dx = quem.getX() - this.getX();
         double dz = quem.getZ() - this.getZ();

@@ -245,7 +245,7 @@ public class WitchesOvenBlockEntity extends BaseContainerBlockEntity {
     /**
      * O {@code generateByProduct}: com sorte, e havendo pote, o que queimou deixa o cheiro dele num fumo.
      *
-     * <p>A sorte é três décimos, mais o que os funis dos lados acrescentam. O pote gasta-se.
+     * <p>A sorte é três décimos, mais o que os funis dos lados acrescentam. O pote se gasta.
      */
     private void fume(Level level, BlockPos pos, BlockState state) {
         if (this.items.get(JARS).isEmpty()) return;

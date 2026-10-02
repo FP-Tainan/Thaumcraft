@@ -44,7 +44,7 @@ import java.util.UUID;
  * O Reflexo: o {@code EntityReflection} do Witchery — o demônio que mora no espelho.
  *
  * <p>Quem passa à frente de um espelho <b>habitado</b> cai na cela dele no Mundo do Espelho, e é ele que a guarda.
- * E ele guarda-a <b>com a cara de quem entrou</b>: veste a armadura dessa pessoa, pega na melhor arma que ela
+ * E ele a guarda <b>com a cara de quem entrou</b>: veste a armadura dessa pessoa, pega na melhor arma que ela
  * trouxer e copia os efeitos que ela tiver. Bater nele é bater em si mesmo.
  *
  * <p>Cem de vida, e <b>nenhuma pancada lhe tira mais de seis</b>: não se mata num golpe, mata-se com paciência.
@@ -138,7 +138,7 @@ public class ReflectionEntity extends Monster implements RangedAttackMob {
     /**
      * Morto o último Reflexo de uma cela, o espelho do outro lado fica vazado: o {@code demonSlain} do original.
      *
-     * <p>Olha-se o espelho selado da cela onde ele caiu, lê-se a ligação dele e põe-se a marca no espelho de lá.
+     * <p>Olha-se o espelho selado da cela onde ele caiu, lê-se a ligação dele e se põe a marca no espelho de lá.
      */
     public static void demonSlain(ServerLevel mundo, BlockPos onde) {
         if (!MirrorWorld.is(mundo)) return;

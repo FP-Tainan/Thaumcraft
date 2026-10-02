@@ -15,7 +15,7 @@ import java.util.Optional;
 /**
  * O que fica guardado em quem anda em espírito: o {@code WITCSpiritWorld} do {@code Infusion} do original.
  *
- * <p>Andar em espírito não é viajar: é <b>deitar-se</b>. O corpo fica onde estava e o espírito levanta-se — e por
+ * <p>Andar em espírito não é viajar: é <b>deitar-se</b>. O corpo fica onde estava e o espírito se levanta — e por
  * isso quem anda tem <b>duas de cada coisa</b>: dois inventários, duas vidas, duas fomes. Esta é a metade que
  * fica dormindo enquanto a outra anda.
  *

@@ -65,7 +65,7 @@ public sealed interface CovenQuest {
         }
     }
 
-    /** E a de buscar: ela pede um tanto de alguma coisa, e conta-se na mão de quem volta. */
+    /** E a de buscar: ela pede um tanto de alguma coisa, e se conta na mão de quem volta. */
     record Busca(String chave, net.minecraft.world.item.Item coisa, int quantos) implements CovenQuest {
         @Override
         public boolean serve(ItemStack naMao) {

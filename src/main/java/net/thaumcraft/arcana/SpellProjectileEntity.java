@@ -98,7 +98,7 @@ public class SpellProjectileEntity extends Projectile {
         this.heading(mx, my, mz, velocidade);
     }
 
-    /** O {@code setSpellProjectileHeading}: aponta e dá-lhe aquela velocidade. */
+    /** O {@code setSpellProjectileHeading}: aponta e lhe dá aquela velocidade. */
     public void heading(double mx, double my, double mz, double velocidade) {
         Vec3 rumo = new Vec3(mx, my, mz).normalize().scale(velocidade);
         this.setDeltaMovement(rumo);

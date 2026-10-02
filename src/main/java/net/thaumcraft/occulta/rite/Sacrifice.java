@@ -33,7 +33,7 @@ public sealed interface Sacrifice {
     /**
      * As coisas no chão: o {@code SacrificeItem}.
      *
-     * <p>Guarda os <b>itens</b>, e não pilhas prontas: a lista dos ritos monta-se quando o mod acorda, e nessa
+     * <p>Guarda os <b>itens</b>, e não pilhas prontas: a lista dos ritos se monta quando o mod acorda, e nessa
      * hora ainda não há pilha que se possa fazer. Cada pedido é de <b>um</b> — que é como estão todos no
      * original; para pedir dois, põe-se o mesmo item duas vezes.
      */

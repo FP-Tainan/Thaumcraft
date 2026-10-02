@@ -95,14 +95,14 @@ public class ShatteredGameTest {
 
         // bater nele só o irrita
         lousa.hurtServer(limbo, lousa.damageSources().generic(), 10.0f);
-        if (lousa.aggro() != 0 && lousa.face() == 0) helper.fail("bater nele abre-lhe o olho");
+        if (lousa.aggro() != 0 && lousa.face() == 0) helper.fail("bater nele lhe abre o olho");
 
         lousa.discard();
         net.thaumcraft.world.DynamicDimensions.remove(helper.getLevel().getServer(), ShatteredRealms.LIMBO);
         helper.succeed();
     }
 
-    /** O Limbo abre-se, tem chão de tecido eterno e terra de tecido desfiado por cima. */
+    /** O Limbo se abre, tem chão de tecido eterno e terra de tecido desfiado por cima. */
     @GameTest
     public void theLimboIsMadeOfFabric(GameTestHelper helper) {
         var server = helper.getLevel().getServer();

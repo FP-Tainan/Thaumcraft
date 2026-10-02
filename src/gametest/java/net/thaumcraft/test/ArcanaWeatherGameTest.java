@@ -49,7 +49,7 @@ public class ArcanaWeatherGameTest {
         helper.succeed();
     }
 
-    /** A Nevasca fere de gelo quem estiver dentro, e prende-o. */
+    /** A Nevasca fere de gelo quem estiver dentro, e o prende. */
     @GameTest(maxTicks = 100)
     public void theBlizzardFreezesWhoIsInside(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
@@ -70,7 +70,7 @@ public class ArcanaWeatherGameTest {
         nevasca.tick();
 
         if (porco.getHealth() >= tinha) helper.fail("a Nevasca fere quem está dentro");
-        if (!porco.hasEffect(ArcanaEffects.FROST_SLOW)) helper.fail("e prende-o com o Gelado");
+        if (!porco.hasEffect(ArcanaEffects.FROST_SLOW)) helper.fail("e o prende com o Gelado");
         if (ArcanaEffects.grau(porco, ArcanaEffects.FROST_SLOW) != SpellEffectEntity.BLIZZARD_HOLD_LEVEL) {
             helper.fail("e no grau mais forte que ele tem");
         }

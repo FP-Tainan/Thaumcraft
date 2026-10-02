@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * A Prateleira de Bonecas: o {@code BlockPoppetShelf} do Witchery.
  *
- * <p>Prega-se na parede e guardam-se bonecas nela. O que está aqui vale para quem a boneca guarda, esteja ele
+ * <p>Prega-se na parede e se guardam bonecas nela. O que está aqui vale para quem a boneca guarda, esteja ele
  * onde estiver.
  */
 public class PoppetShelfBlock extends BaseEntityBlock {

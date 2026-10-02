@@ -118,7 +118,7 @@ public final class RiftCrackRenderer {
 
     /**
      * As estrelas presas na pele: quadradinhos brancos a piscar, cada um no seu compasso, levados pelo mesmo
-     * esvoaçar do corpo — senão descolavam-se dele quando a gavinha ondula.
+     * esvoaçar do corpo — senão se descolavam dele quando a gavinha ondula.
      */
     private static void stars(PoseStack pose, SubmitNodeCollector collector, RiftTendril.Limb braço,
                               float comprido, float tempo, double[] ondas, double cos, double sin, double escala,

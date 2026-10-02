@@ -42,7 +42,7 @@ import java.util.Set;
  * <ol>
  *   <li><b>De costas</b>: dois espelhos vazados frente a frente do outro lado da parede, até trinta e duas casas
  *       de distância, furam-na;</li>
- *   <li><b>de cela em cela</b>, dentro do Mundo do Espelho, com um espelho posto por quem joga — e paga-se três
+ *   <li><b>de cela em cela</b>, dentro do Mundo do Espelho, com um espelho posto por quem joga — e se paga três
  *       mil de poder de altar;</li>
  *   <li><b>em prumo</b>: dois espelhos vazados um acima do outro, até dezesseis casas, furam o chão;</li>
  *   <li><b>de mundo</b>: o espelho habitado leva à cela dele no Mundo do Espelho, e o selado da cela traz de
@@ -244,7 +244,7 @@ public final class MirrorTravel {
         double z = link.pos().getZ() + 0.5;
         float face = jogador.getYRot();
 
-        // o espelho do outro lado diz de que lado dele se sai — e fecha-se por três segundos
+        // o espelho do outro lado diz de que lado dele se sai — e se fecha por três segundos
         BlockState lá = destino.getBlockState(link.pos());
         if (lá.getBlock() instanceof MirrorBlock) {
             Direction mside = lá.getValue(MirrorBlock.FACING);

@@ -26,7 +26,7 @@ import java.util.List;
  * quanto cada uso custa. O vis é contado em centésimos, como no original — uma haste de vinte e cinco
  * guarda dois mil e quinhentos, e é por isso que mexer com ela nunca dá números redondos.
  *
- * <p>Para enchê-la, aponta-se para um nó de aura e segura-se o botão: a cada vez ela puxa um ponto de um
+ * <p>Para enchê-la, aponta-se para um nó de aura e se segura o botão: a cada vez ela puxa um ponto de um
  * aspecto que ainda caiba nela, e o nó vai secando. As hastes feitas de coisa primordial — obsidiana,
  * blaze, gelo, quartzo, osso e junco — recolhem sozinhas um pouquinho do aspecto delas, mas só até um
  * décimo do que cabem.

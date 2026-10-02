@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  *
  * <p><b>Isto é do porte, e não do original:</b> nem o Thaumcraft nem as Portas Dimensionais têm estes óculos. A
  * ideia é de quem joga, e o que ela resolve é um buraco que os dois mods juntos abriam — nas Portas Dimensionais
- * as fendas veem-se desde o primeiro dia, e então nada há para descobrir; aqui elas estão lá desde o primeiro
+ * as fendas se veem desde o primeiro dia, e então nada há para descobrir; aqui elas estão lá desde o primeiro
  * dia mas só se veem depois de se aprender a ver, que é o que o Thaumcraft faz com tudo o mais.
  */
 public class VeilGogglesItem extends GogglesItem {

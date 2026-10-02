@@ -34,7 +34,7 @@ import java.util.function.Supplier;
  *   <li><b>a farinha de osso</b> adianta de duas idades até ao fim nas que aceitam, e só uma nas que não
  *       ({@code canFertilize} do original) — nenhuma a recusa de todo;</li>
  *   <li>a <b>mindrake</b> cresce uma vez e meia mais devagar que as outras;</li>
- *   <li>a <b>losna</b> empilha-se: feita, sobe outra em cima dela;</li>
+ *   <li>a <b>losna</b> se empilha: feita, sobe outra em cima dela;</li>
  *   <li>e a <b>alcachofra-d'água</b> não vai em terra: ela planta na água.</li>
  * </ul>
  *

@@ -26,7 +26,7 @@ public final class OccultaTable {
     }
 
     public static void research() {
-        // o degrau de entrada: o ramo abre-se a quem topar com uma tradição de bruxa
+        // o degrau de entrada: o ramo se abre a quem topar com uma tradição de bruxa
         ThaumcraftApi.research("AO_OLD_WAYS", Occulta.CATEGORY)
                 .at(0, -2)
                 .icon(() -> new ItemStack(OccultaItems.MANDRAKE_ROOT))

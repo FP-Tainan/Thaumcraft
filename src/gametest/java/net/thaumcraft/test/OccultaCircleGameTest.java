@@ -63,7 +63,7 @@ public class OccultaCircleGameTest {
         helper.succeed();
     }
 
-    /** Os três anéis contam-se como o desenho do original manda. */
+    /** Os três anéis se contam como o desenho do original manda. */
     @GameTest
     public void theThreeRingsAreCounted(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();

@@ -14,7 +14,7 @@ import net.minecraft.tags.StructureTags;
  * pergunta ao mundo quais são as ruas da aldeia à volta dele. Posta à mão, a aldeia não tem ruas que ele possa
  * achar, e ele desiste — que é o certo, e foi o que a primeira tentativa desta foto mostrou.
  *
- * <p>Por isso aqui se pede ao gerador a aldeia mais perto, vai-se até ela e espera-se. O marcador aguarda
+ * <p>Por isso aqui se pede ao gerador a aldeia mais perto, vai-se até ela e se espera. O marcador aguarda
  * quarenta tiques depois de o trecho nascer; a espera larga é para a aldeia inteira assentar antes.
  *
  * <p><b>E o mundo é um mundo normal, de semente fixa.</b> O mundo das provas de cliente é <b>superplano</b> por

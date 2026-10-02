@@ -14,7 +14,7 @@ import java.util.List;
  * O desfiar do Limbo: o {@code LimboDecay} das Portas Dimensionais.
  *
  * <p>Nada do que cai lá dentro fica como era. Cada bloco desce um degrau de cada vez — pedra, pedregulho,
- * cascalho, tecido desfiado — e o que não é cheio some. Do tecido desfiado o desfiar espalha-se para os seis
+ * cascalho, tecido desfiado — e o que não é cheio some. Do tecido desfiado o desfiar se espalha para os seis
  * vizinhos, metade das vezes.
  *
  * <p>Não se desfaz o tecido desfiado nem o eterno, nem as portas, nem as fendas: são o que fica de pé no Limbo.

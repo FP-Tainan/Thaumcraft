@@ -31,7 +31,7 @@ import java.util.Random;
  *
  * <p>São dezesseis panos da mesma folha, um por cima do outro, cada um com a sua cor, o seu tamanho, o seu giro e
  * o seu correr no tempo — o primeiro por baixo, com a tinta normal, e os outros quinze a somar luz. O desenho de
- * cada pano não sai do pano: sai de onde a casa está <i>diante da câmara</i>, e por isso o fundo do vão mexe-se
+ * cada pano não sai do pano: sai de onde a casa está <i>diante da câmara</i>, e por isso o fundo do vão se mexe
  * quando quem joga anda, e parece um túnel, e não um papel colado.
  *
  * <p>O original faz isso com o {@code glTexGen} de olho, que dá as coordenadas por pixel. Hoje não há {@code
@@ -105,7 +105,7 @@ public class DimensionalPortalRenderer
         float size;
         net.minecraft.core.BlockPos onde = net.minecraft.core.BlockPos.ZERO;
 
-        /** E se esta fenda aparece a quem está a olhar: as que nasceram com o mundo pedem os Óculos do Véu. */
+        /** E se esta fenda aparece a quem está olhando: as que nasceram com o mundo pedem os Óculos do Véu. */
         boolean seen = true;
 
         /** E se é uma Porta Antiga, que não tem desenho de bloco nenhum e é este que a põe de pé. */
@@ -156,7 +156,7 @@ public class DimensionalPortalRenderer
                 net.minecraft.client.Minecraft.getInstance().player, fenda.natural());
         if (!state.door || fenda.getLevel() == null) return;
 
-        // o vão fica no buraco da porta, e não na folha: é a forma da porta FECHADA que o diz. Assim ele cola-se
+        // o vão fica no buraco da porta, e não na folha: é a forma da porta FECHADA que o diz. Assim ele se cola
         // à folha enquanto ela está fechada e fica no lugar quando ela abre, que é o que o original faz — lá o
         // vão é um bloco à parte, e não a porta.
         var fechada = bloco.hasProperty(DoorBlock.OPEN) ? bloco.setValue(DoorBlock.OPEN, false) : bloco;
@@ -209,7 +209,7 @@ public class DimensionalPortalRenderer
             return;
         }
 
-        // a Porta Antiga não tem desenho de bloco: a folha dela põe-se de pé aqui, e só a quem a possa ver
+        // a Porta Antiga não tem desenho de bloco: a folha dela se põe de pé aqui, e só a quem a possa ver
         if (state.ancient) sheet(state, pose, collector);
 
         float tempo = (float) (System.currentTimeMillis() % 200000L) / 200000.0f;
@@ -240,7 +240,7 @@ public class DimensionalPortalRenderer
     }
 
     /**
-     * A folha da Porta Antiga: uma caixa de três dedos de grossura, com a folha de dezasseis por trinta e dois
+     * A folha da Porta Antiga: uma caixa de três dedos de grossura, com a folha de dezesseis por trinta e dois
      * nas duas caras e uma tira dela nas beiras.
      *
      * <p>Vai de recorte, e não de tinta cheia: onde a folha é buraco — a racha — não se desenha nada, e o que se
@@ -307,7 +307,7 @@ public class DimensionalPortalRenderer
                              float medida, float cosGiro, float sinGiro, float corre, int argb) {
         // de que lado a folha olha, para a conta do desenho sair como no original
         Direction olhar = state.thinOnZ ? Direction.NORTH : Direction.WEST;
-        // um pano só, no meio da folha da porta. Eram dois, um em cada cara dela, e de lado viam-se os dois —
+        // um pano só, no meio da folha da porta. Eram dois, um em cada cara dela, e de lado se viam os dois —
         // o de trás por detrás do da frente, a três dedos um do outro. Como o pano vai desenhado nas duas
         // voltas, um chega para os dois lados.
         float fundura = (state.minFundo + state.maxFundo) / 2.0f;
@@ -325,7 +325,7 @@ public class DimensionalPortalRenderer
     /**
      * Um canto do pano, com o desenho tirado de onde ele está diante da câmara.
      *
-     * <p>É a conta do {@code glTexGen} do original: de um lado tira-se o alto e o través, do outro a fundura, e o
+     * <p>É a conta do {@code glTexGen} do original: de um lado se tira o alto e o través, do outro a fundura, e o
      * quarto valor — o que o original chama Q — divide os dois primeiros. É essa divisão que faz o fundo parecer
      * ir longe. Depois vem a matriz de textura do original, na ordem dele: meio, giro, meio, medida e o correr.
      */

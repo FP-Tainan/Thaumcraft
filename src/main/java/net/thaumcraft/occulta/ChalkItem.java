@@ -21,7 +21,7 @@ import java.util.function.Supplier;
  * <p>Risca-se o chão com ele. O <b>giz dourado</b> risca o glifo do meio, que é onde o ritual acontece; os outros
  * três riscam os glifos dos anéis, cada risco com um dos doze desenhos, sorteado.
  *
- * <p>Riscar por cima de um glifo já riscado <b>troca-o</b> pelo deste giz — é assim que se muda um anel de giz
+ * <p>Riscar por cima de um glifo já riscado <b>o troca</b> pelo deste giz — é assim que se muda um anel de giz
  * sem o apagar primeiro. E riscar por cima de um do mesmo giz só troca o desenho.
  *
  * <p>Cada risco gasta um ponto do giz, que dura sessenta e quatro.

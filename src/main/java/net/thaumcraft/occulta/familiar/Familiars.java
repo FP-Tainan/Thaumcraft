@@ -147,7 +147,7 @@ public final class Familiars {
      * O familiar ia morrer.
      *
      * <p><b>Ele não morre.</b> Se o dono estiver no mesmo mundo, é o dono que cai — o dobro da vida dele —, e o
-     * vínculo desfaz-se. Sem dono por perto, o bicho fica com um de vida e continua.
+     * vínculo se desfaz. Sem dono por perto, o bicho fica com um de vida e continua.
      *
      * @return verdadeiro se a morte foi impedida
      */
@@ -172,7 +172,7 @@ public final class Familiars {
         return null;
     }
 
-    /** E quando quem o tem cai, o vínculo desfaz-se — o bicho fica. */
+    /** E quando quem o tem cai, o vínculo se desfaz — o bicho fica. */
     public static void doneMorreu(Player gente) {
         desfaz(gente);
     }

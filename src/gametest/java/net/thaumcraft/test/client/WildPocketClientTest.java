@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * Umas quantas salas do original, uma a uma, para se ver que a planificação da 1.12 saiu direita.
  *
- * <p>Duas coisas aqui custaram a achar. A primeira: <b>primeiro leva-se quem joga ao lugar, e só depois se cava a
- * sala</b> — um bolso cavado num pedaço de mundo que ninguém está a segurar pode ir-se embora antes de alguém lá
+ * <p>Duas coisas aqui custaram a achar. A primeira: <b>primeiro se leva quem joga ao lugar, e só depois se cava a
+ * sala</b> — um bolso cavado num pedaço de mundo que ninguém está segurando pode ir embora antes de alguém lá
  * chegar. A segunda: quem espera a sala nascer tem de estar de <b>espectador</b>, senão cai no vazio no segundo
  * que passa entre chegar e a sala aparecer, e a foto sai preta.
  *
@@ -43,7 +43,7 @@ public class WildPocketClientTest implements FabricClientGameTest {
             singleplayer.getConnection().waitForChunksRender();
             var server = singleplayer.getServer();
             // espectador: sem gravidade, quem espera a sala nascer não cai no vazio antes de ela chegar. E da
-            // consola o comando precisa de dizer a quem se aplica — sem o @p ele queixa-se e não faz nada
+            // consola o comando precisa de dizer a quem se aplica — sem o @p ele se queixa e não faz nada
             server.runCommand("gamemode spectator @p");
             server.runOnServer(Pockets::level);
 

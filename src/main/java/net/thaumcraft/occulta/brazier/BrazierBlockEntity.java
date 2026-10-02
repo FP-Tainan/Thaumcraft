@@ -25,7 +25,7 @@ import java.util.List;
  * <p>Três casas para o que se queima e uma quarta que guarda a <b>cinza</b> — e é essa quarta que diz se ele está
  * <b>aceso</b>: sem ela ele é um cesto de ferro com coisas dentro; com ela, arde.
  *
- * <p>Acende-se com <b>isqueiro</b> ou com <b>redstone</b>, e apaga-se com um <b>balde de água</b> ou um frasco
+ * <p>Acende-se com <b>isqueiro</b> ou com <b>redstone</b>, e se apaga com um <b>balde de água</b> ou um frasco
  * vazio — que devolvem o que estava dentro. Quebrado <b>aceso</b>, larga cinza e mais nada.
  */
 public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer {
@@ -108,7 +108,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
         return false;
     }
 
-    /** A receita que ele está a queimar, ou nada. */
+    /** A receita que ele está queimando, ou nada. */
     public BrazierRecipes.@Nullable Recipe recipe() {
         return BrazierRecipes.find(this.inside());
     }
@@ -119,7 +119,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
         BrazierRecipes.Recipe receita = this.recipe();
 
         if (receita == null || !this.burning()) {
-            // acendeu-se sem receita: a cinza apaga-se sozinha, com um chiado
+            // acendeu-se sem receita: a cinza se apaga sozinha, com um chiado
             if (!this.getItem(ASH).isEmpty() && receita == null) {
                 this.douse();
                 level.sendParticles(net.minecraft.core.particles.ParticleTypes.SMOKE,

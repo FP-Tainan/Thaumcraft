@@ -94,7 +94,7 @@ public record ScytheItemRenderer(boolean bone) implements SpecialModelRenderer<U
                        int light, int overlay, boolean foil, int tint) {
         Identifier folha = this.bone ? SCYTHE_BONE : SCYTHE;
         pose.pushPose();
-        // o modelo desenha-se a partir do meio da casa; o que o põe de pé e no tamanho é o arquivo do item
+        // o modelo se desenha a partir do meio da casa; o que o põe de pé e no tamanho é o arquivo do item
         pose.translate(0.5f, 0.5f, 0.5f);
         scythe(pose, collector, folha, light, overlay);
         pose.popPose();

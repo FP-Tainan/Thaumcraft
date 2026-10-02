@@ -18,7 +18,7 @@ import net.thaumcraft.occulta.TaglockItem;
  * As bonecas: o vínculo que as prende, o que elas guardam e a prateleira que as faz valer de longe.
  */
 public class OccultaPoppetGameTest {
-    /** O frasco enche-se de quem se toca, e diz de quem é. */
+    /** O frasco se enche de quem se toca, e diz de quem é. */
     @GameTest
     public void theTaglockTakesAName(GameTestHelper helper) {
         var quem = helper.makeMockPlayer(GameType.SURVIVAL);
@@ -34,7 +34,7 @@ public class OccultaPoppetGameTest {
         helper.succeed();
     }
 
-    /** A boneca da terra toma a queda que mataria, e desfaz-se. */
+    /** A boneca da terra toma a queda que mataria, e se desfaz. */
     @GameTest
     public void theEarthPoppetTakesTheFall(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
@@ -53,7 +53,7 @@ public class OccultaPoppetGameTest {
         for (int i = 0; i < quem.getInventory().getContainerSize(); i++) {
             if (quem.getInventory().getItem(i).getItem() instanceof PoppetItem) aindaTem = true;
         }
-        if (aindaTem) helper.fail("e a boneca desfaz-se ao valer");
+        if (aindaTem) helper.fail("e a boneca se desfaz ao valer");
         helper.succeed();
     }
 
@@ -119,7 +119,7 @@ public class OccultaPoppetGameTest {
         if (!Poppets.guard(level, quem, level.damageSources().drown(), 10.0f)) {
             helper.fail("a boneca na prateleira guarda o dono, esteja ele onde estiver");
         }
-        if (!prateleira.getItem(0).isEmpty()) helper.fail("e desfaz-se ali mesmo");
+        if (!prateleira.getItem(0).isEmpty()) helper.fail("e se desfaz ali mesmo");
 
         level.setBlockAndUpdate(onde, Blocks.AIR.defaultBlockState());
         helper.succeed();
@@ -145,7 +145,7 @@ public class OccultaPoppetGameTest {
         helper.succeed();
     }
 
-    /** A da ferramenta conserta o que está quase a partir. */
+    /** A da ferramenta conserta o que está quase quebrando. */
     @GameTest
     public void theToolPoppetMendsWhatIsWorn(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
@@ -165,7 +165,7 @@ public class OccultaPoppetGameTest {
         Poppets.mend(level, quem);
         if (picareta.getDamageValue() != 0) helper.fail("com a boneca, a picareta volta a nova");
 
-        // e a boneca gasta-se inteira num conserto só: mil de mil, que é a conta do original
+        // e a boneca se gasta inteira num conserto só: mil de mil, que é a conta do original
         boolean aindaTem = false;
         for (int i = 0; i < quem.getInventory().getContainerSize(); i++) {
             if (quem.getInventory().getItem(i).getItem() instanceof PoppetItem) aindaTem = true;
@@ -193,9 +193,9 @@ public class OccultaPoppetGameTest {
             helper.fail("uma boneca solta não tem a quem chegar");
         }
 
-        // a agulha de osso gasta-se ao espetar
+        // a agulha de osso se gasta ao espetar
         quemUsa.getInventory().add(new ItemStack(net.thaumcraft.mortuorum.MortuorumItems.BONE_NEEDLE));
-        if (!net.thaumcraft.occulta.Voodoo.takeNeedle(quemUsa)) helper.fail("a agulha gasta-se");
+        if (!net.thaumcraft.occulta.Voodoo.takeNeedle(quemUsa)) helper.fail("a agulha se gasta");
         if (net.thaumcraft.occulta.Voodoo.takeNeedle(quemUsa)) helper.fail("e não se gasta duas vezes");
 
         bicho.discard();

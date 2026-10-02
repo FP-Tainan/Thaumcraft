@@ -24,7 +24,7 @@ import net.thaumcraft.Thaumcraft;
  * @param burnout e quanto de desgaste há agora
  */
 public record Mana(int level, float mana, float burnout, float xp) {
-    /** A conta velha, sem experiência: continua a valer, e a experiência começa em zero. */
+    /** A conta velha, sem experiência: continua valendo, e a experiência começa em zero. */
     public Mana(int level, float mana, float burnout) {
         this(level, mana, burnout, 0.0f);
     }
@@ -144,7 +144,7 @@ public record Mana(int level, float mana, float burnout, float xp) {
     /**
      * Soma experiência mágica, subindo <b>um</b> nível se der.
      *
-     * <p><b>O que sobra perde-se</b>, e é o original: o {@code addMagicXP} zera a experiência ao subir, sem
+     * <p><b>O que sobra se perde</b>, e é o original: o {@code addMagicXP} zera a experiência ao subir, sem
      * guardar o excesso e sem tornar a olhar. Quem ganhasse de uma vez o bastante para dois níveis só
      * subiria um.
      *

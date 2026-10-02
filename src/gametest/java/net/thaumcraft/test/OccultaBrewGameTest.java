@@ -150,7 +150,7 @@ public class OccultaBrewGameTest {
         helper.succeed();
     }
 
-    /** O nome do frasco monta-se do que está dentro. */
+    /** O nome do frasco se monta do que está dentro. */
     @GameTest
     public void theNameIsBuiltFromTheBrew(GameTestHelper helper) {
         String água = Brew.name(List.of()).getString();
@@ -164,7 +164,7 @@ public class OccultaBrewGameTest {
         String dois = Brew.name(List.of(Items.NETHER_WART, Items.DIAMOND, Items.SPIDER_EYE, Items.SUGAR))
                 .getString();
         if (!dois.contains("&") && !dois.contains(" e ")) {
-            helper.fail("dois efeitos juntam-se com um \"e\"; veio " + dois);
+            helper.fail("dois efeitos se juntam com um \"e\"; veio " + dois);
         }
         helper.succeed();
     }

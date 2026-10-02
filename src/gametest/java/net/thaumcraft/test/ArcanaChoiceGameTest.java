@@ -57,7 +57,7 @@ public class ArcanaChoiceGameTest {
             helper.fail("e a cor fica escrita na etapa, e ficou " + guardada);
         }
         if (SpellFx.color(feitiço) != 2437522) {
-            helper.fail("e é com ela que o pó se pinta, e pintou-se de " + SpellFx.color(feitiço));
+            helper.fail("e é com ela que o pó se pinta, e se pintou de " + SpellFx.color(feitiço));
         }
         helper.succeed();
     }
@@ -77,12 +77,12 @@ public class ArcanaChoiceGameTest {
         helper.succeed();
     }
 
-    /** E sem a Cor, o pó continua a sair da Afinidade. */
+    /** E sem a Cor, o pó continua saindo da Afinidade. */
     @GameTest
     public void withoutTheColourTheAffinityStillPaints(GameTestHelper helper) {
         Spell fogo = Spell.of(Shapes.PROJECTILE, Essences.FIRE_DAMAGE);
         if (SpellFx.color(fogo) != net.thaumcraft.arcana.Affinity.FIRE.color) {
-            helper.fail("um feitiço de fogo pinta-se de fogo");
+            helper.fail("um feitiço de fogo se pinta de fogo");
         }
         helper.succeed();
     }
@@ -108,7 +108,7 @@ public class ArcanaChoiceGameTest {
     /** E a Mesa inteira escreve o feitiço com a cor dentro. */
     @GameTest(maxTicks = 60)
     public void thetableWritesTheColouredSpell(GameTestHelper helper) {
-        // a mesa a sério, posta no mundo da prova: ela guarda-se a si mesma e pede o bloco certo por baixo
+        // a mesa a sério, posta no mundo da prova: ela se guarda a si mesma e pede o bloco certo por baixo
         helper.setBlock(new BlockPos(2, 1, 2), net.thaumcraft.arcana.ArcanaBlocks.INSCRIPTION_TABLE);
         var tábua = helper.getBlockEntity(new BlockPos(2, 1, 2), InscriptionTableBlockEntity.class);
         if (tábua == null) {

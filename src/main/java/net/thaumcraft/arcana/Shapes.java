@@ -133,7 +133,7 @@ public final class Shapes {
      *
      * <p>Ela não procura alvo nenhum: <b>atira</b>. O feitiço inteiro entra numa entidade que voa e que, ao
      * bater, corre as Essências desta etapa e lança dali o que sobra da frase. É a Forma que faz o projétil
-     * seguido de Área explodir no sítio da batida.
+     * seguido de Área explodir no lugar da batida.
      *
      * <p>Ela lê cinco modificadores: <b>Velocidade</b> (multiplica), <b>Gravidade</b> (soma — e o valor dela é
      * negativo, que é o que faz cair), <b>Ricochete</b> e <b>Perfuração</b> (somam) e <b>Alvos Não Sólidos</b>.

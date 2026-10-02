@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 /**
  * O Cozimento do Sono: o {@code itemBrewOfSleeping} do Witchery.
  *
- * <p>Bebe-se, e dorme-se. É a porta boa para o {@linkplain SpiritWorld Mundo dos Espíritos}: o original passa-lhe
+ * <p>Bebe-se, e se dorme. É a porta boa para o {@linkplain SpiritWorld Mundo dos Espíritos}: o original lhe passa
  * uma chance de pesadelo de <b>0,998</b>, que é quase um — mas um quarto bem montado, com um Apanhador de Sonhos
  * de teia de pesadelos por perto, derruba essa conta e deixa passar o sonho bom. A Maçã do Sono passa um
  * <b>um redondo</b>, e por isso nunca se livra do pesadelo.

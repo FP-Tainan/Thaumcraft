@@ -14,7 +14,7 @@ import net.thaumcraft.Thaumcraft;
  * <p><b>Atenção ao espelho.</b> Nos dois modelos o original liga o {@code mirror} em cada parte, mas nem sempre
  * no lugar que faz diferença: ligado <b>antes</b> de uma caixa ele vale, ligado <b>depois</b> não faz nada — é
  * o espelho morto que este porte já encontrou às centenas nos modelos de 2014. Aqui o espelho está só onde ele
- * de facto valia: na cabeça e nas pernas do sapo, e na cabeça da coruja.
+ * de fato valia: na cabeça e nas pernas do sapo, e na cabeça da coruja.
  */
 public final class FamiliarModels {
     public static final ModelLayerLocation TOAD = new ModelLayerLocation(Thaumcraft.id("toad"), "main");
@@ -65,7 +65,7 @@ public final class FamiliarModels {
     /**
      * A coruja: sessenta e quatro por trinta e dois, oito caixas.
      *
-     * <p>As pernas dela são <b>filhas do corpo</b> — o original prende-as ao tronco depois de as ter feito, e
+     * <p>As pernas dela são <b>filhas do corpo</b> — o original as prende ao tronco depois de as ter feito, e
      * por isso elas andam com ele.
      */
     public static LayerDefinition owl() {

@@ -63,7 +63,7 @@ public class CrimsonGameTest {
         altar.put(new ItemStack(TCResources.get("void_seed")));
         if (!altar.hasSeed()) helper.fail("a semente devia ficar no altar");
 
-        // o original espera trezentos tiques; aqui contam-se de uma vez
+        // o original espera trezentos tiques; aqui se contam de uma vez
         for (int passo = 0; passo <= AncientAltarBlockEntity.DELAY; passo++) {
             AncientAltarBlockEntity.tick(helper.getLevel(), helper.absolutePos(onde),
                     CrimsonBlocks.ANCIENT_ALTAR.defaultBlockState(), altar);
@@ -101,7 +101,7 @@ public class CrimsonGameTest {
         if (net.thaumcraft.research.ResearchCategories.ALL.containsKey("WARFARE")) {
             helper.fail("e o ramo não tem aba própria");
         }
-        // os pais de verdade do original continuam a ser precisos, mas escondidos
+        // os pais de verdade do original continuam sendo precisos, mas escondidos
         for (String pai : new String[]{"VOIDMETAL", "ELDRITCHMINOR", "BOTTLETAINT"}) {
             if (!guerra.parentsHidden().contains(pai)) helper.fail("falta o pai escondido " + pai);
         }

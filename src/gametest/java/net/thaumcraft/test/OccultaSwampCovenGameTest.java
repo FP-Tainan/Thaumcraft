@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * O <b>Coven do Pântano</b>: a estrutura, o molde e onde ela nasce.
  *
- * <p><b>Este não é porte.</b> O Witchery não tem coven nenhum no mundo — ele dá a Bruxa do Coven e deixa-a
+ * <p><b>Este não é porte.</b> O Witchery não tem coven nenhum no mundo — ele dá a Bruxa do Coven e a deixa
  * numa cabana dentro da aldeia. O coven do pântano é acréscimo, e vai marcado como tal aqui e no
  * {@code PORTE.md}.
  */
@@ -28,11 +28,11 @@ public class OccultaSwampCovenGameTest {
     /** A estrutura existe, e é uma só peça — não cresce como aldeia. */
     @GameTest(maxTicks = 20)
     public void theCovenIsOnePieceOnly(GameTestHelper helper) {
-        var registos = helper.getLevel().registryAccess();
-        var estruturas = registos.lookupOrThrow(Registries.STRUCTURE);
+        var registros = helper.getLevel().registryAccess();
+        var estruturas = registros.lookupOrThrow(Registries.STRUCTURE);
         Structure coven = estruturas.getValueOrThrow(COVEN);
 
-        var ops = RegistryOps.create(JsonOps.INSTANCE, registos);
+        var ops = RegistryOps.create(JsonOps.INSTANCE, registros);
         var escrito = Structure.DIRECT_CODEC.encodeStart(ops, coven)
                 .getOrThrow(erro -> new AssertionError("não deu para escrever o coven: " + erro));
         int tamanho = escrito.getAsJsonObject().get("size").getAsInt();

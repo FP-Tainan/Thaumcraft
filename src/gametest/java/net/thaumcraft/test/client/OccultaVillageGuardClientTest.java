@@ -12,7 +12,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
  * Witchery, e é o que o faz ler como <b>aldeão armado</b> e não como pessoa nem como aldeão.
  *
  * <p>Duas fotos. Na primeira, <b>três guardas comuns em fila</b>: a armadura de cada um sai sorteada, e uma em
- * cinco vezes o peito e a cabeça vêm de malha em vez de couro — com três lado a lado costuma-se ver a diferença,
+ * cinco vezes o peito e a cabeça vêm de malha em vez de couro — com três lado a lado se costuma ver a diferença,
  * que é justamente o que faz uma aldeia guardada não parecer uniformizada.
  *
  * <p>Na segunda, um guarda <b>de frente e de perto</b>, que é onde a mistura se lê: a cabeça alta com o nariz, a

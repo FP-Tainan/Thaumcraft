@@ -29,7 +29,7 @@ import java.util.Set;
  * monte — o original pede ao mundo de cima o gerador dele e usa o mesmo —, mas o céu é baço, não chove e nada
  * nasce ali senão o que só nasce em sonho: o <b>Algodão Sonhador</b> e a <b>Erva Cintilante</b>.
  *
- * <p>Quem vai para lá <b>não viaja</b>: deita-se. O corpo fica onde estava, em carne, e o espírito levanta-se —
+ * <p>Quem vai para lá <b>não viaja</b>: deita-se. O corpo fica onde estava, em carne, e o espírito se levanta —
  * com <b>outra</b> mochila, <b>outra</b> vida e <b>outra</b> fome. Da mochila de cá só passam duas coisas, e são
  * as do original: a <b>Agulha de Gelo</b>, que é como se acorda, e o <b>Mutandis</b>. De lá para cá passam o que
  * só existe lá: os dois algodões, a Fome Melíflua, a Agulha de Gelo e o que se apanhou de espírito.

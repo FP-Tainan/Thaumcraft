@@ -53,7 +53,7 @@ public final class ArcanaEffects {
     /**
      * Um efeito de <b>degraus</b>: o valor dele não é uma conta do grau, é uma tabela.
      *
-     * <p>O jogo de hoje sabe pôr um modificador de atributo num efeito, mas multiplica-o pelo grau. O original
+     * <p>O jogo de hoje sabe pôr um modificador de atributo num efeito, mas o multiplica pelo grau. O original
      * não multiplica nada: ele escolhe um de três números escritos à mão. É isto.
      */
     private static class Degraus extends MobEffect {
@@ -339,7 +339,7 @@ public final class ArcanaEffects {
     }
 
     /**
-     * Esquece esta pessoa: apaga a luz dela e tira-a das listas.
+     * Esquece esta pessoa: apaga a luz dela e a tira das listas.
      *
      * <p>É chamado quando ela sai do mundo — morreu, foi embora, foi desfeita. Sem isto, quem morresse
      * iluminado deixaria <b>um bloco de luz invisível aceso para sempre</b>, e ninguém saberia que ele estava

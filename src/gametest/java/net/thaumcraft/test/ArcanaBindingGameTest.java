@@ -113,7 +113,7 @@ public class ArcanaBindingGameTest {
     }
 
     /**
-     * A ferramenta <b>desfaz-se</b> quando a mana acaba, e volta a ser o feitiço que era.
+     * A ferramenta <b>se desfaz</b> quando a mana acaba, e volta a ser o feitiço que era.
      *
      * <p>É o coração da ideia: uma ferramenta que só existe enquanto se pode pagar por ela.
      */
@@ -127,7 +127,7 @@ public class ArcanaBindingGameTest {
         ferramenta.set(ArcanaComponents.SPELL, vínculo);
         quem.getInventory().setItem(0, ferramenta);
 
-        // sem mana nenhuma, ela desfaz-se
+        // sem mana nenhuma, ela se desfaz
         Mana.set(quem, Mana.NONE);
         BoundToolItem.unbind(ferramenta, quem);
 

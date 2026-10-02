@@ -19,12 +19,12 @@ import java.util.List;
 /**
  * O coração de um círculo de giz: o {@code TileEntityCircle} do Witchery.
  *
- * <p>Ele guarda os ritos que estão a correr e corre <b>um passo por batida</b> do primeiro da fila. Os que se
+ * <p>Ele guarda os ritos que estão rodando e corre <b>um passo por batida</b> do primeiro da fila. Os que se
  * sustentam sozinhos vão para outra fila, e essa corre sempre o mesmo passo até desistir.
  *
  * <p>Quem bate no glifo com um rito a correr <b>desiste</b> dele, e o que se ofereceu volta para o chão.
  *
- * <p><b>Os ritos guardam-se em disco</b>, como no original: desligado o mundo, o rito continua de onde estava.
+ * <p><b>Os ritos se guardam em disco</b>, como no original: desligado o mundo, o rito continua de onde estava.
  * O que se guarda não são os passos — é o <b>nome do rito</b> e <b>quantos passos faltam</b>, e a fila é
  * remontada da lista de ritos ao voltar. Um rito cujo nome já não exista é largado, e o que se ofereceu volta
  * para o chão.

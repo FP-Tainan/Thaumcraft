@@ -101,7 +101,7 @@ public class OccultaCovenGameTest {
             else tentada.discard();
         }
         if (bruxa == null) {
-            helper.fail("em quarenta bruxas nenhuma pediu o de buscar — o sorteio não está a dar os três");
+            helper.fail("em quarenta bruxas nenhuma pediu o de buscar — o sorteio não está dando os três");
             return;
         }
 

@@ -32,7 +32,7 @@ import java.util.Optional;
  *
  * <p><b>Do original fica de fora, por enquanto</b>, o leitor de {@code .schem}: lá as salas vêm de esquemas
  * guardados no jar, com ruínas, prisões e bibliotecas. Aqui a sala é lisa, feita em código. O leitor de esquemas é
- * fatia à parte, e quando chegar troca-se só o que enche a sala.
+ * fatia à parte, e quando chegar se troca só o que enche a sala.
  */
 public final class Pockets {
     /** O lado de dentro de um bolso, em blocos — o {@code size 0} do original. */
@@ -71,12 +71,12 @@ public final class Pockets {
 
     /** O mundo dos bolsos, abrindo-o se ainda não houver. */
     public static @Nullable ServerLevel level(MinecraftServer server) {
-        var registos = server.registryAccess();
+        var registros = server.registryAccess();
         var gerador = new FlatLevelSource(new FlatLevelGeneratorSettings(
                 Optional.empty(),
-                registos.lookupOrThrow(Registries.BIOME).getOrThrow(net.minecraft.world.level.biome.Biomes.THE_VOID),
+                registros.lookupOrThrow(Registries.BIOME).getOrThrow(net.minecraft.world.level.biome.Biomes.THE_VOID),
                 List.of()).withBiomeAndLayers(List.of(new FlatLayerInfo(1, Blocks.AIR)), Optional.empty(),
-                registos.lookupOrThrow(Registries.BIOME).getOrThrow(net.minecraft.world.level.biome.Biomes.THE_VOID)));
+                registros.lookupOrThrow(Registries.BIOME).getOrThrow(net.minecraft.world.level.biome.Biomes.THE_VOID)));
         return DynamicDimensions.getOrCreate(server, ShatteredRealms.PUBLIC_POCKETS,
                 ShatteredRealms.POCKET_TYPE, gerador);
     }
@@ -127,7 +127,7 @@ public final class Pockets {
     }
 
     /**
-     * Põe uma das salas do original naquele canto e liga-lhe as portas.
+     * Põe uma das salas do original naquele canto e lhe liga as portas.
      *
      * <p>A sala vem com as portas dela desenhadas nas paredes. A <b>primeira</b> passa a ser a de volta — aponta
      * para a fenda de onde se veio, e é à frente dela que quem chega aparece. As outras ficam por apontar e

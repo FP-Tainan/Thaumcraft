@@ -33,7 +33,7 @@ public class OccultaRitePersistGameTest {
         rito.offer(new ItemStack(Items.BONE, 3), helper.absolutePos(new net.minecraft.core.BlockPos(1, 1, 1)));
 
         ActiveRite.Saved guardado = rito.save();
-        if (!guardado.key().equals(qual.key())) helper.fail("o nome guarda-se");
+        if (!guardado.key().equals(qual.key())) helper.fail("o nome se guarda");
         if (guardado.remaining() != total) helper.fail("e quantos passos faltam");
         if (guardado.starter().orElse(null) == null || !guardado.starter().get().equals(quem)) {
             helper.fail("e quem o começou");

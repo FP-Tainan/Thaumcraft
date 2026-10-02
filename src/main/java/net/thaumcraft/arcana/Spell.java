@@ -13,7 +13,7 @@ import java.util.List;
  *
  * <p>No Ars Magica 2 isto mora em pedaços soltos do NBT de um item — {@code NumStages}, {@code ShapeOrdinal_0},
  * {@code SpellComponentIDs_0} e por aí. Aqui mora num <b>componente</b>, que é onde o jogo de hoje guarda o que
- * um item é, e o que se guarda são <b>nomes</b> e não números de registo.
+ * um item é, e o que se guarda são <b>nomes</b> e não números de registro.
  *
  * <p>Cada <b>etapa</b> é uma Forma com as suas Essências e os seus Modificadores. Lançar um feitiço é correr a
  * primeira etapa; a Forma dela, ao acabar, chama {@link #pop()} e lança <b>o que sobrou</b>. É assim que um

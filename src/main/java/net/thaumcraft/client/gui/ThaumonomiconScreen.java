@@ -375,7 +375,7 @@ public class ThaumonomiconScreen extends Screen {
      * abas da borda direita para a ponta apontar para fora.
      *
      * <p>Espelhar com a matriz do desenho não serve — uma escala negativa vira o quadro do avesso e ele
-     * desaparece —, então trocam-se as duas beiras da folha, que dá no mesmo e sempre aparece.
+     * desaparece —, então se trocam as duas beiras da folha, que dá no mesmo e sempre aparece.
      */
     private static void blitFlipped(GuiGraphicsExtractor graphics, int x, int y, int u, int v, int w, int h) {
         graphics.blit(BOOK, x, y, x + w, y + h,

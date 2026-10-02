@@ -66,7 +66,7 @@ public class VeilSightGameTest {
         helper.succeed();
     }
 
-    /** E os Óculos do Véu não perdem nada dos outros: continuam a revelar os nós de aura. */
+    /** E os Óculos do Véu não perdem nada dos outros: continuam revelando os nós de aura. */
     @GameTest
     public void theVeilGogglesStillRevealNodes(GameTestHelper helper) {
         var quem = helper.makeMockPlayer(GameType.SURVIVAL);

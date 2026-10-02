@@ -28,7 +28,7 @@ public class ArcanaSkillTreeGameTest {
      * Toda peça da gramática está na árvore, e toda perícia da árvore é uma peça.
      *
      * <p>Menos as <b>órfãs</b>, e elas são órfãs no original também: o Ars Magica 2 registra a peça, dá-lhe
-     * figura e nome, e depois <b>esquece-se de a pôr no quadro</b>. Quem joga o original nunca a pode comprar.
+     * figura e nome, e depois <b>se esquece de a pôr no quadro</b>. Quem joga o original nunca a pode comprar.
      * O porte guarda o engano em vez de o consertar, e esta prova é o lugar onde ele fica escrito.
      */
     @GameTest
@@ -202,7 +202,7 @@ public class ArcanaSkillTreeGameTest {
         if (sabe.canLearn(fogo, 10)) helper.fail("o Dano de Fogo precisa do Dano Físico antes");
 
         sabe = sabe.learn(SkillTree.of(Shapes.PROJECTILE), 10);
-        if (!sabe.knows(Shapes.PROJECTILE)) helper.fail("o Projétil aprende-se");
+        if (!sabe.knows(Shapes.PROJECTILE)) helper.fail("o Projétil se aprende");
         if (sabe.canLearn(fogo, 10)) helper.fail("e ainda falta o Dano Físico");
 
         sabe = sabe.learn(SkillTree.of(Essences.PHYSICAL_DAMAGE), 10);
@@ -251,7 +251,7 @@ public class ArcanaSkillTreeGameTest {
         if (falta <= 0.0f) helper.fail("do nível um para o dois falta alguma coisa");
 
         Mana subiu = conta.addXp(falta);
-        if (subiu.level() != 2) helper.fail("e com ela sobe-se, e ficou no " + subiu.level());
+        if (subiu.level() != 2) helper.fail("e com ela se sobe, e ficou no " + subiu.level());
         if (subiu.xp() != 0.0f) helper.fail("e a experiência volta a zero");
 
         // a conta cresce: do noventa e oito para o noventa e nove custa muito mais
@@ -265,7 +265,7 @@ public class ArcanaSkillTreeGameTest {
     }
 
     /**
-     * Uma pilha de experiência de uma vez sobe <b>um</b> nível só, e o resto <b>perde-se</b>.
+     * Uma pilha de experiência de uma vez sobe <b>um</b> nível só, e o resto <b>se perde</b>.
      *
      * <p>É o original: o {@code addMagicXP} zera a experiência ao subir, sem guardar o excesso. Esta prova
      * existe para fixar isso — parece um erro e não é, e quem vier "consertar" tem de ler antes.
@@ -275,7 +275,7 @@ public class ArcanaSkillTreeGameTest {
         Mana conta = new Mana(1, 0.0f, 0.0f, 0.0f);
         Mana depois = conta.addXp(50.0f);
         if (depois.level() != 2) helper.fail("cinquenta de uma vez sobe um nível só, e subiu para " + depois.level());
-        if (depois.xp() != 0.0f) helper.fail("e o que sobrou perde-se, e ficaram " + depois.xp());
+        if (depois.xp() != 0.0f) helper.fail("e o que sobrou se perde, e ficaram " + depois.xp());
 
         // e subir de verdade é lançar muitas vezes: cada Essência dá cinco centésimos
         Mana devagar = new Mana(1, 0.0f, 0.0f, 0.0f);

@@ -189,7 +189,7 @@ public class MirrorBlock extends BaseEntityBlock {
 
     /**
      * O {@code getDrops} e o {@code onBlockHarvested} do original juntos: quebrado, o espelho <b>volta em item
-     * com a ligação dentro</b>, e a outra metade vai-se com ele. No criativo não larga nada.
+     * com a ligação dentro</b>, e a outra metade se vai com ele. No criativo não larga nada.
      */
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player quem) {

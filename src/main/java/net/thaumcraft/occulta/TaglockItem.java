@@ -23,7 +23,7 @@ import java.util.function.Consumer;
  * tocar quem se quer com ele na mão. Cheio, ele guarda o nome e a marca daquela pessoa, e é isso que prende uma
  * boneca a ela.
  *
- * <p>Ninguém se vincula a si mesmo por engano: tocar-se com o frasco enche-o do próprio dono, que é o que quem
+ * <p>Ninguém se vincula a si mesmo por engano: tocar-se com o frasco o enche do próprio dono, que é o que quem
  * quer uma boneca de proteção precisa.
  */
 public class TaglockItem extends Item {

@@ -85,7 +85,7 @@ public final class OccultaEntities {
      *
      * <p>Este não nasce de descuido do ofício, nasce com a aldeia: vem com o Forte e com a Torre de Vigia que o
      * Witchery põe nela. Por isso entra como {@code CREATURE} e não como monstro — ele mora ali. O tamanho que se
-     * declara é o do guarda comum; o infernal estica-se a si mesmo quando lhe dizem o tipo.
+     * declara é o do guarda comum; o infernal se estica a si mesmo quando lhe dizem o tipo.
      */
     public static final EntityType<net.thaumcraft.occulta.village.VillageGuardEntity> VILLAGE_GUARD =
             register("village_guard", FabricEntityType.Builder.createMob(

@@ -23,7 +23,7 @@ import java.util.Map;
  *
  * <p>O jogo de hoje monta os mundos uma vez, na abertura, e não tem porta para se pedir mais um depois. Os bolsos
  * das Portas Dimensionais precisam exatamente disso — um mundo por bolso, feito na hora em que alguém atravessa a
- * porta —, então a porta abre-se aqui: um {@code ServerLevel} novo posto à mão na lista do servidor, com o feitio
+ * porta —, então a porta se abre aqui: um {@code ServerLevel} novo posto à mão na lista do servidor, com o feitio
  * de mundo e o gerador que se lhe der.
  *
  * <p>O mundo criado ganha a sua pasta debaixo da do mundo, guarda-se e volta a abrir-se sozinho; o que ele não faz
@@ -66,7 +66,7 @@ public final class DynamicDimensions {
         return mundo;
     }
 
-    /** Fecha um mundo aberto assim e tira-o da lista. Quem estiver lá dentro vai para o mundo de cima. */
+    /** Fecha um mundo aberto assim e o tira da lista. Quem estiver lá dentro vai para o mundo de cima. */
     public static boolean remove(MinecraftServer server, ResourceKey<Level> key) {
         var acesso = (MinecraftServerLevelsAccessor) server;
         ServerLevel mundo = acesso.thaumcraft$levels().get(key);

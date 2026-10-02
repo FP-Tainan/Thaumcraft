@@ -88,13 +88,13 @@ public final class MaleficiumItems {
 
     // ------------------------------------------------------------------ as roupas e as bijuterias
 
-    /** Os óculos distorcidos: revelam, distorcem um, e consertam-se com metal das sombras. */
+    /** Os óculos distorcidos: revelam, distorcem um, e se consertam com metal das sombras. */
     public static final Item WARPED_GOGGLES = register("warped_goggles", properties ->
             new MaleficiumGear(0, 1, false, properties
                     .humanoidArmor(MaleficiumArmor.WARPED, net.minecraft.world.item.equipment.ArmorType.HELMET)
                     .rarity(Rarity.RARE)));
 
-    /** Os óculos de metal do vazio: revelam, descontam doze por cento, distorcem cinco e consertam-se sozinhos. */
+    /** Os óculos de metal do vazio: revelam, descontam doze por cento, distorcem cinco e se consertam sozinhos. */
     public static final Item VOIDMETAL_GOGGLES = register("voidmetal_goggles", properties ->
             new MaleficiumGear(12, 5, true, properties
                     .humanoidArmor(MaleficiumArmor.VOIDMETAL_GOGGLES, net.minecraft.world.item.equipment.ArmorType.HELMET)

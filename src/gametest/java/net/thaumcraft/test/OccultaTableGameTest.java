@@ -53,12 +53,12 @@ public class OccultaTableGameTest {
         helper.succeed();
     }
 
-    /** A primeira abre-se sozinha; as outras penduram-se umas nas outras. */
+    /** A primeira se abre sozinha; as outras se penduram umas nas outras. */
     @GameTest
     public void theTreeHangsTogether(GameTestHelper helper) {
         Research entrada = Researches.get("AO_OLD_WAYS");
         if (entrada == null || !entrada.marks().contains(Research.Mark.AUTO)) {
-            helper.fail("o degrau de entrada abre-se sozinho");
+            helper.fail("o degrau de entrada se abre sozinho");
         }
 
         confere(helper, "AO_PLANTS", "AO_OLD_WAYS");

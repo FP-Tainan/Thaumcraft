@@ -14,7 +14,7 @@ import java.util.List;
  * Todo item do mod tem de ter modelo de verdade.
  *
  * <p>Quem joga viu isto três vezes: um arquivo de item com um erro dentro não derruba o jogo — o jogo resmunga
- * uma linha no registo e desenha o cubo de xadrez roxo e preto no lugar. Foi assim que o Cristal de Marca ficou
+ * uma linha no registro e desenha o cubo de xadrez roxo e preto no lugar. Foi assim que o Cristal de Marca ficou
  * sem pele, por causa de um {@code "value": null} que a condição não aceita. Este teste apanha o caso todo de
  * uma vez: se o modelo que o jogo acabou por assar é o modelo de falta, é porque o arquivo não passou.
  */

@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
  * árvores é o alto delas. A estrutura de verdade usa a altura de <b>antes</b> das árvores e abre o mato com o
  * {@code terrain_adaptation} — mas isso só se vê deixando-a nascer.
  *
- * <p>Por isso aqui se pergunta ao gerador onde está o coven mais perto, vai-se lá e fotografa-se. É a mesma
+ * <p>Por isso aqui se pergunta ao gerador onde está o coven mais perto, vai-se lá e se fotografa. É a mesma
  * lição da muralha: o que se põe à mão não prova o caminho que o jogo usa.
  */
 public class OccultaCovenVillageClientTest implements FabricClientGameTest {

@@ -21,7 +21,7 @@ public final class BoxMesh {
      * <i>menor</i> y da caixa fica no alto da figura e o <i>maior</i> x fica à direita dela. Como estes modelos
      * se desenham de cabeça para baixo — é o giro de meia-volta que todo desenhista de Techne faz antes de
      * começar —, é esse emparelhamento que põe a figura direita na tela. Trocá-lo por um que pareça mais natural
-     * gira a figura das paredes de meia-volta, e isso vê-se em qualquer peça que não seja simétrica.
+     * gira a figura das paredes de meia-volta, e isso se vê em qualquer peça que não seja simétrica.
      */
     public static float[] box(float x, float y, float z, float dx, float dy, float dz,
                               float u, float v, float tw, float th) {
@@ -67,7 +67,7 @@ public final class BoxMesh {
      * de desenho, e cada face mostra o seu desenho de trás para a frente.
      *
      * <p><b>Cuidado ao ler os originais:</b> em 1.7.10 o sinalizador é lido <i>dentro</i> do {@code addBox}, logo
-     * só vale se estiver ligado antes da caixa entrar. O exportador do Techne punha-o sempre no fim, depois do
+     * só vale se estiver ligado antes da caixa entrar. O exportador do Techne o punha sempre no fim, depois do
      * {@code addBox}, onde não faz nada — e é assim que ele aparece em quase todos os modelos destes mods. Quando
      * o jogo daquele tempo queria espelhar de verdade (o braço e a perna esquerdos do bípede, a perna do aldeão),
      * punha-o antes. Só se chama este método para os que o punham antes.

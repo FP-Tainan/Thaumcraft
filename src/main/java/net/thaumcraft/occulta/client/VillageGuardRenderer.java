@@ -27,7 +27,7 @@ import net.thaumcraft.occulta.village.VillageGuardEntity;
  * assentar, mas a cabeça é a alta do aldeão, com o nariz, e por cima do tronco vai uma <b>túnica</b> um pouco mais
  * larga que ele. É essa mistura que o faz ler como aldeão armado e não como pessoa nem como aldeão.
  *
- * <p><b>E as pernas dele andam pela metade.</b> O original corta a amplitude do passo ao meio e tira-lhes a volta
+ * <p><b>E as pernas dele andam pela metade.</b> O original corta a amplitude do passo ao meio e lhes tira a volta
  * para os lados; o que se vê é um andar pesado, de quem está de guarda, e não o trote do aldeão.
  */
 public final class VillageGuardRenderer {

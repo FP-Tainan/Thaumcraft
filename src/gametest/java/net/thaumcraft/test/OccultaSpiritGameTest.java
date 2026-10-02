@@ -35,7 +35,7 @@ import java.util.List;
 public class OccultaSpiritGameTest {
     // ------------------------------------------------------------------ o mundo
 
-    /** O mundo dos espíritos abre-se quando se pede, e abre-se com o chão do mundo de cima. */
+    /** O mundo dos espíritos se abre quando se pede, e se abre com o chão do mundo de cima. */
     @GameTest
     public void theSpiritWorldOpens(GameTestHelper helper) {
         var server = helper.getLevel().getServer();
@@ -258,7 +258,7 @@ public class OccultaSpiritGameTest {
             helper.fail("o Cozimento do Sono devia estar na tabela do pote");
             return;
         }
-        if (sono.level() != null) helper.fail("e coze-se em qualquer mundo");
+        if (sono.level() != null) helper.fail("e se coze em qualquer mundo");
 
         var espírito = KettleRecipes.of(OccultaItems.BREW_OF_FLOWING_SPIRIT);
         if (espírito == null) {

@@ -17,7 +17,7 @@ import net.thaumcraft.Thaumcraft;
  * Prender uma boneca a alguém: o {@code RecipeShapelessPoppet} do Witchery.
  *
  * <p>Uma boneca e um <b>Frasco de Vínculo cheio</b> na bancada, e a boneca passa a responder por quem estava no
- * frasco. O frasco gasta-se.
+ * frasco. O frasco se gasta.
  *
  * <p>Uma boneca já presa não se prende outra vez: para trocar de dono, faz-se outra.
  */
@@ -61,7 +61,7 @@ public class PoppetBindingRecipe extends CustomRecipe {
         return presa;
     }
 
-    /** O frasco gasta-se: não volta vazio para a bancada. */
+    /** O frasco se gasta: não volta vazio para a bancada. */
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
         return NonNullList.withSize(input.size(), ItemStack.EMPTY);

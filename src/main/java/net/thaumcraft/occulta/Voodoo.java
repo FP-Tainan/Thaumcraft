@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
  * O vodu: o que a boneca faz a quem está preso a ela, e o que a guarda disso.
  *
  * <p>Quem traz uma <b>Boneca Contra o Vodu</b> presa a si não sente nada do que se faça à sua figura — e a
- * boneca que o guardou gasta-se. De vez em quando, além disso, cai um raio em cima de quem tentou.
+ * boneca que o guardou se gasta. De vez em quando, além disso, cai um raio em cima de quem tentou.
  */
 public final class Voodoo {
     /** A chance de o raio cair em quem tentou, quando a proteção pega. */

@@ -75,7 +75,7 @@ public class ShatteredToolsGameTest {
         helper.succeed();
     }
 
-    /** E o Foco de Fechar Fenda fecha-a. */
+    /** E o Foco de Fechar Fenda a fecha. */
     @GameTest
     public void theCloseFocusClosesARift(GameTestHelper helper) {
         BlockPos onde = new BlockPos(1, 3, 4);

@@ -18,7 +18,7 @@ import net.minecraft.world.phys.AABB;
  * Os que já andavam nas fendas.
  *
  * <p><b>Isto é do porte, e não do original</b>, e a ideia é de quem joga: <i>a gente pode amarrar isso com os
- * endermans, assim isso explicaria como eles vagam entre as dimensões e como eles teleportam</i>. E de facto
+ * endermans, assim isso explicaria como eles vagam entre as dimensões e como eles teleportam</i>. E de fato
  * explica — o Thaumcraft e as Portas Dimensionais já contavam a mesma história por dois lados, e faltava alguém
  * a atravessar de um para o outro. São eles.
  *

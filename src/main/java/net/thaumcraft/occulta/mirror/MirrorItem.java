@@ -23,7 +23,7 @@ import java.util.function.Consumer;
  * O Espelho em item: o {@code ItemMirror} do Witchery.
  *
  * <p>Assenta-se numa <b>parede</b>, e ocupa dois blocos: o que se clicou e o de baixo. Ele leva consigo a ligação
- * que já tivesse — por isso um espelho arrancado e posto noutro canto continua a dar para a mesma cela.
+ * que já tivesse — por isso um espelho arrancado e posto noutro canto continua dando para a mesma cela.
  *
  * <p>Na descrição ele diz o que é: <b>habitado</b>, enquanto o Reflexo dele viver, ou <b>vazado</b>, depois.
  */

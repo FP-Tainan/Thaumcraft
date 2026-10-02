@@ -48,7 +48,7 @@ public class OccultaCreaturesGameTest {
         // primeiro de abafadores, que é como se anda perto dela: o grito não alcança quem os traz
         var quemLeva = helper.makeMockPlayer(GameType.SURVIVAL);
         quemLeva.setItemSlot(EquipmentSlot.HEAD, new ItemStack(OccultaItems.EARMUFFS));
-        if (!MandrakeEntity.wearsEarmuffs(quemLeva)) helper.fail("os abafadores contam-se na cabeça");
+        if (!MandrakeEntity.wearsEarmuffs(quemLeva)) helper.fail("os abafadores se contam na cabeça");
         bicho.doHurtTarget(level, quemLeva);
         if (quemLeva.hasEffect(MobEffects.BLINDNESS)) helper.fail("com abafadores o grito não a alcança");
         if (!MandrakeEntity.wearsEarmuffs(quemLeva)) helper.fail("e os abafadores não se gastam com a pancada");

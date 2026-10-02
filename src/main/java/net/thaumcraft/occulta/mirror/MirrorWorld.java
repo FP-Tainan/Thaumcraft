@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
  * ele — e é por esse par que se vai e se volta.
  *
  * <p>A cela de cada espelho sai da <b>caracol</b> do original: anda-se a grelha de celas em volta do zero, de cela
- * em cela, e fica-se na primeira que estiver limpa de ponta a ponta. A conta é a mesma, passo por passo.
+ * em cela, e se fica na primeira que estiver limpa de ponta a ponta. A conta é a mesma, passo por passo.
  *
  * <p><b>Desvio declarado:</b> no original o mundo do espelho é um número de dimensão posto no arquivo de ajustes,
  * e a altura dele encolhe para metade se quem manda o servidor quiser. Aqui é um mundo aberto na hora — o mesmo

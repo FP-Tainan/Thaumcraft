@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  *
  * <p>Por isso esta porta não se desenha como as outras. O bloco dela é invisível — quem a desenha é o
  * {@code DimensionalPortalRenderer}, e só a quem a possa ver. E, porque uma parede invisível seria uma
- * armadilha e não um segredo, ela também <b>não tem corpo</b>: quem passa pela ombreira sem os óculos atravessa-a
+ * armadilha e não um segredo, ela também <b>não tem corpo</b>: quem passa pela ombreira sem os óculos a atravessa
  * e não dá por nada. Abrir, só quem a vê.
  */
 public class AncientDoorBlock extends DimensionalDoorBlock {
@@ -56,9 +56,9 @@ public class AncientDoorBlock extends DimensionalDoorBlock {
     }
 
     /**
-     * O corpo de ver: quem tem os óculos agarra-a com o rato, quem não tem não lhe acerta nem lhe vê a caixa.
+     * O corpo de ver: quem tem os óculos a agarra com o mouse, quem não tem não lhe acerta nem lhe vê a caixa.
      *
-     * <p>É a única parte disto que sabe de quem está a olhar: a forma de um bloco não costuma saber, mas a
+     * <p>É a única parte disto que sabe de quem está olhando: a forma de um bloco não costuma saber, mas a
      * conta traz quem a pediu, e aqui isso é o que faz a porta ser mesmo um segredo e não um contorno a pairar
      * no meio da ombreira.
      */

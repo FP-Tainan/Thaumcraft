@@ -27,7 +27,7 @@ public class OccultaDistilleryGameTest {
         ItemStack potes = new ItemStack(OccultaItems.CLAY_JAR, 3);
 
         if (DistilleryRecipes.find(sopro, lápis, potes) == null) {
-            helper.fail("o sopro com lápis-lazúli destila-se");
+            helper.fail("o sopro com lápis-lazúli se destila");
         }
         if (DistilleryRecipes.find(lápis, sopro, potes) == null) {
             helper.fail("e a ordem das duas não importa");
@@ -66,7 +66,7 @@ public class OccultaDistilleryGameTest {
             helper.fail("e o Sopro de Magia ao lado dela");
         }
         if (destilaria.getItem(DistilleryBlockEntity.JARS).getCount() != 2) {
-            helper.fail("e os três potes da receita gastam-se; ficaram "
+            helper.fail("e os três potes da receita se gastam; ficaram "
                     + destilaria.getItem(DistilleryBlockEntity.JARS).getCount());
         }
         if (!destilaria.getItem(DistilleryBlockEntity.INPUT_A).isEmpty()) {

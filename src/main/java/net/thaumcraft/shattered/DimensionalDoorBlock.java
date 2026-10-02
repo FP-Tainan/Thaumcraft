@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
  * A Porta Dimensional: o {@code BlockDimensionalDoor} das Portas Dimensionais.
  *
  * <p>É uma porta como as outras, com uma fenda morando na metade de baixo. Quem a atravessa aberta sai do outro
- * lado dela — e o outro lado não é a sala seguinte, é um Reino Fragmentado. Atrás de quem passa a porta fecha-se,
+ * lado dela — e o outro lado não é a sala seguinte, é um Reino Fragmentado. Atrás de quem passa a porta se fecha,
  * como no original.
  */
 public class DimensionalDoorBlock extends DoorBlock implements EntityBlock {
@@ -74,7 +74,7 @@ public class DimensionalDoorBlock extends DoorBlock implements EntityBlock {
         entity.setPortalCooldown(50);
         if (!fenda.teleport(entity)) return;
         entity.setPortalCooldown(0);
-        // a porta fecha-se atrás de quem passa, se quem passou não estava agachado
+        // a porta se fecha atrás de quem passa, se quem passou não estava agachado
         if (entity instanceof Player quem && !quem.isShiftKeyDown()) {
             this.setOpen(quem, server, server.getBlockState(baixo), baixo, false);
         }

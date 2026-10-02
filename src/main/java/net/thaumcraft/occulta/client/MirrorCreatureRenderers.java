@@ -49,7 +49,7 @@ public final class MirrorCreatureRenderers {
         return LayerDefinition.create(mesh, 64, 32);
     }
 
-    /** A cabeça vira-se para quem olha, e é o que o modelo do original faz de mais. */
+    /** A cabeça se vira para quem olha, e é o que o modelo do original faz de mais. */
     public static class MirrorFaceModel extends EntityModel<LivingEntityRenderState> {
         private final ModelPart head;
 
@@ -70,7 +70,7 @@ public final class MirrorCreatureRenderers {
     /**
      * O desenhista dela.
      *
-     * <p>O original desenha-a a <b>três quartos</b> do tamanho, um pouco levantada e <b>meio transparente</b> —
+     * <p>O original a desenha a <b>três quartos</b> do tamanho, um pouco levantada e <b>meio transparente</b> —
      * que é o que lhe dá o ar de estar dentro do vidro, e não à frente dele.
      */
     public static class MirrorFace extends MobRenderer<MirrorFaceEntity, LivingEntityRenderState, MirrorFaceModel> {
@@ -119,7 +119,7 @@ public final class MirrorCreatureRenderers {
      * <p><b>Desvio declarado:</b> no original a pele dele é <b>a pele de quem entrou</b>, baixada do servidor de
      * peles do jogo. Aqui é sempre a pele de reserva do próprio Witchery — a {@code reflection.png} —, porque
      * baixar a pele de alguém de um servidor de fora é coisa que este porte não faz. A armadura, a arma e os
-     * efeitos continuam a ser os de quem entrou, que é o que se vê primeiro.
+     * efeitos continuam sendo os de quem entrou, que é o que se vê primeiro.
      */
     public static class Reflection
             extends HumanoidMobRenderer<ReflectionEntity, HumanoidRenderState, ReflectionModel> {

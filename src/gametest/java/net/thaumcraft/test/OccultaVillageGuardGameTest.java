@@ -88,7 +88,7 @@ public class OccultaVillageGuardGameTest {
     /**
      * Com arco na mão ele <b>atira</b>: posto um zumbi à frente, aparece uma flecha no ar.
      *
-     * <p>E olha-se <b>a cada tique</b>, porque uma flecha que acerta é removida na hora: olhar só no fim é olhar
+     * <p>E se olha <b>a cada tique</b>, porque uma flecha que acerta é removida na hora: olhar só no fim é olhar
      * o único instante em que não há flecha nenhuma.
      */
     @GameTest(maxTicks = 200)
@@ -191,7 +191,7 @@ public class OccultaVillageGuardGameTest {
     /**
      * Matar um guarda custa reputação com os aldeões que viram.
      *
-     * <p>No original são cinco pontos da reputação da aldeia; hoje é fuxico de aldeão, e conta-se como morte de
+     * <p>No original são cinco pontos da reputação da aldeia; hoje é fuxico de aldeão, e se conta como morte de
      * aldeão — que é o que ele é, por o original o fazer nascer de um.
      */
     @GameTest(maxTicks = 40)

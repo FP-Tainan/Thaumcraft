@@ -23,7 +23,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * O glifo do meio de um círculo de giz: o {@code BlockCircle} do Witchery.
  *
- * <p>É o coração do círculo — o giz dourado risca-o, e é nele que se <b>bate</b> para começar o rito. Quando
+ * <p>É o coração do círculo — o giz dourado o risca, e é nele que se <b>bate</b> para começar o rito. Quando
  * alguém o toca, ele conta os anéis de giz em volta e o que está no chão dentro deles, e procura um rito que
  * bata com tudo isso.
  *

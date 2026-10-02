@@ -36,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
  * — os que saem em frasco e se atiram, e não os que se misturam por ordem no Caldeirão da Bruxa.
  *
  * <p>O que se faz com ele: enche-se de água com um balde, acende-se lume debaixo dele, <b>atira-se</b> o que
- * entra lá para dentro (seis coisas), atiram-se frascos de vidro, e ao ficar pronto chega-se com um frasco na mão.
+ * entra lá para dentro (seis coisas), atiram-se frascos de vidro, e ao ficar pronto se chega com um frasco na mão.
  */
 public class KettleBlock extends BaseEntityBlock {
     public static final MapCodec<KettleBlock> CODEC = simpleCodec(KettleBlock::new);

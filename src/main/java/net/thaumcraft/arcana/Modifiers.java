@@ -39,7 +39,7 @@ public final class Modifiers {
     /**
      * Um modificador que <b>não cobra nada</b>, por muitas vezes que se repita.
      *
-     * <p>O original escreve-o devolvendo {@code 1.0F} <i>sem</i> multiplicar pela quantidade, ao contrário de
+     * <p>O original o escreve devolvendo {@code 1.0F} <i>sem</i> multiplicar pela quantidade, ao contrário de
      * todos os outros. Não é descuido: são os dois modificadores que mudam <i>como</i> o feitiço se comporta e
      * não <i>quanto</i> ele faz, e o original quis que fossem de graça.
      */

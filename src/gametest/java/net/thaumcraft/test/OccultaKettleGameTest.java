@@ -26,7 +26,7 @@ public class OccultaKettleGameTest {
         if (pote.throwIn(new ItemStack(OccultaItems.MANDRAKE_ROOT))) {
             helper.fail("num pote seco não entra nada");
         }
-        if (!pote.fill()) helper.fail("um balde de água enche-o");
+        if (!pote.fill()) helper.fail("um balde de água o enche");
         if (pote.fill()) helper.fail("e um segundo não cabe");
         if (!pote.filled()) helper.fail("e ele fica cheio");
 
@@ -89,7 +89,7 @@ public class OccultaKettleGameTest {
         helper.succeed();
     }
 
-    /** Sem lume por baixo, o que estava a cozinhar estraga. */
+    /** Sem lume por baixo, o que estava cozinhando estraga. */
     @GameTest(maxTicks = 60)
     public void withoutFireTheBrewIsRuined(GameTestHelper helper) {
         BlockPos onde = new BlockPos(2, 2, 4);
@@ -104,9 +104,9 @@ public class OccultaKettleGameTest {
                 helper.fail("sem lume por baixo, o cozimento estraga");
                 return;
             }
-            // e recomeça-se do zero
+            // e se recomeça do zero
             pote.reset(true);
-            if (pote.ruined() || pote.filled()) helper.fail("e recomeça-se com o pote limpo e seco");
+            if (pote.ruined() || pote.filled()) helper.fail("e se recomeça com o pote limpo e seco");
             limpa(helper, onde);
             helper.succeed();
         });

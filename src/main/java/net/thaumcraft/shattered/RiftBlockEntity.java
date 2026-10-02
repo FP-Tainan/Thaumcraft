@@ -24,10 +24,10 @@ import java.util.Set;
  * A fenda que mora numa porta: o {@code TileEntityEntranceRift} das Portas Dimensionais.
  *
  * <p>Ela guarda para onde leva — um mundo, um lugar e para que lado se sai — e passa quem a atravessa para lá.
- * Sem destino, a primeira travessia manda abrir um bolso e aponta-se para ele.
+ * Sem destino, a primeira travessia manda abrir um bolso e se aponta para ele.
  *
  * <p><b>Do original fica de fora, por enquanto</b>, o registro de fendas: lá as fendas formam um grafo, acham-se
- * umas às outras e remendam-se quando uma morre. Aqui cada fenda sabe só de si. O que ela guarda cabe no que o
+ * umas às outras e se remendam quando uma morre. Aqui cada fenda sabe só de si. O que ela guarda cabe no que o
  * grafo há de querer depois, então isto não se joga fora quando ele chegar.
  */
 public class RiftBlockEntity extends BlockEntity {
@@ -89,7 +89,7 @@ public class RiftBlockEntity extends BlockEntity {
      * mesmo fez — a porta que assentou, a fenda que rasgou com a Assinatura — estão sempre à vista.
      *
      * <p>Vem ligado, porque quem põe fendas sem passar por mãos de ninguém é a geração do mundo; quem as faz de
-     * propósito desliga-o.
+     * propósito o desliga.
      */
     private boolean natural = true;
 
@@ -108,7 +108,7 @@ public class RiftBlockEntity extends BlockEntity {
      * <p><b>Isto é do porte, e não do original.</b> Lá toda a porta abre o mesmo bolso liso. Aqui, a pedido de
      * quem joga, quem prende uma fenda do mundo com o Firma-Fendas e lhe assenta uma porta em cima ganha outra
      * coisa: um bolso com tema, e mais duas portas nele que levam a outros bolsos com tema. As portas feitas na
-     * bancada e assentadas onde calhou continuam a abrir o bolso liso do original.
+     * bancada e assentadas onde calhou continuam abrindo o bolso liso do original.
      */
     private boolean wild;
 

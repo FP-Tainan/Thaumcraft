@@ -25,7 +25,7 @@ import net.thaumcraft.occulta.OccultaBlocks;
  * O Portal do Espírito: a {@code BlockSpiritPortal} do Witchery.
  *
  * <p>Ele não se faz: <b>acende-se</b>. No Mundo dos Espíritos, monta-se uma moldura de <b>camadas de neve</b> à
- * volta de um vão de dois por dois e derrama-se lá dentro uma fonte de <b>Espírito Fluente</b>. O vão fecha-se
+ * volta de um vão de dois por dois e se derrama lá dentro uma fonte de <b>Espírito Fluente</b>. O vão se fecha
  * de portal, e quem o atravessa <b>volta ao mundo de cá em fantasma</b>.
  *
  * <p>Mas só quem tem crédito: o <b>Rito da Manifestação</b> dá segundos de manifestação, e sem eles o portal

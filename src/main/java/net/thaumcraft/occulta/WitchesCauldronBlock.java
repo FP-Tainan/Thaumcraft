@@ -30,7 +30,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * O Caldeirão da Bruxa: o {@code BlockCauldron} do Witchery.
  *
- * <p>Enche-se de água, acende-se fogo embaixo e espera-se ferver. Ferve em cinco segundos, e daí em diante o que
+ * <p>Enche-se de água, acende-se fogo embaixo e se espera ferver. Ferve em cinco segundos, e daí em diante o que
  * se jogar dentro entra na panela — e, quando a coisa certa cai por último, sai dela o que a receita manda
  * (ver o {@link OccultaRituals}).
  *

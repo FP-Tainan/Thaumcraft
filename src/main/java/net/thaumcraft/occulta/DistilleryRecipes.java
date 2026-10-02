@@ -11,7 +11,7 @@ import java.util.List;
  * O que a Destilaria faz de quê: o {@code DistilleryRecipes} do Witchery.
  *
  * <p>Cada receita pede <b>duas coisas</b> — em qualquer ordem, que é o que o {@code isMatch} do original faz — e
- * um tanto de <b>Potes de Barro</b>, e devolve até <b>quatro</b>. Os potes gastam-se: é neles que sai o que se
+ * um tanto de <b>Potes de Barro</b>, e devolve até <b>quatro</b>. Os potes se gastam: é neles que sai o que se
  * destila.
  *
  * <p>Esta é a parte da tabela que o mod de hoje alcança. <b>Fica declarado o que falta</b>, por depender de coisa

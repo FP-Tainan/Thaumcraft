@@ -288,7 +288,7 @@ public class ArcanaEffectsGameTest {
         zumbi.setNoAi(true);
 
         Essences.CHARM.onEntity(level, Spell.of(Shapes.TOUCH, Essences.CHARM), quem, zumbi);
-        if (!zumbi.hasEffect(ArcanaEffects.CHARMED)) helper.fail("um zumbi encanta-se");
+        if (!zumbi.hasEffect(ArcanaEffects.CHARMED)) helper.fail("um zumbi se encanta");
         // e não se encanta duas vezes
         if (Essences.CHARM.onEntity(level, Spell.of(Shapes.TOUCH, Essences.CHARM), quem, zumbi)) {
             helper.fail("e não se encanta quem já está encantado");

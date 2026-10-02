@@ -45,7 +45,7 @@ public class ArcanaSecretsGameTest {
         }
         if (SkillData.of(quem).silver() != 1) helper.fail("e dá um ponto prateado");
         if (SkillData.of(quem).used(SkillTree.Point.SILVER) != 1) {
-            helper.fail("e gasta-o na perícia que abriu");
+            helper.fail("e o gasta na perícia que abriu");
         }
         if (SkillData.of(quem).free(SkillTree.Point.SILVER, 50) != 0) {
             helper.fail("e não sobra prateado nenhum");
@@ -91,7 +91,7 @@ public class ArcanaSecretsGameTest {
 
         // e depois de descoberta, sai
         SkillData.set(quem, SkillData.NONE.withSilver(1).learn(SkillTree.of(Essences.BLIZZARD), 50));
-        if (SpellUnlocks.tranca(nevasca, quem)) helper.fail("e quem a descobriu lança-a");
+        if (SpellUnlocks.tranca(nevasca, quem)) helper.fail("e quem a descobriu a lança");
 
         SkillData.set(quem, SkillData.NONE);
         helper.succeed();

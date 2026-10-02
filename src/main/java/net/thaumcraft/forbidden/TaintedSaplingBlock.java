@@ -17,7 +17,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * A muda maculada: o {@code BlockSaplingTainted} do Forbidden Magic 0.575.
  *
- * <p>Como a muda comum, ela espera a luz e o tempo; quando cresce, tira-se a muda e tenta-se a árvore — se não
+ * <p>Como a muda comum, ela espera a luz e o tempo; quando cresce, tira-se a muda e se tenta a árvore — se não
  * couber, a muda volta para o lugar.
  */
 public class TaintedSaplingBlock extends VegetationBlock implements BonemealableBlock {

@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
  * um papelzinho na face da frente com o símbolo do aspecto por cima dele, pequeno.
  *
  * <p>O rótulo do original fica a {@code 0.315} do meio do bloco e é desenhado a meia escala; são esses os
- * números usados aqui. Jarro sem rótulo não mostra símbolo nenhum — para saber o que há dentro põem-se os
+ * números usados aqui. Jarro sem rótulo não mostra símbolo nenhum — para saber o que há dentro se põem os
  * Óculos da Revelação, que é como se lê isso no mod.
  */
 public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRenderer.State> {

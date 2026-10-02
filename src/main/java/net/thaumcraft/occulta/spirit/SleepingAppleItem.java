@@ -10,10 +10,10 @@ import net.minecraft.world.level.Level;
 /**
  * A Maçã do Sono: o {@code itemSleepingApple} do Witchery.
  *
- * <p>Come-se e dorme-se. O corpo fica onde estava, em carne, e o espírito levanta-se para o
+ * <p>Come-se e se dorme. O corpo fica onde estava, em carne, e o espírito se levanta para o
  * {@linkplain SpiritWorld Mundo dos Espíritos}.
  *
- * <p>Ela abre a porta <b>sempre para o lado feio</b>: o original passa-lhe a chance de pesadelo <b>um</b>, e a
+ * <p>Ela abre a porta <b>sempre para o lado feio</b>: o original lhe passa a chance de pesadelo <b>um</b>, e a
  * conta dos arredores só conta para quem já tiver um Apanhador de Sonhos com a teia dos pesadelos. Quem a come
  * sem quarto montado cai em pesadelo, e é assim que se aprende a montar o quarto.
  */

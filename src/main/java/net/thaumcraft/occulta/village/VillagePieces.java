@@ -99,10 +99,10 @@ public final class VillagePieces {
     }
 
     private static void junta(MinecraftServer servidor) {
-        var registos = servidor.registryAccess();
-        var piscinas = registos.lookupOrThrow(Registries.TEMPLATE_POOL);
+        var registros = servidor.registryAccess();
+        var piscinas = registros.lookupOrThrow(Registries.TEMPLATE_POOL);
         Holder<StructureProcessorList> semRetoque =
-                registos.lookupOrThrow(Registries.PROCESSOR_LIST).getOrThrow(ProcessorLists.EMPTY);
+                registros.lookupOrThrow(Registries.PROCESSOR_LIST).getOrThrow(ProcessorLists.EMPTY);
 
         // um molde por variante: o material muda no deserto, e o encaixe aponta à rua da sua aldeia
         for (String variante : VARIANTES) {

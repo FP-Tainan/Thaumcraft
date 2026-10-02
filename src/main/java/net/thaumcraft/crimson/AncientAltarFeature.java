@@ -15,7 +15,7 @@ import net.thaumcraft.registry.TCBlocks;
 /**
  * O altar antigo no mundo: o {@code CrimsonWorldGenerator} do Crimson Warfare.
  *
- * <p>Uma tentativa por pedaço, e uma em mil dá certo: no chão de terra, areia ou pedra desenha-se o disco de
+ * <p>Uma tentativa por pedaço, e uma em mil dá certo: no chão de terra, areia ou pedra se desenha o disco de
  * treze por treze de pedra arcana com a orla de tijolo, e no meio dele fica o altar.
  */
 public class AncientAltarFeature extends Feature<NoneFeatureConfiguration> {

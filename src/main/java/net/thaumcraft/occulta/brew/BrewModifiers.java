@@ -5,8 +5,8 @@ import net.minecraft.util.Mth;
 /**
  * O que os temperos fazem ao efeito seguinte: o {@code ModifiersEffect} do Witchery.
  *
- * <p>Um cozimento lê-se de cima para baixo. O pó de pedra luminosa que se joga antes do olho de aranha não faz
- * nada sozinho — ele <b>espera</b> pelo efeito seguinte e dá-lhe mais força. Depois de cada efeito aplicado, os
+ * <p>Um cozimento se lê de cima para baixo. O pó de pedra luminosa que se joga antes do olho de aranha não faz
+ * nada sozinho — ele <b>espera</b> pelo efeito seguinte e lhe dá mais força. Depois de cada efeito aplicado, os
  * temperos que esperavam se apagam ({@link #reset()}), e os que vierem depois valem para o efeito seguinte.
  *
  * <p>Há dois tetos no original: a força e a duração param de subir aos <b>sete</b> — a não ser que a Estrela do

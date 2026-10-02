@@ -16,7 +16,7 @@ import net.thaumcraft.research.Page;
  * Carmesim, que é de onde a coisa vem na lore: quem leu o conto de advertência é quem chega à guerra.
  *
  * <p>Os pais de verdade do original — o metal do vazio e o eldritch menor, com a mácula por trás — ficam como
- * pais escondidos: continuam a ser precisos para a entrada abrir, mas não puxam linha de outra aba.
+ * pais escondidos: continuam sendo precisos para a entrada abrir, mas não puxam linha de outra aba.
  */
 public final class CrimsonTable {
     private CrimsonTable() {

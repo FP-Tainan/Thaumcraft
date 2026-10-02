@@ -18,7 +18,7 @@ import java.util.function.Consumer;
  * <p>Ela só precisa <b>existir</b>: vale na mochila de quem ela guarda, ou numa <b>prateleira de bonecas</b> em
  * qualquer canto do mundo. É o que o original faz, e é o que dá jeito a uma casa de bruxa.
  *
- * <p>As de proteção <b>quebram</b> ao valer; as outras gastam-se aos poucos.
+ * <p>As de proteção <b>quebram</b> ao valer; as outras se gastam aos poucos.
  */
 public class PoppetItem extends Item {
     /** O que cada boneca guarda. */
@@ -102,9 +102,9 @@ public class PoppetItem extends Item {
     /**
      * O {@code onPlayerStoppedUsing}: ao largar a boneca, o que se lhe fez acontece a quem ela tem preso.
      *
-     * <p>Apontada para <b>lava</b>, a pessoa pega fogo — e a boneca desfaz-se. <b>De pé</b>, empurra-a para onde
+     * <p>Apontada para <b>lava</b>, a pessoa pega fogo — e a boneca se desfaz. <b>De pé</b>, empurra-a para onde
      * se olha, com a força do tempo que se segurou. <b>Agachado</b>, com uma agulha de osso na mochila, espeta:
-     * meio coração, e a agulha gasta-se.
+     * meio coração, e a agulha se gasta.
      */
     @Override
     public boolean releaseUsing(ItemStack stack, net.minecraft.world.level.Level level, LivingEntity quemUsa,

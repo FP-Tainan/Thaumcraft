@@ -71,7 +71,7 @@ public class CorpseEntity extends Mob {
         return null;
     }
 
-    /** E o corpo levanta-se quando o espírito volta a ele. */
+    /** E o corpo se levanta quando o espírito volta a ele. */
     public static void rise(ServerLevel level, ServerPlayer quem) {
         CorpseEntity corpo = of(level, quem);
         if (corpo != null) corpo.discard();

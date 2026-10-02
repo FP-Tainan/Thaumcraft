@@ -266,7 +266,7 @@ perde na água; daqui em diante ela é recolhida, levada e guardada.
   do mod: quatro pontas, nove hastes de varinha e nove de bastão, com capacidade, desconto e custo de
   feitura de lá.
 - `item/WandItem` — o vis é contado em centésimos, como no original: haste de vinte e cinco guarda dois
-  mil e quinhentos. Aponta-se para um nó e segura-se o botão para beber dele, um ponto de cada vez. As
+  mil e quinhentos. Aponta-se para um nó e se segura o botão para beber dele, um ponto de cada vez. As
   hastes primordiais recolhem sozinhas o aspecto delas, até um décimo do que cabem.
 - `client/render/WandRenderer` e `BoxMesh` — a varinha é peça de três dimensões, montada das mesmas três
   caixas do `ModelWand` original e com as texturas dele. O `BoxMesh` refaz o desenrolado de textura que o
@@ -1880,7 +1880,7 @@ Esta fecha o Maleficium: o que restava do Tainted Magic 8.1.1 entrou todo.
 - **O Desmontador Táumico**: não gasta uso — bebe cem centésimos de entropia por segundo das varinhas do inventário,
   até cinquenta mil, e queima essa carga para cavar (vinte, oito ou cento e vinte e oito, conforme o modo), para
   lavrar a terra em volta e para bater (vinte de dano). Agachado, o clique direito passa de modo em modo.
-- **A Lâmina Primordial**: fere como nada mais, põe a definhar e a enfraquecer, conserta-se sozinha e, com o clique
+- **A Lâmina Primordial**: fere como nada mais, faz definhar e enfraquecer, conserta-se sozinha e, com o clique
   direito seguro, abre o redemoinho que puxa tudo num raio de quinze blocos.
 - **A Chave do Portão Celeste**: prende-se a um lugar (uma vez só, e ganha uma cor sua) e leva de volta a ele depois
   de dois segundos de clique direito, desde que seja no mesmo mundo e o lugar esteja desimpedido.
@@ -2351,15 +2351,15 @@ prefixo `SR_`.
   porta de volta na parede.
 - Os **Monólitos**, que olham quem entra no Limbo.
 
-O mundo dos bolsos e o Limbo abrem-se com o jogo a andar, pelo `DynamicDimensions` — o jogo de hoje não deixa
+O mundo dos bolsos e o Limbo se abrem com o jogo rodando, pelo `DynamicDimensions` — o jogo de hoje não deixa
 registar mundos em código como a 1.7.10 deixava, então eles nascem na primeira vez que alguém precisa deles.
 
 ### Fatia das ferramentas — a lâmina, o ferro e a armadura
 
 - A **Lâmina de Fenda** (`ItemRiftBlade`): corta como espada de ferro e, com o botão de usar, salta. Havendo uma
-  fenda na linha de visão, ela atravessa-a; havendo um bicho, leva quem a empunha para junto dele. Quanto mais
+  fenda na linha de visão, ela a atravessa; havendo um bicho, leva quem a empunha para junto dele. Quanto mais
   gasta a lâmina, mais longe e mais torto o salto sai — é a única coisa que o gasto dela muda. Vinte tiques de
-  espera entre saltos, e conserta-se com Tecido Estável.
+  espera entre saltos, e se conserta com Tecido Estável.
 - O **Firma-Fendas** (`ItemRiftStabilizer`): usado numa fenda solta, prende-a — ela deixa de comer o mundo em
   volta. Seis usos, e numa porta não faz nada.
 - A **armadura de Fio do Mundo Tecido**: as quatro peças do `ItemWovenWorldThreadArmor`, com os números do
@@ -2370,7 +2370,7 @@ registar mundos em código como a 1.7.10 deixava, então eles nascem na primeira
 em todas as receitas. Aqui vale sempre o Tecido Estável, que é o que o mod faz de fábrica.
 
 **Ainda fica de fora** do ramo: o rosto da fenda solta (no original ela é um rasgão preto que treme no ar, feito
-de um sistema-L), o tamanho das fendas e o registo delas, os alçapões dimensionais, a Ferramenta de Ajuste de
+de um sistema-L), o tamanho das fendas e o registro delas, os alçapões dimensionais, a Ferramenta de Ajuste de
 Fenda, as portas de ouro e de quartzo comuns e o disco de música.
 
 ### Fatia do rosto — o rasgão da fenda solta
@@ -2404,12 +2404,12 @@ rasgão cresce com ele. Presa pelo Firma-Fendas, para.
 ### Fatia das outras portas — o alçapão e as duas de enfeite
 
 - O **Alçapão Dimensional** (`BlockDimensionalTrapdoor`): é a porta deitada. Tem a fenda a morar nele, e quem cai
-  por ele aberto sai num Reino Fragmentado; atrás de quem passa ele fecha-se, a não ser que haja redstone a
+  por ele aberto sai num Reino Fragmentado; atrás de quem passa ele se fecha, a não ser que haja redstone a
   segurá-lo. O original só tem o de madeira, e aqui é o mesmo.
 - A **Porta de Ouro** e a **Porta de Quartzo**: as duas portas comuns do ramo, que não levam fenda nenhuma. São
-  matéria-prima — a porta dimensional de ouro faz-se de uma delas com Tecido Estável, e a de quartzo da outra.
+  matéria-prima — a porta dimensional de ouro se faz de uma delas com Tecido Estável, e a de quartzo da outra.
 
-Com elas o ramo fecha a lista de coisas que se constroem. **Ficam ainda de fora**: o tamanho e o registo das
+Com elas o ramo fecha a lista de coisas que se constroem. **Ficam ainda de fora**: o tamanho e o registro das
 fendas (lá as fendas falam umas com as outras e chamam endermen), a Ferramenta de Ajuste de Fenda, a Placa de
 Marcação, o disco de música e as salas de esquema — no original os bolsos vêm de `.schem` guardados no jar, com
 ruínas, prisões e bibliotecas, e aqui a sala ainda é lisa.
@@ -2441,14 +2441,14 @@ Unbound values in registry ResourceKey[minecraft:root / minecraft:worldgen/biome
 
 Não era do mod. Os dois arquivos de bioma estão certos, e o que faltava era **o arquivo em si**, por um instante:
 a suíte lê os recursos de `build/resources/main`, e uma compilação correndo ao mesmo tempo reescreve essa pasta
-por baixo do jogo. Quando a leitura dos registos calha no meio da reescrita, o bioma não está lá e fica por
+por baixo do jogo. Quando a leitura dos registros calha no meio da reescrita, o bioma não está lá e fica por
 ligar.
 
-Prova: com a suíte a correr, forçaram-se oito reescritas seguidas do `magical_forest.json`, e o erro apareceu,
+Prova: com a suíte rodando, forçaram-se oito reescritas seguidas do `magical_forest.json`, e o erro apareceu,
 nomeando esse mesmo bioma e o vizinho dele na pasta. Sem nada a compilar em paralelo, três voltas seguidas
 passaram limpas.
 
-**A regra que fica:** não compilar enquanto a suíte de tela corre. Se o erro voltar sem nada em paralelo, então aí
+**A regra que fica:** não compilar enquanto a suíte de tela roda. Se o erro voltar sem nada em paralelo, então aí
 sim é do mod, e o que se procura é quem refere esses dois biomas antes de os dados carregarem.
 
 ## As duas foices, por fim (2026-09-26)
@@ -2462,13 +2462,13 @@ Saíram, então, as sete caixas do `ModelScythe` (a foice de sangue de origem) e
 no histórico.
 
 **De passagem, uma armadilha do original que vale guardar:** o `ModelScytheSpecial` **não segue o `.mtl`**. O
-arquivo de materiais manda o cabo usar a `cloth.jpg`, e o desenhista liga-o à `guntex.jpg` antes de o desenhar. É
+arquivo de materiais manda o cabo usar a `cloth.jpg`, e o desenhista o liga à `guntex.jpg` antes de o desenhar. É
 a folha do desenhista que vale — quem for ler um `.obj` de mod da 1.7.10 que olhe primeiro para quem o desenha.
 
 ## Os Óculos do Véu (2026-09-26)
 
 Ideia de quem joga, e **do porte, não do original**: nas Portas Dimensionais toda a fenda se vê desde o primeiro
-dia, e então não há nada para descobrir. Aqui as fendas continuam a estar no mundo desde sempre — o `RiftFeature`
+dia, e então não há nada para descobrir. Aqui as fendas continuam no mundo desde sempre — o `RiftFeature`
 já as espalhava —, mas **só aparecem a quem aprendeu a vê-las**, que é o que o Thaumcraft faz com tudo o mais.
 
 O que quem manda decidiu, quando lhe perguntei:
@@ -2481,7 +2481,7 @@ O que quem manda decidiu, quando lhe perguntei:
 ### Como se sabe de quem é cada fenda
 
 O `RiftBlockEntity` ganhou um `natural`, que **vem ligado**. Quem põe fendas sem passar por mãos de ninguém é a
-geração do mundo, que chama `setBlock` e nada mais; quem as faz de propósito passa por um destes dois sítios, e
+geração do mundo, que chama `setBlock` e nada mais; quem as faz de propósito passa por um destes dois lugares, e
 os dois desligam-no:
 
 * `DimensionalDoorBlock.setPlacedBy` e `DimensionalTrapdoorBlock.setPlacedBy` — quem assenta passa por aqui, a
@@ -2502,7 +2502,7 @@ orbes de foco. Sem isso, as fagulhas denunciavam a fenda a quem não a devia ver
 ### A folha
 
 A dos Óculos da Descoberta, com as lentes de ametista trocadas pelo vazio: uma rampa de preto-azulado com umas
-poucas fagulhas brancas dentro. Quem é lente reconhece-se pela cor e não pelo lugar — um pixel em que o azul manda
+poucas fagulhas brancas dentro. Quem é lente se reconhece pela cor e não pelo lugar — um pixel em que o azul manda
 sobre o vermelho e o verde —, e por isso a mesma conta serviu à folha do item e à da armadura. Gerador em
 `Veu.java`, no rascunho.
 
@@ -2517,10 +2517,10 @@ Também a pedido: as fendas deixam de ser o rabisco de dragão do original e pas
 de beiras roídas, afilado nas duas pontas, com uma gavinha ou outra a sair-lhe do lado e fagulhas de estrela a
 piscar em volta — brancas na maior parte, e uma em cada três puxada para o roxo do vazio.
 
-O `RiftTear` monta-o do número que a fenda sorteou quando nasceu: dele saem o torcer da espinha, o inchar da
+O `RiftTear` o monta do número que a fenda sorteou quando nasceu: dele saem o torcer da espinha, o inchar da
 barriga, as gavinhas e o lugar de cada fagulha. Duas fendas do mesmo número são iguais; de números diferentes,
-não. O que mexe continua a ser do original — o tremor, o esvoaçar das dez ondas e o giro —, e as fagulhas vão
-levadas pelo mesmo tremor, senão descolavam-se do talho quando a fenda abana.
+não. O que mexe continua sendo do original — o tremor, o esvoaçar das dez ondas e o giro —, e as fagulhas vão
+levadas pelo mesmo tremor, senão se descolavam do talho quando a fenda abana.
 
 **Uma coisa que mudou por baixo:** o rasgão do original é largo e quadrado, e a medida dele saía da largura; o
 talho é alto e estreito, e por isso quem manda na medida passa a ser o lado maior. Com a largura, um talho de
@@ -2539,19 +2539,19 @@ um pedaço de deserto, a outra o Nether, a outra um pedaço de um reino antigo*.
 ### A regra da porta
 
 Quem manda nisso é o `DimensionalDoorItem`, e não o bloco: o que a fenda sabia tem de ser lido **antes** de a
-porta lhe tomar o lugar, porque assim que o bloco troca o miolo dela vai-se e leva o destino consigo. São três
+porta lhe tomar o lugar, porque assim que o bloco troca o miolo dela se vai e leva o destino consigo. São três
 casos:
 
 * numa fenda **solta**, a porta não pega — o aviso aparece e a porta fica na mão;
-* numa fenda **presa** pelo Firma-Fendas, a porta toma-lhe o lugar e tudo o que ela sabia, e fica **brava**;
-* **longe de qualquer fenda**, a porta assenta-se como sempre e abre o bolso liso do original.
+* numa fenda **presa** pelo Firma-Fendas, a porta lhe toma o lugar e tudo o que ela sabia, e fica **brava**;
+* **longe de qualquer fenda**, a porta se assenta como sempre e abre o bolso liso do original.
 
 ### As salas
 
 Um bolso bravo sai com um dos quatro temas do `PocketThemes` e com **três portas**: a de volta, no meio da parede
 do norte, e mais duas nas paredes de lado, que ainda não apontam para lado nenhum. Quem atravessar uma delas abre
 outro bolso bravo, de outro tema — o sorteio nunca repete o tema de onde se veio —, e é assim que as salas se vão
-ligando. O bolso liso continua a ser o que uma porta comum abre, com a porta de volta e mais nada.
+ligando. O bolso liso continua sendo o que uma porta comum abre, com a porta de volta e mais nada.
 
 Lá as salas vêm de esquemas `.schem` guardados no jar. O porte ainda não os lê, e estas são feitas em código;
 quando o leitor chegar, troca-se o que enche a sala e não o resto.
@@ -2559,9 +2559,9 @@ quando o leitor chegar, troca-se o que enche a sala e não o resto.
 ### Três coisas que custaram a achar, e que valem para o que vier
 
 1. **Areia num bolso cai para o vazio.** O deserto tinha chão de areia, e um bolso não tem nada por baixo dele: à
-   primeira sacudidela o chão esvaziava-se e via-se o céu do vazio por baixo. O chão passou a arenito, e as dunas
+   primeira sacudidela o chão se esvaziava e se via o céu do vazio por baixo. O chão passou a arenito, e as dunas
    de areia por cima têm-no a segurá-las.
-2. **Um bolso cavado num pedaço de mundo que ninguém segura pode ir-se embora.** Nos retratos, cavar a sala e só
+2. **Um bolso cavado num pedaço de mundo que ninguém segura pode ir embora.** Nos retratos, cavar a sala e só
    depois levar lá quem joga dava sala nenhuma e queda no vazio. Leva-se primeiro, cava-se depois.
 3. **Da consola, `gamemode creative` sem `@p` não faz nada** — queixa-se de que falta um jogador, e o resto do
    teste corre com quem joga a pé, a cair e a morrer. Nos retratos de bolso é melhor `gamemode spectator @p`, que
@@ -2574,7 +2574,7 @@ e um tema, e dois temas seguidos nunca são o mesmo. O `WildPocketClientTest` ti
 ## Os que já andavam nas fendas (2026-09-26)
 
 A quarta coisa que quem manda pediu, e a que amarra as outras três: *a gente pode amarrar isso com os endermans,
-assim isso explicaria como eles vagam entre as dimensões e como eles teleportam*. E de facto explica — o
+assim isso explicaria como eles vagam entre as dimensões e como eles teleportam*. E de fato explica — o
 Thaumcraft e as Portas Dimensionais já contavam a mesma história por dois lados, e faltava alguém a atravessar de
 um para o outro.
 
@@ -2586,7 +2586,7 @@ O `RiftWalkers` diz três coisas sem uma linha de texto:
 * e nas salas para lá de uma fenda presa há sempre um ou outro, porque é ali que eles moram.
 
 E, no livro, a página que o thaumaturgo escreveu ao fim de onze dias de olho num rasgão: *não se teleportam;
-passam, e saem noutro sítio onde o Véu esteja fino*.
+passam, e saem noutro lugar onde o Véu esteja fino*.
 
 **Guardas:** o `RiftWalkersGameTest` cobre quem conta como andarilho do Véu (ao pé de uma fenda sim, longe dela
 não), que uma fenda pequena não põe ninguém cá fora por mais voltas que se dê, e que uma crescida põe — e pára
@@ -2596,7 +2596,7 @@ dá para forjar num gametest sem armar uma morte inteira; fica por cobrir, e est
 ### E a fenda que não se pode apontar
 
 Depois de a porta passar a depender da fenda presa, veio à vista um buraco que até aí não fazia diferença: **uma
-fenda solta não tem corpo**, e o raio do rato passa através dela. Carregar-lhe em cima acertava no bloco por trás,
+fenda solta não tem corpo**, e o raio do mouse passa através dela. Clicar nela acertava no bloco por trás,
 e o Firma-Fendas nunca via fenda nenhuma — a fatia inteira não tinha como começar.
 
 A Lâmina de Fenda já resolvia isto à mão, percorrendo a linha de visão de um quarto de bloco em quarto de bloco
@@ -2611,13 +2611,13 @@ O talho chato não era o que ele tinha pedido. A foto que mostrou é outra coisa
 dimensões**, redonda, gorda em baixo e a afinar até a ponta se perder, com um S ao meio, preta de céu sem lua e
 com estrelas presas na pele.
 
-O `RiftTendril` monta-a assim: uma espinha que sobe virando devagar e a meio caminho dobra o virar para o outro
+O `RiftTendril` a monta assim: uma espinha que sobe virando devagar e a meio caminho dobra o virar para o outro
 lado — é isso que lhe dá o S em vez de um gancho —, anéis de oito lados à volta dela, e a grossura a cair de uma
 raiz no pé até zero na ponta. Cada fenda tem a sua, do número que sorteou ao nascer.
 
 **Duas coisas que o desenho pedia e não havia:**
 
-* **Luz.** O desenho é de cor só, sem folha e sem normais, e por isso um tubo lia-se como uma fita chata. A
+* **Luz.** O desenho é de cor só, sem folha e sem normais, e por isso um tubo se lia como uma fita chata. A
   gavinha traz agora um número de luz por canto, feito quando ela se monta: quem olha para a luz fica claro,
   quem lhe dá as costas fica escuro. É o que lhe dá o redondo.
 * **Um esvoaçar que respeite o pé.** O original esvoaça seis décimos por igual em todo o rabisco; numa gavinha
@@ -2641,22 +2641,22 @@ vetor de varints. Os nomes são os de antes da planificação da 1.13 —
 
 Contam-se **cento e cinquenta e seis esquemas, noventa e seis blocos distintos e trezentos e vinte e oito
 estados** — pouco o bastante para a planificação se fazer à mão e por inteiro, sem adivinhar nada. É o
-`scratchpad/dd-mapa.js`, e o `dd-salas.js` passa-lhe cada esquema e escreve um arquivo por sala.
+`scratchpad/dd-mapa.js`, e o `dd-salas.js` lhe passa cada esquema e escreve um arquivo por sala.
 
 O formato de saída é o mais simples que serve: cabeçalho, paleta de estados em texto — que o `BlockStateParser` lê
 —, e o corpo em pares de *quantas casas seguidas, qual entrada da paleta*. Estas salas são quase todas ar, e ar
-seguido comprime-se a nada: as **oito milhões de posições das 116 salas cabem em 311 KiB**.
+seguido se comprime a nada: as **oito milhões de posições das 116 salas cabem em 311 KiB**.
 
 As portas do mod viraram as nossas na tradução, e os tecidos também. Quer dizer que **as salas já vêm com as
 saídas desenhadas nas paredes**: a primeira passa a ser a de volta, as outras ficam por apontar, e quem as
-atravessar abre outra sala. O quebra-cabeças liga-se sozinho.
+atravessar abre outra sala. O quebra-cabeças se liga sozinho.
 
 ### Três coisas que isto obrigou a mexer
 
-* Os bolsos afastavam-se **sessenta e quatro** uns dos outros; as salas vão até noventa e sete de lado. Passam a
+* Os bolsos se afastavam **sessenta e quatro** uns dos outros; as salas vão até noventa e sete de lado. Passam a
   duzentos e cinquenta e seis — num mundo que é só vazio, o espaço não custa nada.
 * Pôr uma sala é pôr até seiscentas mil casas enquanto alguém atravessa uma porta. Num bolso acabado de abrir o
-  mundo já é vazio, e mais de dois terços do que uma sala tem é ar: **o ar salta-se**, e sobra um terço do
+  mundo já é vazio, e mais de dois terços do que uma sala tem é ar: **o ar se salta**, e sobra um terço do
   trabalho.
 * As salas do original têm portas de ferro e de quartzo, e não só de madeira. O teste que as contava só sabia da
   de madeira e dizia que não havia porta nenhuma.
@@ -2675,7 +2675,7 @@ ela é o vão que já estava desenhado por trás da folha. Não foi preciso mexe
 folha que o tapava toda.
 
 A racha corre pelas duas metades sem dar um salto no meio, e por isso se monta numa folha de dezesseis por trinta
-e dois e corta-se depois (`scratchpad/Rachar.java`). **Desvio declarado:** as quatro continuam a distinguir-se,
+e dois e se corta depois (`scratchpad/Rachar.java`). **Desvio declarado:** as quatro continuam se distinguindo,
 mas só pelo metal do aro — ferro, ouro, quartzo e o escuro da arcana —, porque as salas do original usam as
 quatro e seria pena ficarem todas iguais.
 
@@ -2693,7 +2693,7 @@ cada quatrocentos e vinte pedaços, com o lajedo já comido pelo tempo.
 
 * **Não pode ter corpo.** Uma parede invisível no meio de uma ombreira é uma armadilha, e não um segredo: quem
   não tem os óculos atravessa a ombreira e não dá por nada.
-* **Nem contorno.** A caixa de ver ainda aparecia quando o rato lhe passava por cima, e a porta denunciava-se. A
+* **Nem contorno.** A caixa de ver ainda aparecia quando o rato lhe passava por cima, e a porta se denunciava. A
   forma de um bloco não costuma saber quem a pediu, mas a conta traz quem pediu: sem os óculos, ela devolve
   forma nenhuma. É a única parte disto que olha para quem está do outro lado da tela.
 
@@ -2702,7 +2702,7 @@ cada quatrocentos e vinte pedaços, com o lajedo já comido pelo tempo.
 ## Três focos, e menos três ferros no cinto (2026-09-26)
 
 Quem manda: *acho que estabilizar a fenda, fechar a fenda, abrir fenda deveriam ser focus de varinha e não
-itens*. Tem razão, e a razão é do próprio Thaumcraft: tudo o mais que um thaumaturgo faz ao mundo faz-se com a
+itens*. Tem razão, e a razão é do próprio Thaumcraft: tudo o mais que um thaumaturgo faz ao mundo se faz com a
 varinha, o vis está na varinha, e um rasgão no Véu não é trabalho de ferro como um nó também não é.
 
 Saíram o **Firma-Fendas** e o **Fecha-Fendas** de mão. Entraram três focos: **Rasgar**, que abre uma fenda onde a
@@ -2727,7 +2727,7 @@ passam a ser em primordiais; o Vazio fica para a essência da infusão que faz c
 O primeiro, e o que vale para tudo o que vier: *eu quero as coisas em português do Brasil, não nesse português de
 Portugal*. O texto de jogo do ramo foi reescrito — as páginas do livro, os nomes, as mensagens —, e o resto do
 `pt_br.json` foi varrido nas construções que denunciavam o europeu: o gerúndio com "estar a", o "há de", e o
-pronome grudado depois do verbo onde o Brasil põe antes ("o sangue guarda-se" virou "o sangue se guarda").
+pronome grudado depois do verbo onde o Brasil põe antes ("o sangue se guarda" virou "o sangue se guarda").
 
 **Fica dito:** os comentários do código e este documento ainda estão em português europeu de ponta a ponta, de
 muitas sessões atrás. Do que é novo em diante vai tudo em brasileiro; varrer o que já existe é um serviço à parte,
@@ -3033,7 +3033,7 @@ Até lá elas só existem no criativo. É assim no original também: sem caldeir
 O `BlockCauldron` e o `TileEntityCauldron` do original, que é onde o ofício começa a valer: enche-se de água,
 acende-se fogo embaixo, espera-se ferver — cinco segundos — e daí o que se joga dentro entra na panela.
 
-**Ele não se fabrica.** Faz-se untando um caldeirão comum com **Pasta de Unção**, que sai das quatro sementes que
+**Ele não se fabrica.** se Faz untando um caldeirão comum com **Pasta de Unção**, que sai das quatro sementes que
 o mato dá (alcachofra, mandrágora, beladona e campainha-de-neve). É o `useAnnointingPaste` do original, e a água
 que o caldeirão comum já tinha passa para ele.
 
@@ -3129,7 +3129,7 @@ paredes altas só mostra o que tem dentro quando se olha de cima, e as fotos est
 voltas de diagnóstico deixaram de bom foi o caminho honesto no teste de tela: a água entra por balde e clique,
 como quem joga faz, em vez de ser escrita à força no bloco.
 
-### O Magia Naturalis muda-se para a aba do ofício (2026-09-27)
+### O Magia Naturalis se muda para a aba do ofício (2026-09-27)
 
 *Une o Naturalis na aba da bruxaria, porque elas se conversam: a natureza, a bruxa, o que é antigo, o natural.*
 
@@ -3138,7 +3138,7 @@ passaram para a aba do **Ars Occulta**, à direita da árvore do ofício — doz
 cai em cima de outra (há um teste que confere isso, pesquisa por pesquisa).
 
 A entrada do ramo, o `MN_INTRO`, pendura-se agora no `AO_OLD_WAYS`: é o fio que liga as duas árvores e mostra de
-onde uma olha para a outra. Ele continua a abrir-se sozinho, como antes — quem já jogava não perde nada.
+onde uma olha para a outra. Ele continua se abrindo sozinho, como antes — quem já jogava não perde nada.
 
 O `Naturalis.CATEGORY` deixou de ser um nome seu e passou a apontar para o do ofício, que é o que faz todo o
 resto do ramo (receitas, sombras, testes) continuar a funcionar sem mexer em mais nada.
@@ -3164,7 +3164,7 @@ papoula ou um dente-de-leão. Morta de outro jeito, estoura na mesma, um pouco m
 um mixin no `ItemEntity`, que é onde o original punha o `onItemExpireEvent`.
 
 **O Ent** (`EntEntity`, o `EntityEnt`) sai de uma **tora do ofício quebrada**: uma em cem, mais uma por tora
-encostada nela, até cinco em cem — um bosque cerrado defende-se melhor que uma árvore sozinha. Duzentos de vida,
+encostada nela, até cinco em cem — um bosque cerrado se defende melhor que uma árvore sozinha. Duzentos de vida,
 quatro de dano, e nada o empurra. Onde ele pisa a terra melhora: de trezentas em trezentas batidas, o chão
 debaixo dele recebe farinha de osso. Ele não nasce em cima de quem corta — procura um lugar num raio de dezesseis
 blocos com três de céu livre, como no original.
@@ -3177,7 +3177,7 @@ todo escondido, e a folha em `textures/models`. As caixas são as do original, n
 
 **Um defeito que apanhou dois itens.** Os Abafadores e a Cabeça de Isaac tinham durabilidade **zero**, na ideia de
 que zero era o mesmo que "não se gasta". Não é: o jogo de hoje olha para a peça que *tem* durabilidade, seja ela
-qual for, e a primeira pancada que o dono leva gasta um ponto dela — com conta zero, a peça desfaz-se no primeiro
+qual for, e a primeira pancada que o dono leva gasta um ponto dela — com conta zero, a peça se desfaz no primeiro
 golpe. Na prática, quem levava um golpe da mandrágora perdia os abafadores nesse mesmo golpe e o grito seguinte
 já o alcançava. Os dois passaram a ter a durabilidade do original, que é tanta que nunca se gastam. Foi um teste
 que o apanhou.
@@ -3204,7 +3204,7 @@ Apertou-se dos dois lados:
 - **a semente**: o `WitchSeedItem` recusa o clique quando o que está debaixo do lugar é planta do ofício — até a
   losna sobre losna, que só se empilha por conta própria, nunca pela mão de quem semeia.
 
-A losna continua a empilhar-se exatamente como antes: isso é do `randomTick`, não de quem planta.
+A losna continua se empilhando exatamente como antes: isso é do `randomTick`, não de quem planta.
 
 Há duas provas novas: uma percorre as oito plantas contra as oito e confere que só a losna sobre losna se
 sustenta; a outra dá a semente a um jogador de mentira e clica — recusa sobre a planta, planta em terra arada.
@@ -3226,7 +3226,7 @@ abre enquanto o que já se abriu for menor que o **teto** dele. É por isso que 
 segunda vê que já se passou do teto dela e não faz nada. Cada efeito **gasta** desse espaço conforme o peso, e o
 que não couber não entra.
 
-**Os temperos** valem para o efeito **seguinte**, uma vez só, e apagam-se depois dele. Força, tempo, inversão,
+**Os temperos** valem para o efeito **seguinte**, uma vez só, e se apagam depois dele. Força, tempo, inversão,
 sem fagulhas, sem alvo de bloco, sem alvo de criatura, sem teto de força. A força e o tempo param de subir aos
 sete — a não ser com a Estrela do Nether, que levanta o teto.
 
@@ -3405,7 +3405,7 @@ Mais cinco, e estas todas dependem de alguém apanhar ou de alguma coisa voar:
 - **Volatilidade** (mato alto ou arbusto seco): quem a tem estoura ao apanhar. Vindo de outro estouro é certo;
   das outras pancadas, uma em cinco. E de vez em quando ela própria se gasta nisso.
 - **Reflexo de Projéteis** (teia): o que voa perto volta por onde veio.
-- **Atração de Projéteis** (a mesma teia, invertida): o que voa a três blocos vira-se para quem a tem.
+- **Atração de Projéteis** (a mesma teia, invertida): o que voa a três blocos se vira para quem a tem.
 
 **As duas que esperam uma pancada** vivem num gancho à parte, o `OccultaEvents`, no `AFTER_DAMAGE` do Fabric — é
 o lugar de hoje para o que o original fazia no `IHandleLivingHurt`.
@@ -3468,7 +3468,7 @@ risca-se no chão, larga-se o que se oferece dentro, e bate-se no meio.
 
 **Quatro gizes.** O de ritual sai da bancada (cinza de madeira, gesso e uma Lágrima da Deusa); os outros três
 saem dele, no caldeirão a ferver — o dourado, o do alhures e o infernal. Cada risco gasta um ponto dos sessenta e
-quatro, e riscar por cima de um glifo troca-o pelo do giz que se tem na mão.
+quatro, e riscar por cima de um glifo o troca pelo do giz que se tem na mão.
 
 **Três anéis.** O desenho é o do original letra por letra, dezessete por dezessete: o de dentro com dezesseis
 glifos, o do meio com vinte e oito, o de fora com quarenta. Cada anel pode ser de qualquer giz, e o que um rito
@@ -3488,7 +3488,7 @@ três da tabela do original pedem coisa que ainda não existe aqui — a Pedra S
 Dedo de Sapo —, e entram quando os itens chegarem.
 
 **Dois desvios declarados.** ~~Os ritos <b>não se guardam em disco</b>: um rito morre ao desligar o mundo, onde
-no original ele continuaria de onde estava.~~ *Resolvido: eles guardam-se, e o que se guarda é o nome do rito e
+no original ele continuaria de onde estava.~~ *Resolvido: eles se guardam, e o que se guarda é o nome do rito e
 quantos passos faltam.* E a Fertilidade não cura o aldeão zumbi como lá: no jogo de hoje isso é maçã dourada e fraqueza, que é
 outra coisa, não o mesmo rito.
 
@@ -3517,9 +3517,9 @@ e sai ao ser desfeita, para não haver de varrer o mundo à procura.
 Espanhol, o Musgo de Brasa (que queima quem lhe pisa) e a **Gota de Sorte**, que sai do caldeirão com Mutandis
 Extremis por chave.
 
-**A boneca de vodu** faz o que se lhe fizer: apontada para <b>lava</b>, a pessoa arde e a boneca desfaz-se; <b>de
+**A boneca de vodu** faz o que se lhe fizer: apontada para <b>lava</b>, a pessoa arde e a boneca se desfaz; <b>de
 pé</b>, empurra-a para onde se olha, com a força do tempo que se segurou; <b>agachado</b>, com uma agulha de osso
-na mochila, espeta — meio coração, e a agulha gasta-se. Quem traz a <b>Contra o Vodu</b> não sente nada disso, e
+na mochila, espeta — meio coração, e a agulha se gasta. Quem traz a <b>Contra o Vodu</b> não sente nada disso, e
 uma vez em quatro cai um raio em cima de quem tentou.
 
 **Dois desvios declarados.** O giz: no original uma receita dá <b>duas</b> varas de sessenta e quatro riscos que
@@ -3548,7 +3548,7 @@ dois vazados **em prumo** furam o chão (até dezesseis); e, não havendo nada d
 **O Mundo do Espelho é uma colmeia.** Cada pedaço de dezesseis é uma cela de nove de lado forrada de superfície
 de espelho, e nenhuma se liga à outra. O desenho é o do `WorldChunkManagerMirror` casa por casa — as duas tabelas
 dele dizem quais casas são parede. Cada espelho ganha **a sua** cela pela caracol do `getDimCoords`, e nela nasce
-um espelho **selado** que aponta de volta. O mundo abre-se com o jogo andando, pelo mesmo `DynamicDimensions` dos
+um espelho **selado** que aponta de volta. O mundo se abre com o jogo andando, pelo mesmo `DynamicDimensions` dos
 bolsos das Portas Dimensionais.
 
 **O Reflexo** guarda a cela: cem de vida, **nenhuma pancada lhe tira mais de seis**, e ele veste a armadura, a
@@ -3558,7 +3558,7 @@ melhor arma e os efeitos de quem entrou. Morto ele, o espelho de cá fica **vaza
 quem mais lhe ficou diante desde a última vez. Some em dez segundos.
 
 **As duas cantigas** tiram do Mundo do Espelho: *espelho espelho meu me manda para casa* leva à cela por onde se
-entrou (espera de cinco minutos) e *espelho espelho meu eu desisto* leva à cama (espera de uma hora). Elas ouvem-se
+entrou (espera de cinco minutos) e *espelho espelho meu eu desisto* leva à cama (espera de uma hora). Elas se ouvem
 no `ALLOW_CHAT_MESSAGE` do Fabric, que é o lugar de hoje para o que o original fazia no gancho de fala.
 
 **Desvios declarados.** (1) O Reflexo **não lança os feitiços da Vara Mística**, que é fatia à parte, nem toma a
@@ -3588,7 +3588,7 @@ e o **maior** x fica à direita dela. O `BoxMesh` fazia o contrário nos dois ei
 **de cabeça para baixo** — é o giro de meia-volta que todo desenhista de Techne faz antes de começar —, o engano
 punha a figura das paredes de pernas para o ar e trocada de lado. O fundo e o topo já estavam certos.
 
-Em peça simétrica não se via. No espelho viu-se de uma vez: o vidro saía com a ponta redonda voltada para a
+Em peça simétrica não se via. No espelho se viu de uma vez: o vidro saía com a ponta redonda voltada para a
 emenda dos dois blocos e a faixa lavrada no meio, em vez do oval fechado que o original tem. Corrigidas as quatro
 paredes, o oval fecha.
 
@@ -3601,12 +3601,12 @@ A segunda panela do ofício, e a que faz quase tudo o que o Witchery tem de bebe
 do Caldeirão da Bruxa: ali a <b>ordem</b> das coisas é tudo; aqui não há ordem nenhuma — são <b>seis coisas</b>
 que ou fazem uma receita, ou estragam o pote.
 
-**O que se faz com ele:** assenta-se, acende-se lume por baixo, enche-se com um balde de água, atira-se o que
-entra lá para dentro e atiram-se frascos de vidro. Fechada a receita, o líquido toma a cor dela e fica pronto; aí
-chega-se com um frasco na mão e tira-se. Cada frasco que sai gasta um dos que estão no pote.
+**O que se faz com ele:** se assenta, acende-se lume por baixo, enche-se com um balde de água, atira-se o que
+entra lá para dentro e se atiram frascos de vidro. Fechada a receita, o líquido toma a cor dela e fica pronto; aí
+chega-se com um frasco na mão e se tira. Cada frasco que sai gasta um dos que estão no pote.
 
 **Errar tem preço**, e é o do original: coisa a mais, coisa que não casa com receita nenhuma, ou o lume que se
-apaga — e o pote estraga. Estragado, esvazia-se com um balde e começa-se de novo.
+apaga — e o pote estraga. Estragado, esvazia-se com um balde e se começa de novo.
 
 **O casamento tem dois feitios**, como lá: <b>inteiro</b>, com as seis casas cheias, e <b>pela metade</b>, enquanto
 se enche — é o segundo que dá a cor ao líquido antes de a última coisa entrar, e é por ele que se sabe, olhando,
@@ -3651,9 +3651,9 @@ cozimentos do Caldeirão da Bruxa: ali a mistura é que manda; aqui cada frasco 
 - **Brotação**: um galho de tronco cresce quinze casas na direção em que o frasco bateu, com folha aqui e ali. Se
   cresce para cima, leva consigo quem estava em cima dele.
 - **Erosão**: come uma bola de dois de raio e devolve em **obsidiana** o que havia dela. Em quem apanha, ácido —
-  oito de dano, e a armadura gasta-se cem.
-- **Amor**: os bichos em roda apaixonam-se, e os filhotes crescem de uma vez.
-- **Erguer os Mortos**: um morto levanta-se onde ele bate. É o mesmo levantar do cozimento de caldeirão, que já
+  oito de dano, e a armadura se gasta cem.
+- **Amor**: os bichos em roda se apaixonam, e os filhotes crescem de uma vez.
+- **Erguer os Mortos**: um morto se levanta onde ele bate. É o mesmo levantar do cozimento de caldeirão, que já
   estava portado — não se escreveu duas vezes.
 
 **Um frasco que não pega volta ao chão em item**, como no original: um de espinhos atirado contra pedra do nether
@@ -3689,7 +3689,7 @@ Mais cinco, e com eles três coisas que o pote pedia e não havia.
   quem mais apanhar leva um golpe e fica lerdo por cinco segundos.
 - **Troca**: o que estiver **largado no chão** em roda toma o lugar do bloco em que o frasco bateu, casa por
   casa, do mais perto para o mais longe, até acabarem os itens.
-- **Profundezas**: este não se atira — **bebe-se**. Quinze segundos em que se respira debaixo da água e, fora
+- **Profundezas**: este não se atira — **se bebe**. Quinze segundos em que se respira debaixo da água e, fora
   dela, se definha. É a troca do peixe: o mar passa a ser casa, e a terra deixa de ser.
 
 **As três coisas que vieram com eles**, todas de bancada, como no original: a **Teia do Ofício** (linha em cruz
@@ -3745,10 +3745,10 @@ osso ou carne podre e pó de blaze), que derramam Força e Resistência a quatro
 chamam <b>espíritos</b> — o Espectro, a Banshee e o Poltergeist — e pedem o Pó de Cemitério e o Medo Condensado.
 
 **O Crisol de Sangue está de pé, e é honesto dizer que ele ainda não faz nada.** Ele é peça de <b>vampiro</b>: o
-vampiro despeja nele o que bebeu, cinco de cada vez até vinte, e o crisol cheio abre-lhe a escolha do dom maior —
+vampiro despeja nele o que bebeu, cinco de cada vez até vinte, e o crisol cheio lhe abre a escolha do dom maior —
 a Tempestade com uma alcachofra-d'água na mão, o Enxame com lã de morcego, a Colheita com um osso. O bloco está
 inteiro: monta-se, guarda o sangue, mostra-o subindo dentro dele e sabe a conta dos três dons. O que falta é o
-vampiro, e ele liga-se por <b>dois fios</b>: o `feed` ao gole e o `BloodCrucibleBlock.level` à conta do grau, que
+vampiro, e ele se liga por <b>dois fios</b>: o `feed` ao gole e o `BloodCrucibleBlock.level` à conta do grau, que
 hoje devolve zero de propósito. Até lá, quem clicar nele ouve o mesmo "não" que o original dá a quem não é
 vampiro.
 
@@ -3765,17 +3765,17 @@ bicho morto com a **Arthana**, que não está portada. No lugar dela vai a **Ped
 **Há um lado de lá, e não se vai a ele: dorme-se para ele.** Esta fatia é o `WorldProviderDreamWorld` do Witchery
 inteiro, e é a primeira do porte em que o jogador **muda de mundo com o corpo ficando para trás**.
 
-**Como funciona.** Bebe-se o **Cozimento do Sono** — ou come-se a **Maçã do Sono** — e três coisas acontecem de
+**Como funciona.** se Bebe o **Cozimento do Sono** — ou se come a **Maçã do Sono** — e três coisas acontecem de
 uma vez: um **Corpo Adormecido** fica deitado no chão onde a pessoa estava, em carne e com tudo o que ela levava;
 a mochila, a vida e a fome são **trocadas** por um segundo conjunto guardado no próprio jogador; e o espírito
 acorda no **Mundo dos Espíritos**, no mesmo ponto do mapa, no chão alto de lá.
 
-**O mundo de lá é o daqui.** Ele abre-se com o **gerador do mundo de cima**, que é o que o original faz: o chão é
+**O mundo de lá é o daqui.** Ele se abre com o **gerador do mundo de cima**, que é o que o original faz: o chão é
 o mesmo, monte por monte, e quem anda em espírito reconhece o caminho de casa. O que muda é que não há gente,
 e que nascem lá duas plantas que não nascem em mais nenhum lugar: o **Algodão Sonhador** e a **Erva Cintilante**.
 
 **Da travessia passa pouco**, e o original diz exatamente o quê: a **Agulha de Gelo** e o **Mutandis** vão; o
-Algodão, o Perturbado, a Agulha e a **Fome Melíflua** voltam. O resto fica com o corpo. Para acordar espeta-se a
+Algodão, o Perturbado, a Agulha e a **Fome Melíflua** voltam. O resto fica com o corpo. Para acordar se espeta a
 Agulha em si mesmo; sem ela, morre-se para acordar — e morrer do outro lado é acordar de mãos vazias.
 
 **A conta do pesadelo é a parte engenhosa, e é a que faz o quarto valer a pena.** O Cozimento do Sono passa uma
@@ -3845,7 +3845,7 @@ original diz **três e três**. Corrigida.
    servidor de peles. Este porte não baixa a pele de ninguém de fora; o corpo leva a mesma pele de reserva do
    Reflexo.
 
-   E **deita-se com uma volta só**, noventa graus em Z, que é a com que o jogo de hoje deita um morto. O original
+   E **se deita com uma volta só**, noventa graus em Z, que é a com que o jogo de hoje deita um morto. O original
    põe antes dela um `glTranslatef(0.9, 0.25, 0)` e uma segunda volta em Y: com as contas de agora esses números
    atiram o corpo para o ar e para o lado. O que se vê é o que o original mostra — um corpo caído no chão.
 5. **A bancada das teias é uma receita de código, e não de arquivo.** Um ingrediente de receita do Minecraft de
@@ -3915,14 +3915,14 @@ teto de quatro mil e noventa e seis casas.
 
 ### A Arthana, o Pó Espectral e a Pedra Necrótica (2026-09-27)
 
-**A faca do ofício estava a faltar, e ela é a chave de meia dúzia de coisas.** A **Arthana** — o `ItemArthana` do
+**A faca do ofício estava faltando, e ela é a chave de meia dúzia de coisas.** A **Arthana** — o `ItemArthana` do
 Witchery — é de **ouro com a vida do ferro**, e o ouro é escolha do original: é o metal que não serve para lutar.
 Ela sai de uma bancada com um lingote de ouro, uma esmeralda, duas pepitas e uma vara. Nada nela é raro.
 
 **O que ela faz não é cortar melhor: é abrir o que os bichos guardam.** Com ela na mão, tudo o que o Caldeirão
 de Pote pede vem muito mais vezes — a Língua de Cão e a Lã de Morcego passam de **uma em três para três em
 quatro**, o Dedo de Sapo de **uma em cinco para uma em duas**, o Coração de Creeper de **duas em cem para
-oito**. E abre-se o que sem faca não se abre: a **caveira** do esqueleto, do zumbi e do creeper, e o **Pó
+oito**. E se abre o que sem faca não se abre: a **caveira** do esqueleto, do zumbi e do creeper, e o **Pó
 Espectral**, que só sai de morto-vivo aberto por ela.
 
 **Isso é feito na tabela de despojos do jogo, e não num evento.** Cada queda é uma pilha própria com a sua
@@ -3965,7 +3965,7 @@ o que sai dele é **crédito**, cento e cinquenta segundos de corpo neste lado, 
 precisar deles. Ele pede o que só a Arthana abre — Pó Espectral, Fome Melíflua, Pedra Necrótica, uma picareta de
 ouro, a própria faca e pólvora —, cinco mil de poder e um anel de dezesseis glifos de ritual.
 
-**A porta monta-se do outro lado.** Um vão de dois por dois com moldura de **neve** em volta, e uma fonte de
+**A porta se monta do outro lado.** Um vão de dois por dois com moldura de **neve** em volta, e uma fonte de
 **Espírito Fluente** derramada lá dentro. É a única coisa que o Espírito Fluente acende, e só acende no Mundo dos
 Espíritos: uma poça no mundo de cá não faz portal nenhum.
 
@@ -3987,9 +3987,9 @@ a neve cai com ela.
 **Desvios declarados.**
 
 1. **A moldura aceita a neve nas duas formas**, a camada e o bloco. É a correção do achado acima: com o bloco,
-   que se empilha, a moldura passa a ser construível sem deixar de ser de neve. A camada continua a valer, para
+   que se empilha, a moldura passa a ser construível sem deixar de ser de neve. A camada continua valendo, para
    quem conseguir montá-la.
-2. **O crédito de manifestação soma-se**, e o original guarda um número só. Dois ritos dão o dobro de segundos;
+2. **O crédito de manifestação se soma**, e o original guarda um número só. Dois ritos dão o dobro de segundos;
    no original o segundo rito reescreveria o primeiro. Somar é o que a leitura do `RiteSetNBT` sugere e é o que
    não desperdiça o que se ofereceu.
 3. **A picareta de ouro do rito é leitura, e não certeza.** O original pede o `Items.field_151005_D`, que é uma
@@ -3998,9 +3998,9 @@ a neve cai com ela.
    troca-se uma linha.
 4. **O fantasma não se vê de fora como fantasma.** No original ele é desenhado translúcido, por um pacote de
    estilo que o servidor manda a todos. Este porte não tem esse pacote; o fantasma anda visível como qualquer
-   um. O que ele é continua a valer em tudo o resto — o que carrega, o relógio, e não morrer.
+   um. O que ele é continua valendo em tudo o resto — o que carrega, o relógio, e não morrer.
 
-### Os ritos guardam-se em disco (2026-09-27)
+### Os ritos se guardam em disco (2026-09-27)
 
 **Um rito a correr morria ao desligar o mundo.** Estava declarado desde a fatia dos círculos, com a nota de que
 guardá-lo pediria que cada passo soubesse escrever-se. Pedia menos do que isso.
@@ -4024,7 +4024,7 @@ escrevê-la; até lá, isto é tudo.
 faltam pedem coisa que ainda não existe aqui; estas quatro não pediam nada.
 
 **O Rito da Tempestade** — o `RiteWeatherCallStorm` — chama o raio. De trinta em trinta batidas cai um num anel
-em volta do círculo, nunca em cima dele, e na **quarta** vez o céu fecha-se numa trovoada de cinco a quinze
+em volta do círculo, nunca em cima dele, e na **quarta** vez o céu se fecha numa trovoada de cinco a quinze
 minutos. Depois disso caem raios a esmo até a conta acabar.
 
 **O Rito de Cozer** — o `RiteCookItem` — coze tudo o que for comida e estiver largado a cinco do círculo, e
@@ -4069,10 +4069,10 @@ ofereceu e diz ao dono do círculo por quê.
 
 **Achando, ele levanta um cone** de quinze em quinze batidas, camada a camada, com a beira de baixo salpicada de
 relva e quem estiver em cima a subir junto. Erguido o cone, a lava **sobe por dentro** até o alto; no penúltimo
-passo ela transborda e o cume **rompe-se por um dos quatro lados**, a esmo. No último, a coluna que veio de baixo
+passo ela transborda e o cume **se rompe por um dos quatro lados**, a esmo. No último, a coluna que veio de baixo
 é fechada — e o que fica é um monte com uma cratera, e não um cano de lava aberto até ao fundo do mundo.
 
-**Os números são os do original**, incluindo os que parecem enganos e não são: o raio da camada `y` conta-se
+**Os números são os do original**, incluindo os que parecem enganos e não são: o raio da camada `y` se conta
 como `raio - (alto - fase - 1 + y) * raio / alto`, e é essa conta torta que faz o cone crescer de dentro para
 fora em vez de subir reto. As linhas do círculo encolhem uma casa a cada cinco, a esmo, e é isso que tira a
 régua da borda.
@@ -4091,7 +4091,7 @@ sobre a `RiteProtectionCircle` do Witchery — são os primeiros deste porte a c
 houver com que os pagar.
 
 **A cúpula.** De vinte em vinte batidas o rito desenha chão, parede cilíndrica e teto em volta do círculo, e
-cada casa dela é um **bloco de barreira** com trinta batidas de vida. Parado o rito, a parede desfaz-se sozinha
+cada casa dela é um **bloco de barreira** com trinta batidas de vida. Parado o rito, a parede se desfaz sozinha
 em segundo e meio — não há nada a limpar, e não fica entulho de um rito interrompido.
 
 **E ela sabe de quem é.** Uma barreira que trava gente deixa passar **quem a ergueu**, e quem estiver em criativo
@@ -4140,7 +4140,7 @@ escrever motor nenhum, só dizer o que o anel faz a quem apanha.
 **O que ele faz são dois minutos de escuro**, em gente e em bicho, do círculo até **oitenta casas**. E só a quem
 está <b>naquele anel</b>: quem já ficou para trás não leva outra vez, e quem ainda vem espera a sua vez.
 
-**E há uma defesa, uma só.** Quem trouxer uma **boneca de proteção contra vodu** presa a si gasta-a — e o rito
+**E há uma defesa, uma só.** Quem trouxer uma **boneca de proteção contra vodu** presa a si a gasta — e o rito
 **morre de vez**. É a única coisa que pára a maldição, e é a que o original dá.
 
 **Desvios declarados.**
@@ -4192,9 +4192,9 @@ devolver `EFFECT_FAILED` antes de tirar mana. Curar quem está com a vida cheia 
 
 **Desvios declarados.**
 
-1. **As peças guardam-se por nome, e não por número.** O original numera cada peça e soma mil às Essências e
+1. **As peças se guardam por nome, e não por número.** O original numera cada peça e soma mil às Essências e
    cinco mil aos Modificadores para as separar; um feitiço escrito numa instalação fica ilegível noutra em que
-   os números tenham andado. Aqui guarda-se o nome, e a separação é o próprio tipo da peça. **É de propósito e é
+   os números tenham andado. Aqui se guarda o nome, e a separação é o próprio tipo da peça. **É de propósito e é
    melhor:** um feitiço escrito num mundo continua legível noutro.
 2. **O feitiço mora num componente, e não espalhado pelo NBT.** O original guarda `NumStages`,
    `ShapeOrdinal_0`, `SpellComponentIDs_0` e companhia em chaves separadas. Aqui é uma coisa só.
@@ -4216,7 +4216,7 @@ recupera. É o original, e é a razão mais forte que o Ars Magica 2 dá para su
 
 **O Projétil.** A Forma que define o ramo para quem o joga. Ela não procura alvo: **atira**. O feitiço inteiro
 entra numa entidade que voa e que, ao bater, corre as Essências daquela etapa e **lança dali o que sobra da
-frase**. É o que faz um Projétil seguido de uma Área explodir no sítio da batida e não na mão de quem lançou.
+frase**. É o que faz um Projétil seguido de uma Área explodir no lugar da batida e não na mão de quem lançou.
 
 Ele **não tem física do jogo**: se move à mão, sem arrasto, sem gravidade a não ser a que o modificador der. Um
 projétil sem modificadores voa a direito a um bloco por batida até bater ou até acabarem as **100 batidas** de
@@ -4291,7 +4291,7 @@ cura lançada com o retorno cheio move a Vida em **0,3** de 100.
 
 **Um feitiço que falha não puxa nada**, e nem gasta o retorno decrescente: quem errou não aprendeu.
 
-**A Afinidade de um feitiço se conta, não se escreve.** Passa-se por todas as etapas somando uma marca para
+**A Afinidade de um feitiço se conta, não se escreve.** se Passa por todas as etapas somando uma marca para
 cada Afinidade que cada Essência puxa, e a que aparecer mais vezes é a do feitiço — o `mainAffinityFor` do
 original. É dela que saem a figura e a cor de um projétil, e é isso que faz um feitiço de fogo *parecer* um
 feitiço de fogo sem ninguém ter escolhido.
@@ -4529,7 +4529,7 @@ tudo; com ela, começa sabendo três Formas e compra o resto com o que aprende l
 **verde**, do vinte ao quarenta, e o **vermelho**, do quarenta ao cinquenta. Uma perícia vermelha não se
 compra cedo por mais pontos azuis que se tenha, e é isso que faz o ramo ter começo, meio e fim.
 
-**Ganha-se um ponto a cada dois níveis, e só até o cinquenta.** Depois disso o nível ainda sobe — e ainda
+**se Ganha um ponto a cada dois níveis, e só até o cinquenta.** Depois disso o nível ainda sobe — e ainda
 enche a mana e apressa o relógio — mas não compra mais nada. São **25 pontos** ao todo (3 azuis de começo,
 mais 10 azuis, 10 verdes e 5 vermelhos) para **32 perícias**: **não dá para ter tudo**, e é de propósito. Há
 uma prova que guarda esse número.
@@ -4564,7 +4564,7 @@ porte estão na árvore do Ars Magica 2, com coordenada, ramo, cor e pré-requis
 5. **A tela tem três abas e não seis**, e o quadro é encolhido para caber inteiro sem rolar. As outras três
    abas do original (talentos, familiares, afinidade) são sistemas que não estão portados, e as 120 perícias
    dele não caberiam numa tela — as 32 destas cabem.
-6. **A experiência que sobra ao subir de nível perde-se — e é um erro do original que este porte mantém.** O
+6. **A experiência que sobra ao subir de nível se perde — e é um erro do original que este porte mantém.** O
    `addMagicXP` zera a experiência ao subir, sem guardar o excesso e sem tornar a olhar: quem ganhasse de uma
    vez o bastante para dois níveis só subiria um. Quase nunca se nota, porque a experiência chega de cinco em
    cinco centésimos, mas nos primeiros níveis — em que o que falta é um oitavo de ponto — chega a perder
@@ -4596,7 +4596,7 @@ prova de tela nova que pegou. Entrou um `NoopRenderer`.
 
 1. **Uma figura de partícula só, e não onze.** O original tem uma por Afinidade — a `lens_flare`, a
    `explosion_2`, a `ember` e por aí. Aqui é o `sparkle` dele para todas, e quem separa uma Afinidade da
-   outra é a **cor**. As onze figuras estão no porte (o Projétil usa-as), mas como partícula elas dariam onze
+   outra é a **cor**. As onze figuras estão no porte (o Projétil as usa), mas como partícula elas dariam onze
    folhas de animação para pouca diferença na tela.
 2. **O tamanho do mote foi afinado pelo que se vê.** O original diz `setParticleScale(0.15F)`, mas esse número
    é da escala do motor de partículas *dele*; no do jogo de hoje, o mesmo 0,15 dá um ponto quase invisível.
@@ -4617,7 +4617,7 @@ A última. Com ela o ramo tem **as quinze Formas** do Ars Magica 2.
 ferramenta custa mana **a cada batida** para se manter, e volta a ser o feitiço quando a mana acaba. É a ideia
 mais bonita do ramo depois da Afinidade: uma ferramenta que só existe enquanto se pode pagar por ela.
 
-**Em troca, ela nunca se gasta.** O original conserta-a um ponto por batida enquanto a mantém. Uma picareta
+**Em troca, ela nunca se gasta.** O original a conserta um ponto por batida enquanto a mantém. Uma picareta
 vinculada de diamante não quebra nunca — mas come **um ponto de mana por batida**, que são **vinte por
 segundo**, e ninguém a carrega sem pensar.
 
@@ -4702,7 +4702,7 @@ Z = 8 + (ponto.z + caixa.z)   e cresce para +Z
    original: a caixa `Stand4` tem um mapa de figura que **passa da borda da folha** — chega a `u=65` numa
    folha de 64. No 1.7.10 a figura dava a volta e mostrava uma lasca da outra ponta; o jogo de hoje recusa o
    modelo inteiro com um `Cannot compute translucency out of bounds`. As coordenadas ficam **presas na
-   borda**: perde-se um pixel no fundo do pilar do meio e ganha-se um modelo que carrega.
+   borda**: perde-se um pixel no fundo do pilar do meio e se ganha um modelo que carrega.
 2. **As caixas giradas do livro não cabem num modelo JSON.** Ele só aceita **um eixo** e **cinco ângulos**
    (0, ±22,5, ±45), e o original gira em radianos quaisquer. As duas da Mesa foram encaixadas na mais
    próxima: −13,6° virou −22,5° e 29° virou 22,5°. As páginas do livro ficam um pouco mais abertas do que no
@@ -4711,7 +4711,7 @@ Z = 8 + (ponto.z + caixa.z)   e cresce para +Z
 **Desvios declarados.**
 
 1. **A Mesa continua sendo um bloco só.** No original ela são **dois** — `Left` e `Right`, cada um preenchendo
-   o seu bloco. Aqui usa-se a metade esquerda, que é a da escrivaninha com o livro e já se lê como uma mesa
+   o seu bloco. Aqui se usa a metade esquerda, que é a da escrivaninha com o livro e já se lê como uma mesa
    inteira. Fazer dela um bloco duplo mudaria o bloco, a receita e o menu.
 2. **Os dois modelos passam da altura do bloco** — o olho do Óculus chega a `y=25` e a Mesa a `y=20`. É o que
    o original faz, e o jogo de hoje aceita até 32.
@@ -4729,7 +4729,7 @@ E a tela da árvore **nunca tinha sido fotografada**. Três fotos depois, três 
    **tela** e o `extractLabels` em pixel do **painel** — e o código subtraía o canto em quem não devia.
 2. **O ramo de Utilidade transbordava por baixo.** O quadro do original desce até `y=524` nesse ramo e até
    `y=360` no de Defesa; com um encolhimento fixo, ou um ficava minúsculo ou o outro saía da tela. Agora
-   cada ramo é **medido e encaixado**: encolhe-se até caber, nunca mais do que 0,42, e centra-se o que sobra.
+   cada ramo é **medido e encaixado**: encolhe-se até caber, nunca mais do que 0,42, e se centra o que sobra.
 3. **E o pior: o nível e a mana nunca chegavam à máquina de quem joga.** O Óculus mostrava *Nível 0* e *três
    pontos azuis* a quem estava no nível cinquenta, e por isso mostrava também **menos um** ponto verde — a
    conta de pontos gastos vinha do servidor e a de pontos ganhos vinha de um nível que era zero.
@@ -4793,7 +4793,7 @@ Ignição e Derreter Armadura.
 1. **Drenar Vida cobra o feitiço a quem atira em morto-vivo.** Ele devolve `true` sem ferir e sem curar, o
    que quer dizer que a mana sai na mesma. Fica.
 2. **Derreter Armadura não está no quadro de perícias.** O original registra a peça, dá-lhe figura e nome, e
-   **esquece-se de a pôr na árvore** — quem joga o original nunca a pode comprar. O porte guarda o engano, e
+   **se esquece de a pôr na árvore** — quem joga o original nunca a pode comprar. O porte guarda o engano, e
    a prova `everyPartIsInTheTree` tem agora uma lista de órfãs onde ele fica escrito.
 
 **E a corrente do quadro voltou a ser a do original.** Enquanto faltavam os danos, o Fogo e o Gelo pendiam do
@@ -4910,7 +4910,7 @@ forno, e faz do gelo água), **Outono do Mago** (derruba as folhas a dois blocos
 o arenito e a terra viram areia; a pedra vira pedregulho; o tijolo de pedra racha; e a água desaparece.
 
 **Duas ficam de fora, e é a mesma razão da Cor.** O **Colocar Bloco** e a **Apropriação** guardam um bloco
-**dentro do feitiço** — o original escreve-o no NBT da varinha na hora de inscrever. Este porte guarda os
+**dentro do feitiço** — o original o escreve no NBT da varinha na hora de inscrever. Este porte guarda os
 feitiços por nome de peça e não tem ainda onde pôr um dado desses. É fatia própria, com a Cor.
 
 ### Fatia 20 — as que mexem no céu (2026-09-30)
@@ -4928,7 +4928,7 @@ do nível alto, e mais do que qualquer outra essência por larga margem. Mexer n
 amanhecer, e mais 13250 para o anoitecer. O jogo de hoje já não deixa mexer no relógio assim: ele tem
 **marcos**, e quem quer o amanhecer pede o marco do amanhecer. Dá no mesmo lugar do céu.
 
-**E o tempo mora noutro sítio.** No 1.7.10 a chuva estava no próprio mundo; hoje está num guardado à parte,
+**E o tempo mora noutro lugar.** No 1.7.10 a chuva estava no próprio mundo; hoje está num guardado à parte,
 o `WeatherData`. A conta é a mesma, o lugar é outro.
 
 ### Fatia 21 — a Nevasca e a Chuva de Fogo (2026-09-30)
@@ -4938,7 +4938,7 @@ lugar uma área que fere por si, a cada batida, e vai deixando **neve** ou **fog
 duas são perícias prateadas no original — não se compram, se descobrem.
 
 A entidade de área ganhou duas famílias novas por causa delas. As três de antes — a Zona, a Parede e a Onda —
-acham quem está lá e passam-lhe **o resto da frase**; estas duas não passam nada: fazem o que fazem e mais
+acham quem está lá e lhe passam **o resto da frase**; estas duas não passam nada: fazem o que fazem e mais
 nada. E fazem uma coisa que nenhuma outra faz: **desfazem o empurrão** que a pancada daria, senão quem
 estivesse dentro saltaria para fora na primeira batida e a nevasca não seria nevasca nenhuma.
 
@@ -5005,7 +5005,7 @@ A última peça do ramo, e a que mexe no cano por onde a mana sai.
 **Um elo põe a sua mana ao alcance de outra pessoa.** Quando a dela acaba no meio de um feitiço, o que falta
 sai da sua — e só enquanto estiverem perto.
 
-**Quem ganha o elo é quem leva o feitiço, e não quem o lança.** Lê-se mal e é o que o original faz
+**Quem ganha o elo é quem leva o feitiço, e não quem o lança.** se Lê mal e é o que o original faz
 (`For(target).updateManaLink(caster)`): lançar o Elo em alguém é **dar-lhe** a sua mana, e não tomar a dele.
 É um feitiço de quem joga acompanhado.
 
@@ -5040,7 +5040,7 @@ e são duas maneiras diferentes — porque no original também são.
 `SpellModifierMeta_14_0_0`; aqui é um **número por nome de peça, por etapa**, que é o alcance que o original
 lhes dá. Hoje só a Cor tem um.
 
-**A Cor responde na Mesa.** Põe-se uma **tinta** na casa logo a seguir à peça, e é ela que manda — que é o
+**A Cor responde na Mesa.** se Põe uma **tinta** na casa logo a seguir à peça, e é ela que manda — que é o
 mesmo lugar que a tinta tem no original, onde ela é ingrediente da receita da Mesa, lido da esquerda para a
 direita. Sem tinta **a Mesa recusa a frase e diz porquê**: no original a receita simplesmente não casa, e
 aqui achei melhor dizer do que deixar sair um feitiço preto que ninguém pediu.
@@ -5050,7 +5050,7 @@ três tabelas de cor de tinta — a da ovelha, a do fogo de artifício, a do tex
 números. Como o que se vê é o ponto da peça, ficam os dele.
 
 **E ela pinta sem trocar a cara.** O projétil leva a cor à parte da Afinidade, como o `DW_COLOR` do original:
-a Afinidade continua a decidir a **figura**, e a Cor só a pinta. Está na foto — cinco projéteis de fogo lado
+a Afinidade continua decidindo a **figura**, e a Cor só a pinta. Está na foto — cinco projéteis de fogo lado
 a lado, um sem Cor e quatro com tintas, todos com a mesma figura. O de tinta branca sai igual ao sem Cor, e
 é o que tem de ser: o branco do original é `0xF0F0F0`.
 
@@ -5058,7 +5058,7 @@ a lado, um sem Cor e quatro com tintas, todos com a mesma figura. O de tinta bra
 bloco, fica sabendo aquele bloco; de pé, põe um igual e gasta um da mochila. É a única peça do ramo que muda
 de trabalho conforme a pessoa está agachada, e é do original.
 
-**A Apropriação tira a coisa do mundo e leva-a dentro.** Um bloco **com o que ele tem dentro** — um baú
+**A Apropriação tira a coisa do mundo e a leva dentro.** Um bloco **com o que ele tem dentro** — um baú
 apropriado volta com as coisas lá — ou um bicho inteiro, com o nome e a vida que tinha. Enquanto estiver
 guardado, aquilo **não existe** em lugar nenhum senão no feitiço. Uma coisa de cada vez, e gente não: o
 original recusa gente e chefes, e este recusa também.
@@ -5092,7 +5092,7 @@ pelo `refreshDimensions`.
 **E o infernal é maior só na caixa, não no desenho** — no original também. A foto dele ao lado do comum mostrava
 dois guardas iguais, e eu fui conferir antes de chamar aquilo de defeito: o `RenderVillageGuard` do Witchery é
 apenas `super(new ModelVillageGuard(), 0.5F)`, **sem escala nenhuma**, e o `ModelVillageGuard` não olha o tipo.
-Lá o infernal ocupa mais espaço e tropeça em tetos mais baixos, mas desenha-se do tamanho de gente. Fica assim,
+Lá o infernal ocupa mais espaço e tropeça em tetos mais baixos, mas se desenha do tamanho de gente. Fica assim,
 porque é assim; e fica escrito para quem vier depois não "consertar" uma fidelidade.
 
 **Dois guardas nunca se batem nem se ferem, e nenhum deles mira num creeper.** É o `canAttackClass` do
@@ -5119,7 +5119,7 @@ a qualquer um.
    espalhados por seções. Aqui se acha a seção de aldeia mais perto e se prende o guarda a **quarenta e oito**,
    que é o que aquele produto dava numa aldeia de tamanho comum. A cura de um de vida por volta, quando ele não
    tem ninguém para matar, é a do original.
-3. **A reputação é a de hoje, e conta-se como morte de aldeão.** O original tira cinco da reputação da aldeia
+3. **A reputação é a de hoje, e se conta como morte de aldeão.** O original tira cinco da reputação da aldeia
    de quem o matou. Hoje reputação é fuxico de aldeão, e o que se conta aos aldeões num raio de dezesseis é o
    `VILLAGER_KILLED` — que além de funcionar é o mais fiel, porque no original **o guarda nasce de um aldeão**
    que pegou um arco (`createFrom(EntityVillager)`), e matá-lo pesa como matar quem mora ali.
@@ -5127,7 +5127,7 @@ a qualquer um.
    **E não o `GOLEM_KILLED`, que era o que parecia certo.** Ele existe no jogo de hoje, mas aparece **uma única
    vez em todo o código, na própria declaração**: nada o dispara e nada o trata — o `onReputationEventFrom` do
    aldeão só conhece quatro eventos, e esse não está entre eles. É constante morta. Escrevi-o primeiro, e a
-   prova apanhou-o: a reputação não se movia.
+   prova o apanhou: a reputação não se movia.
 4. **Não há o recolher-se à noite.** A casa oito da mira do original era o `EntityAIRestrictOpenDoor`, que
    mandava o bicho ficar dentro de casa. Esse comportamento deixou de existir e não tem par; fica o abrir e
    fechar portas, que é a casa nove. A casa oito ficou vazia de propósito, para a ordem do original se ler.
@@ -5201,7 +5201,7 @@ levar a **intenção** dele aos biomas de hoje:
 1. **O tamanho é outra alavanca.** Não se registram peças repetidas, porque não há onde; muda-se a profundidade.
    O efeito é o mesmo — aldeia maior — mas a conta é outra, e uma aldeia do porte não terá *exatamente* as três
    a cinco casas a mais de cada tipo que o original dava.
-2. **Etiqueta soma, estrutura substitui.** As cinco etiquetas de bioma levam só os acréscimos, e o jogo junta-as
+2. **Etiqueta soma, estrutura substitui.** As cinco etiquetas de bioma levam só os acréscimos, e o jogo as junta
    às dele — a prova confere os dois lados, que os novos entraram e que **os do jogo continuam lá**, porque uma
    etiqueta escrita com `replace` por engano apagaria as planícies e tudo continuaria a parecer bem. Já os cinco
    arquivos de estrutura **substituem** os do jogo, e por isso são cópia exata deles com um número trocado.
@@ -5216,12 +5216,12 @@ levar a **intenção** dele aos biomas de hoje:
 
 **Guardas:** `OccultaVillageSpreadGameTest`, com três — as cinco aldeias com tamanho oito, os biomas novos mais
 os do jogo, e o molhado que continua vazio. A do tamanho pergunta à estrutura **pelo codec dela**: o `size` não
-tem acessor público, então escreve-se a estrutura como ela foi carregada e lê-se o número de volta. Prova o que
+tem acessor público, então se escreve a estrutura como ela foi carregada e se lê o número de volta. Prova o que
 o jogo tem na mão, e não o que está num arquivo que ele podia nem ter lido.
 
 **A foto:** `OccultaVillageSpreadClientTest`, uma — a aldeia posta com `/place structure` e vista de viés. Ela
 custou quatro tentativas, e as três pedras ficaram escritas no javadoc dela: o jogador tem de ir ao lugar antes,
-senão o trecho não está carregado e não se planta nada; a altura pergunta-se ao mapa de alturas, senão a aldeia
+senão o trecho não está carregado e não se planta nada; a altura se pergunta ao mapa de alturas, senão a aldeia
 nasce enterrada; e **`gamemode` pede alvo** — corre a partir do console, que não é jogador nenhum, e sem `@a`
 não faz nada (quem for posto no ar cai e morre).
 
@@ -5260,7 +5260,7 @@ aldeia já traz.
 
 A piscina de casas de cada variante é um arquivo do jogo, e arquivo de dados **substitui**. Copiar os cinco
 arquivos inteiros e colar as nossas peças no fim seria dez mil bytes de dados do jogo duplicados por variante,
-velhos no dia em que a Mojang mexer numa casa. Em vez disso há um mixin de acesso, e as peças somam-se à
+velhos no dia em que a Mojang mexer numa casa. Em vez disso há um mixin de acesso, e as peças se somam à
 **piscina já carregada**, ao servidor arrancar — depois de o disco ser lido e antes de se gerar qualquer trecho.
 
 **São duas listas, e as duas têm de mudar.** A `templates` é a lista já esticada pelo peso, de onde o sorteio
@@ -5416,7 +5416,7 @@ NBT do `tools/aldeia` aprendeu a escrever vetor de inteiros.)
 
 ### Desvios declarados
 
-1. **O morador do Boticário é um clérigo.** O original dá-lhe uma profissão sua, o `ApothecaryVillagerID 2435`,
+1. **O morador do Boticário é um clérigo.** O original lhe dá uma profissão sua, o `ApothecaryVillagerID 2435`,
    com as trocas dela; isso é um sistema de aldeão que não está portado. Clérigo é a profissão do jogo mais
    perto de quem vende poções.
 2. **A placa fez o molde crescer um bloco.** O original declara a caixa do Boticário como `(0,0,0 .. 9,9,6)` e
@@ -5429,7 +5429,7 @@ NBT do `tools/aldeia` aprendeu a escrever vetor de inteiros.)
    é o mesmo que já tinha tirado o sangue do Guarda —, e por isso ficam de fora. Sobram o livro, o livro de
    escrever e **o Thaumonomicon**.
 4. **E o Thaumonomicon está ali de propósito.** A lista de livros do Config do original inclui
-   `Thaumcraft:ItemThaumonomicon`: quando o Thaumcraft estava instalado, a livraria da aldeia vendia-o. Aqui os
+   `Thaumcraft:ItemThaumonomicon`: quando o Thaumcraft estava instalado, a livraria da aldeia o vendia. Aqui os
    dois **são o mesmo mod**, então ele está sempre lá — no baú e no quadro do meio.
 5. **Os quadros têm livro fixo.** O original sorteia um da tabela da loja para cada quadro; um molde é estático
    e não sorteia. A escolha ficou: livro, Thaumonomicon, livro, livro de escrever.
@@ -5461,7 +5461,7 @@ ocupadas deixa de contar. O que sobra é a borda, e é nela que a muralha se lev
 **E os portões saem de graça**: as três células do meio da **ponta** de cada rua engordada ficam marcadas à
 parte. É por ali que a estrada sai da aldeia, e é ali que a muralha se abre.
 
-**A altura é sondada e suavizada.** Para cada pedaço desce-se contando blocos sólidos à volta até achar nove —
+**A altura é sondada e suavizada.** Para cada pedaço se desce contando blocos sólidos à volta até achar nove —
 é o que impede a muralha de nascer sobre uma copa de árvore —, e a altura é depois puxada **um degrau de cada
 vez** contra a da vizinha já feita. É isso que a faz acompanhar o relevo em vez de flutuar.
 
@@ -5474,10 +5474,10 @@ depende de ninguém lhe entregar nada, e por isso funciona mesmo que o trecho se
 1. **A muralha não come parede de casa.** O original troca ar, folha, planta **e madeira** — e "madeira" ali
    queria dizer árvore no caminho. Hoje não há "material"; ficaram folha e tronco. Tábua fica de fora: uma
    muralha que abre buraco na casa de alguém é defeito, não fidelidade.
-2. **Rua reconhece-se pelo nome do molde.** A classe `Path` de 2014 não existe; o que distingue uma rua hoje é
+2. **Rua se reconhece pelo nome do molde.** A classe `Path` de 2014 não existe; o que distingue uma rua hoje é
    o molde dela viver em `village/<variante>/streets/`. É mais frágil do que por tipo, e é o que há.
 3. **Peso 12, e não os 100 do original.** Mesmo caso do Forte: o salto-de-encaixe não sabe limitar quantidade.
-   Mas aqui pode-se arriscar um número mais alto, porque **duas muralhas não estragam nada** — desenhar outra
+   Mas aqui se pode arriscar um número mais alto, porque **duas muralhas não estragam nada** — desenhar outra
    vez é quase de graça (só se troca o que é trocável, e tijolo não é) e a guarnição não dobra, porque cada
    guarda confere se já há um a oito blocos.
 
@@ -5498,7 +5498,7 @@ verdade cerca centenas de blocos e não cabe numa arena de oito por oito, mas **
 planta**, e planta é conta pura. Provam-se o miolo apagado, o portão na ponta certa da rua, duas ruas cruzadas
 a darem **uma** mancha só, e a aldeia sem rua que não ganha muralha.
 
-Uma delas apanhou-me: eu tinha escrito a expectativa do portão pela conta que **me parecia certa** — o meio da
+Uma delas me apanhou: eu tinha escrito a expectativa do portão pela conta que **me parecia certa** — o meio da
 rua — em vez da que o original faz. Ele calcula `altura / 2 + mínimo - 1`, e esse `-1` com a divisão inteira
 cai **um bloco antes do centro**. O código estava fiel; a régua é que era minha. Ficou escrito no comentário
 dela, porque é o terceiro descuido do original que encontro nesta conta e a tentação de "corrigir" é real.
@@ -5509,10 +5509,10 @@ onde a estrada sai, e a torre de vigia lá dentro.
 ## Fatia D — a Bruxa do Coven, e o zero que saiu dos círculos
 
 Esta fatia fecha um buraco que estava **escrito no código à espera** desde que os círculos de giz entraram: o
-`Rite.steps(int coven)` existia, e o `CircleHeartBlockEntity` passava-lhe **zero na mão**, porque não havia quem
+`Rite.steps(int coven)` existia, e o `CircleHeartBlockEntity` lhe passava **zero na mão**, porque não havia quem
 respondesse. Todo rito do ofício que faz mais com mais bruxas em volta corria no mínimo.
 
-**A Bruxa do Coven não é monstro nem aldeã — é alguém com quem se negocia.** Fala-se com ela e ela pede uma
+**A Bruxa do Coven não é monstro nem aldeã — é alguém com quem se negocia.** se Fala com ela e ela pede uma
 coisa; aceita-se, e ela espera; trazido o que pediu, **entra no coven de quem trouxe**. Seis é o teto, e a mesma
 bruxa não entra duas vezes.
 
@@ -5543,7 +5543,7 @@ Quem a enganar — aceitar e voltar com o coven já cheio — faz dela inimiga, 
 ### Um erro meu que vale ficar escrito
 
 **Escrevi as falas dela em português de Portugal.** "O teu coven", "volta quando tiveres", "traz-me trinta
-ossos", "tu enganaste-me". A regra deste porte é português do Brasil, e eu furei-a — reescrevi tudo, e conferi
+ossos", "tu me enganaste". A regra deste porte é português do Brasil, e eu a furei — reescrevi tudo, e conferi
 que o arquivo de língua continua com as mesmas três mil cento e dezenove chaves, para não ter perdido nada no
 caminho. Fica escrito porque o deslize é fácil justamente num texto de personagem, onde a tentação de "soar
 antigo" puxa para o lado errado.
@@ -5584,7 +5584,7 @@ bruxa.
 
 **Esta fatia não é porte.** Tudo o que veio antes — inclusive o que foi melhorado, traduzido de outro jeito ou
 declarado de fora — saiu do código do Witchery. O Coven do Pântano **não existe nele**: o original dá a Bruxa do
-Coven e deixa-a numa cabana dentro da aldeia, e mais nada. Isto é um acréscimo, pedido por quem joga, e fica
+Coven e a deixa numa cabana dentro da aldeia, e mais nada. Isto é um acréscimo, pedido por quem joga, e fica
 marcado como tal.
 
 **A ideia e o que ela não podia ser.** O pedido era "uma vila de bruxas no pântano". Aldeia no jogo de hoje
@@ -5640,7 +5640,7 @@ leva o dobro da própria vida e cai no lugar dele. Sem dono por perto, o bicho f
 
 As duas primeiras fechavam buracos que já estavam escritos: a Maldição da Cegueira dizia *"o familiar de
 maldição não dobra o escuro... não estão portados"*, e o engarrafar dizia *"quem engarrafa aqui é sempre alguém
-que está a aprender"*. Os dois passam a responder.
+que está aprendendo"*. Os dois passam a responder.
 
 **A coruja entra mesmo sem destrancar nada**, porque é um dos três do original e porque, no dia em que a
 vassoura vier, ela já está aqui — a pergunta existe e é só ligá-la.
@@ -5720,11 +5720,11 @@ E ela morre também se quem a chamou **morreu, saiu do mundo, ou está a mais de
 quadrado do `AMEventHandler`. É a trela, e é o que faz a invocação ser companhia e não um bicho largado no
 mapa.
 
-**Menos se ela tiver nome próprio.** Aí ela não morre: **solta-se**. Perde o dono, perde o prazo, e fica no
+**Menos se ela tiver nome próprio.** Aí ela não morre: **se solta**. Perde o dono, perde o prazo, e fica no
 mundo como bicho de ninguém. É o `revertAI` do original, com uma diferença declarada: lá as vontades antigas
 voltam de uma cópia que ele guardou antes de as trocar, e aqui ela se solta com as vontades que tem.
 
-**O relógio é do mundo, e não do bicho.** O original conta o prazo na batida de cada criatura; aqui olha-se de
+**O relógio é do mundo, e não do bicho.** O original conta o prazo na batida de cada criatura; aqui se olha de
 **vinte em vinte batidas**, para todo o mundo de uma vez. Varrer todo bicho a cada batida é caro para nada: o
 prazo tem 4800 batidas e a trela tem trinta blocos, e um segundo de folga em qualquer dos dois não se vê.
 
@@ -5734,7 +5734,7 @@ No original o teto sobe para dois com a perícia **`ExtraSummon`** — que está
 (230, 210). Esse ramo **não está portado**, e não está por uma razão que já está escrita neste documento: a
 árvore deste porte só sabe guardar **peças de feitiço**, e os Talentos não são peças. Fica o um.
 
-**E com o teto cheio ela ainda dá certo.** O original lê-se ao avesso: o `applyEffectBlock` dele só devolve
+**E com o teto cheio ela ainda dá certo.** O original se lê ao avesso: o `applyEffectBlock` dele só devolve
 `false` quando a criatura **não nasceu**; com o teto cheio ele manda a frase *"Você não pode ter mais
 invocações."* e devolve `true` — ou seja, **a mana se gasta**. É castigo por lançar sem olhar, e é de propósito.
 
@@ -5841,7 +5841,7 @@ esqueleto pegar fogo, que é o que o Ars Magica 2 sempre fez.
 
 1. **A montaria não ocupa vaga.** Ela tem o mesmo prazo e a mesma trela do que a monta, mas não conta no teto —
    fazê-la contar seria dizer que um necromante a cavalo tem metade do exército.
-2. **O teto do original continua a ser o teto do original.** Sem Legião nenhuma, é **um**. O acréscimo não mexe
+2. **O teto do original continua sendo o teto do original.** Sem Legião nenhuma, é **um**. O acréscimo não mexe
    em nada de quem não o usa.
 3. **O apego ganhou um campo**, a bandeira de montaria, e ele é **opcional no disco**: o que foi guardado antes
    desta fatia volta como soldado, que é o que era.

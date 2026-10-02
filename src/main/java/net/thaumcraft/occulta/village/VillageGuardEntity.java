@@ -235,9 +235,9 @@ public class VillageGuardEntity extends PathfinderMob implements RangedAttackMob
     // ------------------------------------------------------------------ a aldeia é a casa dele
 
     /**
-     * De quando em quando ele pergunta onde é a aldeia, e prende-se a ela: o {@code updateAITasks} do original.
+     * De quando em quando ele pergunta onde é a aldeia, e se prende a ela: o {@code updateAITasks} do original.
      *
-     * <p>Sem aldeia por perto ele solta-se e anda à vontade. Com aldeia, <b>cura um de vida</b> em cada volta
+     * <p>Sem aldeia por perto ele se solta e anda à vontade. Com aldeia, <b>cura um de vida</b> em cada volta
      * destas em que não tem ninguém para matar — é o que o original faz, e é o que mantém de pé uma guarda que
      * levou tiro ontem.
      */
@@ -335,7 +335,7 @@ public class VillageGuardEntity extends PathfinderMob implements RangedAttackMob
     /**
      * Quem o matou fica malvisto na aldeia, como no original.
      *
-     * <p>E conta-se como <b>morte de aldeão</b>, que é o que ele é: no original um guarda nasce de um aldeão que
+     * <p>E se conta como <b>morte de aldeão</b>, que é o que ele é: no original um guarda nasce de um aldeão que
      * pegou um arco — o {@code createFrom(EntityVillager)} —, e por isso matá-lo pesa como matar quem mora ali.
      *
      * <p><b>E não como morte de golem</b>, que era o que parecia certo e não é: o {@code GOLEM_KILLED} existe no

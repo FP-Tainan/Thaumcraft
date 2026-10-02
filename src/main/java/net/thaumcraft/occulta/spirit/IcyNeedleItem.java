@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
  *
  * <p>Ela serve para uma coisa só, e é a mais velha de todas: <b>beliscar-se para acordar</b>. Andando em
  * espírito, espetá-la traz de volta ao corpo e gasta a agulha. Acordado, espetá-la só dói — meio coração, e a
- * agulha gasta-se na mesma.
+ * agulha se gasta na mesma.
  *
  * <p>É também uma das <b>duas únicas coisas</b> que passam da mochila de cá para a de lá, pela razão óbvia: sem
  * ela, quem adormece fica lá até alguém lhe matar o corpo.

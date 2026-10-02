@@ -126,7 +126,7 @@ public final class MortuorumItems {
      * que se pode chegar.
      *
      * <p>A durabilidade é a do original, {@code Integer.MAX_VALUE}, e não zero: o jogo de hoje gasta um ponto da
-     * peça a cada pancada que o dono leva, e uma peça de conta zero desfaz-se no primeiro golpe. Com a conta do
+     * peça a cada pancada que o dono leva, e uma peça de conta zero se desfaz no primeiro golpe. Com a conta do
      * original, nunca se gasta — que é o que a máscara é.
      */
     public static final ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> ISAAC_ASSET =

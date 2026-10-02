@@ -16,7 +16,7 @@ public final class OccultaComponents {
      * O que está no frasco de cozimento: a lista dos ingredientes, pela ordem em que caíram no caldeirão.
      *
      * <p>No Witchery isto é o NBT do líquido, com a lista {@code Items} e, ao lado dela, a cor, o poder e o nome
-     * já contados. Aqui guarda-se só a lista: o resto lê-se dela de cada vez, e assim não há duas verdades sobre
+     * já contados. Aqui se guarda só a lista: o resto se lê dela de cada vez, e assim não há duas verdades sobre
      * o mesmo frasco.
      */
     public static final DataComponentType<List<Item>> BREW = register("brew",

@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * O Apanhador de Sonhos: a {@code BlockDreamCatcher} do Witchery.
  *
- * <p>Pendura-se numa parede e prega-se-lhe uma <b>Teia de Sonho</b>. Quem dormir a cinco dele leva o que a teia
+ * <p>Pendura-se numa parede e se prega-lhe uma <b>Teia de Sonho</b>. Quem dormir a cinco dele leva o que a teia
  * tem para dar; e é ele, com a teia dos pesadelos, que faz o <b>quarto de sonho</b> valer a pena montar — sem um
  * por perto, o outro lado é quase sempre pesadelo.
  */

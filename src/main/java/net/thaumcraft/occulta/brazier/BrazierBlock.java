@@ -108,7 +108,7 @@ public class BrazierBlock extends BaseEntityBlock {
         return InteractionResult.SUCCESS;
     }
 
-    /** Um sinal de redstone acende-o, como no original. */
+    /** Um sinal de redstone o acende, como no original. */
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block vizinho,
                                    @Nullable Orientation orientation, boolean moved) {

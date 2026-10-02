@@ -48,7 +48,7 @@ public class OccultaAltarGameTest {
 
         // tirando uma, desfaz-se
         level.setBlockAndUpdate(canto.offset(2, 0, 1), Blocks.AIR.defaultBlockState());
-        if (core(helper, canto) != null) helper.fail("tirando uma pedra, o altar desfaz-se");
+        if (core(helper, canto) != null) helper.fail("tirando uma pedra, o altar se desfaz");
         if (level.getBlockState(canto).getValue(AltarBlock.JOINED)) helper.fail("e a cara volta ao que era");
         helper.succeed();
     }

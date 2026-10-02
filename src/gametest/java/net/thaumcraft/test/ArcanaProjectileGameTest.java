@@ -182,7 +182,7 @@ public class ArcanaProjectileGameTest {
     /**
      * O projétil passa pela água como se ela não existisse, e só para nela se lhe disserem para parar.
      *
-     * <p>São dois tiros iguais no mesmo sítio, e a única diferença é o modificador: um passa e o outro morre na
+     * <p>São dois tiros iguais no mesmo lugar, e a única diferença é o modificador: um passa e o outro morre na
      * água. É o que a caixa do bloco decide — a água não tem caixa nenhuma.
      */
     @GameTest(maxTicks = 100)

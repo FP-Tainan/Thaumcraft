@@ -69,7 +69,7 @@ public final class SpiritRenderers {
 
         /**
          * E o corpo fica <b>duro</b>: o original passa ao bípede um {@code setRotationAngles} vazio, e o que isso
-         * faz é tirar-lhe a animação toda. Aqui zera-se o que a alimenta.
+         * faz é tirar-lhe a animação toda. Aqui se zera o que a alimenta.
          */
         @Override
         public void extractRenderState(CorpseEntity corpo, HumanoidRenderState state, float partial) {

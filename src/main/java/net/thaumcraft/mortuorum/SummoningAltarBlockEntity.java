@@ -120,7 +120,7 @@ public class SummoningAltarBlockEntity extends BaseContainerBlockEntity {
 
     /**
      * O que está no altar tem de chegar ao cliente: é dele que sai o corpo pré-montado que aparece deitado na
-     * mesa. No original o desenhista lê o tile direto — aqui o tile vive no servidor, então manda-se o feitio.
+     * mesa. No original o desenhista lê o tile direto — aqui o tile vive no servidor, então se manda o feitio.
      */
     @Override
     public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getUpdatePacket() {

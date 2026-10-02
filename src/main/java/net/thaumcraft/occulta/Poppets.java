@@ -24,7 +24,7 @@ import java.util.List;
  * Onde as bonecas valem: o {@code PoppetEventHooks} e o {@code GenericEvents} do Witchery.
  *
  * <p>Uma boneca só entra em cena quando a pancada <b>mataria</b>: aí ela toma o golpe no lugar de quem ela
- * guarda, e desfaz-se. A de fome é a única que também vale antes do fim, quando restam dois corações.
+ * guarda, e se desfaz. A de fome é a única que também vale antes do fim, quando restam dois corações.
  *
  * <p>Procura-se a boneca na mochila de quem apanhou e, não a achando, em <b>todas as prateleiras de bonecas</b>
  * do mundo — que é o que o original faz.
@@ -61,7 +61,7 @@ public final class Poppets {
             return !guard(level, gente, fonte, quanto);
         });
 
-        // a da ferramenta e a da armadura consertam o que está quase a partir
+        // a da ferramenta e a da armadura consertam o que está quase quebrando
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server -> {
             if (server.getTickCount() % CHECK_EVERY != 3) return;
             for (ServerLevel level : server.getAllLevels()) {
@@ -72,7 +72,7 @@ public final class Poppets {
 
     /**
      * O {@code checkForArmorProtection} e o gancho da ferramenta: o que estiver gasto a nove décimos volta a
-     * novo, e a boneca gasta-se um pouco.
+     * novo, e a boneca se gasta um pouco.
      *
      * <p><b>Desvio declarado:</b> no original a ferramenta se conserta no momento em que se usa; aqui é de
      * segundo em segundo, no mesmo lugar em que a armadura se olha. O que se vê é o mesmo.
@@ -147,7 +147,7 @@ public final class Poppets {
     /**
      * Gasta a boneca daquele feitio presa àquela pessoa, onde quer que ela esteja.
      *
-     * <p>Primeiro na mochila de quem apanhou; depois nas prateleiras. As de proteção desfazem-se; as outras
+     * <p>Primeiro na mochila de quem apanhou; depois nas prateleiras. As de proteção se desfazem; as outras
      * gastam-se de mil em mil — que, tendo mil de aguento, é uma vez só, como no original.
      */
     public static boolean spend(ServerLevel level, Player quem, PoppetItem.Kind qual) {

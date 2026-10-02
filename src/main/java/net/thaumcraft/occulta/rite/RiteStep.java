@@ -10,7 +10,7 @@ import net.minecraft.server.level.ServerLevel;
  * <b>começando</b>, fica; se <b>acabou</b>, sai da fila e o seguinte entra; se <b>desistiu</b>, o rito inteiro
  * morre — e, se desistiu pedindo devolução, o que se ofereceu volta para o chão.
  *
- * <p>O passo que devolve <b>sustento</b> é outra coisa: o rito sai da fila dos que estão a correr e passa para a
+ * <p>O passo que devolve <b>sustento</b> é outra coisa: o rito sai da fila dos que estão rodando e passa para a
  * dos que se sustentam, que correm um passo só, para sempre, até desistirem.
  */
 public interface RiteStep {

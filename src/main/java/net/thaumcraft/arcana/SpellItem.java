@@ -132,7 +132,7 @@ public class SpellItem extends Item {
                         .withStyle(net.minecraft.ChatFormatting.GRAY));
             }
             for (SpellPart.Modifier mod : etapa.modifiers()) {
-                // a Cor diz-se a si mesma: a linha dela sai pintada da cor que escolheram
+                // a Cor se diz a si mesma: a linha dela sai pintada da cor que escolheram
                 Integer cor = etapa.data().get(mod.name());
                 var nome = Component.literal("  + ").append(
                         Component.translatable("tc.spell.modifier." + mod.name()));

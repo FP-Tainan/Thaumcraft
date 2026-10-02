@@ -27,7 +27,7 @@ import java.util.Optional;
  * ligação que o item leva e as duas cantigas.
  */
 public class OccultaMirrorGameTest {
-    /** O espelho é dois blocos, e quebrando um o outro vai-se. */
+    /** O espelho é dois blocos, e quebrando um o outro se vai. */
     @GameTest
     public void aMirrorIsTwoBlocks(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
@@ -183,7 +183,7 @@ public class OccultaMirrorGameTest {
         helper.succeed();
     }
 
-    /** A cela de um espelho abre-se sozinha na primeira vez, com o espelho selado dentro e o Reflexo nela. */
+    /** A cela de um espelho se abre sozinha na primeira vez, com o espelho selado dentro e o Reflexo nela. */
     @GameTest
     public void aMirrorClaimsItsCell(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
@@ -276,7 +276,7 @@ public class OccultaMirrorGameTest {
     public void theChantOnlyWorksInside(GameTestHelper helper) {
         var quem = helper.makeMockPlayer(GameType.SURVIVAL);
         if (!(quem instanceof net.minecraft.server.level.ServerPlayer jogador)) {
-            // o jogador de mentira das provas não é do servidor: então prova-se o que dá
+            // o jogador de mentira das provas não é do servidor: então se prova o que dá
             helper.succeed();
             return;
         }

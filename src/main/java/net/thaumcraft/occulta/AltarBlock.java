@@ -116,7 +116,7 @@ public class AltarBlock extends BaseEntityBlock {
      * O {@code updateMultiblock} do original: anda pelos altares encostados, vê se o bando fecha um altar de
      * verdade e diz a todos eles quem manda.
      *
-     * @param exclude o bloco que está a sair, que não conta
+     * @param exclude o bloco que está saindo, que não conta
      */
     public static void updateMultiblock(ServerLevel level, BlockPos start, BlockPos exclude) {
         List<BlockPos> visited = new ArrayList<>();

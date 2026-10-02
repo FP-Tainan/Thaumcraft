@@ -27,7 +27,7 @@ public final class ArcanaTable {
     }
 
     public static void research() {
-        // o degrau de entrada: o ramo abre-se a quem topar com a ideia de que magia tem gramática
+        // o degrau de entrada: o ramo se abre a quem topar com a ideia de que magia tem gramática
         ThaumcraftApi.research("AA_GRAMMAR", Arcana.CATEGORY)
                 .at(0, -3)
                 .icon(() -> new ItemStack(ArcanaItems.SPELL))

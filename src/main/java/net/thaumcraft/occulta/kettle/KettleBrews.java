@@ -276,7 +276,7 @@ public final class KettleBrews {
             folha = (doOfício ? net.thaumcraft.occulta.OccultaBlocks.ROWAN_LEAVES : Blocks.OAK_LEAVES)
                     .defaultBlockState();
         }
-        // o tronco deita-se no sentido em que o galho cresce, como no original
+        // o tronco se deita no sentido em que o galho cresce, como no original
         if (tronco.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS)) {
             tronco = tronco.setValue(
                     net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,
@@ -334,7 +334,7 @@ public final class KettleBrews {
 
     /**
      * O {@code impactErosion}: no chão, come uma bola de dois de raio e devolve em obsidiana o que havia dela; em
-     * quem apanha, ácido — e o que ele traz vestido gasta-se.
+     * quem apanha, ácido — e o que ele traz vestido se gasta.
      */
     private static boolean erosion(ServerLevel level, HitResult onde, @Nullable LivingEntity quemAtirou) {
         if (onde instanceof BlockHitResult bateu) {
@@ -408,7 +408,7 @@ public final class KettleBrews {
     public static final double LOVE_RADIUS = 4.0;
 
     /**
-     * O {@code impactLove}: os bichos em roda apaixonam-se, e os filhotes crescem de uma vez.
+     * O {@code impactLove}: os bichos em roda se apaixonam, e os filhotes crescem de uma vez.
      *
      * <p><b>Do original fica de fora, declarado:</b> o par de <b>aldeões</b> que ele junta à força e o de
      * <b>zumbis escravizados</b>, que pedem a Poção de Escravizar — que não está portada. O aldeão do jogo de hoje
@@ -483,7 +483,7 @@ public final class KettleBrews {
         return shield(level, meio.relative(bateu.getDirection()), quemAtirou);
     }
 
-    /** O {@code freezeSurroundingWater}: a agua pega-se em gelo de casa em casa, ate onde o alcance for. */
+    /** O {@code freezeSurroundingWater}: a agua se pega em gelo de casa em casa, ate onde o alcance for. */
     private static boolean freeze(ServerLevel level, BlockPos onde, BlockPos meio, int alcance,
                                   java.util.Set<BlockPos> vistos) {
         if (Math.abs(meio.getX() - onde.getX()) >= alcance || Math.abs(meio.getY() - onde.getY()) >= alcance

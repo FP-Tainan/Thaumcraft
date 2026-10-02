@@ -45,7 +45,7 @@ public class PrisonJarRenderer implements BlockEntityRenderer<PrisonJarBlockEnti
                                    net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay crumbling) {
         BlockEntityRenderState.extractBase(jar, state, crumbling);
         state.entity = cached(jar);
-        // de perto o bicho vira-se para quem olha; de longe ele roda devagar, como no original
+        // de perto o bicho se vira para quem olha; de longe ele roda devagar, como no original
         var pos = jar.getBlockPos();
         if (camera.distanceTo(Vec3.atLowerCornerOf(pos)) < 4.5) {
             double dx = camera.x - (pos.getX() + 0.5);

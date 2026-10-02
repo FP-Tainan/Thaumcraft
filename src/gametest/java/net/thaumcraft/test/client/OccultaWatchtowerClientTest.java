@@ -70,7 +70,7 @@ public class OccultaWatchtowerClientTest implements FabricClientGameTest {
             context.takeScreenshot("boticario");
 
             // e a Livraria. O que ela tem de seu são os quatro quadros na parede do fundo, e eles ficam
-            // dentro de uma loja fechada: para a foto tira-se o telhado com um fill e olha-se de cima, que é
+            // dentro de uma loja fechada: para a foto se tira o telhado com um fill e se olha de cima, que é
             // mais honesto do que acertar uma câmera entre as paredes.
             server.runCommand("place template thaumcraft:village/bookshop_plains 20 " + chão[0] + " -30");
             context.waitTicks(60);

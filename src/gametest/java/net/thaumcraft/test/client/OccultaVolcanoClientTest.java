@@ -35,7 +35,7 @@ public class OccultaVolcanoClientTest implements FabricClientGameTest {
                     }
                 }
 
-                // e corre-se o rito inteiro de uma vez, que na prova não há tempo de o ver crescer
+                // e se corre o rito inteiro de uma vez, que na prova não há tempo de o ver crescer
                 var qual = new Rites.Volcano(6, 6);
                 var rito = new ActiveRite("tc.rite.volcano", qual, List.of(), null, 0);
                 var passo = qual.steps(0).getFirst();

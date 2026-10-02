@@ -68,7 +68,7 @@ public class MonolithRenderer extends MobRenderer<MonolithEntity, MonolithRender
         state.pitchLevel = monólito.pitchLevel;
     }
 
-    /** A lousa inclina-se para quem a olha, como no original. */
+    /** A lousa se inclina para quem a olha, como no original. */
     @Override
     protected void setupRotations(State state, PoseStack pose, float yaw, float scale) {
         super.setupRotations(state, pose, yaw, scale);

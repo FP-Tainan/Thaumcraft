@@ -35,7 +35,7 @@ public class BoundBowItem extends BowItem {
         super(properties);
     }
 
-    /** A cada batida: cobra a mana, conserta um ponto, e desfaz-se se não houver com que pagar. */
+    /** A cada batida: cobra a mana, conserta um ponto, e se desfaz se não houver com que pagar. */
     @Override
     public void inventoryTick(ItemStack coisa, ServerLevel level, Entity quem, EquipmentSlot casa) {
         if (!(quem instanceof Player gente)) return;

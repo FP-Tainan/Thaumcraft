@@ -252,7 +252,7 @@ public final class Rites {
      *
      * <p>Achando, ele levanta um <b>cone</b> de quinze em quinze batidas, camada a camada, com a borda de baixo
      * salpicada de relva; quem estiver em cima sobe com ele. Erguido o cone, a lava <b>sobe por dentro</b> até
-     * o alto e transborda — e o cume rompe-se por um dos lados, a esmo. No fim, a coluna de lava que veio de
+     * o alto e transborda — e o cume se rompe por um dos lados, a esmo. No fim, a coluna de lava que veio de
      * baixo é <b>drenada</b>, e o que fica é um monte com uma cratera.
      *
      * @param radius o raio da base, que cresce dois por bruxa do coven
@@ -472,7 +472,7 @@ public final class Rites {
      *
      * <p>Eles não acontecem e acabam: <b>sustentam-se</b>. De vinte em vinte batidas o rito volta a desenhar uma
      * <b>cúpula de barreira</b> em volta do círculo — chão, parede cilíndrica e teto — e cada casa dela dura
-     * trinta batidas. Parado o rito, a parede desfaz-se sozinha em segundo e meio.
+     * trinta batidas. Parado o rito, a parede se desfaz sozinha em segundo e meio.
      *
      * <p>E ele <b>paga por batida</b>: sem um Altar por perto com poder de sobra, o rito morre. É o que faz de
      * uma barreira uma coisa que se mantém, e não uma coisa que se faz.
@@ -596,7 +596,7 @@ public final class Rites {
      *
      * <p>Dois minutos de escuro em cada um, e quem já estiver cego não leva mais.
      *
-     * <p>Ela pára de vez se alguém no anel trouxer uma <b>boneca de proteção contra vodu</b>: a boneca gasta-se
+     * <p>Ela pára de vez se alguém no anel trouxer uma <b>boneca de proteção contra vodu</b>: a boneca se gasta
      * e o rito morre. É a única defesa que há contra ela, e é a que o original dá.
      *
      * <p><b>E quem tem gato vê o escuro durar mais:</b> dois minutos viram <b>cinco</b>. É o
@@ -651,7 +651,7 @@ public final class Rites {
      * O Rito da Tempestade: o {@code RiteWeatherCallStorm} do Witchery.
      *
      * <p>De trinta em trinta batidas cai um raio num anel em volta do círculo — nunca em cima dele, que é o que
-     * o raio de dentro serve para garantir. Na <b>quarta</b> vez, o céu fecha-se: começa uma trovoada que dura
+     * o raio de dentro serve para garantir. Na <b>quarta</b> vez, o céu se fecha: começa uma trovoada que dura
      * de cinco a quinze minutos. Depois disso caem raios a esmo até a conta chegar ao fim.
      *
      * @param minRadius de que distância para fora o raio pode cair
@@ -865,7 +865,7 @@ public final class Rites {
      * cada ponto dele, de profundidade que varia. O que fica é uma rachadura no chão, e não um túnel de régua.
      *
      * <p><b>Desvio declarado:</b> no original o caminho sai do relógio de sorte do mundo, e por isso é diferente
-     * a cada vez — e perde-se ao desligar o mundo. Aqui ele sai de uma <b>sorte semeada pelo lugar do
+     * a cada vez — e se perde ao desligar o mundo. Aqui ele sai de uma <b>sorte semeada pelo lugar do
      * círculo</b>: é sempre o mesmo caminho para o mesmo círculo, e é isso que deixa o rito continuar de onde
      * estava. O que se vê é igual; o que muda é que a mesma pedra dá sempre a mesma rachadura.
      *

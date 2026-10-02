@@ -19,7 +19,7 @@ import java.util.List;
  * <p>Nascer não basta: os desejos só correm quando o bicho tiqueia, e é aí que ele vai ler o que precisa. O
  * Lacaio derrubava o servidor logo no primeiro tique porque o {@code TemptGoal} do jogo de hoje lê o alcance
  * num atributo — coisa que na 1.7.10 estava fixa no código do {@code EntityAITempt} — e ninguém lho tinha
- * declarado. Um bicho parado num teste nunca mostra isso; um bicho a andar mostra-o na hora.
+ * declarado. Um bicho parado num teste nunca mostra isso; um bicho a andar o mostra na hora.
  */
 public class MobTickGameTest {
     /** Quantos tiques se deixa cada bicho andar. */

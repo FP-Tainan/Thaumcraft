@@ -27,7 +27,7 @@ import java.util.UUID;
  * <p>Ele não se monta nem se apanha — os ritos de proteção põem-no e ele <b>some sozinho</b> quando a conta
  * acaba. É de vidro e não se vê de longe; o que ele faz é <b>não deixar passar</b>.
  *
- * <p>E sabe de quem é: <b>quem ergueu a barreira atravessa-a</b>, e quem está em criativo agachado também. Uma
+ * <p>E sabe de quem é: <b>quem ergueu a barreira a atravessa</b>, e quem está em criativo agachado também. Uma
  * barreira que não trava gente trava só o que não é gente.
  */
 public class BarrierBlock extends BaseEntityBlock {

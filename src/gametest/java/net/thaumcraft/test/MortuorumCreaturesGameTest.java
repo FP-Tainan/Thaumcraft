@@ -40,7 +40,7 @@ public class MortuorumCreaturesGameTest {
         ursinho.mobInteract(dono, net.minecraft.world.InteractionHand.MAIN_HAND);
         if (ursinho.state() != TeddyEntity.State.DEFENDING) helper.fail("o primeiro clique põe-no de guarda");
         ursinho.mobInteract(dono, net.minecraft.world.InteractionHand.MAIN_HAND);
-        if (ursinho.state() != TeddyEntity.State.SITTING) helper.fail("o segundo senta-o");
+        if (ursinho.state() != TeddyEntity.State.SITTING) helper.fail("o segundo o senta");
         if (!ursinho.isOrderedToSit()) helper.fail("e sentado ele fica mesmo sentado");
         ursinho.mobInteract(dono, net.minecraft.world.InteractionHand.MAIN_HAND);
         if (ursinho.state() != TeddyEntity.State.WALKING) helper.fail("e o terceiro põe-no a andar outra vez");

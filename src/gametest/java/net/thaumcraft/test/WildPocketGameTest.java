@@ -23,7 +23,7 @@ import net.thaumcraft.shattered.ShatteredRealms;
  * Da fenda presa à sala com tema.
  *
  * <p>A regra que quem joga pediu: para se abrir uma porta é preciso <b>prender a fenda primeiro</b>. Presa, a
- * porta toma-lhe o lugar e fica brava, e o que espera do outro lado já não é o bolso liso do original — é uma
+ * porta lhe toma o lugar e fica brava, e o que espera do outro lado já não é o bolso liso do original — é uma
  * das salas com tema, e dessa saem outras portas para outras salas.
  */
 public class WildPocketGameTest {
@@ -179,13 +179,13 @@ public class WildPocketGameTest {
         helper.succeed();
     }
 
-    /** As cento e dezasseis salas do original estão todas lá, e duas seguidas nunca são a mesma. */
+    /** As cento e dezesseis salas do original estão todas lá, e duas seguidas nunca são a mesma. */
     @GameTest
     public void theRoomsAreAllThereAndNeverRepeat(GameTestHelper helper) {
         var server = helper.getLevel().getServer();
         var sorte = helper.getLevel().getRandom();
         if (DungeonRooms.count(server) != 116) {
-            helper.fail("são cento e dezasseis salas; achei " + DungeonRooms.count(server));
+            helper.fail("são cento e dezesseis salas; achei " + DungeonRooms.count(server));
             return;
         }
         for (String veioDe : DungeonRooms.names(server)) {

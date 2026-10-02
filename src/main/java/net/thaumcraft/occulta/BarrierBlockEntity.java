@@ -18,7 +18,7 @@ import java.util.UUID;
  *
  * <p>Ela guarda três coisas: <b>quanto tempo falta</b>, <b>se trava gente</b> e <b>de quem é</b>. A conta desce
  * a cada batida, e no zero a casa some — é isso que faz a barreira precisar do rito a sustentá-la: parado o
- * rito, a parede desfaz-se sozinha em segundo e meio.
+ * rito, a parede se desfaz sozinha em segundo e meio.
  */
 public class BarrierBlockEntity extends BlockEntity {
     private int ticks = BarrierBlock.TICKS_TO_LIVE;

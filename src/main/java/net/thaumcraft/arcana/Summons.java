@@ -109,7 +109,7 @@ public record Summons(UUID dono, long acabaEm, boolean montaria) {
     }
 
     /**
-     * Marca o bicho como invocado de alguém, com o prazo dele, e <b>passa-o para o lado do dono</b>.
+     * Marca o bicho como invocado de alguém, com o prazo dele, e <b>o passa para o lado do dono</b>.
      *
      * <p>É aqui que o {@code makeSummon_PlayerFaction} e o {@code setOwner} do original se juntam: o apego, a
      * lista de alvos nova, e a vontade de seguir.

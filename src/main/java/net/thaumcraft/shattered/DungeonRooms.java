@@ -29,7 +29,7 @@ import java.util.zip.GZIPInputStream;
  * As salas das Portas Dimensionais, as de verdade.
  *
  * <p>O original é um mod de quebra-cabeças: as salas para lá de uma porta não são quartos lisos, são cento e
- * dezasseis construções à mão — salões, armadilhas, poços, labirintos, minas — cada uma com as portas dela já
+ * dezesseis construções à mão — salões, armadilhas, poços, labirintos, minas — cada uma com as portas dela já
  * postas nas paredes, e é por essas portas que se vai para a seguinte. É isso que faz o mod ser o que é, e é isso
  * que quem manda mandou vir para cá.
  *
@@ -40,8 +40,8 @@ import java.util.zip.GZIPInputStream;
  * As portas do mod viram as nossas, e os tecidos também.
  *
  * <p>O formato é o mais simples que serve: cabeçalho, paleta de estados em texto, e o corpo em pares de
- * <i>quantas casas seguidas, qual entrada da paleta</i>. Estas salas são quase todas ar, e ar seguido comprime-se
- * a nada: os oito milhões de casas das cento e dezasseis salas cabem em trezentos e poucos quilobytes.
+ * <i>quantas casas seguidas, qual entrada da paleta</i>. Estas salas são quase todas ar, e ar seguido se comprime
+ * a nada: os oito milhões de casas das cento e dezesseis salas cabem em trezentos e poucos quilobytes.
  */
 public final class DungeonRooms {
     /** Onde moram, e o índice que as lista. */
@@ -109,8 +109,8 @@ public final class DungeonRooms {
 
             int largura = dados.readInt(), altura = dados.readInt(), comprimento = dados.readInt();
             int quantas = dados.readUnsignedShort();
-            HolderLookup.Provider registos = server.registryAccess();
-            var blocos = registos.lookupOrThrow(Registries.BLOCK);
+            HolderLookup.Provider registros = server.registryAccess();
+            var blocos = registros.lookupOrThrow(Registries.BLOCK);
             BlockState[] paleta = new BlockState[quantas];
             for (int i = 0; i < quantas; i++) paleta[i] = estado(blocos, dados.readUTF());
 
@@ -130,7 +130,7 @@ public final class DungeonRooms {
         }
     }
 
-    /** Um estado de bloco a partir do texto dele; o que não se entender vira ar, e fica dito no registo. */
+    /** Um estado de bloco a partir do texto dele; o que não se entender vira ar, e fica dito no registro. */
     private static BlockState estado(HolderLookup<net.minecraft.world.level.block.Block> blocos, String texto) {
         try {
             return net.minecraft.commands.arguments.blocks.BlockStateParser
@@ -156,7 +156,7 @@ public final class DungeonRooms {
      *
      * <p>Num bolso acabado de abrir o mundo já é vazio, e mais de dois terços do que uma sala tem é ar: saltá-lo
      * poupa a maior parte do trabalho. A maior das salas do original tem seiscentas mil casas, e pô-las uma a uma
-     * enquanto alguém atravessa uma porta faz-se sentir.
+     * enquanto alguém atravessa uma porta se faz sentir.
      */
     public static List<BlockPos> place(ServerLevel level, BlockPos canto, Room sala, boolean pulaAr) {
         List<BlockPos> portas = new ArrayList<>();

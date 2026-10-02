@@ -182,7 +182,7 @@ public final class BrewWorldActions {
     // ------------------------------------------------------------------ o plantio
 
     /**
-     * O Plantio: as sementes que estiverem no chão em volta plantam-se sozinhas.
+     * O Plantio: as sementes que estiverem no chão em volta se plantam sozinhas.
      *
      * <p>Não é o cozimento que traz semente nenhuma — ele só põe no lugar a que já estiver lá largada. É o
      * {@code BrewActionPlanting} do original.
@@ -229,7 +229,7 @@ public final class BrewWorldActions {
     /**
      * Erguer os Mortos: o {@code BrewActionRaising}, que vem de um osso na panela.
      *
-     * <p>Onde o frasco bate levanta-se um morto — zumbi em seis de cada dez, esqueleto em quase todas as outras,
+     * <p>Onde o frasco bate se levanta um morto — zumbi em seis de cada dez, esqueleto em quase todas as outras,
      * e um porco-zumbi de vez em quando. Com força, levantam-se mais: um a mais por grau, cada um com a sua
      * chance, e esses nascem de três blocos em volta, no primeiro chão que houver.
      *

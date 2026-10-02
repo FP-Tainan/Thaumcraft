@@ -14,7 +14,7 @@ import net.thaumcraft.world.DynamicDimensions;
  * Abrir e fechar mundos com o jogo andando — o que os bolsos das Portas Dimensionais vão precisar.
  *
  * <p>É a prova que faltava antes de começar aquele porte: o jogo de hoje monta os mundos uma vez, na abertura, e
- * não tem porta para se pedir mais um depois. Aqui pede-se, escreve-se dentro, lê-se de volta e fecha-se.
+ * não tem porta para se pedir mais um depois. Aqui se pede, escreve-se dentro, lê-se de volta e se fecha.
  */
 public class DynamicDimensionGameTest {
     /** Um mundo novo, aberto com o jogo andando, que aceita blocos e volta a fechar. */
@@ -39,7 +39,7 @@ public class DynamicDimensionGameTest {
         }
         if (server.getLevel(chave) != mundo) helper.fail("e entrar na lista do servidor");
 
-        // escreve-se lá dentro e lê-se de volta
+        // escreve-se lá dentro e se lê de volta
         BlockPos onde = new BlockPos(0, 70, 0);
         mundo.setBlockAndUpdate(onde, Blocks.DIAMOND_BLOCK.defaultBlockState());
         if (!mundo.getBlockState(onde).is(Blocks.DIAMOND_BLOCK)) {

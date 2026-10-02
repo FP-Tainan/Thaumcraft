@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
  * A cara do espelho: o {@code EntityMirrorFace} do Witchery.
  *
  * <p>É uma cabeça que aparece no vidro quando alguém pergunta ao espelho quem é a mais bela. Não anda, não cai,
- * não se machuca e não se empurra — olha para quem estiver perto e some-se em <b>dez segundos</b>.
+ * não se machuca e não se empurra — olha para quem estiver perto e se some em <b>dez segundos</b>.
  */
 public class MirrorFaceEntity extends Mob {
     /** Quanto tempo ela fica: os dez segundos do original. */

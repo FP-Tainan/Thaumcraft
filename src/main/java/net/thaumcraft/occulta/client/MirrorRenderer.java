@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
  * O Espelho no mundo: o {@code RenderMirror} e o {@code ModelMirror} do Witchery.
  *
  * <p>São dezenove peças, e a moldura é <b>oval</b>: um arco de peças miúdas em cima e duas colunas dos lados. A
- * mesma figura serve às duas metades do bloco — a de baixo desenha-se <b>de cabeça para baixo</b>, e é assim que o
+ * mesma figura serve às duas metades do bloco — a de baixo se desenha <b>de cabeça para baixo</b>, e é assim que o
  * arco de cima vira o arco de baixo e o oval se fecha.
  *
  * <p>O vidro do meio troca de figura quando há <b>alguém à frente</b>: é a segunda folha do original, desenhada por

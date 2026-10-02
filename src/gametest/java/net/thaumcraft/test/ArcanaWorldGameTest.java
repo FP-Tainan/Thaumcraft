@@ -138,7 +138,7 @@ public class ArcanaWorldGameTest {
         BlockPos pedra = helper.absolutePos(new BlockPos(3, 1, 2));
 
         if (!Essences.PLOW.onBlock(level, frase, quem, terra, Direction.UP, Vec3.ZERO)) {
-            helper.fail("a terra ara-se");
+            helper.fail("a terra se ara");
         }
         if (!level.getBlockState(terra).is(Blocks.FARMLAND)) helper.fail("e fica terra arada");
         if (Essences.PLOW.onBlock(level, frase, quem, pedra, Direction.UP, Vec3.ZERO)) {

@@ -26,7 +26,7 @@ public final class FamiliarEvents {
     }
 
     /**
-     * O <b>gato</b> vincula-se com um agachar de mão vazia, como o sapo e a coruja.
+     * O <b>gato</b> se vincula com um agachar de mão vazia, como o sapo e a coruja.
      *
      * <p>Ele não é bicho deste mod — é o do jogo —, e por isso o vínculo dele não cabe num
      * {@code mobInteract} nosso: tem de ser um gancho de fora. <b>É de propósito que seja o gato do jogo</b>:

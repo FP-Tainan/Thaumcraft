@@ -20,7 +20,7 @@ import net.thaumcraft.inventory.HoverHarnessMenu;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * O arreio taumostático: o {@code ItemHoverHarness} da 4.2.3.5. Vai no peito; clicando com ele na mão abre-se a casa
+ * O arreio taumostático: o {@code ItemHoverHarness} da 4.2.3.5. Vai no peito; clicando com ele na mão se abre a casa
  * do jarro de Potentia que alimenta o voo (tecla H, {@link Hover}). Dá 5% de desconto de vis no ar e 2% no resto;
  * conserta com ouro. As linhas da dica ficam no {@code HoverClient}, porque dependem dos aspectos que a pessoa já
  * descobriu.

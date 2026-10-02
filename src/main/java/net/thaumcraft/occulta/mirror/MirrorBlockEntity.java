@@ -129,7 +129,7 @@ public class MirrorBlockEntity extends BlockEntity {
      * Lê do item o que ele trazia: o {@code loadFromItem} do original.
      *
      * <p>Se a ligação aponta para um espelho selado do Mundo do Espelho, avisa-se o de lá que o de cá mudou de
-     * lugar — é assim que um espelho arrancado e assentado noutra parede continua a ser o mesmo.
+     * lugar — é assim que um espelho arrancado e assentado noutra parede continua sendo o mesmo.
      */
     public void readFromItem(ServerLevel level, ItemStack item) {
         MirrorLink.Held trazia = item.getOrDefault(OccultaComponents.MIRROR, MirrorLink.Held.EMPTY);

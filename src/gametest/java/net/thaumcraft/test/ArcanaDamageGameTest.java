@@ -121,12 +121,12 @@ public class ArcanaDamageGameTest {
             bicho.discard();
         }
 
-        // e um porco afoga-se
+        // e um porco se afoga
         var porco = helper.spawn(EntityTypes.PIG, new net.minecraft.core.BlockPos(3, 2, 3));
         porco.setNoAi(true);
         float era = porco.getHealth();
         Essences.DROWN.onEntity(level, Spell.of(Shapes.TOUCH, Essences.DROWN), quem, porco);
-        if (porco.getHealth() >= era) helper.fail("um porco afoga-se");
+        if (porco.getHealth() >= era) helper.fail("um porco se afoga");
         porco.discard();
         helper.succeed();
     }
@@ -205,7 +205,7 @@ public class ArcanaDamageGameTest {
         Essences.MANA_DRAIN.onEntity(level, Spell.of(Shapes.TOUCH, Essences.MANA_DRAIN), ladrão, vítima);
 
         if (Mana.of(vítima).mana() >= tinha) helper.fail("a vítima perde mana");
-        if (Mana.of(ladrão).mana() <= 0.0f) helper.fail("e o ladrão ganha-a");
+        if (Mana.of(ladrão).mana() <= 0.0f) helper.fail("e o ladrão a ganha");
         if (vítima.getHealth() < vida) helper.fail("e ninguém se fere nisto");
 
         Mana.set(ladrão, Mana.NONE);

@@ -104,7 +104,7 @@ public class ArcanaNecromancyClientTest implements FabricClientGameTest {
                     throw new AssertionError("e os três a cavalo, e estão " + acavalo);
                 }
             });
-            // e viram-se para a câmara: eles nascem virados para onde o mago olha, que é o original,
+            // e se viram para a câmara: eles nascem virados para onde o mago olha, que é o original,
             // e de costas não se distingue o zumbi do esqueleto
             server.runOnServer(s -> {
                 for (var bicho : s.overworld().getAllEntities()) {

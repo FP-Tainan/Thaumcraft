@@ -28,7 +28,7 @@ public class SkullWallBlock extends WallBlock {
     /**
      * Para que lado o crânio olha.
      *
-     * <p>O muro em si não tem frente — quem a tem é o crânio —, então o lado guarda-se à parte, e o arquivo de
+     * <p>O muro em si não tem frente — quem a tem é o crânio —, então o lado se guarda à parte, e o arquivo de
      * feitios gira o mourão inteiro conforme ele.
      */
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;

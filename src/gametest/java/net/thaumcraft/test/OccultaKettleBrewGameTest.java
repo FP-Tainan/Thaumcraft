@@ -166,7 +166,7 @@ public class OccultaKettleBrewGameTest {
 
         var onde = new BlockHitResult(bicho.position(), Direction.UP, bicho.blockPosition(), false);
         if (!KettleBrews.Kind.LOVE.impact(level, onde, null)) helper.fail("o amor devia pegar num bicho");
-        if (!bicho.isInLove()) helper.fail("e o bicho apaixona-se");
+        if (!bicho.isInLove()) helper.fail("e o bicho se apaixona");
         bicho.discard();
         helper.succeed();
     }

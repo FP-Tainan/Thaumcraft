@@ -341,7 +341,7 @@ public final class Essences {
     /**
      * <b>Toque Gélido</b>: o {@code FrostDamage}.
      *
-     * <p>Cinco de dano e um bom tempo de lentidão. O original chama-lhe Frost Damage, e é a irmã do fogo.
+     * <p>Cinco de dano e um bom tempo de lentidão. O original lhe chama Frost Damage, e é a irmã do fogo.
      */
     public static final SpellPart.Essence FROST_DAMAGE = SpellParts.essence(new SpellPart.Essence() {
         public static final float BASE = 5.0f;
@@ -860,7 +860,7 @@ public final class Essences {
      *
      * <p>Vinte e tal das essências do original são esta mesma coisa escrita vinte e tal vezes: contam a
      * duração, contam quantos <b>Poderes de Bênção</b> há na frase, e põem o efeito com essa duração e esse
-     * grau. <b>Seiscentas batidas</b> de base — meio minuto — e a Duração multiplica-as.
+     * grau. <b>Seiscentas batidas</b> de base — meio minuto — e a Duração as multiplica.
      *
      * <p>O original faz aqui mais uma coisa que este porte não faz: se a pessoa estiver dentro de um
      * <b>círculo de ritual</b> desenhado no chão, a duração salta uma hora por grau. Os rituais são da outra
@@ -1211,7 +1211,7 @@ public final class Essences {
     /**
      * <b>Arremesso</b>: atira para cima.
      *
-     * <p><b>1,05</b> de velocidade para o alto, e é tudo. Vinte de mana. A Velocidade Acrescentada soma-lhe
+     * <p><b>1,05</b> de velocidade para o alto, e é tudo. Vinte de mana. A Velocidade Acrescentada lhe soma
      * meio por vez, e três delas atiram alguém alto o bastante para a queda o matar — que é o feitiço inteiro.
      */
     public static final SpellPart.Essence FLING = SpellParts.essence(new SpellPart.Essence() {
@@ -1371,7 +1371,7 @@ public final class Essences {
             java.util.Set.of(Affinity.ARCANE), 0.001f));
 
     /**
-     * <b>Atrair</b>: a mesma coisa que a Telecinese, e o original escreve-as duas vezes.
+     * <b>Atrair</b>: a mesma coisa que a Telecinese, e o original as escreve duas vezes.
      *
      * <p>Elas chamam a <i>mesma</i> conta — o {@code doTK_Extrapolated} —, com os mesmos números. O que muda é
      * o preço, que é metade, e a Afinidade, que aqui não é nenhuma. Fica como está.
@@ -1620,7 +1620,7 @@ public final class Essences {
     /**
      * <b>Teleporte Aleatório</b>: atira para um lugar qualquer ali perto.
      *
-     * <p><b>Nove blocos</b> de lado, e o Alcance multiplica-os. O original não procura chão nenhum — ele
+     * <p><b>Nove blocos</b> de lado, e o Alcance os multiplica. O original não procura chão nenhum — ele
      * sorteia e manda, e quem cair dentro de pedra que se desenrasque. Fica assim.
      */
     public static final SpellPart.Essence RANDOM_TELEPORT = SpellParts.essence(new SpellPart.Essence() {
@@ -1884,7 +1884,7 @@ public final class Essences {
     /**
      * <b>Intervenção do Fim</b>: leva ao Nether.
      *
-     * <p>A irmã da outra, e o original escreve-a quase igual: no Fim não faz nada, e a quem já está no Nether
+     * <p>A irmã da outra, e o original a escreve quase igual: no Fim não faz nada, e a quem já está no Nether
      * responde que já lá está — e essa recusa, ao contrário das outras, devolve <b>falso</b> e sai de graça.
      */
     public static final SpellPart.Essence ENDER_INTERVENTION = SpellParts.essence(new SpellPart.Essence() {
@@ -2864,7 +2864,7 @@ public final class Essences {
     /**
      * <b>Colocar Bloco</b>: põe no mundo o bloco que o feitiço aprendeu.
      *
-     * <p>E ele aprende <b>agachado</b>: lançar o feitiço agachado contra um bloco ensina-lhe aquele bloco;
+     * <p>E ele aprende <b>agachado</b>: lançar o feitiço agachado contra um bloco lhe ensina aquele bloco;
      * lançá-lo de pé põe um igual onde se apontar. É o original inteiro, e é a única peça do ramo que muda de
      * trabalho conforme a pessoa está agachada ou não.
      *
@@ -2934,7 +2934,7 @@ public final class Essences {
     });
 
     /**
-     * <b>Apropriação</b>: tira uma coisa do mundo e leva-a consigo.
+     * <b>Apropriação</b>: tira uma coisa do mundo e a leva consigo.
      *
      * <p>Um bloco <b>com o que ele tem dentro</b> — um baú apropriado volta com as coisas lá — ou um bicho
      * inteiro, com a vida e o nome que tinha. Enquanto estiver guardado, aquilo <b>não existe</b> em lugar

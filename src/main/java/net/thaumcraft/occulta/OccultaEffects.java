@@ -258,7 +258,7 @@ public final class OccultaEffects {
     /**
      * Atrair Projéteis: o {@code PotionAttractProjectiles}, que é o contrário do de cima.
      *
-     * <p>O que voa a três blocos (mais três por grau) vira-se para quem a tem. É o que o cozimento invertido dá.
+     * <p>O que voa a três blocos (mais três por grau) se vira para quem a tem. É o que o cozimento invertido dá.
      */
     public static final Holder<MobEffect> ATTRACT_PROJECTILES = register("attract_projectiles",
             new MobEffect(MobEffectCategory.HARMFUL, 0x6B4F8A) {

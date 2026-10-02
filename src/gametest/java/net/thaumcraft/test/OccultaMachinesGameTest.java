@@ -137,7 +137,7 @@ public class OccultaMachinesGameTest {
         if (!crisol.full()) helper.fail("e cheio ele sabe que está cheio");
         crisol.feed();
         if (crisol.blood() != BloodCrucibleBlockEntity.MAX) helper.fail("e não transborda");
-        if (Math.abs(crisol.filled() - 1.0f) > 1.0e-6) helper.fail("e diz-se cheio de um a um");
+        if (Math.abs(crisol.filled() - 1.0f) > 1.0e-6) helper.fail("e se diz cheio de um a um");
 
         crisol.drain();
         if (crisol.blood() != 0) helper.fail("e esvazia de uma vez");

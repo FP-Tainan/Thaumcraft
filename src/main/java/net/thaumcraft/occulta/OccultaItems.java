@@ -354,7 +354,7 @@ public final class OccultaItems {
     /**
      * A Maçã do Sono: o {@code itemSleepingApple} do Witchery.
      *
-     * <p>Come-se, e dorme-se — o corpo fica e o espírito levanta-se. É a porta do Mundo dos Espíritos, e ela abre
+     * <p>Come-se, e se dorme — o corpo fica e o espírito se levanta. É a porta do Mundo dos Espíritos, e ela abre
      * sempre para o lado feio: quem a come sem um Apanhador de Sonhos por perto cai em pesadelo.
      */
     public static final Item SLEEPING_APPLE = register("sleeping_apple", properties ->
@@ -549,7 +549,7 @@ public final class OccultaItems {
      * Um giz.
      *
      * <p><b>Desvio declarado.</b> No original uma receita dá <b>duas</b> varas de sessenta e quatro riscos cada,
-     * e elas empilham-se — na 1.7.10 uma coisa gasta ainda empilhava. Hoje não: o que tem desgaste vai uma por
+     * e elas se empilham — na 1.7.10 uma coisa gasta ainda empilhava. Hoje não: o que tem desgaste vai uma por
      * casa. Por isso a receita dá <b>uma</b> vara de <b>cento e vinte e oito</b> riscos, que é o mesmo giz na
      * mesma conta, numa vara só.
      */

@@ -68,7 +68,7 @@ public final class NaturalisItems {
 
     // ------------------------------------------------------------------ o diário
 
-    /** O Diário de Pesquisa: anota pontos na mesa de decomposição e despeja-os depois. */
+    /** O Diário de Pesquisa: anota pontos na mesa de decomposição e os despeja depois. */
     public static final Item RESEARCH_LOG = register("research_log", properties ->
             new ResearchLogItem(properties.stacksTo(1).rarity(Rarity.UNCOMMON)));
 

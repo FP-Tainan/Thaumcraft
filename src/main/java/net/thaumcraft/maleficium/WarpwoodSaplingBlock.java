@@ -17,7 +17,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * A muda da árvore distorcida: o {@code BlockWarpwoodSapling} do Tainted Magic.
  *
- * <p>Como a do jogo, ela espera a luz e o tempo; quando cresce, tira-se a muda e tenta-se a árvore — se não couber,
+ * <p>Como a do jogo, ela espera a luz e o tempo; quando cresce, tira-se a muda e se tenta a árvore — se não couber,
  * a muda volta para o lugar. A farinha de osso vale como numa muda comum, que é o que o Thaumcraft já faz com as
  * mudas mágicas dele.
  */

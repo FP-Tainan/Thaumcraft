@@ -198,7 +198,7 @@ public class SpellEffectEntity extends Entity {
     /**
      * A <b>Nevasca</b> e a <b>Chuva de Fogo</b>: as duas que não correm feitiço nenhum.
      *
-     * <p>Elas são a exceção desta entidade. As outras três acham quem está lá e passam-lhe o resto da frase;
+     * <p>Elas são a exceção desta entidade. As outras três acham quem está lá e lhe passam o resto da frase;
      * estas duas <b>fazem o que fazem</b> e mais nada — ferem, prendem ou queimam, e vão deixando neve ou
      * fogo no chão. No original são duas perícias prateadas, e é isso que elas são: um feitiço inteiro numa
      * peça só.
@@ -415,7 +415,7 @@ public class SpellEffectEntity extends Entity {
         var qual = gelo ? net.minecraft.core.particles.ParticleTypes.SNOWFLAKE
                 : net.minecraft.core.particles.ParticleTypes.FLAME;
 
-        // uma a uma, e cada uma com rumo próprio: mandá-las em monte deixa-as paradas no ar, e o que faz
+        // uma a uma, e cada uma com rumo próprio: mandá-las em monte as deixa paradas no ar, e o que faz
         // isto parecer tempo é elas caírem
         for (int i = 0; i < quantas; i++) {
             double x = this.getX() - this.radius + level.getRandom().nextDouble() * this.radius * 2.0;

@@ -42,7 +42,7 @@ public final class ShatteredTable {
                 .pages(Page.text("tc.research_page.SR_WORLD_THREAD.1"), Page.crafting("SRStableFabric"))
                 .register();
 
-        // e, ainda no segundo degrau, o que faz o ver valer de facto: os Óculos do Véu
+        // e, ainda no segundo degrau, o que faz o ver valer de fato: os Óculos do Véu
         ThaumcraftApi.research("SR_VEIL_GOGGLES", ShatteredRealms.CATEGORY)
                 .aspects(new AspectList().add(Aspects.VOID, 4).add(Aspects.SENSES, 4).add(Aspects.CLOTH, 2))
                 .at(8, -2)

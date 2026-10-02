@@ -46,7 +46,7 @@ public class OccultaCauldronGameTest {
             return;
         }
         if (!caldeirão.isFull()) helper.fail("a água do caldeirão comum passa para ele; ficou " + caldeirão.water());
-        if (pasta.getCount() != 1) helper.fail("e a pasta gasta-se");
+        if (pasta.getCount() != 1) helper.fail("e a pasta se gasta");
 
         // e num caldeirão que não é caldeirão a pasta não faz nada
         BlockPos outro = helper.absolutePos(new BlockPos(3, 2, 1));
@@ -103,7 +103,7 @@ public class OccultaCauldronGameTest {
                 if (!caldeirão.inside().isEmpty()) helper.fail("e não guarda o que foi jogado nele");
                 return;
             }
-            if (caldeirão.isRitualInProgress()) throw helper.assertionException("a receita está a mexer");
+            if (caldeirão.isRitualInProgress()) throw helper.assertionException("a receita está mexendo");
             // o fogo às vezes se apaga sozinho no mundo de prova; aqui ele se mantém aceso
             if (!level.getBlockState(fogo).is(Blocks.FIRE)) {
                 level.setBlockAndUpdate(fogo, Blocks.FIRE.defaultBlockState());

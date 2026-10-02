@@ -30,7 +30,7 @@ import java.util.List;
 public class ArcanaSpellGameTest {
     // ------------------------------------------------------------------ a gramática
 
-    /** As três classes de palavra estão registadas, e cada peça acha-se pelo nome. */
+    /** As três classes de palavra estão registadas, e cada peça se acha pelo nome. */
     @GameTest
     public void theGrammarIsRegistered(GameTestHelper helper) {
         if (SpellParts.shapes().isEmpty()) helper.fail("devia haver Formas");

@@ -60,7 +60,7 @@ public class DreamPlantBlock extends BushBlock {
         return true;
     }
 
-    /** O {@code updateTick}: ela alastra-se devagar, e só no outro lado. */
+    /** O {@code updateTick}: ela se alastra devagar, e só no outro lado. */
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!SpiritWorld.is(level) || random.nextInt(SPREAD_CHANCE) != 0) return;

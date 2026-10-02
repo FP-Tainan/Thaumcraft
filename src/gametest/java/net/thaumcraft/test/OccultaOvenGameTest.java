@@ -70,7 +70,7 @@ public class OccultaOvenGameTest {
                 helper.fail("e a cinza de madeira devia estar na casa dela");
             }
             if (forno.getItem(WitchesOvenBlockEntity.JARS).getCount() == 64) {
-                helper.fail("o pote gasta-se ao guardar o cheiro");
+                helper.fail("o pote se gasta ao guardar o cheiro");
             }
         });
     }

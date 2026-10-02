@@ -112,9 +112,9 @@ public class OccultaWorldRitesGameTest {
             if (dx == 0 && dz == 0) helper.fail("e não fica parado: passo " + i);
         }
 
-        // e, para este lugar, ele afasta-se do círculo — o número é o desta semente
+        // e, para este lugar, ele se afasta do círculo — o número é o desta semente
         if (uma.getLast().distSqr(meio) < 100.0) {
-            helper.fail("e o caminho afasta-se do círculo: " + uma.getLast().distSqr(meio));
+            helper.fail("e o caminho se afasta do círculo: " + uma.getLast().distSqr(meio));
         }
         helper.succeed();
     }
@@ -161,7 +161,7 @@ public class OccultaWorldRitesGameTest {
         helper.succeed();
     }
 
-    /** A fase de um rito guarda-se: um rito de muitas batidas volta no ponto em que estava. */
+    /** A fase de um rito se guarda: um rito de muitas batidas volta no ponto em que estava. */
     @GameTest
     public void theStageSurvivesTheSave(GameTestHelper helper) {
         var qual = new Rites.Storm(0, 3, 8);
@@ -256,7 +256,7 @@ public class OccultaWorldRitesGameTest {
         var rito = new ActiveRite("tc.rite.volcano", qual, List.of(), null, 0);
         var passo = qual.steps(0).getFirst();
         if (passo.run(level, meio, 15L, rito) != RiteStep.Result.UPKEEP) {
-            helper.fail("com lava, o rito começa e sustenta-se");
+            helper.fail("com lava, o rito começa e se sustenta");
         }
         helper.succeed();
     }

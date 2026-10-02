@@ -55,7 +55,7 @@ public class VillageWallGenBlockEntity extends BlockEntity {
                         VillageWall.base(deserto), VillageWall.cerca(deserto),
                         VillageWall.escada(deserto));
             } else if (eu.tiques < DESISTE) {
-                return;   // a aldeia ainda pode estar a nascer
+                return;   // a aldeia ainda pode estar nascendo
             }
         }
 

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * A aba do Ars Mortuorum no Thaumonomicon.
  *
- * <p>O Necromancy não é um addon de Thaumcraft: lá não há pesquisa nenhuma, as coisas fazem-se na bancada e
+ * <p>O Necromancy não é um addon de Thaumcraft: lá não há pesquisa nenhuma, as coisas se fazem na bancada e
  * pronto. A árvore daqui é <b>do porte</b>, e não do original — é o que põe o ramo dentro do livro, do jeito que
  * os outros ramos entraram. O que cada pesquisa ensina, porém, é o que o original faz: as receitas são as dele.
  */

@@ -38,7 +38,7 @@ import java.util.Optional;
  * (o dicionário de minérios de então). O resto é <b>deduzido das receitas</b>, pelo {@code generateTags}: o
  * crisol, a bancada arcana, a infusão e a mesa de trabalho, nessa ordem de preferência. Da mesa vêm três
  * quartos da soma dos ingredientes, divididos pelo que a receita rende, e fica a receita de menor soma; das
- * receitas mágicas soma-se ainda a raiz do custo. Nada passa de 64.
+ * receitas mágicas se soma ainda a raiz do custo. Nada passa de 64.
  *
  * <p>O servidor monta a tabela inteira ao abrir (quando as receitas e as marcas já estão carregadas) e a manda a
  * quem entra; o cliente só consulta. Por cima do que a tabela diz entram os bônus do {@code getBonusTags}:

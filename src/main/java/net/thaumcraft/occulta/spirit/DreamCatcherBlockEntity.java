@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  * A alma do Apanhador de Sonhos: a {@code TileEntityDreamCatcher} do Witchery.
  *
  * <p>Ele guarda uma coisa: <b>que teia</b> está pregada nele. De segundo em segundo olha quem está a cinco de
- * distância e dá-lhe o que a teia tem para dar — o sonho bom ou o pesadelo, conforme o que mais houver em volta.
+ * distância e lhe dá o que a teia tem para dar — o sonho bom ou o pesadelo, conforme o que mais houver em volta.
  *
  * <p>A conta de quem manda é a do original, e é engenhosa: um apanhador com a <b>teia dos pesadelos</b> por perto
  * faz de tudo pesadelo; um com a <b>teia da intensidade</b> aperta o que houver. Os dois juntos fazem pesadelo

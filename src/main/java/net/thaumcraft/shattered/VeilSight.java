@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  *
  * <p>A lore do ramo diz que as fendas não se abrem: <i>sempre estiveram abertas</i>, e o que muda é quem as
  * consegue ver. Enquanto o thaumaturgo não tiver posto Fio do Mundo nos Óculos da Descoberta, uma fenda que já
- * estava no mundo é ar para ele — não a vê, não lhe vê as fagulhas, e passa-lhe ao lado sem saber.
+ * estava no mundo é ar para ele — não a vê, não lhe vê as fagulhas, e lhe passa ao lado sem saber.
  *
  * <p>O que ele mesmo fez é outra coisa: uma porta que ele assentou ou uma fenda que ele rasgou com a Assinatura
  * ficam à vista de qualquer um, com óculos ou sem eles. Quem rasgou sabe onde rasgou.
@@ -32,7 +32,7 @@ public final class VeilSight {
             TagKey.create(Registries.ITEM, Thaumcraft.id("sees_the_veil"));
 
     /**
-     * Quem está a olhar, do lado de quem joga.
+     * Quem está olhando, do lado de quem joga.
      *
      * <p>O código comum não pode pedir a máquina do cliente — no servidor dedicado ela não existe. Então quem
      * corre na máquina de quem joga põe aqui como se acha o jogador da vez, que é o mesmo jeito do

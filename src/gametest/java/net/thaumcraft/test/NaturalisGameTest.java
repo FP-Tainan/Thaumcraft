@@ -645,7 +645,7 @@ public class NaturalisGameTest {
     }
 
     /**
-     * O jarro leva o bicho do começo ao fim: pega-o da mão, guarda-o no bloco que se põe e devolve-o ao item
+     * O jarro leva o bicho do começo ao fim: pega-o da mão, guarda-o no bloco que se põe e o devolve ao item
      * quando alguém quebra o vidro. É o que faz o bicho aparecer lá dentro para quem olha.
      */
     @GameTest

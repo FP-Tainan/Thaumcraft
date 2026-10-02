@@ -17,7 +17,7 @@ import java.util.List;
  * As aldeias do Witchery: <b>maiores</b>, e em <b>mais lugares</b>.
  *
  * <p>Esta fatia não tem bicho nem bloco — ela mexe só no que o jogo lê do disco. Por isso as provas são sobre o
- * que ficou <b>carregado no registo</b>, que é a única coisa que importa: se a etiqueta do bioma somou, e se o
+ * que ficou <b>carregado no registro</b>, que é a única coisa que importa: se a etiqueta do bioma somou, e se o
  * tamanho da aldeia é o novo.
  */
 public class OccultaVillageSpreadGameTest {
@@ -25,21 +25,21 @@ public class OccultaVillageSpreadGameTest {
     private static final List<String> VARIANTES =
             List.of("plains", "desert", "savanna", "snowy", "taiga");
 
-    /** O tamanho novo: o salto-de-encaixe vai mais fundo, e a aldeia espalha-se mais. */
+    /** O tamanho novo: o salto-de-encaixe vai mais fundo, e a aldeia se espalha mais. */
     private static final int TAMANHO = 8;
 
     /**
      * As aldeias ficaram maiores.
      *
-     * <p>O {@code size} de uma estrutura de encaixe não tem acessor público, e por isso pergunta-se-lhe pelo
-     * próprio codec: escreve-se a estrutura <b>como ela foi carregada</b> e lê-se o número de volta. Prova o que
+     * <p>O {@code size} de uma estrutura de encaixe não tem acessor público, e por isso se pergunta-lhe pelo
+     * próprio codec: escreve-se a estrutura <b>como ela foi carregada</b> e se lê o número de volta. Prova o que
      * o jogo tem na mão, e não o que está escrito num arquivo que ele podia nem ter lido.
      */
     @GameTest(maxTicks = 20)
     public void villagesAreBigger(GameTestHelper helper) {
-        var registos = helper.getLevel().registryAccess();
-        var ops = RegistryOps.create(JsonOps.INSTANCE, registos);
-        var estruturas = registos.lookupOrThrow(Registries.STRUCTURE);
+        var registros = helper.getLevel().registryAccess();
+        var ops = RegistryOps.create(JsonOps.INSTANCE, registros);
+        var estruturas = registros.lookupOrThrow(Registries.STRUCTURE);
 
         for (String qual : VARIANTES) {
             var chave = ResourceKey.create(Registries.STRUCTURE,

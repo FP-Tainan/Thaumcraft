@@ -353,7 +353,7 @@ public final class TaintRenderers {
             float h = state.height;
             float hc = h * 10.0f;
             float rise = state.tickCount < hc ? (hc - state.tickCount) / hc * h : 0.0f;
-            // no original isto vem depois do recuo de 1,5 do corpo, que aqui vem depois: desfaz-se e refaz-se em volta
+            // no original isto vem depois do recuo de 1,5 do corpo, que aqui vem depois: desfaz-se e se refaz em volta
             pose.translate(0.0f, -1.501f + (h == 3.0f ? 0.6f : 1.2f) + rise, 0.0f);
             pose.scale(h / 3.0f, h / 3.0f, h / 3.0f);
             pose.translate(0.0f, 1.501f, 0.0f);

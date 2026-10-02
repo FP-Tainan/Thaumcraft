@@ -27,9 +27,9 @@ import org.jetbrains.annotations.Nullable;
  * O Crisol de Sangue: a {@code BlockBloodCrucible} do Witchery.
  *
  * <p>Uma bacia de pedra baixa onde o <b>vampiro</b> despeja o que bebeu. Cheia — vinte de sangue, quatro goles —
- * e sendo ele de <b>décimo grau</b>, ela abre-lhe a escolha do dom maior: a <b>Tempestade</b>, com uma
+ * e sendo ele de <b>décimo grau</b>, ela lhe abre a escolha do dom maior: a <b>Tempestade</b>, com uma
  * alcachofra-d'água na mão; o <b>Enxame</b>, com lã de morcego; ou a <b>Colheita</b>, com um osso. Escolhido, o
- * crisol esvazia-se.
+ * crisol se esvazia.
  *
  * <p><b>Declarado, e é o principal:</b> este bloco <b>não faz nada ainda</b>. Ele está de pé, guarda o sangue,
  * mostra-o e sabe a conta dos três dons — mas o que o enche é o vampiro a alimentar-se, e o que ele destrava é o

@@ -208,7 +208,7 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
      * <p><b>Do original ficam de fora, declarados:</b> o rendimento maior de quem tem prática, chapéu de bruxa
      * e túnica — nenhuma dessas três coisas existe ainda.
      *
-     * @param quem quem está a engarrafar, ou nulo quando não é ninguém (uma prova, um funil)
+     * @param quem quem está engarrafando, ou nulo quando não é ninguém (uma prova, um funil)
      */
     public ItemStack bottle(ServerLevel level, BlockPos pos,
                             @org.jetbrains.annotations.Nullable net.minecraft.world.entity.player.Player quem) {
@@ -248,7 +248,7 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
             caldeirão.changed();
         }
 
-        // o {@code isPowered} do original: de vinte em vinte batidas olha-se se há altar com o poder pedido
+        // o {@code isPowered} do original: de vinte em vinte batidas se olha se há altar com o poder pedido
         if (level instanceof ServerLevel server && level.getGameTime() % 20 == 7) {
             int poder = caldeirão.brewPower();
             boolean antes = caldeirão.powered;

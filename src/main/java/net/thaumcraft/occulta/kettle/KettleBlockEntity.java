@@ -29,7 +29,7 @@ import java.util.List;
  * líquido ganha cor e fica pronto. Aí é chegar com um frasco de vidro e tirar.
  *
  * <p>Errar tem preço: coisa a mais, coisa que não casa com receita nenhuma, ou o lume que se apaga — e o pote
- * <b>estraga</b>. Estragado, esvazia-se e começa-se de novo.
+ * <b>estraga</b>. Estragado, esvazia-se e se começa de novo.
  *
  * <p><b>Desvio declarado:</b> no original o pote tem um tanque de mil medidas que outros mods podem encher aos
  * poucos. Aqui a água é <b>sim ou não</b>: um balde enche, um balde vazio esvazia. Sem outros mods à volta, o que
@@ -160,7 +160,7 @@ public class KettleBlockEntity extends BlockEntity implements WorldlyContainer {
         if (this.ruined || this.ticks % EVERY != 0) return;
         if (!this.water || (!this.some() && this.getItem(RESULT).isEmpty())) return;
 
-        // sem lume por baixo, o que estava a cozinhar estraga-se
+        // sem lume por baixo, o que estava cozinhando se estraga
         if (!level.getBlockState(this.worldPosition.below()).is(BlockTags.FIRE)) {
             this.ruin();
             return;
@@ -238,7 +238,7 @@ public class KettleBlockEntity extends BlockEntity implements WorldlyContainer {
             this.sync();
             return true;
         }
-        // não há onde pôr: o pote estraga-se, que é o que o original faz
+        // não há onde pôr: o pote se estraga, que é o que o original faz
         if (!this.ruined) this.ruin();
         return true;
     }

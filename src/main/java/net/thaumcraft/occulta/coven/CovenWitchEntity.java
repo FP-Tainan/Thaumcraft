@@ -204,7 +204,7 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
             diz(quem, "joinedcoven");
             this.setPersistenceRequired();
         } else {
-            // o "tricked" do original: ela sente-se enganada e vira
+            // o "tricked" do original: ela se sente enganada e vira
             diz(quem, "tricked");
             this.virada = true;
             this.setTarget(quem);

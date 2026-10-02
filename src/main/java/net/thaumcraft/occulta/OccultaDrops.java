@@ -22,7 +22,7 @@ import java.util.Optional;
  *
  * <p>São duas contas, e é a <b>Arthana na mão</b> que diz qual vale. Sem ela, o lobo dá a Língua de Cão uma vez
  * em três, o creeper dá o Coração duas em cem e o sapo dá o Dedo uma em cinco. <b>Com ela</b>, a língua e a lã
- * sobem para três em quatro, o dedo para uma em duas, o coração para oito em cem — e abrem-se coisas que sem
+ * sobem para três em quatro, o dedo para uma em duas, o coração para oito em cem — e se abrem coisas que sem
  * faca não se abrem: a <b>caveira</b> do esqueleto, do zumbi e do creeper, e o <b>Pó Espectral</b> dos dois
  * primeiros.
  *

@@ -372,7 +372,7 @@ public class ResearchPageScreen extends Screen {
         while (found) {
             found = false;
             raw = raw.replace("<BR>", "\n").replace("<BR/>", "\n");
-            // o negrito do livro: o original marcava-o com o código do jogo, e as páginas deste porte com <b>
+            // o negrito do livro: o original o marcava com o código do jogo, e as páginas deste porte com <b>
             raw = raw.replace("<b>", "§l").replace("</b>", "§r");
             int line = raw.indexOf("<LINE>");
             int lineAlt = raw.indexOf("<LINE/>");

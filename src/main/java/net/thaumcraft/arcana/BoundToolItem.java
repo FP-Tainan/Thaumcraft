@@ -17,9 +17,9 @@ import java.util.function.Consumer;
  * Uma <b>ferramenta vinculada</b>: as {@code ItemBound*} do Ars Magica 2.
  *
  * <p>É um feitiço que virou ferramenta. Ela não se fabrica e não se conserta: <b>ela se segura</b>, e segurar
- * custa mana <b>a cada batida</b>. Quando a mana acaba, ela desfaz-se e volta a ser o feitiço que era.
+ * custa mana <b>a cada batida</b>. Quando a mana acaba, ela se desfaz e volta a ser o feitiço que era.
  *
- * <p>Em troca, ela <b>nunca se gasta</b>: o original conserta-a um ponto por batida enquanto a mantém. Uma
+ * <p>Em troca, ela <b>nunca se gasta</b>: o original a conserta um ponto por batida enquanto a mantém. Uma
  * picareta vinculada de diamante não quebra nunca — mas come um ponto de mana por batida, que é <b>vinte por
  * segundo</b>, e ninguém a carrega sem pensar.
  *
@@ -72,7 +72,7 @@ public class BoundToolItem extends Item {
     }
 
     /**
-     * A cada batida: cobra a mana, conserta um ponto, e desfaz-se se não houver com que pagar.
+     * A cada batida: cobra a mana, conserta um ponto, e se desfaz se não houver com que pagar.
      *
      * <p>É o {@code onUpdate} do original, e é o coração da ideia: uma ferramenta que só existe enquanto se
      * pode pagar por ela.
@@ -91,7 +91,7 @@ public class BoundToolItem extends Item {
 
         Mana.set(gente, conta.withMana(conta.mana() - this.kind.maintain));
 
-        // e ela conserta-se sozinha enquanto se mantém
+        // e ela se conserta sozinha enquanto se mantém
         if (coisa.isDamaged()) coisa.setDamageValue(coisa.getDamageValue() - 1);
     }
 
