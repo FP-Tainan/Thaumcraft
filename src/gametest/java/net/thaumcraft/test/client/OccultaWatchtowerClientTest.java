@@ -12,8 +12,8 @@ import net.minecraft.world.level.levelgen.Heightmap;
  * só sabe dizer que ele carrega e que mede nove por vinte e quatro por nove; se o telhado estiver virado do
  * avesso ou a escada de mão na parede errada, ela passa na mesma. Esta é a que julga isso.
  *
- * <p>Duas fotos: a torre inteira de fora, e o alto dela de perto — que é onde ficam o telhado de escadas, as
- * ameias e os guardas.
+ * <p>Três fotos: a torre inteira de fora, o mirante de perto com os guardas, e a <b>torre do deserto</b> ao
+ * lado — que é arenito e bétula, porque o Witchery re-veste a aldeia conforme o bioma.
  */
 public class OccultaWatchtowerClientTest implements FabricClientGameTest {
     @Override
@@ -35,7 +35,7 @@ public class OccultaWatchtowerClientTest implements FabricClientGameTest {
                 chão[0] = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, 0, 0);
             });
 
-            server.runCommand("place template thaumcraft:village/watchtower 0 " + chão[0] + " 0");
+            server.runCommand("place template thaumcraft:village/watchtower_plains 0 " + chão[0] + " 0");
             context.waitTicks(60);
 
             context.runOnClient(minecraft -> minecraft.options.renderDistance().set(12));
@@ -47,6 +47,13 @@ public class OccultaWatchtowerClientTest implements FabricClientGameTest {
             server.runCommand("tp @a 4 " + (chão[0] + 18) + " 16 facing 4 " + (chão[0] + 17) + " 4");
             context.waitTicks(40);
             context.takeScreenshot("torre_de_vigia_alto");
+
+            // e a do deserto, que é arenito e bétula
+            server.runCommand("place template thaumcraft:village/watchtower_desert 20 " + chão[0] + " 0");
+            context.waitTicks(40);
+            server.runCommand("tp @a 42 " + (chão[0] + 14) + " 22 facing 24 " + (chão[0] + 10) + " 4");
+            context.waitTicks(60);
+            context.takeScreenshot("torre_de_vigia_deserto");
         }
     }
 }

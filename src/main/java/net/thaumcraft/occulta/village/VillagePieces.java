@@ -59,8 +59,10 @@ public final class VillagePieces {
         Holder<StructureProcessorList> semRetoque =
                 registos.lookupOrThrow(Registries.PROCESSOR_LIST).getOrThrow(ProcessorLists.EMPTY);
 
+        // um molde por variante: o material muda no deserto, e o encaixe aponta à rua da sua aldeia
         for (String variante : VARIANTES) {
-            acrescenta(piscinas, variante, Thaumcraft.id("village/watchtower"), PESO_TORRE, semRetoque);
+            acrescenta(piscinas, variante, Thaumcraft.id("village/watchtower_" + variante),
+                    PESO_TORRE, semRetoque);
         }
     }
 

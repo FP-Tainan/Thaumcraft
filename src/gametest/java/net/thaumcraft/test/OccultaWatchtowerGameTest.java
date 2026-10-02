@@ -37,7 +37,7 @@ public class OccultaWatchtowerGameTest {
                     Identifier.withDefaultNamespace("village/" + variante + "/houses"));
             StructureTemplatePool piscina = piscinas.getValueOrThrow(chave);
 
-            int torres = VillagePieces.quantas(piscina, "village/watchtower");
+            int torres = VillagePieces.quantas(piscina, "village/watchtower_" + variante);
             if (torres != PESO) {
                 helper.fail("a aldeia " + variante + " devia ter a torre com peso " + PESO
                         + ", tem " + torres);
@@ -61,13 +61,15 @@ public class OccultaWatchtowerGameTest {
     @GameTest(maxTicks = 20)
     public void theWatchtowerTemplateLoads(GameTestHelper helper) {
         var moldes = helper.getLevel().getServer().getStructureManager();
-        var molde = moldes.get(Thaumcraft.id("village/watchtower"));
-        if (molde.isEmpty()) helper.fail("o molde da torre devia carregar");
+        for (String variante : VARIANTES) {
+            var molde = moldes.get(Thaumcraft.id("village/watchtower_" + variante));
+            if (molde.isEmpty()) helper.fail("o molde da torre de " + variante + " devia carregar");
 
-        var tamanho = molde.get().getSize();
-        if (tamanho.getX() != 9 || tamanho.getY() != 24 || tamanho.getZ() != 9) {
-            helper.fail("a torre é 9x24x9, veio " + tamanho.getX() + "x" + tamanho.getY()
-                    + "x" + tamanho.getZ());
+            var tamanho = molde.get().getSize();
+            if (tamanho.getX() != 9 || tamanho.getY() != 24 || tamanho.getZ() != 9) {
+                helper.fail("a torre de " + variante + " é 9x24x9, veio " + tamanho.getX() + "x"
+                        + tamanho.getY() + "x" + tamanho.getZ());
+            }
         }
         helper.succeed();
     }

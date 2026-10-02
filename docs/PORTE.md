@@ -5292,3 +5292,54 @@ A segunda existe porque um molde que não carrega **não dá erro nenhum** — a
 **As fotos:** `OccultaWatchtowerClientTest`, duas — a torre inteira de fora e o mirante de perto, com os
 guardas lá dentro. Elas são o que julga o molde de verdade: a prova de servidor passa igual se o telhado
 estiver virado do avesso.
+
+## A aldeia do Ars Occulta — C1b: a aldeia re-vestida pelo bioma, e os cinco nomes de bloco
+
+Esta emenda sai de uma pergunta pequena — *que bloco é o `field_150487_bG`?* — que abriu um buraco que eu tinha
+aberto na C1 sem dar por ele.
+
+### Cinco nomes, resolvidos com prova
+
+Os prédios que faltam usam cinco blocos cujo nome de 2014 eu não sabia, e adivinhar é o que este porte não faz.
+Não há jar desofuscado do 1.7.10 à mão, e a busca não deu a tabela. A prova veio de **dentro do próprio
+material**:
+
+- O `ConfigAspects` do **Thaumcraft 4.2.3.5** registra aspectos por metadata, e isso identifica um bloco sem
+  margem. O `field_150417_aV` tem meta 0 terra, meta 1 terra+**planta**, meta 2 terra+**entropia**, meta 3
+  terra+**ordem** — musgo, rachado e entalhado: é o **tijolo de pedra**. O `field_150322_A` tem meta 1
+  terra+**magia** e meta 2 terra+**ordem** — a cara entalhada e o liso: é o **arenito**.
+- O `WorldHandlerVillageDistrict$Wall` atribui `blockBase` e `stairsBlock` **em par**, e troca os dois juntos:
+  daí `field_150390_bg` ser a **escada de tijolo de pedra** e `field_150372_bz` a **de arenito**.
+- E o `field_150487_bG` sai do `EventHooks`: no deserto a tábua é trocada por **meta 2, que é bétula**, e é por
+  isso que a escada de carvalho vira a dele — **escada de bétula**.
+
+### O buraco que isso abriu
+
+Lendo o `EventHooks` apareceu uma coisa que eu não sabia que existia: **o Witchery re-veste a aldeia conforme o
+bioma**, pelos eventos `GetVillageBlockID` e `GetVillageBlockMeta` do Forge. No deserto, pedregulho e tora viram
+arenito e toda a madeira vira bétula. Na neve, tudo vira neve e gelo.
+
+E na C1 eu tinha posto **a mesma torre de pedregulho e carvalho nas cinco variantes**. Passava nas provas e
+estava errada.
+
+**O conserto:** um molde por variante. O gerador passou a receber o material, e saem cinco torres — o deserto
+em arenito e bétula, as outras quatro no material comum. De quebra isso arrumou outra coisa que estava errada e
+não dava erro: o bloco de encaixe de cada molde aponta à **piscina de ruas da sua aldeia**, e antes todos
+diziam `plains`.
+
+**Desvio declarado: a aldeia de neve fica com o material comum.** O ramo da neve do original troca tudo por
+blocos **dele** — `SNOW_STAIRS`, `SNOW_SLAB_SINGLE`, `PERPETUAL_ICE_FENCE`, `SNOW_PRESSURE_PLATE` —, e nenhum
+deles está portado. Volta quando eles vierem.
+
+**E uma observação que poupa trabalho futuro:** o resto do `EventHooks` **não precisa ser portado**. Ele existe
+porque a aldeia de 2014 era uma só, de pedregulho e carvalho, em todo bioma; o jogo de hoje já tem cinco
+variantes de aldeia com material próprio e resolve isso sozinho. O que sobrou de útil dele foi a tabela de
+materiais do deserto, que está no `tools/aldeia/materiais.js`.
+
+### Os geradores entram no repositório
+
+Os moldes `.nbt` são binários, e sem o gerador ninguém os revisa nem os regera. Os scripts passam a morar em
+`tools/aldeia/` — `nbt.js` (leitor e escritor de NBT), `materiais.js` (a tabela por variante) e `torre.js`. Para
+refazer os moldes: `node tools/aldeia/torre.js`.
+
+**A foto nova:** as duas torres lado a lado, a comum e a do deserto, que é o que mostra a re-vestimenta.
