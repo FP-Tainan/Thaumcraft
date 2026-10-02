@@ -5166,3 +5166,61 @@ E uma lição de prova, não de porte: **provar que algo não aconteceu olhando 
 "sem arco não atira" contava flechas, e flecha que acerta é removida na hora — no fim nunca há nenhuma, e ela
 passava sempre. Agora ela julga a **decisão** do `setCombatTask`: posto o arco a mira de longe entra, tirado
 sai, devolvido volta, e de espada ele **chega perto**.
+
+## A aldeia do Ars Occulta — Fatia B: maiores, e em mais lugares
+
+Esta fatia não traz bicho nem bloco: mexe só no que o jogo lê do disco. E é a que mais obrigou a **traduzir** em
+vez de transcrever, porque o Minecraft de hoje faz aldeia de um jeito que o de 2014 não fazia.
+
+**As aldeias ficaram maiores.** No original, o `WorldHandlerVillageDistrict.preInit` registra cada peça de aldeia
+do próprio jogo **outra vez, em grupos**, pela tabela `townParts` do Config: a casa de jardim, a casa, a cabana
+de madeira, o salão, a casa 3 e os dois campos entram **três grupos cada**, com peso 20 e três a cinco de cada
+vez; o ferreiro entra um grupo, peso 5, zero a um; a torre de vigia quatro grupos; e a **igreja entra zero**, que
+é o jeito do original de dizer que não quer mais igrejas do que o jogo já dá. O gerador de 2014 escolhia peças
+por peso até esgotar as contagens, e por isso registrar a mesma peça de novo fazia a aldeia crescer.
+
+**Isso não tem equivalente hoje.** A aldeia do 26.2 é um salto-de-encaixe: o número de peças não vem de peso
+nem de contagem, vem da **profundidade** do salto. Peso aqui decide *qual* peça entra, não *quantas*. A única
+alavanca que o jogo de hoje dá para o tamanho é o `size` da estrutura, e é essa que se usou: **de seis para
+oito**, nas cinco variantes.
+
+**E nascem em mais biomas.** O `init` do original percorre todo bioma do jogo e chama `addVillageBiome` em tudo
+o que não é molhado, oceano, praia, rio, selva, End nem Nether — com uma chave por tipo para desligar, e a selva
+já desligada de fábrica. Isso é a taxonomia do `BiomeDictionary` de 2014, que não existe mais; o que se fez foi
+levar a **intenção** dele aos biomas de hoje:
+
+- **planície** ganha floresta, floresta de flores, bétula, bétula antiga, floresta escura, cerejeira, girassóis
+  e os três ventosos (montanha, floresta e cascalho) — o FOREST, o PLAINS, o MOUNTAIN e o HILLS do original;
+- **deserto** ganha os três *badlands*, que é o MESA que o original permite;
+- **savana** ganha o planalto e a savana ventosa;
+- **neve** ganha encostas nevadas, bosque e picos de gelo;
+- **taiga** ganha a taiga nevada e as duas antigas.
+
+**Desvios declarados.**
+
+1. **O tamanho é outra alavanca.** Não se registram peças repetidas, porque não há onde; muda-se a profundidade.
+   O efeito é o mesmo — aldeia maior — mas a conta é outra, e uma aldeia do porte não terá *exatamente* as três
+   a cinco casas a mais de cada tipo que o original dava.
+2. **Etiqueta soma, estrutura substitui.** As cinco etiquetas de bioma levam só os acréscimos, e o jogo junta-as
+   às dele — a prova confere os dois lados, que os novos entraram e que **os do jogo continuam lá**, porque uma
+   etiqueta escrita com `replace` por engano apagaria as planícies e tudo continuaria a parecer bem. Já os cinco
+   arquivos de estrutura **substituem** os do jogo, e por isso são cópia exata deles com um número trocado.
+   **Risco declarado:** se a Mojang mexer nesses arquivos, a nossa cópia fica velha.
+3. **Pântano, selva e cogumelo continuam sem aldeia**, como no original — e há prova disso, porque é no pântano
+   que o coven vai morar.
+4. **O ermo e o planalto de pedra ficam de fora.** O original permite WASTELAND, que no jogo de hoje não tem
+   correspondente, e MOUNTAIN, que hoje inclui picos nus onde uma aldeia seria absurda. Entraram os ventosos,
+   que são a montanha habitável; ficaram de fora os picos.
+5. **O Jardim Pálido fica de fora.** Pela taxonomia do original ele seria FOREST e entraria; é um bioma de 2024
+   feito para não ter ninguém, e pô-lo aqui seria aplicar a regra contra o sentido dela.
+
+**Guardas:** `OccultaVillageSpreadGameTest`, com três — as cinco aldeias com tamanho oito, os biomas novos mais
+os do jogo, e o molhado que continua vazio. A do tamanho pergunta à estrutura **pelo codec dela**: o `size` não
+tem acessor público, então escreve-se a estrutura como ela foi carregada e lê-se o número de volta. Prova o que
+o jogo tem na mão, e não o que está num arquivo que ele podia nem ter lido.
+
+**A foto:** `OccultaVillageSpreadClientTest`, uma — a aldeia posta com `/place structure` e vista de viés. Ela
+custou quatro tentativas, e as três pedras ficaram escritas no javadoc dela: o jogador tem de ir ao lugar antes,
+senão o trecho não está carregado e não se planta nada; a altura pergunta-se ao mapa de alturas, senão a aldeia
+nasce enterrada; e **`gamemode` pede alvo** — corre a partir do console, que não é jogador nenhum, e sem `@a`
+não faz nada (quem for posto no ar cai e morre).
