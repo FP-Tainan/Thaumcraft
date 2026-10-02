@@ -19,6 +19,9 @@ const COMUM = {
           { north: 'false', south: 'false', east: 'false', west: 'false', waterlogged: 'false' }],
   laje: ['minecraft:oak_slab', { type: 'bottom', waterlogged: 'false' }],
   escada: 'minecraft:oak_stairs',
+  escadaPedra: 'minecraft:cobblestone_stairs',
+  tora: 'minecraft:oak_log',
+  lajePedra: 'minecraft:cobblestone_slab',
 };
 
 /** E o do deserto: arenito e bétula. */
@@ -28,6 +31,9 @@ const DESERTO = {
   cerca: COMUM.cerca,
   laje: ['minecraft:birch_slab', { type: 'bottom', waterlogged: 'false' }],
   escada: 'minecraft:birch_stairs',
+  escadaPedra: 'minecraft:sandstone_stairs',
+  tora: 'minecraft:sandstone',
+  lajePedra: 'minecraft:sandstone_slab',
 };
 
 module.exports = { COMUM, DESERTO };

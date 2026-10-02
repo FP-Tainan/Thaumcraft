@@ -115,7 +115,7 @@
       "net.thaumcraft.test.OccultaSpiritGameTest",
       "net.thaumcraft.test.OccultaVillageGuardGameTest",
       "net.thaumcraft.test.OccultaVillageSpreadGameTest",
-      "net.thaumcraft.test.OccultaWatchtowerGameTest",
+      "net.thaumcraft.test.OccultaVillagePiecesGameTest",
       "net.thaumcraft.test.OccultaArthanaGameTest",
       "net.thaumcraft.test.OccultaPortalGameTest",
       "net.thaumcraft.test.OccultaRitePersistGameTest",

@@ -5343,3 +5343,49 @@ Os moldes `.nbt` são binários, e sem o gerador ninguém os revisa nem os reger
 refazer os moldes: `node tools/aldeia/torre.js`.
 
 **A foto nova:** as duas torres lado a lado, a comum e a do deserto, que é o que mostra a re-vestimenta.
+
+## A aldeia do Ars Occulta — Fatia C2: o Forte
+
+A maior peça da aldeia: **dezessete por vinte e sete por dezessete**, duas torres ligadas por um portão e um
+torreão no meio. O corpo saiu do `ComponentVillageKeep` traduzido chamada por chamada, e desta vez com um
+tradutor escrito para isso — o Java descompilado do Witchery é regular o bastante para se traduzir por padrão,
+e o que não casa sai marcado. Das dezessete marcas que sobraram, **nenhuma era geometria**: eram escrituração,
+as duas chamadas da torre, o baú e os guardas.
+
+**Uma armadilha do original, que vale guardar.** O ajudante dele, `fill(x,y,z, largura,altura,fundo)`, **não é**
+o `fillWithBlocks` do jogo, que vai de canto a canto. Confundir os dois faz um prédio quase certo — paredes um
+bloco mais curtas, telhado um bloco mais baixo —, e é o tipo de erro que nenhuma prova apanha e só a foto mostra.
+
+**E o `drawTower(offsetX, flipX)`** desenha a mesma torre duas vezes, em `0,0` e em `8,4`; o segundo número
+espelha a janela e a viga para o outro lado.
+
+**Quinze guardas**, de três chamadas — `(7,1,7,3)`, `(5,10,4,4)` e `(13,10,4,5)` —, e os três números saem do
+mesmo descuido do original, cujo laço é `n <= conta` e dá sempre uma volta a mais: quatro, cinco e seis. É o
+mesmo descuido da torre de vigia, e vai assim.
+
+**O baú** fica em `13,20,12`, com três a oito sorteios e a tabela do original: ouro em barra e em pepita pesados
+10 e 20, as quatro peças de armadura de ouro e as duas ferramentas pesadas 5, e as armaduras de cavalo de
+diamante e de ouro pesadas 1.
+
+### O desvio que mais pesa desta fatia
+
+**No original o Forte tem peso 100 e no máximo um por aldeia.** O gerador de 2014 sabia limitar quantidade — o
+`PieceWeight` leva peso **e** conta —, e o salto-de-encaixe de hoje **não sabe**: peso aqui só diz quantas vezes
+a peça é sorteada entre as candidatas, e nada impede que saia duas.
+
+Peso 100 contra os **87** que a piscina de casas do jogo soma faria quase toda construção da aldeia ser um forte
+de dezessete por vinte e sete. O que se fez foi medir: a piscina tem trinta e sete entradas somando oitenta e
+sete, e **peso 5** é o que faz a conta dar cerca de um forte por aldeia. **Não é o número do original; é o
+efeito dele.**
+
+A torre de vigia não precisou disso: o peso 20 dela dá à volta de um quinto das escolhas, que é o que os "quatro
+grupos de zero a um" do original entregam.
+
+**Guardas:** `OccultaVillagePiecesGameTest`, com três — as peças nas cinco piscinas com o peso de cada uma (e as
+casas do jogo ainda lá), os moldes com as medidas certas, e **o encaixe de cada molde apontado à rua da sua
+aldeia**.
+
+Esta última entrou no lugar de uma que eu ia escrever e não dava: contar os guardas de um molde, que não tem
+acessor público. E saiu melhor do que a que eu queria, porque pega exatamente o engano que escapou na C1 —
+encaixe faltando, ou apontando à piscina de outra variante. **Nenhuma das duas coisas dá erro**: a aldeia só sai
+sem a peça, calada.

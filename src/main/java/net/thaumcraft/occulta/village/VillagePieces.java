@@ -42,6 +42,19 @@ public final class VillagePieces {
      */
     private static final int PESO_TORRE = 20;
 
+    /**
+     * O Forte, com peso 5.
+     *
+     * <p><b>Desvio declarado, e é o maior desta fatia.</b> No original ele tem <b>peso 100 e no máximo um por
+     * aldeia</b> — o gerador de 2014 sabia limitar quantidade, e o salto-de-encaixe de hoje não sabe: peso aqui
+     * só diz quantas vezes a peça é sorteada entre as candidatas, e nada impede que saia duas vezes.
+     *
+     * <p>Peso 100 contra os 87 que a piscina de casas do jogo soma faria <b>quase toda</b> construção da aldeia
+     * ser um forte de dezessete por vinte e sete. O número escolhido é o que faz a conta dar <b>cerca de um</b>
+     * forte por aldeia, que é o que o original entrega. Não é o número dele; é o efeito dele.
+     */
+    private static final int PESO_FORTE = 5;
+
     /** As cinco variantes de aldeia, que são as cinco piscinas de casas a mexer. */
     private static final List<String> VARIANTES =
             List.of("plains", "desert", "savanna", "snowy", "taiga");
@@ -63,6 +76,8 @@ public final class VillagePieces {
         for (String variante : VARIANTES) {
             acrescenta(piscinas, variante, Thaumcraft.id("village/watchtower_" + variante),
                     PESO_TORRE, semRetoque);
+            acrescenta(piscinas, variante, Thaumcraft.id("village/keep_" + variante),
+                    PESO_FORTE, semRetoque);
         }
     }
 

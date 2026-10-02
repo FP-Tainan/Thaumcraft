@@ -54,6 +54,13 @@ public class OccultaWatchtowerClientTest implements FabricClientGameTest {
             server.runCommand("tp @a 42 " + (chão[0] + 14) + " 22 facing 24 " + (chão[0] + 10) + " 4");
             context.waitTicks(60);
             context.takeScreenshot("torre_de_vigia_deserto");
+
+            // e o Forte, que é a maior peça da aldeia: dezessete por vinte e sete por dezessete
+            server.runCommand("place template thaumcraft:village/keep_plains -40 " + chão[0] + " 0");
+            context.waitTicks(60);
+            server.runCommand("tp @a -8 " + (chão[0] + 26) + " 30 facing -32 " + (chão[0] + 10) + " 8");
+            context.waitTicks(80);
+            context.takeScreenshot("forte");
         }
     }
 }
