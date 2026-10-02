@@ -136,6 +136,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.NIGHTMARE,
                 net.thaumcraft.occulta.client.SpiritRenderers.Nightmare::new);
 
+        // o Ars Occulta: o Guarda da Aldeia
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.VillageGuardRenderer.LAYER,
+                net.thaumcraft.occulta.client.VillageGuardRenderer::createLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.VILLAGE_GUARD,
+                net.thaumcraft.occulta.client.VillageGuardRenderer.Guard::new);
+
         // o Ars Occulta: a Roca, o Braseiro e o Crisol de Sangue
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.SPINNING_WHEEL,
                 net.thaumcraft.occulta.client.SpinningWheelScreen::new);

@@ -80,6 +80,20 @@ public final class OccultaEntities {
                             mob -> mob.defaultAttributes(net.thaumcraft.occulta.spirit.NightmareEntity::attributes))
                     .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(10));
 
+    /**
+     * O <b>Guarda da Aldeia</b>.
+     *
+     * <p>Este não nasce de descuido do ofício, nasce com a aldeia: vem com o Forte e com a Torre de Vigia que o
+     * Witchery põe nela. Por isso entra como {@code CREATURE} e não como monstro — ele mora ali. O tamanho que se
+     * declara é o do guarda comum; o infernal estica-se a si mesmo quando lhe dizem o tipo.
+     */
+    public static final EntityType<net.thaumcraft.occulta.village.VillageGuardEntity> VILLAGE_GUARD =
+            register("village_guard", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.village.VillageGuardEntity::new, MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.village.VillageGuardEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(10));
+
     private OccultaEntities() {
     }
 
@@ -104,5 +118,7 @@ public final class OccultaEntities {
                 .register(CORPSE, net.thaumcraft.occulta.spirit.CorpseEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(NIGHTMARE, net.thaumcraft.occulta.spirit.NightmareEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(VILLAGE_GUARD, net.thaumcraft.occulta.village.VillageGuardEntity.attributes());
     }
 }

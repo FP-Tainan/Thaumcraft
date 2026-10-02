@@ -5065,3 +5065,104 @@ original recusa gente e chefes, e este recusa também.
 
 Com estas três, **todas as peças de feitiço do Ars Magica 2 que não dependem da outra metade do mod estão
 portadas**.
+
+## A aldeia do Ars Occulta — Fatia A: o Guarda
+
+Um buraco que passou batido, e que não estava declarado em lugar nenhum: o Witchery **mexe na aldeia**. Faz
+umas delas maiores, cerca-as de muralha, põe-lhes forte, torre de vigia, boticário, livraria e cabana de bruxa,
+e põe gente armada a andar lá dentro. Nenhuma linha disso tinha entrado no porte, e as fatias do Ars Occulta
+nunca tocaram no assunto — ao contrário de tudo o mais que ficou de fora, que está escrito aqui com a razão.
+Esta fatia abre a conta, e começa por quem mora lá.
+
+**O Guarda responde a uma pergunta que o Minecraft nunca respondeu: quem defende a aldeia de gente.** O golem
+defende de monstro, e de quem a aldeia já odeia. O guarda é outra coisa — é um aldeão que pegou um arco, mora
+na aldeia, anda por ela, abre e fecha as portas, e mata o que entrar.
+
+**Quarenta de vida e quatro de dano**, e briga de longe ou de perto **conforme o que tem na mão**: com arco
+atira, sem arco avança. E ele volta a decidir isso toda vez que a mão muda, e não só ao nascer — desarmar um
+guarda fá-lo avançar. É o `setCombatTask` do original, e há duas provas para os dois lados dele.
+
+**Nasce de couro, e uma em cada cinco vezes o peito e a cabeça vêm de malha.** É o detalhe que faz uma aldeia
+guardada parecer guardada de verdade, e não uniformizada.
+
+**Dois tipos.** O comum, do tamanho de gente. E o **infernal**, 0,72 por 2,34, imune ao fogo e com flechas que
+queimam cem tiques. O original guarda isso num byte e troca o tamanho ao trocar o byte; aqui é a mesma coisa,
+pelo `refreshDimensions`.
+
+**E o infernal é maior só na caixa, não no desenho** — no original também. A foto dele ao lado do comum mostrava
+dois guardas iguais, e eu fui conferir antes de chamar aquilo de defeito: o `RenderVillageGuard` do Witchery é
+apenas `super(new ModelVillageGuard(), 0.5F)`, **sem escala nenhuma**, e o `ModelVillageGuard` não olha o tipo.
+Lá o infernal ocupa mais espaço e tropeça em tetos mais baixos, mas desenha-se do tamanho de gente. Fica assim,
+porque é assim; e fica escrito para quem vier depois não "consertar" uma fidelidade.
+
+**Dois guardas nunca se batem nem se ferem, e nenhum deles mira num creeper.** É o `canAttackClass` do
+original, e a razão do segundo é óbvia para quem já viu um creeper ao lado de uma casa.
+
+**O corpo é uma mistura, e é de propósito.** Tronco e braços de gente, para a armadura assentar; cabeça alta de
+aldeão, com nariz; e uma túnica meio ponto mais larga por cima do tronco. As pernas andam **pela metade** da
+amplitude e sem volta para os lados — o que se vê é um andar pesado, de quem está de guarda, e não o trote do
+aldeão. Tudo isso é o `ModelVillageGuard`, e a túnica entra na raiz do modelo e não no tronco porque é onde o
+original a desenha: à parte, depois de tudo, sem receber volta nenhuma.
+
+**A mira genérica.** O jogo de hoje já tem o defender-a-aldeia — o `DefendVillageTargetGoal` —, mas ele está
+**preso ao golem de ferro no tipo**: pede um `IronGolem` e não um bicho qualquer. O Witchery tinha escrito a
+dele justamente para a poder dar a outro bicho, e o nome diz isso: *genérica*. Aqui ela é a mesma conta, aberta
+a qualquer um.
+
+**Desvios declarados.**
+
+1. **O sangue fica de fora.** O guarda do original tem um poço de quinhentos de sangue, que serve de comida a
+   vampiro, e o `takeBlood` dele conta com a paralisia do ofício. O vampiro não está portado; um poço de sangue
+   sem quem o beba é peso morto. Volta quando o vampiro vier.
+2. **A casa do guarda é um raio fixo.** O original pede à aldeia o centro e o tamanho, e prende o guarda a
+   `tamanho × 1,5`. O jogo de hoje não tem objeto de aldeia nem tamanho de aldeia — tem lugares de interesse
+   espalhados por seções. Aqui se acha a seção de aldeia mais perto e se prende o guarda a **quarenta e oito**,
+   que é o que aquele produto dava numa aldeia de tamanho comum. A cura de um de vida por volta, quando ele não
+   tem ninguém para matar, é a do original.
+3. **A reputação é a de hoje, e conta-se como morte de aldeão.** O original tira cinco da reputação da aldeia
+   de quem o matou. Hoje reputação é fuxico de aldeão, e o que se conta aos aldeões num raio de dezesseis é o
+   `VILLAGER_KILLED` — que além de funcionar é o mais fiel, porque no original **o guarda nasce de um aldeão**
+   que pegou um arco (`createFrom(EntityVillager)`), e matá-lo pesa como matar quem mora ali.
+
+   **E não o `GOLEM_KILLED`, que era o que parecia certo.** Ele existe no jogo de hoje, mas aparece **uma única
+   vez em todo o código, na própria declaração**: nada o dispara e nada o trata — o `onReputationEventFrom` do
+   aldeão só conhece quatro eventos, e esse não está entre eles. É constante morta. Escrevi-o primeiro, e a
+   prova apanhou-o: a reputação não se movia.
+4. **Não há o recolher-se à noite.** A casa oito da mira do original era o `EntityAIRestrictOpenDoor`, que
+   mandava o bicho ficar dentro de casa. Esse comportamento deixou de existir e não tem par; fica o abrir e
+   fechar portas, que é a casa nove. A casa oito ficou vazia de propósito, para a ordem do original se ler.
+5. **Duas perguntas viraram uma.** A mira de defender a aldeia fazia duas: *quem a atacou* e *com quem ela está
+   mal*. A primeira deixou de existir — a aldeia não é mais um objeto que guarda quem a agrediu, não há a quem
+   perguntar. Ela está refeita no próprio guarda, que caça monstro por conta e caça gente que bate em quem mora
+   ali. Para a mira sobra a segunda, que é a que a reputação de hoje sabe responder.
+6. **O Caçador de Bruxas e o Goblin não entram na conta de quem é alvo**, por não estarem portados. No original
+   o guarda poupa o Caçador (são do mesmo lado) e caça o Goblin mesmo não sendo monstro.
+
+**Guardas:** `OccultaVillageGuardGameTest`, com seis — o que ele veste e os números dele, o de arco que atira,
+o de espada que troca de mira e chega perto, os dois que se poupam e o creeper que escapa, o infernal maior e
+imune, e a aldeia que fica de mal com quem o matou.
+
+**Três pedras no caminho, que ficam escritas porque nenhuma era defeito do original e todas voltariam a morder.**
+
+1. **O `registerGoals` corre dentro do construtor do `Mob`** — antes de os campos da subclasse serem
+   atribuídos. As duas brigas nasciam na declaração do campo e por isso eram `null` na hora em que a mira as
+   pedia. Nascem no `registerGoals`, e o `arrumaBriga` sai calado se for chamado antes disso. Quem apanhou foi
+   o `MobTickGameTest.everyMobSurvivesItsOwnThinking`, que já estava no projeto e cria cada bicho do mod: achou
+   o defeito antes de qualquer prova nova rodar.
+2. **A arena de prova é oito por oito por oito de ar puro** — não tem chão. Sem piso o guarda cai, e uma prova
+   de briga morre sem nunca ter começado.
+3. **Criatura posta à mão com `addFreshEntity` é criatura apagada.** O `helper.spawn` do jogo chama
+   `setPersistenceRequired` antes de a pôr no mundo; sem isso um bicho de categoria `CREATURE` sem jogador por
+   perto desaparece em poucos tiques. O que se vê é um guarda que não atira e não anda, com a vida cheia e na
+   posição exata onde nasceu — e parece defeito dele. Isto é também um **requisito das estruturas**: o original
+   chama `enablePersistence()` em todo guarda que nasce do Forte e da Torre, e a fatia C tem de fazer o mesmo.
+
+**A foto.** `OccultaVillageGuardClientTest`, com duas — três guardas em fila, onde o sorteio da armadura se vê
+(uma em cinco vezes o peito e a cabeça vêm de malha, e é isso que faz uma aldeia guardada não parecer
+uniformizada); e um de frente e de perto, onde a mistura se lê: cabeça alta de aldeão com nariz, túnica por cima
+do tronco, braços de gente de fora. O infernal não entra em foto nenhuma, pela razão de cima.
+
+E uma lição de prova, não de porte: **provar que algo não aconteceu olhando o efeito não serve.** A prova do
+"sem arco não atira" contava flechas, e flecha que acerta é removida na hora — no fim nunca há nenhuma, e ela
+passava sempre. Agora ela julga a **decisão** do `setCombatTask`: posto o arco a mira de longe entra, tirado
+sai, devolvido volta, e de espada ele **chega perto**.
