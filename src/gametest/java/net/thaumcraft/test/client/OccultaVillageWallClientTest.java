@@ -61,6 +61,7 @@ public class OccultaVillageWallClientTest implements FabricClientGameTest {
                     + " facing " + onde[0] + " " + onde[1] + " " + onde[2]);
             context.waitTicks(80);
             context.takeScreenshot("aldeia_murada");
+
         }
     }
 }

@@ -5579,3 +5579,42 @@ próprio declara.
 
 **As fotos:** a cabana de fora, onde as três madeiras se leem; e por dentro, sem telhado, com o caldeirão e a
 bruxa.
+
+## Fatia F — o Coven do Pântano
+
+**Esta fatia não é porte.** Tudo o que veio antes — inclusive o que foi melhorado, traduzido de outro jeito ou
+declarado de fora — saiu do código do Witchery. O Coven do Pântano **não existe nele**: o original dá a Bruxa do
+Coven e deixa-a numa cabana dentro da aldeia, e mais nada. Isto é um acréscimo, pedido por quem joga, e fica
+marcado como tal.
+
+**A ideia e o que ela não podia ser.** O pedido era "uma vila de bruxas no pântano". Aldeia no jogo de hoje
+traz aldeão, sino, troca, cama e incursão — e com isso a bruxa viraria vendedora e o **Caçador de Bruxas
+perderia o sentido**: a graça do ofício é a bruxa estar escondida. O que se fez foi um **coven**: quatro
+cabanas numa clareira fundo no pântano, sem estrada e sem sino, com o terreiro de ritual no meio. Raro.
+
+**O terreiro é de verdade.** Leva o coração do círculo e o **anel de dentro** completo — dezesseis glifos de
+giz de Ritual, pelo desenho do `RitualCircles`, que é o do original letra por letra. É o que faz aquilo ler
+como chão de ritual e ainda serve aos ritos simples. **Os três anéis seriam oitenta e quatro glifos**, e isso
+já é um depósito de giz e não um cenário.
+
+**Quatro cabanas iguais, e é de propósito:** um coven é uma gente só, e quatro casas iguais à volta de um
+círculo leem como um lugar. Abeto e carvalho-escuro, pedregulho com musgo, caldeirão e tora de sorveira dentro
+de cada uma. **Uma bruxa por cabana.**
+
+**Onde ele nasce:** pântano e mangue, e mais nenhum lugar — e há prova dos dois lados, que o pântano tem e que
+a planície não. Um coven numa planície seria um acampamento à vista de todos, que é o contrário do que ele é.
+Espaçamento de oitenta trechos com separação de vinte e quatro: raro o bastante para valer procurar.
+
+### A foto, e a lição que ela repetiu
+
+A primeira tentativa plantou o coven com `/place template` na altura do mapa de alturas, e ele saiu
+**flutuando sobre a copa das árvores**: num pântano fechado, a altura de superfície *depois* das árvores é o
+alto delas. A estrutura de verdade usa a altura de **antes** e abre o mato com o `terrain_adaptation` — mas
+isso só se vê deixando-a nascer.
+
+É a mesma lição da muralha, e é a segunda vez nesta conta: **o que se põe à mão não prova o caminho que o jogo
+usa**. A prova passou a procurar um coven gerado, e na foto ele está assentado no chão, com o mato aberto à
+volta.
+
+**Guardas:** `OccultaSwampCovenGameTest`, com três — a estrutura de uma peça só (ela não cresce como aldeia), o
+pântano que tem e a planície que não, e o molde com a clareira inteira.

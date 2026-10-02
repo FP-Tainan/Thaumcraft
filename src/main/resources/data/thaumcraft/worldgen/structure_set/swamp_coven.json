@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1987462,
+    "separation": 24,
+    "spacing": 80
+  },
+  "structures": [
+    {
+      "structure": "thaumcraft:swamp_coven",
+      "weight": 1
+    }
+  ]
+}
