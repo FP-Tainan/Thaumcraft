@@ -79,6 +79,19 @@ public class OccultaWatchtowerClientTest implements FabricClientGameTest {
             server.runCommand("tp @a 25 " + (chão[0] + 11) + " -32 facing 25 " + (chão[0] + 3) + " -25");
             context.waitTicks(60);
             context.takeScreenshot("livraria");
+
+            // e a Cabana da Bruxa: casa de aldeia por fora, caldeirão e bruxa por dentro. O telhado sai por
+            // um fill só para a foto, como na Livraria.
+            server.runCommand("place template thaumcraft:village/witch_hut_plains 40 " + chão[0] + " -30");
+            context.waitTicks(60);
+            server.runCommand("tp @a 48 " + (chão[0] + 5) + " -37 facing 42 " + (chão[0] + 2) + " -27");
+            context.waitTicks(60);
+            context.takeScreenshot("cabana_da_bruxa");
+            server.runCommand("fill 40 " + (chão[0] + 4) + " -30 45 " + (chão[0] + 8) + " -23 air");
+            context.waitTicks(20);
+            server.runCommand("tp @a 42 " + (chão[0] + 10) + " -34 facing 42 " + (chão[0] + 1) + " -27");
+            context.waitTicks(40);
+            context.takeScreenshot("cabana_por_dentro");
         }
     }
 }

@@ -5553,3 +5553,29 @@ falam com ela, o caminho completo de um pedido de buscar (pede, aceita, de mão 
 ossos entra e fica com eles), o teto de seis, a mesma bruxa que não entra duas vezes, e os três pedidos que há.
 
 **A foto:** as cinco caras lado a lado. Uma sozinha não diria nada.
+
+## Fatia E — a Cabana da Bruxa
+
+A menor peça da aldeia e a que diz mais. Por fora é uma casa de aldeia: pedregulho em baixo, tábua em cima,
+porta e duas vidraças. Por dentro tem um **caldeirão cheio**, uma **tora de sorveira**, um vaso — e uma
+**bruxa do coven**.
+
+**É a peça que a fatia anterior destrancou.** No original a cabana nasce com uma bruxa dentro, e até a Bruxa do
+Coven existir não havia quem pôr lá.
+
+**As três madeiras são de propósito.** O original usa tábua comum nas paredes, tábua de metadata **1** no
+telhado e de metadata **2** nos cantos: carvalho, **abeto** e **bétula**. É o que faz a cabana destoar de leve
+das casas à volta sem gritar — que é exatamente o que uma casa de bruxa numa aldeia devia fazer.
+
+**Peso 10, e zero ou uma por aldeia** — é o que o handler dela diz:
+`PieceWeight(classe, 10, sorteio(2))`. O zero é de propósito, e é o que faz valer a pena procurar.
+
+**Dois descuidos do original que vão como estão.** O `isTallHouse` é posto no construtor e nunca mais mexido —
+a cabana é **sempre** a versão alta, e o ramo da baixa é código morto. E o `tablePosition` é sorteado entre um
+e dois e depois testado por `> 0`: o caldeirão, a tora e o vaso aparecem **sempre**.
+
+**E o z anda um**, como no Boticário: o original põe o degrau da porta em `z = -1`, fora da caixa que ele
+próprio declara.
+
+**As fotos:** a cabana de fora, onde as três madeiras se leem; e por dentro, sem telhado, com o caldeirão e a
+bruxa.

@@ -79,6 +79,14 @@ public final class VillagePieces {
      */
     private static final int PESO_MURALHA = 12;
 
+    /**
+     * A Cabana da Bruxa, com peso 10.
+     *
+     * <p>É o do handler dela no original — {@code PieceWeight(classe, 10, sorteio(2))}: peso dez, e zero ou uma
+     * por aldeia. O zero é de propósito, e é o que faz valer a pena procurar.
+     */
+    private static final int PESO_CABANA = 10;
+
     /** As cinco variantes de aldeia, que são as cinco piscinas de casas a mexer. */
     private static final List<String> VARIANTES =
             List.of("plains", "desert", "savanna", "snowy", "taiga");
@@ -108,6 +116,8 @@ public final class VillagePieces {
                     PESO_LIVRARIA, semRetoque);
             acrescenta(piscinas, variante, Thaumcraft.id("village/wall_gen_" + variante),
                     PESO_MURALHA, semRetoque);
+            acrescenta(piscinas, variante, Thaumcraft.id("village/witch_hut_" + variante),
+                    PESO_CABANA, semRetoque);
         }
     }
 
