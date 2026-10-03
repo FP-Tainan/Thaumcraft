@@ -197,6 +197,19 @@ public final class OccultaEntities {
                     .sized(0.6f, 1.95f).eyeHeight(1.62f).clientTrackingRange(16));
 
     /**
+     * O <b>goblin</b>: o {@code EntityGoblin} do original.
+     *
+     * <p>Mais baixo que um aldeão — um metro e meio — e é {@code CREATURE} e não {@code MONSTER}, porque ele
+     * não é um monstro: é gente de outra espécie, que por acaso rouba.
+     */
+    public static final EntityType<net.thaumcraft.occulta.goblin.GoblinEntity> GOBLIN =
+            register("goblin", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.goblin.GoblinEntity::new, MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.goblin.GoblinEntity::attributes))
+                    .sized(0.6f, 1.5f).eyeHeight(1.35f).clientTrackingRange(8));
+
+    /**
      * O <b>Caçador de Bruxas</b>: o {@code EntityWitchHunter} do original.
      *
      * <p>Ele <b>não nasce do mundo</b> — nasce de alguém ter feito magia negra. Por isso é

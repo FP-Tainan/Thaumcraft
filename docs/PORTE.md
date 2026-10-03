@@ -6862,3 +6862,71 @@ do Enregelado; a magia comida e só a magia; o reflexo que sai do que chega; o e
 Corda Mortal que não faz nada e então mata; a Aura que queima o lado e não quem a tem; a Mal Ajustada que
 despe perto do fim; a escala que vai e volta; a aranha que sai do bicho; o leite que não tira estas; e que
 todas as doze se cozem. E `OccultaColorfulClientTest`, com os oito porcos.
+
+## O goblin (2026-10-03)
+
+A última das quatro miudezas, e a mais estranha do mod inteiro: **um bicho que trabalha**.
+
+### Ele não é domado — é preso
+
+Não há comida que o amanse, não há ovo que o invoque, não há ordem que ele obedeça. O que há é uma **corda**,
+e um goblin na corda faz três coisas que nenhum outro bicho do jogo faz:
+
+1. **apanha o que está no chão** e o carrega na mão;
+2. **cava**, se lhe puserem uma picareta na mão;
+3. e **larga o que cavou** no primeiro baú grande que ache.
+
+Fechado o ciclo, um goblin preso ao pé de um baú numa caverna trabalha sozinho até alguém o desprender. É a
+única automação do Witchery, e ela é um bicho com uma corda ao pescoço.
+
+**E o gesto de mandar nele é o melhor detalhe.** Não há menu: clicar nele com uma picareta na mão **dá-lhe a
+picareta**, e clicar outra vez **tira-lhe o que ele tiver**. É assim que se diz a um goblin o que fazer, e é
+assim que se recebe o que ele fez.
+
+### E o jeito como ele escolhe onde cavar
+
+Ele **vira-se para um lado a esmo** e olha em frente quatro blocos. O que estiver ali, se for cavável, é o que
+ele cava.
+
+Não há plano, não há área marcada. Um goblin na corda numa caverna **abre buraco**, e para onde ele abre é
+problema de quem o levou lá. Ao fim de **quinze** olhadas falhadas ele desiste de olhar em frente e **olha
+para baixo** — que é como ele acaba por cavar um poço debaixo dos próprios pés.
+
+### A conta da coragem
+
+É a única coisa que decide o que um goblin é, e são **três**:
+
+- **sozinho**, ele foge de gente e do guarda da aldeia;
+- **em três**, a oito blocos uns dos outros, ele deixa de fugir — e **caça aldeão**.
+
+É a mesma conta vista dos dois lados (o `shouldAvoid` e o `isEntityApplicable` do original são o mesmo
+`if`), e é por ela que eles andam sempre em bando.
+
+**E ele trepa paredes**, como uma aranha. Uma cerca não o segura.
+
+### Traduções declaradas
+
+1. **Onde ele procura o baú.** O original varre a **lista inteira de blocos com alma do mundo**, e apanha um
+   `Throwable` em volta disso porque a lista muda enquanto ele a lê. Aqui se varre o que está **à volta
+   dele**, casa a casa, no mesmo alcance de vinte e quatro — é a mesma resposta sem ler o mundo inteiro, e sem
+   apanhar erros que não deviam acontecer.
+2. **O que ele cava** era uma lista de `Material` do 1.7.10 — pedra, areia, terra, barro e chão. Hoje são as
+   etiquetas do jogo, que dizem o mesmo e deixam qualquer mod entrar nelas.
+
+### O que fica de fora, declarado
+
+- O **Koboldite**: o minério, o lingote, a picareta e o que ela faz ao que se cava. É uma **linha de material
+  inteira** do original, e com ela vêm os números do goblin que mais mudam — a picareta de koboldite cava de
+  quatro em quatro batidas em vez de sessenta (**quinze vezes mais depressa**) e funde metade do minério que
+  apanha. O goblin cava com qualquer picareta, e isso é tudo o que ele faz hoje.
+- Os dois **chefes** goblins, o **Gulg** e o **Mog** — quatrocentos de vida cada — pendem da linha do
+  koboldite e da infusão, e vêm com elas.
+- O **comércio**: solto e numa aldeia, o goblin do original é um mercador. Fica para quando houver o resto da
+  aldeia goblin.
+- A **Estátua de Adoração** e a vontade de a adorar. O estado de adorar **está feito** — é um dos três que ele
+  sincroniza, e todas as vontades de trabalho já o respeitam —, e só falta o bloco que o liga.
+
+**Guardas:** `OccultaGoblinGameTest`, com seis — os números; **a conta da coragem**, com o que está longe a não
+contar; a picareta que a corda troca de mão, e que solto ele não aceita; o que ele cava e o que não cava; o
+apanhar que só vale na corda e de mãos vazias; o largar que poupa a ferramenta; e a parede que ele trepa. E
+`OccultaGoblinClientTest`, com os quatro ofícios ao lado de um aldeão, para a altura e o nariz se verem.
