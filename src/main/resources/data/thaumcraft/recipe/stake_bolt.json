@@ -9,7 +9,7 @@
   "key": {
     "f": "minecraft:feather",
     "s": "minecraft:string",
-    "w": "#minecraft:sticks"
+    "w": "minecraft:stick"
   },
   "result": {
     "id": "thaumcraft:stake_bolt",

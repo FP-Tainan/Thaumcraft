@@ -41,9 +41,12 @@ public final class OccultaMaterials {
     /**
      * A cara das roupas de caçador.
      *
-     * <p>É uma só, e <b>não tem camada nenhuma</b>: quem as desenha é o
+     * <p>É uma só, e <b>nada dela se desenha</b>: quem desenha as roupas é o
      * {@link net.thaumcraft.occulta.client.HunterClothesRenderer}, com o modelo próprio do original. A cara
      * existe só porque o jogo pede uma a toda armadura.
+     *
+     * <p>E <b>não tem arquivo nenhum</b>, como a dos abafadores: o jogo não aceita uma cara com a lista
+     * de camadas vazia, e uma cara que ninguém procura é mais honesta do que uma camada de mentira.
      */
     public static final ResourceKey<EquipmentAsset> HUNTER_ASSET =
             ResourceKey.create(EquipmentAssets.ROOT_ID, Thaumcraft.id("hunter_clothes"));

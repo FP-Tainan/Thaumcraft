@@ -11,7 +11,7 @@
     "b": "minecraft:bow",
     "n": "thaumcraft:bone_needle",
     "s": "minecraft:string",
-    "w": "#minecraft:sticks"
+    "w": "minecraft:stick"
   },
   "result": {
     "id": "thaumcraft:crossbow_pistol",
