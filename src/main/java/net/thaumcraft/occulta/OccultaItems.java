@@ -564,6 +564,19 @@ public final class OccultaItems {
     }
 
     /**
+     * O <b>Cozimento do Grotesco</b>, que se bebe.
+     *
+     * <p>Por um minuto, nada de vivo consegue chegar a quatro blocos de quem o bebeu — tudo é empurrado para
+     * trás. É o ingrediente das maldições, e faz sentido que seja: para amaldiçoar alguém não é preciso
+     * força, é preciso que ninguém chegue perto do círculo.
+     */
+    public static final Item BREW_GROTESQUE = register("brew_grotesque", properties ->
+            new net.thaumcraft.occulta.curse.GrotesqueBrewItem(properties.stacksTo(16)
+                    .component(net.minecraft.core.component.DataComponents.CONSUMABLE,
+                            net.minecraft.world.item.component.Consumables.DEFAULT_DRINK)
+                    .usingConvertsTo(net.minecraft.world.item.Items.GLASS_BOTTLE)));
+
+    /**
      * A <b>Vassoura</b>: dois gravetos e três mudas de espinheiro-alvar.
      *
      * <p>Sozinha ela não voa e não se põe no chão — é <b>ingrediente</b>, e só. Quem voa é a encantada, e para

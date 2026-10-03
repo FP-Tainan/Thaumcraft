@@ -5945,3 +5945,313 @@ montar de mão vazia; **a coruja**; a encantada que fica no chão quando a vasso
 varre o giz.
 
 **A foto:** três de lado — por pintar, de roxo e de vermelho.
+
+## Os ritos que faltavam — primeira leva: os que chamam (2026-10-02)
+
+O Witchery tem **79 ritos**; este porte tinha **22**. Esta é a primeira leva do resto, e são os quatro que não
+pedem nada que o porte ainda não tenha.
+
+### Chamar uma criatura, e o teto que ele olha
+
+O `RiteSummonCreature` não chama nada antes de **olhar o teto**. São três camadas de sete por sete em cima do
+círculo, com os cantos de fora, e o que estiver sólido ali conta — **mais de um estorvo e o rito desiste**,
+devolvendo o que se ofereceu.
+
+E o bloco **do meio conta por cem**. Ou seja: uma laje em cima do glifo já chega para ele recusar. É o que
+impede alguém de chamar um Wither dentro de uma caixa de obsidiana, e é metade do rito.
+
+**Um engano do original que fica:** ele percorre o desenho até ao **penúltimo** z, e por isso a fila de trás
+nunca é olhada. O teto que ele mede é de sete por **seis**.
+
+Com ele vieram dois ritos: a **Bruxa** (a do próprio jogo, não a do coven — dois mil de poder, anel de
+dezesseis no de fora) e o **Wither** (caveira, Vapor de Diamante, pérola, **um aldeão vivo**, quatro mil de
+poder).
+
+### Chamar os Bichos, que não cria nada
+
+O `RiteCallCreatures` é o mais bonito dos quatro, porque ele **não faz bicho nenhum**: ele **traz**. De
+sessenta em sessenta batidas olha **um oitavo** do mundo em volta — uma caixa de cento e vinte e oito blocos
+num dos oito cantos, quatro por baixo do círculo e quatro por cima — e teleporta até **dois** dos bichos que
+achar ali. Rodando os oito cantos, ele acaba por varrer tudo o que há à volta.
+
+Duzentas e cinquenta voltas, e **três bruxas**: sozinha, ninguém chama o mato inteiro.
+
+### A Chuva de Sapos
+
+Quatro raios, um de trinta em trinta batidas, e ao **quarto o céu fecha** — de cinco a quinze minutos de chuva.
+Daí em diante caem **sapos**, de oito a dezessete de cada vez, num anel de cinco a dezesseis blocos e de oito a
+catorze acima do chão.
+
+**Os sapos têm hora para acabar**: meio minuto, e somem. É o `setTimeToLive` do original, e sem ele a
+brincadeira deixava o mapa cheio de sapos para sempre — são dezessete de cada vez, por duzentas voltas.
+
+O sapo é o **do porte**, o da fatia dos familiares. Não foi preciso trazer bicho nenhum.
+
+### O sacrifício vivo, que faltava à maquinaria
+
+Dois destes ritos pedem um **aldeão vivo** dentro do círculo, e o porte não sabia pedir vivos. O
+`SacrificeLiving` entrou, com uma coisa dele que vale ser dita: **ele não entra na conta de antes**. O
+`isMatch` do original devolve sempre que sim, e por isso o círculo aceita começar sem o bicho lá — quem
+descobre que falta é o **passo**, e aí o rito desiste e devolve o resto.
+
+É de propósito, e é o que faz um rito começar e morrer à vista de quem o fez.
+
+### E os recados de recusa
+
+O `RiteRegistry.RiteError` do original: um tambor, e a frase em vermelho para quem começou o rito. Sem ele, um
+rito que recusa parece um rito quebrado — e metade dos que recusam, recusam por coisas que se arranjam: um
+teto tapado, um coven pequeno, um aldeão que saiu andando.
+
+### O que ficou de fora desta leva
+
+O **Imp** e o **Demônio**, porque são bichos do Witchery que ainda não estão portados — e com eles os quatro
+ritos que os chamam.
+
+**Guardas:** `OccultaSummonRitesGameTest`, com sete — os quatro na lista; o bicho que vem com o céu livre; a
+laje em cima do glifo que já chega para recusar; o coven pequeno demais; o porco que é **trazido** e não
+criado; o sapo com prazo; e o vivo que falta.
+
+**Uma prova ao lado ficou instável por causa desta.** A `theCatcherBringsTheReckoningDown` diz no próprio
+comentário que *"a suíte corre num mundo só, e o que as provas ao lado puserem também entra na conta"* — e uma
+classe de provas nova muda onde as arenas caem. Ela falhou uma vez e passou na seguinte. **Não foi
+estabilizada à força**: está apontada, com as outras duas instáveis do projeto.
+
+## Os ritos que faltavam — segunda leva: a Praga, e o chão que faltava ao anel (2026-10-02)
+
+Esta leva traz **um** rito, e dois consertos na maquinaria por baixo dele que valem mais do que ele.
+
+### A Maldição da Praga
+
+O `RiteBlight`: um anel de **oitenta blocos** de raio que cresce a partir do círculo e mata o que encontra.
+Quem está na faixa fica **cego** dois minutos; um aldeão em cada dez vira **zumbi**, com a mesma cara e o
+mesmo tamanho; uma vaca em cada vinte vira **cogumelada** e um bicho em cada três **morre**; e o chão **seca** —
+a relva vai embora, a flor e a plantação viram arbusto morto, a terra arada vira areia, e o que era relva,
+terra ou micélio vira areia ou terra pelada.
+
+**A faixa é só a do anel.** O rito compara a distância com o anel de agora e com o de antes, e por isso quem
+está no miolo já percorrido não apanha a praga outra vez. Sem isso, ficar parado no meio custava uma praga por
+volta.
+
+### O chão que faltava ao anel
+
+O `drawPixel` do original procura o primeiro sólido com ar em cima **subindo e descendo** até `height`. Este
+porte só subia — a metade de baixo nunca foi escrita, desde a fatia dos círculos.
+
+O efeito era invisível no plano e grosseiro numa encosta: **descendo um barranco, o anel simplesmente não
+tocava no chão**. Os dois ritos que já herdavam da maquinaria — a Fertilidade e a Maldição da Cegueira —
+estavam com o mesmo buraco, e ficam consertados de carona.
+
+### E o gato atravessa a maquinaria
+
+O `enhanced` do original é a **maestria da maldição**, a do familiar gato, e ele não muda o que um rito de
+maldição faz: muda **quanto**. Na Praga, o chão seca um em cada **quatro** em vez de um em cada cinco.
+
+A bandeira não existia neste porte — quando a maquinaria foi escrita, os familiares não estavam portados.
+Agora ela atravessa o anel inteiro e chega a quem herda dele. É a **segunda** coisa que o gato destranca, e a
+primeira que se vê no chão.
+
+### O que ficou de fora desta leva
+
+O **Inferno na Terra**, que é o outro grande dos que crescem: ele pede o **Coração de Demônio** e a **Pedra de
+Caminho**, e nenhum dos dois está portado. A maquinaria dele já está pronta — falta só o que ele come.
+
+**Guardas:** `OccultaBlightGameTest`, com cinco — a Praga na lista; o chão que seca em areia e terra, e que
+**não** seca todo (é sorteio, não varredura); a pedra que não seca; o aldeão que vira zumbi; e os dois números
+do gato.
+
+### Um erro meu que vale ficar escrito
+
+A suíte de tela desta sessão **falhou**, e a culpa foi minha: rodei `compileJava` **enquanto ela corria**. É
+exatamente a regra que este documento já tinha — *"não compilar enquanto a suíte de tela corre"* —, escrita
+aqui depois de o mesmo erro ter acontecido em 2026-09-26. Repeti-o.
+
+E o modo como eu a corria escondia o estrago: `./gradlew runClientGameTest | tail -3` devolve o código de
+saída do `tail`, e não o do Gradle. **A suíte passou a correr com o log inteiro guardado.**
+
+## Os ritos que faltavam — terceira leva: as Maldições (2026-10-03)
+
+Esta leva não traz ritos: traz um **sistema**, e os nove ritos que mexem nele.
+
+### Uma maldição não é um efeito de poção
+
+É um **número guardado em quem a tem**. Não acaba sozinha, não sai com leite, não aparece no canto da tela, e
+não se vê de fora. Só outro rito a tira — e tirar é uma **aposta**.
+
+São cinco, e cada uma morde de um jeito:
+
+| maldição | o que faz |
+| --- | --- |
+| **Azar** | um em vinte: pancada, lentidão, fraqueza, cegueira — e **largar o que se tem na mão** |
+| **Fervura** | pega fogo sozinho, mas **só em terra quente** e com o céu aberto |
+| **Pesadelo Acordado** | o **Pesadelo** aparece, acordado, à procura de quem o tem |
+| **Loucura** | vê bichos que **não existem**, e ouve coisas que não estão lá |
+| **Afundar** | dentro da água, descer é mais rápido e subir é mais devagar |
+
+**O grau manda em tudo**: quantas vezes, quão forte, e **quantas opções** o azar tem para escolher — duas no
+grau um, seis a partir do cinco. A sexta é largar o que se tem na mão, e é a que dói.
+
+### As visões, que são a melhor ideia do original
+
+A Loucura não chama bichos: chama **visões**. Uma tem a cara de um creeper, outra de uma aranha, outra de um
+zumbi — e são desenhadas com o **modelo e a pele do próprio jogo**, sem um pixel de diferença, porque é disso
+que depende acreditar nelas.
+
+E elas **não são nada**:
+
+- **não fazem dano** — o ataque devolve que acertou e não tira nada;
+- **não levam dano** — bater nelas é bater no ar;
+- **apagam-se sozinhas** — um em quinze batidas perdem um de vida, e somem;
+- e **o barulho é só para quem as vê**. O chiado da aranha e o gemido do zumbi vão num pacote **a uma pessoa
+  só**. Quem estiver ao lado não ouve nada.
+
+É isto que faz delas horror e não bicho: vê-se um creeper vindo, corre-se, e no meio da fuga ele desaparece —
+e mais ninguém viu nada.
+
+### Tirar uma maldição é uma aposta
+
+Esta é a parte que é fácil portar errado, porque o caminho óbvio é fazer tirar ser sempre tirar. No original
+não é:
+
+| o rito contra a maldição | o que sai |
+| --- | --- |
+| mais forte | sai — menos **uma vez em vinte**, em que **sobe um grau** |
+| mais fraco | **sobe um grau** — a não ser uma vez em quatro, em que sai |
+| igual | sai três vezes em quatro; na quarta, **sobe** |
+
+Quem tenta tirar uma maldição de grau cinco com um rito de grau um **quase sempre a piora**. É por isso que os
+ritos de tirar também querem coven e gato: não para pôr, para **conseguir tirar**.
+
+### E o gato, outra vez
+
+A maestria da maldição soma **um grau** — ao pôr e ao tirar. O coven soma **um** a partir de três bruxas e
+**dois** com seis. Um coven cheio com gato põe uma maldição de grau **quatro** onde uma bruxa sozinha põe uma
+de grau um. É a terceira coisa que o gato destranca neste porte.
+
+### O Cozimento do Grotesco
+
+Quatro dos cinco ritos de amaldiçoar o pedem, e por isso ele veio junto. Bebe-se, e por **um minuto** nada de
+vivo consegue chegar a quatro blocos de quem o bebeu — tudo é empurrado para trás. Chefes, golens e bruxas não
+se empurram; o quarto que o original poupa é o demônio, que não está portado.
+
+Faz sentido que seja ele o ingrediente das maldições: para amaldiçoar alguém não é preciso força, é preciso
+que **ninguém chegue perto do círculo**.
+
+### Um engano do original que fica
+
+**O Afundar não pega em gente.** O `handleCurseEffects` guarda o trecho inteiro atrás de um
+`!(entity instanceof EntityPlayer)` — e **dentro** dele há um ramo escrito para jogador que nunca pode correr.
+O autor quis que pegasse em gente e escreveu o contrário.
+
+O porte guarda o engano, e os dois ritos que a põem e a tiram ficam na mesma — também ficam no original. A
+prova `sinkingDoesNotTouchPeople` é onde isto está escrito.
+
+### O que ficou de fora
+
+A **Maldição da Fervura** (pôr). Ela pede **Sangue Infernal**, que sai da Destilaria a partir de um **Coração
+de Demônio** — e o demônio não está portado. O rito de **tirar** a Fervura veio, porque esse não o pede: quem
+apanhar a fervura por outro caminho tem como se livrar dela.
+
+**Guardas:** `OccultaCurseGameTest`, com seis — as cinco maldições e os nove ritos; o número que fica e que não
+abaixa; **o rito fraco que piora mais do que tira** (duzentas voltas, porque o que se mede é a tendência); o
+forte que quase sempre tira, mas não sempre; o Afundar que não pega em gente; o Grotesco que empurra; e a
+visão que não machuca, não se machuca e se apaga.
+
+## Os ritos que faltavam — quarta leva: os que mexem no próprio círculo (2026-10-03)
+
+Quatro ritos, e os três primeiros são as peças que faltavam para o círculo ser uma **ferramenta** e não só um
+lugar onde se oferece coisa.
+
+### Empurrar e puxar
+
+Os `RiteProtectionCircleRepulsive` e `RiteProtectionCircleAttractive` são o **mesmo rito com o sinal
+trocado**, e por isso aqui são um só. O de **Proteção** empurra tudo para fora de quatro blocos; o de
+**Aprisionamento** puxa tudo de volta para dentro. Os dois comem **0,8 de poder de altar por batida** e correm
+**para sempre**, até o altar secar.
+
+**Gente não se mexe, e o dragão também não.** É do original, e é o que os torna utilizáveis: um anel que
+empurrasse quem o fez seria uma armadilha para o dono.
+
+E o de puxar **só puxa quem está na borda**, a partir de raio menos um — quem já está no meio fica quieto.
+Sem isso o anel cuspia os bichos para o centro e eles saltavam para sempre.
+
+**Uma conta esquisita do original que fica como está.** Ela calcula a direção do empurrão pela distância
+elevada à **quarta potência**, confere que não passa de 6⁴ — e então **deita o número fora** e troca-o por um
+valor fixo: 0,22 na horizontal e 0,12 na vertical. Ou seja, toda a conta elaborada só serve para decidir o
+**sinal**. E no eixo de cima há um engano a mais: os dois ramos do `if` dão o **mesmo** valor, para cima.
+
+### Os minérios que sobem
+
+O `RiteTransposeOres` desce **uma camada de cada vez**, de dez em dez batidas, varre um quadrado de oito
+blocos de lado e **arranca** de lá o minério, pondo-o como item em cima do círculo. Trinta camadas, mais cinco
+por bruxa, ou até à rocha-mãe.
+
+**E com o coven cheio ele leva dois feitios em vez de um.** É o `covenSize == 6 ? 2 : 1` do original: sozinha,
+uma bruxa traz só ferro; com seis, traz ouro também.
+
+### Repintar o giz
+
+O `RiteGlyphicTransformation` é o mais prestável do ofício e o menos espalhafatoso: larga-se giz de uma cor
+dentro do círculo e **um anel inteiro muda de giz**. Qual deles muda depende de **quantos gizes** se largou —
+um muda o de dentro, dois o do meio, três o de fora.
+
+Sem ele, trocar o giz de um anel de quarenta glifos é quarenta picaretadas e quarenta riscos.
+
+**Só um giz de cada vez**: largando duas cores, ele conta a primeira que achar e ignora as outras. E gasta
+**um** da pilha, seja ela de que tamanho for — o resto fica no chão.
+
+O desenho dos três anéis é o do original, e com ele vem o engano de sempre: a varredura vai até o
+**penúltimo** z, e a fila de trás nunca é olhada.
+
+### O que ficou de fora desta leva
+
+- **Mudança de Clima**, que pede a **Asa de Coruja**;
+- **Casca de Gelo**, que pede o **Coração Gelado** e o **Gelo Perpétuo**;
+- **Pedra Espectral**, que pede quatro itens do ramo dos espíritos que ainda não vieram.
+
+Nenhum deles é difícil — é só que o que eles comem ainda não existe.
+
+**Guardas:** `OccultaCircleRitesGameTest`, com cinco — os quatro na lista; o empurrão que pega no bicho e
+**não em gente**, e que vai para fora; o puxão que só pega **na borda** e que vai para dentro, sem subir; o
+minério que sobe e o ouro que só vem com coven cheio; o giz que repinta; e a recusa quando não há giz nenhum.
+
+## Os ritos que faltavam — quinta leva: o prado, e as bonecas corrompidas (2026-10-03)
+
+### O Poder da Natureza
+
+O `RiteNaturesPower` é **a Praga escrita ao avesso**. De segundo em segundo ele escolhe um ponto ao acaso
+dentro do raio, procura o chão, e **enche um círculo de três blocos** com relva — virando pedra, areia e
+cascalho em terra viva, e plantando em cima mudas, flores, cogumelos e relva alta. Cento e cinquenta voltas,
+mais cinco por bruxa.
+
+Três coisas dele que valem ser ditas:
+
+1. **Ele faz água.** Dois por cento das casas viram água — mas **setenta** por cento se já houver água ao
+   lado. É assim que nascem poças em vez de pingos soltos.
+2. **A borda é esfarrapada.** Ao riscar cada linha do círculo, uma vez em cinco ele encolhe-a de um lado. É o
+   que faz o prado não ter cara de círculo desenhado.
+3. **E ele não planta debaixo de folha.** Onde já houver copa, só o chão muda — senão o prado crescia por
+   baixo da floresta.
+
+**A lista do que nasce é a dele, com os pesos dele**: a relva alta aparece **seis vezes** na lista de vinte, e
+cada flor uma só. É assim que um prado fica com cara de prado e não de canteiro.
+
+### Corromper as bonecas
+
+O `RiteCursePoppets` quebra até **dez** Bonecas de Proteção contra Vodu de quem o vínculo prender — e é assim
+que se desarma alguém que se escondeu atrás delas.
+
+**E ele exige a maestria da maldição.** Sem o familiar gato, o rito **recusa** e devolve o que se ofereceu,
+com um recado. É o **único rito deste porte que pede um familiar para correr**, e é a quarta coisa que o gato
+destranca.
+
+A ordem do original fica: a **primeira** boneca de proteção gasta-se a guardar as outras. Quem se guardou bem
+sobrevive ao rito com uma boneca a menos, e não com nenhuma.
+
+### Uma prova da primeira leva ficou frágil, e foi consertada
+
+A `callingBeastsBringsThemInsteadOfMakingThem` passou a falhar ao entrar esta leva. A causa não era o código:
+o rito varre **cento e vinte e oito blocos** em volta, a suíte corre num **mundo só**, e as provas das
+maldições enchem esse mundo de **porcos às centenas** — o rito trazia os delas e nunca chegava ao da prova.
+
+Ela passou a usar **galinha**, que mais nenhuma prova usa. É a segunda vez nesta sessão que o mundo
+compartilhado das provas morde: da primeira foi o Apanhador de Sonhos.

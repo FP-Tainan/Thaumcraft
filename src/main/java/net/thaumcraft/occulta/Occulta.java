@@ -29,6 +29,8 @@ public final class Occulta {
         net.thaumcraft.occulta.village.VillagePieces.init();
         net.thaumcraft.occulta.familiar.FamiliarEvents.init();
         net.thaumcraft.occulta.broom.Brooms.init();
+        net.thaumcraft.occulta.curse.Curse.init();
+        net.thaumcraft.occulta.curse.Grotesque.init();
         OccultaItems.init();
         OccultaAspects.init();
         OccultaGrassSeeds.init();

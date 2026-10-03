@@ -7,6 +7,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +16,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,11 +60,18 @@ public final class Rites {
             return List.of(new Step(this, coven));
         }
 
-        /** O que acontece em cada bloco do anel. */
-        protected abstract void onBlock(ServerLevel level, BlockPos onde, int raio, Player quem);
+        /**
+         * O que acontece em cada bloco do anel.
+         *
+         * <p>O <b>mordeFundo</b> é o {@code enhanced} do original: quem tem a <b>maestria da maldição</b> — a
+         * do familiar gato — faz os ritos de maldição morderem mais fundo. Vale só para os que são maldição.
+         */
+        protected abstract void onBlock(ServerLevel level, BlockPos onde, int raio, Player quem,
+                                        boolean mordeFundo);
 
         /** E o que acontece a cada passo, no anel inteiro; devolvendo falso, o rito desiste. */
-        protected boolean onRing(ServerLevel level, BlockPos meio, int raio, Player quem) {
+        protected boolean onRing(ServerLevel level, BlockPos meio, int raio, Player quem,
+                                 boolean mordeFundo) {
             return true;
         }
 
@@ -92,9 +105,11 @@ public final class Rites {
                 int raio = this.stage + 3;
                 float teto = this.rite.maxRadius + 2.0f * this.coven;
                 Player quem = rito.starter(level);
+                boolean mordeFundo = this.rite.curse
+                        && net.thaumcraft.occulta.familiar.Familiars.temMaestriaDeMaldicao(quem);
                 if (raio <= teto) {
-                    if (!this.rite.onRing(level, onde, raio, quem)) return Result.ABORTED;
-                    ring(level, onde, raio, this.rite, quem);
+                    if (!this.rite.onRing(level, onde, raio, quem, mordeFundo)) return Result.ABORTED;
+                    ring(level, onde, raio, this.rite, quem, mordeFundo);
                 }
                 boolean cheio = raio >= teto;
                 return this.stage <= 250 && !this.rite.done(level, onde, raio, cheio, ticks)
@@ -103,13 +118,14 @@ public final class Rites {
         }
 
         /** O anel riscado, e o que ele faz ao primeiro chão que houver em cada ponto. */
-        private static void ring(ServerLevel level, BlockPos meio, int raio, Expanding rite, Player quem) {
+        private static void ring(ServerLevel level, BlockPos meio, int raio, Expanding rite, Player quem,
+                                 boolean mordeFundo) {
             int x = raio;
             int z = 0;
             int erro = 1 - x;
             while (x >= z) {
                 int[][] pontos = {{x, z}, {z, x}, {-x, z}, {-z, x}, {-x, -z}, {-z, -x}, {x, -z}, {z, -x}};
-                for (int[] p : pontos) pixel(level, meio.offset(p[0], 0, p[1]), raio, rite, quem);
+                for (int[] p : pontos) pixel(level, meio.offset(p[0], 0, p[1]), raio, rite, quem, mordeFundo);
                 z++;
                 if (erro < 0) {
                     erro += 2 * z + 1;
@@ -120,16 +136,30 @@ public final class Rites {
             }
         }
 
-        /** O {@code drawPixel}: procura o chão de cima para baixo e faz nele o que o rito manda. */
-        private static void pixel(ServerLevel level, BlockPos onde, int raio, Expanding rite, Player quem) {
+        /**
+         * O {@code drawPixel}: procura o chão e faz nele o que o rito manda.
+         *
+         * <p><b>Ele procura para os dois lados.</b> Sobe até {@code height} e desce o mesmo tanto, parando no
+         * primeiro sólido com ar em cima — e é isso que faz o anel acompanhar a encosta em vez de passar por
+         * dentro dela. Esta metade de baixo <b>faltava</b> neste porte desde a fatia dos círculos: o anel só
+         * subia, e descendo um barranco ele simplesmente não tocava no chão.
+         */
+        private static void pixel(ServerLevel level, BlockPos onde, int raio, Expanding rite, Player quem,
+                                  boolean mordeFundo) {
             for (int i = 0; i < rite.height; i++) {
-                BlockPos aqui = onde.above(i);
-                if (level.getBlockState(aqui).isAir() || !level.isEmptyBlock(aqui.above())) continue;
-                level.sendParticles(rite.curse ? ParticleTypes.WITCH : ParticleTypes.HAPPY_VILLAGER,
-                        aqui.getX() + 0.5, aqui.getY() + 1.0, aqui.getZ() + 0.5, 2, 0.3, 0.3, 0.3, 0.0);
-                rite.onBlock(level, aqui, raio, quem);
-                return;
+                if (chão(level, onde.above(i), raio, rite, quem, mordeFundo)) return;
+                if (i > 0 && chão(level, onde.below(i), raio, rite, quem, mordeFundo)) return;
             }
+        }
+
+        /** Uma casa: se tem chão aqui, faz-se nela o que o rito manda. */
+        private static boolean chão(ServerLevel level, BlockPos aqui, int raio, Expanding rite, Player quem,
+                                    boolean mordeFundo) {
+            if (level.getBlockState(aqui).isAir() || !level.isEmptyBlock(aqui.above())) return false;
+            level.sendParticles(rite.curse ? ParticleTypes.WITCH : ParticleTypes.HAPPY_VILLAGER,
+                    aqui.getX() + 0.5, aqui.getY() + 1.0, aqui.getZ() + 0.5, 2, 0.3, 0.3, 0.3, 0.0);
+            rite.onBlock(level, aqui, raio, quem, mordeFundo);
+            return true;
         }
     }
 
@@ -198,12 +228,14 @@ public final class Rites {
         }
 
         @Override
-        protected void onBlock(ServerLevel level, BlockPos onde, int raio, Player quem) {
+        protected void onBlock(ServerLevel level, BlockPos onde, int raio, Player quem,
+                               boolean mordeFundo) {
             net.minecraft.world.item.BoneMealItem.growCrop(new ItemStack(Items.BONE_MEAL), level, onde);
         }
 
         @Override
-        protected boolean onRing(ServerLevel level, BlockPos meio, int raio, Player quem) {
+        protected boolean onRing(ServerLevel level, BlockPos meio, int raio, Player quem,
+                                 boolean mordeFundo) {
             double fora = raio * raio;
             double dentro = Math.max(0, (raio - 1) * (raio - 1));
             for (Player gente : level.players()) {
@@ -618,11 +650,13 @@ public final class Rites {
         }
 
         @Override
-        protected void onBlock(ServerLevel level, BlockPos onde, int raio, Player quem) {
+        protected void onBlock(ServerLevel level, BlockPos onde, int raio, Player quem,
+                               boolean mordeFundo) {
         }
 
         @Override
-        protected boolean onRing(ServerLevel level, BlockPos meio, int raio, Player quem) {
+        protected boolean onRing(ServerLevel level, BlockPos meio, int raio, Player quem,
+                                 boolean mordeFundo) {
             double fora = (double) raio * raio;
             double dentro = Math.max(0, (raio - 1.0) * (raio - 1.0));
             AABB roda = new AABB(meio).inflate(raio, this.height, raio);
@@ -1001,6 +1035,1021 @@ public final class Rites {
     }
 
     /** A lista da primeira leva, posta na tabela. */
+    /**
+     * A <b>Maldição da Praga</b>: o {@code RiteBlight} do Witchery.
+     *
+     * <p>Um anel de oitenta blocos de raio que cresce a partir do círculo e <b>mata o que encontra</b>:
+     *
+     * <ul>
+     *   <li>quem está na faixa do anel fica <b>cego</b>, dois minutos;</li>
+     *   <li>um aldeão em cada dez vira <b>zumbi</b>, com a mesma cara e o mesmo tamanho;</li>
+     *   <li>uma vaca em cada vinte vira <b>cogumelada</b>, e um bicho em cada três <b>morre</b>;</li>
+     *   <li>e o chão <b>seca</b>: a relva vai embora, a flor e a plantação viram arbusto morto, a terra arada
+     *       vira areia, e o que era relva, terra ou micélio vira areia ou terra pelada.</li>
+     * </ul>
+     *
+     * <p><b>Com o gato é um em cada quatro, e não um em cada cinco.</b> A maestria da maldição não muda o que
+     * o rito faz: muda <b>quanto</b> ele faz. É a segunda coisa que o gato destranca neste porte, e a primeira
+     * que se vê no chão.
+     *
+     * <p><b>A faixa é só a do anel.</b> Quem está dentro do círculo, no miolo já percorrido, não é atingido
+     * outra vez — o rito compara a distância com o anel de agora e com o de antes. Sem isso, quem ficasse no
+     * meio apanhava a praga uma vez por volta.
+     */
+    public static class Blight extends Expanding {
+        /** Quanto tempo a cegueira dura: os dois minutos do original. */
+        public static final int CEGUEIRA = 2400;
+        /** Um aldeão em cada dez, uma vaca em cada vinte, um bicho em cada três. */
+        public static final int ALDEÃO = 10;
+        public static final int VACA = 20;
+        public static final int BICHO = 3;
+        /** E o chão: um em cada cinco, ou em cada quatro com o gato. */
+        public static final int CHÃO = 5;
+        public static final int CHÃO_COM_GATO = 4;
+
+        public Blight(int radius, int height) {
+            super(radius, height, true);
+        }
+
+        @Override
+        protected boolean onRing(ServerLevel level, BlockPos meio, int raio, Player quem,
+                                 boolean mordeFundo) {
+            double fora = (double) raio * raio;
+            double dentro = Math.max(0, (raio - 1) * (raio - 1));
+            double x = meio.getX() + 0.5;
+            double y = meio.getY() + 0.5;
+            double z = meio.getZ() + 0.5;
+
+            for (Player vítima : level.players()) {
+                double quão = vítima.distanceToSqr(x, y, z);
+                if (quão <= dentro || quão > fora) continue;
+                if (vítima.hasEffect(MobEffects.BLINDNESS)) continue;
+                vítima.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, CEGUEIRA, 1));
+            }
+
+            var sorte = level.getRandom();
+            var caixa = new AABB(meio).inflate(raio + 1.0);
+            List<net.minecraft.world.entity.Mob> matar = new ArrayList<>();
+            for (var bicho : level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, caixa)) {
+                double quão = bicho.distanceToSqr(x, y, z);
+                if (quão <= dentro || quão > fora) continue;
+
+                if (bicho instanceof net.minecraft.world.entity.npc.villager.Villager aldeão) {
+                    if (sorte.nextInt(ALDEÃO) == 0) zumbifica(level, aldeão);
+                } else if (bicho.getType() == net.minecraft.world.entity.EntityTypes.COW) {
+                    if (sorte.nextInt(VACA) == 0) cogumela(level, bicho);
+                    else if (sorte.nextInt(BICHO) == 0) matar.add(bicho);
+                } else if (bicho instanceof net.minecraft.world.entity.animal.Animal) {
+                    if (sorte.nextInt(BICHO) == 0) matar.add(bicho);
+                }
+            }
+            for (var bicho : matar) {
+                bicho.hurtServer(level, level.damageSources().magic(), 20.0f);
+            }
+            return true;
+        }
+
+        /** O aldeão vira zumbi, com a mesma cara e o mesmo tamanho. */
+        public static void zumbifica(ServerLevel level, net.minecraft.world.entity.npc.villager.Villager aldeão) {
+            var zumbi = net.minecraft.world.entity.EntityTypes.ZOMBIE_VILLAGER.create(level,
+                    net.minecraft.world.entity.EntitySpawnReason.CONVERSION);
+            if (zumbi == null) return;
+            zumbi.copyPosition(aldeão);
+            zumbi.finalizeSpawn(level, level.getCurrentDifficultyAt(zumbi.blockPosition()),
+                    net.minecraft.world.entity.EntitySpawnReason.CONVERSION, null);
+            zumbi.setVillagerData(aldeão.getVillagerData());
+            if (aldeão.isBaby()) zumbi.setBaby(true);
+            aldeão.discard();
+            level.addFreshEntity(zumbi);
+            level.levelEvent(null, 1026, zumbi.blockPosition(), 0);
+        }
+
+        /** E a vaca vira cogumelada. */
+        public static void cogumela(ServerLevel level, net.minecraft.world.entity.Mob vaca) {
+            var cogumelada = net.minecraft.world.entity.EntityTypes.MOOSHROOM.create(level,
+                    net.minecraft.world.entity.EntitySpawnReason.CONVERSION);
+            if (cogumelada == null) return;
+            cogumelada.copyPosition(vaca);
+            cogumelada.finalizeSpawn(level, level.getCurrentDifficultyAt(cogumelada.blockPosition()),
+                    net.minecraft.world.entity.EntitySpawnReason.CONVERSION, null);
+            vaca.discard();
+            level.addFreshEntity(cogumelada);
+            level.levelEvent(null, 1026, cogumelada.blockPosition(), 0);
+        }
+
+        @Override
+        protected void onBlock(ServerLevel level, BlockPos onde, int raio, Player quem,
+                               boolean mordeFundo) {
+            var aqui = level.getBlockState(onde);
+            var debaixo = level.getBlockState(onde.below());
+
+            if (aqui.is(Blocks.SHORT_GRASS) || aqui.is(Blocks.TALL_GRASS) || aqui.is(Blocks.FERN)) {
+                level.removeBlock(onde, false);
+                seca(level, onde.below(), debaixo, mordeFundo);
+                return;
+            }
+            if (aqui.is(net.minecraft.tags.BlockTags.SMALL_FLOWERS) || aqui.is(Blocks.WHEAT)
+                    || aqui.is(Blocks.CARROTS) || aqui.is(Blocks.POTATOES) || aqui.is(Blocks.BEETROOTS)
+                    || aqui.is(Blocks.MELON) || aqui.is(Blocks.PUMPKIN)
+                    || aqui.is(Blocks.MELON_STEM) || aqui.is(Blocks.PUMPKIN_STEM)) {
+                level.setBlockAndUpdate(onde, Blocks.DEAD_BUSH.defaultBlockState());
+                seca(level, onde.below(), debaixo, mordeFundo);
+                return;
+            }
+            if (aqui.is(Blocks.FARMLAND)) {
+                level.setBlockAndUpdate(onde, Blocks.SAND.defaultBlockState());
+                return;
+            }
+            if (aqui.isSolid()) seca(level, onde, aqui, mordeFundo);
+            else if (debaixo.isSolid()) seca(level, onde.below(), debaixo, mordeFundo);
+        }
+
+        /** O chão que seca: relva, terra, micélio e terra arada viram areia ou terra pelada. */
+        public static void seca(ServerLevel level, BlockPos onde,
+                                net.minecraft.world.level.block.state.BlockState qualé,
+                                boolean mordeFundo) {
+            if (!qualé.is(Blocks.DIRT) && !qualé.is(Blocks.GRASS_BLOCK) && !qualé.is(Blocks.MYCELIUM)
+                    && !qualé.is(Blocks.FARMLAND)) {
+                return;
+            }
+            int sorte = level.getRandom().nextInt(mordeFundo ? CHÃO_COM_GATO : CHÃO);
+            if (sorte == 0) level.setBlockAndUpdate(onde, Blocks.SAND.defaultBlockState());
+            else if (sorte == 1) level.setBlockAndUpdate(onde, Blocks.DIRT.defaultBlockState());
+        }
+    }
+
+    // ================================================================= o prado, e as bonecas corrompidas
+
+    /**
+     * O <b>Poder da Natureza</b>: o {@code RiteNaturesPower} do Witchery.
+     *
+     * <p>De segundo em segundo ele escolhe um ponto ao acaso dentro do raio, procura o chão, e <b>enche um
+     * círculo de três blocos</b> com relva — virando pedra, areia e cascalho em terra viva, e plantando em
+     * cima mudas, flores, cogumelos e relva alta. Cento e cinquenta voltas, mais cinco por bruxa.
+     *
+     * <p>É o contrário exato da Praga, e eles são a mesma ideia escrita ao avesso: um seca o mundo em volta,
+     * o outro planta-o.
+     *
+     * <p>Três coisas dele que valem ser ditas:
+     *
+     * <ol>
+     *   <li><b>Ele faz água.</b> Dois por cento das casas viram água — mas <b>setenta</b> por cento se a casa
+     *       tiver água ao lado. É assim que nascem as poças em vez de pingos soltos.</li>
+     *   <li><b>A borda é esfarrapada.</b> Ao riscar cada linha do círculo, uma vez em cinco ele encolhe-a de
+     *       um lado. É o que faz o prado não ter cara de círculo desenhado.</li>
+     *   <li><b>E ele não planta debaixo de folhas.</b> Onde já houver copa, ele faz o chão e não põe nada em
+     *       cima — senão o prado crescia por baixo da floresta.</li>
+     * </ol>
+     *
+     * @param radius   até onde ele escolhe os pontos, antes do coven
+     * @param height   quantos blocos ele procura chão, para cima e para baixo
+     * @param duration quantas voltas, antes do coven
+     * @param expanse  o raio de cada remendo de relva, menos um
+     */
+    public record NaturesPower(int radius, int height, int duration, int expanse) implements Rite {
+        public static final int EVERY = 20;
+        /** Quanto o coven soma ao raio e às voltas, por bruxa. */
+        public static final int RAIO_POR_BRUXA = 2;
+        public static final int VOLTAS_POR_BRUXA = 5;
+        /** A chance de uma casa virar água: dois por cento, ou setenta se já houver água ao lado. */
+        public static final double ÁGUA = 0.02;
+        public static final double ÁGUA_AO_LADO = 0.7;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % EVERY != 0L) return RiteStep.Result.STARTING;
+
+                int volta = rito.advance();
+                if (volta >= this.duration + rito.coven() * VOLTAS_POR_BRUXA) {
+                    return RiteStep.Result.COMPLETED;
+                }
+
+                int raio = this.radius + rito.coven() * RAIO_POR_BRUXA;
+                var sorte = level.getRandom();
+                int x = onde.getX() - raio + sorte.nextInt(raio * 2);
+                int z = onde.getZ() - raio + sorte.nextInt(raio * 2);
+                int chão = this.achaChão(level, x, onde.getY() - 1, z);
+                if (chão != Integer.MIN_VALUE) {
+                    this.remendo(level, new BlockPos(x, chão, z), this.expanse + 1);
+                }
+                return RiteStep.Result.UPKEEP;
+            });
+        }
+
+        /** Procura o primeiro sólido com ar em cima, a partir de uma altura, para os dois lados. */
+        private int achaChão(ServerLevel level, int x, int y, int z) {
+            if (sólidoComArEmCima(level, new BlockPos(x, y, z))) return y;
+            for (int h = 1; h < this.height; h++) {
+                if (sólidoComArEmCima(level, new BlockPos(x, y + h, z))) return y + h;
+                BlockPos abaixo = new BlockPos(x, y - h, z);
+                if (!level.getBlockState(abaixo).isSolid()) continue;
+                // e aqui a neve conta como ar, que é do original
+                var emCima = level.getBlockState(abaixo.above());
+                if (emCima.isAir() || emCima.is(Blocks.SNOW)) return y - h;
+            }
+            return Integer.MIN_VALUE;
+        }
+
+        private static boolean sólidoComArEmCima(ServerLevel level, BlockPos onde) {
+            return level.getBlockState(onde).isSolid() && level.getBlockState(onde.above()).isAir();
+        }
+
+        /** Um remendo de relva: o círculo cheio, com as linhas esfarrapadas. */
+        private void remendo(ServerLevel level, BlockPos meio, int raio) {
+            int x = raio;
+            int z = 0;
+            int erro = 1 - raio;
+            while (x >= z) {
+                this.linha(level, meio, -x, x, z, raio);
+                this.linha(level, meio, -z, z, x, raio);
+                this.linha(level, meio, -x, x, -z, raio);
+                this.linha(level, meio, -z, z, -x, raio);
+                z++;
+                if (erro < 0) {
+                    erro += 2 * z + 1;
+                } else {
+                    x--;
+                    erro += 2 * (z - x + 1);
+                }
+            }
+        }
+
+        /** Uma linha do remendo. Uma vez em cinco ela encolhe de um lado, e é o que esfarrapa a borda. */
+        private void linha(ServerLevel level, BlockPos meio, int de, int até, int dz, int raio) {
+            var sorte = level.getRandom();
+            int x1 = raio > 1 && sorte.nextInt(5) == 0 ? de + 1 : de;
+            int x2 = raio > 1 && sorte.nextInt(5) == 0 ? até - 1 : até;
+            for (int dx = x1; dx <= x2; dx++) {
+                this.casa(level, meio.offset(dx, 0, dz));
+            }
+        }
+
+        /** E uma casa: o chão que vira relva ou água, e o que nasce em cima. */
+        private void casa(ServerLevel level, BlockPos onde) {
+            var emCima = level.getBlockState(onde.above());
+            if (emCima.isSolid()) return;
+
+            var sorte = level.getRandom();
+            var aqui = level.getBlockState(onde);
+            boolean debaixoDeFolha = emCima.is(net.minecraft.tags.BlockTags.LEAVES);
+
+            if ((aqui.is(Blocks.STONE) || aqui.is(Blocks.SAND) || aqui.is(Blocks.GRAVEL)
+                    || aqui.is(Blocks.DIRT) || aqui.is(Blocks.COARSE_DIRT) || aqui.is(Blocks.PODZOL))
+                    && sorte.nextInt(8) != 0) {
+                double chance = temÁguaAoLado(level, onde) ? ÁGUA_AO_LADO : ÁGUA;
+                if (!debaixoDeFolha && sorte.nextDouble() <= chance) {
+                    level.setBlockAndUpdate(onde, Blocks.WATER.defaultBlockState());
+                    return;
+                }
+                level.setBlockAndUpdate(onde, Blocks.GRASS_BLOCK.defaultBlockState());
+                aqui = level.getBlockState(onde);
+            }
+
+            if (debaixoDeFolha || aqui.isAir() || aqui.is(net.minecraft.tags.BlockTags.LEAVES)) return;
+            if (sorte.nextInt(4) != 0) return;
+            level.setBlockAndUpdate(onde.above(), nasce(level).defaultBlockState());
+        }
+
+        private static boolean temÁguaAoLado(ServerLevel level, BlockPos onde) {
+            for (var lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+                if (level.getBlockState(onde.relative(lado)).is(Blocks.WATER)) return true;
+            }
+            return false;
+        }
+
+        /**
+         * O que nasce em cima: a lista do original, com os pesos dele.
+         *
+         * <p>Repare que a <b>relva alta aparece seis vezes</b> na lista de vinte e tal, e as flores uma vez
+         * cada: é assim que um prado fica com cara de prado, e não de canteiro.
+         */
+        private static Block nasce(ServerLevel level) {
+            List<Block> quais = List.of(
+                    Blocks.OAK_SAPLING, Blocks.SPRUCE_SAPLING, Blocks.BIRCH_SAPLING, Blocks.JUNGLE_SAPLING,
+                    net.thaumcraft.occulta.OccultaBlocks.ROWAN_SAPLING,
+                    net.thaumcraft.occulta.OccultaBlocks.ALDER_SAPLING,
+                    net.thaumcraft.occulta.OccultaBlocks.HAWTHORN_SAPLING,
+                    net.thaumcraft.occulta.OccultaBlocks.EMBER_MOSS,
+                    Blocks.SHORT_GRASS, Blocks.FERN,
+                    Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM,
+                    Blocks.POPPY, Blocks.DANDELION,
+                    Blocks.SHORT_GRASS, Blocks.FERN,
+                    Blocks.SHORT_GRASS, Blocks.FERN,
+                    Blocks.SHORT_GRASS, Blocks.FERN);
+            return quais.get(level.getRandom().nextInt(quais.size()));
+        }
+    }
+
+    /**
+     * Corromper as bonecas de proteção: o {@code RiteCursePoppets} do Witchery.
+     *
+     * <p>Ele quebra até <b>dez</b> Bonecas de Proteção contra Vodu de quem o vínculo prender — e é assim que
+     * se desarma alguém que se escondeu atrás delas.
+     *
+     * <p><b>E ele exige a maestria da maldição.</b> Sem o familiar gato, o rito <b>recusa</b> e devolve o que
+     * se ofereceu, com um recado. É o único rito deste porte que pede um familiar para correr, e é a quarta
+     * coisa que o gato destranca.
+     *
+     * @param level quantas bonecas ele quebra, por grau
+     */
+    public record CursePoppets(int level) implements Rite {
+        /** Quantas bonecas ele quebra: os dez do original. */
+        public static final int QUANTAS = 10;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                Player quemFaz = rito.starter(level);
+                if (!net.thaumcraft.occulta.familiar.Familiars.temMaestriaDeMaldicao(quemFaz)) {
+                    avisa(level, onde, rito, "message.thaumcraft.requires_curse_mastery");
+                    return RiteStep.Result.ABORTED_REFUND;
+                }
+
+                LivingEntity alvo = null;
+                for (var oferecido : rito.offered()) {
+                    if (!oferecido.stack().is(net.thaumcraft.occulta.OccultaItems.TAGLOCK)) continue;
+                    alvo = net.thaumcraft.occulta.Voodoo.bound(level, oferecido.stack());
+                    if (alvo != null) break;
+                }
+                if (!(alvo instanceof Player vítima)) return RiteStep.Result.ABORTED_REFUND;
+
+                // a primeira boneca de proteção contra vodu gasta-se a guardar as outras: é a ordem do
+                // original, e é o que dá a quem se guardou uma chance de sobreviver ao rito
+                if (net.thaumcraft.occulta.Voodoo.guarded(level, vítima)) {
+                    level.sendParticles(ParticleTypes.HAPPY_VILLAGER, vítima.getX(), vítima.getY() + 1.0,
+                            vítima.getZ(), 16, 0.4, 0.6, 0.4, 0.0);
+                    return RiteStep.Result.COMPLETED;
+                }
+
+                for (int n = 0; n < QUANTAS; n++) {
+                    if (!net.thaumcraft.occulta.Poppets.spend(level, vítima,
+                            net.thaumcraft.occulta.PoppetItem.Kind.VOODOO_PROTECTION)) {
+                        break;
+                    }
+                }
+
+                level.sendParticles(ParticleTypes.FLAME, onde.getX() + 0.5, onde.getY() + 0.1,
+                        onde.getZ() + 0.5, 32, 1.0, 1.0, 1.0, 0.05);
+                level.playSound(null, onde, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.BLOCKS, 1.0f, 1.0f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    // ================================================================= os que empurram e puxam
+
+    /**
+     * O anel que <b>empurra</b> ou <b>puxa</b> o que estiver dentro dele: os
+     * {@code RiteProtectionCircleRepulsive} e {@code RiteProtectionCircleAttractive} do Witchery.
+     *
+     * <p>São dois ritos com a mesma conta e o sinal trocado, e por isso são um só aqui. O de <b>Proteção</b>
+     * empurra tudo para fora de quatro blocos; o de <b>Aprisionamento</b> puxa tudo de volta para dentro. Os
+     * dois custam <b>0,8 de poder de altar por batida</b> e correm <b>para sempre</b>, até o altar secar.
+     *
+     * <p><b>Gente não se mexe, e o dragão também não.</b> É do original, e é o que torna estes ritos
+     * utilizáveis: um anel que empurrasse quem o fez seria uma armadilha para o dono.
+     *
+     * <p>O empurrão tem uma conta esquisita e ela fica como está: calcula-se a direção pela distância ao
+     * <b>quadrado do quadrado</b>, e depois o resultado é <b>jogado fora</b> e trocado por um valor fixo —
+     * 0,22 na horizontal e 0,12 na vertical. Ou seja: a conta elaborada só serve para decidir o <b>sinal</b>.
+     *
+     * <p>E o de puxar só puxa quem está <b>na borda</b>, a partir de raio menos um. Quem já está no meio fica
+     * quieto — senão o anel cuspia os bichos para o centro e eles saltavam para sempre.
+     *
+     * @param radius o raio
+     * @param upkeep o que ele come por batida
+     * @param pull   se puxa em vez de empurrar
+     */
+    public record PushCircle(int radius, float upkeep, boolean pull) implements Rite {
+        /** O valor fixo com que o original troca a conta que acabou de fazer. */
+        public static final double NA_HORIZONTAL = 0.22;
+        public static final double NA_VERTICAL = 0.12;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (rito.stage() == 0) {
+                    if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+                    rito.advance();
+                    level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
+                }
+
+                if (this.upkeep > 0.0f) {
+                    var altar = net.thaumcraft.occulta.PowerSources.closest(level, onde);
+                    if (altar == null || !altar.consume(this.upkeep)) return RiteStep.Result.ABORTED;
+                }
+
+                double meioX = onde.getX();
+                double meioY = onde.getY();
+                double meioZ = onde.getZ();
+                var caixa = new AABB(onde).inflate(this.radius);
+                for (var bicho : level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, caixa)) {
+                    if (bicho.distanceToSqr(meioX, meioY, meioZ) >= (double) this.radius * this.radius) {
+                        continue;
+                    }
+                    if (this.pull) puxa(bicho, meioX, meioY, meioZ, this.radius);
+                    else empurra(bicho, meioX, meioY, meioZ);
+                }
+                return RiteStep.Result.UPKEEP;
+            });
+        }
+
+        /** O empurrão do original, com a conta que só decide o sinal. */
+        public static void empurra(net.minecraft.world.entity.Entity bicho, double x, double y, double z) {
+            var quanto = sinal(bicho, x, y, z);
+            if (quanto == null) return;
+            bicho.setDeltaMovement(bicho.getDeltaMovement().add(quanto));
+            bicho.hurtMarked = true;
+        }
+
+        /** E o puxão, que é o mesmo vetor virado de meia-volta — e só para quem está na borda. */
+        public static void puxa(net.minecraft.world.entity.Entity bicho, double x, double y, double z,
+                                int raio) {
+            var anda = bicho.getDeltaMovement();
+            double depois = Math.sqrt(bicho.distanceToSqr(x - anda.x, y - anda.y, z - anda.z));
+            if (depois < raio - 1.0) return;
+
+            var quanto = sinal(bicho, x, y, z);
+            if (quanto == null) return;
+            // meia-volta em torno do Y: o x e o z trocam de sinal, e o y fica zero
+            bicho.setDeltaMovement(-quanto.x, 0.0, -quanto.z);
+            bicho.hurtMarked = true;
+        }
+
+        /**
+         * A conta do original, tal e qual.
+         *
+         * <p>Ela calcula a direção com a distância elevada à quarta, confere que não passa de 6⁴ — e então
+         * <b>deita o número fora</b> e usa 0,22 e 0,12 pelo sinal que saiu. Fica como está.
+         */
+        private static Vec3 sinal(net.minecraft.world.entity.Entity bicho, double x, double y, double z) {
+            if (bicho instanceof Player) return null;
+            if (bicho instanceof net.minecraft.world.entity.boss.enderdragon.EnderDragon) return null;
+
+            double dx = x - bicho.getX();
+            double dy = y - bicho.getY();
+            double dz = z - bicho.getZ();
+            double quão = dx * dx + dy * dy + dz * dz;
+            quão *= quão;
+            if (quão > Math.pow(6.0, 4.0)) return null;
+
+            double vx = -(dx * 0.01999999955296516 / quão) * Math.pow(6.0, 3.0);
+            double vy = -(dy * 0.01999999955296516 / quão) * Math.pow(6.0, 3.0);
+            double vz = -(dz * 0.01999999955296516 / quão) * Math.pow(6.0, 3.0);
+
+            if (vx > 0.0) vx = NA_HORIZONTAL;
+            else if (vx < 0.0) vx = -NA_HORIZONTAL;
+            // e o de cima é o engano do original: os dois lados dão o MESMO valor, para cima
+            if (vy > 0.2) vy = NA_VERTICAL;
+            else if (vy < -0.1) vy = NA_VERTICAL;
+            if (vz > 0.0) vz = NA_HORIZONTAL;
+            else if (vz < 0.0) vz = -NA_HORIZONTAL;
+
+            return new Vec3(vx, vy, vz);
+        }
+    }
+
+    /**
+     * Os minérios que sobem: o {@code RiteTransposeOres} do Witchery.
+     *
+     * <p>De dez em dez batidas ele desce <b>uma camada</b> por baixo do círculo, varre um quadrado de oito
+     * blocos de lado e <b>arranca</b> de lá o que for do feitio pedido — pondo o bloco como item em cima do
+     * círculo. Trinta camadas, mais cinco por bruxa do coven, ou até chegar à rocha-mãe.
+     *
+     * <p><b>E com o coven cheio ele leva dois feitios em vez de um.</b> É o
+     * {@code covenSize == 6 ? 2 : 1} do original: sozinha, uma bruxa traz só ferro; com seis, traz ouro
+     * também.
+     *
+     * @param radius  metade do lado do quadrado que ele varre
+     * @param pulses  quantas camadas, antes do coven
+     * @param blocks  o que ele arranca, por ordem — o segundo só com coven cheio
+     */
+    public record TransposeOres(int radius, int pulses, List<Block> blocks) implements Rite {
+        public static final int EVERY = 10;
+        /** A camada mais funda a que ele chega. */
+        public static final int FUNDO = 2;
+        /** Quantas camadas a mais por bruxa. */
+        public static final int POR_BRUXA = 5;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % EVERY != 0L) return RiteStep.Result.STARTING;
+
+                int camada = rito.advance();
+                int y = onde.getY() - camada;
+                int quantos = rito.coven() >= 6 ? 2 : 1;
+
+                for (int x = onde.getX() - this.radius; x <= onde.getX() + this.radius; x++) {
+                    for (int z = onde.getZ() - this.radius; z <= onde.getZ() + this.radius; z++) {
+                        BlockPos casa = new BlockPos(x, y, z);
+                        var qualé = level.getBlockState(casa);
+                        for (int t = 0; t < quantos && t < this.blocks.size(); t++) {
+                            if (!qualé.is(this.blocks.get(t))) continue;
+                            level.removeBlock(casa, false);
+                            var sorte = level.getRandom();
+                            Block.popResource(level, new BlockPos(
+                                            onde.getX() - this.radius + sorte.nextInt(2 * this.radius + 1),
+                                            onde.getY() + 2,
+                                            onde.getZ() - this.radius + sorte.nextInt(2 * this.radius + 1)),
+                                    new ItemStack(this.blocks.get(t)));
+                        }
+                    }
+                }
+
+                boolean segue = camada < this.pulses + POR_BRUXA * rito.coven() && y > FUNDO;
+                return segue ? RiteStep.Result.UPKEEP : RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    /**
+     * Repintar um anel de glifos: o {@code RiteGlyphicTransformation} do Witchery.
+     *
+     * <p>Larga-se giz de uma cor dentro do círculo e <b>um anel inteiro muda de giz</b>. Qual deles muda
+     * depende de <b>quantos gizes</b> se largou: um muda o de dentro, dois o do meio, três o de fora.
+     *
+     * <p>É o rito mais prestável do ofício, e o menos espalhafatoso: sem ele, trocar o giz de um anel de
+     * quarenta glifos é quarenta picaretadas e quarenta riscos.
+     *
+     * <p><b>Só um giz de cada vez.</b> Largando duas cores, o rito conta a primeira que achar e ignora as
+     * outras — é o que os três {@code if} encadeados do original fazem. E ele gasta <b>um</b> giz da pilha,
+     * seja a pilha de que tamanho for: o resto fica no chão.
+     *
+     * <p>O desenho dos três anéis é o do original, e com ele vem o engano de sempre: a varredura vai até o
+     * <b>penúltimo</b> z, e a fila de trás do desenho nunca é olhada.
+     */
+    public record GlyphicTransformation() implements Rite {
+        public static final int EVERY = 30;
+        /** Até onde ele procura o giz largado. */
+        public static final double ALCANCE = 4.0;
+
+        /** Os três anéis: 1 o de dentro, 2 o do meio, 3 o de fora. */
+        private static final int[][] ANÉIS = {
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0},
+                {0, 0, 0, 3, 0, 0, 2, 2, 2, 2, 2, 0, 0, 3, 0, 0, 0},
+                {0, 0, 3, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 3, 0, 0},
+                {0, 3, 0, 0, 2, 0, 0, 1, 1, 1, 0, 0, 2, 0, 0, 3, 0},
+                {0, 3, 0, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 0, 3, 0},
+                {0, 3, 0, 2, 0, 1, 0, 0, 0, 0, 0, 1, 0, 2, 0, 3, 0},
+                {0, 3, 0, 2, 0, 1, 0, 0, 4, 0, 0, 1, 0, 2, 0, 3, 0},
+                {0, 3, 0, 2, 0, 1, 0, 0, 0, 0, 0, 1, 0, 2, 0, 3, 0},
+                {0, 3, 0, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 0, 3, 0},
+                {0, 3, 0, 0, 2, 0, 0, 1, 1, 1, 0, 0, 2, 0, 0, 3, 0},
+                {0, 0, 3, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 3, 0, 0},
+                {0, 0, 0, 3, 0, 0, 2, 2, 2, 2, 2, 0, 0, 3, 0, 0, 0},
+                {0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        };
+
+        /** Os três gizes, na ordem em que o original os procura, com o glifo de cada um. */
+        private static List<net.minecraft.world.item.Item> gizes() {
+            return List.of(net.thaumcraft.occulta.OccultaItems.RITUAL_CHALK,
+                    net.thaumcraft.occulta.OccultaItems.OTHERWHERE_CHALK,
+                    net.thaumcraft.occulta.OccultaItems.INFERNAL_CHALK);
+        }
+
+        private static Block glifo(int qual) {
+            return switch (qual) {
+                case 1 -> net.thaumcraft.occulta.OccultaBlocks.OTHERWHERE_GLYPH;
+                case 2 -> net.thaumcraft.occulta.OccultaBlocks.INFERNAL_GLYPH;
+                default -> net.thaumcraft.occulta.OccultaBlocks.RITUAL_GLYPH;
+            };
+        }
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % EVERY != 0L) return RiteStep.Result.STARTING;
+
+                var caixa = new AABB(onde).inflate(ALCANCE, 2.0, ALCANCE);
+                var largados = level.getEntitiesOfClass(ItemEntity.class, caixa);
+
+                int qualGiz = -1;
+                int quantos = 0;
+                for (ItemEntity largado : largados) {
+                    for (int g = 0; g < 3; g++) {
+                        if (!largado.getItem().is(gizes().get(g))) continue;
+                        // o primeiro giz que aparece é o que manda: os outros são ignorados
+                        if (qualGiz != -1 && qualGiz != g) continue;
+                        boolean primeiro = qualGiz == -1;
+                        qualGiz = g;
+                        quantos += largado.getItem().getCount();
+                        if (primeiro) {
+                            largado.getItem().shrink(1);
+                            if (largado.getItem().isEmpty()) largado.discard();
+                        }
+                        level.sendParticles(ParticleTypes.SMOKE, largado.getX(), largado.getY() + 0.3,
+                                largado.getZ(), 8, 0.2, 0.2, 0.2, 0.01);
+                    }
+                }
+                if (qualGiz == -1) return RiteStep.Result.ABORTED_REFUND;
+
+                int anel = Math.min(quantos, 3);
+                Block vira = glifo(qualGiz);
+                int meio = (ANÉIS.length - 1) / 2;
+                for (int z = 0; z < ANÉIS.length - 1; z++) {
+                    for (int x = 0; x < ANÉIS[z].length; x++) {
+                        if (ANÉIS[ANÉIS.length - 1 - z][x] != anel) continue;
+                        BlockPos casa = new BlockPos(onde.getX() - meio + x, onde.getY(),
+                                onde.getZ() - meio + z);
+                        var qualé = level.getBlockState(casa);
+                        if (!(qualé.getBlock() instanceof net.thaumcraft.occulta.GlyphBlock)) continue;
+                        if (qualé.is(vira)) continue;
+                        level.setBlockAndUpdate(casa, vira.defaultBlockState()
+                                .setValue(net.thaumcraft.occulta.GlyphBlock.SHAPE,
+                                        qualé.getValue(net.thaumcraft.occulta.GlyphBlock.SHAPE)));
+                        level.sendParticles(ParticleTypes.SMOKE, casa.getX() + 0.5, casa.getY() + 1.0,
+                                casa.getZ() + 0.5, 4, 0.2, 0.2, 0.2, 0.01);
+                    }
+                }
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    // ================================================================= as maldições
+
+    /**
+     * Pôr ou tirar uma maldição: o {@code RiteCurseCreature} do Witchery.
+     *
+     * <p>Ele não olha quem está no círculo — ele olha o <b>vínculo</b> que se ofereceu. Quem tem o sangue, o
+     * cabelo ou o nome de alguém num frasco amaldiçoa essa pessoa <b>do outro lado do mundo</b>, e é isso que
+     * faz o vínculo valer o que vale.
+     *
+     * <h2>O grau sobe com quem está em volta</h2>
+     *
+     * <p>Ao grau que o rito tem somam-se: <b>um</b> se quem o faz tem a maestria da maldição (o gato),
+     * <b>um</b> se o coven tem três ou mais, e <b>dois</b> se tem seis. Um coven cheio com gato põe uma
+     * maldição de grau <b>quatro</b> onde uma bruxa sozinha põe uma de grau um.
+     *
+     * <h2>E tirar é uma aposta</h2>
+     *
+     * <p>Esta é a parte boa, e é fácil portar errado. <b>Tirar uma maldição pode deixá-la pior.</b> O rito
+     * compara a força que traz com a força que a maldição tem:
+     *
+     * <table border="1">
+     *   <caption>O que acontece ao tentar tirar</caption>
+     *   <tr><th>o rito contra a maldição</th><th>o que sai</th></tr>
+     *   <tr><td>mais forte</td><td>sai — menos uma vez em vinte, em que <b>sobe um grau</b></td></tr>
+     *   <tr><td>mais fraco</td><td><b>sobe um grau</b> — a não ser uma vez em quatro, em que sai</td></tr>
+     *   <tr><td>igual</td><td>sai três vezes em quatro; na quarta, <b>sobe</b></td></tr>
+     * </table>
+     *
+     * <p>Quem tenta tirar uma maldição de grau cinco com um rito de grau um quase sempre a piora. É por isso
+     * que o rito de tirar também quer coven e gato: não para pôr, para <b>conseguir tirar</b>.
+     *
+     * <p>E, saindo, ela leva consigo os cinco efeitos que o azar deixa: veneno, fraqueza, cegueira, pancada e
+     * lentidão.
+     *
+     * @param curse se põe (verdadeiro) ou tira
+     * @param qual  qual das quatro
+     * @param level o grau que este rito traz
+     */
+    public record CurseCreature(boolean curse, net.thaumcraft.occulta.curse.Curse qual, int level)
+            implements Rite {
+        /** O que a maestria da maldição soma, e o que o coven soma. */
+        public static final int GATO = 1;
+        public static final int COVEN_TRES = 1;
+        public static final int COVEN_CHEIO = 2;
+
+        /** Os sorteios do tirar: um em vinte, um em quatro. */
+        public static final int SORTE_MAIS_FORTE = 20;
+        public static final int SORTE_IGUAL_OU_MAIS_FRACO = 4;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                Player quemFaz = rito.starter(level);
+                LivingEntity alvo = doVinculo(level, rito);
+                if (alvo == null) return RiteStep.Result.ABORTED_REFUND;
+
+                int soma = (net.thaumcraft.occulta.familiar.Familiars.temMaestriaDeMaldicao(quemFaz)
+                        ? GATO : 0)
+                        + (rito.coven() >= 6 ? COVEN_CHEIO : (rito.coven() >= 3 ? COVEN_TRES : 0));
+
+                boolean pegou = this.curse
+                        ? this.poe(level, alvo, quemFaz, soma)
+                        : this.tira(level, alvo, soma);
+
+                level.sendParticles(pegou ? ParticleTypes.FLAME : ParticleTypes.WITCH,
+                        onde.getX() + 0.5, onde.getY() + 0.1, onde.getZ() + 0.5, 32, 1.0, 1.0, 1.0, 0.05);
+                level.playSound(null, onde,
+                        pegou ? SoundEvents.ENDER_DRAGON_GROWL : SoundEvents.PLAYER_LEVELUP,
+                        SoundSource.BLOCKS, 1.0f, 1.0f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+
+        /** Quem o vínculo oferecido prende. */
+        private static LivingEntity doVinculo(ServerLevel level, ActiveRite rito) {
+            for (var oferecido : rito.offered()) {
+                if (!oferecido.stack().is(net.thaumcraft.occulta.OccultaItems.TAGLOCK)) continue;
+                // no original o vínculo cheio é outro item (metadado 1); aqui é o mesmo item com um
+                // componente, e por isso quem decide é o Voodoo.bound: vazio, não prende ninguém.
+                var quem = net.thaumcraft.occulta.Voodoo.bound(level, oferecido.stack());
+                if (quem != null) return quem;
+            }
+            return null;
+        }
+
+        /** Põe. Quem está guardado por uma boneca de vodu não apanha, e quem tentou leva o troco. */
+        private boolean poe(ServerLevel level, LivingEntity alvo, Player quemFaz, int soma) {
+            if (net.thaumcraft.occulta.Voodoo.guarded(level, alvo)) {
+                if (quemFaz != null) net.thaumcraft.occulta.Voodoo.backfire(level, quemFaz);
+                return false;
+            }
+            net.thaumcraft.occulta.curse.Curse.put(alvo, this.qual, this.level + soma);
+            return true;
+        }
+
+        /** O sorteio de tirar, à mão: é o que a prova chama, porque prova nenhuma tem vínculo. */
+        public boolean tiraParaProva(ServerLevel level, LivingEntity alvo, int soma) {
+            return this.tira(level, alvo, soma);
+        }
+
+        /** E tira — ou piora, que é o que o original deixa acontecer. */
+        private boolean tira(ServerLevel level, LivingEntity alvo, int soma) {
+            int tem = net.thaumcraft.occulta.curse.Curse.level(alvo, this.qual);
+            if (tem <= 0) return false;
+
+            int força = this.level + soma;
+            int novo;
+            if (força > tem) {
+                novo = level.getRandom().nextInt(SORTE_MAIS_FORTE) == 0 ? tem + 1 : 0;
+            } else if (força < tem) {
+                novo = level.getRandom().nextInt(SORTE_IGUAL_OU_MAIS_FRACO) == 0 ? 0 : tem + 1;
+            } else {
+                novo = level.getRandom().nextInt(SORTE_IGUAL_OU_MAIS_FRACO) == 0 ? tem + 1 : 0;
+            }
+
+            if (novo != 0) {
+                net.thaumcraft.occulta.curse.Curse.put(alvo, this.qual, novo);
+                return true;
+            }
+
+            net.thaumcraft.occulta.curse.Curse.remove(alvo, this.qual);
+            // e saindo ela leva os cinco que o azar deixa
+            alvo.removeEffect(MobEffects.POISON);
+            alvo.removeEffect(MobEffects.WEAKNESS);
+            alvo.removeEffect(MobEffects.BLINDNESS);
+            alvo.removeEffect(MobEffects.MINING_FATIGUE);
+            alvo.removeEffect(MobEffects.SLOWNESS);
+            return false;
+        }
+    }
+
+    // ================================================================= os que chamam
+
+    /**
+     * Chamar uma criatura: o {@code RiteSummonCreature} do Witchery.
+     *
+     * <p>Antes de chamar, ele <b>olha o teto</b>. São três camadas de sete por sete em cima do círculo, com os
+     * cantos de fora — e o que estiver sólido ali conta. <b>Mais de um estorvo e o rito desiste</b>, devolvendo
+     * o que se ofereceu; e o bloco <b>do meio</b> conta por cem, ou seja: pôr uma laje em cima do glifo já
+     * chega para ele recusar. É o que impede alguém de chamar um Wither dentro de uma caixa de obsidiana.
+     *
+     * <p><b>Um engano do original que fica:</b> ele percorre o desenho do teto até ao <b>penúltimo</b> z, e
+     * por isso a fila de trás nunca é olhada. O teto que ele mede é de sete por seis, e não de sete por sete.
+     *
+     * @param tipo  quem vem
+     * @param coven quantas bruxas ele pede, porque alguns só se fazem em grupo
+     */
+    public record SummonCreature(java.util.function.Supplier<EntityType<? extends Mob>> tipo, int coven)
+            implements Rite {
+        /** O desenho do teto: 1 conta um, 2 conta cem. */
+        private static final int[][] TETO = {
+                {0, 0, 1, 1, 1, 0, 0},
+                {0, 1, 1, 1, 1, 1, 0},
+                {1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 2, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1},
+                {0, 1, 1, 1, 1, 1, 0},
+                {0, 0, 1, 1, 1, 0, 0},
+        };
+
+        /** E quantos estorvos ele aguenta. */
+        public static final int ESTORVOS = 1;
+
+        /** Conta o que há de sólido nas três camadas em cima do círculo. */
+        public static int estorvos(ServerLevel level, BlockPos onde) {
+            int conta = 0;
+            for (int y = 1; y <= 3; y++) {
+                for (int z = 0; z < TETO.length - 1; z++) {
+                    for (int x = 0; x < TETO[z].length; x++) {
+                        int quanto = TETO[TETO.length - 1 - z][x];
+                        if (quanto == 0) continue;
+                        BlockPos casa = onde.offset(x - 3, y, z - 3);
+                        if (!level.getBlockState(casa).isSolid()) continue;
+                        conta += quanto == 2 ? 100 : 1;
+                    }
+                }
+            }
+            return conta;
+        }
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                if (rito.coven() < this.coven) {
+                    avisa(level, onde, rito, "message.thaumcraft.coven_too_small");
+                    return RiteStep.Result.ABORTED_REFUND;
+                }
+                if (estorvos(level, onde) > ESTORVOS) {
+                    level.sendParticles(ParticleTypes.LARGE_SMOKE, onde.getX() + 0.5, onde.getY() + 1.0,
+                            onde.getZ() + 0.5, 32, 0.5, 2.0, 0.5, 0.02);
+                    avisa(level, onde, rito, "message.thaumcraft.obstructed_circle");
+                    return RiteStep.Result.ABORTED_REFUND;
+                }
+
+                Mob quem = this.tipo.get().create(level,
+                        net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+                if (quem == null) return RiteStep.Result.ABORTED_REFUND;
+                quem.snapTo(onde.getX() + 0.5, onde.getY() + 1.0, onde.getZ() + 0.5, 1.0f, 0.0f);
+                quem.finalizeSpawn(level, level.getCurrentDifficultyAt(quem.blockPosition()),
+                        net.minecraft.world.entity.EntitySpawnReason.TRIGGERED, null);
+                level.addFreshEntity(quem);
+
+                level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
+                        onde.getZ() + 0.5, 48, 0.5, 1.0, 0.5, 0.1);
+                level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    /**
+     * Chamar os bichos do mato: o {@code RiteCallCreatures} do Witchery.
+     *
+     * <p>Ele não cria nada — ele <b>traz</b>. De sessenta em sessenta batidas olha <b>um oitavo</b> do mundo em
+     * volta, uma caixa de cento e vinte e oito blocos num dos oito cantos, e teleporta até <b>dois</b> dos
+     * bichos que achar ali para junto do círculo. Rodando os oito cantos, ele acaba por varrer tudo à volta.
+     *
+     * <p>É um rito de <b>sustento</b>: duzentas e cinquenta voltas, e só então para. E pede <b>três bruxas</b>
+     * — sozinha, ninguém chama o mato inteiro.
+     */
+    public record CallCreatures(java.util.function.Supplier<List<EntityType<?>>> quais) implements Rite {
+        /** Até onde o chamado chega, e de quanto em quanto ele olha. */
+        public static final double ALCANCE = 128.0;
+        public static final int EVERY = 60;
+        /** Quantos de cada vez, e quantas voltas ao todo. */
+        public static final int DE_CADA_VEZ = 2;
+        public static final int VOLTAS = 250;
+        /** O coven que ele pede. */
+        public static final int COVEN = 3;
+        /** E nada que esteja a menos disto é chamado: já está perto. */
+        public static final double PERTO_DEMAIS = 32.0;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % EVERY != 0L) return RiteStep.Result.STARTING;
+                if (rito.coven() < COVEN) {
+                    avisa(level, onde, rito, "message.thaumcraft.coven_too_small");
+                    return RiteStep.Result.ABORTED_REFUND;
+                }
+
+                int volta = rito.advance();
+                chama(level, onde, this.quais.get(), volta % 8);
+                return volta < VOLTAS ? RiteStep.Result.UPKEEP : RiteStep.Result.COMPLETED;
+            });
+        }
+
+        /** Um dos oito cantos: quatro por baixo do círculo e quatro por cima. */
+        private static void chama(ServerLevel level, BlockPos onde, List<EntityType<?>> quais, int canto) {
+            double x = onde.getX();
+            double y = onde.getY();
+            double z = onde.getZ();
+            boolean porCima = canto >= 4;
+            boolean paraLeste = canto == 0 || canto == 2 || canto == 5 || canto == 7;
+            boolean paraSul = canto == 2 || canto == 3 || canto == 5 || canto == 6;
+
+            var caixa = new net.minecraft.world.phys.AABB(
+                    paraLeste ? x : x - ALCANCE, porCima ? y + 1.0 : y - 10.0, paraSul ? z : z - ALCANCE,
+                    paraLeste ? x + ALCANCE : x, porCima ? y + 10.0 : y, paraSul ? z + ALCANCE : z);
+
+            int trazidos = 0;
+            for (Mob bicho : level.getEntitiesOfClass(Mob.class, caixa)) {
+                if (!quais.contains(bicho.getType())) continue;
+                if (bicho.distanceToSqr(x, y, z) <= PERTO_DEMAIS) continue;
+                var sorte = level.getRandom();
+                bicho.snapTo(x - 2.0 + sorte.nextInt(5), y + 1.0, z - 2.0 + sorte.nextInt(5),
+                        bicho.getYRot(), bicho.getXRot());
+                level.sendParticles(ParticleTypes.PORTAL, bicho.getX(), bicho.getY() + 0.5, bicho.getZ(),
+                        16, 0.3, 0.5, 0.3, 0.1);
+                if (++trazidos >= DE_CADA_VEZ) return;
+            }
+        }
+    }
+
+    /**
+     * A Chuva de Sapos: o {@code RiteRainOfToads} do Witchery.
+     *
+     * <p>Quatro raios, um de trinta em trinta batidas, e ao <b>quarto o céu fecha</b> — de cinco a quinze
+     * minutos de chuva. Daí em diante <b>caem sapos</b>, de oito a dezessete de cada vez, num anel entre cinco
+     * e dezesseis blocos do círculo e de oito a catorze blocos acima do chão.
+     *
+     * <p>Os sapos <b>têm hora para acabar</b>: meio minuto, e somem. É o {@code setTimeToLive} do original, e
+     * sem ele a brincadeira deixava o mapa cheio de sapos para sempre.
+     *
+     * <p>Pede <b>uma bruxa</b> no coven: é o mais barato dos que pedem gente.
+     */
+    public record RainOfToads(int minRadius, int maxRadius, int bolts) implements Rite {
+        public static final int EVERY = 30;
+        public static final int VOLTAS = 200;
+        public static final int COVEN = 1;
+        /** Quantas voltas de raio antes de começarem a cair sapos. */
+        public static final int RAIOS = 4;
+        /** E quanto tempo um sapo chovido dura: os trinta segundos do original. */
+        public static final int VIDA_DO_SAPO = 600;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % EVERY != 0L) return RiteStep.Result.STARTING;
+                if (rito.coven() < COVEN) {
+                    avisa(level, onde, rito, "message.thaumcraft.coven_too_small");
+                    return RiteStep.Result.ABORTED_REFUND;
+                }
+
+                int fase = rito.advance();
+                if (fase <= RAIOS) {
+                    if (fase == RAIOS && !level.isRaining()) {
+                        // o tempo do mundo de hoje mora num guardado à parte, e não no ServerLevel
+                        int quanto = (300 + level.getRandom().nextInt(600)) * 20;
+                        var tempo = level.getWeatherData();
+                        tempo.setClearWeatherTime(0);
+                        tempo.setRainTime(quanto);
+                        tempo.setRaining(true);
+                    }
+                    this.raio(level, onde);
+                    return RiteStep.Result.STARTING;
+                }
+
+                int quantos = level.getRandom().nextInt(this.bolts) + 8;
+                for (int n = 0; n < quantos; n++) {
+                    BlockPos casa = this.umaCasa(level, onde);
+                    if (!level.getBlockState(casa).isAir()) continue;
+                    var sapo = net.thaumcraft.occulta.OccultaEntities.TOAD.create(level,
+                            net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+                    if (sapo == null) continue;
+                    sapo.snapTo(casa.getX() + 0.5, casa.getY() + 8 + level.getRandom().nextInt(7),
+                            casa.getZ() + 0.5, 0.0f, 0.0f);
+                    sapo.choveu(VIDA_DO_SAPO);
+                    level.addFreshEntity(sapo);
+                }
+                return fase < VOLTAS ? RiteStep.Result.UPKEEP : RiteStep.Result.COMPLETED;
+            });
+        }
+
+        /** Uma casa do anel: entre o raio de dentro e o de fora, nunca no meio. */
+        private BlockPos umaCasa(ServerLevel level, BlockPos onde) {
+            int vão = this.maxRadius - this.minRadius;
+            int ax = level.getRandom().nextInt(vão * 2 + 1);
+            if (ax > vão) ax += this.minRadius * 2;
+            int az = level.getRandom().nextInt(vão * 2 + 1);
+            if (az > vão) az += this.minRadius * 2;
+            int x = onde.getX() - this.maxRadius + ax;
+            int z = onde.getZ() - this.maxRadius + az;
+            return new BlockPos(x, level.getHeight(
+                    net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, x, z), z);
+        }
+
+        private void raio(ServerLevel level, BlockPos onde) {
+            BlockPos casa = this.umaCasa(level, onde);
+            var raio = net.minecraft.world.entity.EntityTypes.LIGHTNING_BOLT.create(level,
+                    net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            if (raio == null) return;
+            raio.snapTo(casa.getX() + 0.5, onde.getY(), casa.getZ() + 0.5, 0.0f, 0.0f);
+            level.addFreshEntity(raio);
+        }
+    }
+
+    /**
+     * O recado de quando um rito desiste: o {@code RiteRegistry.RiteError} do original.
+     *
+     * <p>Um tambor, e a frase em vermelho para quem o começou. Sem ele, um rito que recusa parece um rito
+     * quebrado — e metade dos que recusam, recusam por coisas que se arranjam.
+     */
+    private static void avisa(ServerLevel level, BlockPos onde, ActiveRite rito, String oquê) {
+        level.playSound(null, onde, SoundEvents.NOTE_BLOCK_SNARE.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
+        Player gente = rito.starter(level);
+        if (gente != null) {
+            gente.sendSystemMessage(net.minecraft.network.chat.Component.translatable(oquê)
+                    .withStyle(net.minecraft.ChatFormatting.RED));
+        }
+    }
+
     public static void register() {
         RiteRegistry.register("tc.rite.cook", new Cook(5.0f, 0.08),
                 new Sacrifice.Both(
@@ -1183,6 +2232,274 @@ public final class Rites {
                         new Sacrifice.Power(3000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
                 java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
+
+        /*
+         * A Maldição da Praga: um anel de oitenta blocos que seca tudo o que encontra. Pede a Pedra
+         * Sintonizada Carregada, a Sopa de Redstone, o Fedor do Azar, olho de aranha, creme de magma, carne
+         * podre e um diamante — e um anel de vinte e oito glifos no de fora.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.curseblight",
+                new Blight(80, 15),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED,
+                        net.thaumcraft.occulta.OccultaItems.REDSTONE_SOUP,
+                        net.thaumcraft.occulta.OccultaItems.REEK_OF_MISFORTUNE,
+                        Items.SPIDER_EYE, Items.MAGMA_CREAM, Items.ROTTEN_FLESH, Items.DIAMOND),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        // ---------------------------------------------------------- o prado, e as bonecas corrompidas
+
+        /*
+         * O Poder da Natureza: o contrário da Praga. Cento e cinquenta voltas plantando relva, mudas e
+         * flores num raio de catorze. Pede o de Brotação e as sete mudas, num anel de vinte e oito.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.naturespower",
+                new NaturesPower(14, 8, 150, 2),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_SPROUTING,
+                        net.thaumcraft.occulta.OccultaItems.WOOD.get("rowan_sapling"),
+                        net.thaumcraft.occulta.OccultaItems.WOOD.get("alder_sapling"),
+                        net.thaumcraft.occulta.OccultaItems.WOOD.get("hawthorn_sapling"),
+                        Items.OAK_SAPLING, Items.SPRUCE_SAPLING, Items.BIRCH_SAPLING,
+                        Items.JUNGLE_SAPLING),
+                new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * E o que corrompe as bonecas de proteção de quem o vínculo prender — dez delas. Pede o gato, e sem
+         * ele recusa. Sete mil de poder, num anel de vinte e oito no de fora.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.corruptvoodooprotection",
+                new CursePoppets(1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.EXHALE_OF_THE_HORNED_ONE,
+                                net.thaumcraft.occulta.OccultaItems.VOODOO_PROTECTION_POPPET,
+                                Items.BLAZE_POWDER,
+                                net.thaumcraft.occulta.OccultaItems.SPECTRAL_DUST),
+                        new Sacrifice.Power(7000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        // ---------------------------------------------------------- os que empurram, puxam e repintam
+
+        /*
+         * O Rito da Proteção: um anel de quatro blocos que empurra tudo para fora, por 0,8 de poder por
+         * batida, para sempre. Uma pena e um pó de redstone, num anel de dezesseis glifos.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.protection",
+                new PushCircle(4, 0.8f, false),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.FEATHER, Items.REDSTONE),
+                        new Sacrifice.Power(500.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /* E o do Aprisionamento, que é o mesmo com o sinal trocado: puxa tudo para dentro. */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.imprisonment",
+                new PushCircle(4, 0.8f, true),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.SLIME_BALL, Items.REDSTONE),
+                        new Sacrifice.Power(500.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * O dos minérios que sobem: oito blocos de lado, trinta camadas, ferro — e ouro também, se o coven
+         * estiver cheio. Num anel de quarenta glifos no meio.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.teleportironore",
+                new TransposeOres(8, 30, List.of(Blocks.IRON_ORE, Blocks.GOLD_ORE)),
+                new Sacrifice.Items(Items.ENDER_PEARL, Items.IRON_INGOT, Items.BLAZE_POWDER,
+                        net.thaumcraft.occulta.OccultaItems.DIAMOND_VAPOUR,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(40, 0, 0), RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * E o que repinta um anel de glifos com o giz que se largar: gesso e a Arthana, mil de poder, e
+         * nenhum anel pedido — porque o anel que ele muda é o que já lá estiver.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.glyphictransform",
+                new GlyphicTransformation(),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.GYPSUM,
+                                net.thaumcraft.occulta.OccultaItems.ARTHANA),
+                        new Sacrifice.Power(1000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        // ---------------------------------------------------------- as maldições
+        // Todas pedem um VÍNCULO: é por ele que elas atravessam o mundo e pegam em quem não está lá.
+        // Pôr pede o Bafo do Cornudo e um anel de vinte e oito glifos NO DE FORA; tirar pede o Sopro da
+        // Deusa e um anel de dezesseis NO DE DENTRO. Dois mil de poder, menos o Pesadelo, que pede dez mil.
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cursecreature",
+                new CurseCreature(true, net.thaumcraft.occulta.curse.Curse.CURSED, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.EXHALE_OF_THE_HORNED_ONE,
+                                Items.SPIDER_EYE, Items.GUNPOWDER,
+                                net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.curseinsanity",
+                new CurseCreature(true, net.thaumcraft.occulta.curse.Curse.INSANITY, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.EXHALE_OF_THE_HORNED_ONE,
+                                Items.POISONOUS_POTATO, Items.SUGAR,
+                                net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cursenightmare",
+                new CurseCreature(true, net.thaumcraft.occulta.curse.Curse.WAKING_NIGHTMARE, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.EXHALE_OF_THE_HORNED_ONE,
+                                net.thaumcraft.occulta.OccultaItems.MELLIFLUOUS_HUNGER,
+                                net.thaumcraft.occulta.OccultaItems.TORMENTED_TWINE, Items.DIAMOND),
+                        new Sacrifice.Power(10000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cursesinking",
+                new CurseCreature(true, net.thaumcraft.occulta.curse.Curse.SINKING, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.EXHALE_OF_THE_HORNED_ONE,
+                                Items.INK_SAC, Items.NETHER_WART,
+                                net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.removecurse",
+                new CurseCreature(false, net.thaumcraft.occulta.curse.Curse.CURSED, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.BREATH_OF_THE_GODDESS,
+                                Items.GHAST_TEAR, Items.GUNPOWDER,
+                                net.thaumcraft.occulta.OccultaItems.BREW_OF_LOVE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.removeinsanity",
+                new CurseCreature(false, net.thaumcraft.occulta.curse.Curse.INSANITY, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.BREATH_OF_THE_GODDESS,
+                                Items.BAKED_POTATO, Items.SUGAR,
+                                net.thaumcraft.occulta.OccultaItems.BREW_OF_LOVE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.removesinking",
+                new CurseCreature(false, net.thaumcraft.occulta.curse.Curse.SINKING, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.BREATH_OF_THE_GODDESS,
+                                Items.BONE_MEAL, Items.NETHER_WART,
+                                net.thaumcraft.occulta.OccultaItems.BREW_OF_THE_DEPTHS),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.curenightmare",
+                new CurseCreature(false, net.thaumcraft.occulta.curse.Curse.WAKING_NIGHTMARE, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.BREATH_OF_THE_GODDESS,
+                                Items.GOLDEN_CARROT,
+                                net.thaumcraft.occulta.OccultaItems.TORMENTED_TWINE,
+                                net.thaumcraft.occulta.OccultaItems.BREW_OF_LOVE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cureoverheating",
+                new CurseCreature(false, net.thaumcraft.occulta.curse.Curse.OVERHEATING, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.BREATH_OF_THE_GODDESS,
+                                net.thaumcraft.occulta.OccultaItems.ICY_NEEDLE, Items.BLAZE_POWDER,
+                                net.thaumcraft.occulta.OccultaItems.BREW_OF_THE_DEPTHS),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        // ---------------------------------------------------------- os que chamam
+
+        /*
+         * Chamar uma Bruxa: a do próprio jogo, e não a do coven. Dois mil de poder e um anel de dezesseis
+         * glifos, no anel de FORA — que é o que o torna mais caro de desenhar do que de pagar.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.summonwitch",
+                new SummonCreature(() -> net.minecraft.world.entity.EntityTypes.WITCH, 0),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.DIAMOND_VAPOUR,
+                                net.thaumcraft.occulta.OccultaItems.EXHALE_OF_THE_HORNED_ONE,
+                                Items.GHAST_TEAR, net.thaumcraft.occulta.OccultaItems.ARTHANA,
+                                Items.SPIDER_EYE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(16, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * Chamar o Wither. Pede uma caveira de wither, Vapor de Diamante, uma pérola — e um aldeão vivo
+         * dentro do círculo. Quatro mil de poder, e dois anéis: vinte e oito e quarenta.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.summonwither",
+                new SummonCreature(() -> net.minecraft.world.entity.EntityTypes.WITHER, 0),
+                new Sacrifice.Both(
+                        new Sacrifice.Both(
+                                new Sacrifice.Items(Items.WITHER_SKELETON_SKULL,
+                                        net.thaumcraft.occulta.OccultaItems.DIAMOND_VAPOUR,
+                                        Items.ENDER_PEARL),
+                                new Sacrifice.Living(net.minecraft.world.entity.EntityTypes.VILLAGER)),
+                        new Sacrifice.Power(4000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * Chamar os Bichos: leite, feno, maçã, carne, peixe, cogumelo, cenoura e semente — a despensa toda —
+         * e seis mil de poder, num anel de quarenta glifos no MEIO. Pede três bruxas.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.callbeasts",
+                new CallCreatures(() -> List.of(
+                        net.minecraft.world.entity.EntityTypes.PIG,
+                        net.minecraft.world.entity.EntityTypes.CHICKEN,
+                        net.minecraft.world.entity.EntityTypes.COW,
+                        net.minecraft.world.entity.EntityTypes.SHEEP,
+                        net.minecraft.world.entity.EntityTypes.MOOSHROOM,
+                        net.minecraft.world.entity.EntityTypes.WOLF,
+                        net.minecraft.world.entity.EntityTypes.CAT)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.MILK_BUCKET, Items.HAY_BLOCK, Items.APPLE,
+                                Items.BEEF, Items.COD, Items.BROWN_MUSHROOM, Items.CARROT,
+                                Items.WHEAT_SEEDS),
+                        new Sacrifice.Power(6000.0f, 20)),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(40, 0, 0), RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * A Chuva de Sapos: quatro raios, o céu que fecha, e sapos a cair num anel de cinco a dezesseis
+         * blocos. Um anel de vinte e oito glifos no de fora, e uma bruxa de coven.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.rainoftoads",
+                new RainOfToads(5, 16, 10),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED,
+                        net.thaumcraft.occulta.OccultaItems.REDSTONE_SOUP,
+                        net.thaumcraft.occulta.OccultaItems.REEK_OF_MISFORTUNE,
+                        net.thaumcraft.occulta.OccultaItems.TOE_OF_FROG,
+                        Items.WATER_BUCKET,
+                        net.thaumcraft.occulta.OccultaItems.BELLADONNA_FLOWER),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // o Rito de Infusão, que prende um demônio num espelho — e é de onde todo espelho vem
         RiteRegistry.register("tc.rite.mirror",

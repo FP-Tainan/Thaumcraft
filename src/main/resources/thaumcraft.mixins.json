@@ -30,7 +30,8 @@
     "ItemEntitySalisMixin",
     "MinecraftServerLevelsAccessor",
     "MobSpawnReasonMixin",
-    "LivingEntityArcanaEffectsMixin"
+    "LivingEntityArcanaEffectsMixin",
+    "LivingEntityCurseMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",

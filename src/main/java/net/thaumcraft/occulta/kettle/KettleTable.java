@@ -23,6 +23,13 @@ public final class KettleTable {
 
     public static void register() {
         // ---------------------------------------------------------- os frascos que se atiram
+        // ---------------------------------------------------------- o Cozimento do Grotesco
+        // Três de cada vez, quinhentos de poder, e a cor -13491946 do original lida como ARGB.
+        KettleRecipes.add(OccultaItems.BREW_GROTESQUE, 3, 0xFF3184D6, 500.0f,
+                OccultaItems.MUTANDIS_EXTREMIS, OccultaItems.MANDRAKE_ROOT,
+                OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.DOG_TONGUE,
+                Items.GOLDEN_APPLE, Items.POISONOUS_POTATO);
+
         // ---------------------------------------------------------- o Unguento do Voo
         // A cor é o -17620 do original, lido como cor de 32 bits: 0xFFFFBB6C.
         // <b>Um desvio declarado:</b> o original pede uma Poção de Rapidez longa e de arremesso, com o número

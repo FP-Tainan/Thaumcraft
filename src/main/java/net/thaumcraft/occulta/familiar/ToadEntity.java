@@ -100,6 +100,30 @@ public class ToadEntity extends TamableAnimal {
     }
 
     /** Vinculado, ele aguenta o que um familiar tem de aguentar. */
+    /**
+     * Um sapo que <b>caiu do céu</b> tem hora para acabar: o {@code setTimeToLive} do original.
+     *
+     * <p>Sem isto, a Chuva de Sapos deixava o mapa cheio de sapos para sempre — e são dezessete de cada vez,
+     * de trinta em trinta batidas, por duzentas voltas.
+     */
+    public void choveu(int batidas) {
+        this.tempoQueResta = batidas;
+    }
+
+    private int tempoQueResta = -1;
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.tempoQueResta < 0 || this.level().isClientSide()) return;
+        if (--this.tempoQueResta > 0) return;
+        if (this.level() instanceof net.minecraft.server.level.ServerLevel mundo) {
+            mundo.sendParticles(net.minecraft.core.particles.ParticleTypes.POOF,
+                    this.getX(), this.getY() + 0.2, this.getZ(), 8, 0.2, 0.2, 0.2, 0.02);
+        }
+        this.discard();
+    }
+
     public void viraFamiliar() {
         var vida = this.getAttribute(Attributes.MAX_HEALTH);
         if (vida != null) vida.setBaseValue(VIDA_DE_FAMILIAR);

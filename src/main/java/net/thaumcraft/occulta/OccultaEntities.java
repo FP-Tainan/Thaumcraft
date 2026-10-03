@@ -136,6 +136,32 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.broom.BroomEntity::new, MobCategory.MISC)
                     .sized(1.2f, 0.5f).clientTrackingRange(10));
 
+    /**
+     * As três <b>visões</b> da Loucura: um creeper, uma aranha e um zumbi que não existem.
+     *
+     * <p>Cada uma tem o tamanho do bicho que finge ser, porque é pelo tamanho que se acredita nela.
+     */
+    public static final EntityType<net.thaumcraft.occulta.curse.IllusionEntity> ILLUSION_CREEPER =
+            register("illusion_creeper", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.curse.IllusionEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.curse.IllusionEntity::attributes))
+                    .sized(0.6f, 1.7f).eyeHeight(1.45f).clientTrackingRange(8));
+
+    public static final EntityType<net.thaumcraft.occulta.curse.IllusionEntity.Spider> ILLUSION_SPIDER =
+            register("illusion_spider", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.curse.IllusionEntity.Spider::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.curse.IllusionEntity::attributes))
+                    .sized(1.4f, 0.9f).eyeHeight(0.65f).clientTrackingRange(8));
+
+    public static final EntityType<net.thaumcraft.occulta.curse.IllusionEntity.Zombie> ILLUSION_ZOMBIE =
+            register("illusion_zombie", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.curse.IllusionEntity.Zombie::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.curse.IllusionEntity::attributes))
+                    .sized(0.6f, 1.95f).eyeHeight(1.74f).clientTrackingRange(8));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));
@@ -143,6 +169,12 @@ public final class OccultaEntities {
     }
 
     public static void init() {
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(ILLUSION_CREEPER, net.thaumcraft.occulta.curse.IllusionEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(ILLUSION_SPIDER, net.thaumcraft.occulta.curse.IllusionEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(ILLUSION_ZOMBIE, net.thaumcraft.occulta.curse.IllusionEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(MANDRAKE, MandrakeEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry

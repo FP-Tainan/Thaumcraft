@@ -4,7 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
@@ -168,6 +170,66 @@ public sealed interface Sacrifice {
             }
             level.playSound(null, onde, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0f, 1.0f);
             return Result.COMPLETED;
+        }
+    }
+
+    /**
+     * Um <b>vivo</b> dentro do círculo: o {@code SacrificeLiving} do Witchery.
+     *
+     * <p>Não é um item que se larga: é um bicho que tem de <b>estar lá</b> quando o rito corre, e que
+     * <b>some</b> quando ele o toma. Dois ritos deste porte o pedem, e os dois pedem um <b>aldeão</b> — que é
+     * o que lhes dá o peso que têm.
+     *
+     * <p><b>Ele não entra na conta de antes.</b> O {@code isMatch} do original devolve sempre que sim, e por
+     * isso o círculo aceita começar sem o bicho lá: quem descobre que falta é o <b>passo</b>, e aí o rito
+     * desiste e devolve o resto. É de propósito, e é o que faz um rito começar e morrer à vista de quem o fez.
+     */
+    record Living(EntityType<?> what) implements Sacrifice {
+        @Override
+        public boolean matches(ServerLevel level, BlockPos meio, List<ItemEntity> noChão) {
+            return true;
+        }
+
+        @Override
+        public void steps(List<RiteStep> fila) {
+            fila.add(new TakeLiving(this.what));
+        }
+
+        @Override
+        public List<ItemStack> shown() {
+            return List.of();
+        }
+    }
+
+    /** E o passo que o toma. */
+    record TakeLiving(EntityType<?> what) implements RiteStep {
+        @Override
+        public Result run(ServerLevel level, BlockPos onde, long ticks, ActiveRite rito) {
+            if (ticks % 20L != 0L) return Result.STARTING;
+
+            AABB dentro = new AABB(onde).inflate(RADIUS + 1.0, RADIUS + 1.0, RADIUS + 1.0);
+            for (var bicho : level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, dentro)) {
+                if (bicho.getType() != this.what) continue;
+                if (bicho.distanceToSqr(onde.getX(), onde.getY(), onde.getZ())
+                        > (RADIUS + 1.0) * (RADIUS + 1.0)) {
+                    continue;
+                }
+                level.sendParticles(net.minecraft.core.particles.ParticleTypes.PORTAL,
+                        bicho.getX(), bicho.getY() + 1.0, bicho.getZ(), 32, 0.5, 1.0, 0.5, 0.1);
+                level.playSound(null, bicho.blockPosition(), SoundEvents.GENERIC_EXTINGUISH_FIRE,
+                        SoundSource.BLOCKS, 1.0f, 1.0f);
+                bicho.discard();
+                return Result.COMPLETED;
+            }
+
+            Player gente = rito.starter(level);
+            if (gente != null) {
+                gente.sendSystemMessage(net.minecraft.network.chat.Component
+                        .translatable("message.thaumcraft.missing_living_sacrifice")
+                        .withStyle(net.minecraft.ChatFormatting.RED));
+            }
+            level.playSound(null, onde, SoundEvents.NOTE_BLOCK_SNARE.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
+            return Result.ABORTED_REFUND;
         }
     }
 
