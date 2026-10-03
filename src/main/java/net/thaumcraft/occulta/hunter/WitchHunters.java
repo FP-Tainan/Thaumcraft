@@ -97,7 +97,7 @@ public final class WitchHunters {
         quem.setAttached(RELÓGIO, Math.max(1L, level.getGameTime()));
     }
 
-    /** Se o relógio desta pessoa está a correr. */
+    /** Se o relógio desta pessoa está correndo. */
     public static boolean notado(Player quem) {
         return quem.getAttachedOrCreate(RELÓGIO) > 0L;
     }

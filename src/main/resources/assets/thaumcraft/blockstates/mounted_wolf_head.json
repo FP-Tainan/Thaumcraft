@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "rotation=0": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=1": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=2": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=3": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=4": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=5": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=6": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=7": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=8": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=9": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=10": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=11": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=12": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=13": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=14": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "rotation=15": { "model": "thaumcraft:block/mounted_wolf_head" }
+  }
+}

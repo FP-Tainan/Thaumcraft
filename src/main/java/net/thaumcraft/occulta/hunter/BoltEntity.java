@@ -192,7 +192,7 @@ public class BoltEntity extends AbstractArrow {
     private static boolean impuro(net.minecraft.world.entity.Entity quem) {
         if (!(quem instanceof LivingEntity vivo)) return false;
         if (vivo.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) return true;
-        // o diabrete e o demónio do original ainda não existem aqui; o que há de inferno é o que o jogo traz
+        // o diabrete e o demônio do original ainda não existem aqui; o que há de inferno é o que o jogo traz
         return vivo.getType().builtInRegistryHolder()
                 .is(net.minecraft.tags.EntityTypeTags.SENSITIVE_TO_SMITE);
     }

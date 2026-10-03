@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " w ",
+    "w#w",
+    "#d#"
+  ],
+  "key": {
+    "w": "thaumcraft:mounted_wolf_head",
+    "#": "minecraft:stone",
+    "d": "thaumcraft:wolfsbane_sprig"
+  },
+  "result": {
+    "id": "thaumcraft:werewolf_statue",
+    "count": 1
+  }
+}

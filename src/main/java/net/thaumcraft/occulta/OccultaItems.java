@@ -342,6 +342,20 @@ public final class OccultaItems {
     public static final Item SPINNING_WHEEL = register("spinning_wheel", properties ->
             new BlockItem(OccultaBlocks.SPINNING_WHEEL, properties.useBlockDescriptionPrefix()));
 
+    /**
+     * A <b>Cabeça de Lobo</b>, que se põe no chão ou se prega numa parede.
+     *
+     * <p>Um item só para os dois blocos, como o crânio do jogo.
+     */
+    public static final Item WOLF_HEAD = register("mounted_wolf_head", properties ->
+            new net.minecraft.world.item.StandingAndWallBlockItem(OccultaBlocks.WOLF_HEAD,
+                    OccultaBlocks.WOLF_HEAD_WALL, net.minecraft.core.Direction.DOWN,
+                    properties.useBlockDescriptionPrefix()));
+
+    /** A <b>Estátua do Lobisomem</b>, que é quem dá os dez graus. */
+    public static final Item WEREWOLF_STATUE = register("werewolf_statue", properties ->
+            new BlockItem(OccultaBlocks.WEREWOLF_STATUE, properties.useBlockDescriptionPrefix()));
+
     /** O Braseiro, em item. */
     public static final Item BRAZIER = register("brazier", properties ->
             new BlockItem(OccultaBlocks.BRAZIER, properties.useBlockDescriptionPrefix()));
@@ -593,6 +607,86 @@ public final class OccultaItems {
             new net.thaumcraft.occulta.wolf.MoonCharmItem(properties.stacksTo(1)
                     .durability(net.thaumcraft.occulta.wolf.MoonCharmItem.AGUENTA)
                     .rarity(net.minecraft.world.item.Rarity.RARE)));
+
+    /**
+     * O <b>Chifre da Caça</b>, que a Estátua do Lobisomem dá ao quarto grau.
+     *
+     * <p>Sopra-se uma vez e ele parte-se: aguenta um e gasta dois.
+     */
+    public static final Item HORN_OF_THE_HUNT = register("horn_of_the_hunt", properties ->
+            new net.thaumcraft.occulta.wolf.HornOfTheHuntItem(properties.stacksTo(1)
+                    .durability(net.thaumcraft.occulta.wolf.HornOfTheHuntItem.AGUENTA)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)));
+
+    /** O dano e a velocidade da lança: um a mais do que a espada de diamante, e a cadência dela. */
+    public static final float LANÇA_DANO = 4.0f;
+    public static final float LANÇA_VELOCIDADE = -2.4f;
+
+    /**
+     * E o que ela apara: <b>metade</b>, num arco de noventa graus.
+     *
+     * <p>No original a lança é uma {@code ItemSword}, e na 1.7.10 <b>toda espada aparava</b> — segurava-se o
+     * botão direito e o golpe valia metade. Hoje só o escudo apara, e por isso a lança diz por si mesma que
+     * apara: é a mesma metade, pelo jeito de hoje. Sem isto o aviso dela mentiria, porque o lobo que ela
+     * chama só vem a quem apanha <b>aparando</b>.
+     */
+    public static final float LANÇA_APARA = 0.5f;
+    public static final float LANÇA_ARCO = 90.0f;
+
+    /**
+     * A <b>Lança do Caçador</b>, que cai do Caçador Cornudo uma vez em quatro.
+     *
+     * <p>Um ponto de dano <b>acima de uma espada de diamante</b> — é o {@code BONUS_DAMAGE} do original — e,
+     * na mão, <b>ninguém a empurra</b>: a resistência a empurrão é o que faz dela a arma de quem não sai do
+     * lugar.
+     *
+     * <p>O original ainda lhe nega cavar qualquer bloco. Hoje as regras de cavar de uma espada são as do
+     * jogo, e forçá-las a nada não mudaria nada que se sinta: a lança não é ferramenta de ninguém.
+     */
+    public static final Item HUNTSMANS_SPEAR = register("huntsmans_spear", properties ->
+            new Item(properties
+                    .sword(net.minecraft.world.item.ToolMaterial.DIAMOND, LANÇA_DANO, LANÇA_VELOCIDADE)
+                    .component(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,
+                            net.minecraft.world.item.component.ItemAttributeModifiers.builder()
+                                    .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,
+                                            new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                                                    Item.BASE_ATTACK_DAMAGE_ID, LANÇA_DANO,
+                                                    net.minecraft.world.entity.ai.attributes.AttributeModifier
+                                                            .Operation.ADD_VALUE),
+                                            net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
+                                    .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED,
+                                            new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                                                    Item.BASE_ATTACK_SPEED_ID, LANÇA_VELOCIDADE,
+                                                    net.minecraft.world.entity.ai.attributes.AttributeModifier
+                                                            .Operation.ADD_VALUE),
+                                            net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
+                                    .add(net.minecraft.world.entity.ai.attributes.Attributes
+                                                    .KNOCKBACK_RESISTANCE,
+                                            new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                                                    net.thaumcraft.Thaumcraft.id("huntsmans_spear_knockback"),
+                                                    1.0, net.minecraft.world.entity.ai.attributes
+                                                    .AttributeModifier.Operation.ADD_VALUE),
+                                            net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
+                                    .build())
+                    .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                    .component(net.minecraft.core.component.DataComponents.LORE,
+                            new net.minecraft.world.item.component.ItemLore(java.util.List.of(
+                                    net.minecraft.network.chat.Component
+                                            .translatable("tc.huntsmansspear.tip")
+                                            .withStyle(net.minecraft.ChatFormatting.DARK_PURPLE))))
+                    .component(net.minecraft.core.component.DataComponents.BLOCKS_ATTACKS,
+                            new net.minecraft.world.item.component.BlocksAttacks(0.0f, 1.0f,
+                                    java.util.List.of(new net.minecraft.world.item.component.BlocksAttacks
+                                            .DamageReduction(LANÇA_ARCO, java.util.Optional.empty(),
+                                            0.0f, LANÇA_APARA)),
+                                    net.minecraft.world.item.component.BlocksAttacks.ItemDamageFunction
+                                            .DEFAULT,
+                                    java.util.Optional.empty(), java.util.Optional.empty(),
+                                    java.util.Optional.empty()))
+                    .rarity(net.minecraft.world.item.Rarity.EPIC)));
+
+    /** O <b>Sangue Infernal</b>, que cai do Caçador Cornudo. */
+    public static final Item INFERNAL_BLOOD = register("infernal_blood", Item::new);
 
     public static final Item SILVER_DUST = register("silver_dust", Item::new);
 

@@ -39,7 +39,8 @@
     "LivingEntityOccultaHurtMixin",
     "BlockDropsFortuneMixin",
     "PlayerKeepInventoryMixin",
-    "PlayerWerewolfSizeMixin"
+    "PlayerWerewolfSizeMixin",
+    "MobXpAccessor"
   ],
   "client": [
     "ItemInHandRendererMixin",
@@ -53,7 +54,8 @@
     "ItemEntitySalisFxMixin",
     "LivingEntityRendererInvisibleMixin",
     "LivingEntityRendererColorfulMixin",
-    "LivingEntityRendererWerewolfMixin"
+    "LivingEntityRendererWerewolfMixin",
+    "MinecraftHowlMixin"
   ],
   "injectors": {
     "defaultRequire": 1

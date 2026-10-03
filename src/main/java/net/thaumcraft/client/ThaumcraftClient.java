@@ -171,6 +171,25 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.WERE_VILLAGER,
                 net.minecraft.client.renderer.entity.VillagerRenderer::new);
 
+        // e o Caçador Cornudo, que o Chifre da Caça chama
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.HornedHuntsmanModel.HUNTSMAN,
+                net.thaumcraft.occulta.client.HornedHuntsmanModel::huntsman);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.HORNED_HUNTSMAN,
+                net.thaumcraft.occulta.client.HornedHuntsmanRenderer::new);
+
+        // a Estátua do Lobisomem e a Lança do Caçador, que são modelos e não blocos
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.WerewolfStatueModel.STATUE,
+                net.thaumcraft.occulta.client.WerewolfStatueModel::statue);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.HuntsmansSpearRenderer.SPEAR,
+                net.thaumcraft.occulta.client.HuntsmansSpearRenderer::spear);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.WolfHeadRenderer.WOLF_HEAD,
+                net.thaumcraft.occulta.client.WolfHeadRenderer::wolfHead);
+
         // o Ars Occulta: as três visões da Loucura
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.ILLUSION_CREEPER,
@@ -231,6 +250,12 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.SPINNING_WHEEL_ENTITY,
                 net.thaumcraft.occulta.client.SpinningWheelRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.WEREWOLF_STATUE_ENTITY,
+                net.thaumcraft.occulta.client.WerewolfStatueRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.WOLF_HEAD_ENTITY,
+                net.thaumcraft.occulta.client.WolfHeadRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.BRAZIER_ENTITY,
                 net.thaumcraft.occulta.client.BrazierRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
@@ -239,6 +264,15 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("spinning_wheel"),
                 net.thaumcraft.occulta.client.SpinningWheelItemRenderer.Unbaked.CODEC);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("werewolf_statue"),
+                net.thaumcraft.occulta.client.WerewolfStatueItemRenderer.Unbaked.CODEC);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("huntsmans_spear"),
+                net.thaumcraft.occulta.client.HuntsmansSpearRenderer.Unbaked.CODEC);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("mounted_wolf_head"),
+                net.thaumcraft.occulta.client.WolfHeadItemRenderer.Unbaked.CODEC);
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("brazier"),
                 net.thaumcraft.occulta.client.BrazierItemRenderer.Unbaked.CODEC);

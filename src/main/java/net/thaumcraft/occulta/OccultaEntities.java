@@ -172,6 +172,20 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.wolf.WolfmanEntity::attributes))
                     .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(8));
 
+    /**
+     * O <b>Caçador Cornudo</b>, que vem quando se sopra o Chifre da Caça.
+     *
+     * <p>Um bloco e meio de largura por <b>três e um quinto de altura</b>: ele não passa por uma porta, e é
+     * de propósito.
+     */
+    public static final EntityType<net.thaumcraft.occulta.wolf.HornedHuntsmanEntity> HORNED_HUNTSMAN =
+            register("horned_huntsman", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.wolf.HornedHuntsmanEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.wolf.HornedHuntsmanEntity::attributes))
+                    .fireImmune()
+                    .sized(1.4f, 3.2f).eyeHeight(2.9f).clientTrackingRange(16));
+
     /** E o <b>aldeão que vira</b>, que por fora não se distingue de um aldeão qualquer. */
     public static final EntityType<net.thaumcraft.occulta.wolf.WereVillagerEntity> WERE_VILLAGER =
             register("were_villager", FabricEntityType.Builder.createMob(
@@ -247,6 +261,8 @@ public final class OccultaEntities {
                 .register(VAMPIRE, net.thaumcraft.occulta.vampire.VampireEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(WOLFMAN, net.thaumcraft.occulta.wolf.WolfmanEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(HORNED_HUNTSMAN, net.thaumcraft.occulta.wolf.HornedHuntsmanEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(WERE_VILLAGER, net.minecraft.world.entity.npc.villager.Villager.createAttributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry

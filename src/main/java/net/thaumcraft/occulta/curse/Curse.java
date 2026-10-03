@@ -285,37 +285,12 @@ public enum Curse implements StringRepresentable {
     }
 
     /**
-     * Põe um bicho perto de alguém, entre duas distâncias: o {@code Infusion.spawnCreature} do original.
-     *
-     * <p>Ele tenta dez vezes achar um lugar com chão e dois blocos de ar, no anel entre o mínimo e o máximo.
-     * Não achando, não nasce nada — e é melhor assim do que um creeper dentro da parede.
+     * Põe um bicho perto de quem tem a maldição: o {@code Infusion.spawnCreature} do original, que está
+     * em {@link net.thaumcraft.occulta.Spawn}.
      */
     @Nullable
     private static Entity nasce(ServerLevel level, net.minecraft.world.entity.EntityType<?> qual,
-                                Player quem, int perto, int longe) {
-        var sorte = level.getRandom();
-        for (int tentativa = 0; tentativa < 10; tentativa++) {
-            int dx = Mth.nextInt(sorte, perto, longe) * (sorte.nextBoolean() ? 1 : -1);
-            int dz = Mth.nextInt(sorte, perto, longe) * (sorte.nextBoolean() ? 1 : -1);
-            BlockPos onde = quem.blockPosition().offset(dx, 0, dz);
-
-            for (int dy = 2; dy >= -2; dy--) {
-                BlockPos casa = onde.offset(0, dy, 0);
-                if (!level.getBlockState(casa.below()).isSolid()) continue;
-                if (!level.isEmptyBlock(casa) || !level.isEmptyBlock(casa.above())) continue;
-
-                var bicho = qual.create(level, EntitySpawnReason.TRIGGERED);
-                if (bicho == null) return null;
-                bicho.snapTo(casa.getX() + 0.5, casa.getY(), casa.getZ() + 0.5,
-                        sorte.nextFloat() * 360.0f, 0.0f);
-                if (bicho instanceof net.minecraft.world.entity.Mob mob) {
-                    mob.finalizeSpawn(level, level.getCurrentDifficultyAt(casa),
-                            EntitySpawnReason.TRIGGERED, null);
-                }
-                level.addFreshEntity(bicho);
-                return bicho;
-            }
-        }
-        return null;
+                               Player quem, int perto, int longe) {
+        return net.thaumcraft.occulta.Spawn.perto(level, qual, quem.blockPosition(), perto, longe);
     }
 }

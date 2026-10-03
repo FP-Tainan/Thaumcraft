@@ -263,6 +263,42 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.spinning.SpinningWheelBlockEntity::new,
                             java.util.Set.of(SPINNING_WHEEL)));
 
+    /**
+     * A <b>Cabeça de Lobo</b>, que cai de um lobo morto e é o que a Estátua do Lobisomem pede.
+     *
+     * <p>Dois blocos, como o crânio do jogo: um no chão e outro na parede.
+     */
+    public static final Block WOLF_HEAD = register("mounted_wolf_head", properties ->
+            new net.thaumcraft.occulta.wolf.WolfHeadBlock(properties.mapColor(MapColor.WOOL)
+                    .strength(1.0f).sound(SoundType.WOOL).noOcclusion()));
+
+    public static final Block WOLF_HEAD_WALL = register("mounted_wolf_head_wall", properties ->
+            new net.thaumcraft.occulta.wolf.WolfHeadWallBlock(properties.mapColor(MapColor.WOOL)
+                    .strength(1.0f).sound(SoundType.WOOL).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.wolf.WolfHeadBlockEntity> WOLF_HEAD_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("mounted_wolf_head"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.wolf.WolfHeadBlockEntity::new,
+                            java.util.Set.of(WOLF_HEAD, WOLF_HEAD_WALL)));
+
+    /**
+     * A <b>Estátua do Lobisomem</b>, que é quem dá os dez graus.
+     *
+     * <p>Pedra que <b>aguenta mil de estouro</b>: não se tira um lugar de culto com um creeper.
+     */
+    public static final Block WEREWOLF_STATUE = register("werewolf_statue", properties ->
+            new net.thaumcraft.occulta.wolf.WerewolfStatueBlock(properties.mapColor(MapColor.STONE)
+                    .strength(2.5f, 1000.0f).sound(SoundType.STONE).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.wolf.WerewolfStatueBlockEntity> WEREWOLF_STATUE_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("werewolf_statue"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.wolf.WerewolfStatueBlockEntity::new,
+                            java.util.Set.of(WEREWOLF_STATUE)));
+
     /** O Braseiro, em que o que arde vale para quem está em volta. */
     public static final Block BRAZIER = register("brazier", properties ->
             new net.thaumcraft.occulta.brazier.BrazierBlock(properties.mapColor(MapColor.METAL)

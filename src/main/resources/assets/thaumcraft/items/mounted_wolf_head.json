@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/mounted_wolf_head",
+    "model": {
+      "type": "thaumcraft:mounted_wolf_head"
+    }
+  }
+}

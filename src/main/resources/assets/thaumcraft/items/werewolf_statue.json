@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/werewolf_statue",
+    "model": {
+      "type": "thaumcraft:werewolf_statue"
+    }
+  }
+}

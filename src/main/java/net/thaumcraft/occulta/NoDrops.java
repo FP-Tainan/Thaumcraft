@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
  * um apego, e quem a lê é o {@link net.thaumcraft.mixin.LivingEntityNoDropsMixin}.
  */
 public final class NoDrops {
-    /** A marca. Não guarda nada: só o facto de estar lá. */
+    /** A marca. Não guarda nada: só o fato de estar lá. */
     public static final AttachmentType<Unit> MARCA = AttachmentRegistry.<Unit>builder()
             .initializer(() -> null)
             .persistent(Unit.CODEC)

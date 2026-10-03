@@ -852,7 +852,7 @@ public final class OccultaEffects {
      * <b>dentro</b> do desenho, que lá corria com o bicho do servidor à mão.
      *
      * <p>Por isso a cor viaja num <b>apego sincronizado</b>, posto e tirado na batida de quem a tem. É menos
-     * uma cor por bicho do que um <b>facto</b>: este está pintado, e desta cor.
+     * uma cor por bicho do que um <b>fato</b>: este está pintado, e desta cor.
      */
     public static final net.fabricmc.fabric.api.attachment.v1.AttachmentType<Integer> COR =
             net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry.<Integer>builder()

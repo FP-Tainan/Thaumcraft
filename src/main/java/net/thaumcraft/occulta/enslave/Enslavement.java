@@ -39,7 +39,7 @@ import java.util.UUID;
  * deles, e sem este laço o frasco era uma arma que mordia quem a atirava.
  *
  * <p><b>Quem não se escraviza</b>, e são os do original: os <b>chefes</b>, os <b>golens</b>, as <b>bruxas</b>,
- * os <b>entes</b> — e, no original, também o demónio e o diabrete, que este porte ainda não tem.
+ * os <b>entes</b> — e, no original, também o demônio e o diabrete, que este porte ainda não tem.
  *
  * <p><b>Mudança declarada:</b> o original guarda o <b>nome</b> de quem escravizou, e acha a pessoa pelo nome.
  * Aqui se guarda o <b>UUID</b>. É estritamente melhor: um nome muda, e no original um bicho escravizado por

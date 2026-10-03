@@ -145,6 +145,9 @@ public record Werewolf(int grau, Forma forma) {
      *
      * <p>Baixar o grau a <b>zero</b> devolve a pessoa à forma de gente, mesmo que ela estivesse de lobo: é o
      * {@code setWerewolfLevel} do original, e é o que a cura faz.
+     *
+     * <p>E <b>apaga o degrau</b>: o que ele fez para subir não serve para o degrau seguinte, e os lugares
+     * onde uivou se esquecem. Cada degrau começa do zero.
      */
     public static void grau(Player quem, int grau) {
         int novo = Math.clamp(grau, 0, TETO);
@@ -153,6 +156,7 @@ public record Werewolf(int grau, Forma forma) {
 
         Forma forma = novo == 0 ? Forma.GENTE : era.forma();
         quem.setAttached(DATA, new Werewolf(novo, forma));
+        WerewolfQuest.limpa(quem);
         if (quem.level() instanceof ServerLevel level) WerewolfTick.arruma(level, quem);
     }
 
@@ -194,7 +198,7 @@ public record Werewolf(int grau, Forma forma) {
         return false;
     }
 
-    /** E se o acônito o está a segurar: o {@code isWolfsbaneActive}. */
+    /** E se o acônito o está segurando: o {@code isWolfsbaneActive}. */
     public static boolean temAcônito(LivingEntity quem) {
         return quem.hasEffect(OccultaEffects.WOLFSBANE);
     }

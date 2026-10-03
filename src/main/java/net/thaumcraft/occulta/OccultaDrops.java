@@ -61,12 +61,32 @@ public final class OccultaDrops {
     public static final float SKULL_ZOMBIE = 0.02f;
     public static final float SKULL_CREEPER = 0.01f;
 
+    /**
+     * E a <b>Cabeça de Lobo</b>, que é o troféu: uma em doze, e a Pilhagem soma mais uma em doze por grau.
+     *
+     * <p>O original escreve isso como {@code sorte(12) <= min(pilhagem, 3)}, que é a mesma coisa dita ao
+     * contrário — e é por isso que a conta aqui tem a base e o passo iguais.
+     */
+    public static final float WOLF_HEAD = 1.0f / 12.0f;
+    public static final float WOLF_HEAD_POR_GRAU = 1.0f / 12.0f;
+
     private OccultaDrops() {
     }
 
     public static void init() {
         LootTableEvents.MODIFY.register((key, table, source, registries) -> {
             if (!source.isBuiltin() || !key.identifier().getNamespace().equals("minecraft")) return;
+            // a Cabeça de Lobo, que é a única queda que a Pilhagem melhora
+            if (key.identifier().getPath().equals("entities/wolf")) {
+                table.withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                        .when(net.minecraft.world.level.storage.loot.predicates
+                                .LootItemRandomChanceWithEnchantedBonusCondition
+                                .randomChanceAndLootingBoost(registries, WOLF_HEAD, WOLF_HEAD_POR_GRAU))
+                        .add(LootItem.lootTableItem(OccultaItems.WOLF_HEAD)));
+            }
+
             for (var queda : QUEDAS) {
                 if (!key.identifier().getPath().equals("entities/" + queda.bicho())) continue;
                 var pilha = LootPool.lootPool()

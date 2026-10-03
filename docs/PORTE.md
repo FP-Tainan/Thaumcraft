@@ -6528,7 +6528,7 @@ exemplo. Quase nenhum efeito precisa dele; os que precisam, precisam muito.
    que trocasse de nome ficava preso a um nome que não existia mais.
 2. **Os dois chefes do jogo em vez da interface.** O `canCreatureBeEnslaved` pergunta
    `instanceof IBossDisplayData`, que é a interface da barra de chefe de 2014. Hoje não há interface nem
-   etiqueta de chefe: o que há são os dois chefes do jogo, e é por eles que se pergunta. O demónio e o
+   etiqueta de chefe: o que há são os dois chefes do jogo, e é por eles que se pergunta. O demônio e o
    diabrete, que o original também exclui, ainda não existem aqui.
 3. **A mira se atalha na cabeça.** No original o `onLivingSetAttackTarget` é um evento do Forge que corre
    depois de o alvo já estar posto e o desfaz. Aqui se atalha na cabeça do `setTarget` — o mesmo visto de mais
@@ -6795,7 +6795,7 @@ corpo é, do lado de quem olha, um porco qualquer. Em 2014 era igual, e o origin
 bicho **dentro** do desenho, que lá corria com o bicho do servidor à mão.
 
 Por isso a cor viaja num **apego sincronizado**, posto e tirado na batida de quem a tem, e o desenhista lê o
-apego. É menos uma cor do que um facto: este está pintado, e desta cor.
+apego. É menos uma cor do que um fato: este está pintado, e desta cor.
 
 **Traduções declaradas:**
 1. O original são duas chamadas de `glColor3f` em volta do desenho **inteiro**, camadas incluídas. Aqui é o
@@ -7049,3 +7049,177 @@ custa**, com a mão do lobo e as mãos do lobisomem; o Amuleto que não cai; a l
 não a deixam; o que cada forma dá e o que ela tira ao voltar; as duas tabelas linha por linha; o mando aos
 dois graus e o lobisomem aos cinco; e **o lobo que cabe onde uma pessoa não cabe**. E
 `OccultaWerewolfPlayerClientTest`, com as quatro telas da volta inteira.
+
+## A escada dos dez graus — o Altar do Lobo (2026-10-03)
+
+A outra metade da maior coisa do Witchery. A primeira trouxe **ser** lobisomem; esta traz **subir**.
+
+### Dez degraus, e nenhum deles é o seguinte
+
+Quem apanha a licantropia fica no **grau um**, e no grau um a lua manda nele e ele não manda em nada. Daí até
+ao décimo quem dá os degraus é o **Altar do Lobo** — um a um, e nunca dois.
+
+Os três primeiros são **coisas na mão**, e são de propósito os mais fáceis:
+
+| degrau | o que ela pede | o que ela dá |
+| --- | --- | --- |
+| 1 → 2 | **três barras de ouro** | o grau, e um **Amuleto da Lua** |
+| 2 → 3 | **trinta carnes de carneiro cruas** | o grau |
+| 3 → 4 | **dez línguas de cachorro** | o grau |
+
+Do quarto em diante ela deixa de pedir coisas e passa a pedir **feitos** — e cada feito só conta na **forma
+certa**:
+
+| degrau | o feito | a forma |
+| --- | --- | --- |
+| 4 → 5 | o **Caçador Cornudo** morto; ela dá o **Chifre da Caça** | qualquer |
+| 5 → 6 | **dez monstros mortos no ar** | de bicho, e **sem os pés no chão** |
+| 6 → 7 | **uivar em dezesseis lugares** diferentes | de **lobo**, e de noite |
+| 7 → 8 | **seis lobos amansados** com o focinho | de **lobo** |
+| 8 → 9 | **trinta porcos-zumbis** | de **lobisomem** |
+| 9 → 10 | **uma pessoa** — aldeão ou jogador | de bicho |
+
+É isso que faz da escada uma escada e não uma lista de compras: cada degrau **obriga a jogar de outro jeito**.
+O quinto obriga a saltar, o sexto a andar, o sétimo a aproximar-se de um lobo bravo sem bater nele, o oitavo a
+descer ao Nether de lobisomem, e o nono a fazer a coisa que ninguém faz por acaso.
+
+### O ouro compra sempre, e isso é uma falha que fica
+
+Do **segundo grau** em diante, chegar ao altar com três barras de ouro na mão compra um **Amuleto da Lua** —
+sempre, e **antes** de ele olhar o degrau. Tem uma consequência curiosa: um lobisomem de grau dois que chegue
+com ouro na mão **nunca passa do grau dois**, porque o altar lhe vende um amuleto em vez de lhe pedir o
+carneiro.
+
+É do original, letra por letra, e fica. A outra falha que fica é a do **Caçador**: matá-lo cumpre *qualquer*
+pedido que esteja em curso, e não só o do quarto degrau — quem estiver uivando pelo mundo e matar um Caçador
+que outro chamou sobe de graça. As duas estão declaradas no javadoc, porque tirá-las seria mudar a escada.
+
+### O Caçador Cornudo
+
+É o quinto degrau, e é o único que não se compra. O altar dá-lhe um **Chifre da Caça** — dois segundos de
+sopro, e ele **parte-se**: aguenta um e gasta dois. O chifre não é uma ferramenta, é uma **vez**.
+
+E o que vem é a **caça ao contrário**: o lobisomem, que é o que caça, chama o que caça lobisomens.
+
+- **Quatrocentos de vida**, e **nenhuma pancada lhe tira mais de quinze** — vinte e sete golpes, no mínimo,
+  enquanto ele **sara um por segundo**.
+- **Ele entra com um estouro**: cento e cinquenta batidas de invulnerabilidade, começando com um quarto da
+  vida e sarando vinte de dez em dez até aos quatrocentos, e saindo com o estouro de seis do Wither. Esse
+  tempo serve para uma coisa só, que é correr.
+- **Ele atira**, uma vez em cinco e de segundo a segundo, e a flecha dele é mais forte **quanto mais longe**
+  estiver o alvo — ao contrário do que se espera, e é do original.
+- **Traz cães**: de duzentas a quinhentas batidas, um lobo raivoso com Regeneração II que não acaba.
+- **Não se foge dele a pé**: quando o caminho fecha, ele aparece ao lado de quem persegue.
+- E a pancada dele é **sete mais até quinze**, com **levantada** — ele bate, o chão se vai, e o golpe seguinte
+  apanha quem está no ar.
+
+Larga as **caveiras de wither** que ninguém mais larga fora do Nether, um **livro encantado**, o **Sangue
+Demoníaco** e, uma vez em quatro, a **Lança do Caçador**.
+
+### A lança que apara
+
+A Lança do Caçador é **um ponto de dano acima de uma espada de diamante** e, na mão, **ninguém a empurra**. E
+faz uma coisa que o aviso dela promete: quem **apara com ela** e apanha de alguém vivo chama, uma vez em
+quatro, um **lobo bravo** que se vira contra quem bateu — e o lobo vem **a morrer**, com Definhamento II. Ele
+não é um servo, é um **troco**.
+
+No original ela apara porque é uma `ItemSword`, e na 1.7.10 **toda espada aparava**. Hoje só o escudo apara, e
+por isso a lança passou a dizer por si mesma que apara: a **mesma metade**, num arco de noventa graus, pelo
+jeito de hoje. Sem isso o aviso dela mentiria.
+
+### O uivo é um gesto, e são três uivos
+
+Uivar não tem tecla nem item: olha-se **direito para cima**, agacha-se, e aperta-se o botão de usar. Não está
+escrito em parte nenhuma do jogo — quem descobre o uivo descobre-o por ter olhado para a lua.
+
+E o mesmo gesto faz **três coisas diferentes**, pela ordem em que o original as pergunta:
+
+1. no **sexto grau**, de lobo e de noite, ele **conta** o pedaço de mundo — e um lugar onde ele já uivou não
+   conta, e é avisado disso em vermelho;
+2. do **oitavo** em diante, de lobo, ele **chama cães**: dois mais o que o grau der, já mansos, com a Morte
+   Certa de dez segundos. Eles vêm para morrer, e não deixam nem corpo **nem experiência**;
+3. do **sétimo** em diante, de lobisomem, ele **prende**: tudo o que não é lobisomem nem vampiro, a dezesseis
+   blocos, fica paralisado.
+
+Os dois últimos esperam um minuto entre si. E repare na ordem: um **lobo de grau sete não tem uivo nenhum** —
+o primeiro ramo quer grau seis, o segundo quer oito, e o terceiro quer lobisomem. É do original, e é o degrau
+em que ele está a aprender.
+
+O **zero de experiência** dos cães sai por onde no original saía por reflexão: um acessório ao `xpReward` do
+bicho. Sem isso, um lobisomem de grau dez tem uma fábrica de experiência que basta uivar para ligar.
+
+### E correr é saltar
+
+Em forma de bicho, quem **corre** leva um empurrão para a frente do tamanho do arranco do grau — e é isso que
+faz do quinto degrau, que pede dez monstros mortos **no ar**, uma coisa que se consegue.
+
+E em forma de bicho a **arma na mão não vale nada**: a pancada vale **dois** se o que ele tem na mão tem dano
+próprio, e só soma o dano do grau a **mãos vazias e a correr**. Um lobo com uma espada de diamante bate menos
+do que um lobo sem nada, e é de propósito: a forma de bicho joga-se com as mãos vazias.
+
+### A Cabeça de Lobo Empalhada, e o nome que mudou
+
+O altar não se acha: **faz-se**, com três cabeças de lobo, quatro pedras e um raminho de acônito. E a cabeça
+cai de um lobo morto **uma vez em doze**, que a Pilhagem melhora até quatro em doze.
+
+Ela é o crânio do jogo com outro modelo — **dois blocos**, um que assenta e gira em dezesseis passos e outro
+que se prega na parede —, e usa a **pele do lobo do jogo**, sem folha nova.
+
+**O nome mudou, e não por gosto**: o original só lhe chama `wolfhead`, e esse nome já estava tomado — o ramo
+do Mortuorum tem uma cabeça de lobo que é peça de costura. Duas coisas não podem ter o mesmo nome, e esta é a
+**empalhada**.
+
+### O que se desenhou
+
+O **Altar do Lobo** é o modelo mais cheio deste porte: **trinta e oito peças**. Um pedestal de três lajes, um
+degrau à frente onde se põe o que se traz, o **senhor** de pé — tronco de gente, cabeça de lobo, uma lança de
+quarenta de comprido atrás das costas e uma perna dobrada, como quem acabou de parar de andar — e **dois
+lobos** aos pés, cada um virado para fora por um ângulo diferente.
+
+Os três encolhimentos do original — sete décimos no senhor e metade em cada lobo, cada um em volta do próprio
+ponto — saem pelas escalas da peça, que é a mesma conta com muito menos linhas do que os seis `glTranslate` e
+os três `glScaled` dele.
+
+E o **Caçador** não é um gigante: é um homem com as proporções erradas. O peito mede vinte de largura, mais do
+que o corpo inteiro de um aldeão, e os antebraços e as canelas são mais grossos do que os braços e as coxas. A
+galhada é uma caixa **chata** de vinte por dezessete, presa à cabeça, e a lança é **duas folhas cruzadas** que
+de qualquer ângulo parecem uma lâmina só. As pernas vêm dobradas de fábrica: ele **nunca está de pé direito**.
+
+E **o corpo dele balança** cinco graus e meio no compasso do passo, com a onda triangular do original e não com
+um seno — que é o que faz dele uma coisa **pesada** em vez de um boneco grande.
+
+**Duas diferenças declaradas, as duas de desenho.** O original punha um **brilho verde correndo** por cima do
+Caçador e da lança, com a folha do encantamento, e esse brilho era **opcional no próprio original** — um
+ajuste dele. Aqui não está: o jeito de hoje de pintar um brilho por cima de um modelo é outro, e o que faz o
+Caçador assustar é o tamanho e o balanço, que estão. E a lança, que o original punha na mão com três giros e
+três deslocamentos seus — cem graus, cinquenta e um negativos, oitenta e um negativos —, vai na mão pelo jeito
+que o jogo de hoje **tem** de segurar uma haste comprida, que é o do tridente. Os seis números dele eram
+feitos à mão para chegar ao mesmo lugar.
+
+### O que falta, declarado
+
+A escada está inteira: **nenhum degrau falta**, e há prova disso. O que falta são os outros **poderes** do
+lobisomem, que não são degraus:
+
+- a **armadura rasgada** ao nono grau, de lobisomem — um quarto da durabilidade por golpe, e arrancada a quem
+  não a aguentar;
+- a **fome que a caça mata** ao quarto: oito de comida e o barulho de comer, de cada bicho que ele matar;
+- o **osso que sai da terra** ao terceiro, de lobo — e com ele o cavar com as patas;
+- a **queda que perdoa** e o **teto da pancada**, que estão na tabela e ainda não estão no corpo;
+- e o **contágio** ao décimo, que é o que faz de finalizar a escada uma coisa que se espalha.
+
+E a **cabeça do cão-do-inferno**, que é o segundo tipo da cabeça empalhada e espera o bicho dela.
+
+E uma terceira, pequena e do jeito de hoje: a cabeça na **mão** leva um **meio-giro** que o original não
+escrevia. Na 1.7.10 quem o dava era o caminho do crânio do jogo, por fora do desenhista; hoje não há esse
+caminho, e sem ele a cabeça aparecia de costas no inventário.
+
+**Guardas:** `OccultaWerewolfLadderGameTest`, com dezesseis — os números de cada degrau; o altar, a cabeça, o
+chifre, a lança e o Caçador no jogo; o grau zero que não é digno; o ouro que compra sempre e nunca o degrau; a
+mão errada e a mão a meio que não custam nada; o grau que apaga o degrau; o lugar que só conta uma vez; o
+Caçador que custa vinte e sete golpes e a espera que o leva aos quatrocentos; o chifre que só se dá uma vez e
+o Caçador morto que cumpre o pedido; **a escada inteira do grau um ao dez**, que é a prova que carrega a
+fatia; o feito que só conta no degrau dele; os dois uivos que chamam e que prendem; a pancada de um bicho com
+arma na mão; e os três blocos que assentam onde se põem. E `OccultaWerewolfLadderClientTest`, com **oito
+telas** medidas de um marco: o altar de frente, de perto e de lado, as duas cabeças, o Caçador de longe e de
+perto, a lança na mão e as cinco coisas no inventário.

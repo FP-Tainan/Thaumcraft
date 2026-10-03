@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "facing=south": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "facing=west": { "model": "thaumcraft:block/mounted_wolf_head" },
+    "facing=east": { "model": "thaumcraft:block/mounted_wolf_head" }
+  }
+}
