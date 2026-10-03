@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "b b",
+    " b ",
+    " g "
+  ],
+  "key": {
+    "b": "minecraft:glass_bottle",
+    "g": "minecraft:glass"
+  },
+  "result": {
+    "id": "thaumcraft:goblet",
+    "count": 1
+  }
+}

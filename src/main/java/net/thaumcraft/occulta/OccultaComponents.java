@@ -24,6 +24,16 @@ public final class OccultaComponents {
                     .networkSynchronized(ByteBufCodecs.registry(net.minecraft.core.registries.Registries.ITEM)
                             .apply(ByteBufCodecs.list())));
 
+    /**
+     * O que está dentro do <b>Cálice de Vidro</b>: o {@code WITCBloodUUID} do {@code ItemGlassGoblet}.
+     *
+     * <p>Sem ele o cálice está vazio, e um cálice vazio é só um copo.
+     */
+    public static final DataComponentType<net.thaumcraft.occulta.vampire.GobletBlood> GOBLET =
+            register("goblet", builder -> builder
+                    .persistent(net.thaumcraft.occulta.vampire.GobletBlood.CODEC)
+                    .networkSynchronized(net.thaumcraft.occulta.vampire.GobletBlood.STREAM_CODEC));
+
     /** A quem uma boneca ou um frasco está preso: o vínculo do {@code ItemTaglockKit}. */
     public static final DataComponentType<TaglockItem.Taglock> TAGLOCK = register("taglock",
             builder -> builder.persistent(TaglockItem.Taglock.CODEC)

@@ -186,6 +186,31 @@ public final class OccultaEntities {
                     .fireImmune()
                     .sized(1.4f, 3.2f).eyeHeight(2.9f).clientTrackingRange(16));
 
+    /** <b>Elle</b>, que o rito chama e que procura lava até virar Lilith. */
+    public static final EntityType<net.thaumcraft.occulta.vampire.FollowerEntity> FOLLOWER =
+            register("follower", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.vampire.FollowerEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.vampire.FollowerEntity::attributes))
+                    .fireImmune()
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(10));
+
+    /** E <b>Lilith</b>, que não se pode matar. */
+    public static final EntityType<net.thaumcraft.occulta.vampire.LilithEntity> LILITH =
+            register("lilith", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.vampire.LilithEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.vampire.LilithEntity::attributes))
+                    .fireImmune()
+                    .sized(0.8f, 2.5f).eyeHeight(2.25f).clientTrackingRange(16));
+
+    /** O feitiço que ela atira. */
+    public static final EntityType<net.thaumcraft.occulta.vampire.LilithSpellEntity> LILITH_SPELL =
+            register("lilith_spell", net.minecraft.world.entity.EntityType.Builder
+                    .<net.thaumcraft.occulta.vampire.LilithSpellEntity>of(
+                            net.thaumcraft.occulta.vampire.LilithSpellEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).clientTrackingRange(8).updateInterval(10));
+
     /** E o <b>aldeão que vira</b>, que por fora não se distingue de um aldeão qualquer. */
     public static final EntityType<net.thaumcraft.occulta.wolf.WereVillagerEntity> WERE_VILLAGER =
             register("were_villager", FabricEntityType.Builder.createMob(
@@ -263,6 +288,10 @@ public final class OccultaEntities {
                 .register(WOLFMAN, net.thaumcraft.occulta.wolf.WolfmanEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(HORNED_HUNTSMAN, net.thaumcraft.occulta.wolf.HornedHuntsmanEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(FOLLOWER, net.thaumcraft.occulta.vampire.FollowerEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(LILITH, net.thaumcraft.occulta.vampire.LilithEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(WERE_VILLAGER, net.minecraft.world.entity.npc.villager.Villager.createAttributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry

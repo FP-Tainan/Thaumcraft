@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "y",
+    "a",
+    "b"
+  ],
+  "key": {
+    "y": "minecraft:iron_ingot",
+    "a": "minecraft:bone",
+    "b": "minecraft:emerald"
+  },
+  "result": {
+    "id": "thaumcraft:boline",
+    "count": 1
+  }
+}

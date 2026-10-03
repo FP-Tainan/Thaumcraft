@@ -164,7 +164,8 @@
       "net.thaumcraft.test.ArcanaChoiceGameTest",
       "net.thaumcraft.test.OccultaWerewolfLadderGameTest",
       "net.thaumcraft.test.OccultaWerewolfPowersGameTest",
-      "net.thaumcraft.test.OccultaVampirePlayerGameTest"
+      "net.thaumcraft.test.OccultaVampirePlayerGameTest",
+      "net.thaumcraft.test.OccultaLilithGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -294,7 +295,8 @@
       "net.thaumcraft.test.client.ArcanaStarClientTest",
       "net.thaumcraft.test.client.ArcanaColourClientTest",
       "net.thaumcraft.test.client.OccultaWerewolfLadderClientTest",
-      "net.thaumcraft.test.client.OccultaVampirePlayerClientTest"
+      "net.thaumcraft.test.client.OccultaVampirePlayerClientTest",
+      "net.thaumcraft.test.client.OccultaLilithClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

@@ -190,6 +190,20 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.client.WolfHeadRenderer.WOLF_HEAD,
                 net.thaumcraft.occulta.client.WolfHeadRenderer::wolfHead);
 
+        // Elle, Lilith e o feitiço que ela atira
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.FOLLOWER,
+                net.thaumcraft.occulta.client.FollowerRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.LilithModel.LILITH,
+                net.thaumcraft.occulta.client.LilithModel::lilith);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.LILITH,
+                net.thaumcraft.occulta.client.LilithRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.LILITH_SPELL,
+                net.thaumcraft.occulta.client.LilithSpellRenderer::new);
+
         // e o painel de comando de um vampiro: a barra de sangue e a tecla do poder
         net.thaumcraft.occulta.client.VampireClient.init();
 

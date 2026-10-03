@@ -688,6 +688,31 @@ public final class OccultaItems {
     /** O <b>Sangue Infernal</b>, que cai do Caçador Cornudo. */
     public static final Item INFERNAL_BLOOD = register("infernal_blood", Item::new);
 
+    /** O dano e a cadência da Boline: os de uma faca de madeira. */
+    public static final float BOLINE_DANO = 3.0f;
+    public static final float BOLINE_VELOCIDADE = -2.4f;
+
+    /**
+     * A <b>Boline</b>: a faca de colher do ofício.
+     *
+     * <p>Bate como uma de madeira e dura como uma de ferro, e é de propósito: ela não é arma, é
+     * <b>ferramenta</b>. O que ela faz de especial é cortar folha, teia, relva, trepadeira e fio-armadilha
+     * <b>sem se gastar</b> — e sacrificar a galinha que enche o Cálice.
+     */
+    public static final Item BOLINE = register("boline", properties ->
+            new net.thaumcraft.occulta.vampire.BolineItem(properties
+                    .sword(net.minecraft.world.item.ToolMaterial.IRON, BOLINE_DANO, BOLINE_VELOCIDADE)
+                    .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
+    /**
+     * O <b>Cálice de Vidro</b>, que é a porta de entrada da vampirice.
+     *
+     * <p>Vazio é um copo; cheio do sangue de Lilith, é a única coisa no mod que faz de alguém um vampiro.
+     */
+    public static final Item GOBLET = register("goblet", properties ->
+            new net.thaumcraft.occulta.vampire.GobletItem(properties.stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
     public static final Item SILVER_DUST = register("silver_dust", Item::new);
 
     /**

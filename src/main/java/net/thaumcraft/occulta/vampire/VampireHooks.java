@@ -47,6 +47,13 @@ public final class VampireHooks {
                 }));
 
         UseEntityCallback.EVENT.register(VampireHooks::toca);
+        // e a galinha sacrificada sobre o rito, que enche o Cálice
+        net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents.AFTER_DEATH.register(
+                (quemMorreu, fonte) -> {
+                    if (!(quemMorreu.level() instanceof ServerLevel mundo)) return;
+                    if (!(fonte.getEntity() instanceof Player quem)) return;
+                    GobletItem.aGalinha(mundo, quem, quemMorreu);
+                });
     }
 
     /**

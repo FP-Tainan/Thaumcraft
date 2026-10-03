@@ -7424,10 +7424,10 @@ A barra só aparece a quem é vampiro, e some no instante em que ele deixa de se
 
 ### O que falta, declarado
 
-**Esta fatia não tem porta de entrada**, e é preciso dizê-lo com todas as letras: hoje só se vira vampiro por
-comando. O caminho do original é um só e é longo — a **Lilith**, que se chama com um ritual de arame e um
-crânio, de noite, com um cálice de sangue de galinha tirado com a Boline —, e ela é um bicho de quinhentas
-linhas com uma corrente de coisas atrás. É a fatia seguinte, e é onde a entrada e a **cura** moram.
+**Esta fatia não tinha porta de entrada**, e era preciso dizê-lo com todas as letras: nela só se virava
+vampiro por comando. O caminho do original é um só e é longo — a **Lilith**, que se chama com um rito de
+arame e um crânio, de noite, com um cálice de sangue de galinha tirado com a Boline. Ela veio na fatia
+seguinte, **A porta de entrada**, mais abaixo, e com ela vieram a entrada e a **cura**.
 
 Falta também, por ordem do que vem a seguir:
 
@@ -7449,3 +7449,141 @@ comida que não o alimenta e o sangue que alimenta; a maldição da sede; **o so
 sangue de lobisomem que é veneno; a roda dos poderes e o interruptor da visão; a cura que devolve o sangue de
 gente; e o corpo de quem é gente, que faz sangue sozinho. E `OccultaVampirePlayerClientTest`, com as quatro
 telas da barra — sem ela, com ela cheia, com a sede a apertar, e sem ela outra vez.
+
+## A porta de entrada — o rito, Elle e Lilith (2026-10-03)
+
+A fatia anterior deixou o corpo do vampiro pronto e **sem porta**. Esta é a porta — e vale dizer de uma vez o
+que ela é, porque o Witchery escondeu-a melhor do que escondeu qualquer outra coisa:
+
+> Desenhe um círculo de fio-armadilha com um crânio de esqueleto no meio. Mate uma galinha em cima dele com
+> uma faca que o mod nunca diz que serve para isso. Leve o cálice que ela encheu até ao crânio, **de noite**, e
+> toque. Uma mulher aparece. Siga-a até à lava. Lá, ela deixa de ser ela — e o que fica no lugar **tem de ser
+> vencido**. Vencida, ela enche o seu cálice do próprio sangue. Beba.
+
+Nada disto está escrito em lugar nenhum do jogo.
+
+### O rito, e uma falha que fica
+
+Um **crânio de esqueleto** no meio, **oito pós de redstone** à volta dele, um **anel de fio-armadilha** de
+sete por sete com os cantos cortados, e **quatro tochas** nos cantos. O chão de todo o quadrado sólido, os
+dois andares por cima vazios.
+
+**O quarto noroeste do anel não é olhado.** O autor copiou o arco sudoeste duas vezes e esqueceu o outro.
+Quem construir o círculo inteiro passa; quem deixar cinco fios de fora no noroeste **também passa**. Fica como
+está, porque corrigir seria pedir mais do que o original pede.
+
+Com um **cálice de sangue de galinha** na mão, tocar no crânio de noite, a céu aberto e no mundo de cima
+chama **Elle** — e o crânio vai-se num raio de verdade, que acende o que estiver perto.
+
+### Elle, que procura lava
+
+Ela não é um chefe nem um servo: é um **guia**, e o que ela procura diz tudo sobre quem a mandou.
+
+Recém-chamada, Elle não tem casa. De dez em dez batidas ela olha à volta, a quinze blocos, à procura de um
+**lago de lava** — lava de verdade, com dois andares de ar por cima e **seis blocos de raio**. Achando um, ela
+**faz dele a casa** e **esquece quem a chamou**.
+
+Chegando lá, ela conta: às vinte batidas fala, às quarenta **deixa de existir** — e no lugar dela fica
+**Lilith**, com um estouro de seis.
+
+É por isso que o rito não é o fim: quem chamar Elle no meio de um campo fica com uma convidada que não tem
+para onde ir. **O jogador tem de a levar até à lava** — ou cavar até ela, ou fazer-lhe um lago de treze
+blocos de boca. O mod nunca o diz; ela é que mostra, voando sempre para o mesmo lado.
+
+E ela **não arde**, porque a casa dela é um lago de lava.
+
+### Lilith, que não se pode matar
+
+É a melhor ideia do mod inteiro, e é por isso que ela merece ser dita devagar.
+
+Ela é um chefe a sério: **duzentos de vida**, **teto de doze por pancada**, e **sara cinco por segundo** — o
+que, por si só, a torna invencível. Há duas maneiras de lhe tirar a cura, e as duas são lições:
+
+- **enregelá-la** ou **enfraquecê-la**, e então ela sara só um;
+- ou **devolver-lhe o fogo dela**: uma bola de fogo grande na cara tira-lhe a cura por dez segundos. O mod
+  responde assim a quem reparar que ela se cura com fogo na mão.
+
+Enquanto isso ela **apaga a Resistência ao Fogo** de quem estiver a trinta e dois blocos e chove bolas de
+fogo pequenas em cima deles — a primeira coisa que ela tira é a poção que o jogador bebeu para a enfrentar —,
+e atira **feitiços**: metade das vezes que ataca, e de cada três desses, um é fogo e dois são símbolos.
+
+**E então ela não morre.** Levando o golpe que a mataria, ela volta à vida cheia, perde o que a prendia, fica
+**amiga**, e **aparece ao lado** de quem a venceu. O combate com ela nunca foi um combate: foi uma **prova**.
+
+*(E o `/kill` também não a mata. Ele chama o mesmo morrer que o combate chama, e ela responde do mesmo jeito.
+Descobri isso numa foto que saiu errada, e é o melhor atestado que a fatia podia ter.)*
+
+### Os cinco feitiços dela
+
+Vêm do sistema de **símbolos** do mod — o das infusões, que este porte ainda não tem. Estão aqui porque **ela
+os atira**, e sem eles o combate seria só bolas de fogo. Quando o sistema vier, é daqui que eles saem.
+
+Os pesos contam a história: **Flipendo** e **Attraho** cinco vezes mais prováveis do que os outros três. Ela
+passa o combate a **empurrar e a puxar** — a atirar o jogador para longe e a trazê-lo de volta —, e só de vez
+em quando cega, prende ou queima.
+
+E o **Ignianima** é o mais bonito dos cinco: ele dói **mais quanto mais ferida ela estiver**. Uma Lilith
+inteira queima por dois; uma Lilith quase vencida queima por nove. O combate fica **pior à medida que se
+ganha**, e é de propósito.
+
+### O que ela dá
+
+Amiga, ela olha o que se traz na mão, e some depois — é uma visita, e uma só:
+
+| o que se traz | o que ela faz |
+| --- | --- |
+| um **Cálice**, de quem não é vampiro | o enche do **sangue dela**: bebê-lo é **virar vampiro** |
+| **alho**, de quem é vampiro | **cura** — e é a única cura que há |
+| uma **papoula**, ao sexto grau | dá o sétimo, que é o do voo de morcego |
+| qualquer outra coisa encantável | **a encanta** como uma mesa de nível quarenta, e de graça |
+
+### O Cálice e a Boline
+
+O **Cálice de Vidro** enche de três maneiras, e as três são degraus diferentes: com **sangue de galinha**
+sacrificada com a Boline sobre o rito — e esse serve para chamar, não para beber —; com o **sangue de
+Lilith**; e com o **próprio sangue** de um vampiro do nono grau, que gasta cento e vinte e cinco de poder para
+o encher, porque o nono degrau da escada pede que ele beba o seu.
+
+Beber um cálice de sangue que **não** é de galinha, não sendo já vampiro, vira. É a entrada do mod inteiro, e
+é de propósito que ela seja tão estreita: quem não procurou Lilith não entra por acaso.
+
+A **Boline** é a faca de colher do ofício: bate como uma de madeira e dura como uma de ferro, e corta folha,
+teia, relva, trepadeira e fio-armadilha **sem se gastar**. O que ela faz de especial — sacrificar a galinha —
+o mod nunca explica.
+
+### O que se desenhou
+
+**Lilith** é o modelo mais estranho deste porte: chifres virados para trás, dois dentes a sair da boca, um
+nariz de um pixel, e **duas asas chatas** presas aos braços que descem até abaixo dos pés.
+
+E a **saia** são duas peças iguais no mesmo lugar — o truque mais bonito do modelo: uma segue a perna que está
+mais **atrás** e a outra a que está mais à **frente**, de modo que andando a saia se abre sozinha. Parada, a
+da frente fica em dois décimos e a saia fecha.
+
+Os braços dela nunca param: mesmo imóvel há um balanço de cinco centésimos no ombro e no cotovelo, tirado do
+relógio do mundo e não do passo. É o que a faz parecer **viva** em vez de posta.
+
+**Elle** é, por fora, **gente** — o original usa o corpo de um biped tal e qual —, e é de propósito: ela não
+parece um monstro. Parece uma mulher parada no meio do campo.
+
+E o **feitiço** no ar é uma chapa virada para quem olha, com a figura da bola de neve do jogo tingida da cor
+do símbolo. Não é um modelo: é uma **mancha de luz**, e cada um dos cinco tem a sua cor e o seu tamanho, de
+modo que se aprende a reconhecê-los de longe.
+
+### O que falta, declarado
+
+A porta está inteira: dá para virar vampiro, e dá para deixar de ser. O que falta do ramo do vampiro é o que
+vem **depois** da porta:
+
+- a **forma de morcego** e os outros três poderes, e os três supremos;
+- a **escada dos dez graus**, de que esta fatia já traz dois degraus — o **sexto**, que é a papoula na mão de
+  Lilith, e o **nono**, que é o cálice do próprio sangue;
+- o **Livro do Vampiro**, que levanta o teto do grau, sem o qual nenhum feito conta;
+- e o **Caixão**, a **Rosa de Sangue** e a **Guirlanda de Alho**.
+
+**Guardas:** `OccultaLilithGameTest`, com sete — o rito que se lê desenhado e não se lê sem uma tocha, com
+coisa em cima, ou com o crânio errado; a galinha que enche o cálice, e só com a Boline na mão e o rito
+debaixo; o sangue dela que vira e o de galinha que não vira; **Lilith que não se pode matar**, que é a prova
+que carrega a fatia; o que ela dá e a cura pelo alho; Elle que não acha casa num campo seco; o lago que é um
+lago e a poça que não é; e as cinco coisas no jogo. E `OccultaLilithClientTest`, com cinco telas: Lilith de
+frente, de perto e de lado, Elle, e a porta no inventário.
