@@ -225,6 +225,27 @@ public final class OccultaItems {
      */
     public static final Item BAT_WOOL = register("bat_wool", Item::new);
 
+    /**
+     * A <b>Esfera de Quartzo</b>: o {@code itemQuartzSphere} do original.
+     *
+     * <p>Um vidro vazio, e nada mais — até alguém o pôr num {@linkplain
+     * net.thaumcraft.occulta.vampire.DaylightCollectorBlock Coletor de Luz} e deixar o sol entrar nele.
+     */
+    public static final Item QUARTZ_SPHERE = register("quartz_sphere", Item::new);
+
+    /** A <b>Granada Solar</b>: sol engarrafado, e a única dose de dia que um vampiro aguenta. */
+    public static final Item SUN_GRENADE = register("sun_grenade", properties ->
+            new net.thaumcraft.occulta.vampire.SunGrenadeItem(properties.stacksTo(16)));
+
+    /** Uma <b>Página Rasgada</b> do Livro do Vampiro, que só cai para quem já tem o livro. */
+    public static final Item TORN_PAGE = register("torn_page", properties ->
+            new Item(properties.rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
+    /** E o <b>Livro do Vampiro</b>, que levanta o teto do grau até onde as páginas dele chegam. */
+    public static final Item VAMPIRE_BOOK = register("vampire_book", properties ->
+            new net.thaumcraft.occulta.vampire.VampireBookItem(
+                    properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
     /** O Galho de Ent, que o Ent larga. */
     public static final Item ENT_BRANCH = register("ent_branch", Item::new);
 
@@ -363,6 +384,14 @@ public final class OccultaItems {
     /** E o Crisol de Sangue. */
     public static final Item BLOOD_CRUCIBLE = register("blood_crucible", properties ->
             new BlockItem(OccultaBlocks.BLOOD_CRUCIBLE, properties.useBlockDescriptionPrefix()));
+
+    /** O <b>Coletor de Luz</b>, que enche a Esfera de Quartzo de sol. */
+    public static final Item DAYLIGHT_COLLECTOR = register("daylight_collector", properties ->
+            new BlockItem(OccultaBlocks.DAYLIGHT_COLLECTOR, properties.useBlockDescriptionPrefix()));
+
+    /** E o <b>Caixão</b>, que é a casa de um vampiro e a última coisa que a escada dele pede. */
+    public static final Item COFFIN = register("coffin", properties ->
+            new BlockItem(OccultaBlocks.COFFIN, properties.useBlockDescriptionPrefix()));
 
     // ------------------------------------------------------------------ o que é de sonho
 

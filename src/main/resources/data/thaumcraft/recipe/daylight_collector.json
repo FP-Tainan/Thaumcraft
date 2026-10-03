@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "g g",
+    " r ",
+    "ici"
+  ],
+  "key": {
+    "g": "minecraft:gold_ingot",
+    "r": "minecraft:repeater",
+    "i": "minecraft:iron_ingot",
+    "c": "minecraft:daylight_detector"
+  },
+  "result": {
+    "id": "thaumcraft:daylight_collector",
+    "count": 1
+  }
+}

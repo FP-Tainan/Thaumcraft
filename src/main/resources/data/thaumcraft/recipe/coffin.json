@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ppp",
+    "lbl",
+    "lll"
+  ],
+  "key": {
+    "p": "#minecraft:planks",
+    "l": "#minecraft:logs",
+    "b": "#minecraft:beds"
+  },
+  "result": {
+    "id": "thaumcraft:coffin",
+    "count": 1
+  }
+}

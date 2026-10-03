@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#s#",
+    "#b#",
+    "#g#"
+  ],
+  "key": {
+    "s": "minecraft:nether_star",
+    "b": "minecraft:book",
+    "g": "thaumcraft:garlic",
+    "#": "minecraft:nether_wart"
+  },
+  "result": {
+    "id": "thaumcraft:vampire_book",
+    "count": 1
+  }
+}

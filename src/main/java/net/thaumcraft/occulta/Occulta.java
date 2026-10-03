@@ -43,6 +43,8 @@ public final class Occulta {
         net.thaumcraft.occulta.vampire.Vampire.init();
         net.thaumcraft.occulta.vampire.Blood.init();
         net.thaumcraft.occulta.vampire.VampirePowers.init();
+        net.thaumcraft.occulta.vampire.VampireLadder.init();
+        net.thaumcraft.occulta.vampire.VampireBookRecipe.init();
         net.thaumcraft.occulta.vampire.VampireTick.init();
         net.thaumcraft.occulta.vampire.VampireHooks.init();
         OccultaItems.init();

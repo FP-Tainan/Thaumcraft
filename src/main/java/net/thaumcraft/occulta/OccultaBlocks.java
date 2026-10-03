@@ -323,6 +323,26 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(
                             BloodCrucibleBlockEntity::new, java.util.Set.of(BLOOD_CRUCIBLE)));
 
+    /**
+     * O <b>Coletor de Luz</b>: a garra de ferro que enche uma Esfera de Quartzo de sol, de um em um,
+     * ao ritmo dos Sensores de Luz Solar encostados a ela.
+     */
+    public static final Block DAYLIGHT_COLLECTOR = register("daylight_collector", properties ->
+            new net.thaumcraft.occulta.vampire.DaylightCollectorBlock(properties.mapColor(MapColor.METAL)
+                    .strength(3.5f).sound(SoundType.METAL).noOcclusion()));
+
+    /** O <b>Caixão</b>: uma cama com tampa, e a casa de um vampiro. */
+    public static final Block COFFIN = register("coffin", properties ->
+            new net.thaumcraft.occulta.vampire.CoffinBlock(properties.mapColor(MapColor.WOOD)
+                    .strength(1.0f).sound(SoundType.WOOD).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.vampire.CoffinBlockEntity> COFFIN_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("coffin"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.vampire.CoffinBlockEntity::new,
+                            java.util.Set.of(COFFIN)));
+
     // ------------------------------------------------------------------ o marcador da muralha
 
     /**

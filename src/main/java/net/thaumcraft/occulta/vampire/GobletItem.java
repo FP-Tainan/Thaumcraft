@@ -210,6 +210,37 @@ public class GobletItem extends Item {
         }
     }
 
+    /**
+     * <b>Oferecer o cálice a quem não o pediu</b>: o {@code onEntityInteract} do {@code ItemGlassGoblet}.
+     *
+     * <p>Com um cálice <b>cheio</b> na mão, tocar num aldeão ou num guarda não comercia nem morde: <b>dá-lhe
+     * de beber</b>. E se as quatro coisas que o {@linkplain VampireLadder#fazUmVampiro décimo degrau} pede
+     * estiverem no lugar, a presa deixa de ser ela.
+     *
+     * <p>É o fim da escada e fecha o círculo: o que o fez vampiro foi um cálice de sangue dado por alguém, e
+     * o que o faz completo é <b>dar o seu</b>.
+     *
+     * @return se o toque era do cálice, e então o jogo não tem mais nada a fazer com ele
+     */
+    public static boolean oferece(ServerLevel level, Player quem, ItemStack cálice,
+                                  net.minecraft.world.entity.LivingEntity presa) {
+        if (!(cálice.getItem() instanceof GobletItem) || !cheio(cálice)) return false;
+        if (!(presa instanceof net.minecraft.world.entity.npc.villager.Villager)
+                && !(presa instanceof net.thaumcraft.occulta.village.VillageGuardEntity)) {
+            return false;
+        }
+
+        GobletBlood oquê = dentro(cálice);
+        boolean dele = oquê != null && oquê.éDe(quem);
+        if (!VampireLadder.fazUmVampiro(level, quem, presa, dele)) return true;
+
+        esvazia(cálice);
+        level.sendParticles(net.minecraft.core.particles.DustParticleOptions.REDSTONE,
+                presa.getX(), presa.getY() + presa.getBbHeight() * 0.5, presa.getZ(),
+                24, presa.getBbWidth(), presa.getBbHeight() * 0.5, presa.getBbWidth(), 0.0);
+        return true;
+    }
+
     /** O rito, se houver um a um bloco de onde a galinha caiu. */
     @Nullable
     private static BlockPos acharORito(ServerLevel level, BlockPos perto) {

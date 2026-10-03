@@ -158,6 +158,7 @@ public record Vampire(int grau, int sangue, int teto, int conta) {
             default -> era.sangue();
         };
         quem.setAttached(DATA, new Vampire(novo, sangue, era.teto(), 0));
+        VampireLadder.limpa(quem);
 
         if (novo == 0) {
             Blood.dá(quem, Blood.TETO / 10);
@@ -175,7 +176,7 @@ public record Vampire(int grau, int sangue, int teto, int conta) {
      */
     public static void sobeUmGrau(Player quem) {
         Vampire era = de(quem);
-        if (era.grau() >= TETO || era.grau() >= era.teto()) return;
+        if (era.grau() >= TETO || era.grau() >= tetoDoGrau(quem)) return;
         grau(quem, era.grau() + 1);
         quem.sendSystemMessage(Component.translatable("tc.vampire.thirstgrows")
                 .withStyle(ChatFormatting.GOLD));
@@ -184,7 +185,20 @@ public record Vampire(int grau, int sangue, int teto, int conta) {
     /** Se o teto deixa ele subir agora. */
     public static boolean podeSubir(Player quem) {
         Vampire é = de(quem);
-        return é.grau() < TETO && é.grau() < é.teto();
+        return é.grau() < TETO && é.grau() < tetoDoGrau(quem);
+    }
+
+    /**
+     * Até onde o teto o deixa ir, com o <b>chão de três</b> por baixo.
+     *
+     * <p><b>Declarado, e é a mesma coisa por outro caminho:</b> no original o teto nasce em <b>zero</b>, e
+     * os dois primeiros degraus — encher o sangue e os cinco aldeões — simplesmente <b>não perguntam</b> por
+     * ele; só do terceiro em diante é que alguém olha. Aqui quem olha é um lugar só, e por isso o chão é
+     * escrito: três. O que o jogador sente é idêntico — sobe-se até ao terceiro sem livro nenhum, e dali em
+     * diante é o livro que manda.
+     */
+    public static int tetoDoGrau(Player quem) {
+        return Math.max(de(quem).teto(), MENOR_TETO);
     }
 
     /** Levanta o teto do grau: o {@code increaseVampireLevelCap}, que nunca o põe abaixo de três. */

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "qbq",
+    "bgb",
+    "qbq"
+  ],
+  "key": {
+    "q": "minecraft:quartz",
+    "b": "minecraft:quartz_block",
+    "g": "minecraft:glass"
+  },
+  "result": {
+    "id": "thaumcraft:quartz_sphere",
+    "count": 1
+  }
+}

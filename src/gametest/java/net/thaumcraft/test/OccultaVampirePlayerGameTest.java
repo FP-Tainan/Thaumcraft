@@ -106,14 +106,17 @@ public class OccultaVampirePlayerGameTest {
     /**
      * <b>Encher o sangue no primeiro grau sobe ao segundo</b>: o único degrau que não se procura.
      *
-     * <p>E o teto do grau manda: sem ter lido nada, nem esse degrau vem.
+     * <p><b>Corrigido nesta fatia:</b> esta prova dizia antes que, <i>sem ter lido nada</i>, nem esse degrau
+     * vinha — e estava errada. No original os dois primeiros degraus <b>não perguntam pelo teto</b>; só do
+     * terceiro em diante é que alguém o olha. Um vampiro recém-nascido sobe ao segundo e ao terceiro sem
+     * livro nenhum, e é aí que ele para. A conta está no {@link Vampire#tetoDoGrau}.
      */
     @GameTest(maxTicks = 40)
     public void fillingTheBloodAtTheFirstGradeClimbs(GameTestHelper helper) {
         Player semLer = helper.makeMockServerPlayerInLevel();
         Vampire.grau(semLer, 1);
         Vampire.bebe(semLer, 9999);
-        if (Vampire.grauDe(semLer) != 1) helper.fail("sem teto, nem encher o sangue sobe o grau");
+        if (Vampire.grauDe(semLer) != 2) helper.fail("sem livro nenhum, o sangue cheio ainda sobe o grau");
 
         Player quem = helper.makeMockServerPlayerInLevel();
         Vampire.levantaOTeto(quem, Vampire.TETO);

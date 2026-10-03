@@ -126,6 +126,10 @@ public final class VampireTick {
         oSangueVisteDeComida(quem);
         aSede(quem);
         oSol(level, quem);
+
+        // e os dois degraus da escada que só o tempo e o caminho contam
+        VampireLadder.aNoite(level, quem);
+        VampireLadder.aAldeia(level, quem);
     }
 
     /**

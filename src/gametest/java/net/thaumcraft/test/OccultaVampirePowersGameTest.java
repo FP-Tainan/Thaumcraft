@@ -234,23 +234,33 @@ public class OccultaVampirePowersGameTest {
         if (Vampire.sangueDe(quem) != tinha - 10) helper.fail("e custou dez");
         int durava = corre == null ? 0 : corre.getDuration();
 
-        // ao quarto grau ele corre uma vez só: a segunda não passa
+        /*
+         * A segunda dose dobra outra vez — e ao quarto grau ela ainda passa, porque a conta do original é
+         * {@code ceil((grau-3)/2)} contra o nível que ele já tem, e um é igual a um. O que o quarto grau não
+         * dá é a <b>terceira</b>.
+         */
+        jáPode(quem);
+        VampirePowers.usa(level, quem);
+        var dobrou = quem.getEffect(MobEffects.SPEED);
+        if (dobrou == null || dobrou.getAmplifier() != 3) helper.fail("a segunda dose dá Rapidez IV");
+        if (dobrou.getDuration() <= durava) {
+            helper.fail("e soma ao que já durava em vez de recomeçar");
+        }
+
         jáPode(quem);
         int agora = Vampire.sangueDe(quem);
         VampirePowers.usa(level, quem);
         var ainda = quem.getEffect(MobEffects.SPEED);
-        if (ainda != null && ainda.getAmplifier() != 1) helper.fail("ao quarto grau não há segunda dose");
+        if (ainda != null && ainda.getAmplifier() != 3) helper.fail("ao quarto grau não há terceira dose");
         if (Vampire.sangueDe(quem) != agora) helper.fail("e a que não passa não custa");
 
-        // ao décimo, passa — e soma três segundos ao que já estava correndo
+        // e ao décimo grau ela passa, porque o teto dela sobe com o grau
         Vampire.grau(quem, 10);
+        Vampire.sangue(quem, Vampire.tetoDoSangue(quem));
         jáPode(quem);
         VampirePowers.usa(level, quem);
         var mais = quem.getEffect(MobEffects.SPEED);
-        if (mais == null || mais.getAmplifier() != 3) helper.fail("a segunda dose dá Rapidez IV");
-        if (mais != null && mais.getDuration() <= durava) {
-            helper.fail("e soma ao que já durava em vez de recomeçar");
-        }
+        if (mais == null || mais.getAmplifier() != 7) helper.fail("ao décimo grau a terceira dá Rapidez VIII");
         helper.succeed();
     }
 
@@ -455,6 +465,9 @@ public class OccultaVampirePowersGameTest {
         boolean chovia = tempo.isRaining();
         int chuvaAntes = tempo.getRainTime();
         tempo.setRaining(false);
+        // o que o jogo chama de "a chover" é o nível da chuva, que anda devagar atrás do guardado
+        float nívelAntes = level.getRainLevel(1.0f);
+        level.setRainLevel(0.0f);
 
         VampirePowers.usa(level, quem);
         if (!tempo.isRaining()) helper.fail("ela devia ter chamado a chuva");
@@ -464,7 +477,11 @@ public class OccultaVampirePowersGameTest {
         }
         if (VampirePowers.cargas(quem) != 4) helper.fail("e gastou um uso");
 
-        // chovendo já, não faz nada — e não gasta
+        /*
+         * E chovendo já, não faz nada — nem gasta. O que o jogo chama de "a chover" é o nível da chuva, que
+         * no mundo real sobe sozinho nas batidas a seguir; aqui põe-se à mão, que é o mesmo estado.
+         */
+        level.setRainLevel(1.0f);
         jáPode(quem);
         VampirePowers.usa(level, quem);
         if (VampirePowers.cargas(quem) != 4) helper.fail("não se chama o que já veio");
@@ -472,6 +489,7 @@ public class OccultaVampirePowersGameTest {
         tempo.setRaining(chovia);
         tempo.setThundering(false);
         tempo.setRainTime(chuvaAntes);
+        level.setRainLevel(nívelAntes);
         helper.succeed();
     }
 
@@ -487,6 +505,9 @@ public class OccultaVampirePowersGameTest {
         piso(helper);
         ServerLevel level = helper.getLevel();
         Player quem = vampiro(helper, 10);
+        // um jogador de mentira nasce na origem do mundo; os morcegos nascem onde ele está
+        BlockPos aqui = helper.absolutePos(new BlockPos(4, 2, 4));
+        quem.snapTo(aqui.getX() + 0.5, aqui.getY(), aqui.getZ() + 0.5, 0.0f, 0.0f);
         VampirePowers.escolhe(quem, Poder.SUPREMO);
         VampirePowers.dáOSupremo(quem, Supremo.ENXAME);
 
@@ -494,7 +515,7 @@ public class OccultaVampirePowersGameTest {
         VampirePowers.usa(level, quem);
         if (VampirePowers.cargas(quem) != 4) helper.fail("e o enxame gasta um uso sempre");
 
-        var roda = quem.getBoundingBox().inflate(16.0);
+        var roda = quem.getBoundingBox().inflate(48.0);
         var bichos = level.getEntitiesOfClass(AttackBatEntity.class, roda);
         if (bichos.isEmpty()) helper.fail("algum morcego devia ter nascido");
         for (var morcego : bichos) {
@@ -592,7 +613,7 @@ public class OccultaVampirePowersGameTest {
         if (Vampire.sangueDe(quem) != tinha) helper.fail("nem o sangue");
 
         for (var morcego : level.getEntitiesOfClass(AttackBatEntity.class,
-                quem.getBoundingBox().inflate(16.0))) {
+                quem.getBoundingBox().inflate(48.0))) {
             morcego.discard();
         }
         helper.succeed();

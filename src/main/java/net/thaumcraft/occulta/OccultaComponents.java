@@ -34,6 +34,17 @@ public final class OccultaComponents {
                     .persistent(net.thaumcraft.occulta.vampire.GobletBlood.CODEC)
                     .networkSynchronized(net.thaumcraft.occulta.vampire.GobletBlood.STREAM_CODEC));
 
+    /**
+     * Quantas páginas um <b>Livro do Vampiro</b> tem: o {@code damage} do {@code ItemMarkupBook} do original.
+     *
+     * <p>Lá o número de páginas vivia no dano do item, que era o jeito de 2014 de dar estados a uma coisa.
+     * Aqui é um componente, que é o jeito de hoje — e com isso o livro deixa de parecer uma ferramenta
+     * gasta e passa a ser o que é: um livro rasgado.
+     */
+    public static final DataComponentType<Integer> VAMPIRE_PAGES = register("vampire_pages",
+            builder -> builder.persistent(com.mojang.serialization.Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT));
+
     /** A quem uma boneca ou um frasco está preso: o vínculo do {@code ItemTaglockKit}. */
     public static final DataComponentType<TaglockItem.Taglock> TAGLOCK = register("taglock",
             builder -> builder.persistent(TaglockItem.Taglock.CODEC)

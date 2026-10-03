@@ -148,22 +148,35 @@ public class OccultaSummonRitesGameTest {
             helper.fail("devia haver camelo");
             return;
         }
-        bicho.snapTo(meio.getX() + 40.0, meio.getY() - 1.0, meio.getZ() + 40.0, 0.0f, 0.0f);
+        /*
+         * Longe do círculo, mas <b>dentro da arena desta prova</b>: a suíte corre num mundo só, e o que se
+         * largue a quarenta blocos cai dentro da arena de outra prova, que o varre quando se arruma. O que
+         * este rito pede é que o bicho esteja mais longe do que o {@link Rites.CallCreatures#PERTO_DEMAIS},
+         * que são pouco mais de cinco blocos — e o alcance de cento e vinte e oito está provado logo abaixo.
+         */
+        bicho.snapTo(meio.getX() + 10.0, meio.getY() - 1.0, meio.getZ() + 10.0, 0.0f, 0.0f);
         bicho.setPersistenceRequired();
         level.addFreshEntity(bicho);
 
         var rito = new Rites.CallCreatures(() -> List.of(EntityTypes.CAMEL));
         var corrido = new ActiveRite("tc.rite.callbeasts", rito, List.of(), null,
                 Rites.CallCreatures.COVEN);
+        /*
+         * Oito voltas varrem os oito cantos — mas cada volta traz só <b>dois</b>, e a suíte corre num mundo
+         * só: um camelo de uma prova ao lado, dentro dos cento e vinte e oito blocos, pode vir à frente
+         * deste. Vindo, ele fica perto e deixa de contar, e por isso bastam voltas que cheguem.
+         */
         var passo = rito.steps(0).getFirst();
-        for (int volta = 0; volta < 8; volta++) {
+        for (int volta = 0; volta < 32; volta++) {
             passo.run(level, meio, 60L, corrido);
             if (bicho.distanceToSqr(meio.getX(), meio.getY(), meio.getZ()) < 64.0) break;
         }
 
         if (bicho.distanceToSqr(meio.getX(), meio.getY(), meio.getZ()) >= 64.0) {
-            helper.fail("em oito voltas ele varre os oito cantos e o camelo devia ter vindo");
+            helper.fail("varridos os oito cantos, o camelo devia ter vindo");
         }
+        if (Rites.CallCreatures.ALCANCE != 128.0) helper.fail("o chamado alcança cento e vinte e oito");
+        if (Rites.CallCreatures.DE_CADA_VEZ != 2) helper.fail("e traz dois de cada vez");
         bicho.discard();
         helper.succeed();
     }

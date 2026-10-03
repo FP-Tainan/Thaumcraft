@@ -113,6 +113,8 @@
       "net.thaumcraft.test.OccultaKettleBrewGameTest",
       "net.thaumcraft.test.OccultaMachinesGameTest",
       "net.thaumcraft.test.OccultaSpiritGameTest",
+      "net.thaumcraft.test.OccultaVampirePowersGameTest",
+      "net.thaumcraft.test.OccultaVampireLadderGameTest",
       "net.thaumcraft.test.OccultaVillageGuardGameTest",
       "net.thaumcraft.test.OccultaVillageSpreadGameTest",
       "net.thaumcraft.test.OccultaVillagePiecesGameTest",
@@ -297,6 +299,7 @@
       "net.thaumcraft.test.client.OccultaWerewolfLadderClientTest",
       "net.thaumcraft.test.client.OccultaVampirePlayerClientTest",
       "net.thaumcraft.test.client.OccultaVampireBatClientTest",
+      "net.thaumcraft.test.client.OccultaVampireBookClientTest",
       "net.thaumcraft.test.client.OccultaLilithClientTest"
     ],
     "main": [

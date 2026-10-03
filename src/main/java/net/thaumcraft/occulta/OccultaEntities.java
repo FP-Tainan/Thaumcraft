@@ -216,6 +216,17 @@ public final class OccultaEntities {
                                     net.minecraft.world.entity.ambient.Bat::createAttributes))
                     .sized(0.5f, 0.9f).eyeHeight(0.45f).clientTrackingRange(5));
 
+    /**
+     * A <b>Granada Solar</b> no ar: o {@code EntityGrenade} no modo zero.
+     *
+     * <p>Ela não é bicho — voa como uma bola de neve, para onde bate, e fica ali um minuto a alumiar.
+     */
+    public static final EntityType<net.thaumcraft.occulta.vampire.SunGrenadeEntity> SUN_GRENADE =
+            register("sun_grenade", net.minecraft.world.entity.EntityType.Builder
+                    .<net.thaumcraft.occulta.vampire.SunGrenadeEntity>of(
+                            net.thaumcraft.occulta.vampire.SunGrenadeEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
+
     /** O feitiço que ela atira. */
     public static final EntityType<net.thaumcraft.occulta.vampire.LilithSpellEntity> LILITH_SPELL =
             register("lilith_spell", net.minecraft.world.entity.EntityType.Builder

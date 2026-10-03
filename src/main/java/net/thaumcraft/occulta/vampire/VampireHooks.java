@@ -78,6 +78,8 @@ public final class VampireHooks {
                     if (!(quemMorreu.level() instanceof ServerLevel mundo)) return;
                     if (!(fonte.getEntity() instanceof Player quem)) return;
                     GobletItem.aGalinha(mundo, quem, quemMorreu);
+                    VampireLadder.matou(quem, quemMorreu);
+                    TornPage.doMorto(mundo, quem, quemMorreu);
                 });
     }
 
@@ -93,6 +95,11 @@ public final class VampireHooks {
                                           net.minecraft.world.phys.EntityHitResult onde) {
         if (!(level instanceof ServerLevel mundo)) return InteractionResult.PASS;
         if (!(emQuem instanceof LivingEntity vivo)) return InteractionResult.PASS;
+
+        // o Cálice cheio na mão é o décimo degrau, e vem antes dos poderes
+        if (GobletItem.oferece(mundo, quem, quem.getItemInHand(mão), vivo)) {
+            return InteractionResult.SUCCESS;
+        }
         if (!Vampire.é(quem)) return InteractionResult.PASS;
         if (VampirePowers.prende(mundo, quem, vivo)) return InteractionResult.SUCCESS;
         return VampirePowers.bebe(mundo, quem, vivo) ? InteractionResult.SUCCESS : InteractionResult.PASS;

@@ -7736,3 +7736,152 @@ enxame de que nada cai e o morcego dele que se gasta no primeiro corpo; o caminh
 nunca paga; a visão que é um interruptor; e a espera que conta mesmo quando falha. E
 `OccultaVampireBatClientTest`, com seis telas: de gente, os três por trás, os três de frente, os três no ar, o
 Supremo com as cargas, e o morcego do enxame.
+
+## A escada dos dez graus do vampiro, e o livro que a destranca (2026-10-03)
+
+As fatias anteriores deram o corpo, a porta e os poderes. Esta é a **escada** — e ela é o contrário da do
+lobisomem em tudo, o que conta tudo sobre as duas maldições.
+
+O lobisomem tem uma **estátua** que lhe diz o que fazer: ele chega, ela manda, ele volta. O vampiro **não tem
+ninguém**. Ninguém lhe diz nada, nada no jogo aponta para o degrau seguinte, e o que ele sobe, sobe por ter
+reparado.
+
+O que ele tem é um **livro**. E o livro não é um manual.
+
+### Observações de um Imortal
+
+É o diário de um erudito condenado que jantou com um vampiro e anotou o que ele contou — em reticências,
+meias-frases e dois desenhos à pressa. O autor não sabia que estava a escrever as instruções de uma escada.
+
+Lê-lo **levanta o teto do grau** até ao número de páginas que ele tem, e isso é tudo o que ele faz. Um
+vampiro sem livro sobe ao segundo e ao terceiro grau e **para ali para sempre**, por mais aldeões que morda —
+e nada no jogo lhe diz por quê. É a coisa mais cruel que este mod faz, e é o que põe o livro no centro do
+ramo.
+
+E o livro chega **rasgado**: vem sem nenhuma das nove páginas. Cada capítulo pede um número delas, e um
+capítulo que peça mais do que o exemplar tem **não abre** — a seta fica apagada. O Witchery nunca escreve
+"falta-te uma página". Ele mostra a seta que não anda.
+
+**De onde ele vem:** há um garantido no baú da **livraria de aldeia**, e a receita dele pede uma **Estrela
+do Nether**. Quem o quiser antes de ter matado o Wither tem de o encontrar.
+
+**De onde vêm as páginas:** elas **só caem de quem morre pela mão de quem já traz um livro incompleto**. É a
+única coisa do mod que funciona assim. Quem nunca achou o primeiro exemplar nunca verá uma página cair, por
+mais que mate. E a lista de quem as larga conta uma história — **chefes** sempre, **aldeões** uma em dez,
+**zumbis-porcos e endermen** nove em cem, qualquer **morto-vivo** duas em cem: elas estão com os aldeões, com
+os mortos e com as coisas que andam entre mundos. Quem quiser o livro inteiro tem de fazer o que o vampiro do
+diário fez.
+
+### Os dez degraus
+
+| degrau | o que ele pede |
+| --- | --- |
+| 1 | **virar** — beber sangue de Lilith, ou de outro vampiro, num Cálice |
+| 2 | **encher o sangue** até ao teto, uma vez |
+| 3 | **cinco aldeões** mordidos sem os esvaziar |
+| 4 | **dez minutos de noite**, acordado |
+| 5 | **queimar-se dez vezes** com o sol engarrafado |
+| 6 | **vinte Blazes** |
+| 7 | **Lilith outra vez**, com uma papoula |
+| 8 | **quatro aldeias** diferentes |
+| 9 | **cinco aldeões em gaiolas** |
+| 10 | **fazer outro vampiro** |
+
+Repare na forma deles. Três pedem **moderação** — morder sem matar —, dois pedem que ele **ande**, um pede
+que ele se **machuque**, e o último pede que ele **faça o que lhe fizeram**. Não há um único degrau que peça
+matar um chefe ou achar um tesouro. A escada do vampiro é uma escada de **hábitos**, e é por isso que ela
+leva tanto tempo.
+
+### Morder sem esvaziar, que são dois degraus
+
+De quinhentos de sangue, parar entre **duzentos e cinquenta e duzentos e oitenta** são três goles e meio. A
+faixa é estreita de propósito, e a crueldade está no resto: beber **demais** não falha a mordida, **apaga a
+conta inteira**. Quatro aldeões bem mordidos e um mal mordido valem zero.
+
+O nono degrau pede o mesmo, só que em **gaiolas**: um anel de barras de ferro de dois andares à volta do
+aldeão, das dezesseis posições ao menos **quinze** com barra — uma fresta, e só uma —, e por cima um teto
+inteiro de nove blocos. O livro descreve a gaiola páginas antes de o jogador ter de a construir, e não diz
+para quê.
+
+### Queimar-se de propósito, que é o melhor degrau do mod
+
+Para **aguentar** o sol, ele tem de aprender a **levar** o sol — e a única maneira de o levar sem morrer é em
+doses. As doses vêm da **Granada Solar**, que é sol engarrafado, e a granada vem do **Coletor de Luz**.
+
+E o Coletor não se enche à pressa. Põe-se nele uma **Esfera de Quartzo** vazia, e ela sobe **de um em um**:
+cada degrau precisa de um **Sensor de Luz Solar** encostado a marcar exatamente um a mais do que ela já tem.
+Não serve pô-la ao meio-dia e esperar. **Encher a esfera é ver um dia inteiro nascer** — e quem a tirar a
+meio perde a manhã, porque não há meio-sol.
+
+Cheia, ela dá uma granada. Atirada, a granada voa, **para no ar onde bate** — a gravidade dela some no
+impacto — e fica ali um minuto a alumiar, com um bloco de luz a acompanhá-la. Ao fim do minuto estoura,
+devolve a esfera, e queima os mortos-vivos a três blocos.
+
+**E um vampiro é um morto-vivo.** Dez vezes. Nada no jogo explica por que alguém haveria de se queimar de
+propósito; o livro o diz em reticências, e quem não o ler nunca saberá.
+
+### O Caixão, e o fim da escada
+
+O Caixão é uma **cama com tampa**. O jogo trata-o como cama — guarda o ponto de renascer, estoura no Nether
+—, mas agachado o clique **abre e fecha a tampa**, as duas metades ao mesmo tempo, e de tampa fechada não se
+dorme. E ela não levanta debaixo de um bloco: um caixão enterrado fica enterrado.
+
+Por fora é preto; por dentro é **azul**, que é o forro. O modelo são seis peças e uma tampa de três chapas
+que gira em volta da borda esquerda, com a curva cúbica dos baús — e é essa curva que a faz parecer pesada.
+
+E ele é a última coisa que a escada pede. O **décimo degrau** quer quatro coisas ao mesmo tempo e nenhuma
+delas é um golpe: um **Cálice do próprio sangue**, uma presa **presa** — paralisia no quinto grau, que é o
+que o prender de um vampiro do oitavo grau dá —, a presa **vazia**, e um **Caixão a quatro blocos**.
+
+Fecha o círculo: o que o fez vampiro foi um cálice de sangue dado por alguém ao pé de um caixão, longe do
+olhar do sol. A última página do livro mostra o erudito a receber esse cálice, e acaba aí.
+
+### Duas correções e um desvio declarado
+
+**O teto do grau tem chão.** No original ele nasce em zero, e os dois primeiros degraus — encher o sangue e
+os cinco aldeões — **não perguntam** por ele; só do terceiro em diante é que alguém o olha. O porte tinha
+copiado a pergunta para um lugar só, e com isso um vampiro recém-nascido ficava preso no primeiro grau para
+sempre. Agora o chão é escrito — **três** —, e o que o jogador sente é idêntico ao original. A prova que
+dizia o contrário foi corrigida e diz porquê.
+
+**A espera não trava quem acabou de nascer.** A espera de meio segundo entre poderes mede-se contra a batida
+do último uso, e ela começava em zero — de modo que um jogador nas suas dez primeiras batidas não conseguia
+usar poder nenhum. Começa agora meio segundo atrás.
+
+**O desvio:** a folha do livro traz o **pedaço da marcação que este livro usa** — quebra de linha, título,
+cor, figura e a seta com o número de páginas que ela pede. A marcação inteira do original tem modelos, listas
+de itens e marcadores, e serve os outros três livros do Witchery, que não estão portados. Quando eles vierem,
+é daqui que saem.
+
+### E duas provas antigas que esta fatia desenterrou
+
+A suíte corre num **mundo só**, e as arenas são postas lado a lado: trinta e duas provas novas mudaram quem
+fica ao lado de quem, e duas provas antigas que dependiam disso caíram.
+
+A do **apanhador de sonhos** contava com o algodão à volta baixar a conta, mas o algodão só conta **até
+dois** — e se as provas ao lado já tiverem gasto os dois, o dela não tem onde entrar. Agora ela conta o que
+já lá está antes de exigir a descida.
+
+A do **chamado dos bichos** largava um camelo a quarenta blocos, que é dentro da arena de outra prova — e
+essa arena varre-o quando se arruma. Agora o camelo fica dentro da arena dela, a dez blocos, que é mais do
+que os cinco e meio que o rito pede para o considerar longe; o alcance de cento e vinte e oito está provado à
+parte.
+
+**E uma falha minha, declarada:** as provas da fatia anterior — os cinco poderes do vampiro — **não estavam
+na lista de entrada do Fabric**, e por isso nunca correram. Entraram agora, com as desta fatia, e a conta da
+suíte passou de 1074 a 1106. Três coisas que elas apanharam estão corrigidas acima.
+
+### O que falta, declarado
+
+- a **Rosa de Sangue** e a **Guirlanda de Alho**, que são o que fere um vampiro;
+- as **roupas de vampiro**, que somam três segundos ao prender;
+- e a **Granada Duplicadora**, que é o segundo modo da mesma criatura e pede a Seguidora do tipo cinco.
+
+**Guardas:** `OccultaVampireLadderGameTest`, com doze — os números dos dez degraus; **o teto que para no
+terceiro sem livro**, que é a prova que carrega a fatia; os cinco aldeões e a mordida a mais que apaga tudo;
+a gaiola de quinze barras com uma fresta e não duas; a noite que não conta de dia; os vinte Blazes e a ovelha
+que não vale; as dez queimaduras; as quatro aldeias que se esquecem quando o grau muda; as quatro coisas do
+décimo degrau, uma a uma; as páginas que só caem para quem já tem o livro; o Coletor que sobe de um em um e
+dá a granada cheio; e a tampa do Caixão que abre as duas metades e não abre debaixo de um bloco. E
+`OccultaVampireBookClientTest`, com oito telas: o índice, o rito desenhado, a gaiola desenhada, a seta
+apagada, o caixão fechado e aberto, o coletor pela metade e cheio, e as coisas novas no inventário.

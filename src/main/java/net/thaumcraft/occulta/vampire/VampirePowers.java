@@ -242,7 +242,7 @@ public final class VampirePowers {
      * precisar de olhar todo jogador do mundo sessenta vezes por segundo para tirar um do nada.
      */
     public static final AttachmentType<Integer> ÚLTIMO = AttachmentRegistry.<Integer>builder()
-            .initializer(() -> 0)
+            .initializer(() -> -ESPERA)
             .buildAndRegister(Thaumcraft.id("vampire_cooldown"));
 
     private VampirePowers() {
@@ -314,7 +314,10 @@ public final class VampirePowers {
             Vampire.bebe(quem, Blood.tira(level, deQuem, gole, quem));
             pó(level, deQuem);
             barulho(level, deQuem);
-            if (deQuem instanceof Villager aldeão) testemunhas(level, quem, aldeão);
+            if (deQuem instanceof Villager aldeão) {
+                testemunhas(level, quem, aldeão);
+                VampireLadder.mordeu(level, quem, aldeão);
+            }
             return true;
         }
         if (deQuem instanceof Animal) {

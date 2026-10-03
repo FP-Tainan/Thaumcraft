@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "sol=0": {
+      "model": "thaumcraft:block/daylight_collector_vazio"
+    },
+    "sol=1": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=2": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=3": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=4": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=5": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=6": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=7": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=8": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=9": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=10": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=11": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=12": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=13": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=14": {
+      "model": "thaumcraft:block/daylight_collector_esfera"
+    },
+    "sol=15": {
+      "model": "thaumcraft:block/daylight_collector_cheio"
+    }
+  }
+}

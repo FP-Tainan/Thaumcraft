@@ -87,9 +87,25 @@ public class OccultaSpiritGameTest {
         if (só > teto + 1.0e-6) helper.fail("com apanhador a conta cai a " + teto + " ou menos, e deu " + só);
         if (só < 0.0) helper.fail("e não passa do chão");
 
+        /*
+         * E o algodão em volta ainda a faz cair — mas só conta até dois, e a suíte corre num mundo só. Se o
+         * que as provas ao lado puseram já tiver gasto os dois, este algodão não tem onde entrar, e o que se
+         * exige então é apenas que ele não <b>suba</b> a conta.
+         */
+        int jáHáAlgodão = 0;
+        for (BlockPos casa : BlockPos.betweenClosed(
+                onde.offset(-SpiritWorld.LOOK, -SpiritWorld.LOOK, -SpiritWorld.LOOK),
+                onde.offset(SpiritWorld.LOOK, SpiritWorld.LOOK, SpiritWorld.LOOK))) {
+            if (helper.getLevel().getBlockState(casa).is(OccultaBlocks.WISPY_COTTON)) jáHáAlgodão++;
+        }
+
         helper.setBlock(new BlockPos(1, 2, 5), OccultaBlocks.WISPY_COTTON.defaultBlockState());
         double comAlgodão = SpiritWorld.nightmareChance(helper.getLevel(), onde, 0.998);
-        if (comAlgodão >= só - 1.0e-9) helper.fail("e o algodão em volta ainda a faz cair");
+        if (jáHáAlgodão < SpiritWorld.COTTONS) {
+            if (comAlgodão >= só - 1.0e-9) helper.fail("e o algodão em volta ainda a faz cair");
+        } else if (comAlgodão > só + 1.0e-9) {
+            helper.fail("e o algodão nunca faz a conta subir");
+        }
         helper.succeed();
     }
 

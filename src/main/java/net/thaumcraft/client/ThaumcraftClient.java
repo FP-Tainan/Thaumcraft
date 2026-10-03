@@ -212,6 +212,32 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.ATTACK_BAT,
                 net.minecraft.client.renderer.entity.BatRenderer::new);
 
+        // o Caixão, que é uma cama com tampa e se desenha sozinho
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.CoffinModel.CAIXÃO,
+                net.thaumcraft.occulta.client.CoffinModel::caixão);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.COFFIN_ENTITY,
+                net.thaumcraft.occulta.client.CoffinRenderer::new);
+
+        // e a Granada Solar, que voa como o item que é
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.SUN_GRENADE,
+                contexto -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(contexto));
+
+        /*
+         * E o Livro do Vampiro, que abre a folha do lado de cá: o teto do grau já subiu no servidor, e o que
+         * falta é a leitura. É o mesmo caminho do Thaumonomicon, e pela mesma razão.
+         */
+        net.fabricmc.fabric.api.event.player.UseItemCallback.EVENT.register((quem, level, mão) -> {
+            net.minecraft.world.item.ItemStack livro = quem.getItemInHand(mão);
+            if (!level.isClientSide() || !livro.is(net.thaumcraft.occulta.OccultaItems.VAMPIRE_BOOK)) {
+                return net.minecraft.world.InteractionResult.PASS;
+            }
+            net.thaumcraft.occulta.client.VampireBookHook.abre(livro);
+            return net.minecraft.world.InteractionResult.SUCCESS;
+        });
+
         // e o painel de comando de um vampiro: a barra de sangue e a tecla do poder
         net.thaumcraft.occulta.client.VampireClient.init();
 
