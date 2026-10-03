@@ -43,7 +43,7 @@ import org.jetbrains.annotations.Nullable;
  * <ol>
  *   <li><b>De noite</b>, se não tem aldeia, procura uma a <b>cento e vinte e oito blocos</b> e vai para lá —
  *       num sopro de fumaça, sem andar o caminho.</li>
- *   <li><b>Lá, bebe.</b> Cada mordida num aldeão tem uma chance em dez de ser um gole de verdade: ele cura-se
+ *   <li><b>Lá, bebe.</b> Cada mordida num aldeão tem uma chance em dez de ser um gole de verdade: ele se cura
  *       de quatro, e conta quatro para o jantar dele.</li>
  *   <li><b>Cheio</b> — vinte —, volta ao caixão e <b>enche um Crisol de Sangue</b> que esteja a seis blocos
  *       dele. É para isso que o crisol existe, e é por isso que ele estava no porte à espera.</li>

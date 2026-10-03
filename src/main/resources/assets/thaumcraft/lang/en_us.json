@@ -350,6 +350,8 @@
   "death.attack.taint.player": "%1$s was corrupted by Taint whilst fighting %2$s",
   "death.attack.tentacle": "%1$s was squeezed by %2$s",
   "death.attack.unsummon": "%1$s was unsummoned",
+  "death.attack.vampire_fire": "%1$s burned to ashes",
+  "death.attack.vampire_sun": "%1$s was caught by the sun",
   "dimension.minecraft.overworld": "Overworld",
   "dimension.minecraft.the_end": "The End",
   "dimension.minecraft.the_nether": "The Nether",
@@ -1319,6 +1321,7 @@
   "key.thaumcraft.naturalis.increase_size": "Increase Area Size",
   "key.thaumcraft.naturalis.misc": "Toggle Shape/Mode",
   "key.thaumcraft.naturalis.pick_block": "Pick Block",
+  "key.thaumcraft.vampire_power": "Vampire Power",
   "key.unbound": "Unbound",
   "message.thaumcraft.minion.bidding": "<Minion> Your bidding?",
   "message.thaumcraft.coven_too_small": "Your coven is too small for this rite.",
@@ -3302,5 +3305,11 @@
   "tc.werewolf.mooncharmcrafted": "The voice rumbles, \"DO NOT LOSE IT AGAIN!\"",
   "tc.werewolf.notworthy": "A voice echoes in your head, \"YOU ARE UNWORTHY!\"",
   "tc.hornofthehunt.tip": "Calls forth the Horned Huntsman then vanishes.",
-  "tc.huntsmansspear.tip": "Can summon a wolf, if struck while blocking."
+  "tc.huntsmansspear.tip": "Can summon a wolf, if struck while blocking.",
+  "tc.vampire.thirstgrows": "Your thirst grows stronger!",
+  "tc.vampirepower.beber": "Drink Blood",
+  "tc.vampirepower.morcego": "Toggle Bat Form",
+  "tc.vampirepower.nenhum": "None",
+  "tc.vampirepower.velocidade": "Speed",
+  "tc.vampirepower.visao": "Transfix / Toggle Night Vision"
 }

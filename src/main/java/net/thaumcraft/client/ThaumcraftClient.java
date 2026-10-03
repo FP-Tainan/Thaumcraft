@@ -190,6 +190,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.client.WolfHeadRenderer.WOLF_HEAD,
                 net.thaumcraft.occulta.client.WolfHeadRenderer::wolfHead);
 
+        // e o painel de comando de um vampiro: a barra de sangue e a tecla do poder
+        net.thaumcraft.occulta.client.VampireClient.init();
+
         // o Ars Occulta: as três visões da Loucura
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.ILLUSION_CREEPER,

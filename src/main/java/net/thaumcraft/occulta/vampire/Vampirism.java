@@ -4,21 +4,22 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Quem é vampiro: a costura por onde a <b>vampirice do jogador</b> vai entrar.
+ * Quem é vampiro: o {@code CreatureUtil.isVampire} do Witchery.
  *
- * <p>Hoje ela responde só pelo bicho, porque só o bicho está portado — e o vampiro do mod não ataca outro
- * vampiro, que é a única pergunta que o bicho lhe faz.
+ * <p>Ela responde por <b>dois</b>: o bicho — o Vampiro do mundo — e a <b>gente</b>, que desde a fatia do
+ * corpo do vampiro pode ser vampira também.
  *
- * <p><b>É uma costura, e não um desvio.</b> Quando a vampirice do jogador vier — os graus, a sede, a forma de
- * morcego, as vítimas —, <b>esta é a única linha que muda</b>, como aconteceu com o {@code temFamiliar} da
- * Bruxa do Coven, que ficou aqui escrito do mesmo jeito e fechou com uma linha na fatia dos familiares.
+ * <p><b>E a costura fechou.</b> Ela foi escrita na fatia do bicho como "a única linha que muda quando a
+ * vampirice vier", e foi <b>só</b> ela: o uivo que prende e não pega em vampiros, e o vampiro que não ataca
+ * outro vampiro, passaram a saber a resposta certa sem se tocar em mais nada.
  */
 public final class Vampirism {
     private Vampirism() {
     }
 
-    /** Se quem se pergunta é vampiro. */
+    /** Se quem se pergunta é vampiro: o bicho, ou gente de grau um para cima. */
     public static boolean é(@Nullable LivingEntity quem) {
-        return quem instanceof VampireEntity;
+        if (quem instanceof VampireEntity) return true;
+        return Vampire.é(quem);
     }
 }

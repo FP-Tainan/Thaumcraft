@@ -350,6 +350,8 @@
   "death.attack.taint.player": "%1$s foi corrompido pela Mácula enquanto lutava com %2$s",
   "death.attack.tentacle": "%1$s foi esmagado por %2$s",
   "death.attack.unsummon": "%1$s se desfez no ar",
+  "death.attack.vampire_fire": "%1$s virou cinzas",
+  "death.attack.vampire_sun": "%1$s foi apanhado pelo sol",
   "dimension.minecraft.overworld": "Superfície",
   "dimension.minecraft.the_end": "O Fim",
   "dimension.minecraft.the_nether": "Nether",
@@ -1319,6 +1321,7 @@
   "key.thaumcraft.naturalis.increase_size": "Aumentar a área",
   "key.thaumcraft.naturalis.misc": "Trocar a forma / o jeito",
   "key.thaumcraft.naturalis.pick_block": "Marcar o bloco",
+  "key.thaumcraft.vampire_power": "Poder de Vampiro",
   "key.unbound": "Solta",
   "message.thaumcraft.minion.bidding": "<Lacaio> Às suas ordens?",
   "message.thaumcraft.coven_too_small": "O coven é pequeno demais para este rito.",
@@ -3300,5 +3303,11 @@
   "tc.werewolf.mooncharmcrafted": "A voz ruge: \"NÃO O PERCA OUTRA VEZ!\"",
   "tc.werewolf.notworthy": "Uma voz ecoa na sua cabeça: \"VOCÊ NÃO É DIGNO!\"",
   "tc.hornofthehunt.tip": "Chama o Caçador Cornudo e então desaparece.",
-  "tc.huntsmansspear.tip": "Pode chamar um lobo, se for atingida enquanto apara."
+  "tc.huntsmansspear.tip": "Pode chamar um lobo, se for atingida enquanto apara.",
+  "tc.vampire.thirstgrows": "A sua sede fica mais forte!",
+  "tc.vampirepower.beber": "Beber Sangue",
+  "tc.vampirepower.morcego": "Forma de Morcego",
+  "tc.vampirepower.nenhum": "Nenhum",
+  "tc.vampirepower.velocidade": "Velocidade",
+  "tc.vampirepower.visao": "Visão / Visão Noturna"
 }

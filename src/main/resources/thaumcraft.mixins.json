@@ -43,7 +43,8 @@
     "MobXpAccessor",
     "LivingEntityWerewolfJumpMixin",
     "LivingEntityWerewolfFallMixin",
-    "BlockDropsWolfBoneMixin"
+    "BlockDropsWolfBoneMixin",
+    "FoodPropertiesVampireMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",

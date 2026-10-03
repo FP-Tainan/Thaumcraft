@@ -40,6 +40,11 @@ public final class Occulta {
         net.thaumcraft.occulta.wolf.WerewolfPowers.init();
         net.thaumcraft.occulta.wolf.WerewolfTick.init();
         net.thaumcraft.occulta.wolf.WerewolfHooks.init();
+        net.thaumcraft.occulta.vampire.Vampire.init();
+        net.thaumcraft.occulta.vampire.Blood.init();
+        net.thaumcraft.occulta.vampire.VampirePowers.init();
+        net.thaumcraft.occulta.vampire.VampireTick.init();
+        net.thaumcraft.occulta.vampire.VampireHooks.init();
         OccultaItems.init();
         OccultaAspects.init();
         OccultaGrassSeeds.init();

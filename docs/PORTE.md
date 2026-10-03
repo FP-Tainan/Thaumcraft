@@ -7325,3 +7325,127 @@ que perdoa e para em zero; o teto, a resistência, o fogo que a ignora e os quat
 prata que soma em vez de ser cortada; a armadura rasgada ao nono e não ao oitavo nem de lobo; a fome que a
 caça mata e o morto-vivo que não alimenta; o osso que sai uma vez e não duas; as patas que cavam terra e não
 pedra; o contágio do décimo e as duas guardas dele; e **as três costuras**, que chamam o jogo.
+
+## O corpo do vampiro — o sangue, a sede e o sol (2026-10-03)
+
+A outra maldição do Witchery, e o avesso da licantropia. Vale pôr os dois lado a lado antes de tudo o mais,
+porque é a comparação que explica os dois:
+
+| | o lobisomem | o vampiro |
+| --- | --- | --- |
+| **quem manda** | a **lua**: ele não escolhe quando muda | **ele**: escolhe a forma, o poder, a hora |
+| **o preço** | pontual — larga tudo o que veste, naquela noite | **constante**: tem de beber, todos os dias |
+| **a tabela** | oito números por grau | **um**: o dano, que para em três |
+| **a escada** | um **altar** que lhe diz o que fazer | um **teto** que sobe quando ele **lê** |
+| **o que o mata** | a **prata** | o **sol** |
+
+Um lobisomem é servo de alguma coisa. Um vampiro não é servo de ninguém — e por isso tudo o que ele tem, tem
+de pagar.
+
+### O sangue, que é três coisas ao mesmo tempo
+
+O <b>poder de sangue</b> é a única coisa que sustenta um vampiro, e ele faz três trabalhos de uma vez:
+
+- é a **comida**: cinco de sangue viram um de comida, e é o único jeito de um vampiro comer;
+- é o **combustível** dos poderes;
+- e é o **guarda-sol**: enquanto houver sangue, o sol só castiga. Zerado o sangue, o sol **mata**.
+
+Tirar o sangue dele é tirar as três coisas de uma vez, e é isso que faz de um vampiro uma coisa que se
+joga **com pressa**.
+
+O teto cresce com o grau — **quinhentos mais duzentos e cinquenta por grau** — e cresce **pela metade** em
+quem também é lobisomem do segundo grau para cima. É a única linha do mod em que as duas maldições se olham, e
+o que ela diz é claro: ser as duas custa.
+
+### Beber, que é tudo
+
+Com o poder de **beber** escolhido, tocar num vivo a um bloco e três décimos — **dois e um**, se ele estiver
+paralisado, porque a presa não foge — tira-lhe sangue. E o que sai depende de **quem é** e de **como está**:
+
+- de quem está **desacordado** — adormecido, ou paralisado ao quinto grau — sai **tudo**;
+- de quem está **acordado** saem **dois terços**: ele se debate.
+
+Daí vem todo o jeito de jogar de um vampiro: **não se morde quem está de pé**. A poção da Paralisia e a Maçã
+do Sono deixam de ser truques e passam a ser ferramentas de caça.
+
+E beber demais **mata**. Acima de metade do sangue a mordida quase não dói; **abaixo**, cada gole fere — e é
+isso que fará do segundo degrau da escada, que pede seis goles deixando o aldeão entre duzentos e cinquenta e
+duzentos e oitenta, uma coisa de pulso firme.
+
+Três regras a mais, e cada uma diz alguma coisa:
+
+- **sangue de bicho** dá dois e **nunca passa de um quarto do teto**. É a regra mais elegante do mod porque
+  não proíbe nada: quem não quiser morder gente sobrevive, e fica preso no primeiro grau para sempre;
+- **sangue de lobisomem é veneno**: não dá nada e custa **quatro de dor**. As duas maldições não se misturam;
+- e morder um aldeão **tem testemunhas**: todo guarda a dezesseis blocos que esteja de olhos abertos vem
+  atrás de quem mordeu.
+
+### O sol, nos seus quatro degraus
+
+Ao sol — **céu aberto, de dia, e sem chuva**, que é o que faz de um temporal a melhor hora de um vampiro:
+
+1. **sem sangue**, e passados os primeiros vinte segundos de vida, ele **morre ali**: morte direta, que
+   armadura nenhuma apara;
+2. **do quinto grau** em diante ele **aguenta**: perde sessenta de sangue e apanha Fraqueza IV, Lentidão e
+   Fadiga. Um vampiro velho anda de dia — mal, devagar e **pagando**;
+3. **abaixo do quinto**, o sol lhe **zera o sangue de uma vez**. Não há aguentar: há correr;
+4. e, zerado o sangue de um jeito ou de outro, ele **pega fogo**.
+
+A ordem é do original e tem uma consequência que vale guardar: um vampiro de grau baixo que ponha o nariz ao
+sol **com o sangue cheio arde na mesma**, porque o sol lhe tirou tudo antes de perguntar.
+
+E há uma piada cruel que o original faz e que fica: **a Resistência ao Fogo não salva um vampiro**. Ardendo
+com ela no corpo, ele leva dois de uma dor que é só dele. A poção que salva todo mundo é inútil justamente
+para quem mais arde.
+
+### Comida não o alimenta
+
+A barra de um vampiro sobe por **uma porta só**, que é o sangue. Pode mastigar o que quiser e não lhe faz
+nada — e é isso que faz da sede uma coisa que não se contorna com um baú de pão.
+
+**O jeito mudou, e para melhor.** O original deixa a comida entrar e, na batida seguinte, **apaga a barra
+inteira** quando repara que ela subiu — um porrete: quem comesse um pão perdia também o que já tinha dentro.
+Aqui a comida simplesmente **não alimenta**, no lugar exato onde um alimento conta. E há um ganho que o
+original não tinha: uma **maçã dourada ainda cura** um vampiro. O que ela deixa de fazer é sustentá-lo, que é
+o que o mod queria dizer.
+
+### E sem sangue nem comida, a maldição da sede
+
+**Fraqueza IX, Lentidão II e Fadiga II.** Não é um aviso: é um fim de jogo em câmara lenta, e é o que um
+vampiro vê quando percebeu tarde demais que a noite ia acabar.
+
+### O painel de comando
+
+Um vampiro não tem menu, não tem livro aberto, não tem roda. Tem **uma barra que desce** e **uma palavra** que
+diz o que o clique vai fazer, e é o painel inteiro. A tecla **V** passa ao poder seguinte e, com Ctrl, liga e
+desliga a visão.
+
+A barra só aparece a quem é vampiro, e some no instante em que ele deixa de ser.
+
+### O que falta, declarado
+
+**Esta fatia não tem porta de entrada**, e é preciso dizê-lo com todas as letras: hoje só se vira vampiro por
+comando. O caminho do original é um só e é longo — a **Lilith**, que se chama com um ritual de arame e um
+crânio, de noite, com um cálice de sangue de galinha tirado com a Boline —, e ela é um bicho de quinhentas
+linhas com uma corrente de coisas atrás. É a fatia seguinte, e é onde a entrada e a **cura** moram.
+
+Falta também, por ordem do que vem a seguir:
+
+- a **forma de morcego** — o voo, a queda que não dói, e o gole pequeno. A pergunta já está escrita no
+  `VampirePowers.emMorcego`, que hoje responde sempre que não: é a mesma costura que o `Lycanthropy` foi
+  antes de a licantropia existir, e que fechou com uma linha;
+- os outros **três poderes** — a velocidade, o transfixar do olhar — e os **três supremos**: o enxame de
+  morcegos, o teleporte e a tempestade;
+- a **escada dos dez graus**, que já está toda lida e é diferente da do lobisomem: o sangue cheio ao primeiro,
+  seis goles medidos num aldeão ao segundo, dez minutos de noite ao terceiro, Lilith ao sexto, quatro aldeias
+  ao sétimo, um aldeão engaiolado ao oitavo e o próprio sangue ao nono;
+- o **Livro do Vampiro**, que é o que levanta o teto do grau — sem ele, nenhum feito conta;
+- e o **Caixão**, a **Rosa de Sangue** e a **Guirlanda de Alho**, que são a casa dele e o que o fere.
+
+**Guardas:** `OccultaVampirePlayerGameTest`, com doze — os números; o teto do sangue e o que ser híbrido
+custa; o sangue cheio que sobe ao segundo grau e o teto de grau que o segura; o teto que nunca desce; os dois
+terços de quem se debate e a mordida que fere abaixo da metade; o sangue de bicho que para num quarto; a
+comida que não o alimenta e o sangue que alimenta; a maldição da sede; **o sol nos seus quatro degraus**; o
+sangue de lobisomem que é veneno; a roda dos poderes e o interruptor da visão; a cura que devolve o sangue de
+gente; e o corpo de quem é gente, que faz sangue sozinho. E `OccultaVampirePlayerClientTest`, com as quatro
+telas da barra — sem ela, com ela cheia, com a sede a apertar, e sem ela outra vez.
