@@ -6930,3 +6930,15 @@ para baixo** — que é como ele acaba por cavar um poço debaixo dos próprios 
 contar; a picareta que a corda troca de mão, e que solto ele não aceita; o que ele cava e o que não cava; o
 apanhar que só vale na corda e de mãos vazias; o largar que poupa a ferramenta; e a parede que ele trepa. E
 `OccultaGoblinClientTest`, com os quatro ofícios ao lado de um aldeão, para a altura e o nariz se verem.
+
+## Uma Lã de Morcego a dobrar, tirada (2026-10-03)
+
+O `OccultaBatWool` era de antes do `OccultaDrops`, e ficou. Os dois punham Lã de Morcego na queda do morcego —
+o primeiro **uma vez em três, sem olhar a mão de quem matou**, e o segundo as duas contas certas do original
+(uma em três sem a Arthana, três em quatro com ela, e certa com o Saque).
+
+O que isso dava era **lã a dobrar**: quem matasse um morcego tinha a conta do `OccultaDrops` <i>e</i> mais uma
+em três por cima, com ou sem faca. O javadoc dele dizia, por escrito, que a Arthana "ainda não está portada" —
+e ela está, há fatias.
+
+Tirado. A conta certa é a do `OccultaDrops`, e sempre foi.

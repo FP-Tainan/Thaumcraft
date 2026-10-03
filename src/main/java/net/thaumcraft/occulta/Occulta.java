@@ -38,7 +38,6 @@ public final class Occulta {
         OccultaItems.init();
         OccultaAspects.init();
         OccultaGrassSeeds.init();
-        OccultaBatWool.init();
         OccultaDrops.init();
         OccultaEvents.init();
         Poppets.init();
