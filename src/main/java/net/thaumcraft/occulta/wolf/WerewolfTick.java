@@ -33,23 +33,12 @@ public final class WerewolfTick {
     private WerewolfTick() {
     }
 
-    /**
-     * Põe o relógio a correr.
-     *
-     * <p>Duas coisas correm aqui, e em compassos diferentes: <b>a lua</b>, de quarenta em quarenta batidas, e
-     * <b>o salto</b>, a cada batida — porque o arranco de um bicho a correr tem de entrar na batida em que ele
-     * corre. Quem não é nada sai da conta na primeira pergunta, e por isso varrer todo jogador a cada batida
-     * não custa nada.
-     */
+    /** Põe o relógio a andar. */
     public static void init() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
-            boolean aLua = server.getTickCount() % DE_QUANTO_EM_QUANTO == 1;
+            if (server.getTickCount() % DE_QUANTO_EM_QUANTO != 1) return;
             for (ServerLevel level : server.getAllLevels()) {
-                for (Player quem : level.players()) {
-                    if (Werewolf.grauDe(quem) <= 0) continue;
-                    WerewolfPowers.salta(quem);
-                    if (aLua) olha(level, quem);
-                }
+                for (Player quem : level.players()) olha(level, quem);
             }
         });
     }

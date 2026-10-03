@@ -70,8 +70,9 @@ public final class WerewolfHooks {
 
         ServerLivingEntityEvents.AFTER_DEATH.register(WerewolfHooks::morreu);
         ServerLivingEntityEvents.AFTER_DAMAGE.register(
-                (quem, fonte, dano, levou, aparado) -> oLoboDaLança(quem, fonte));
+                (quem, fonte, dano, levou, aparado) -> bateu(quem, fonte));
         UseEntityCallback.EVENT.register(WerewolfHooks::amansa);
+        net.fabricmc.fabric.api.event.player.AttackBlockCallback.EVENT.register(WerewolfHooks::cava);
     }
 
     // ------------------------------------------------------------------ as mortes que contam
@@ -85,6 +86,9 @@ public final class WerewolfHooks {
         }
 
         if (!(fonte.getDirectEntity() instanceof Player quem)) return;
+        if (quemMorreu.level() instanceof ServerLevel mundo) {
+            WerewolfPowers.come(mundo, quem, quemMorreu);
+        }
         int grau = Werewolf.grauDe(quem);
         Werewolf.Forma forma = Werewolf.formaDe(quem);
 
@@ -142,6 +146,22 @@ public final class WerewolfHooks {
         return InteractionResult.SUCCESS;
     }
 
+    /**
+     * O que um golpe de um bicho faz a quem apanhou: a <b>armadura rasgada</b> e o <b>contágio</b>.
+     *
+     * <p>Os dois correm <b>depois</b> da pancada, e os dois perguntam pela vida que sobrou — é por isso que
+     * o contágio pega em quem ficou <b>quase morto</b> e não em quem ficou bem.
+     */
+    private static void bateu(LivingEntity quemLevou, DamageSource fonte) {
+        if (!(quemLevou.level() instanceof ServerLevel level)) return;
+        oLoboDaLança(quemLevou, fonte);
+        if (!fonte.is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK)) return;
+        if (!(fonte.getEntity() instanceof Player quem)) return;
+
+        WerewolfPowers.rasga(level, quem, quemLevou);
+        WerewolfPowers.contagia(level, quem, quemLevou);
+    }
+
     // ------------------------------------------------------------------ e o lobo da lança
 
     /** Uma vez em quatro, e o lobo morre do que lhe fizeram: quinze minutos de Definhamento II. */
@@ -186,6 +206,21 @@ public final class WerewolfHooks {
      *
      * <p>Só vale para o <b>golpe da mão</b> de um jogador, como no original.
      */
+    /**
+     * <b>Cavar com as patas</b>: quando um lobo de grau alto bate agachado numa coisa mole.
+     *
+     * <p>Devolver {@code SUCCESS} tira a batida das mãos do jogo, que é o {@code setCanceled} do original:
+     * o bloco já saiu, e o jogo não tem mais nada a fazer com ela.
+     */
+    private static InteractionResult cava(Player quem, net.minecraft.world.level.Level level,
+                                          net.minecraft.world.InteractionHand mão,
+                                          net.minecraft.core.BlockPos onde,
+                                          net.minecraft.core.Direction lado) {
+        if (!(level instanceof ServerLevel mundo)) return InteractionResult.PASS;
+        return WerewolfPowers.cavaComAsPatas(mundo, quem, onde)
+                ? InteractionResult.SUCCESS : InteractionResult.PASS;
+    }
+
     public static float pancada(DamageSource fonte, float dano) {
         if (!fonte.is(DamageTypes.PLAYER_ATTACK)) return dano;
         if (!(fonte.getEntity() instanceof Player quem)) return dano;

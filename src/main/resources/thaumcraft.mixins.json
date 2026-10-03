@@ -40,7 +40,10 @@
     "BlockDropsFortuneMixin",
     "PlayerKeepInventoryMixin",
     "PlayerWerewolfSizeMixin",
-    "MobXpAccessor"
+    "MobXpAccessor",
+    "LivingEntityWerewolfJumpMixin",
+    "LivingEntityWerewolfFallMixin",
+    "BlockDropsWolfBoneMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",

@@ -52,8 +52,11 @@ public final class OccultaHurt {
         dano = reflete(level, quem, fonte, dano);
         empurra(level, quem, fonte);
         dano = fome(quem, fonte, dano);
-        // e a pancada de um lobisomem em forma de bicho, que corria no mesmo gancho do original
+        // e as duas do lobisomem, que corriam no mesmo gancho do original: o que ele bate e o que lhe tiram
         dano = net.thaumcraft.occulta.wolf.WerewolfHooks.pancada(fonte, dano);
+        if (quem instanceof net.minecraft.world.entity.player.Player gente) {
+            dano = net.thaumcraft.occulta.wolf.WerewolfPowers.apanha(gente, fonte, dano);
+        }
         return dano;
     }
 

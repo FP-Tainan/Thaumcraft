@@ -7043,6 +7043,8 @@ o que o Caçador vem buscar — um lobisomem de dia é gente para a prata, e nã
   terra ao terceiro, a fome que a caça mata ao quarto, e o contágio ao décimo.
 - O **Chifre da Caça**, que a estátua dá ao quarto grau.
 
+> *As três coisas vieram nas duas fatias seguintes: **A escada dos dez graus** e **Os poderes do lobisomem**.*
+
 **Guardas:** `OccultaWerewolfPlayerGameTest`, com nove — os números; o grau que para em dez e volta à forma de
 gente ao chegar a zero; a forma de bicho que conta como lobisomem e a de gente que não; **o que virar bicho
 custa**, com a mão do lobo e as mãos do lobisomem; o Amuleto que não cai; a lua que manda e as duas coisas que
@@ -7150,8 +7152,11 @@ bicho. Sem isso, um lobisomem de grau dez tem uma fábrica de experiência que b
 
 ### E correr é saltar
 
-Em forma de bicho, quem **corre** leva um empurrão para a frente do tamanho do arranco do grau — e é isso que
+Em forma de bicho, quem **corre e pula** é atirado para a frente do tamanho do arranco do grau — e é isso que
 faz do quinto degrau, que pede dez monstros mortos **no ar**, uma coisa que se consegue.
+
+> *Esta fatia pôs o arranco a correr a cada batida, e isso estava errado: o original soma uma vez, no pulo. A
+> fatia dos poderes corrige e acrescenta o que faltava, que é pular mais alto.*
 
 E em forma de bicho a **arma na mão não vale nada**: a pancada vale **dois** se o que ele tem na mão tem dano
 próprio, e só soma o dano do grau a **mãos vazias e a correr**. Um lobo com uma espada de diamante bate menos
@@ -7198,17 +7203,11 @@ feitos à mão para chegar ao mesmo lugar.
 
 ### O que falta, declarado
 
-A escada está inteira: **nenhum degrau falta**, e há prova disso. O que falta são os outros **poderes** do
-lobisomem, que não são degraus:
+A escada está inteira: **nenhum degrau falta**, e há prova disso. O que faltava eram os outros **poderes** do
+lobisomem — a armadura rasgada, a fome que a caça mata, o osso que sai da terra, a queda que perdoa, o teto da
+pancada e o contágio —, e esses vieram na fatia seguinte: **Os poderes do lobisomem**, mais abaixo.
 
-- a **armadura rasgada** ao nono grau, de lobisomem — um quarto da durabilidade por golpe, e arrancada a quem
-  não a aguentar;
-- a **fome que a caça mata** ao quarto: oito de comida e o barulho de comer, de cada bicho que ele matar;
-- o **osso que sai da terra** ao terceiro, de lobo — e com ele o cavar com as patas;
-- a **queda que perdoa** e o **teto da pancada**, que estão na tabela e ainda não estão no corpo;
-- e o **contágio** ao décimo, que é o que faz de finalizar a escada uma coisa que se espalha.
-
-E a **cabeça do cão-do-inferno**, que é o segundo tipo da cabeça empalhada e espera o bicho dela.
+Fica a **cabeça do cão-do-inferno**, que é o segundo tipo da cabeça empalhada e espera o bicho dela.
 
 E uma terceira, pequena e do jeito de hoje: a cabeça na **mão** leva um **meio-giro** que o original não
 escrevia. Na 1.7.10 quem o dava era o caminho do crânio do jogo, por fora do desenhista; hoje não há esse
@@ -7223,3 +7222,106 @@ fatia; o feito que só conta no degrau dele; os dois uivos que chamam e que pren
 arma na mão; e os três blocos que assentam onde se põem. E `OccultaWerewolfLadderClientTest`, com **oito
 telas** medidas de um marco: o altar de frente, de perto e de lado, as duas cabeças, o Caçador de longe e de
 perto, a lança na mão e as cinco coisas no inventário.
+
+## Os poderes do lobisomem — o que a escada destranca (2026-10-03)
+
+A terceira e última parte da licantropia. A primeira trouxe **ser**, a segunda trouxe **subir**, e esta traz
+o que se ganha ao subir.
+
+O que todos eles têm em comum vale dizer de uma vez: **nenhum se escolhe**. Não há tecla, não há item, não há
+menu. Todos vêm do **grau** e da **forma**, e todos param sozinhos quando ele volta a ser gente.
+
+### O salto, e uma correção
+
+Um bicho **pula mais alto** — o `salto` do grau, somado de uma vez ao impulso do pulo — e, **correndo**, o
+pulo também o atira **para a frente**, do tamanho do `arranco`. Um lobo de grau dez que corra e pule atravessa
+quatro ou cinco blocos num salto só, e cai em cima do que estiver no caminho. É isso que faz do quinto degrau
+— dez monstros mortos **no ar** — uma coisa que se consegue.
+
+**E aqui houve um erro meu, que esta fatia corrige.** Na fatia da escada eu pus o arranco a correr **a cada
+batida**, enquanto o jogador corresse. O original não faz isso: o `updateJump` dele corre no
+`LivingJumpEvent`, **quando ele pula**, e soma uma vez. Um empurrão por batida é um lobo que acelera para
+sempre e nunca mais para — e eu nem tinha visto, porque o salto em si não estava lá. Agora está onde o
+original o tem, e com ele vem o que faltava: pular mais alto.
+
+### A queda que perdoa
+
+A distância da queda **encolhe** pelo tanto que o grau perdoa, e o que sobra é que dói. Um lobo de grau dez
+perdoa cinco blocos; um lobisomem de grau dez, sete.
+
+O original mexe na **distância** e não no dano, e a diferença importa: perdoando a distância, tudo o que o
+jogo conta em cima dela — o dano, o barulho, o pó, a Queda Suave — continua a bater certo. Um lobo de grau dez
+cai cinco blocos e não **caiu** de todo.
+
+### O que lhe tiram, que é o que o faz duro
+
+São dois números, e trabalham um em cima do outro:
+
+1. a **resistência** *subtrai* — tira do golpe o que o grau aguenta, e **não vale para fogo**;
+2. e o **teto** *corta* — nenhuma pancada passa dele. É o único número da tabela que **melhora baixando**:
+   quatro no princípio, **dois** do quinto grau em diante.
+
+Duas pancadas escapam ao teto, e são as duas que fazem sentido: a de **outro lobisomem**, que bate tão duro
+quanto ele, e a de **prata** — que, em vez de ser cortada, **soma cinco**. É isso que faz da prata a única
+coisa que mata um lobisomem de grau alto em tempo útil, e é o que dá sentido a toda a linha do Caçador de
+Bruxas.
+
+E quatro danos ficam de fora de tudo: **o vazio, a parede, o afogamento e a queda**. Um lobisomem de grau dez
+que caia de cem blocos morre como qualquer um.
+
+### A armadura rasgada
+
+Do **nono grau** e só de lobisomem, cada golpe escolhe **uma peça de armadura ao acaso** de quem apanhou e
+lhe tira **um quarto da vida dela**. O que não se gasta é **arrancado logo**, e o que se gastar até ao fim cai
+no chão com cinco segundos antes de se poder apanhar outra vez.
+
+Arrancar só vale contra **gente**, como no original: é um poder feito para o combate entre jogadores, e é o
+que faz de um lobisomem de grau nove uma coisa contra a qual não adianta vestir ferro.
+
+**Uma diferença, declarada:** o original gasta a peça em nome de **quem bateu** — o jeito da 1.7.10 de gastar
+uma coisa pedia um jogador e não perguntava de quem ela era. Aqui ela se gasta em nome de **quem a veste**,
+que é o jeito de hoje e é o certo: quebrando, é no corpo dele que ela quebra.
+
+### A fome que a caça mata
+
+Do **quarto grau** e em forma de bicho, cada coisa **viva** que ele mata o **alimenta** — oito de comida e
+quase uma barra inteira de fartura, de uma vez. É mais do que qualquer comida do jogo dá, e é a razão de um
+lobisomem nunca precisar de cozinhar.
+
+**Morto-vivo não alimenta**, e é a única regra: carne podre não sustenta ninguém.
+
+### O osso que sai da terra
+
+Do **terceiro grau** e só de lobo, bater **agachado** em relva, areia, terra, micélio ou gravilha a tira de
+uma vez — sem ferramenta e sem demora, porque um lobo não tem mãos. E cavando **terra**, uma vez em vinte sai
+um **osso** — dois, se a sorte for de uma em cinco —, e depois disso nada mais sai por **um minuto**.
+
+É a menor coisa que um lobisomem faz e a que mais o faz parecer um cão. E o minuto é o que impede que cavar
+terra de lobo seja uma fábrica de ossos.
+
+### E o contágio, que é o fim da escada
+
+Do **décimo grau** e em forma de bicho, quem ele derrubar abaixo de **um quarto da vida** apanha a
+licantropia, uma vez em quatro. Um **aldeão** vira lobisomem ali mesmo; uma **pessoa** fica no grau um, com
+uma vida inteira de luas pela frente.
+
+As contas são as mesmas da mordida do Lobisomem do mundo, e as guardas também: o **conjunto prateado** protege
+e quem já é lobisomem não volta ao princípio. É o que faz da escada uma coisa que **se espalha**, e é o único
+poder do mod cujo efeito é outro jogador.
+
+### Três remendos no jogo, e por que eles se provam à parte
+
+O salto, a queda e o osso não são chamados por nada deste porte: quem passa por eles é o **jogo**. São três
+remendos — no pulo, na queda e na queda de um bloco —, e um remendo que se aplica mas não acerta no lugar
+certo é indistinguível de um que não existe.
+
+Por isso há uma prova que **chama o jogo e não o porte**, e ela repara se algum deles se soltar. A da queda
+não olha a vida de quem caiu — um jogador de mentira está travado no criativo e nada lhe dói — e olha o que o
+jogo **devolve**: sete blocos contam como queda a quem é gente e **não contam** a um lobo de grau dez, e a
+diferença entre os dois é a prova de que o remendo está no caminho.
+
+**Guardas:** `OccultaWerewolfPowersGameTest`, com nove — o salto mais alto e o arranco de quem corre; a queda
+que perdoa e para em zero; o teto, a resistência, o fogo que a ignora e os quatro danos que passam inteiros; a
+prata que soma em vez de ser cortada; a armadura rasgada ao nono e não ao oitavo nem de lobo; a fome que a
+caça mata e o morto-vivo que não alimenta; o osso que sai uma vez e não duas; as patas que cavam terra e não
+pedra; o contágio do décimo e as duas guardas dele; e **as três costuras**, que chamam o jogo.

@@ -162,7 +162,8 @@
       "net.thaumcraft.test.ArcanaWeatherGameTest",
       "net.thaumcraft.test.ArcanaStarAndLinkGameTest",
       "net.thaumcraft.test.ArcanaChoiceGameTest",
-      "net.thaumcraft.test.OccultaWerewolfLadderGameTest"
+      "net.thaumcraft.test.OccultaWerewolfLadderGameTest",
+      "net.thaumcraft.test.OccultaWerewolfPowersGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
