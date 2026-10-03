@@ -125,6 +125,17 @@ public final class OccultaEntities {
     private OccultaEntities() {
     }
 
+    /**
+     * A vassoura posta no chão: o {@code EntityBroom}.
+     *
+     * <p>Um metro e vinte de comprido por meio de alto, que são os números do original, e nada de bicho: ela
+     * não nasce, não respira e não briga — é uma coisa do mod que voa.
+     */
+    public static final EntityType<net.thaumcraft.occulta.broom.BroomEntity> BROOM = register("broom",
+            EntityType.Builder.<net.thaumcraft.occulta.broom.BroomEntity>of(
+                            net.thaumcraft.occulta.broom.BroomEntity::new, MobCategory.MISC)
+                    .sized(1.2f, 0.5f).clientTrackingRange(10));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));

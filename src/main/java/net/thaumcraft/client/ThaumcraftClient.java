@@ -150,6 +150,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.OWL,
                 net.thaumcraft.occulta.client.FamiliarRenderers.Coruja::new);
 
+        // o Ars Occulta: a vassoura
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.BroomModel.BROOM,
+                net.thaumcraft.occulta.client.BroomModel::broom);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.BROOM,
+                net.thaumcraft.occulta.client.BroomRenderer::new);
+
         // o Ars Occulta: a Bruxa do Coven
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.COVEN_WITCH,

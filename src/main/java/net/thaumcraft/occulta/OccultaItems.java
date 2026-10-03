@@ -563,6 +563,45 @@ public final class OccultaItems {
                 new net.thaumcraft.occulta.kettle.KettleBrewItem(kind, properties.stacksTo(16)));
     }
 
+    /**
+     * A <b>Vassoura</b>: dois gravetos e três mudas de espinheiro-alvar.
+     *
+     * <p>Sozinha ela não voa e não se põe no chão — é <b>ingrediente</b>, e só. Quem voa é a encantada, e para
+     * chegar a ela a vassoura tem de passar pelo Rito da Infusão do Céu. É assim no original.
+     */
+    public static final Item BROOM = register("broom", Item::new);
+
+    /**
+     * A <b>Vassoura Encantada</b>, que se põe no chão e se monta.
+     *
+     * <p>Sai do <b>Rito da Infusão do Céu</b>, de noite, com uma vassoura e um Unguento do Voo no chão e três
+     * mil de poder de altar. E volta a ser item quando a vassoura posta se desfaz.
+     */
+    public static final Item ENCHANTED_BROOM = register("enchanted_broom", properties ->
+            new Item(properties.stacksTo(1)) {
+                @Override
+                public net.minecraft.world.InteractionResult useOn(
+                        net.minecraft.world.item.context.UseOnContext uso) {
+                    return net.thaumcraft.occulta.broom.Brooms.põe(uso);
+                }
+            });
+
+    /**
+     * O <b>Unguento do Voo</b>: o {@code itemFlyingOintment}, que se bebe e envenena.
+     *
+     * <p>Beber é um mau negócio — <b>Veneno III por um minuto</b> —, e é de propósito: ele não existe para se
+     * beber, existe para se oferecer no círculo. É o original, tal e qual.
+     */
+    public static final Item FLYING_OINTMENT = register("flying_ointment", properties ->
+            new Item(properties.stacksTo(2).food(
+                    new net.minecraft.world.food.FoodProperties.Builder()
+                            .alwaysEdible().nutrition(0).saturationModifier(0.0f).build(),
+                    net.minecraft.world.item.component.Consumables.defaultDrink().onConsume(
+                            new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                                    new net.minecraft.world.effect.MobEffectInstance(
+                                            net.minecraft.world.effect.MobEffects.POISON, 1200, 2)))
+                            .build())));
+
     private static Item register(String name, Function<Item.Properties, Item> factory) {
         Identifier id = Thaumcraft.id(name);
         Item item = factory.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)));

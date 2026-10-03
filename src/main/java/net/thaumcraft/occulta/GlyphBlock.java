@@ -59,6 +59,25 @@ public class GlyphBlock extends Block {
         return net.minecraft.world.phys.shapes.Shapes.empty();
     }
 
+    /**
+     * <b>Uma vassoura na mão apaga o giz.</b>
+     *
+     * <p>É o {@code BlockCircle.onBlockClicked} do original, e é a única forma decente de desfazer um círculo
+     * que ficou torto: sem ela, é picareta a picareta. Vale para as duas vassouras, a comum e a encantada —
+     * no original também.
+     */
+    @Override
+    protected void attack(BlockState estado, net.minecraft.world.level.Level level, BlockPos onde,
+                          net.minecraft.world.entity.player.Player quem) {
+        if (level.isClientSide()) return;
+        var naMão = quem.getMainHandItem();
+        if (!naMão.is(net.thaumcraft.occulta.OccultaItems.BROOM)
+                && !naMão.is(net.thaumcraft.occulta.OccultaItems.ENCHANTED_BROOM)) {
+            return;
+        }
+        level.destroyBlock(onde, false);
+    }
+
     /** Giz não se risca no ar: precisa de chão firme por baixo. */
     @Override
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {

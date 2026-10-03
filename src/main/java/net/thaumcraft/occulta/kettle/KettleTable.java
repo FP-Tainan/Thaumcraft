@@ -23,6 +23,16 @@ public final class KettleTable {
 
     public static void register() {
         // ---------------------------------------------------------- os frascos que se atiram
+        // ---------------------------------------------------------- o Unguento do Voo
+        // A cor é o -17620 do original, lido como cor de 32 bits: 0xFFFFBB6C.
+        // <b>Um desvio declarado:</b> o original pede uma Poção de Rapidez longa e de arremesso, com o número
+        // de poção da 1.7.10 (8258). A tabela deste pote casa por <b>item</b>, e uma poção de hoje leva o que
+        // ela é num componente, não no item — por isso aqui o que entra é a poção, qualquer que seja. Está no
+        // {@code PORTE.md}.
+        KettleRecipes.add(OccultaItems.FLYING_OINTMENT, 1, 0xFFFFBB6C, 3000.0f,
+                OccultaItems.REDSTONE_SOUP, Items.SPLASH_POTION, Items.DIAMOND, Items.FEATHER,
+                OccultaItems.BAT_WOOL, OccultaItems.BELLADONNA_FLOWER);
+
         KettleRecipes.add(OccultaItems.BREW_OF_VINES, BREW_COUNT, 0xFF005B07, 0.0f,
                 Items.VINE, Items.BROWN_MUSHROOM, Items.RED_MUSHROOM,
                 OccultaItems.DOG_TONGUE, Items.WHEAT, OccultaItems.REEK_OF_MISFORTUNE);

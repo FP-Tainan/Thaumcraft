@@ -5636,7 +5636,7 @@ leva o dobro da própria vida e cai no lugar dele. Sem dono por perto, o bicho f
 | --- | --- | --- |
 | **gato** | maldição | o escuro de uma maldição passa de **dois** minutos para **cinco** |
 | **sapo** | cozimento | sai **um frasco a mais** de cada caldeirão |
-| **coruja** | vassoura | nada ainda — **a vassoura não está portada** |
+| **coruja** | vassoura | mais empurrão, mais teto e freio — a vassoura veio na fatia dela |
 
 As duas primeiras fechavam buracos que já estavam escritos: a Maldição da Cegueira dizia *"o familiar de
 maldição não dobra o escuro... não estão portados"*, e o engarrafar dizia *"quem engarrafa aqui é sempre alguém
@@ -5860,3 +5860,88 @@ na árvore.
 o original deixa um esqueleto de mãos a abanar. E a prova de tela **confere o que fotografa**: se faltar um
 soldado, uma montaria ou um cavaleiro, ela falha em vez de tirar uma foto ruim em silêncio — o que foi
 exatamente o que aconteceu da primeira vez que ela correu.
+
+## A Vassoura, e a dívida da coruja (2026-10-02)
+
+A fatia dos Familiares entregou a **coruja** com a maestria dela escrita e **sem nada para destrancar** — o
+javadoc dizia *"a vassoura não está portada"*, a tabela do ramo dizia *"nada ainda"*, e ficou assim. Esta fatia
+é essa dívida paga.
+
+### O que é a vassoura, no original
+
+São **três itens e um bicho**, e vale separar porque é fácil confundi-los:
+
+| | o que é | de onde vem |
+| --- | --- | --- |
+| **Vassoura** | ingrediente, e só | bancada: dois gravetos sobre três mudas de espinheiro-alvar |
+| **Unguento do Voo** | bebida que envenena | Caldeirão de Pote, seis coisas |
+| **Vassoura Encantada** | o item que se põe no chão | **Rito da Infusão do Céu** |
+| **a vassoura posta** | o bicho que se monta | pôr a encantada no chão |
+
+**A vassoura comum não voa**, e isso é do original: ela existe para ser oferecida no círculo. E o Unguento do
+Voo, bebido, dá **Veneno III por um minuto** — é um mau negócio de propósito, porque ele também não é para se
+beber.
+
+### A conta do voo, que é o que faz dela uma vassoura
+
+O `EntityBroom` tem uma conta própria, e é dela que vem a sensação de montar uma vassoura em vez de pilotar
+um avião:
+
+1. **Ela acelera devagar e para devagar.** O empurrão começa em **0,07** e sobe até **0,35**, um centésimo da
+   diferença de cada vez, enquanto se vai ganhando velocidade; soltando, desce pelo mesmo caminho. Não há botão
+   de turbo: há inércia.
+2. **O teto é de velocidade, não de aceleração**: **0,9** sem nada.
+3. **Subir e descer saem do olhar, com zona morta.** A inclinação só conta fora da faixa de **−0,5 a 0,2**, e
+   descer conta **pela metade**. É o que impede a vassoura de mergulhar a cada olhadela.
+4. **Quem vai nela chega inteiro**, por mais alto que tenha vindo.
+
+### E é aqui que a coruja serve
+
+Quem tem a **maestria da vassoura** — a do familiar coruja — ganha **0,2 de empurrão** e **0,3 de teto**, e
+passa a **frear sozinho** ao largar o acelerador em vez de deslizar. É o `riderHasOwlFamiliar` do original, lido
+**uma vez, ao montar**, como lá.
+
+A prova `theOwlMakesHerFasterAndGivesHerBrakes` é onde a dívida fica paga: ela vincula a coruja, monta, e
+confere que a vassoura sabe disso.
+
+### A tinta, e o que o desenho faz com ela
+
+Tinta na mão **pinta as cerdas** em vez de montar. E há duas coisas aí que só uma foto mostra:
+
+- **Só as cerdas levam a cor**; o cabo é sempre madeira. Por isso o modelo tem **duas** partes e não uma.
+- **A tabela de cores é a da lã de 2014**, e não a do jogo — as dezesseis do `fleeceColorTable`, copiadas uma a
+  uma. Sem tinta, a vassoura é **castanha**, que é a cor 12.
+
+O modelo são **dez caixas**: o cabo e **nove cerdas** em leque, cada uma com a sua inclinação, nenhuma igual à
+outra. O espelho do original é o **morto** de sempre — ligado nas dez partes, mas sempre depois das caixas —, e
+por isso nenhuma o leva aqui.
+
+**Um engano do original que fica:** a nona cerda é a única que ele desloca de `-0.5333334` em vez de `-0.5`.
+Um terço de um dezesseis avos, que ninguém vê. Fica.
+
+### O que ficou de fora, declarado
+
+1. **A Infusão do Céu.** O rito do original faz **duas** coisas: dá a Vassoura Encantada **e** infunde quem o
+   faz com a Infusão do Céu, que é um ramo inteiro de poderes. Só a vassoura está portada; a infusão precisa do
+   sistema de infusões, que é outra fatia.
+2. **O Cozimento do Voo Alto** (`riderHasSoaringBrew`), que soma metade do que a coruja soma — 0,1 de empurrão
+   e 0,3 de teto. A conta dele **está escrita** no `BroomEntity`, pronta, para o dia em que o cozimento vier.
+3. **A poção que o Unguento pede.** O original quer uma **Poção de Rapidez longa e de arremesso**, pelo número
+   de poção da 1.7.10 (8258). A tabela do Caldeirão de Pote deste porte casa por **item**, e uma poção de hoje
+   leva o que ela é num **componente** e não no item — por isso aqui entra a poção de arremesso, qualquer que
+   seja.
+
+### Uma coisa que a foto apanhou e o verde não
+
+A primeira foto desta fatia saiu com **três sombras e nenhuma vassoura**. O original translada **um bloco para
+cima antes de virar o modelo**, e eu tinha posto 0,375 — a vassoura estava enterrada, inteira, debaixo do chão.
+Nenhuma das seis provas de servidor diria isso.
+
+E a segunda saiu com as vassouras **de pé**, o que me pareceu errado até eu virá-las de lado: elas estavam
+deitadas, e eu estava a olhar pela ponta. A foto que fica é a de lado, por isso.
+
+**Guardas:** `OccultaBroomGameTest`, com seis — os números da conta de voo; a tinta que pinta em vez de montar;
+montar de mão vazia; **a coruja**; a encantada que fica no chão quando a vassoura se desfaz; e a vassoura que
+varre o giz.
+
+**A foto:** três de lado — por pintar, de roxo e de vermelho.

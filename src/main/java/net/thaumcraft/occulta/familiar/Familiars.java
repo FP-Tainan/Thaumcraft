@@ -59,8 +59,9 @@ public final class Familiars {
     /**
      * <b>A coruja</b>: a maestria da vassoura.
      *
-     * <p>Ela não destranca nada ainda, porque <b>a vassoura não está portada</b>. Fica aqui porque o bicho é do
-     * original e porque, no dia em que a vassoura vier, é só perguntar.
+     * <p>Quem a tem monta a vassoura com <b>0,2 de empurrão</b> e <b>0,3 de teto</b> a mais, e com freio ao
+     * largar o acelerador. É o {@code riderHasOwlFamiliar} do original, e a
+     * {@link net.thaumcraft.occulta.broom.BroomEntity} pergunta por isto uma vez, ao montar.
      */
     public static boolean temMaestriaDeVassoura(@Nullable Player gente) {
         return qual(gente).orElse(null) == FamiliarKind.OWL;

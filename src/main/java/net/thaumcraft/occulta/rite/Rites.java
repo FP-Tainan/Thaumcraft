@@ -1165,6 +1165,25 @@ public final class Rites {
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
 
+        /*
+         * O Rito da Infusão do Céu, que é de onde vem a vassoura que voa.
+         *
+         * <p>No original ele faz duas coisas: dá a Vassoura Encantada <b>e</b> infunde quem o faz com a
+         * Infusão do Céu, que é um ramo inteiro de poderes. <b>Só a vassoura está portada</b>, e a infusão
+         * fica declarada de fora no PORTE.md — ela precisa do sistema de infusões, que é outra coisa.
+         *
+         * <p>Os números são os dele: dois anéis, de dezesseis e vinte e oito glifos de ritual, só de noite,
+         * com uma vassoura e um Unguento do Voo no chão e três mil de poder de altar.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.infusionsky",
+                new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.ENCHANTED_BROOM)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BROOM,
+                                net.thaumcraft.occulta.OccultaItems.FLYING_OINTMENT),
+                        new Sacrifice.Power(3000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
+
         // o Rito de Infusão, que prende um demônio num espelho — e é de onde todo espelho vem
         RiteRegistry.register("tc.rite.mirror",
                 new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.WITCH_MIRROR)),

@@ -31,8 +31,8 @@ import org.jetbrains.annotations.Nullable;
  * <p>Doma-se com <b>carne crua</b> — porco ou boi —, voa, e bate por quatro. Solta tem dez de vida; vinculada
  * sobe para <b>cinquenta</b>.
  *
- * <p><b>A maestria dela ainda não destranca nada</b>, porque a vassoura não está portada. A coruja entra na
- * mesma, porque é um dos três do original e porque, no dia em que a vassoura vier, ela já está aqui.
+ * <p><b>A maestria dela é a da vassoura</b>: quem tem coruja voa mais depressa e consegue parar. Esteve
+ * escrita e sem nada para destrancar desde a fatia dos familiares, e é a fatia da vassoura que a responde.
  */
 public class OwlEntity extends TamableAnimal {
     /** O que a doma: carne crua, de porco ou de boi. */
