@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "ddd",
+    "dsd",
+    "ddd"
+  ],
+  "key": {
+    "s": "minecraft:golden_sword",
+    "d": "thaumcraft:silver_dust"
+  },
+  "result": {
+    "id": "thaumcraft:silver_sword"
+  }
+}

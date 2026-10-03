@@ -25,6 +25,20 @@ import net.thaumcraft.Thaumcraft;
  */
 public final class OccultaEffects {
     /**
+     * O <b>Acônito</b>: o {@code Potions.WOLFSBANE} do Witchery.
+     *
+     * <p>Ele não faz nada por si — nada de velocidade, nada de dano. O que ele faz é <b>segurar a
+     * transformação</b>: quem o tem no corpo não vira lobisomem na lua cheia, e um lobisomem que o apanhe não
+     * volta a ser aldeão enquanto durar.
+     *
+     * <p>É um efeito que só existe para ser <b>perguntado</b>, e é a melhor razão que a planta do mato tem
+     * para ser plantada ao pé de uma aldeia.
+     */
+    public static final Holder<MobEffect> WOLFSBANE = register("wolfsbane",
+            new MobEffect(MobEffectCategory.NEUTRAL, 0x6B4FA8) {
+            });
+
+    /**
      * Nadar: o {@code PotionSwimming}.
      *
      * <p>Dentro da água, quem a tem anda mais depressa — quinze por cento mais, e mais três por cento por grau.

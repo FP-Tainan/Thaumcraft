@@ -1004,7 +1004,9 @@
   "item.thaumcraft.sheep_legs": "Pernas de Ovelha",
   "item.thaumcraft.sheep_torso": "Tronco de Ovelha",
   "item.thaumcraft.shimmerleaf": "Flor Brilhante",
+  "item.thaumcraft.silver_dust": "Pó de Prata",
   "item.thaumcraft.silver_nugget": "Pepita de Prata",
+  "item.thaumcraft.silver_sword": "Espada de Prata",
   "item.thaumcraft.sinister_stone": "Pedra-ímã Sinistra",
   "item.thaumcraft.skeleton_arm": "Braço de Esqueleto",
   "item.thaumcraft.skeleton_legs": "Pernas de Esqueleto",
@@ -1473,6 +1475,7 @@
   "tc.brew.waterbreathing": "Respiração Aquática",
   "tc.brew.weakness": "Fraqueza",
   "tc.brew.wither": "Definhamento",
+  "tc.brew.wolfsbane": "do Acônito",
   "tc.cap.alchemical": "Alquímicas",
   "tc.cap.copper": "Cobre",
   "tc.cap.gold": "Ouro",
@@ -3091,6 +3094,7 @@
   "effect.thaumcraft.aa_scramble_synapses": "Sinapses Embaralhadas",
   "effect.thaumcraft.aa_chrono_anchor": "Âncora do Tempo",
   "effect.thaumcraft.aa_illumination": "Iluminado",
+  "effect.thaumcraft.wolfsbane": "Acônito",
   "tc.spell.silenced": "Você está calado e não consegue lançar.",
   "item.thaumcraft.spell_part_fling": "Arremesso",
   "item.thaumcraft.spell_part_knockback": "Empurrão",
@@ -3157,5 +3161,7 @@
   "tc.research_page.AA_CHOICE.1": "Quase toda peça diz tudo o que é. Três não dizem.<BR><BR>A §aCor§r não diz §oqual§r cor. Responde-se na Mesa: põe-se uma §atinta§r na casa logo a seguir à peça, e é ela que manda. Sem tinta a Mesa recusa a frase e diz porquê — melhor do que escrever um feitiço que sai preto sem ninguém ter pedido.<BR><BR>E ela não muda número nenhum. Um feitiço de fogo pintado de azul continua queimando: o que ele deixa de fazer é §oparecer§r um feitiço de fogo.",
   "tc.research_page.AA_CHOICE.2": "As outras duas não perguntam na Mesa: perguntam ao §amundo§r.<BR><BR>O §aColocar Bloco§r aprende §aagachado§r — lançado assim contra um bloco, fica sabendo aquele bloco; lançado de pé, põe um igual onde se apontar, gastando um da mochila.<BR><BR>A §aApropriação§r é a mais estranha deste ofício: ela §atira a coisa do mundo§r e a leva dentro. Um baú vai com o que tem lá; um bicho vai com o nome e a vida que tinha. Enquanto estiver guardado, aquilo §onão existe§r em lugar nenhum senão no feitiço — e lançá-lo outra vez põe de volta.<BR><BR>Uma coisa de cada vez. E gente, não.",
   "entity.thaumcraft.toad": "Sapo",
-  "entity.thaumcraft.owl": "Coruja"
+  "entity.thaumcraft.owl": "Coruja",
+  "entity.thaumcraft.were_villager": "Aldeão",
+  "entity.thaumcraft.wolfman": "Lobisomem"
 }

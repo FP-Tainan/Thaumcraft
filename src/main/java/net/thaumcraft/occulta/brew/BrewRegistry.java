@@ -166,6 +166,9 @@ public final class BrewRegistry {
                 temperos -> temperos.strengthCeilingDisabled = true));
 
         // ------------------------------------------------------------ as poções do próprio ofício
+        // o acônito: sessenta segundos, e o altar não cobra nada por ele
+        register(new BrewActions.Potion(OccultaItems.WOLFSBANE_SPRIG, new BrewName.Text("tc.brew.wolfsbane"), 0,
+                net.thaumcraft.occulta.OccultaEffects.WOLFSBANE, secs(60), COMUM));
         register(new BrewActions.Potion(Items.COD, new BrewName.Text("tc.brew.swimming"), 0,
                 net.thaumcraft.occulta.OccultaEffects.SWIMMING, mins(3), LEVE));
         register(new BrewActions.Potion(Items.FEATHER, new BrewName.Text("tc.brew.featherfall"), 100,

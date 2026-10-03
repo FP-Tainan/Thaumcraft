@@ -1004,7 +1004,9 @@
   "item.thaumcraft.sheep_legs": "Sheep Legs",
   "item.thaumcraft.sheep_torso": "Sheep Torso",
   "item.thaumcraft.shimmerleaf": "Shimmerleaf",
+  "item.thaumcraft.silver_dust": "Silver Dust",
   "item.thaumcraft.silver_nugget": "Silver Nugget",
+  "item.thaumcraft.silver_sword": "Silver Sword",
   "item.thaumcraft.sinister_stone": "Sinister Lodestone",
   "item.thaumcraft.skeleton_arm": "Skeleton Arm",
   "item.thaumcraft.skeleton_legs": "Skeleton Legs",
@@ -1471,6 +1473,7 @@
   "tc.brew.waterbreathing": "Water Breathing",
   "tc.brew.weakness": "Weakness",
   "tc.brew.wither": "Decay",
+  "tc.brew.wolfsbane": "of Wolfsbane",
   "tc.cap.alchemical": "Alchemical",
   "tc.cap.copper": "Copper",
   "tc.cap.gold": "Gold",
@@ -3093,6 +3096,7 @@
   "effect.thaumcraft.aa_scramble_synapses": "Scramble Synapses",
   "effect.thaumcraft.aa_chrono_anchor": "Chrono Anchor",
   "effect.thaumcraft.aa_illumination": "Illuminated",
+  "effect.thaumcraft.wolfsbane": "Wolfsbane",
   "tc.spell.silenced": "You are silenced and cannot cast.",
   "item.thaumcraft.spell_part_fling": "Fling",
   "item.thaumcraft.spell_part_knockback": "Knockback",
@@ -3159,5 +3163,7 @@
   "tc.research_page.AA_CHOICE.1": "Nearly every part says everything it is. Three do not.<BR><BR>§aColour§r does not say §owhich§r colour. You answer at the Table: put a §adye§r in the slot right after the part, and that is what decides. Without a dye the Table refuses the sentence and says why.<BR><BR>And it changes no number. A fire spell painted blue still burns: what it stops doing is §olooking§r like a fire spell.",
   "tc.research_page.AA_CHOICE.2": "The other two do not ask at the Table: they ask the §aworld§r.<BR><BR>§aPlace Block§r learns while §acrouching§r — cast that way at a block, it comes to know that block; cast standing, it places one where you point, spending one from your bag.<BR><BR>§aAppropriation§r is the strangest of this craft: it §atakes the thing out of the world§r and carries it inside. A chest goes with what is in it; a beast goes with the name and the life it had. While it is held, that thing §odoes not exist§r anywhere but in the spell — and casting again puts it back.<BR><BR>One thing at a time. And no people.",
   "entity.thaumcraft.toad": "Toad",
-  "entity.thaumcraft.owl": "Owl"
+  "entity.thaumcraft.owl": "Owl",
+  "entity.thaumcraft.were_villager": "Villager",
+  "entity.thaumcraft.wolfman": "Werewolf"
 }

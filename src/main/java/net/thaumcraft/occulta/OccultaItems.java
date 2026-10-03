@@ -577,6 +577,23 @@ public final class OccultaItems {
                     .usingConvertsTo(net.minecraft.world.item.Items.GLASS_BOTTLE)));
 
     /**
+     * O <b>Pó de Prata</b>: o {@code itemSilverDust} do Witchery.
+     *
+     * <p>Cai de lobisomem, e é a única prata do ofício. É de propósito que ela venha do próprio bicho: o
+     * primeiro lobisomem mata-se a pancada, oitenta vezes, e os outros com o que ele deixou.
+     */
+    public static final Item SILVER_DUST = register("silver_dust", Item::new);
+
+    /**
+     * A <b>Espada de Prata</b>: uma espada de ouro com oito pós de prata à volta.
+     *
+     * <p>Na mão do jogo ela é uma espada de ouro e nada mais — a prata não a faz melhor contra nada. O que ela
+     * faz é ser a <b>única coisa que fere um lobisomem</b> de verdade.
+     */
+    public static final Item SILVER_SWORD = register("silver_sword", properties ->
+            new Item(properties.sword(net.minecraft.world.item.ToolMaterial.GOLD, 3.0f, -2.4f)));
+
+    /**
      * A <b>Vassoura</b>: dois gravetos e três mudas de espinheiro-alvar.
      *
      * <p>Sozinha ela não voa e não se põe no chão — é <b>ingrediente</b>, e só. Quem voa é a encantada, e para

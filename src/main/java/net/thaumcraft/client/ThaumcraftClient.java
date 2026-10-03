@@ -150,6 +150,17 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.OWL,
                 net.thaumcraft.occulta.client.FamiliarRenderers.Coruja::new);
 
+        // o Ars Occulta: o lobisomem e o aldeão que vira
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.WolfmanModel.WOLFMAN,
+                net.thaumcraft.occulta.client.WolfmanModel::wolfman);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.WOLFMAN,
+                net.thaumcraft.occulta.client.WolfmanRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.WERE_VILLAGER,
+                net.minecraft.client.renderer.entity.VillagerRenderer::new);
+
         // o Ars Occulta: as três visões da Loucura
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.ILLUSION_CREEPER,

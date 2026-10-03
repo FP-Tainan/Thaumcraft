@@ -6255,3 +6255,76 @@ maldições enchem esse mundo de **porcos às centenas** — o rito trazia os de
 
 Ela passou a usar **galinha**, que mais nenhuma prova usa. É a segunda vez nesta sessão que o mundo
 compartilhado das provas morde: da primeira foi o Apanhador de Sonhos.
+
+## O Lobisomem (2026-10-03)
+
+O primeiro dos três grandes que faltavam ao Ars Occulta. Esta fatia traz o **bicho** — a licantropia do
+jogador, que é um ramo com dez graus e uma demanda, fica para a seguinte.
+
+### Ele não é um monstro: é uma doença
+
+Um lobisomem **não nasce do mundo**. Ele é um **aldeão** que virou, na primeira lua cheia, e que volta a ser
+aldeão quando a lua passar — **com a profissão e as trocas que tinha**. É por isso que matar um lobisomem numa
+aldeia custa um aldeão, e é por isso que o ofício inteiro o trata como doença e não como bicho.
+
+O aldeão doente é indistinguível por fora: troca, trabalha, dorme. **Criança não vira** — é a única
+misericórdia do original.
+
+### Só a prata o fere
+
+E esta é a coisa que define o bicho: **tudo o que não for prata lhe tira um ponto de vida**, por mais
+encantada que seja a espada. Com **oitenta** de vida, isso são oitenta pancadas. A prata tira dano a sério —
+vez e meia, até quinze de cada vez.
+
+Ele ainda **arromba portas**, caça gente e aldeãos, ganha **dez de armadura** por cima da que tem, e **não
+apanha veneno**: tira-o de si de dois em dois segundos.
+
+**A prata vem dele mesmo.** O Pó de Prata cai de lobisomem — um em três —, e a Espada de Prata é uma espada
+de ouro com oito pós à volta. O original não tem pudor com a galinha e o ovo: o primeiro lobisomem mata-se a
+pancada, oitenta vezes, e os outros com o que ele deixou.
+
+**Desvio declarado, e é melhor do que o original.** Lá a pergunta "isto é prata?" é feita ao **nome do
+material** da espada — `"SILVER"`. O jogo de hoje não guarda isso, e por isso aqui a pergunta é feita a uma
+**etiqueta**: `thaumcraft:silver_weapons`. Qualquer mod que traga prata pode pôr a espada dele na etiqueta e
+ela passa a ferir lobisomem, sem este porte saber nada sobre esse mod.
+
+### O acônito
+
+A planta do mato que já estava portada ganhou **para que serve**: cozida no Caldeirão da Bruxa dá o efeito do
+**Acônito**, sessenta segundos, e quem o tem no corpo **não vira** na lua cheia — e um lobisomem que o apanhe
+não volta a ser aldeão enquanto durar.
+
+É um efeito que não faz nada por si: existe só para ser **perguntado**. E é a melhor razão que aquela planta
+tem para ser plantada ao pé de uma aldeia.
+
+### A lua, que mudou de casa
+
+No jogo de 2014 a fase da lua era `dimensionType.moonPhase(dayTime)`. O jogo de hoje **mudou o tempo de
+lugar**: há relógios (`WorldClock`), linhas do tempo (`Timeline`) e marcas, e a lua passou a ser uma linha do
+tempo de **192000 batidas** — que são os mesmos oito dias de sempre. A conta fica a mesma, e a fase zero
+continua a ser a cheia.
+
+### O modelo
+
+Dez caixas traduzidas do `ModelWolfman`, e a graça delas é que ele **não é um homem com cabeça de lobo**: o
+tronco inclina-se para a frente, as pernas são de bicho — coxa e canela em dois pedaços, dobradas ao
+contrário —, os braços caem até ao chão e há cauda. Ele corre como um lobo e levanta-se como um homem.
+
+Duas coisas do original ficam: o **braço direito nasce meio bloco mais para dentro** do que o esquerdo, e as
+pernas têm um **teto na dobra** (`Math.max(..., -0.8)`) que as impede de abrir para trás ao correr.
+
+### O que ficou de fora, declarado
+
+- **A licantropia do jogador**: dez graus, as duas formas (lobo e lobisomem), a demanda dos pedaços de mundo
+  visitados, o uivo que chama a matilha. É a fatia seguinte.
+- **O virote de prata**, porque dano de longe não conta como prata no original e o virote tinha caminho
+  próprio.
+- **O Altar do Lobo** e a **Estátua**, que são do ramo da licantropia.
+
+**Guardas:** `OccultaWerewolfGameTest`, com sete — os números do bicho; a pancada de diamante que tira **um**;
+a prata que tira a sério; o couro grosso; o veneno que não cola; a fase zero da lua; o acônito que segura; e o
+aldeão que vira guardando a profissão.
+
+**As fotos:** de frente, entre um aldeão e um lobo do jogo — o que ele era e o que ele não é; e de lado, que é
+onde se vê a perna dobrada ao contrário e a cauda. **A segunda custou três tentativas**: virar um bicho já
+posto não vira o corpo dele, só a cabeça, porque o corpo tem conta própria. Quem tem de virar é a câmara.

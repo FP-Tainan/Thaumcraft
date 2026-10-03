@@ -162,6 +162,24 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.curse.IllusionEntity::attributes))
                     .sized(0.6f, 1.95f).eyeHeight(1.74f).clientTrackingRange(8));
 
+    /**
+     * O <b>Lobisomem</b>, que é um aldeão que virou — e que volta a ser aldeão quando a lua passar.
+     */
+    public static final EntityType<net.thaumcraft.occulta.wolf.WolfmanEntity> WOLFMAN =
+            register("wolfman", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.wolf.WolfmanEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.wolf.WolfmanEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(8));
+
+    /** E o <b>aldeão que vira</b>, que por fora não se distingue de um aldeão qualquer. */
+    public static final EntityType<net.thaumcraft.occulta.wolf.WereVillagerEntity> WERE_VILLAGER =
+            register("were_villager", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.wolf.WereVillagerEntity::new, MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(
+                                    net.minecraft.world.entity.npc.villager.Villager::createAttributes))
+                    .sized(0.6f, 1.95f).eyeHeight(1.62f).clientTrackingRange(10));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));
@@ -169,6 +187,10 @@ public final class OccultaEntities {
     }
 
     public static void init() {
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(WOLFMAN, net.thaumcraft.occulta.wolf.WolfmanEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(WERE_VILLAGER, net.minecraft.world.entity.npc.villager.Villager.createAttributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(ILLUSION_CREEPER, net.thaumcraft.occulta.curse.IllusionEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
