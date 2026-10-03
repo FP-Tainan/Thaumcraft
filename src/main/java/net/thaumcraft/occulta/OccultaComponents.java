@@ -35,6 +35,19 @@ public final class OccultaComponents {
                     .persistent(net.thaumcraft.occulta.mirror.MirrorLink.Held.CODEC)
                     .networkSynchronized(net.thaumcraft.occulta.mirror.MirrorLink.Held.STREAM_CODEC));
 
+    /**
+     * O lugar a que uma Pedra de Caminho está presa: o {@code PosX}/{@code PosY}/{@code PosZ}/{@code PosD} do
+     * {@code bindToLocation}.
+     *
+     * <p>No original o nome do mundo é guardado à parte, num {@code NameD}, porque em 2014 uma dimensão era um
+     * número e o número não dizia nada a ninguém. Hoje a dimensão <b>é</b> o nome dela, e guardar os dois seria
+     * guardar duas verdades sobre o mesmo lugar.
+     */
+    public static final DataComponentType<net.thaumcraft.occulta.waystone.Waystones.Lugar> WAYSTONE =
+            register("waystone", builder -> builder
+                    .persistent(net.thaumcraft.occulta.waystone.Waystones.Lugar.CODEC)
+                    .networkSynchronized(net.thaumcraft.occulta.waystone.Waystones.Lugar.STREAM_CODEC));
+
     private OccultaComponents() {
     }
 

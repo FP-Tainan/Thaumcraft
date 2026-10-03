@@ -103,7 +103,12 @@ public class BrewItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity quem) {
         List<Item> dentro = contents(stack);
-        if (!level.isClientSide()) Brew.apply(level, quem, dentro, new BrewModifiers());
+        if (!level.isClientSide()) {
+            BrewModifiers temperos = new BrewModifiers();
+            // quem bebe é quem fez: um frasco da ressurreição bebido levanta os mortos de quem o bebeu
+            if (quem instanceof net.minecraft.world.entity.player.Player gente) temperos.quemFez = gente;
+            Brew.apply(level, quem, dentro, temperos);
+        }
         return super.finishUsingItem(stack, level, quem);
     }
 

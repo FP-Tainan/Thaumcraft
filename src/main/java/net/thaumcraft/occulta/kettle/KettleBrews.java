@@ -88,7 +88,7 @@ public final class KettleBrews {
                 case SPROUTING -> sprouting(level, onde);
                 case EROSION -> erosion(level, onde, quemAtirou);
                 case LOVE -> love(level, onde);
-                case RAISING -> raising(level, onde);
+                case RAISING -> raising(level, onde, quemAtirou);
                 case WEBS -> webs(level, onde);
                 case ICE -> ice(level, onde, quemAtirou);
                 case INFECTION -> infection(level, onde, quemAtirou);
@@ -434,11 +434,13 @@ public final class KettleBrews {
     // ------------------------------------------------------------------ erguer os mortos
 
     /** O {@code impactRaising}: onde ele bate, um morto se levanta. */
-    private static boolean raising(ServerLevel level, HitResult onde) {
+    private static boolean raising(ServerLevel level, HitResult onde,
+                                   @Nullable LivingEntity quemAtirou) {
         BlockPos lugar = onde instanceof BlockHitResult bateu
                 ? bateu.getBlockPos().relative(bateu.getDirection())
                 : BlockPos.containing(onde.getLocation());
-        net.thaumcraft.occulta.brew.BrewWorldActions.Raising.raise(level, lugar);
+        net.thaumcraft.occulta.brew.BrewWorldActions.Raising.raise(level, lugar,
+                quemAtirou instanceof net.minecraft.world.entity.player.Player gente ? gente : null);
         return true;
     }
     // ------------------------------------------------------------------ as teias

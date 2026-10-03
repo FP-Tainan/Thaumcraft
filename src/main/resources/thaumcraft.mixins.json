@@ -31,7 +31,10 @@
     "MinecraftServerLevelsAccessor",
     "MobSpawnReasonMixin",
     "LivingEntityArcanaEffectsMixin",
-    "LivingEntityCurseMixin"
+    "LivingEntityCurseMixin",
+    "MobEnslavedTargetMixin",
+    "LivingEntityNoDropsMixin",
+    "ItemEntityWaystoneMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",

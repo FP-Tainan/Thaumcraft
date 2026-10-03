@@ -249,7 +249,7 @@ public final class BrewWorldActions {
         @Override
         protected void onBlock(ServerLevel level, BlockPos onde, Direction lado, int raio, BrewModifiers temperos) {
             BlockPos lugar = onde.relative(lado);
-            raise(level, lugar);
+            raise(level, lugar, temperos.quemFez);
 
             int força = temperos.getStrength();
             int quantos = 0;
@@ -263,14 +263,30 @@ public final class BrewWorldActions {
                 for (int y = lugar.getY() + DROP; y >= lugar.getY() - DROP; y--) {
                     BlockPos tenta = new BlockPos(x, y, z);
                     if (!level.getBlockState(tenta.below()).isSolidRender() || !level.isEmptyBlock(tenta)) continue;
-                    raise(level, tenta);
+                    raise(level, tenta, temperos.quemFez);
                     break;
                 }
             }
         }
 
-        /** O {@code createUndeadCreature}: seis em dez zumbi, quase todo o resto esqueleto, e um porco-zumbi raro. */
+        /** Quem levanta um morto sem dizer de quem ele é levanta um morto solto, e isso é raro. */
         public static void raise(ServerLevel level, BlockPos onde) {
+            raise(level, onde, null);
+        }
+
+        /**
+         * O {@code createUndeadCreature}: seis em dez zumbi, quase todo o resto esqueleto, e um porco-zumbi raro.
+         *
+         * <p><b>E o morto é de quem o levantou.</b> É o {@code setEnslaverForMob} do original, e sem ele o
+         * frasco era uma arma que mordia quem a atirava: o zumbi nascia hostil, e o primeiro a quem ele chegava
+         * era quem estava de pé ao lado do estouro.
+         *
+         * <p><b>Dele não cai nada</b>, que é o {@code setNoDrops}: o que ele tem no corpo não veio do mundo.
+         * Sem isso, levantar mortos era uma fábrica de carne podre.
+         */
+        public static void raise(ServerLevel level, BlockPos onde,
+                                 @org.jetbrains.annotations.Nullable
+                                 net.minecraft.world.entity.player.Player quemFez) {
             double sorte = level.getRandom().nextDouble();
             var tipo = sorte < 0.6 ? net.minecraft.world.entity.EntityTypes.ZOMBIE
                     : (sorte < 0.97 ? net.minecraft.world.entity.EntityTypes.SKELETON
@@ -279,6 +295,8 @@ public final class BrewWorldActions {
             if (morto == null) return;
             morto.snapTo(onde.getX() + 0.5, onde.getY() + 0.1, onde.getZ() + 0.5, 0.0f, 0.0f);
             morto.setPersistenceRequired();
+            net.thaumcraft.occulta.NoDrops.marca(morto);
+            net.thaumcraft.occulta.enslave.Enslavement.escraviza(morto, quemFez);
             level.addFreshEntity(morto);
             level.sendParticles(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE,
                     onde.getX() + 0.5, onde.getY() + 0.5, onde.getZ() + 0.5, 16, 0.5, 0.5, 0.5, 0.0);

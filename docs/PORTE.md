@@ -6416,3 +6416,138 @@ morto; ganha cinco minutos de uma velha de mau humor largando pó espectral no q
 **Guardas:** `OccultaBabaYagaGameTest`, com sete — os números; **mil de dano que tiram quinze**; a magia que
 dói menos; o salto que sai do lugar; o presente que é sempre do ofício; a visita que acaba; a lentidão de quem
 voa; e o que ela atira, que não a fere.
+
+## A Pedra de Caminho e o Escravizado (2026-10-03)
+
+Duas das quatro miudezas que faltavam. Vieram juntas porque fecham buracos uma da outra: a Pedra de Caminho é
+o que os **ritos de teleporte** comem, e o Escravizado é o que faltava ao **Cozimento da Ressurreição**.
+
+### A Pedra de Caminho: o menor ofício que há no mod
+
+Uma pedra lisa não é nada. O que faz dela uma Pedra de Caminho é **largá-la no chão**, e o resto é geometria
+de giz. São três anéis e três pedras:
+
+| O que se larga | Onde | O que acontece |
+| --- | --- | --- |
+| Pedra lisa | **anel miúdo** (as 8 casas em volta, giz do Alhures) | até **oito** viram **Pedra Presa** ao lugar; os oito glifos **estouram** |
+| Pedra lisa, com alguém de pé no anel | o mesmo anel | **uma** vira **Pedra Sangrada**, presa àquele bicho — e custa **quatro mil de poder** ao altar mais perto |
+| Pedra presa (de lugar ou de bicho) | **anel pequeno** (os 12 glifos de raio dois) | ela **se gasta** e leva **tudo o que estiver a quatro blocos** do meio: bicho, gente e item largado |
+
+Não precisa de altar para prender a um lugar, não precisa de ritual, não precisa de bruxa. É a primeira coisa
+que alguém faz com giz do Alhures antes de saber para que ele serve — e é de propósito.
+
+Os quatro mil de poder da Pedra Sangrada, ao contrário, são **muitos de propósito**: um altar nu não os tem.
+Sem poder, **nada se gasta** — o anel fica de pé e a pedra fica lisa, e dá para tentar outra vez quando o
+altar crescer.
+
+#### Um engano do original, corrigido
+
+O `isSmallBlockCircle` varre as nove casas em que o meio do anel pode estar e, quando acha o anel em
+`coord + co`, devolve **`coord - co`** — o avesso do meio que acabou de achar. Com a pedra bem no meio o
+primeiro da lista é `(0,0)` e o engano não aparece, porque o avesso de nada é nada; é só quando ela **cai de
+lado** — que é como ela sempre cai, quando alguém a atira para dentro do círculo — que a porta se abre no
+lugar errado.
+
+Aqui **o meio é onde o anel está**. A prova `theRingCentreIsWhereTheRingIs` larga a pedra uma casa a leste e
+exige o meio de verdade.
+
+#### O que fica igual, mesmo parecendo engano
+
+**A pedra que sobra vai pela porta junto.** O original larga o resto do monte no chão, morre, e só então varre
+o que está dentro do anel — e o resto do monte está dentro do anel. Fica assim: é faithful, e faz sentido no
+mundo (o que está no círculo, vai).
+
+#### Traduções declaradas
+
+1. **Um item largado em vez de uma entidade própria.** No original a pedra é uma classe de item largado
+   própria (`EntityItemWaystone`), e o mod troca o item largado por ela ao entrar no mundo. Aqui a batida é a
+   de qualquer item largado, e a pergunta é pelo item. Dá o mesmo e poupa uma entidade — e os dois segundos de
+   espera com as quarenta batidas entre olhadas do original são o que faz isso não custar nada.
+2. **O nome do mundo.** Em 2014 cada mundo tinha um nome em código — "Overworld", "Nether" — e era esse que a
+   pedra mostrava. Hoje um mundo é uma marca; a pedra pergunta por um texto em `dimension.<espaço>.<nome>` e,
+   não havendo, mostra a marca crua. Os três do jogo estão traduzidos.
+3. **Uma varredura em vez de duas.** O original procura o alvo do anel em duas voltas — primeiro gente, depois
+   bicho. Aqui é uma só, com a gente a valer mais. Dá o mesmo, porque a gente sempre ganha de qualquer bicho,
+   por mais perto que ele esteja.
+
+#### O que fica de fora, declarado
+
+- A **Pedra Afinada** e o **Espírito Dominado** largados num anel miúdo de **giz de Ritual** fazem nascer um
+  Espírito. É o mesmo método, no mesmo lugar do original — mas pede o `EntitySpirit`, que este porte ainda não
+  tem.
+- A pedra presa, segurada na mão, mostra o lugar dela por uma **câmara remota** — um pacote de rede e uma tela
+  próprios.
+- A **Inibição do Alhures** segura o que o porte sabe mandar: o teleporte da Pedra de Caminho. No original ela
+  cancela o `EnderTeleportEvent` e por isso segura também o salto do enderman e a pérola; isso fica para
+  quando houver um lugar só deles de onde perguntar.
+
+**Guardas:** `OccultaWaystoneGameTest`, com oito — os números; o anel miúdo que prende e se gasta; os oito de
+uma vez com o resto de volta; o que acontece sem altar; a gente que ganha do bicho; a Pedra Sangrada que
+guarda quem e não onde; **o meio do anel que é onde o anel está**; o anel pequeno que leva o que há; e a
+inibição que segura. E `OccultaWaystoneClientTest`, com as três pedras na barra e a dica da pedra presa.
+
+### O Escravizado: o que faltava ao Cozimento da Ressurreição
+
+O `PotionEnslaved` não é domar. Um bicho escravizado continua o bicho que era — o zumbi continua zumbi, e
+morde quem encontrar. Mudam duas coisas, e só essas duas:
+
+1. **ele nunca mais escolhe o escravizador por alvo** — e se já o tinha, larga;
+2. **ele briga as brigas do escravizador**: quem bater em quem o escravizou passa a ser alvo dele.
+
+Por isso o efeito é **infinito**: ele não faz nada por si, está lá para ser perguntado. Um laço não acaba
+sozinho.
+
+O miolo da segunda é o **relógio de vingança**: a vontade guarda o número da última vez que o dono foi ferido
+e só se acende quando ele **muda**. Sem isso, um escravo cujo dono levasse uma pancada ficaria a reacender-se
+para sempre contra o mesmo agressor, mesmo depois de ele ter fugido ou morrido.
+
+Isto é o que faltava ao `BrewActionRaising`. No original, **quem levanta os mortos fica dono deles** — e sem o
+laço o frasco era uma arma que mordia quem a atirava: o zumbi nascia hostil, e o primeiro a quem ele chegava
+era quem estava de pé ao lado do estouro.
+
+#### E deles não cai nada
+
+O `EntityUtil.setNoDrops` também faltava, e virou classe própria (`NoDrops`), porque o ofício inteiro precisa
+dele: é a marca que se põe em **tudo o que o mod faz nascer**. O bicho é um bicho de verdade, mas o que ele
+tem no corpo **não veio do mundo**, e por isso não volta para ele. Sem isso, levantar mortos era uma fábrica
+de carne podre: um frasco, uma dúzia de zumbis, uma dúzia de carnes podres, outra vez.
+
+**Nunca de gente**, como no original: o `isNoDrops` pergunta `!(entity instanceof EntityPlayer)` antes de
+olhar o NBT, e é de propósito.
+
+#### Quem fez o cozimento
+
+O `modifiers.caster` do original não existia neste porte, e agora existe: o frasco atirado leva quem o atirou,
+e o frasco bebido leva quem o bebeu. Fica **nulo** quando não se sabe — numa nuvem que já estava no chão, por
+exemplo. Quase nenhum efeito precisa dele; os que precisam, precisam muito.
+
+#### Traduções declaradas
+
+1. **UUID em vez de nome.** O original guarda o **nome** de quem escravizou e acha a pessoa pelo nome. Aqui se
+   guarda o **UUID**, o que é estritamente melhor: um nome muda, e no original um bicho escravizado por alguém
+   que trocasse de nome ficava preso a um nome que não existia mais.
+2. **Os dois chefes do jogo em vez da interface.** O `canCreatureBeEnslaved` pergunta
+   `instanceof IBossDisplayData`, que é a interface da barra de chefe de 2014. Hoje não há interface nem
+   etiqueta de chefe: o que há são os dois chefes do jogo, e é por eles que se pergunta. O demónio e o
+   diabrete, que o original também exclui, ainda não existem aqui.
+3. **A mira se atalha na cabeça.** No original o `onLivingSetAttackTarget` é um evento do Forge que corre
+   depois de o alvo já estar posto e o desfaz. Aqui se atalha na cabeça do `setTarget` — o mesmo visto de mais
+   perto, com a vantagem de o alvo nunca chegar a existir, nem por uma batida.
+
+**Guardas:** `OccultaEnslaveGameTest`, com oito — quem não se escraviza; **o escravo que nunca mira no dono**;
+o que ele continua a mirar; o laço que não se põe duas vezes; a vontade que entra pela batida e não entra
+duas vezes; o morto levantado que é de quem o levantou e de quem não cai nada; o levantado por ninguém; e a
+gente, de quem cai sempre.
+
+### Um achado da suíte: o jogador de mentira está sempre em criativo
+
+O `makeMockServerPlayerInLevel` entrega um `ServerPlayer` cuja classe **sobrescreve o `gameMode()` com a
+palavra `CREATIVE` escrita à mão** — e o `setGameMode` não o tira de lá. Como a primeira coisa que o
+`asValidTarget` do `Mob` olha é se o alvo está em criativo, **nenhum bicho consegue mirar nele**, e qualquer
+prova de mira contra esse jogador passa por engano.
+
+Quem serve é o **`makeMockServerPlayer(GameType)`**, que diz o modo que se pediu. Ele não entra no mundo — e
+para uma prova de mira não precisa, porque a mira não pergunta onde o alvo está.
+
+(E a dificuldade também conta: em **paz**, o `canAttack` recusa qualquer gente como alvo. A prova a põe em
+fácil e a devolve ao que era num `finally`.)

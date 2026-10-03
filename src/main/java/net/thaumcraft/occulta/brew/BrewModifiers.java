@@ -33,6 +33,19 @@ public class BrewModifiers {
     public int totalStrength;
     public int totalDuration;
 
+    /**
+     * Quem fez o cozimento, quando se sabe: o {@code modifiers.caster} do original.
+     *
+     * <p>Quase nenhum efeito precisa dele — o que importa a um frasco de vinhas é onde ele bateu, e não quem o
+     * atirou. Mas dois precisam, e por boa razão: o <b>Cozimento da Ressurreição</b> precisa dele para saber de
+     * quem são os mortos que levanta, e o Grotesco para saber de quem fugir.
+     *
+     * <p>Fica <b>nulo</b> quando não se sabe — numa nuvem que já estava no chão, por exemplo, ou num frasco
+     * que um dispensador atirou.
+     */
+    @org.jetbrains.annotations.Nullable
+    public net.minecraft.world.entity.player.Player quemFez;
+
     /** O espaço do caldeirão, que os efeitos vão gastando enquanto se aplicam. */
     private final BrewCapacity espaço = new BrewCapacity();
 

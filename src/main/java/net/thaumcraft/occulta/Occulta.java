@@ -31,6 +31,9 @@ public final class Occulta {
         net.thaumcraft.occulta.broom.Brooms.init();
         net.thaumcraft.occulta.curse.Curse.init();
         net.thaumcraft.occulta.curse.Grotesque.init();
+        net.thaumcraft.occulta.enslave.Enslavement.init();
+        NoDrops.init();
+        net.thaumcraft.occulta.waystone.Waystones.init();
         OccultaItems.init();
         OccultaAspects.init();
         OccultaGrassSeeds.init();

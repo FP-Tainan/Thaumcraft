@@ -331,6 +331,49 @@ public final class OccultaEffects {
                 }
             });
 
+    /**
+     * O <b>Escravizado</b>: o {@code Potions.ENSLAVED} do Witchery.
+     *
+     * <p>Ele não faz nada por si, e é infinito. O que ele é está em
+     * {@link net.thaumcraft.occulta.enslave.Enslavement} — este efeito é só a marca que diz que o laço está
+     * posto, e a batida que mantém a vontade de brigar as brigas do dono na lista de alvos do bicho.
+     */
+    public static final Holder<MobEffect> ENSLAVED = register("enslaved",
+            new MobEffect(MobEffectCategory.NEUTRAL, 0x4A3728) {
+                @Override
+                public boolean applyEffectTick(ServerLevel level, LivingEntity quem, int grau) {
+                    net.thaumcraft.occulta.enslave.Enslavement.tick(level, quem);
+                    return true;
+                }
+
+                @Override
+                public boolean shouldApplyEffectTickThisTick(int restante, int grau) {
+                    return true;
+                }
+            });
+
+    /**
+     * A <b>Inibição do Alhures</b>: o {@code Potions.ENDER_INHIBITION} do Witchery.
+     *
+     * <p>Quem a tem <b>não vai a lugar nenhum por magia</b>. É o que segura uma Pedra de Caminho largada num
+     * círculo: o que estiver inibido fica onde está, e sai fumo dele em vez de portal.
+     *
+     * <p><b>Fica de fora, declarado:</b> no original ela cancela o {@code EnderTeleportEvent}, e por isso
+     * segura também o salto do enderman e a pérola do Alhures. Aqui ela segura o que o porte sabe mandar — o
+     * teleporte da Pedra de Caminho. O salto do enderman e a pérola ficam para quando houver um lugar só deles
+     * de onde perguntar. Está no {@code PORTE.md}.
+     */
+    public static final Holder<MobEffect> ENDER_INHIBITION = register("ender_inhibition",
+            new MobEffect(MobEffectCategory.HARMFUL, 0x2E1A47) {
+            });
+
+    /** Se este bicho está inibido neste grau ou acima: o {@code PotionEnderInhibition.isActive}. */
+    public static boolean inibido(net.minecraft.world.entity.Entity quem, int grau) {
+        if (!(quem instanceof LivingEntity vivo)) return false;
+        var tem = vivo.getEffect(ENDER_INHIBITION);
+        return tem != null && tem.getAmplifier() >= grau;
+    }
+
     private static Holder<MobEffect> register(String nome, MobEffect efeito) {
         return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, Thaumcraft.id(nome), efeito);
     }

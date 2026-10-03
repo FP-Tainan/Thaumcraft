@@ -632,6 +632,29 @@ public final class OccultaItems {
                                             net.minecraft.world.effect.MobEffects.POISON, 1200, 2)))
                             .build())));
 
+    // ------------------------------------------------------------------ a pedra de caminho
+
+    /**
+     * A <b>Pedra de Caminho</b> lisa, que não sabe ir a lugar nenhum: o {@code itemWaystone}.
+     *
+     * <p>O que ela faz, faz <b>largada no chão</b>, e está em {@link net.thaumcraft.occulta.waystone.Waystones}.
+     */
+    public static final Item WAYSTONE = register("waystone", Item::new);
+
+    /** A mesma, presa a um lugar: o {@code itemWaystoneBound}. */
+    public static final Item BOUND_WAYSTONE = register("bound_waystone",
+            properties -> new net.thaumcraft.occulta.waystone.WaystoneItem(properties.stacksTo(8)));
+
+    /**
+     * E a mesma presa a um <b>bicho</b>, que é a que custa poder ao altar: o
+     * {@code itemWaystonePlayerBound}, a <b>Pedra Sangrada</b>.
+     *
+     * <p>Ela não guarda um lugar: guarda <b>quem</b>. O destino dela é onde esse alguém estiver na hora, e por
+     * isso ela é a única pedra que aponta para um lugar que anda.
+     */
+    public static final Item BLOODED_WAYSTONE = register("blooded_waystone",
+            properties -> new net.thaumcraft.occulta.waystone.WaystoneItem(properties.stacksTo(1)));
+
     private static Item register(String name, Function<Item.Properties, Item> factory) {
         Identifier id = Thaumcraft.id(name);
         Item item = factory.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)));

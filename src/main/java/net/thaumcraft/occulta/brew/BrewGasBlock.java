@@ -156,6 +156,7 @@ public class BrewGasBlock extends BaseEntityBlock {
         if (nuvem.contents().isEmpty()) return;
         BrewModifiers temperos = new BrewModifiers(TOUCH_POWER, TOUCH_DURATION);
         temperos.protectedFromBadEffects = vivo.hasEffect(net.thaumcraft.occulta.OccultaEffects.GAS_MASK);
+        // numa nuvem que já está no chão não se sabe quem a fez, e fica nulo como no original
         Brew.apply(level, vivo, nuvem.contents(), temperos);
     }
 
