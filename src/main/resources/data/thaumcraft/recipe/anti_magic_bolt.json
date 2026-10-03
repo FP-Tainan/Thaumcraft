@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:null_catalyst",
+    "thaumcraft:belladonna_flower",
+    "thaumcraft:belladonna_flower",
+    "thaumcraft:holy_bolt",
+    "thaumcraft:holy_bolt",
+    "thaumcraft:holy_bolt"
+  ],
+  "result": {
+    "id": "thaumcraft:anti_magic_bolt",
+    "count": 3
+  }
+}

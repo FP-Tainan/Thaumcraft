@@ -6551,3 +6551,201 @@ para uma prova de mira não precisa, porque a mira não pergunta onde o alvo est
 
 (E a dificuldade também conta: em **paz**, o `canAttack` recusa qualquer gente como alvo. A prova a põe em
 fácil e a devolve ao que era num `finally`.)
+
+## O apetrecho do Caçador de Bruxas (2026-10-03)
+
+A primeira metade da fatia do Caçador: o que ele leva. O **caçador** em si vem a seguir.
+
+### A Besta de Mão: o gesto é que é a arma
+
+O `ItemHandBow` não é um arco. Um arco se puxa e se solta; esta se **carrega**, e o que ela tem dentro fica lá
+até alguém soltar o gatilho. São dois gestos, e os dois começam do mesmo jeito:
+
+- **De pé, vazia:** segurar carrega.
+- **De pé, carregada:** segurar e soltar atira. Meio segundo já bota o virote fora; **um segundo inteiro
+  bota-o crítico**.
+- **Agachado:** segurar **troca o virote** pelo seguinte que houver na mochila, e **devolve o que estava
+  dentro** — por isso trocar não custa munição. Três estalos, aos cinco, dez e quinze tiques, dizem que a
+  troca está a acontecer.
+
+É o gesto que faz dela o que ela é: quem caça o que a espada não mata precisa de escolher a munição **com o
+bicho em cima**, e agachar-se é exatamente o tempo que isso devia custar. Não há menu nenhum.
+
+### Os cinco virotes
+
+| Virote | O que faz |
+| --- | --- |
+| **de Madeira** (estaca) | o comum — e é de madeira que se mata vampiro |
+| **Anulador** | chupa magia de quem acerta |
+| **Anulador, com o conjunto vestido** | **limpa**: tira todo efeito menos os três que são castigo, e derruba o poder pela metade |
+| **de Osso** (sagrado) | **uma vez e meia** contra morto-vivo e coisa do inferno |
+| **que Parte** | três de uma vez, num leque de vinte graus, por metade do dano cada |
+| **de Prata** | a **única coisa de longe** que fere um lobisomem |
+
+A drenagem forte deixa de propósito o **veneno**, o **definhar** e a **cegueira**: tirá-los seria **curar**
+quem se acertou.
+
+E o virote de prata fechou um buraco que o porte já tinha escrito no próprio `Silver`: lá dizia, por escrito,
+que o caminho do virote de prata não existia. Agora existe, e o `éDePrata` pergunta por ele.
+
+### Chupar o poder: dois poços em vez de três
+
+O `reducePowerLevels` do original toca em três poços — o do Witchery, o do Ars Magica e o do Thaumcraft —
+porque lá eram três mods. Aqui são **dois**, e estão no mesmo jar: a **mana** do Ars Arcana (que é o mesmo poço
+que lá era a energia de infusão <i>e</i> a mana do Ars Magica) e o **vis das varinhas** que a pessoa carrega.
+
+**Tradução declarada:** o gancho do Thaumcraft chama o `consumeVisFromInventory`, que aplica o desconto da
+ponteira. Aqui o vis se tira **cru**: uma ponteira boa faz uma varinha **gastar** menos, e não a protege de
+quem a está esvaziando.
+
+### As roupas: couro para proteger, ferro para durar
+
+São quatro peças em três feitios — a **lisa**, a **prateada** e a **da aurora**, que é prateada <i>e</i> com
+alho (é o `ItemHunterClothes(casa, true, true)` do original, e por isso vale contra os dois).
+
+A proteção é a de couro — um, três, dois e um — e a durabilidade é a do **ferro**. É a melhor piada do mod:
+quem caça o que a espada não mata anda de casaco, e o casaco aguenta.
+
+**O que vale é o conjunto**, e só o conjunto inteiro: protege de **magia** uma vez em quatro, de **maldição**
+nove vezes em dez, faz o virote anulador **drenar com força** — e, se for prateado, protege de **lobo**.
+
+**E o conjunto cobra**: quem o veste **não pode usar boneca nenhuma**. É o preço inteiro do ofício, e é o
+maior que o mod cobra: quem caça bruxas não anda com a magia das bruxas no bolso. No original isso é o
+`findBoundPoppetInWorld`, que devolve nada **antes** de procurar — e por isso nenhuma boneca se gasta, ela só
+não é achada.
+
+A peça **certa** contra a pancada certa — prata contra lobisomem, alho contra vampiro — vale **duas vezes e
+meia**, **não se gasta** nessa pancada, e **queima quem bateu**. A roupa não é armadura: é uma armadilha
+vestida.
+
+#### A conta do Forge, traduzida
+
+No Forge de então cada peça dizia quanto absorvia: o comum era `armadura / 25`, e a peça certa dizia
+`armadura * 2,5 / 25`. A armadura comum já é aplicada pelo jogo de hoje antes de o nosso código correr, e por
+isso o que se tira a mais é **só o que falta** — `armadura * 1,5 / 25` por peça certa. Com o conjunto prateado
+inteiro, que dá sete de armadura, são quarenta e dois por cento a menos do que já sobrou.
+
+**Desvio declarado:** o original poupa do desgaste **peça a peça**; aqui se poupa o conjunto quando alguma peça
+é a certa. Com o conjunto todo do mesmo feitio — o único caso em que as proteções valem — dá o mesmo.
+
+### E elas não são armadura de folha
+
+Esta foi a descoberta da fatia, e custou uma tela para aparecer.
+
+A primeira tentativa pôs as roupas como **camada de armadura** do jogo de hoje, com a folha do original. Saiu
+um caçador de **chapéu certo e sem casaco**: o tronco ficava com a camisa da pele por baixo. A folha parecia
+meio vazia.
+
+Ela não estava vazia: ela é de **cento e vinte e oito por sessenta e quatro**, e o original a lê com um
+**modelo próprio**, o `ModelHunterClothes`, que não é a camada de armadura do jogo — é um `ModelBiped` com
+**quatro caixas a mais**:
+
+- o **chapéu**, em três andares presos uns aos outros: a **aba**, de treze por um por treze, presa à cabeça; o
+  **meio**, de oito por dois por oito, preso à aba; e o **topo**, de sete por dois por sete, preso ao meio;
+- e o **casaco**, de onze por dez por seis, preso ao tronco, que desce dez pontos **abaixo** da cintura.
+
+É o chapéu que faz um caçador de bruxas ser reconhecido de longe, e ele não cabe numa folha. Por isso as
+roupas vão pelo mesmo caminho dos **Abafadores**: um `ArmorRenderer` com modelo próprio, caixa por caixa, nos
+números do original. E são **dois** modelos, não um — o do peito com `0,4` de folga e o das pernas com `0,01`:
+o casaco tem de sobrar do corpo, as calças têm de colar à perna.
+
+**E a cor de fábrica deixou de ser componente.** Posta como componente, toda peça dizia "Tingida" na dica sem
+ninguém lhe ter tocado. O original dá a cor **na pergunta**, e é o que se faz aqui: o desenhista pergunta ao
+item, e quem pintar a peça escreve por cima. As peças entram na etiqueta `minecraft:dyeable`, que é como se
+tingem hoje.
+
+### E as receitas, que faltavam até à raiz
+
+Vieram dois itens que o porte não tinha e de que **a Pedra de Caminho também já precisava**: o
+**Catalisador Nulo** — estrela do Nether, diamante, pederneira e seis pérolas do Alhures — e o **Couro
+Anulado**, oito couros em volta de um catalisador. É com ele que o conjunto se costura, e é por isso que ele
+protege de maldição: é feito do que não deixa magia passar.
+
+As vinte e uma receitas são as do original, letra por letra, incluindo a **prateação** (pó de prata, acônito e
+linha em volta da peça lisa) e o **alho** (alho e linha em volta da prateada) — e é por isso que a da aurora é
+prateada: ela **vem** da prateada.
+
+**Guardas:** `OccultaHunterGearGameTest`, com oito — os números; o que cada virote é e como volta ao chão; **o
+virote de prata que é dano de prata**; a drenagem forte que limpa menos os três castigos; a fraca que não
+limpa nada; o conjunto que só vale inteiro e tira as bonecas; **a roupa da aurora que também é prateada**; a
+peça certa contra a pancada certa; e a besta vazia que não atira. E `OccultaHunterGearClientTest`, com o
+caçador visto de fora e a dica do casaco.
+
+### E uma prova que mexia no mundo inteiro
+
+A prova `anEnslavedMobNeverTargetsItsEnslaver` da fatia anterior **mudava a dificuldade** do mundo e a repunha
+num `finally`. As provas correm todas no mesmo mundo, em lote, e a dificuldade é do mundo inteiro: enquanto a
+prova corria, as vizinhas viam outra. Agora ela **confere** a dificuldade em vez de a mexer, e falha dizendo o
+que precisa se o mundo estiver em paz.
+
+## O Caçador de Bruxas (2026-10-03)
+
+A segunda metade da fatia: o homem.
+
+### Ele é a resposta do mundo ao ofício
+
+O `EntityWitchHunter` não nasce de ódio nem de escuridão. Nasce porque **alguém fez magia negra** — e vem
+atrás dessa pessoa **pelo nome**.
+
+O relógio tem três voltas, e a melhor parte dele é a **demora**:
+
+1. Alguém espeta uma boneca de vodu ou amaldiçoa um vizinho. **Uma vez em dez**, isso é **notado**.
+2. **Dois minutos depois**, e só a partir daí, há **uma chance em cem** por volta de o mundo mandar alguém.
+3. E então **dois caçadores** aparecem entre três e oito blocos de distância, já sabendo de quem vieram
+   buscar, e quem os chamou ouve um som que não ouviu antes.
+
+O que torna isto bom não é o perigo: é que entre o feitiço e a batida à porta passam minutos, e às vezes nada
+acontece. Quem joga não liga uma coisa à outra na primeira vez — liga na terceira, e aí já é tarde para
+desaprender a magia.
+
+### E a lista do que ele caça é curta
+
+Morto-vivo, coisa do inferno, bruxa, lobisomem, vampiro — e **gente**, mas só a que for bruxa, lobisomem,
+vampira, ou **a que ele veio buscar**.
+
+Repare no que **não** está nela: aldeão, bicho, creeper, esqueleto comum. **Ele não é um monstro — é um homem
+com um trabalho**, e o trabalho é curto. É a diferença entre um caçador de bruxas e um zumbi, e ela está toda
+nesta lista.
+
+### O que o faz durar não é a vida
+
+São trinta de vida, mas **nenhuma pancada lhe tira mais de nove** — o mesmo truque da Baba Yaga, e pela mesma
+razão: contra quem leva a armadura certa, o número que importa é o teto.
+
+E ele **não se fere** por mão de **guarda de aldeia** nem de **outro caçador**: eles são do mesmo lado, e o
+original diz isso com um `instanceof` em vez de uma facção.
+
+**O veneno não pega nele.** De segundo em segundo ele se limpa — é a primeira coisa que uma bruxa tenta, e a
+primeira que não funciona.
+
+### E ele escolhe a munição
+
+É a coisa que mais o faz parecer gente. O `attackEntityWithRangedAttack` do original olha o alvo antes de
+atirar: **prata** contra lobisomem, **osso** contra morto-vivo, e — uma vez em quatro — o **anulador** contra
+tudo o mais. Contra vampiro, uma vez em três, o virote sai **a arder**.
+
+Dele caem **virotes de madeira**, e raramente dois anuladores: quem o mata fica com a munição dele.
+
+### As roupas dele estão pintadas, não vestidas
+
+O `ModelWitchHunter` é um bípede com **três caixas a mais** — a aba do chapéu, de **catorze** por um por
+catorze; o topo, de seis por dois por seis; e a saia do casaco, de dez por onze por cinco, presa ao tronco. E
+são **três peles**, sorteadas ao nascer.
+
+Por isso ele **não veste** as peças do conjunto, embora elas existam: vesti-lo punha dois casacos um por cima
+do outro. E repare que a aba dele é **maior** que a das roupas que se podem vestir — catorze contra treze. Um
+caçador de verdade tem o chapéu que ninguém mais tem.
+
+### Traduções declaradas
+
+1. **UUID em vez de nome**, para quem ele veio buscar — pela mesma razão do Escravizado.
+2. **O vampirismo de jogador** é a outra razão por que eles aparecem no original: um vampiro de grau dez,
+   malvisto numa aldeia, atrai caçadores. Isso pede a vampirice de jogador, que este porte ainda não tem;
+   quando vier, é no relógio que se pergunta, ao lado do que já lá está.
+3. **O aparecimento natural** fica de fora: o original deixa o caçador nascer à noite como monstro comum,
+   além de vir pelo relógio. Aqui só vem pelo relógio — que é o que o torna o que ele é.
+
+**Guardas:** `OccultaWitchHunterGameTest`, com oito — os números; **mil de dano que tiram nove**; o seu lado,
+que não o fere; **a lista curta** do que ele caça, com o aldeão, o porco e o creeper de fora; a gente, só a que
+ele veio buscar; o veneno que não pega; a besta que o faz atirar; **o relógio que a magia negra põe a correr**;
+e os dois que vêm sabendo de quem se trata.

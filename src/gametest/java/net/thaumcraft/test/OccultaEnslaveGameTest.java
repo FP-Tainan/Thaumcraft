@@ -61,15 +61,18 @@ public class OccultaEnslaveGameTest {
     /**
      * <b>Um escravo nunca mira em quem o escravizou.</b>
      *
-     * <p>A prova mexe na <b>dificuldade</b> e a põe de volta no fim: em paz, nenhum bicho mira em gente
-     * nenhuma, e a prova passaria por engano — o alvo seria nulo por paz, e não por laço.
+     * <p>A prova <b>confere a dificuldade</b> em vez de a mexer: em paz, nenhum bicho mira em gente nenhuma, e
+     * a prova passaria por engano — o alvo seria nulo por paz, e não por laço. Mexer nela seria pior: as provas
+     * correm todas no mesmo mundo, e a dificuldade é do mundo inteiro.
      */
     @GameTest(maxTicks = 40)
     public void anEnslavedMobNeverTargetsItsEnslaver(GameTestHelper helper) {
         piso(helper);
         ServerLevel level = helper.getLevel();
-        var antes = level.getDifficulty();
-        level.getServer().setDifficulty(net.minecraft.world.Difficulty.EASY, true);
+        if (level.getDifficulty() == net.minecraft.world.Difficulty.PEACEFUL) {
+            helper.fail("esta prova pede um mundo que não esteja em paz");
+            return;
+        }
         var zumbi = helper.spawn(EntityTypes.ZOMBIE, new BlockPos(3, 2, 3));
         var dono = sobrevivente(helper);
         try {
@@ -94,7 +97,6 @@ public class OccultaEnslaveGameTest {
             }
             helper.succeed();
         } finally {
-            level.getServer().setDifficulty(antes, true);
             zumbi.discard();
         }
     }

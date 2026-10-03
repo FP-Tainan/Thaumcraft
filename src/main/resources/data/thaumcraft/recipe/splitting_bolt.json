@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " s ",
+    "bbb",
+    " f "
+  ],
+  "key": {
+    "f": "minecraft:feather",
+    "s": "minecraft:string",
+    "b": "thaumcraft:stake_bolt"
+  },
+  "result": {
+    "id": "thaumcraft:splitting_bolt",
+    "count": 1
+  }
+}

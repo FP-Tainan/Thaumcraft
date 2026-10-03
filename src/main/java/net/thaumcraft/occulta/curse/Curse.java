@@ -96,8 +96,15 @@ public enum Curse implements StringRepresentable {
         return quem.getAttachedOrCreate(DATA).getOrDefault(qual, 0);
     }
 
-    /** Põe a maldição no grau que se pedir — nunca abaixo do que já lá está, que é o original. */
+    /**
+     * Põe a maldição no grau que se pedir — nunca abaixo do que já lá está, que é o original.
+     *
+     * <p><b>Menos em quem veste as roupas de caçador inteiras</b>, que nove vezes em dez não apanha nada: é o
+     * {@code isCurseProtectionActive} do {@code ItemHunterClothes}, e é a melhor razão que alguém tem para
+     * andar de casaco num pântano.
+     */
     public static void put(LivingEntity quem, Curse qual, int grau) {
+        if (net.thaumcraft.occulta.hunter.HunterClothes.protegeDeMaldição(quem)) return;
         var mapa = new EnumMap<>(quem.getAttachedOrCreate(DATA));
         mapa.put(qual, Math.max(grau, mapa.getOrDefault(qual, 0)));
         quem.setAttached(DATA, mapa);

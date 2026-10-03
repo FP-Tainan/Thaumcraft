@@ -34,7 +34,8 @@
     "LivingEntityCurseMixin",
     "MobEnslavedTargetMixin",
     "LivingEntityNoDropsMixin",
-    "ItemEntityWaystoneMixin"
+    "ItemEntityWaystoneMixin",
+    "LivingEntityHunterArmorMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",

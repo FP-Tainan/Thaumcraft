@@ -8,6 +8,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PlaceOnWaterBlockItem;
@@ -654,6 +655,99 @@ public final class OccultaItems {
      */
     public static final Item BLOODED_WAYSTONE = register("blooded_waystone",
             properties -> new net.thaumcraft.occulta.waystone.WaystoneItem(properties.stacksTo(1)));
+
+    // ------------------------------------------------------------------ o caçador de bruxas
+
+    /**
+     * O <b>Catalisador Nulo</b>: o {@code itemNullCatalyst} do original.
+     *
+     * <p>É a estrela do Nether moída com diamante, pederneira e seis pérolas do Alhures — e o que ele faz é
+     * <b>tirar a magia de uma coisa</b>. Com ele se curte o couro que não deixa magia passar, e dele saem os
+     * virotes anuladores.
+     *
+     * <p>E ele <b>multiplica-se</b>: um catalisador com uma pérola e um pó de blaze fazem dois.
+     */
+    public static final Item NULL_CATALYST = register("null_catalyst", Item::new);
+
+    /**
+     * O <b>Couro Anulado</b>: o {@code itemNullifiedLeather}, que é de que se fazem as roupas de caçador.
+     *
+     * <p>Oito couros em volta de um catalisador dão três — e é só com ele que o conjunto se costura. É por
+     * isso que as roupas protegem de maldição: elas são feitas do que não deixa magia passar.
+     */
+    public static final Item NULLIFIED_LEATHER = register("nullified_leather", Item::new);
+
+    /**
+     * A <b>Besta de Mão</b>: o {@code ItemHandBow} do original.
+     *
+     * <p>Ela se carrega, e o que tem dentro fica lá. O gesto está em
+     * {@link net.thaumcraft.occulta.hunter.CrossbowPistolItem}.
+     */
+    public static final Item CROSSBOW_PISTOL = register("crossbow_pistol", properties ->
+            new net.thaumcraft.occulta.hunter.CrossbowPistolItem(properties.stacksTo(1).durability(768)));
+
+    /** O virote de <b>estaca</b>: madeira, que é do que se mata vampiro. */
+    public static final Item STAKE_BOLT = register("stake_bolt", Item::new);
+
+    /** O <b>anti-magia</b>, que chupa o poder de quem acerta. */
+    public static final Item ANTI_MAGIC_BOLT = register("anti_magic_bolt", Item::new);
+
+    /** O <b>sagrado</b>, que vale uma vez e meia contra morto-vivo e coisa do inferno. */
+    public static final Item HOLY_BOLT = register("holy_bolt", Item::new);
+
+    /** O <b>que parte</b>: três de uma vez, num leque, por metade do dano cada. */
+    public static final Item SPLITTING_BOLT = register("splitting_bolt", Item::new);
+
+    /** E o de <b>prata</b>, a única coisa de longe que fere um lobisomem. */
+    public static final Item SILVER_BOLT = register("silver_bolt", Item::new);
+
+    /** As quatro peças lisas das roupas de caçador. */
+    public static final Item HUNTER_HAT = hunter("hunter_hat", ArmorType.HELMET, false, false);
+    public static final Item HUNTER_COAT = hunter("hunter_coat", ArmorType.CHESTPLATE, false, false);
+    public static final Item HUNTER_LEGS = hunter("hunter_legs", ArmorType.LEGGINGS, false, false);
+    public static final Item HUNTER_BOOTS = hunter("hunter_boots", ArmorType.BOOTS, false, false);
+
+    /** As quatro <b>prateadas</b>, que ardem num lobisomem e lhe tiram a força da pancada. */
+    public static final Item SILVERED_HUNTER_HAT =
+            hunter("silvered_hunter_hat", ArmorType.HELMET, true, false);
+    public static final Item SILVERED_HUNTER_COAT =
+            hunter("silvered_hunter_coat", ArmorType.CHESTPLATE, true, false);
+    public static final Item SILVERED_HUNTER_LEGS =
+            hunter("silvered_hunter_legs", ArmorType.LEGGINGS, true, false);
+    public static final Item SILVERED_HUNTER_BOOTS =
+            hunter("silvered_hunter_boots", ArmorType.BOOTS, true, false);
+
+    /**
+     * E as quatro <b>da aurora</b>, que são prateadas <b>e</b> com alho: valem contra os dois.
+     *
+     * <p>É o {@code ItemHunterClothes(casa, true, true)} do original — o alho nunca vem sozinho, e por isso
+     * quem tem a roupa da aurora tem a melhor que há.
+     */
+    public static final Item GARLICKED_HUNTER_HAT =
+            hunter("garlicked_hunter_hat", ArmorType.HELMET, true, true);
+    public static final Item GARLICKED_HUNTER_COAT =
+            hunter("garlicked_hunter_coat", ArmorType.CHESTPLATE, true, true);
+    public static final Item GARLICKED_HUNTER_LEGS =
+            hunter("garlicked_hunter_legs", ArmorType.LEGGINGS, true, true);
+    public static final Item GARLICKED_HUNTER_BOOTS =
+            hunter("garlicked_hunter_boots", ArmorType.BOOTS, true, true);
+
+    /** Uma peça de roupa de caçador: couro para proteger, ferro para durar, e tingível. */
+    private static Item hunter(String nome, ArmorType casa, boolean prateada, boolean comAlho) {
+        return register(nome, properties -> new net.thaumcraft.occulta.hunter.HunterClothesItem(properties
+                .humanoidArmor(OccultaMaterials.HUNTER, casa)
+                .rarity(net.minecraft.world.item.Rarity.UNCOMMON),
+                prateada, comAlho, corDe(casa)));
+    }
+
+    /** A cor de fábrica de cada peça, pelos números do original. */
+    private static int corDe(ArmorType casa) {
+        return switch (casa) {
+            case LEGGINGS -> 0x49372B;
+            case BOOTS -> 0x19110B;
+            default -> 0x3F2A1E;
+        };
+    }
 
     private static Item register(String name, Function<Item.Properties, Item> factory) {
         Identifier id = Thaumcraft.id(name);

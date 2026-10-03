@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "mbm",
+    "swn",
+    " m "
+  ],
+  "key": {
+    "m": "minecraft:iron_ingot",
+    "b": "minecraft:bow",
+    "n": "thaumcraft:bone_needle",
+    "s": "minecraft:string",
+    "w": "#minecraft:sticks"
+  },
+  "result": {
+    "id": "thaumcraft:crossbow_pistol",
+    "count": 1
+  }
+}

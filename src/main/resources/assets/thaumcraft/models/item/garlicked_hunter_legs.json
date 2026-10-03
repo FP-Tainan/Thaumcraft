@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "thaumcraft:item/hunter_legs",
+    "layer1": "thaumcraft:item/hunter_legs_garlicked"
+  }
+}

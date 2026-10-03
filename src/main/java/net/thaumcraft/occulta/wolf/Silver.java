@@ -18,9 +18,11 @@ import net.thaumcraft.Thaumcraft;
  * espada dele na etiqueta e ela passa a ferir lobisomem, sem este porte saber nada sobre esse mod. O
  * {@code PORTE.md} tem isto declarado.
  *
- * <p><b>E só vale corpo a corpo.</b> Dano de longe não é dano de prata, por mais prateada que seja a flecha —
- * é a pergunta {@code !source.isProjectile()} do original. O virote de prata do Witchery tinha o seu próprio
- * caminho, e esse ainda não está portado.
+ * <p><b>De perto, só conta a mão.</b> Uma flecha prateada não é dano de prata — é a pergunta
+ * {@code !source.isProjectile()} do original, e o que ela guarda é que prata se crava, não se atira.
+ *
+ * <p><b>Menos uma.</b> O <b>virote de prata</b> do Caçador de Bruxas tem o seu próprio caminho no original, e
+ * é a única coisa de longe que fere um lobisomem. Está portado, e é por ele que se pergunta aqui.
  */
 public final class Silver {
     /** A etiqueta das armas que ferem um lobisomem. */
@@ -30,8 +32,11 @@ public final class Silver {
     private Silver() {
     }
 
-    /** Se esta pancada veio de prata. */
+    /** Se esta pancada veio de prata: a mão com a arma certa, ou o virote de prata do Caçador. */
     public static boolean éDePrata(DamageSource fonte) {
+        if (fonte.getDirectEntity() instanceof net.thaumcraft.occulta.hunter.BoltEntity virote) {
+            return virote.éDePrata();
+        }
         if (!fonte.isDirect()) return false;
         if (!(fonte.getEntity() instanceof LivingEntity quem)) return false;
         return quem.getMainHandItem().is(ARMAS);

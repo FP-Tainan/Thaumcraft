@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " s ",
+    "www",
+    "fff"
+  ],
+  "key": {
+    "f": "minecraft:feather",
+    "s": "minecraft:string",
+    "w": "#minecraft:sticks"
+  },
+  "result": {
+    "id": "thaumcraft:stake_bolt",
+    "count": 9
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "dwd",
+    "w#w",
+    "dsd"
+  ],
+  "key": {
+    "#": "thaumcraft:hunter_coat",
+    "s": "minecraft:string",
+    "w": "thaumcraft:wolfsbane_sprig",
+    "d": "thaumcraft:silver_dust"
+  },
+  "result": {
+    "id": "thaumcraft:silvered_hunter_coat",
+    "count": 1
+  }
+}

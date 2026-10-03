@@ -6,6 +6,18 @@
     "thaumcraft:robe_boots",
     "thaumcraft:void_robe_helmet",
     "thaumcraft:void_robe_chestplate",
-    "thaumcraft:void_robe_leggings"
+    "thaumcraft:void_robe_leggings",
+    "thaumcraft:hunter_hat",
+    "thaumcraft:silvered_hunter_hat",
+    "thaumcraft:garlicked_hunter_hat",
+    "thaumcraft:hunter_coat",
+    "thaumcraft:silvered_hunter_coat",
+    "thaumcraft:garlicked_hunter_coat",
+    "thaumcraft:hunter_legs",
+    "thaumcraft:silvered_hunter_legs",
+    "thaumcraft:garlicked_hunter_legs",
+    "thaumcraft:hunter_boots",
+    "thaumcraft:silvered_hunter_boots",
+    "thaumcraft:garlicked_hunter_boots"
   ]
 }

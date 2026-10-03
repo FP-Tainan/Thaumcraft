@@ -1761,8 +1761,14 @@ public final class Rites {
             return null;
         }
 
-        /** Põe. Quem está guardado por uma boneca de vodu não apanha, e quem tentou leva o troco. */
+        /**
+         * Põe. Quem está guardado por uma boneca de vodu não apanha, e quem tentou leva o troco.
+         *
+         * <p>E <b>quem amaldiçoa é notado</b>: é o {@code blackMagicPerformed} do original, que corre antes
+         * de se saber se a maldição pegou. Tentar já conta.
+         */
         private boolean poe(ServerLevel level, LivingEntity alvo, Player quemFaz, int soma) {
+            net.thaumcraft.occulta.hunter.WitchHunters.magiaNegra(quemFaz);
             if (net.thaumcraft.occulta.Voodoo.guarded(level, alvo)) {
                 if (quemFaz != null) net.thaumcraft.occulta.Voodoo.backfire(level, quemFaz);
                 return false;

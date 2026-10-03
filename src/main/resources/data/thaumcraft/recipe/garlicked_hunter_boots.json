@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " g ",
+    "g#g",
+    " s "
+  ],
+  "key": {
+    "#": "thaumcraft:silvered_hunter_boots",
+    "s": "minecraft:string",
+    "g": "thaumcraft:garlic"
+  },
+  "result": {
+    "id": "thaumcraft:garlicked_hunter_boots",
+    "count": 1
+  }
+}

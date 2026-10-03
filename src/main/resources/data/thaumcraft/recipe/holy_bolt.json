@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aba",
+    "ata",
+    "aba"
+  ],
+  "key": {
+    "t": "minecraft:ghast_tear",
+    "a": "thaumcraft:stake_bolt",
+    "b": "minecraft:bone"
+  },
+  "result": {
+    "id": "thaumcraft:holy_bolt",
+    "count": 12
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "lll",
+    "lcl",
+    "lll"
+  ],
+  "key": {
+    "l": "minecraft:leather",
+    "c": "thaumcraft:null_catalyst"
+  },
+  "result": {
+    "id": "thaumcraft:nullified_leather",
+    "count": 3
+  }
+}

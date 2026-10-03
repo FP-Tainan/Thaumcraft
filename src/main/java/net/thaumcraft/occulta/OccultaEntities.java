@@ -196,6 +196,31 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.baba.BabaYagaEntity::attributes))
                     .sized(0.6f, 1.95f).eyeHeight(1.62f).clientTrackingRange(16));
 
+    /**
+     * O <b>Caçador de Bruxas</b>: o {@code EntityWitchHunter} do original.
+     *
+     * <p>Ele <b>não nasce do mundo</b> — nasce de alguém ter feito magia negra. Por isso é
+     * {@code MobCategory.MONSTER} para contar como monstro, mas quem o põe no mundo é o
+     * {@link net.thaumcraft.occulta.hunter.WitchHunters}, e não o relógio de aparecimentos.
+     */
+    public static final EntityType<net.thaumcraft.occulta.hunter.WitchHunterEntity> WITCH_HUNTER =
+            register("witch_hunter", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.hunter.WitchHunterEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.hunter.WitchHunterEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(8));
+
+    /**
+     * O <b>virote</b>: o {@code EntityBolt} do original.
+     *
+     * <p>Mais pequeno que uma flecha, e por isso se vê de mais perto: o original o segue a sessenta e quatro
+     * blocos, com atualização de vinte em vinte tiques, que é o que uma flecha tem.
+     */
+    public static final EntityType<net.thaumcraft.occulta.hunter.BoltEntity> BOLT = register("bolt",
+            EntityType.Builder.<net.thaumcraft.occulta.hunter.BoltEntity>of(
+                            net.thaumcraft.occulta.hunter.BoltEntity::new, MobCategory.MISC)
+                    .sized(0.4f, 0.4f).eyeHeight(0.0f).clientTrackingRange(4).updateInterval(20));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));

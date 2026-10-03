@@ -151,6 +151,9 @@ public final class Poppets {
      * gastam-se de mil em mil — que, tendo mil de aguento, é uma vez só, como no original.
      */
     public static boolean spend(ServerLevel level, Player quem, PoppetItem.Kind qual) {
+        // e não há boneca nenhuma para quem veste as roupas de caçador inteiras: é o findBoundPoppetInWorld,
+        // que devolve nada antes sequer de procurar — e por isso nenhuma se gasta, ela só não é achada
+        if (net.thaumcraft.occulta.hunter.HunterClothes.semBonecas(quem)) return false;
         if (spendIn(level, quem, qual, quem.getInventory())) return true;
         SHELVES.removeIf(BlockEntity::isRemoved);
         for (PoppetShelfBlockEntity prateleira : List.copyOf(SHELVES)) {

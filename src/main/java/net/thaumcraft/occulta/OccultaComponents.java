@@ -48,6 +48,23 @@ public final class OccultaComponents {
                     .persistent(net.thaumcraft.occulta.waystone.Waystones.Lugar.CODEC)
                     .networkSynchronized(net.thaumcraft.occulta.waystone.Waystones.Lugar.STREAM_CODEC));
 
+    /**
+     * O virote que está <b>dentro</b> da Besta de Mão: o {@code WITCBoltTypeCurrent} do original.
+     *
+     * <p>A besta não guarda uma munição qualquer — guarda <b>qual</b>, porque é o tipo que decide o que o tiro
+     * faz. Sem este componente ela está vazia, e vazia ela não atira: só se carrega.
+     */
+    public static final DataComponentType<Item> BOLT_LOADED = register("bolt_loaded",
+            builder -> builder.persistent(BuiltInRegistries.ITEM.byNameCodec())
+                    .networkSynchronized(ByteBufCodecs.registry(
+                            net.minecraft.core.registries.Registries.ITEM)));
+
+    /** E o que a pessoa escolheu da última vez: o {@code WITCBoltTypePreferred}, que a besta recarrega sozinha. */
+    public static final DataComponentType<Item> BOLT_PREFERRED = register("bolt_preferred",
+            builder -> builder.persistent(BuiltInRegistries.ITEM.byNameCodec())
+                    .networkSynchronized(ByteBufCodecs.registry(
+                            net.minecraft.core.registries.Registries.ITEM)));
+
     private OccultaComponents() {
     }
 

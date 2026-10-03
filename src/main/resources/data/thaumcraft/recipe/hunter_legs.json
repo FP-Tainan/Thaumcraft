@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "lll",
+    "l l",
+    "l l"
+  ],
+  "key": {
+    "l": "thaumcraft:nullified_leather"
+  },
+  "result": {
+    "id": "thaumcraft:hunter_legs",
+    "count": 1
+  }
+}

@@ -190,6 +190,19 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.BROOM,
                 net.thaumcraft.occulta.client.BroomRenderer::new);
 
+        // o Ars Occulta: o Caçador de Bruxas
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.WitchHunterRenderer.LAYER,
+                net.thaumcraft.occulta.client.WitchHunterRenderer::createLayer);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.WITCH_HUNTER,
+                net.thaumcraft.occulta.client.WitchHunterRenderer.Caçador::new);
+
+        // o Ars Occulta: o virote do Caçador
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.BOLT,
+                net.thaumcraft.occulta.client.BoltRenderer::new);
+
         // o Ars Occulta: a Bruxa do Coven
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.COVEN_WITCH,
@@ -651,6 +664,27 @@ net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.occulta.client.EarmuffsRenderer::createLayer);
         net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(
                 net.thaumcraft.occulta.client.EarmuffsRenderer::new, net.thaumcraft.occulta.OccultaItems.EARMUFFS);
+        // as roupas de caçador do Ars Occulta, com o modelo do ModelHunterClothes
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.HunterClothesRenderer.PEITO,
+                net.thaumcraft.occulta.client.HunterClothesRenderer::peito);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.HunterClothesRenderer.PERNAS,
+                net.thaumcraft.occulta.client.HunterClothesRenderer::pernas);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(
+                net.thaumcraft.occulta.client.HunterClothesRenderer::new,
+                net.thaumcraft.occulta.OccultaItems.HUNTER_HAT,
+                net.thaumcraft.occulta.OccultaItems.HUNTER_COAT,
+                net.thaumcraft.occulta.OccultaItems.HUNTER_LEGS,
+                net.thaumcraft.occulta.OccultaItems.HUNTER_BOOTS,
+                net.thaumcraft.occulta.OccultaItems.SILVERED_HUNTER_HAT,
+                net.thaumcraft.occulta.OccultaItems.SILVERED_HUNTER_COAT,
+                net.thaumcraft.occulta.OccultaItems.SILVERED_HUNTER_LEGS,
+                net.thaumcraft.occulta.OccultaItems.SILVERED_HUNTER_BOOTS,
+                net.thaumcraft.occulta.OccultaItems.GARLICKED_HUNTER_HAT,
+                net.thaumcraft.occulta.OccultaItems.GARLICKED_HUNTER_COAT,
+                net.thaumcraft.occulta.OccultaItems.GARLICKED_HUNTER_LEGS,
+                net.thaumcraft.occulta.OccultaItems.GARLICKED_HUNTER_BOOTS);
         // a armadura de fortaleza, com o modelo do ModelFortressArmor
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.client.render.FortressArmorRenderer.LAYER,

@@ -38,6 +38,34 @@ public final class OccultaMaterials {
             Map.of(ArmorType.HELMET, 0), 1, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f,
             TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_earmuffs")), EARMUFFS_ASSET);
 
+    /**
+     * A cara das roupas de caçador.
+     *
+     * <p>É uma só, e <b>não tem camada nenhuma</b>: quem as desenha é o
+     * {@link net.thaumcraft.occulta.client.HunterClothesRenderer}, com o modelo próprio do original. A cara
+     * existe só porque o jogo pede uma a toda armadura.
+     */
+    public static final ResourceKey<EquipmentAsset> HUNTER_ASSET =
+            ResourceKey.create(EquipmentAssets.ROOT_ID, Thaumcraft.id("hunter_clothes"));
+
+    /** A conta de durabilidade do ferro, que é por quanto o jogo multiplica a base de cada peça. */
+    public static final int IRON_WEAR = 15;
+
+    /**
+     * De que são feitas as <b>roupas de caçador</b>: o {@code ArmorMaterial.CLOTH} com a durabilidade do ferro.
+     *
+     * <p>É o que o original faz, letra por letra, e é a melhor piada do mod: a roupa <b>protege como couro</b> —
+     * um, três, dois e um — mas <b>dura como ferro</b>. Quem caça o que a espada não mata não se protege com
+     * placa: anda de casaco, e o casaco aguenta.
+     *
+     * <p>Elas se <b>tingem</b>, como o couro, e cada peça tem a sua cor de fábrica, que são as do original.
+     */
+    public static final ArmorMaterial HUNTER = new ArmorMaterial(IRON_WEAR,
+            Map.of(ArmorType.HELMET, 1, ArmorType.CHESTPLATE, 3,
+                    ArmorType.LEGGINGS, 2, ArmorType.BOOTS, 1),
+            15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f,
+            TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_hunter_clothes")), HUNTER_ASSET);
+
     private OccultaMaterials() {
     }
 }

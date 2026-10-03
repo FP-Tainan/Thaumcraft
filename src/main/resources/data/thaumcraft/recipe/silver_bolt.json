@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " s ",
+    "bbb"
+  ],
+  "key": {
+    "s": "thaumcraft:silver_dust",
+    "b": "thaumcraft:stake_bolt"
+  },
+  "result": {
+    "id": "thaumcraft:silver_bolt",
+    "count": 3
+  }
+}

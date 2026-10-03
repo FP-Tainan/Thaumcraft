@@ -116,8 +116,19 @@ public class PoppetItem extends Item {
         }
         LivingEntity alvo = Voodoo.bound(server, stack);
         if (alvo == null) return false;
+
+        // e quem espeta uma boneca é notado: o blackMagicPerformed do original
+        net.thaumcraft.occulta.hunter.WitchHunters.magiaNegra(quem);
+
         if (Voodoo.guarded(server, alvo)) {
             Voodoo.backfire(server, quem);
+            return true;
+        }
+
+        // e as roupas de caçador inteiras escapam a um em cada quatro tormentos — sem troco nenhum para quem
+        // os manda: a boneca se gasta na mesma, e é só o tormento que não chega
+        if (net.thaumcraft.occulta.hunter.HunterClothes.protegeDeMagia(alvo)) {
+            wear(stack, server);
             return true;
         }
 
