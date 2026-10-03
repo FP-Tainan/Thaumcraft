@@ -6373,3 +6373,46 @@ Quem quiser matar um vampiro com uma espada tem de o prender ao sol. É a coisa 
 **Guardas:** `OccultaVampireGameTest`, com seis — os números; o gole que cura e conta; o crisol que ele enche;
 **a espada que não o mata**; o fogo, a parede e o vazio que matam; e o outro vampiro, que é a única mão viva
 que lhe chega.
+
+## A Baba Yaga (2026-10-03)
+
+O terceiro dos três grandes, e o mais curto de escrever — porque ela é uma bruxa do jogo levada ao extremo e
+depois **torcida**.
+
+### O que faz dela um chefe não é a vida
+
+São **quinhentos** de vida, mas o que a torna um chefe é o **teto**: **nenhuma pancada lhe tira mais de
+quinze**. Não importa a espada, o encantamento ou a poção. São trinta e quatro golpes no mínimo — e com
+**magia**, que vale **quinze por cento**, são duzentos e vinte.
+
+E ela **não se deixa alcançar**:
+
+- **Ela salta.** Sempre que o caminho dela fecha — ou uma vez em cinquenta, a esmo —, aparece a oito blocos
+  de quem a persegue, pelo caminho do enderman.
+- **E não deixa fugir pelo ar.** Quem estiver caindo ou voando apanha **Lentidão VI** por dez segundos, uma
+  vez em vinte.
+- **Ela atira os cozimentos do ofício** — teias, espinhos, tinta, gelo, infecção — e, duas vezes em três, as
+  poções de arremesso do jogo, escolhidas pelo que o alvo está fazendo, como a bruxa do jogo escolhe.
+- **E bebe as dela**: resistência ao fogo quando arde, cura quando está ferida, rapidez quando o alvo está
+  longe. Enquanto bebe, anda um quarto mais devagar — é o `AttributeModifier` do original, com o mesmo
+  número.
+
+### E ela pode ser chamada
+
+Com **dono**, ela deixa de ser inimiga dele e vira outra coisa: de cinco em cinco segundos, se ele estiver a
+oito blocos, **larga no chão** os ingredientes do ofício — e **some ao fim de trinta segundos**.
+
+É a Baba da bola de cristal do original: uma **visita**, não uma conquista. Quem a chama não ganha um chefe
+morto; ganha cinco minutos de uma velha de mau humor largando pó espectral no quintal.
+
+### Duas traduções declaradas
+
+1. **O modelo é o da bruxa do jogo.** O `ModelBabaYaga` do original é o modelo da bruxa com o chapéu trocado e
+   a verruga tirada; o que dela se vê, de perto e de longe, é a **pele** — e essa é a dele.
+2. **Os cozimentos que ela atira** são os que este porte tem. O original atira sete, e três deles — o do Sapo,
+   o do Hitchcock e o do Definhar — ainda não existem aqui; os outros cinco ficam, com os pesos ajustados para
+   a lista ficar do mesmo tamanho.
+
+**Guardas:** `OccultaBabaYagaGameTest`, com sete — os números; **mil de dano que tiram quinze**; a magia que
+dói menos; o salto que sai do lugar; o presente que é sempre do ofício; a visita que acaba; a lentidão de quem
+voa; e o que ela atira, que não a fere.

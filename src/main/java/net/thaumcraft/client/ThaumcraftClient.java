@@ -150,6 +150,11 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.OWL,
                 net.thaumcraft.occulta.client.FamiliarRenderers.Coruja::new);
 
+        // o Ars Occulta: a Baba Yaga
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.BABA_YAGA,
+                net.thaumcraft.occulta.client.BabaYagaRenderer::new);
+
         // o Ars Occulta: o vampiro
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.VAMPIRE,
