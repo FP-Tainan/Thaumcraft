@@ -38,7 +38,8 @@
     "LivingEntityHunterArmorMixin",
     "LivingEntityOccultaHurtMixin",
     "BlockDropsFortuneMixin",
-    "PlayerKeepInventoryMixin"
+    "PlayerKeepInventoryMixin",
+    "PlayerWerewolfSizeMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",
@@ -51,7 +52,8 @@
     "InventoryRecipeBookMixin",
     "ItemEntitySalisFxMixin",
     "LivingEntityRendererInvisibleMixin",
-    "LivingEntityRendererColorfulMixin"
+    "LivingEntityRendererColorfulMixin",
+    "LivingEntityRendererWerewolfMixin"
   ],
   "injectors": {
     "defaultRequire": 1

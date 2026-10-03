@@ -152,7 +152,8 @@ public class WitchHunterEntity extends PathfinderMob implements RangedAttackMob 
         if (quem.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) return true;
         if (quem instanceof Witch) return true;
         if (quem instanceof net.thaumcraft.occulta.coven.CovenWitchEntity) return true;
-        if (net.thaumcraft.occulta.wolf.Lycanthropy.é(quem)) return true;
+        // ao caçador basta que a pessoa <b>seja</b> lobisomem, esteja de bicho ou não
+        if (net.thaumcraft.occulta.wolf.Lycanthropy.éMesmoDeGente(quem)) return true;
         if (net.thaumcraft.occulta.vampire.Vampirism.é(quem)) return true;
 
         if (!(quem instanceof Player gente)) return false;

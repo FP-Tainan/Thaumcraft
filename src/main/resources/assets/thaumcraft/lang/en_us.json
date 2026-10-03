@@ -922,6 +922,7 @@
   "item.thaumcraft.mindrake_bulb": "Minedrake Bulb",
   "item.thaumcraft.mirrored_glass": "Mirrored Glass",
   "item.thaumcraft.mob_crystal": "Imprinting Crystal",
+  "item.thaumcraft.moon_charm": "Moon Charm",
   "item.thaumcraft.morph.phase": "Face %s",
   "item.thaumcraft.mundane_amulet": "Mundane Amulet",
   "item.thaumcraft.mundane_belt": "Mundane Belt",
@@ -1321,6 +1322,8 @@
   "message.thaumcraft.teddy.defending": "Animated Teddy is now defending",
   "message.thaumcraft.teddy.sitting": "Animated Teddy is now sitting",
   "message.thaumcraft.teddy.walking": "Animated Teddy is now walking",
+  "message.thaumcraft.werewolf_infection": "Something came into you with that bite.",
+  "message.thaumcraft.werewolf_setlevel": "Werewolf level: %s",
   "recipe.clickthrough": "Click for research",
   "recipe.return": "Return",
   "recipe.type.arcane": "Arcane Workbench",
@@ -3255,5 +3258,10 @@
   "tc.hunter.set": "Set bonus: protection from curses.",
   "tc.hunter.set_bolts": "Set bonus: nullifying bolts drain with force.",
   "tc.hunter.set_poppets": "Set bonus: no poppet will answer for you.",
-  "tc.hunter.silvered": "Werewolf protection."
+  "tc.hunter.silvered": "Werewolf protection.",
+  "tc.mooncharm.changes": "In hand, it changes your shape — from the second level on.",
+  "tc.mooncharm.holds": "In the pack, it holds your shape against the moon.",
+  "tc.werewolf.form.gente": "Human",
+  "tc.werewolf.form.lobisomem": "Wolfman",
+  "tc.werewolf.form.lobo": "Wolf"
 }

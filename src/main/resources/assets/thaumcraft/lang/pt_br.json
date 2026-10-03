@@ -922,6 +922,7 @@
   "item.thaumcraft.mindrake_bulb": "Bulbo de Mandrágora-de-Mina",
   "item.thaumcraft.mirrored_glass": "Vidro Espelhado",
   "item.thaumcraft.mob_crystal": "Cristal de Marca",
+  "item.thaumcraft.moon_charm": "Amuleto da Lua",
   "item.thaumcraft.morph.phase": "Cara %s",
   "item.thaumcraft.mundane_amulet": "Amuleto Comum",
   "item.thaumcraft.mundane_belt": "Cinto Comum",
@@ -1321,6 +1322,8 @@
   "message.thaumcraft.teddy.defending": "O Ursinho Animado passou a guardar",
   "message.thaumcraft.teddy.sitting": "O Ursinho Animado se sentou",
   "message.thaumcraft.teddy.walking": "O Ursinho Animado passou a andar",
+  "message.thaumcraft.werewolf_infection": "Alguma coisa entrou em você com aquela mordida.",
+  "message.thaumcraft.werewolf_setlevel": "Grau de lobisomem: %s",
   "recipe.clickthrough": "Clique para pesquisar",
   "recipe.return": "Retornar",
   "recipe.type.arcane": "Mesa de Manufatura Arcana",
@@ -3253,5 +3256,10 @@
   "tc.hunter.set": "Com o conjunto: protege de maldições.",
   "tc.hunter.set_bolts": "Com o conjunto: os virotes anuladores drenam com força.",
   "tc.hunter.set_poppets": "Com o conjunto: nenhuma boneca responde por você.",
-  "tc.hunter.silvered": "Protege de lobisomem."
+  "tc.hunter.silvered": "Protege de lobisomem.",
+  "tc.mooncharm.changes": "Na mão, muda a forma — do segundo grau em diante.",
+  "tc.mooncharm.holds": "Na mochila, segura a forma contra a lua.",
+  "tc.werewolf.form.gente": "Gente",
+  "tc.werewolf.form.lobisomem": "Lobisomem",
+  "tc.werewolf.form.lobo": "Lobo"
 }

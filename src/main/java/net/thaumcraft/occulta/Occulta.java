@@ -35,6 +35,8 @@ public final class Occulta {
         NoDrops.init();
         net.thaumcraft.occulta.waystone.Waystones.init();
         net.thaumcraft.occulta.hunter.WitchHunters.init();
+        net.thaumcraft.occulta.wolf.Werewolf.init();
+        net.thaumcraft.occulta.wolf.WerewolfTick.init();
         OccultaItems.init();
         OccultaAspects.init();
         OccultaGrassSeeds.init();

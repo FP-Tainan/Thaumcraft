@@ -225,17 +225,53 @@ public class WolfmanEntity extends Monster {
                 1.0f, 0.8f);
     }
 
-    /** E o alvo dele nunca é quem está em forma de bicho — o que só vale quando a licantropia vier. */
+    /**
+     * E o alvo dele nunca é quem está em <b>forma de bicho</b>.
+     *
+     * <p>Agora que a licantropia do jogador existe, isto vale para gente também: um lobisomem de lobo passa
+     * por um bando de lobisomens sem que nenhum lhe toque. De gente, não.
+     */
     @Override
     public boolean canAttack(LivingEntity quem) {
         if (quem instanceof WolfmanEntity) return false;
+        if (Werewolf.emBicho(quem)) return false;
         return super.canAttack(quem);
     }
 
+    /**
+     * <b>A mordida que pega</b>: o {@code processWolfInfection} do {@code Shapeshift}.
+     *
+     * <p>Um aldeão que ele derrube abaixo de um quarto de vida <b>vira lobisomem</b>. E uma pessoa, nas
+     * mesmas contas, <b>apanha a licantropia</b> — o primeiro grau, e com ele uma vida inteira de luas.
+     *
+     * <p>É uma vez em quatro, e só abaixo de um quarto de vida: não é a primeira mordida que pega, é a que
+     * quase mata. E o <b>conjunto prateado do caçador</b> protege de todo.
+     */
     @Override
     public boolean doHurtTarget(ServerLevel level, Entity alvo) {
-        return super.doHurtTarget(level, alvo);
+        boolean acertou = super.doHurtTarget(level, alvo);
+        if (!acertou || !(alvo instanceof LivingEntity vivo)) return acertou;
+        if (vivo.getHealth() <= 0.0f || vivo.getHealth() >= vivo.getMaxHealth() * QUASE_MORTO) return acertou;
+        if (level.getRandom().nextInt(PEGA_UMA_EM) != 0) return acertou;
+
+        if (alvo instanceof Villager aldeão) {
+            doAldeão(level, aldeão);
+            return acertou;
+        }
+        if (!(alvo instanceof net.minecraft.world.entity.player.Player gente)) return acertou;
+        if (net.thaumcraft.occulta.hunter.HunterClothes.protegeDeLobo(gente)) return acertou;
+        if (Werewolf.grauDe(gente) > 0) return acertou;
+
+        Werewolf.grau(gente, 1);
+        gente.sendSystemMessage(
+                net.minecraft.network.chat.Component.translatable("message.thaumcraft.werewolf_infection")
+                        .withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
+        return acertou;
     }
+
+    /** Abaixo de que parte da vida a mordida pega, e de quantas em quantas. */
+    public static final float QUASE_MORTO = 0.25f;
+    public static final int PEGA_UMA_EM = 4;
 
     /** O tipo do aldeão que ele vira e de que veio, para quem precisar. */
     public static EntityType<?> aldeãoDele() {

@@ -6942,3 +6942,110 @@ em três por cima, com ou sem faca. O javadoc dele dizia, por escrito, que a Art
 e ela está, há fatias.
 
 Tirado. A conta certa é a do `OccultaDrops`, e sempre foi.
+
+## A licantropia do jogador — o corpo e a lua (2026-10-03)
+
+A primeira metade da maior coisa do Witchery. O que ela traz é **ser** lobisomem; o que falta é **subir de
+grau**, e isso vem a seguir.
+
+### O que define um lobisomem não são os poderes — é o preço
+
+Ao virar bicho ele **larga tudo o que veste**. A armadura cai sempre; e sendo **lobo**, cai também o que ele
+tem na mão, porque um lobo não tem mãos. Nada de espada, nada de escudo, nada de armadura.
+
+E **não escolhe quando**. A lua cheia escolhe por ele: de duas em duas segundos o mundo olha, e
+
+- de **gente**, em lua cheia, ele **vira lobo**;
+- de **bicho**, fora da lua cheia, ele **volta a ser gente**.
+
+Em troca vêm a **visão noturna** e o **veneno limpo** — as duas coisas boas de ser bicho.
+
+### Três coisas o seguram, e só três
+
+| O quê | O que faz |
+| --- | --- |
+| **Amuleto da Lua**, na mochila | **trava a forma** onde ela estiver: a lua passa e não lhe toca |
+| **Acônito**, no corpo | não deixa a transformação acontecer de todo |
+| **O grau** | do **segundo** ele manda na mudança; do **quinto** pode escolher ser **lobisomem** |
+
+Abaixo do segundo grau, a lua manda e ele obedece. É a parte do mod que mais se parece com uma maldição, e é
+de propósito.
+
+O **Amuleto da Lua** é a única coisa que ele **não larga** ao virar bicho — e isso não é um detalhe: largá-lo
+seria perder, no chão, a única coisa capaz de desfazer a transformação.
+
+Segurado na mão, ele muda a forma à vontade, e **demora menos quanto maior o grau** — a conta
+`(grau - 1) * 4` do original, que faz de um lobisomem velho uma coisa que muda quase de imediato.
+
+### As duas tabelas, que contam a história
+
+| | o lobo | o lobisomem |
+| --- | --- | --- |
+| **velocidade** | meia já no primeiro grau, uma e três quartos no décimo | dois décimos, e só do quinto |
+| **vida** | nada até ao sétimo, doze no décimo | **vinte de uma vez ao quinto**, quarenta no décimo |
+| **queda** | perdoa dois blocos cedo, cinco no fim | nada até ao quinto, sete no fim |
+| **teto da pancada** | quatro, baixando a dois | quatro, baixando a dois |
+
+O lobo **é depressa desde o princípio**: ele é a forma que foge e que persegue. O lobisomem **não vale nada
+até ao quinto grau** — zeros em tudo — e então, de uma vez, ganha vinte de vida e quatro de dano. É a forma
+que se **ganha**, não a que se recebe.
+
+E repare no **teto da pancada**: é o único número que melhora **baixando**. Quatro no princípio, dois do
+quinto em diante — e é ele que faz um lobisomem de grau alto difícil de matar, do mesmo jeito que faz a Baba
+Yaga e o Caçador.
+
+### Um lobo cabe onde uma pessoa não cabe
+
+De lobo ele mede **oito décimos** de altura em vez de um e oito: passa por baixo de um alçapão e entra numa
+toca de um bloco. As duas formas sobem um **degrau de um bloco inteiro**.
+
+É a melhor razão para virar lobo que o mod tem, e é a única que não é um número de combate.
+
+### Como se pega
+
+Um **Lobisomem** que derrube alguém abaixo de **um quarto da vida** passa-lhe a licantropia, uma vez em
+quatro. O mesmo golpe faz de um **aldeão** um lobisomem. E o **conjunto prateado do caçador** protege de todo
+— que é a razão de ele existir.
+
+### E o desenho
+
+No original, um jogador transformado é desenhado por um **bicho de mentira**: um `EntityWolf` guardado à
+parte, com a posição e o passo copiados a cada quadro. Era o jeito de 2014.
+
+Hoje o jogo separa o que se desenha do que existe, e por isso aqui não há bicho nenhum: o desenho do jogador
+é **atalhado** e no lugar dele vai o modelo do lobo ou do lobisomem, com o **mesmo estado**. Para o lobisomem
+o estado serve tal como vem; para o lobo se enche um estado de lobo com o que o do jogador tem, e os números
+que só um lobo tem ficam em repouso.
+
+**E atalhar o desenho inteiro é o certo, não um atalho**: um lobo não veste nada, e as camadas que o jogo
+desenharia por cima — armadura, capa, elitro — não têm onde se pôr num bicho. O jogo já lhe tirou tudo isso
+das mãos quando ele mudou de forma.
+
+A forma viaja num **apego sincronizado**, pela mesma razão da cor do Colorido: o cliente precisa de a saber e
+as poções de um jogador não bastam.
+
+### A costura fechou
+
+O `Lycanthropy`, escrito na fatia do bicho como "a única linha que muda quando a licantropia vier", mudou — e
+foi **só** ele. As roupas prateadas que ardem em quem as veste, o Caçador que escolhe o virote de prata, o que
+a prata faz doer: tudo passou a saber a resposta certa sem se tocar em mais nada.
+
+E ganhou uma segunda pergunta, que o original também tem: `é()` responde por quem está **em forma de bicho**,
+e `éMesmoDeGente()` por quem **é** lobisomem mesmo estando de gente. É a diferença entre o que a prata fere e
+o que o Caçador vem buscar — um lobisomem de dia é gente para a prata, e não é para o caçador.
+
+### O que falta, declarado
+
+- **A escada dos dez graus**: a Estátua do Lobisomem e o que ela pede em cada degrau. Sem ela, quem apanhar a
+  licantropia fica no **grau um** — a lua manda nele e ele não manda em nada. É fiel ao que é ser recém-mordido,
+  mas não há caminho para a frente até a escada vir, e **o Amuleto da Lua só sai da estátua**.
+- **Os poderes**: o uivo nas três formas que ele toma, a armadura rasgada ao nono grau, o osso que sai da
+  terra ao terceiro, a fome que a caça mata ao quarto, e o contágio ao décimo.
+- O **Chifre da Caça**, que a estátua dá ao quarto grau.
+
+**Guardas:** `OccultaWerewolfPlayerGameTest`, com nove — os números; o grau que para em dez e volta à forma de
+gente ao chegar a zero; a forma de bicho que conta como lobisomem e a de gente que não; **o que virar bicho
+custa**, com a mão do lobo e as mãos do lobisomem; o Amuleto que não cai; a lua que manda e as duas coisas que
+não a deixam; o que cada forma dá e o que ela tira ao voltar; as duas tabelas linha por linha; o mando aos
+dois graus e o lobisomem aos cinco; e **o lobo que cabe onde uma pessoa não cabe**. E
+`OccultaWerewolfPlayerClientTest`, com as quatro telas da volta inteira.

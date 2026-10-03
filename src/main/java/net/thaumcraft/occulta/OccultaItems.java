@@ -583,6 +583,17 @@ public final class OccultaItems {
      * <p>Cai de lobisomem, e é a única prata do ofício. É de propósito que ela venha do próprio bicho: o
      * primeiro lobisomem mata-se a pancada, oitenta vezes, e os outros com o que ele deixou.
      */
+    /**
+     * O <b>Amuleto da Lua</b>: o {@code ItemMoonCharm} do original.
+     *
+     * <p>Na mochila ele <b>trava a forma</b> de um lobisomem; na mão, muda-a. É a única coisa que um
+     * lobisomem não larga ao virar bicho.
+     */
+    public static final Item MOON_CHARM = register("moon_charm", properties ->
+            new net.thaumcraft.occulta.wolf.MoonCharmItem(properties.stacksTo(1)
+                    .durability(net.thaumcraft.occulta.wolf.MoonCharmItem.AGUENTA)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)));
+
     public static final Item SILVER_DUST = register("silver_dust", Item::new);
 
     /**
