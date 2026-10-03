@@ -3162,6 +3162,7 @@
   "tc.research_page.AA_CHOICE.2": "As outras duas não perguntam na Mesa: perguntam ao §amundo§r.<BR><BR>O §aColocar Bloco§r aprende §aagachado§r — lançado assim contra um bloco, fica sabendo aquele bloco; lançado de pé, põe um igual onde se apontar, gastando um da mochila.<BR><BR>A §aApropriação§r é a mais estranha deste ofício: ela §atira a coisa do mundo§r e a leva dentro. Um baú vai com o que tem lá; um bicho vai com o nome e a vida que tinha. Enquanto estiver guardado, aquilo §onão existe§r em lugar nenhum senão no feitiço — e lançá-lo outra vez põe de volta.<BR><BR>Uma coisa de cada vez. E gente, não.",
   "entity.thaumcraft.toad": "Sapo",
   "entity.thaumcraft.owl": "Coruja",
+  "entity.thaumcraft.vampire": "Vampiro",
   "entity.thaumcraft.were_villager": "Aldeão",
   "entity.thaumcraft.wolfman": "Lobisomem"
 }

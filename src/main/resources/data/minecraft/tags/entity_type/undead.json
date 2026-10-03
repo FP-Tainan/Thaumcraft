@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumcraft:eldritch_guardian"
+    "thaumcraft:eldritch_guardian",
+    "thaumcraft:vampire"
   ]
 }

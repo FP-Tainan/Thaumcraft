@@ -131,6 +131,7 @@
       "net.thaumcraft.test.OccultaCircleRitesGameTest",
       "net.thaumcraft.test.OccultaMeadowRiteGameTest",
       "net.thaumcraft.test.OccultaWerewolfGameTest",
+      "net.thaumcraft.test.OccultaVampireGameTest",
       "net.thaumcraft.test.OccultaBarrierGameTest",
       "net.thaumcraft.test.ArcanaSpellGameTest",
       "net.thaumcraft.test.ArcanaSummonGameTest",

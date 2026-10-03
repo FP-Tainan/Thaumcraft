@@ -180,6 +180,14 @@ public final class OccultaEntities {
                                     net.minecraft.world.entity.npc.villager.Villager::createAttributes))
                     .sized(0.6f, 1.95f).eyeHeight(1.62f).clientTrackingRange(10));
 
+    /** O <b>Vampiro</b>, que tem casa, rotina e um plano. */
+    public static final EntityType<net.thaumcraft.occulta.vampire.VampireEntity> VAMPIRE =
+            register("vampire", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.vampire.VampireEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.vampire.VampireEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(8));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));
@@ -187,6 +195,8 @@ public final class OccultaEntities {
     }
 
     public static void init() {
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(VAMPIRE, net.thaumcraft.occulta.vampire.VampireEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(WOLFMAN, net.thaumcraft.occulta.wolf.WolfmanEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry

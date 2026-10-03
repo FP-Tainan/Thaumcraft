@@ -150,6 +150,11 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.OWL,
                 net.thaumcraft.occulta.client.FamiliarRenderers.Coruja::new);
 
+        // o Ars Occulta: o vampiro
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.VAMPIRE,
+                net.thaumcraft.occulta.client.VampireRenderer::new);
+
         // o Ars Occulta: o lobisomem e o aldeão que vira
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.WolfmanModel.WOLFMAN,

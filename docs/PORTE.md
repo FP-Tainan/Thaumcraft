@@ -6328,3 +6328,48 @@ aldeão que vira guardando a profissão.
 **As fotos:** de frente, entre um aldeão e um lobo do jogo — o que ele era e o que ele não é; e de lado, que é
 onde se vê a perna dobrada ao contrário e a cauda. **A segunda custou três tentativas**: virar um bicho já
 posto não vira o corpo dele, só a cabeça, porque o corpo tem conta própria. Quem tem de virar é a câmara.
+
+## O Vampiro (2026-10-03)
+
+O segundo dos três grandes. Como no lobisomem, esta fatia traz o **bicho**; a vampirice do jogador fica para
+depois, e o `Vampirism.é()` já está lá como costura — uma linha, e nada mais, quando ela vier.
+
+### Ele é o contrário do Lobisomem em tudo
+
+O lobisomem é um aldeão doente, de força bruta, que a prata resolve. O vampiro é uma coisa que **pensa**: tem
+casa, tem rotina, e tem um plano.
+
+1. **De noite**, se não tem aldeia, procura uma a cento e vinte e oito blocos e **vai para lá num sopro de
+   fumaça** — sem andar o caminho.
+2. **Lá, bebe.** Cada mordida num aldeão tem **uma chance em dez** de ser um gole de verdade: cura-se de
+   quatro e conta quatro para o jantar. As outras nove **não fazem dano nenhum**, e é isso que faz uma aldeia
+   com um vampiro ficar de pé por semanas em vez de amanhecer vazia.
+3. **Cheio** — vinte —, volta ao caixão e **enche um Crisol de Sangue** que esteja a seis blocos. É para isto
+   que o crisol existe, e ele estava neste porte desde setembro à espera de quem o enchesse.
+4. **De dia** volta ao caixão de qualquer maneira, esquece a aldeia, e **pega fogo** se o sol o apanhar.
+
+### E uma espada não o mata
+
+Esta é a outra metade do bicho, e vem do `checkForVampireDeath`. Ele leva o dano, cai a zero de vida — **e não
+morre**. Só o levam:
+
+- **fogo**, venha de onde vier — e o sol é fogo;
+- **sufocar** numa parede, ou cair no **vazio**;
+- e a mão de outro **vampiro**, de um **lobisomem** ou de um **chefe**.
+
+Quem quiser matar um vampiro com uma espada tem de o prender ao sol. É a coisa mais vampiro que este mod faz.
+
+### Três traduções declaradas
+
+1. **O morto-vivo mudou de casa.** No jogo de 2014 era um método do bicho (`getCreatureAttribute`); hoje é uma
+   **etiqueta de dados**, e o vampiro entra em `minecraft:undead`. Com isso a poção de cura fere e a de veneno
+   não pega, sem uma linha de código.
+2. **Não há etiqueta de chefe** no jogo de hoje. Os dois que há — o dragão e o Wither — ficam escritos à mão, e
+   isso está dito no código.
+3. **A roupa dele não veio.** O original tem um `ModelVampire` que é o corpo de gente com um conjunto de
+   armadura de vampiro por cima; o conjunto é um ramo próprio e não está portado. Fica o corpo de gente com a
+   pele do original, que é o que dele se vê de qualquer maneira.
+
+**Guardas:** `OccultaVampireGameTest`, com seis — os números; o gole que cura e conta; o crisol que ele enche;
+**a espada que não o mata**; o fogo, a parede e o vazio que matam; e o outro vampiro, que é a única mão viva
+que lhe chega.
