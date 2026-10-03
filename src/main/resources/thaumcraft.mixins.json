@@ -35,7 +35,10 @@
     "MobEnslavedTargetMixin",
     "LivingEntityNoDropsMixin",
     "ItemEntityWaystoneMixin",
-    "LivingEntityHunterArmorMixin"
+    "LivingEntityHunterArmorMixin",
+    "LivingEntityOccultaHurtMixin",
+    "BlockDropsFortuneMixin",
+    "PlayerKeepInventoryMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",
@@ -47,7 +50,8 @@
     "InventoryScreenBaublesMixin",
     "InventoryRecipeBookMixin",
     "ItemEntitySalisFxMixin",
-    "LivingEntityRendererInvisibleMixin"
+    "LivingEntityRendererInvisibleMixin",
+    "LivingEntityRendererColorfulMixin"
   ],
   "injectors": {
     "defaultRequire": 1

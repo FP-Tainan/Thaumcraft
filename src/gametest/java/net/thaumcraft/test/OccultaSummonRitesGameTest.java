@@ -129,43 +129,42 @@ public class OccultaSummonRitesGameTest {
     }
 
     /**
-     * O de Chamar os Bichos <b>traz</b> o que está longe, e não cria nada.
+     * Chamar os bichos traz os que já existem, em vez de fazer bichos novos.
      *
-     * <p>A prova usa <b>galinha</b>, e não porco, de propósito: o rito varre cento e vinte e oito blocos em
-     * volta, a suíte corre num mundo só, e há provas ao lado que enchem o mundo de porcos às centenas. Com
-     * porco, o rito trazia os delas e nunca chegava ao desta — foi o que aconteceu quando uma classe de
-     * provas nova mudou onde as arenas caem.
+     * <p><b>A prova usa um camelo</b>, e não um bicho comum. O rito varre uma caixa de <b>cento e vinte e
+     * oito blocos</b> por canto e traz <b>dois</b> de cada vez; as provas correm todas no mesmo mundo, e um
+     * canto desses apanha as arenas das vizinhas. Com uma galinha, o rito trazia as galinhas das outras
+     * provas e nunca chegava à desta. Com um camelo — que nenhuma outra prova usa — o único que há no canto é
+     * o dela.
      */
-    @GameTest(maxTicks = 80)
+    @GameTest(maxTicks = 60)
     public void callingBeastsBringsThemInsteadOfMakingThem(GameTestHelper helper) {
         piso(helper);
         ServerLevel level = helper.getLevel();
         BlockPos meio = helper.absolutePos(new BlockPos(3, 2, 3));
 
-        // uma galinha longe o bastante para ser chamado, nos oito cantos que o rito varre
-        var galinha = EntityTypes.CHICKEN.create(level, EntitySpawnReason.TRIGGERED);
-        if (galinha == null) {
-            helper.fail("devia haver galinha");
+        var bicho = EntityTypes.CAMEL.create(level, EntitySpawnReason.TRIGGERED);
+        if (bicho == null) {
+            helper.fail("devia haver camelo");
             return;
         }
-        galinha.snapTo(meio.getX() + 40.0, meio.getY() - 1.0, meio.getZ() + 40.0, 0.0f, 0.0f);
-        galinha.setPersistenceRequired();
-        level.addFreshEntity(galinha);
+        bicho.snapTo(meio.getX() + 40.0, meio.getY() - 1.0, meio.getZ() + 40.0, 0.0f, 0.0f);
+        bicho.setPersistenceRequired();
+        level.addFreshEntity(bicho);
 
-        var rito = new Rites.CallCreatures(() -> List.of(EntityTypes.CHICKEN));
+        var rito = new Rites.CallCreatures(() -> List.of(EntityTypes.CAMEL));
         var corrido = new ActiveRite("tc.rite.callbeasts", rito, List.of(), null,
                 Rites.CallCreatures.COVEN);
-        // o canto 2 é o do sudeste por baixo, que é onde a galinha está
         var passo = rito.steps(0).getFirst();
         for (int volta = 0; volta < 8; volta++) {
             passo.run(level, meio, 60L, corrido);
-            if (galinha.distanceToSqr(meio.getX(), meio.getY(), meio.getZ()) < 64.0) break;
+            if (bicho.distanceToSqr(meio.getX(), meio.getY(), meio.getZ()) < 64.0) break;
         }
 
-        if (galinha.distanceToSqr(meio.getX(), meio.getY(), meio.getZ()) >= 64.0) {
-            helper.fail("em oito voltas ele varre os oito cantos e a galinha devia ter vindo");
+        if (bicho.distanceToSqr(meio.getX(), meio.getY(), meio.getZ()) >= 64.0) {
+            helper.fail("em oito voltas ele varre os oito cantos e o camelo devia ter vindo");
         }
-        galinha.discard();
+        bicho.discard();
         helper.succeed();
     }
 

@@ -6749,3 +6749,116 @@ caçador de verdade tem o chapéu que ninguém mais tem.
 que não o fere; **a lista curta** do que ele caça, com o aldeão, o porco e o creeper de fora; a gente, só a que
 ele veio buscar; o veneno que não pega; a besta que o faz atirar; **o relógio que a magia negra põe a correr**;
 e os dois que vêm sabendo de quem se trata.
+
+## As poções que faltavam (2026-10-03)
+
+As vinte e três do Witchery que o porte ainda não tinha. Com elas, das quarenta e três do original ficam de
+fora só as que são **maldição** (e essas estão feitas, por outro caminho) e as que pedem gente transformada.
+
+### As que mexem no golpe, e porque estão todas juntas
+
+Seis delas se perguntam **no mesmo instante** — entre o golpe e a vida — e por isso moram no mesmo lugar, o
+`OccultaHurt`, pela ordem de registro do original. A ordem importa: o que uma tira, a seguinte já não vê.
+
+| Poção | O que faz ao golpe |
+| --- | --- |
+| **Enregelado** | o fogo dói **um a menos por grau** — e do terceiro grau em diante pode chegar a zero |
+| **Enrolado em Vinha** | o fogo dói **até quatro vezes mais** |
+| **Absorver Magia** | come **um quinto por grau** do dano mágico, e em gente o vira **mana** |
+| **Refletir Dano** | manda **um décimo por grau** de volta a quem bateu, e o que volta **sai do que chega** |
+| **Repelir Agressor** | empurra quem bateu de perto |
+| **Não Sentir Dor** | paga o resto com **fome** em vez de vida |
+
+As duas primeiras puxam o fogo para lados opostos, e é a melhor prova da fatia: se a ordem entre elas se
+perder, as duas param de fazer sentido.
+
+E repare no **piso** do Enregelado, que é o detalhe que é fácil perder: até ao segundo grau o fogo sempre
+deixa **um ponto**; é só do terceiro em diante que ele pode não passar de todo. Não é o quanto que muda com o
+grau — é o chão.
+
+### As três que mexem na morte
+
+- **Reencarnar**: do corpo levanta-se outra coisa, e o que se levanta diz o que o morto era — de bicho ou de
+  aranha sai bicho de teia, de tudo o mais sai morto-vivo. E **já odeia quem matou**.
+- **Guardar o Que Se Tem**: quem morre não larga nada.
+- **Guardar o Que Se Bebeu**: quem morre acorda com as mesmas poções no corpo. Vai num apego, porque o jogador
+  que morre e o que acorda são, para o jogo, **dois objetos diferentes**.
+
+### E o Colorido, que custou duas telas
+
+O `PotionColorful` **não faz nada**. Pinta quem o tem da cor do grau — as dezesseis tintas do jogo, pela ordem
+delas — e é só isso. É a melhor piada do Witchery: o cozimento mais difícil de acertar sem efeito nenhum.
+
+A primeira tentativa pintava **nada**, e a razão é boa de saber: **as poções de um bicho não vão para quem
+joga**. O jogo de hoje manda ao cliente as poções do *próprio* jogador e mais nada — um porco com uma poção no
+corpo é, do lado de quem olha, um porco qualquer. Em 2014 era igual, e o original escapava porque pintava o
+bicho **dentro** do desenho, que lá corria com o bicho do servidor à mão.
+
+Por isso a cor viaja num **apego sincronizado**, posto e tirado na batida de quem a tem, e o desenhista lê o
+apego. É menos uma cor do que um facto: este está pintado, e desta cor.
+
+**Traduções declaradas:**
+1. O original são duas chamadas de `glColor3f` em volta do desenho **inteiro**, camadas incluídas. Aqui é o
+   `getModelTint`, que é a cor do **corpo** — a lã de uma ovelha e a armadura de um esqueleto ficam da cor
+   delas. Em troca, a poção passa a conviver com o piscar de quem levou uma pancada, coisa que no original ela
+   apagava.
+2. A segunda tela foi feita com **porcos** e não com ovelhas, e não por capricho: o corpo de uma ovelha é a
+   pele tosquiada, e a lã é uma camada — uma ovelha pintada parece uma ovelha branca.
+
+### O Redimensionar, que era duzentas linhas e agora é uma
+
+O `PotionResizing` muda o tamanho de quem o tem. Em 2014 isso custava **reflexão**, método a método, um por
+feitio de bicho, porque o jogo de então não deixava mudar o tamanho de uma entidade de fora.
+
+Hoje o jogo tem um **atributo** para isso. O que lá eram duzentas linhas aqui é a escala — e o original
+**encolhe nos graus pares e aumenta nos ímpares**, que é o que se faz.
+
+### O que o leite não tira
+
+A lista do `setIncurable` cresceu de quatro para doze, e é quase toda de coisas **ruins**. É de propósito: o
+que o ofício faz a alguém de propósito não se lava com um balde de leite. As duas boas que estão nela — a
+Máscara de Gás e a Barriga Forte — são as que se bebem **antes** de uma coisa perigosa, e perdê-las ao beber
+leite no meio seria uma morte estúpida.
+
+### E onde cada uma se coze
+
+Doze delas ganharam ingrediente no caldeirão, com os poderes e as durações do original — e o **Colorido** são
+dezesseis cozimentos, um por tinta, todos do mesmo efeito em graus diferentes. Para isso o cozimento ganhou
+uma **força de partida**, que é o que diz qual tinta; sem ela as dezesseis dariam a mesma cor.
+
+**Fica de fora, declarado:** a **Mal Ajustada** e o **Repelir Agressor** pedem a <b>Sarça</b>, e a
+**Paralisia** pede o **Coração de Demónio** — nenhum dos dois está portado. As poções existem e funcionam; o
+que falta é o ingrediente. E quatro delas não se cozem de todo, porque no original também não: a **Corda
+Mortal** vem do Cozimento da Ressurreição ritualizado, a **Paralisia** do vampiro, o **Enjoado** do estômago
+cheio, e a **Adoração** dos goblins.
+
+### Três enganos de leitura, corrigidos
+
+Os nomes de item do 1.7.10 são números com letras, e três estavam mal lidos — dois deles já commitados na
+fatia do Caçador:
+
+| Campo | Era lido como | É |
+| --- | --- | --- |
+| `field_151064_bs` | pérola do Alhures | **creme de magma** |
+| `field_151119_aD` | açúcar | **bola de argila** |
+
+O primeiro estava no **Catalisador Nulo** (seis cremes de magma, não seis pérolas) e na receita que o
+multiplica; o segundo era o ingrediente da **Fortuna**. Os dois foram confirmados contra o próprio original:
+`field_151064_bs` é o cozimento de resistência ao fogo, que este porte já tinha mapeado para o creme de magma,
+e `field_151119_aD` é o Pote de Barro Mole, que este porte já tinha mapeado para a bola de argila.
+
+### E uma instável, consertada
+
+A prova `callingBeastsBringsThemInsteadOfMakingThem` falhava de vez em quando desde a fatia dos ritos. A razão
+era boa: o rito varre uma caixa de **cento e vinte e oito blocos** por canto e traz **dois** bichos de cada
+vez; as provas correm todas no mesmo mundo, e um canto desses apanha as arenas das vizinhas. Com uma galinha,
+o rito trazia as galinhas das outras provas e nunca chegava à desta.
+
+Agora usa um **camelo**, que nenhuma outra prova usa. Fica uma das duas instáveis de pé — a do Apanhador de
+Sonhos —, e o cartão da isolação continua aberto.
+
+**Guardas:** `OccultaPotionsGameTest`, com doze — os números; **o fogo puxado para os dois lados**, com o piso
+do Enregelado; a magia comida e só a magia; o reflexo que sai do que chega; o empurrão; a fome que paga; a
+Corda Mortal que não faz nada e então mata; a Aura que queima o lado e não quem a tem; a Mal Ajustada que
+despe perto do fim; a escala que vai e volta; a aranha que sai do bicho; o leite que não tira estas; e que
+todas as doze se cozem. E `OccultaColorfulClientTest`, com os oito porcos.

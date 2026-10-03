@@ -99,6 +99,7 @@ public final class BrewActions {
         private final int invertedDuration;
         private final int weight;
         private int strengthCeiling = BrewModifiers.STRENGTH_CEILING;
+        private int baseStrength;
 
         public Potion(Item key, BrewName.Text namePart, int power, Holder<MobEffect> effect, int duration,
                       Holder<MobEffect> invertedEffect, int invertedDuration, int weight) {
@@ -120,9 +121,26 @@ public final class BrewActions {
             return this;
         }
 
+        /**
+         * A força de partida deste cozimento, para os que <b>já nascem num grau</b>.
+         *
+         * <p>Só o Colorido a usa, e é por ela que ele existe: dezesseis cozimentos do <b>mesmo</b> efeito, um
+         * por tinta, e o que diz qual tinta é o <b>grau</b>. Sem isto, as dezesseis tintas dariam todas a
+         * mesma cor.
+         */
+        public Potion base(int grau) {
+            this.baseStrength = grau;
+            return this;
+        }
+
         @Override
         public boolean isEffect() {
             return true;
+        }
+
+        /** Que poção este cozimento põe: serve às provas, que de outro jeito só a veriam no corpo de alguém. */
+        public Holder<MobEffect> effect() {
+            return this.effect;
         }
 
         @Override
@@ -141,14 +159,21 @@ public final class BrewActions {
                 temperos.reset();
                 return;
             }
-            apply(quem, temperos, qual, quanto, this.strengthCeiling);
+            apply(quem, temperos, qual, quanto, this.strengthCeiling, this.baseStrength);
             temperos.reset();
         }
 
         /** O {@code applyPotionEffect}: a força para no teto, e a duração estica com o tempero. */
         public static void apply(LivingEntity quem, BrewModifiers temperos, Holder<MobEffect> qual, int duração,
                                  int teto) {
-            int força = Math.min(temperos.getStrength(), temperos.strengthCeilingDisabled ? NO_CEILING : teto);
+            apply(quem, temperos, qual, duração, teto, 0);
+        }
+
+        /** O mesmo, com uma força de partida — que só o Colorido tem. */
+        public static void apply(LivingEntity quem, BrewModifiers temperos, Holder<MobEffect> qual, int duração,
+                                 int teto, int base) {
+            int força = base + Math.min(temperos.getStrength(),
+                    temperos.strengthCeilingDisabled ? NO_CEILING : teto);
             if (qual.value().isInstantaneous()) {
                 if (quem.level() instanceof net.minecraft.server.level.ServerLevel level) {
                     qual.value().applyInstantaneousEffect(level, null, null, quem, força, temperos.powerScale);

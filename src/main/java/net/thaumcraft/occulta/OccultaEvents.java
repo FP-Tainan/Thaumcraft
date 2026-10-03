@@ -31,7 +31,103 @@ public final class OccultaEvents {
             poisonWeapons(level, quemLevou, fonte);
             volatility(level, quemLevou, fonte);
         });
+
+        ServerLivingEntityEvents.AFTER_DEATH.register((quemMorreu, fonte) -> {
+            if (!(quemMorreu.level() instanceof ServerLevel level)) return;
+            onDeath(level, quemMorreu, fonte);
+        });
+
+        // e o jogador novo recebe o que o velho guardou: as poções que atravessaram a morte
+        net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents.COPY_FROM.register(
+                (velho, novo, manteveTudo) -> {
+                    var levou = velho.getAttachedOrCreate(GUARDADAS);
+                    if (levou.isEmpty()) return;
+                    for (var tem : levou) {
+                        novo.addEffect(new net.minecraft.world.effect.MobEffectInstance(tem));
+                    }
+                    velho.removeAttached(GUARDADAS);
+                });
     }
+
+    /**
+     * O que cada poção faz quando quem a tem <b>morre</b>: os {@code IHandleLivingDeath} do Witchery.
+     *
+     * <p>São três, e as três são o avesso uma da outra: a <b>Reencarnação</b> troca o morto por outra coisa, e
+     * as duas de <b>guardar</b> fazem a morte custar menos.
+     */
+    private static void onDeath(ServerLevel level, LivingEntity quemMorreu, DamageSource fonte) {
+        reincarnate(level, quemMorreu, fonte);
+        keepEffects(quemMorreu);
+    }
+
+    /**
+     * A <b>Reencarnação</b>: o {@code PotionReincarnate}.
+     *
+     * <p>Do corpo levanta-se outra coisa, e o que se levanta diz o que o morto era: de bicho ou de aranha sai
+     * bicho de teia; de tudo o mais, morto-vivo. E quanto mais forte a poção, pior o que sai.
+     *
+     * <p>O que nasce <b>já odeia quem matou</b> — é o {@code attacker} que o original passa ao
+     * {@code spawnCreature}, e é o que torna a poção uma vingança e não um truque.
+     */
+    private static void reincarnate(ServerLevel level, LivingEntity quemMorreu, DamageSource fonte) {
+        var volta = quemMorreu.getEffect(OccultaEffects.REINCARNATE);
+        if (volta == null) return;
+        int grau = volta.getAmplifier();
+
+        boolean deTeia = quemMorreu instanceof net.minecraft.world.entity.animal.Animal
+                || quemMorreu instanceof net.minecraft.world.entity.monster.spider.Spider;
+        net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.Mob> qual;
+        if (deTeia) {
+            qual = grau > 2 ? net.minecraft.world.entity.EntityTypes.CREEPER
+                    : grau > 1 ? net.minecraft.world.entity.EntityTypes.CAVE_SPIDER
+                    : net.minecraft.world.entity.EntityTypes.SPIDER;
+        } else {
+            qual = grau > 2 ? net.minecraft.world.entity.EntityTypes.BLAZE
+                    : grau > 1 ? net.minecraft.world.entity.EntityTypes.SKELETON
+                    : net.minecraft.world.entity.EntityTypes.ZOMBIE;
+        }
+
+        var nasceu = qual.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        if (nasceu == null) return;
+        nasceu.snapTo(quemMorreu.getX(), quemMorreu.getY(), quemMorreu.getZ(),
+                quemMorreu.getYRot(), quemMorreu.getXRot());
+        nasceu.finalizeSpawn(level, level.getCurrentDifficultyAt(nasceu.blockPosition()),
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED, null);
+        if (fonte.getEntity() instanceof LivingEntity quemMatou) nasceu.setTarget(quemMatou);
+        level.addFreshEntity(nasceu);
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE,
+                quemMorreu.getX(), quemMorreu.getY() + 0.5, quemMorreu.getZ(), 24, 0.4, 0.6, 0.4, 0.0);
+    }
+
+    /**
+     * <b>Guardar o Que Se Bebeu</b>: o {@code PotionKeepEffectsOnDeath}.
+     *
+     * <p>Ela se guarda a si mesma junto com as outras, e é a única coisa boa de morrer com o caldeirão cheio.
+     *
+     * <p>Quem a tem é marcado com o apego {@link #GUARDADAS}; quem o lê é o {@code COPY_FROM}, que corre
+     * quando o jogador novo toma o lugar do velho.
+     */
+    private static void keepEffects(LivingEntity quemMorreu) {
+        if (!(quemMorreu instanceof net.minecraft.world.entity.player.Player gente)) return;
+        if (!gente.hasEffect(OccultaEffects.KEEP_EFFECTS_ON_DEATH)) return;
+
+        java.util.List<net.minecraft.world.effect.MobEffectInstance> levou = new java.util.ArrayList<>();
+        for (var tem : gente.getActiveEffects()) levou.add(new net.minecraft.world.effect.MobEffectInstance(tem));
+        gente.setAttached(GUARDADAS, levou);
+    }
+
+    /**
+     * As poções que atravessaram a morte com quem as tinha.
+     *
+     * <p>Fica num apego e não numa lista do servidor porque o jogador que morre e o que acorda são, para o
+     * jogo, <b>dois objetos diferentes</b>; o apego é o que passa de um para o outro.
+     */
+    public static final net.fabricmc.fabric.api.attachment.v1.AttachmentType<
+            java.util.List<net.minecraft.world.effect.MobEffectInstance>> GUARDADAS =
+            net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
+                    .<java.util.List<net.minecraft.world.effect.MobEffectInstance>>builder()
+                    .initializer(java.util.List::of)
+                    .buildAndRegister(net.thaumcraft.Thaumcraft.id("kept_effects"));
 
     /**
      * O {@code PotionPoisonWeapons}: quem bate com a poção na veia envenena quem apanhou.

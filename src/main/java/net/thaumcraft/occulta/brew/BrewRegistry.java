@@ -197,6 +197,49 @@ public final class BrewRegistry {
                     net.thaumcraft.occulta.OccultaEffects.VOLATILITY, secs(180), GRAVE));
         }
 
+        // ------------------------------------------------------------ a segunda leva de poções
+
+        /*
+         * O Colorido: dezesseis cozimentos, um por tinta, e todos com o mesmo efeito em graus diferentes.
+         * É o único cozimento do mod que não custa poder nenhum, e o único que não faz nada.
+         */
+        int tinta = 0;
+        for (net.minecraft.world.item.DyeColor cor : net.minecraft.world.item.DyeColor.values()) {
+            register(new BrewActions.Potion(net.minecraft.world.item.Items.DYE.pick(cor),
+                    new BrewName.Text("tc.brew.colorful." + cor.getName()), 0,
+                    net.thaumcraft.occulta.OccultaEffects.COLORFUL, secs(90), LEVE).base(tinta));
+            tinta++;
+        }
+
+        register(new BrewActions.Potion(Items.WHEAT, new BrewName.Text("tc.brew.moonshine"), 0,
+                net.thaumcraft.occulta.OccultaEffects.FEEL_NO_PAIN, secs(90), LEVE));
+        register(new BrewActions.Potion(Items.POPPY, new BrewName.Text("tc.brew.love"), 500,
+                net.thaumcraft.occulta.OccultaEffects.LOVE, secs(10), GRAVE));
+        register(new BrewActions.Potion(Items.ROTTEN_FLESH, new BrewName.Text("tc.brew.diseased"), 2000,
+                net.thaumcraft.occulta.OccultaEffects.DISEASED, mins(3), GRAVE));
+        register(new BrewActions.Potion(OccultaItems.WHIFF_OF_MAGIC,
+                new BrewName.Text("tc.brew.absorbmagic"), 2000,
+                net.thaumcraft.occulta.OccultaEffects.ABSORB_MAGIC, secs(60), GRAVE));
+        register(new BrewActions.Potion(OccultaItems.SPECTRAL_DUST,
+                new BrewName.Text("tc.brew.reflectdamage"), 2000,
+                net.thaumcraft.occulta.OccultaEffects.REFLECT_DAMAGE, secs(90), 5));
+        register(new BrewActions.Potion(Items.CLAY_BALL, new BrewName.Text("tc.brew.fortune"), 1000,
+                net.thaumcraft.occulta.OccultaEffects.FORTUNE, mins(3), 6));
+        register(new BrewActions.Potion(OccultaItems.HINT_OF_REBIRTH,
+                new BrewName.Text("tc.brew.reincarnate"), 2500,
+                net.thaumcraft.occulta.OccultaEffects.REINCARNATE, mins(3), 6));
+        register(new BrewActions.Potion(Items.EMERALD, new BrewName.Text("tc.brew.resizing"), 2500,
+                net.thaumcraft.occulta.OccultaEffects.RESIZING, secs(20), 6));
+        register(new BrewActions.Potion(OccultaItems.DROP_OF_LUCK,
+                new BrewName.Text("tc.brew.potionmaster"), 5000,
+                net.thaumcraft.occulta.OccultaEffects.BREWING_EXPERTISE, mins(6), GRAVE));
+        register(new BrewActions.Potion(OccultaItems.FOCUSED_WILL,
+                new BrewName.Text("tc.brew.keepinventory"), 10000,
+                net.thaumcraft.occulta.OccultaEffects.KEEP_INVENTORY, mins(6), 8));
+        register(new BrewActions.Potion(OccultaItems.REDSTONE_SOUP,
+                new BrewName.Text("tc.brew.keepeffects"), 10000,
+                net.thaumcraft.occulta.OccultaEffects.KEEP_EFFECTS_ON_DEATH, mins(6), 8));
+
         // ------------------------------------------------------------ os efeitos que mexem no lugar
         // só acontecem no cozimento atirado, porque é aí que há um lugar onde ele bateu
         register(new BrewWorldActions.Felling(Items.STRING, 0, 0, LEVE));

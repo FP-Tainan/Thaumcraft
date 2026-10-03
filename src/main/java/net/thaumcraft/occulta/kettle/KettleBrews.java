@@ -259,8 +259,16 @@ public final class KettleBrews {
      */
     private static boolean sprouting(ServerLevel level, HitResult onde) {
         if (!(onde instanceof BlockHitResult bateu)) return false;
-        Direction para = bateu.getDirection();
-        BlockPos base = bateu.getBlockPos();
+        return brota(level, bateu.getBlockPos(), bateu.getDirection(), BRANCH);
+    }
+
+    /**
+     * O galho em si, à parte do frasco: cresce de um lugar, numa direção, até ao tamanho que se pedir.
+     *
+     * <p>Está à parte porque a <b>poção de Brotar</b> também o pede — e lá não há frasco nem lugar batido: há
+     * alguém de pé, e o galho sobe dele.
+     */
+    public static boolean brota(ServerLevel level, BlockPos base, Direction para, int tamanho) {
         BlockState batido = level.getBlockState(base);
 
         BlockState tronco;
@@ -287,7 +295,7 @@ public final class KettleBrews {
         int passo = para == Direction.UP && !sólidoNaBase ? 0 : 1;
         int feitos = 0;
         BlockPos ponta = base;
-        for (; passo < BRANCH; passo++) {
+        for (; passo < tamanho; passo++) {
             BlockPos lugar = base.relative(para, passo);
             if (lugar.getY() >= level.getMaxY() || !poe(level, lugar, tronco)) break;
             ponta = lugar;

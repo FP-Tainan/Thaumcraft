@@ -22,6 +22,8 @@ public abstract class LivingEntityCurseMixin {
         LivingEntity eu = (LivingEntity) (Object) this;
         if (!(eu.level() instanceof ServerLevel mundo)) return;
         Curse.tick(mundo, eu);
+        // e a cor do Colorido, que precisa de viajar até quem desenha
+        net.thaumcraft.occulta.OccultaEffects.tickColour(mundo, eu);
         if (eu instanceof net.minecraft.world.entity.player.Player gente) {
             net.thaumcraft.occulta.curse.Grotesque.tick(mundo, gente);
         }
