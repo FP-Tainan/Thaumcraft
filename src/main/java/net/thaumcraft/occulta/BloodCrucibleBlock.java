@@ -21,6 +21,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.thaumcraft.occulta.vampire.Vampire;
+import net.thaumcraft.occulta.vampire.VampirePowers;
+import net.thaumcraft.occulta.vampire.VampirePowers.Supremo;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -28,14 +31,16 @@ import org.jetbrains.annotations.Nullable;
  *
  * <p>Uma bacia de pedra baixa onde o <b>vampiro</b> despeja o que bebeu. Cheia — vinte de sangue, quatro goles —
  * e sendo ele de <b>décimo grau</b>, ela lhe abre a escolha do dom maior: a <b>Tempestade</b>, com uma
- * alcachofra-d'água na mão; o <b>Enxame</b>, com lã de morcego; ou a <b>Colheita</b>, com um osso. Escolhido, o
+ * alcachofra-d'água na mão; o <b>Enxame</b>, com lã de morcego; ou o <b>Caminho de Casa</b>, com um osso. Escolhido, o
  * crisol se esvazia.
  *
- * <p><b>Declarado, e é o principal:</b> este bloco <b>não faz nada ainda</b>. Ele está de pé, guarda o sangue,
- * mostra-o e sabe a conta dos três dons — mas o que o enche é o vampiro a alimentar-se, e o que ele destrava é o
- * décimo grau do vampiro, e <b>o vampiro não está portado</b>. Ele vai no jar porque é peça do ofício e porque,
- * quando a fatia do vampiro chegar, só é preciso ligar duas linhas: o {@code feed} ao gole e o {@link #level}
- * abaixo à conta do grau. Até lá, quem clicar nele ouve o mesmo "não" que o original dá a quem não é vampiro.
+ * <p>E o dom <b>vem com cinco usos</b>, nada mais: gastos os cinco, é preciso enchê-lo outra vez e escolher
+ * outra vez. Escolher um dom diferente não acumula — ele <b>troca</b> o que havia, e os usos que sobravam do
+ * anterior somem com ele. Um vampiro de décimo grau tem um Supremo, e só um.
+ *
+ * <p>Quem clicar nele não sendo vampiro de décimo grau, ou com o crisol vazio, ou sem nada que sirva na mão,
+ * ouve um <b>toque de caixa</b> e não recebe explicação nenhuma. É o original inteiro: ele nunca diz o que
+ * falta.
  */
 public class BloodCrucibleBlock extends BaseEntityBlock {
     public static final MapCodec<BloodCrucibleBlock> CODEC = simpleCodec(BloodCrucibleBlock::new);
@@ -74,21 +79,23 @@ public class BloodCrucibleBlock extends BaseEntityBlock {
         return new BloodCrucibleBlockEntity(pos, state);
     }
 
-    /**
-     * O grau de vampiro de quem clicou.
-     *
-     * <p>Enquanto o vampiro não estiver portado isto é sempre <b>zero</b>, e por isso o crisol recusa sempre. É
-     * o único fio que a fatia do vampiro tem de ligar aqui.
-     */
+    /** O grau de vampiro de quem clicou. */
     public static int level(Player quem) {
-        return 0;
+        return Vampire.grauDe(quem);
     }
 
-    /** Qual dom cada coisa na mão escolhe, ou nada. */
-    public static @Nullable String gift(ItemStack naMão) {
-        if (naMão.is(OccultaItems.WATER_ARTICHOKE_GLOBE)) return "storm";
-        if (naMão.is(OccultaItems.BAT_WOOL)) return "swarm";
-        if (naMão.is(Items.BONE)) return "farm";
+    /**
+     * Qual dom cada coisa na mão escolhe, ou nada.
+     *
+     * <p>As três coisas <b>dizem</b> o que dão, e é o melhor desenho calado do mod: a
+     * <b>alcachofra-d'água</b>, que é planta de lago, chama a <b>tempestade</b>; a <b>lã de morcego</b> chama o
+     * <b>enxame</b> de morcegos; e o <b>osso</b> — o que resta de um morto — chama o <b>caminho de casa</b>.
+     * Ninguém precisa de ler isso em lugar nenhum.
+     */
+    public static @Nullable Supremo gift(ItemStack naMão) {
+        if (naMão.is(OccultaItems.WATER_ARTICHOKE_GLOBE)) return Supremo.TEMPESTADE;
+        if (naMão.is(OccultaItems.BAT_WOOL)) return Supremo.ENXAME;
+        if (naMão.is(Items.BONE)) return Supremo.CASA;
         return null;
     }
 
@@ -99,7 +106,7 @@ public class BloodCrucibleBlock extends BaseEntityBlock {
         if (!(server.getBlockEntity(pos) instanceof BloodCrucibleBlockEntity crisol)) return InteractionResult.PASS;
 
         boolean pode = level(quem) >= VAMPIRE_LEVEL && (crisol.full() || quem.hasInfiniteMaterials());
-        String dom = pode ? gift(naMão) : null;
+        Supremo dom = pode ? gift(naMão) : null;
         if (dom == null) {
             server.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                     8, 0.3, 0.3, 0.3, 0.0);
@@ -107,6 +114,7 @@ public class BloodCrucibleBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
 
+        VampirePowers.dáOSupremo(quem, dom);
         crisol.drain();
         if (!quem.hasInfiniteMaterials()) naMão.shrink(1);
         server.sendParticles(ParticleTypes.DUST_PLUME, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,

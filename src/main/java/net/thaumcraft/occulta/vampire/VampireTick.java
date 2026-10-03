@@ -11,11 +11,14 @@ import net.minecraft.world.entity.player.Player;
  * ser vampiro custa.
  *
  * <p>É o mesmo compasso do {@linkplain net.thaumcraft.occulta.wolf.WerewolfTick relógio da lua} — quarenta
- * batidas —, e faz sete coisas, pela ordem do original:
+ * batidas —, e faz nove coisas, pela ordem do original:
  *
  * <ol>
  *   <li><b>A visão</b>, se ele a ligou: visão noturna enquanto a quiser;</li>
  *   <li><b>o veneno some</b>, como no lobisomem: não há sangue vivo para envenenar;</li>
+ *   <li><b>ele não se afoga</b>: na água, o ar dele volta ao cheio. É o que faz do fundo de um lago o único
+ *       lugar onde um vampiro está a salvo <b>de dia</b>, e o original não o diz em lugar nenhum;</li>
+ *   <li><b>a forma de morcego cobra um</b>: sem sangue, as asas somem onde ele estiver;</li>
  *   <li><b>o fogo queima na mesma</b>: ardendo <i>com</i> Resistência ao Fogo, ele leva dois de uma dor que
  *       é só dele. A poção que salva todo mundo não salva um vampiro;</li>
  *   <li><b>o sangue vira comida</b>: cinco de sangue por um de comida, até encher. É o único jeito de um
@@ -69,6 +72,9 @@ public final class VampireTick {
     /** E os vinte segundos de graça que todo vampiro recém-nascido tem ao sol. */
     public static final int GRAÇA = 400;
 
+    /** O ar que um vampiro tem sempre: ele não se afoga. */
+    public static final int AR = 300;
+
     private VampireTick() {
     }
 
@@ -94,6 +100,23 @@ public final class VampireTick {
             quem.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 400, 0, true, false));
         }
         quem.removeEffect(MobEffects.POISON);
+
+        /*
+         * Ele não se afoga: o ar dele volta ao cheio a cada volta do relógio enquanto estiver na água. O
+         * original não o explica em lugar nenhum, e é o que faz da água um caminho de fuga de um vampiro —
+         * o sol não pega debaixo dela, e o fundo de um lago é o único lugar onde ele está a salvo de dia.
+         */
+        if (quem.isInWater()) quem.setAirSupply(AR);
+
+        /*
+         * E a forma de morcego cobra um de sangue por volta. Não há aviso: acabando o sangue, ele deixa
+         * de ser morcego onde estiver — e se estiver no ar, cai. Um vampiro que voe com a barra no fim está
+         * apostando.
+         */
+        if (VampirePowers.emMorcego(quem)
+                && !Vampire.gasta(quem, VampirePowers.Poder.MORCEGO.mantém, true)) {
+            VampirePowers.tiraOMorcego(quem);
+        }
 
         // a Resistência ao Fogo não salva um vampiro que arde
         if (quem.isOnFire() && quem.hasEffect(MobEffects.FIRE_RESISTANCE)) {

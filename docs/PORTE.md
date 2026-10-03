@@ -7587,3 +7587,152 @@ debaixo; o sangue dela que vira e o de galinha que não vira; **Lilith que não 
 que carrega a fatia; o que ela dá e a cura pelo alho; Elle que não acha casa num campo seco; o lago que é um
 lago e a poça que não é; e as cinco coisas no jogo. E `OccultaLilithClientTest`, com cinco telas: Lilith de
 frente, de perto e de lado, Elle, e a porta no inventário.
+
+## A forma de morcego e os cinco poderes (2026-10-03)
+
+A fatia anterior deixou a **porta**: dá para virar vampiro e dá para deixar de ser. Esta é o que vem depois
+dela — e o que vem depois dela é uma lista curta que diz tudo sobre o que um vampiro é no Witchery:
+
+| o poder | custa | ao grau |
+| --- | --- | --- |
+| **beber** | nada | primeiro |
+| **prender pelo olhar** | 50 | segundo |
+| a **velocidade** | 10 | quarto |
+| a **forma de morcego** | 50, e **1 por volta do relógio** | sétimo |
+| o **Supremo** | 50, e uma das cinco cargas | décimo |
+
+**Nenhum dos cinco é um golpe.** Prender deixa a presa quieta, correr o leva mais depressa, o morcego o leva
+por cima, e os três Supremos mudam o tempo, chamam bichos ou o põem noutro lugar. Um vampiro de décimo grau
+tem cinco poderes e nenhum deles serve para ganhar uma briga. Ele ganha por **chegar antes**.
+
+### A escada que não salta: ela não chega lá
+
+A conta de quantos poderes ele tem não é o grau. É uma tabela — `{0,1,2,2,3,3,3,4,4,4,5}` — e por isso subir
+de grau nem sempre dá um poder novo. Passar ao poder seguinte **para no último que o grau dá**, e a volta
+seguinte o devolve a *nenhum*: um vampiro de segundo grau nunca vê a palavra "morcego" na tela.
+
+É assim que o mod conta a escada sem escrever uma linha. A palavra aparece no dia em que ele a merece.
+
+### A velocidade, que dobra
+
+O ramo mais curioso do original. Cada uso **dobra** a Rapidez que ele já tem — dois, quatro, oito — e o grau
+diz até onde: `ceil((grau-3)/2)` doses. Um vampiro de quarto grau corre **uma vez**; um de décimo, quatro.
+
+E cada dose **soma três segundos** ao que já estava correndo em vez de recomeçar. Quem quiser a velocidade
+cheia tem de a construir dose a dose **antes** de precisar dela — e quem a deixar acabar recomeça do dois.
+
+### Prender, que é metade do laço
+
+Cinquenta de sangue, e só em **gente**: aldeão, jogador ou guarda. Um bicho não se prende olhando, e um
+**aldeão que vira** também não, porque o que corre nele já é outra maldição.
+
+Quem apanha fica paralisado por `5 + grau/2 + max(0,(grau-4)/2)` segundos, no **quarto** grau da poção — ou
+no **quinto**, do oitavo grau em diante. E é esse número que faz tudo: do quarto para cima a presa **conta
+como desacordada** e dá todo o sangue que se lhe pede, em vez de dois terços.
+
+Prender e beber é o laço inteiro de um vampiro, e é por isso que o prender abre **dois graus antes** da
+velocidade.
+
+*(Falta, declarado: o original soma três segundos a quem veste as **roupas de vampiro**, que este porte ainda
+não tem.)*
+
+### A forma de morcego — e ela não é um morcego: são três
+
+Cinquenta para entrar, **um por volta do relógio** para ficar, e sair é de graça. Nela ele mede **três
+décimos por seis**, com os olhos a oito décimos da altura: a menor caixa que o mod dá a um jogador, e a
+câmara desce para meio metro do chão. Ele voa, e voando a queda não conta.
+
+E a pancada dele **não vale nada**: **menos seis** de dano. No original são duas tabelas diferentes, e a do
+morcego **substitui** a do vampiro em vez de se somar — de modo que um vampiro de décimo grau, que bate três
+a mais, em forma de morcego bate seis a menos. O gole de sangue dele também passa de dez a dois: um morcego
+não tem boca para mais.
+
+É o poder que mais muda o jogo e o que menos serve para brigar, e é **de propósito**.
+
+**E ele não é um morcego.** O original desenha o bicho de mentira **três vezes**: um no lugar do jogador e
+dois atrás, a três quartos de bloco, seis décimos mais baixos, a oito décimos do tamanho e com as asas duas e
+sete batidas fora de compasso. O que atravessa um vale no Witchery é uma **nuvenzinha** de morcegos. Nenhuma
+linha do mod o diz: quem vira morcego descobre que virou **vários**.
+
+#### Um erro do autor que fica
+
+Os dois de trás saem de uma volta do vetor do olhar, e o original pede essa volta **em graus** a um método que
+a conta **em radianos**: escreve `90` e `-180` onde queria noventa e cento e oitenta graus. Noventa radianos,
+descontadas as voltas inteiras, dão cento e dezesseis graus e meio; o segundo pedido devolve o vetor ao outro
+lado.
+
+O resultado é **simétrico por acaso** — um de cada banda, atrás dele. É o que se vê no jogo, e por isso fica
+como está: os números do original, e não os que ele queria.
+
+### Os três Supremos
+
+Escolhem-se no **Crisol de Sangue**, cheio, ao décimo grau, e as três coisas que os escolhem **dizem** o que
+dão: a **alcachofra-d'água**, que é planta de lago, chama a **tempestade**; a **lã de morcego** chama o
+**enxame**; e o **osso** — o que resta de um morto — chama o **caminho de casa**. Ninguém precisa de ler isso
+em lugar nenhum.
+
+Cada um vem com **cinco usos**, e escolher outro **troca** o que havia, levando o que sobrava com ele.
+
+- **A tempestade** é o mais calado e o mais útil: cinco a quinze minutos de chuva com trovão. Um temporal tira
+  o sol, e sem sol um vampiro **anda de dia**. Ele não ataca ninguém — muda o mundo para caber nele. Chovendo
+  já, não faz nada.
+- **O enxame** são quinze morcegos que vão ao que ele estiver olhando a trinta e dois blocos, doem quatro e
+  **morrem no primeiro corpo** que apanham. Não são servos: são **tiros que voam torto**. Param em paredes,
+  perdem o alvo quando ele vira a cara, e de nenhum deles cai nada — quinze por uso seriam uma fábrica de
+  couro.
+- **O caminho de casa** o leva à cama dele; e estando **em casa**, a seis blocos dela, leva-o à **aldeia mais
+  perto**. O Supremo da colheita leva o vampiro ao rebanho dele.
+
+### Duas linhas que vinham junto
+
+O relógio do vampiro ganhou o que lhe faltava do mesmo pedaço do original: **ele não se afoga** — o ar volta
+ao cheio enquanto estiver na água —, e é isso que faz do fundo de um lago o único lugar onde ele está a salvo
+**de dia**. O original não o diz em lugar nenhum.
+
+E **não se é lobo e morcego** ao mesmo tempo. No original as duas maldições partilham um único contador de
+forma e a mistura é impossível por construção; aqui são dois apegos separados, e por isso a regra é escrita à
+mão: de lobo não se vira morcego, e **virando lobo o morcego cai**. A lua ganha.
+
+### Um defeito antigo que esta fatia desenterrou
+
+O **Amuleto Voador** do Maleficium tirava as asas de **quem quer que as tivesse**. A conta dele era "sem o
+amuleto e com asas, tira as asas", e isso apanhava a poção de Voo, o criativo, outro mod — e a forma de
+morcego, que perdia o voo na batida seguinte à de o ganhar.
+
+O `ArcanaEffects` já tinha resolvido isto com uma **marca** de quem recebeu asas dele, e o javadoc dele até o
+diz. O amuleto passou a usar a mesma marca. Foi o morcego que o encontrou: um jogador que caía do céu sem
+explicação nenhuma, três de dano de cada vez.
+
+### O que se desenhou, e as duas costuras
+
+O botão de usar **é** o poder: com um poder escolhido, o clique direito deixa de abrir baús e passa a ser
+esse poder. É o painel de comando inteiro de um vampiro — ele não tem menu, não tem roda, não tem varinha.
+Tem uma palavra no canto da tela e o botão que já usava. Por isso o clique é engolido mesmo com o **beber**
+escolhido, que não se usa no ar: um vampiro com a boca pronta não põe uma tocha na parede por acidente.
+
+E a palavra diz outra coisa no Supremo: o nome do dom com os **usos que restam** entre parênteses. É o único
+número que um vampiro vê além do sangue, e saber que ele está em zero **antes** de apertar é tudo.
+
+Falhando — por falta de sangue, de grau ou de forma —, o que se ouve é um **toque de caixa**, e nenhuma
+palavra. O mod nunca explica por quê.
+
+**Declarado:** a espera de meio segundo entre dois usos é, no original, um contador que desce uma vez por
+batida. Aqui é a **batida em que ele usou**, e a espera se mede contra ela — a mesma espera, sem olhar todo
+jogador do mundo sessenta vezes por segundo para tirar um do nada.
+
+### O que falta, declarado
+
+- a **escada dos dez graus** do vampiro, de que já há três degraus — o sexto e o nono da fatia da porta, e
+  agora o décimo, que é o Crisol;
+- o **Livro do Vampiro**, que levanta o teto do grau, sem o qual nenhum feito conta;
+- as **roupas de vampiro**, que somam três segundos ao prender;
+- e o **Caixão**, a **Rosa de Sangue** e a **Guirlanda de Alho**.
+
+**Guardas:** `OccultaVampirePowersGameTest`, com treze — os cinco poderes e a escada que para onde o grau
+para; só gente se prende, e o que o grau faz à paralisia; a velocidade que dobra e para, e que de morcego não
+há; o morcego que custa cinquenta e um por volta, que **bate menos do que gente** e a quem a queda não pega,
+e que não se mistura com o lobo; os cinco usos que o Crisol dá; a tempestade que não se chama duas vezes; o
+enxame de que nada cai e o morcego dele que se gasta no primeiro corpo; o caminho de casa; o criativo que
+nunca paga; a visão que é um interruptor; e a espera que conta mesmo quando falha. E
+`OccultaVampireBatClientTest`, com seis telas: de gente, os três por trás, os três de frente, os três no ar, o
+Supremo com as cargas, e o morcego do enxame.

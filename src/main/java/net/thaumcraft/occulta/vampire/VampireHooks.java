@@ -36,14 +36,39 @@ public final class VampireHooks {
         }
     }
 
+    /**
+     * E o recado de quem apertou o botão de usar com um poder escolhido: o {@code PacketSelectPlayerAbility}
+     * do original, no ramo que <b>dispara</b> em vez de escolher.
+     *
+     * <p>Não leva nada dentro, e não precisa: o poder escolhido está do lado do servidor, e o cliente só diz
+     * <i>agora</i>.
+     */
+    public record Usa() implements CustomPacketPayload {
+        public static final Type<Usa> TYPE = new Type<>(Thaumcraft.id("vampire_use"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, Usa> CODEC =
+                StreamCodec.unit(new Usa());
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     public static void init() {
         PayloadTypeRegistry.serverboundPlay().register(Escolha.TYPE, Escolha.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(Usa.TYPE, Usa.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(Escolha.TYPE, (recado, quem) ->
                 quem.server().execute(() -> {
                     Player gente = quem.player();
                     if (!Vampire.é(gente)) return;
                     if (recado.visão()) VampirePowers.viraAVisão(gente);
                     else VampirePowers.seguinte(gente);
+                }));
+        ServerPlayNetworking.registerGlobalReceiver(Usa.TYPE, (recado, quem) ->
+                quem.server().execute(() -> {
+                    Player gente = quem.player();
+                    if (!(gente.level() instanceof ServerLevel mundo)) return;
+                    VampirePowers.usa(mundo, gente);
                 }));
 
         UseEntityCallback.EVENT.register(VampireHooks::toca);
@@ -69,6 +94,7 @@ public final class VampireHooks {
         if (!(level instanceof ServerLevel mundo)) return InteractionResult.PASS;
         if (!(emQuem instanceof LivingEntity vivo)) return InteractionResult.PASS;
         if (!Vampire.é(quem)) return InteractionResult.PASS;
+        if (VampirePowers.prende(mundo, quem, vivo)) return InteractionResult.SUCCESS;
         return VampirePowers.bebe(mundo, quem, vivo) ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 }

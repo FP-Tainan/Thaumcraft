@@ -27,8 +27,16 @@ public final class VampireStats {
     private VampireStats() {
     }
 
-    /** O que esta pessoa ganha agora. */
+    /**
+     * O que esta pessoa ganha agora.
+     *
+     * <p>Em <b>forma de morcego</b> não é o grau que manda: é <b>menos seis</b>, e o grau não conta para
+     * nada. No original são duas tabelas diferentes, e a do morcego <b>substitui</b> a do vampiro em vez de
+     * se somar a ela. Um vampiro de décimo grau em forma de morcego bate <b>menos</b> do que gente, e é esse
+     * o preço do voo.
+     */
     public static float de(Player quem) {
+        if (VampirePowers.emMorcego(quem)) return VampirePowers.MORCEGO_DANO;
         return DANO[Math.clamp(Vampire.grauDe(quem), 0, Vampire.TETO)];
     }
 

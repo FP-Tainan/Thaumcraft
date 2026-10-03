@@ -311,7 +311,12 @@ public class OccultaVampirePlayerGameTest {
         helper.succeed();
     }
 
-    /** E o poder escolhido roda, e só roda para quem é vampiro. */
+    /**
+     * E o poder escolhido roda, e só roda para quem é vampiro.
+     *
+     * <p>A roda inteira é de quem tem os <b>dez graus</b>: ela para no último poder que o grau dá, e a conta
+     * disso está no {@link OccultaVampirePowersGameTest}.
+     */
     @GameTest(maxTicks = 40)
     public void theChosenPowerCycles(GameTestHelper helper) {
         Player gente = helper.makeMockServerPlayerInLevel();
@@ -320,7 +325,7 @@ public class OccultaVampirePlayerGameTest {
             helper.fail("quem não é vampiro não escolhe poder nenhum");
         }
 
-        Player quem = vampiro(helper, 5);
+        Player quem = vampiro(helper, Vampire.TETO);
         var todos = VampirePowers.Poder.values();
         for (int n = 1; n < todos.length; n++) {
             VampirePowers.seguinte(quem);

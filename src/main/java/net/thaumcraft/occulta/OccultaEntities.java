@@ -204,6 +204,18 @@ public final class OccultaEntities {
                     .fireImmune()
                     .sized(0.8f, 2.5f).eyeHeight(2.25f).clientTrackingRange(16));
 
+    /**
+     * <b>O morcego do enxame</b>, que vai ao que o dono está olhando e morre no primeiro que apanhar.
+     *
+     * <p>Não se gera no mundo: só o Supremo do Enxame o chama, quinze de cada vez.
+     */
+    public static final EntityType<net.thaumcraft.occulta.vampire.AttackBatEntity> ATTACK_BAT =
+            register("attack_bat", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.vampire.AttackBatEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.minecraft.world.entity.ambient.Bat::createAttributes))
+                    .sized(0.5f, 0.9f).eyeHeight(0.45f).clientTrackingRange(5));
+
     /** O feitiço que ela atira. */
     public static final EntityType<net.thaumcraft.occulta.vampire.LilithSpellEntity> LILITH_SPELL =
             register("lilith_spell", net.minecraft.world.entity.EntityType.Builder
@@ -292,6 +304,8 @@ public final class OccultaEntities {
                 .register(FOLLOWER, net.thaumcraft.occulta.vampire.FollowerEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(LILITH, net.thaumcraft.occulta.vampire.LilithEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(ATTACK_BAT, net.minecraft.world.entity.ambient.Bat.createAttributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(WERE_VILLAGER, net.minecraft.world.entity.npc.villager.Villager.createAttributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry

@@ -204,6 +204,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.LILITH_SPELL,
                 net.thaumcraft.occulta.client.LilithSpellRenderer::new);
 
+        /*
+         * E o morcego do enxame, que usa o desenhista do morcego do jogo tal como vem: ele é um morcego, e o
+         * que o torna outra coisa está todo do lado do servidor.
+         */
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.ATTACK_BAT,
+                net.minecraft.client.renderer.entity.BatRenderer::new);
+
         // e o painel de comando de um vampiro: a barra de sangue e a tecla do poder
         net.thaumcraft.occulta.client.VampireClient.init();
 

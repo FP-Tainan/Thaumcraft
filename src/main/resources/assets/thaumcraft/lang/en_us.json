@@ -413,6 +413,7 @@
   "enchantment.thaumcraft.repair": "Repair",
   "enchantment.thaumcraft.voidtouched": "Voidtouched",
   "enchantment.thaumcraft.wrath": "Wrath",
+  "entity.thaumcraft.attack_bat": "Bat",
   "entity.thaumcraft.baba_yaga": "Baba Yaga",
   "entity.thaumcraft.alumentum": "Alumentum",
   "entity.thaumcraft.bolt": "Bolt",
@@ -3316,8 +3317,9 @@
   "tc.vampirepower.beber": "Drink Blood",
   "tc.vampirepower.morcego": "Toggle Bat Form",
   "tc.vampirepower.nenhum": "None",
+  "tc.vampirepower.prender": "Transfix / Toggle Night Vision",
+  "tc.vampirepower.supremo": "Ultimate",
   "tc.vampirepower.velocidade": "Speed",
-  "tc.vampirepower.visao": "Transfix / Toggle Night Vision",
   "tc.boline.tip": "Harvests leaves, cobweb, grass, vines and tripwire without wearing out.",
   "tc.goblet.galinha": "chicken blood",
   "tc.goblet.lilith": "Lilith's blood",
@@ -3338,5 +3340,9 @@
   "tc.lilith.nothing": "\"That is no use to me.\"",
   "tc.lilith.ritual": "The skull breaks in a bolt of lightning, and someone stands where it was.",
   "tc.lilith.summon": "\"I am home. Stand back.\"",
-  "tc.lilith.summon2": "\"I am Lilith. You called me — now show me why.\""
+  "tc.lilith.summon2": "\"I am Lilith. You called me — now show me why.\"",
+  "tc.vampireultimate.casa": "Teleport (%s)",
+  "tc.vampireultimate.enxame": "Bat Swarm (%s)",
+  "tc.vampireultimate.nenhum": "None (%s)",
+  "tc.vampireultimate.tempestade": "Call Storm (%s)"
 }

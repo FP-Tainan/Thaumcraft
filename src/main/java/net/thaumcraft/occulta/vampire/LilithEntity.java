@@ -49,8 +49,8 @@ import org.jetbrains.annotations.Nullable;
  * <b>não se pode matá-la</b>. Levando o último golpe, ela <b>não morre</b>: volta à vida cheia, fica
  * <b>amiga</b>, aparece ao lado de quem a venceu e oferece o que tem.
  *
- * <p>É por isso que o combate com ela não é um combate: é uma <b>prova</b>. Ela não está a defender-se, está
- * a ver se quem a chamou aguenta.
+ * <p>É por isso que o combate com ela não é um combate: é uma <b>prova</b>. Ela não está se defendendo: está
+ * vendo se quem a chamou aguenta.
  *
  * <h2>E o que ela dá</h2>
  *

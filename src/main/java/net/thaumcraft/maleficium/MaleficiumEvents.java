@@ -17,6 +17,16 @@ import net.thaumcraft.Thaumcraft;
  * aqui mora no tique do servidor, que é onde o jogo de hoje deixa mexer nisto.
  */
 public final class MaleficiumEvents {
+    /**
+     * <b>Quem recebeu asas deste amuleto</b>, e só deste.
+     *
+     * <p>Sem esta marca, o amuleto tirava as asas de <b>quem quer que as tivesse</b>: a poção de Voo, a forma
+     * de morcego de um vampiro, o criativo, outro mod. Bastava não trazer o amuleto para as perder na batida
+     * seguinte. É a mesma marca que o {@link net.thaumcraft.arcana.ArcanaEffects} já usa, e pela mesma razão.
+     */
+    private static final java.util.Set<java.util.UUID> COM_ASAS =
+            java.util.concurrent.ConcurrentHashMap.newKeySet();
+
     /** O pulo a mais da faixa ligada: cinco por cento, como no original. */
     private static final AttributeModifier SASH_JUMP = new AttributeModifier(
             Thaumcraft.id("sash_jump"), 0.05, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
@@ -59,6 +69,7 @@ public final class MaleficiumEvents {
         boolean charm = FlyteCharmItem.carried(player);
         boolean canFly = charm && FlyteCharmItem.consume(player, FlyteCharmItem.FLIGHT, false);
         if (canFly) {
+            COM_ASAS.add(player.getUUID());
             if (!player.getAbilities().mayfly) {
                 player.getAbilities().mayfly = true;
                 player.onUpdateAbilities();
@@ -77,7 +88,8 @@ public final class MaleficiumEvents {
             return;
         }
         // sem amuleto ou sem vis, o voo é tirado — mas só o que veio dele
-        if (charm || !player.getAbilities().mayfly) return;
+        if (charm || !COM_ASAS.remove(player.getUUID())) return;
+        if (!player.getAbilities().mayfly) return;
         player.getAbilities().mayfly = false;
         player.getAbilities().flying = false;
         player.onUpdateAbilities();

@@ -73,9 +73,26 @@ public final class VampireClient {
         graphics.fill(x, y, x + LARGURA, y + ALTURA, VAZIO);
         if (cheio > 0) graphics.fill(x, y, x + cheio, y + ALTURA, SANGUE);
 
+        graphics.text(minecraft.font, diz(quem), x, y - 11, 0xFFFFFFFF);
+    }
+
+    /**
+     * O que a palavra diz, que é o nome do poder escolhido.
+     *
+     * <p>E no <b>Supremo</b> ela diz outra coisa: o nome do <b>dom</b> que ele escolheu no Crisol, com os
+     * <b>usos que lhe restam</b> entre parênteses. É o único número que um vampiro vê além do sangue, e é o
+     * original que o põe lá — porque um Supremo sem cargas é uma palavra que não faz nada, e saber disso
+     * antes de apertar é tudo.
+     */
+    private static Component diz(net.minecraft.world.entity.player.Player quem) {
         var poder = VampirePowers.escolhido(quem);
-        Component diz = Component.translatable("tc.vampirepower." + poder.getSerializedName())
+        if (poder != VampirePowers.Poder.SUPREMO) {
+            return Component.translatable("tc.vampirepower." + poder.getSerializedName())
+                    .withStyle(ChatFormatting.DARK_RED);
+        }
+        return Component.translatable(
+                        "tc.vampireultimate." + VampirePowers.supremo(quem).getSerializedName(),
+                        VampirePowers.cargas(quem))
                 .withStyle(ChatFormatting.DARK_RED);
-        graphics.text(minecraft.font, diz, x, y - 11, 0xFFFFFFFF);
     }
 }

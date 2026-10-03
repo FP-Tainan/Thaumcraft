@@ -44,7 +44,9 @@
     "LivingEntityWerewolfJumpMixin",
     "LivingEntityWerewolfFallMixin",
     "BlockDropsWolfBoneMixin",
-    "FoodPropertiesVampireMixin"
+    "FoodPropertiesVampireMixin",
+    "PlayerVampireSizeMixin",
+    "PlayerVampireFlyMixin"
   ],
   "client": [
     "ItemInHandRendererMixin",
@@ -59,7 +61,9 @@
     "LivingEntityRendererInvisibleMixin",
     "LivingEntityRendererColorfulMixin",
     "LivingEntityRendererWerewolfMixin",
-    "MinecraftHowlMixin"
+    "MinecraftHowlMixin",
+    "LivingEntityRendererVampireMixin",
+    "MinecraftVampirePowerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

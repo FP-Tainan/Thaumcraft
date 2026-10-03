@@ -413,6 +413,7 @@
   "enchantment.thaumcraft.repair": "Auto Reparo",
   "enchantment.thaumcraft.voidtouched": "Tocada pelo Vazio",
   "enchantment.thaumcraft.wrath": "Ira",
+  "entity.thaumcraft.attack_bat": "Morcego",
   "entity.thaumcraft.baba_yaga": "Baba Yaga",
   "entity.thaumcraft.alumentum": "Alumentum",
   "entity.thaumcraft.bolt": "Virote",
@@ -3314,8 +3315,9 @@
   "tc.vampirepower.beber": "Beber Sangue",
   "tc.vampirepower.morcego": "Forma de Morcego",
   "tc.vampirepower.nenhum": "Nenhum",
+  "tc.vampirepower.prender": "Prender / Visão Noturna",
+  "tc.vampirepower.supremo": "Supremo",
   "tc.vampirepower.velocidade": "Velocidade",
-  "tc.vampirepower.visao": "Visão / Visão Noturna",
   "tc.boline.tip": "Colhe folha, teia, relva, trepadeira e fio sem se gastar.",
   "tc.goblet.galinha": "sangue de galinha",
   "tc.goblet.lilith": "sangue de Lilith",
@@ -3336,5 +3338,9 @@
   "tc.lilith.nothing": "\"Isso não me serve de nada.\"",
   "tc.lilith.ritual": "O crânio parte-se num raio, e há alguém de pé onde ele estava.",
   "tc.lilith.summon": "\"Cheguei a casa. Afaste-se.\"",
-  "tc.lilith.summon2": "\"Eu sou Lilith. Você chamou-me — agora mostre-me por quê.\""
+  "tc.lilith.summon2": "\"Eu sou Lilith. Você chamou-me — agora mostre-me por quê.\"",
+  "tc.vampireultimate.casa": "Caminho de Casa (%s)",
+  "tc.vampireultimate.enxame": "Enxame de Morcegos (%s)",
+  "tc.vampireultimate.nenhum": "Nenhum (%s)",
+  "tc.vampireultimate.tempestade": "Chamar Tempestade (%s)"
 }

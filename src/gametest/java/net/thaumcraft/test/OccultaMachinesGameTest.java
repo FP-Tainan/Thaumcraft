@@ -149,21 +149,27 @@ public class OccultaMachinesGameTest {
     /** Os três dons do crisol são os do original, e nenhuma outra coisa escolhe algum. */
     @GameTest
     public void theCrucibleKnowsItsThreeGifts(GameTestHelper helper) {
-        if (!"storm".equals(BloodCrucibleBlock.gift(new ItemStack(OccultaItems.WATER_ARTICHOKE_GLOBE)))) {
+        var sup = net.thaumcraft.occulta.vampire.VampirePowers.Supremo.class;
+        if (BloodCrucibleBlock.gift(new ItemStack(OccultaItems.WATER_ARTICHOKE_GLOBE))
+                != net.thaumcraft.occulta.vampire.VampirePowers.Supremo.TEMPESTADE) {
             helper.fail("a alcachofra escolhe a Tempestade");
         }
-        if (!"swarm".equals(BloodCrucibleBlock.gift(new ItemStack(OccultaItems.BAT_WOOL)))) {
+        if (BloodCrucibleBlock.gift(new ItemStack(OccultaItems.BAT_WOOL))
+                != net.thaumcraft.occulta.vampire.VampirePowers.Supremo.ENXAME) {
             helper.fail("a lã de morcego escolhe o Enxame");
         }
-        if (!"farm".equals(BloodCrucibleBlock.gift(new ItemStack(Items.BONE)))) {
-            helper.fail("o osso escolhe a Colheita");
+        if (BloodCrucibleBlock.gift(new ItemStack(Items.BONE))
+                != net.thaumcraft.occulta.vampire.VampirePowers.Supremo.CASA) {
+            helper.fail("o osso escolhe o caminho de casa");
         }
         if (BloodCrucibleBlock.gift(new ItemStack(Items.DIAMOND)) != null) {
             helper.fail("e um diamante não escolhe nada");
         }
-        // e, sem vampiro portado, o grau é sempre zero — é o único fio que falta ligar
+        if (sup.getEnumConstants().length != 4) helper.fail("são três dons e o nenhum");
+
+        // e o grau que ele lê é o grau do vampiro, que num mortal é zero
         var quem = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
-        if (BloodCrucibleBlock.level(quem) != 0) helper.fail("sem o vampiro portado, o grau é zero");
+        if (BloodCrucibleBlock.level(quem) != 0) helper.fail("num mortal, o grau é zero");
         helper.succeed();
     }
 }

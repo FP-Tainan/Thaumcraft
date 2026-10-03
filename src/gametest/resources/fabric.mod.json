@@ -296,6 +296,7 @@
       "net.thaumcraft.test.client.ArcanaColourClientTest",
       "net.thaumcraft.test.client.OccultaWerewolfLadderClientTest",
       "net.thaumcraft.test.client.OccultaVampirePlayerClientTest",
+      "net.thaumcraft.test.client.OccultaVampireBatClientTest",
       "net.thaumcraft.test.client.OccultaLilithClientTest"
     ],
     "main": [

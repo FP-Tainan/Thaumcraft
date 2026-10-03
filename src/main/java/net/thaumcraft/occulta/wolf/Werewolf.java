@@ -165,11 +165,18 @@ public record Werewolf(int grau, Forma forma) {
         grau(quem, de(quem).grau() + 1);
     }
 
-    /** Muda de forma, e arruma o corpo para ela. */
+    /**
+     * Muda de forma, e arruma o corpo para ela.
+     *
+     * <p>E virando bicho, a <b>forma de morcego</b> cai. No original as duas maldições partilham um único
+     * contador de forma, e por isso ser lobo e morcego ao mesmo tempo é impossível por construção; aqui são
+     * dois apegos separados, e a lua ganha — quem estiver a voar na noite de lua cheia <b>cai</b>.
+     */
     public static void forma(Player quem, Forma qual) {
         Werewolf era = de(quem);
         if (era.forma() == qual) return;
         quem.setAttached(DATA, new Werewolf(era.grau(), qual));
+        if (qual.éBicho()) net.thaumcraft.occulta.vampire.VampirePowers.tiraOMorcego(quem);
         if (quem.level() instanceof ServerLevel level) WerewolfTick.arruma(level, quem);
     }
 
