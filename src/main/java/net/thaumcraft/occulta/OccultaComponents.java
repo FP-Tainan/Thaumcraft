@@ -96,6 +96,18 @@ public final class OccultaComponents {
             builder -> builder.persistent(net.minecraft.core.UUIDUtil.CODEC)
                     .networkSynchronized(net.minecraft.core.UUIDUtil.STREAM_CODEC));
 
+    /** Que porta esta chave abre: o mundo e as três contas do {@code doorX}/{@code doorY}/{@code doorZ}. */
+    public static final DataComponentType<net.minecraft.core.GlobalPos> DOOR_KEY = register("door_key",
+            builder -> builder.persistent(net.minecraft.core.GlobalPos.CODEC)
+                    .networkSynchronized(net.minecraft.core.GlobalPos.STREAM_CODEC));
+
+    /** E o que um chaveiro traz: o {@code doorKeys} do original. */
+    public static final DataComponentType<List<net.minecraft.core.GlobalPos>> KEYRING =
+            register("keyring", builder -> builder
+                    .persistent(net.minecraft.core.GlobalPos.CODEC.listOf())
+                    .networkSynchronized(net.minecraft.core.GlobalPos.STREAM_CODEC
+                            .apply(ByteBufCodecs.list())));
+
     private OccultaComponents() {
     }
 

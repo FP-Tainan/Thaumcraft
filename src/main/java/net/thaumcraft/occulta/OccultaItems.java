@@ -212,6 +212,23 @@ public final class OccultaItems {
     /** E o Mal Refinado, que é o que sobra do que era bom. */
     public static final Item REFINED_EVIL = register("refined_evil", Item::new);
 
+    /** A <b>Porta de Amieiro</b>, que é só uma porta. */
+    public static final Item ALDER_DOOR = register("alder_door", properties ->
+            new net.minecraft.world.item.DoubleHighBlockItem(OccultaBlocks.ALDER_DOOR,
+                    properties.useBlockDescriptionPrefix()));
+
+    /** A <b>Porta de Sorveira</b>, que larga a chave dela ao ser posta. */
+    public static final Item ROWAN_DOOR = register("rowan_door", properties ->
+            new net.thaumcraft.occulta.door.RowanDoorItem(properties.useBlockDescriptionPrefix()));
+
+    /** A <b>Chave</b> daquela porta, e só daquela. */
+    public static final Item DOOR_KEY = register("door_key", properties ->
+            new net.thaumcraft.occulta.door.DoorKeyItem(properties));
+
+    /** E o <b>Chaveiro</b>, que vale por todas as que tem. */
+    public static final Item DOOR_KEYRING = register("door_keyring", properties ->
+            new net.thaumcraft.occulta.door.KeyringItem(properties));
+
     /** A Destilaria, em item. */
     public static final Item DISTILLERY = register("distillery", properties ->
             new net.minecraft.world.item.BlockItem(OccultaBlocks.DISTILLERY,

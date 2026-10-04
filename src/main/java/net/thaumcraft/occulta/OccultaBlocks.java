@@ -101,6 +101,24 @@ public final class OccultaBlocks {
     public static final Block ALDER_STAIRS = stairs("alder_stairs", () -> ALDER_PLANKS);
     public static final Block ALDER_SLAB = slab("alder_slab");
 
+    /**
+     * A <b>Porta de Amieiro</b>, que é uma porta e mais nada — e é de propósito: ela existe para que a de
+     * sorveira não seja a única porta do ofício, e para que escolher a trancada seja uma escolha.
+     */
+    public static final Block ALDER_DOOR = register("alder_door", properties ->
+            new net.minecraft.world.level.block.DoorBlock(
+                    net.minecraft.world.level.block.state.properties.BlockSetType.OAK, properties
+                    .mapColor(MapColor.WOOD).strength(3.0f, 3.0f).sound(SoundType.WOOD)
+                    .noOcclusion().ignitedByLava()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+
+    /** E a <b>Porta de Sorveira</b>, que só abre para quem tem a chave que nasceu com ela. */
+    public static final Block ROWAN_DOOR = register("rowan_door", properties ->
+            new net.thaumcraft.occulta.door.RowanDoorBlock(properties
+                    .mapColor(MapColor.WOOD).strength(5.0f, 5.0f).sound(SoundType.WOOD)
+                    .noOcclusion().ignitedByLava()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+
     /** E o espinheiro-alvar, a árvore da pureza, que quase não pega fogo. */
     public static final Block HAWTHORN_LOG = log("hawthorn_log");
     public static final Block HAWTHORN_LEAVES = leaves("hawthorn_leaves", () -> OccultaBlocks.HAWTHORN_SAPLING, false);

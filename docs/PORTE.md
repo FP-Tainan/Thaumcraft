@@ -8277,3 +8277,63 @@ nunca lhe deu.
 **Guardas:** `OccultaCovenGameTest` ganha a do olho — a coisa dela serve a ela, a da outra bruxa não serve, e
 um olho de aranha do bolso não serve a ninguém; o bicho solto tem cem de vida, o nome dela e a coisa
 pendurada; e morto, a coisa cai. E a conta dos pedidos sobe de três para seis.
+
+## As duas portas, e a chave que nasce com uma delas (2026-10-04)
+
+A madeira do ofício estava toda portada — tora, folha, muda, tábua, escada e laje das três árvores — menos as
+**portas**. E as portas são a parte que interessa, porque uma delas não é uma porta: é uma **fechadura**.
+
+### A Porta de Sorveira
+
+Ela **não abre** para quem não traz a chave dela. E a chave dela é uma só: a que **nasceu com a porta**, no
+instante em que alguém a pôs no chão, marcada com aquelas três contas e aquele mundo. Não há como fazer
+outra — nenhuma receita faz uma chave.
+
+Quem a quebrar sem a chave fica com **vinte e quatro gravetos**. A porta não volta.
+
+É a única tranca deste mod que não depende de nada vivo: nem de ofício, nem de poder, nem de altar. É
+madeira, e a chave está no bolso de alguém. O Witchery não a faz cara — **seis tábuas** — porque o preço dela
+não é o da matéria: é ter de **cuidar** de uma chave.
+
+E o cuidar começa logo: ao ser posta, a porta **larga a chave no chão**, aos pés de quem a pôs. Ela cai como
+qualquer coisa cai. Quem não a apanhar fica do lado de fora da própria casa.
+
+#### A conta das duas metades
+
+A chave sabe uma casa só — a **de baixo** — e quem toca a porta toca onde quer. Tocando pela cabeça, é a
+casa de baixo que se procura. Sem esta conta, a porta abriria pela cintura e não pela cabeça, que é o tipo de
+erro que ninguém vê num teste e toda a gente vê no jogo.
+
+E a procura é no **inventário inteiro**, não na mão. Uma chave de casa não se leva na mão, e uma tranca que
+obrigasse a isso não seria uma tranca: seria um estorvo.
+
+### O Chaveiro
+
+Duas chaves fazem um chaveiro; um chaveiro mais uma chave faz um chaveiro maior. Cada porta entra **uma vez
+só** — pôr duas chaves da mesma porta na bancada não dobra nada.
+
+Ele vale por todas as chaves que tem, e é por isso que existe: quem tem três casas trancadas já não carrega
+três chaves, carrega uma argola. E quem perde a argola perde as três.
+
+No original eram **duas receitas** sem forma, escritas à mão, uma para cada caso. Aqui é **uma**, que faz as
+duas coisas: na bancada pode estar um chaveiro ou nenhum, e o resto são chaves.
+
+### A Porta de Amieiro
+
+É só uma porta, e é de propósito. Ela existe para que a de sorveira não seja a única porta do ofício e para
+que escolher a trancada seja uma **escolha**.
+
+**Fiel ao original:** ela leva a **folha da porta de carvalho**, não uma folha própria. O Witchery faz isso de
+propósito — a porta comum do ofício é indistinguível de uma porta comum —, e aqui fica igual.
+
+### O que ficou de fora
+
+O original tem ainda uma **Porta de Gelo**, que é do ramo do gelo perpétuo, e a quirk do amieiro de avisar os
+vizinhos ao abrir — que no jogo de hoje já é o que uma porta faz sozinha.
+
+**Guardas:** `OccultaDoorsGameTest`, com seis — a porta que não se mexe de mãos vazias, não se mexe com a
+chave de outra porta e abre com a dela **do fundo do inventário**, que é a prova que carrega a fatia; a chave
+que vale pelas duas metades; os vinte e quatro gravetos de quem arromba e a porta de volta para quem tinha a
+chave; o chaveiro que guarda cada porta uma vez só e vale por todas; e a de amieiro, que abre para quem a
+empurrar. E `OccultaDoorsClientTest`, com três telas: as duas na parede fechadas, abertas, e as quatro peças
+no inventário.
