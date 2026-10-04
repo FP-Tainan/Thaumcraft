@@ -257,6 +257,19 @@ public final class OccultaItems {
     public static final Item SNOW_PRESSURE_PLATE = register("snow_pressure_plate", properties ->
             new BlockItem(OccultaBlocks.SNOW_PRESSURE_PLATE, properties.useBlockDescriptionPrefix()));
 
+    public static final Item WILD_BRAMBLE = register("wild_bramble", properties ->
+            new BlockItem(OccultaBlocks.WILD_BRAMBLE, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ENDER_BRAMBLE = register("ender_bramble", properties ->
+            new BlockItem(OccultaBlocks.ENDER_BRAMBLE, properties.useBlockDescriptionPrefix()));
+
+    public static final Item VOID_BRAMBLE = register("void_bramble", properties ->
+            new BlockItem(OccultaBlocks.VOID_BRAMBLE, properties.useBlockDescriptionPrefix()));
+
+    public static final Item LEAPING_LILY = register("leaping_lily", properties ->
+            new net.minecraft.world.item.PlaceOnWaterBlockItem(OccultaBlocks.LEAPING_LILY,
+                    properties.useBlockDescriptionPrefix()));
+
     /** A <b>Porta de Amieiro</b>, que é só uma porta. */
     public static final Item ALDER_DOOR = register("alder_door", properties ->
             new net.minecraft.world.item.DoubleHighBlockItem(OccultaBlocks.ALDER_DOOR,

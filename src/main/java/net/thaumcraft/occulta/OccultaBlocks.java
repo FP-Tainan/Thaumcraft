@@ -167,6 +167,26 @@ public final class OccultaBlocks {
                     properties.mapColor(MapColor.SNOW).strength(0.2f, 0.2f).sound(SoundType.SNOW)
                             .noCollision().forceSolidOn()));
 
+    // ------------------------------------------------------------ as sarças e o nenúfar
+
+    /** A <b>Sarça Selvagem</b>, que espinha quem passa — e que cortada se espalha. */
+    public static final Block WILD_BRAMBLE = register("wild_bramble", properties ->
+            new net.thaumcraft.occulta.BrambleBlock(sarça(properties), false));
+
+    /** A <b>Sarça do Fim</b>, que manda quem passa para quinhentos blocos de distância. */
+    public static final Block ENDER_BRAMBLE = register("ender_bramble", properties ->
+            new net.thaumcraft.occulta.BrambleBlock(sarça(properties), true));
+
+    /** E a <b>Sarça do Vazio</b>, à volta da qual círculo nenhum acende. */
+    public static final Block VOID_BRAMBLE = register("void_bramble", properties ->
+            new net.thaumcraft.occulta.VoidBrambleBlock(sarça(properties).lightLevel(feitio -> 2)));
+
+    /** O <b>Lírio-Saltador</b>: um nenúfar que brilha e dá salto a quem lhe pisa. */
+    public static final Block LEAPING_LILY = register("leaping_lily", properties ->
+            new net.thaumcraft.occulta.LeapingLilyBlock(properties.mapColor(MapColor.PLANT)
+                    .instabreak().sound(SoundType.LILY_PAD).noOcclusion()
+                    .lightLevel(feitio -> 6).pushReaction(PushReaction.DESTROY)));
+
     // ------------------------------------------------------------ as gêmeas amaldiçoadas
     /*
      * Nenhuma delas tem item, receita ou lugar no criativo: ninguém as põe no mundo. Elas acontecem a uma
@@ -647,6 +667,17 @@ public final class OccultaBlocks {
     private static Block slab(String name) {
         return register(name, properties -> new net.minecraft.world.level.block.SlabBlock(properties
                 .mapColor(MapColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD).ignitedByLava()));
+    }
+
+    /**
+     * Os números das sarças: <b>vinte de dureza</b>, que é a da obsidiana.
+     *
+     * <p>Não se atravessa uma sarça com pressa, e é de propósito: o tempo que ela custa a cortar é o tempo
+     * em que ela está espinhando ou atirando quem a corta.
+     */
+    private static BlockBehaviour.Properties sarça(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.PLANT).strength(20.0f, 20.0f).sound(SoundType.GRASS)
+                .noOcclusion().noCollision().pushReaction(PushReaction.DESTROY);
     }
 
     /** Os números do gelo perpétuo, que são os mesmos em toda a família dele. */

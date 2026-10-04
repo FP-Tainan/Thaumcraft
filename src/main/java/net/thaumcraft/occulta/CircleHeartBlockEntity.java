@@ -51,6 +51,13 @@ public class CircleHeartBlockEntity extends BlockEntity {
             return;
         }
 
+        /*
+         * E a Sarça do Vazio: <b>nenhum círculo acende</b> a trinta e dois blocos de uma. Não falha, não
+         * aborta, não avisa — o glifo simplesmente não responde, como no original. É a única coisa do mod
+         * que desliga o ofício, e ela tem de se fazer sentir antes de tudo o resto.
+         */
+        if (net.thaumcraft.occulta.VoidBrambleBlock.apagado(level, this.worldPosition)) return;
+
         var círculos = RitualCircles.read(level, this.worldPosition);
         var noChão = net.thaumcraft.occulta.rite.Sacrifice.onTheGround(level, this.worldPosition);
         List<RiteRegistry.Entry> achados = RiteRegistry.find(level, this.worldPosition, círculos, noChão);

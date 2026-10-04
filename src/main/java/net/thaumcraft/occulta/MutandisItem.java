@@ -45,6 +45,57 @@ public class MutandisItem extends Item {
         return this.extremis;
     }
 
+    /** Até onde a coluna sobe: quinze na cana, quatro no cato, que são os do original. */
+    public static final int CANA_ALTA = 15;
+    public static final int CATO_ALTO = 4;
+
+    /**
+     * <b>De onde vêm as duas sarças</b>: uma cana cercada de <b>musgo-espanhol</b>, com <b>água</b> nas
+     * quatro quinas de baixo.
+     *
+     * <p>Vira <b>Sarça do Fim</b>, a coluna inteira, até quinze de altura — e o musgo à volta some, porque
+     * foi ele que se gastou na troca.
+     *
+     * <p><b>Declarado:</b> no original esta mutação pede ainda <b>quatro Apanha-Ervas</b> nas diagonais, cada
+     * um segurando uma <b>pérola do fim</b>, e quem a faz é a <b>Vara Mutante</b> e não o Mutandis. O
+     * Apanha-Erva e a vara não estão portados; o Mutandis Extremis faz aqui o que a vara fazia lá, como já
+     * faz com o Baú de Sanguessugas. Quando eles vierem, a conta volta ao que era.
+     */
+    public static boolean éCanaDeSarça(Level level, BlockPos onde) {
+        return level.getBlockState(onde).is(Blocks.SUGAR_CANE) && cercada(level, onde);
+    }
+
+    /**
+     * E um <b>cato</b> do mesmo jeito vira <b>Sarça Selvagem</b>, até quatro de altura.
+     *
+     * <p><b>Declarado:</b> no original ela pede ainda <b>dois Apanha-Ervas com farinha de osso</b> e
+     * <b>dois com pó de blaze</b> nas diagonais. Vale aqui o mesmo que para a cana.
+     */
+    public static boolean éCatoDeSarça(Level level, BlockPos onde) {
+        return level.getBlockState(onde).is(Blocks.CACTUS) && cercada(level, onde);
+    }
+
+    /** As quatro de musgo ao lado e as quatro de água na quina de baixo. */
+    private static boolean cercada(Level level, BlockPos onde) {
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            if (!level.getBlockState(onde.relative(lado)).is(OccultaBlocks.SPANISH_MOSS)) return false;
+            if (!level.getBlockState(onde.relative(lado).below()).is(Blocks.WATER)) return false;
+        }
+        return true;
+    }
+
+    /** A coluna inteira, de cima para baixo, e o musgo que se gastou. */
+    private static void vira(Level level, BlockPos onde, Block oquê, Block emQuê, int alto) {
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            level.removeBlock(onde.relative(lado), false);
+        }
+        for (int i = alto; i >= 0; i--) {
+            BlockPos casa = onde.above(i);
+            if (!level.getBlockState(casa).is(oquê)) continue;
+            level.setBlock(casa, emQuê.defaultBlockState(), Block.UPDATE_ALL);
+        }
+    }
+
     /**
      * <b>De onde vem a primeira Rosa de Sangue</b>: um <b>baú vazio</b>, com <b>quatro flores</b> à volta e
      * <b>água por baixo</b>, passado a Mutandis Extremis. O baú some, e no lugar das quatro flores ficam
@@ -142,6 +193,24 @@ public class MutandisItem extends Item {
                 level.setBlock(onde.relative(lado),
                         OccultaBlocks.BLOOD_ROSE.defaultBlockState(), Block.UPDATE_ALL);
             }
+            this.spend(context, level, onde);
+            return InteractionResult.SUCCESS;
+        }
+
+        /*
+         * E as duas sarças: uma <b>cana</b> ou um <b>cato</b> cercados de musgo-espanhol, com água nas
+         * quatro quinas de baixo, viram a coluna inteira em sarça — a cana em <b>Sarça do Fim</b>, o cato em
+         * <b>Sarça Selvagem</b>.
+         */
+        if (this.extremis && éCanaDeSarça(level, onde)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            vira(level, onde, Blocks.SUGAR_CANE, OccultaBlocks.ENDER_BRAMBLE, CANA_ALTA);
+            this.spend(context, level, onde);
+            return InteractionResult.SUCCESS;
+        }
+        if (this.extremis && éCatoDeSarça(level, onde)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            vira(level, onde, Blocks.CACTUS, OccultaBlocks.WILD_BRAMBLE, CATO_ALTO);
             this.spend(context, level, onde);
             return InteractionResult.SUCCESS;
         }

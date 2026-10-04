@@ -8477,3 +8477,83 @@ receita que somam e o diferente que troca; a última carga que devolve o botão 
 peças, com a porta de ferro e a pedra de fora. E `OccultaCursedBlocksClientTest`, com duas telas — e é
 a única tela deste porte cujo acerto é a **ausência** de diferença: em cima as peças do mundo, em baixo as
 gêmeas, e as duas filas iguais.
+
+## As três sarças e o nenúfar que salta (2026-10-04)
+
+O ofício tem três plantas que não se plantam para colher: plantam-se para **estorvar**.
+
+### A Sarça Selvagem, e o machado de ouro
+
+Ela espinha quem passa — um de dano, o do cato — e é **duríssima**: vinte de dureza, a mesma da obsidiana.
+Não se atravessa uma sarça com pressa, e é de propósito: o tempo que ela custa a cortar é o tempo em que ela
+está espinhando quem a corta.
+
+E então a parte que ninguém descobre sozinho: **cortá-la a espalha**. Ela tenta nascer nas oito casas à
+volta, metade das vezes em cada uma, parando na primeira que pegar em dois de cada três casos. Quem a quiser
+tirar do caminho a multiplica.
+
+**A não ser com um machado de ouro.** É a única ferramenta no mundo que a corta sem a espalhar, e o original
+não o diz em lugar nenhum — nem no livro, nem na dica, nem no nome da ferramenta. Está escrito numa linha de
+código e em mais lado nenhum.
+
+É por isso que isto tem de estar escrito numa prova: é a única coisa deste porte que guarda a lembrança de um
+detalhe que nenhum jogador descobriria sem ler o mod.
+
+### A Sarça do Fim
+
+A mesma planta com o outro gesto: em vez de espinhar, **manda quem lhe toca para longe**. Até quinhentos
+blocos para cada lado, num lugar que ela escolhe e ninguém vê.
+
+A conta é a de uma pérola do fim de quem não sabe mirar: sorteia o lugar, **desce** até achar chão, **sobe**
+até caber uma pessoa de pé com dois blocos de ar por cima. Não cabendo em lugar nenhum dentro de sessenta e
+quatro blocos de altura, ela desiste e quem passou fica onde estava.
+
+Cortada, ela não se espalha. Só a Selvagem faz isso.
+
+### A Sarça do Vazio
+
+Ela faz metade de cada: atira para longe como a do Fim, e **apaga a magia** à volta dela.
+
+**Nenhum círculo acende a trinta e dois blocos de uma Sarça do Vazio.** Não falha, não aborta, não avisa — o
+glifo do meio simplesmente não responde. É a única coisa neste mod que **desliga o ofício**, e a única defesa
+possível contra um coven que já sabe o que está fazendo.
+
+Plantá-la à volta de uma casa é dizer: aqui não se faz nada. E ela brilha de leve, para quem a plantou saber
+onde o seu próprio silêncio começa.
+
+**Diferença declarada de feitio:** o original guarda uma **lista** das sarças do vazio do mundo, que cada uma
+preenche ao carregar e esvazia ao sumir, e pergunta a essa lista. Aqui se olha a bola na hora. A razão é que
+a pergunta só se faz quando um círculo acende — uma coisa rara e lenta por natureza — e uma lista que se
+mantém sozinha tem de acertar o carregar, o descarregar, o quebrar e o gravar; errando um deles, fica um
+silêncio onde não há sarça nenhuma. Olhar na hora não erra.
+
+### O Lírio-Saltador
+
+Um nenúfar que brilha e dá a quem lhe pisa **Rapidez** e **Salto V** por meio segundo.
+
+Um nenúfar sozinho é um degrau. Uma fileira deles é uma **estrada**: quem a percorrer atravessa um pântano
+aos saltos, por cima da água, sem nunca tocar nela.
+
+E o efeito só se põe em quem **ainda não o tem** — é assim no original, e faz diferença: quem já traz um
+salto de outra coisa não o perde para este, que é mais fraco em tempo. O nenúfar **não atrapalha** quem já
+está voando.
+
+### De onde vêm
+
+A do Vazio e o nenúfar têm receita. As outras duas vêm de uma **mutação**: uma **cana** ou um **cato**
+cercados de musgo-espanhol, com água nas quatro quinas de baixo, passados ao Mutandis Extremis — a cana vira
+Sarça do Fim, o cato vira Sarça Selvagem, e a coluna inteira se transforma de uma vez.
+
+**Declarado:** no original esta mutação pede ainda **quatro Apanha-Ervas** nas diagonais, cada um segurando a
+coisa certa — pérolas do fim para a cana, farinha de osso e pó de blaze para o cato —, e quem a faz é a
+**Vara Mutante** e não o Mutandis. Nem o Apanha-Erva nem a vara estão portados; o Mutandis Extremis faz aqui o
+que a vara fazia lá, como já faz com o Baú de Sanguessugas das Rosas de Sangue. Quando eles vierem, a conta
+volta ao que era.
+
+**Guardas:** `OccultaBramblesGameTest`, com sete — a Selvagem que se espalha ao ser cortada e **o machado de
+ouro que a corta limpa**, que é a prova que carrega a fatia; a do Fim que nunca se espalha; o espinho e os
+quinhentos blocos; o silêncio de trinta e dois da do Vazio, que se apaga quando ela sai; o salto do nenúfar,
+no quinto grau e por meio segundo; e as duas mutações, uma por prova, porque montar as
+duas na mesma arena fazia o musgo de uma cair em cima da outra. E `OccultaBramblesClientTest`, com quatro
+telas: as três sarças em fila, as mesmas de noite — que é onde a do Vazio se vê brilhar —, o nenúfar numa
+poça, e as quatro no inventário.

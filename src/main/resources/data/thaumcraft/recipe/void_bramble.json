@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "lml",
+    "r#r",
+    "lml"
+  ],
+  "key": {
+    "#": "thaumcraft:ender_bramble",
+    "r": "minecraft:nether_star",
+    "l": "thaumcraft:drop_of_luck",
+    "m": "thaumcraft:mutandis_extremis"
+  },
+  "result": {
+    "id": "thaumcraft:void_bramble",
+    "count": 4
+  }
+}

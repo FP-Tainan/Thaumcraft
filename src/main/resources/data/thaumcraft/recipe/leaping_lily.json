@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#p#",
+    "c#c",
+    "#b#"
+  ],
+  "key": {
+    "#": "minecraft:lily_pad",
+    "p": "minecraft:potion",
+    "c": "minecraft:glowstone_dust",
+    "b": "thaumcraft:breath_of_the_goddess"
+  },
+  "result": {
+    "id": "thaumcraft:leaping_lily",
+    "count": 5
+  }
+}
