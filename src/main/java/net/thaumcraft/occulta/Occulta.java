@@ -33,6 +33,7 @@ public final class Occulta {
         net.thaumcraft.occulta.curse.Grotesque.init();
         net.thaumcraft.occulta.enslave.Enslavement.init();
         NoDrops.init();
+        ExtraDrops.init();
         net.thaumcraft.occulta.waystone.Waystones.init();
         net.thaumcraft.occulta.hunter.WitchHunters.init();
         net.thaumcraft.occulta.wolf.Werewolf.init();

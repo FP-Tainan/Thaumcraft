@@ -183,6 +183,76 @@ public class OccultaCovenGameTest {
     }
 
     /**
+     * <b>O bicho de estimação dela, e o olho dele.</b>
+     *
+     * <p>O pedido de brigar não se fecha matando: fecha-se <b>trazendo de volta</b> uma coisa que estava
+     * pendurada no bicho — um olho de aranha, ou uma carne podre, com o nome dela em cima e a <b>marca
+     * dela</b> por dentro.
+     *
+     * <p>E é a marca que faz o pedido valer alguma coisa. Sem ela, qualquer olho de aranha do bolso fechava o
+     * pedido de qualquer bruxa, e o bicho de cem de vida que ela solta não servia para nada.
+     */
+    @GameTest(maxTicks = 40)
+    public void herPetsEyeIsWhatClosesTheFight(GameTestHelper helper) {
+        piso(helper);
+        var level = helper.getLevel();
+        var bruxa = bruxa(helper, 2, 2, 2);
+        var outra = bruxa(helper, 6, 2, 6);
+        var quem = helper.makeMockPlayer(GameType.SURVIVAL);
+        quem.snapTo(helper.absoluteVec(new Vec3(3.5, 2, 2.5)));
+
+        var briga = (CovenQuest.Briga) CovenQuest.TODAS.stream()
+                .filter(pedido -> pedido instanceof CovenQuest.Briga)
+                .findFirst().orElseThrow();
+
+        // o que vem pendurado no bicho dela é dela, e o da outra é da outra
+        ItemStack oDela = briga.oOlho(bruxa);
+        ItemStack oDaOutra = briga.oOlho(outra);
+        if (!briga.serve(oDela, bruxa)) helper.fail("o olho do bicho dela fecha o pedido dela");
+        if (briga.serve(oDaOutra, bruxa)) helper.fail("mas o olho do bicho da outra não");
+        if (briga.serve(new ItemStack(Items.SPIDER_EYE), bruxa)) {
+            helper.fail("e um olho de aranha do bolso muito menos");
+        }
+
+        // e o bicho que ela solta é o dela: cem de vida, cinco de dano, e o olho pendurado
+        briga.aceita(level, bruxa, quem);
+        var roda = bruxa.getBoundingBox().inflate(6.0);
+        var bichos = level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, roda,
+                bicho -> bicho.getType() == briga.bicho());
+        if (bichos.isEmpty()) {
+            helper.fail("ela solta o bicho dela ali");
+            return;
+        }
+        var bicho = bichos.get(0);
+        if (bicho.getMaxHealth() != CovenQuest.Briga.VIDA) {
+            helper.fail("com cem de vida, e tem " + bicho.getMaxHealth());
+        }
+        if (bicho.getHealth() != bicho.getMaxHealth()) helper.fail("e cheio dela");
+        if (!bicho.hasCustomName()) helper.fail("e com o nome dela em cima");
+        var pendurado = bicho.getAttached(net.thaumcraft.occulta.ExtraDrops.PENDURADO);
+        if (pendurado == null || pendurado.size() != 1) {
+            helper.fail("e com uma coisa pendurada, que é a que fecha o pedido");
+            bicho.discard();
+            return;
+        }
+        if (!briga.serve(pendurado.get(0), bruxa)) helper.fail("e essa coisa é a dela");
+
+        // morto, o que estava pendurado cai
+        bicho.setHealth(0.0f);
+        bicho.die(level.damageSources().generic());
+        net.thaumcraft.occulta.ExtraDrops.larga(level, bicho);
+        var caiu = level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, roda,
+                item -> briga.serve(item.getItem(), bruxa));
+        if (caiu.isEmpty()) helper.fail("morto o bicho, o olho dele cai no chão");
+        for (var item : caiu) item.discard();
+
+        bicho.discard();
+        bruxa.discard();
+        outra.discard();
+        helper.succeed();
+    }
+
+    /**
      * Os pedidos do original que dão para portar estão todos lá.
      *
      * <p>São <b>sete</b> no original e eram <b>três</b> aqui, porque as coisas que os outros quatro pediam

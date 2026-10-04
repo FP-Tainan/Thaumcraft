@@ -68,6 +68,7 @@ public final class OccultaEvents {
      * as duas de <b>guardar</b> fazem a morte custar menos.
      */
     private static void onDeath(ServerLevel level, LivingEntity quemMorreu, DamageSource fonte) {
+        ExtraDrops.larga(level, quemMorreu);
         reincarnate(level, quemMorreu, fonte);
         keepEffects(quemMorreu);
     }

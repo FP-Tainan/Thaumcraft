@@ -178,25 +178,26 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
         return this.confere(quem);
     }
 
-    /** E a terceira palavra: ver se o que ela pediu está feito. */
+    /**
+     * E a terceira palavra: ver se o que ela pediu está <b>na mão</b> de quem voltou.
+     *
+     * <p>Os dois tipos de pedido acabam aqui, e acabam do mesmo jeito. O de buscar pede um tanto de uma
+     * coisa; o de brigar pede <b>o olho do bicho dela</b>, que caiu do bicho quando ele morreu e que só ela
+     * reconhece. Ela nunca olha o mundo à procura de um corpo: ela olha a mão.
+     */
     private InteractionResult confere(Player quem) {
         CovenQuest pedido = CovenQuest.TODAS.get(this.qualPedido);
 
-        if (pedido.quantos() > 0) {
-            ItemStack naMao = quem.getMainHandItem();
-            if (!pedido.serve(naMao)) {
-                diz(quem, "questnotfinished");
-                return InteractionResult.SUCCESS;
-            }
-            int leva = Math.min(this.faltamAinda, naMao.getCount());
-            naMao.shrink(leva);
-            this.faltamAinda -= leva;
-            if (this.faltamAinda > 0) {
-                diz(quem, "questitemsremaining");
-                return InteractionResult.SUCCESS;
-            }
-        } else if (!this.matouOPedido()) {
+        ItemStack naMao = quem.getMainHandItem();
+        if (!pedido.serve(naMao, this)) {
             diz(quem, "questnotfinished");
+            return InteractionResult.SUCCESS;
+        }
+        int leva = Math.min(this.faltamAinda, naMao.getCount());
+        naMao.shrink(leva);
+        this.faltamAinda -= leva;
+        if (this.faltamAinda > 0) {
+            diz(quem, "questitemsremaining");
             return InteractionResult.SUCCESS;
         }
 
@@ -211,15 +212,6 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
         }
         this.esquece();
         return InteractionResult.SUCCESS;
-    }
-
-    /** Se o bicho que ela soltou já morreu: não há nenhum vivo por perto que ela tenha soltado. */
-    private boolean matouOPedido() {
-        CovenQuest pedido = CovenQuest.TODAS.get(this.qualPedido);
-        if (!(pedido instanceof CovenQuest.Briga briga)) return true;
-        var roda = this.getBoundingBox().inflate(24.0);
-        return this.level().getEntitiesOfClass(net.minecraft.world.entity.Mob.class, roda,
-                bicho -> bicho.getType() == briga.bicho() && bicho.isAlive()).isEmpty();
     }
 
     /** Se o que ela pediu é dos de buscar: serve às provas, que só sabem resolver esse sem matar nada. */

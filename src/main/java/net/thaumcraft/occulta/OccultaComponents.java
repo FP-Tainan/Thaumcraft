@@ -86,6 +86,16 @@ public final class OccultaComponents {
                     .networkSynchronized(ByteBufCodecs.registry(
                             net.minecraft.core.registries.Registries.ITEM)));
 
+    /**
+     * <b>De quem é este pedido</b>: o {@code WITCQuestOwnerID} do Witchery.
+     *
+     * <p>Vai dentro da coisa que cai do bicho de estimação de uma bruxa do coven, e é por ela que a bruxa
+     * reconhece o que é dela. Sem isto, um olho de aranha qualquer fechava o pedido de qualquer bruxa.
+     */
+    public static final DataComponentType<java.util.UUID> QUEST_OWNER = register("quest_owner",
+            builder -> builder.persistent(net.minecraft.core.UUIDUtil.CODEC)
+                    .networkSynchronized(net.minecraft.core.UUIDUtil.STREAM_CODEC));
+
     private OccultaComponents() {
     }
 

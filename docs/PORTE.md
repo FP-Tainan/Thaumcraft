@@ -8234,3 +8234,46 @@ estraga, onde o que é vivo vira pedra do Nether e o que é construído fica. E 
 seis telas: ele de frente, de lado e de trás — porque uma chapa posta no ângulo trocado desaparece quando se
 olha de frente para ela —, o Coração no chão, o Coração de perto, onde o músculo inchando se vê, e o Coração
 no inventário.
+
+## O bicho de estimação da bruxa, e o olho dele (2026-10-04)
+
+A fatia do coven deixou um pedido pela metade, e a fatia do Demônio — que foi mexer na lista de pedidos para
+lhe devolver o do Coração — deu com ele.
+
+### O que estava errado
+
+A bruxa do coven tem dois pedidos de brigar. Aqui eles se fechavam **matando**: ela soltava uma aranha comum,
+e quando não havia nenhuma aranha viva num raio de vinte e quatro blocos ela considerava o pedido feito.
+
+No original ela não olha o mundo à procura de um corpo. **Ela olha a mão.**
+
+O bicho que ela solta é o **bicho de estimação dela**: cem de vida, cinco de dano — cinco vezes o que uma
+aranha tem —, com o nome dela em cima, já virado para quem aceitou. O zumbi dela leva ainda um **crânio** na
+cabeça. E nele vem **pendurada** uma coisa que não é dele: um **olho de aranha**, ou uma **carne podre**, com
+o nome dela escrito e a **marca dela** por dentro.
+
+Morto o bicho, essa coisa cai no chão, um bloco acima dele. Levada de volta, ela a reconhece pela marca.
+
+E a marca é tudo. Sem ela, qualquer olho de aranha do bolso fechava o pedido de qualquer bruxa, e aquele bicho
+de cem de vida não servia para nada. Com ela, **o pedido é o bicho dela e mais nenhum** — e é por isso que o
+original se dá o trabalho de guardar um UUID dentro de um olho de aranha.
+
+### O que isso trouxe de novo
+
+O `WITCExtraDrops` do Witchery: **pendurar uma coisa num bicho** para que ela caia quando ele morrer. É o
+avesso do `setNoDrops`, que cala o que o bicho tem no corpo; aqui se lhe acrescenta uma coisa que **não veio
+do mundo** e que só existe para ser trazida de volta.
+
+No original é uma lista no NBT do bicho, lida pelo `LivingDeathEvent`. Aqui é um apego com a lista de pilhas,
+lido pelo `OccultaEvents` — a mesma forma que o `NoDrops` já tinha.
+
+### E o que o bicho dela não leva
+
+**Fiel ao original:** o bicho **não passa pelo nascimento comum**. Nada de armadura sorteada, nada de ajuste
+por dificuldade. Ele é feito à mão, posto no mundo e mandado atacar — e é só isso. Este porte estava chamando
+o nascimento comum, o que dava à aranha dela uma chance de nascer com efeitos de dificuldade que o original
+nunca lhe deu.
+
+**Guardas:** `OccultaCovenGameTest` ganha a do olho — a coisa dela serve a ela, a da outra bruxa não serve, e
+um olho de aranha do bolso não serve a ninguém; o bicho solto tem cem de vida, o nome dela e a coisa
+pendurada; e morto, a coisa cai. E a conta dos pedidos sobe de três para seis.
