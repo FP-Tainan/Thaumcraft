@@ -11,7 +11,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -303,11 +302,12 @@ public final class MirrorTravel {
         quem.teleportTo(level, onde.x, y, onde.z, Set.of(), face, quem.getXRot(), false);
     }
 
-    /** O chapinhar de quem atravessa: o {@code ParticleEffect.SPLASH} com o som da água. */
+    /** O chapinhar de quem atravessa: o {@code ParticleEffect.SPLASH} com o chape do próprio ofício. */
     private static void splash(ServerLevel level, Entity quem) {
         level.sendParticles(ParticleTypes.SPLASH, quem.getX(), quem.getY() + 1.0, quem.getZ(),
                 16, 0.5, 0.5, 0.5, 0.0);
-        level.playSound(null, quem.blockPosition(), SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 0.5f, 1.0f);
+        level.playSound(null, quem.blockPosition(), net.thaumcraft.occulta.OccultaSounds.SPLASH.value(),
+                SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 
     // ------------------------------------------------------------------ as cantigas

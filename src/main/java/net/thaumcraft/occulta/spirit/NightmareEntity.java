@@ -2,7 +2,6 @@ package net.thaumcraft.occulta.spirit;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -87,16 +86,25 @@ public class NightmareEntity extends Monster {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.VEX_AMBIENT;
+        return net.thaumcraft.occulta.OccultaSounds.NIGHTMARE_LIVE.value();
     }
 
+    /**
+     * <b>Os dois trocados, como no original.</b>
+     *
+     * <p>O arquivo do pesadelo chamado {@code nightmare_dead} é o que ele toca ao <b>levar um golpe</b>, e o
+     * chamado {@code nightmare_hit} é o que ele toca ao <b>morrer</b>. Quem escreveu o Witchery trocou os
+     * dois, e o jogo de 2014 toca assim desde então.
+     *
+     * <p>Fica trocado aqui também: o porte copia o original, inclusive onde o original se enganou.
+     */
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.VEX_HURT;
+        return net.thaumcraft.occulta.OccultaSounds.NIGHTMARE_DEAD.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.VEX_DEATH;
+        return net.thaumcraft.occulta.OccultaSounds.NIGHTMARE_HIT.value();
     }
 }

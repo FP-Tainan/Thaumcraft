@@ -70,7 +70,7 @@ public final class WerewolfTick {
         // de gente, em lua cheia: vira lobo
         Werewolf.forma(quem, Werewolf.Forma.LOBO);
         Werewolf.vira(level, quem, Werewolf.Forma.LOBO);
-        estouro(level, quem, SoundEvents.RAVAGER_ROAR);
+        estouro(level, quem, net.thaumcraft.occulta.OccultaSounds.WOLFMAN_HOWL.value());
     }
 
     /**

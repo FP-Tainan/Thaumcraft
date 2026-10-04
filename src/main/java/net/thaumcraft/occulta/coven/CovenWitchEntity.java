@@ -240,6 +240,22 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
     private void diz(Player aQuem, String oQue) {
         aQuem.sendSystemMessage(Component.translatable("witch.thaumcraft.say." + oQue,
                 this.getDisplayName()));
+        falaDeBruxa();
+    }
+
+    /**
+     * O <b>barulho de bruxa falando</b>: o {@code playWitchTalk} do original.
+     *
+     * <p>São os <b>dois sons da Baba Yagá</b>, sorteados — o de viva e o de morrer. Não é um descuido: a
+     * bruxa do coven fala com a voz da velha do pântano, e é o jeito do original de dizer de quem ela vem.
+     *
+     * <p>No original isto é um pacote mandado a oito blocos de distância, e o volume que o método recebe
+     * <b>não é usado</b>: ele sempre manda um. Fica assim aqui.
+     */
+    private void falaDeBruxa() {
+        this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                (this.random.nextBoolean() ? net.thaumcraft.occulta.OccultaSounds.BABA_DEATH : net.thaumcraft.occulta.OccultaSounds.BABA_LIVING).value(),
+                this.getSoundSource(), 1.0f, 1.0f);
     }
 
     // ------------------------------------------------------------------ a poção
@@ -305,7 +321,7 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
 
     @Override
     protected net.minecraft.sounds.SoundEvent getAmbientSound() {
-        return SoundEvents.WITCH_AMBIENT;
+        return null;
     }
 
     @Override

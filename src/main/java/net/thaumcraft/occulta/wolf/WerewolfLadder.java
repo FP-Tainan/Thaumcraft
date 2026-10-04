@@ -80,7 +80,7 @@ public final class WerewolfLadder {
     public static final int FADIGA = 1200;
 
     /** A voz dela: a do senhor dos lobisomens. */
-    public static final SoundEvent VOZ = SoundEvents.RAVAGER_ROAR;
+    public static final SoundEvent VOZ = net.thaumcraft.occulta.OccultaSounds.WOLFMAN_LORD.value();
 
     private WerewolfLadder() {
     }

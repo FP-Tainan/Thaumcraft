@@ -5,7 +5,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -260,17 +259,17 @@ public class GoblinEntity extends AgeableMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.VILLAGER_AMBIENT;
+        return net.thaumcraft.occulta.OccultaSounds.GOBLIN_IDLE.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource fonte) {
-        return SoundEvents.VILLAGER_HURT;
+        return net.thaumcraft.occulta.OccultaSounds.GOBLIN_HIT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.VILLAGER_DEATH;
+        return net.thaumcraft.occulta.OccultaSounds.GOBLIN_DEATH.value();
     }
 
     @Override

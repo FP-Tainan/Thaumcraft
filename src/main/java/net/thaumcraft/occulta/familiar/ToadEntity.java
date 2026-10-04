@@ -2,7 +2,6 @@ package net.thaumcraft.occulta.familiar;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
@@ -143,16 +142,17 @@ public class ToadEntity extends TamableAnimal {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.FROG_AMBIENT;
+        return net.thaumcraft.occulta.OccultaSounds.TOAD_CROAK.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource fonte) {
-        return SoundEvents.FROG_HURT;
+        return net.thaumcraft.occulta.OccultaSounds.TOAD_HURT.value();
     }
 
+    /** Como a coruja, ele morre com o som de quem levou um golpe. */
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.FROG_DEATH;
+        return net.thaumcraft.occulta.OccultaSounds.TOAD_HURT.value();
     }
 }

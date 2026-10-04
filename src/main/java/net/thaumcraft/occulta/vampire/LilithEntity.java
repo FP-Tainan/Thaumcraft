@@ -500,17 +500,18 @@ public class LilithEntity extends Monster implements RangedAttackMob {
 
     @Override
     protected @Nullable SoundEvent getAmbientSound() {
-        return this.amiga() ? null : SoundEvents.WITCH_AMBIENT;
+        return this.amiga() ? null : net.thaumcraft.occulta.OccultaSounds.LILITH_SAY.value();
     }
 
     @Override
     protected @Nullable SoundEvent getHurtSound(DamageSource fonte) {
-        return SoundEvents.WITCH_HURT;
+        return net.thaumcraft.occulta.OccultaSounds.LILITH_HIT.value();
     }
 
+    /** <b>De amiga ela não morre</b>: o original lhe dá o som do golpe, e ela some em vez de cair. */
     @Override
     protected @Nullable SoundEvent getDeathSound() {
-        return SoundEvents.WITCH_HURT;
+        return (this.amiga() ? net.thaumcraft.occulta.OccultaSounds.LILITH_HIT : net.thaumcraft.occulta.OccultaSounds.LILITH_DEATH).value();
     }
 
     @Override

@@ -2,7 +2,6 @@ package net.thaumcraft.occulta;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -51,7 +50,7 @@ public class ChalkItem extends Item {
 
         if (!drawOn(server, alvo, risca)) return InteractionResult.PASS;
 
-        level.playSound(null, alvo, SoundEvents.SAND_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
+        level.playSound(null, alvo, net.thaumcraft.occulta.OccultaSounds.CHALK.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
         Player quem = context.getPlayer();
         ItemStack giz = context.getItemInHand();
         if (quem != null && !quem.hasInfiniteMaterials()) {

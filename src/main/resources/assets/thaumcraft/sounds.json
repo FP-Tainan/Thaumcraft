@@ -254,6 +254,416 @@
       "thaumcraft:nightcrawler_scream"
     ]
   },
+  "occulta.mob.baba.baba_death": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/baba/baba_death"
+    ]
+  },
+  "occulta.mob.baba.baba_living": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/baba/baba_living1"
+    ]
+  },
+  "occulta.mob.banshee.banshee_scream": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/banshee/banshee_scream"
+    ]
+  },
+  "occulta.mob.darkmark.idle": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/darkmark/idle"
+    ]
+  },
+  "occulta.mob.goblin.death": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/goblin/death"
+    ]
+  },
+  "occulta.mob.goblin.gulg_idle": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/goblin/gulg_idle"
+    ]
+  },
+  "occulta.mob.goblin.haggle": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/goblin/haggle1",
+      "thaumcraft:occulta/mob/goblin/haggle2",
+      "thaumcraft:occulta/mob/goblin/haggle3"
+    ]
+  },
+  "occulta.mob.goblin.hit": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/goblin/hit1",
+      "thaumcraft:occulta/mob/goblin/hit2",
+      "thaumcraft:occulta/mob/goblin/hit3",
+      "thaumcraft:occulta/mob/goblin/hit4"
+    ]
+  },
+  "occulta.mob.goblin.idle": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/goblin/idle1",
+      "thaumcraft:occulta/mob/goblin/idle2",
+      "thaumcraft:occulta/mob/goblin/idle3"
+    ]
+  },
+  "occulta.mob.goblin.mog_idle": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/goblin/mog_idle"
+    ]
+  },
+  "occulta.mob.goblin.no": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/goblin/no1",
+      "thaumcraft:occulta/mob/goblin/no2",
+      "thaumcraft:occulta/mob/goblin/no3"
+    ]
+  },
+  "occulta.mob.goblin.yes": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/goblin/yes1",
+      "thaumcraft:occulta/mob/goblin/yes2",
+      "thaumcraft:occulta/mob/goblin/yes3"
+    ]
+  },
+  "occulta.mob.imp.death": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/imp/death"
+    ]
+  },
+  "occulta.mob.imp.hit": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/imp/hit"
+    ]
+  },
+  "occulta.mob.imp.laugh": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/imp/laugh"
+    ]
+  },
+  "occulta.mob.leonard.death": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/leonard/death"
+    ]
+  },
+  "occulta.mob.leonard.hit": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/leonard/hit"
+    ]
+  },
+  "occulta.mob.leonard.say": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/leonard/say1",
+      "thaumcraft:occulta/mob/leonard/say2",
+      "thaumcraft:occulta/mob/leonard/say3",
+      "thaumcraft:occulta/mob/leonard/say4",
+      "thaumcraft:occulta/mob/leonard/say5"
+    ]
+  },
+  "occulta.mob.lilith.death": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/lilith/death"
+    ]
+  },
+  "occulta.mob.lilith.hit": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/lilith/hit"
+    ]
+  },
+  "occulta.mob.lilith.say": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/lilith/say1",
+      "thaumcraft:occulta/mob/lilith/say2",
+      "thaumcraft:occulta/mob/lilith/say3",
+      "thaumcraft:occulta/mob/lilith/say4",
+      "thaumcraft:occulta/mob/lilith/say5"
+    ]
+  },
+  "occulta.mob.monkey.death": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/monkey/death"
+    ]
+  },
+  "occulta.mob.monkey.hit": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/monkey/hit"
+    ]
+  },
+  "occulta.mob.monkey.say": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/monkey/say1",
+      "thaumcraft:occulta/mob/monkey/say2",
+      "thaumcraft:occulta/mob/monkey/say3"
+    ]
+  },
+  "occulta.mob.nightmare.nightmare_dead": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/nightmare/nightmare_dead"
+    ]
+  },
+  "occulta.mob.nightmare.nightmare_hit": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/nightmare/nightmare_hit"
+    ]
+  },
+  "occulta.mob.nightmare.nightmare_live": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/nightmare/nightmare_live"
+    ]
+  },
+  "occulta.mob.owl.owl_hoot": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/owl/owl_hoot1",
+      "thaumcraft:occulta/mob/owl/owl_hoot2"
+    ]
+  },
+  "occulta.mob.owl.owl_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/owl/owl_hurt1"
+    ]
+  },
+  "occulta.mob.reflection.death": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/reflection/death"
+    ]
+  },
+  "occulta.mob.reflection.hit": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/reflection/hit"
+    ]
+  },
+  "occulta.mob.reflection.say": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/reflection/say1"
+    ]
+  },
+  "occulta.mob.reflection.speech": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/reflection/speech"
+    ]
+  },
+  "occulta.mob.spectre.spectre_die": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/spectre/spectre_die"
+    ]
+  },
+  "occulta.mob.spectre.spectre_hit": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/spectre/spectre_hit"
+    ]
+  },
+  "occulta.mob.spectre.spectre_say": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/spectre/spectre_say"
+    ]
+  },
+  "occulta.mob.toad.toad_croak": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/toad/toad_croak1",
+      "thaumcraft:occulta/mob/toad/toad_croak2"
+    ]
+  },
+  "occulta.mob.toad.toad_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/toad/toad_hurt1"
+    ]
+  },
+  "occulta.mob.torment.death": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/torment/death"
+    ]
+  },
+  "occulta.mob.torment.hit": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/torment/hit"
+    ]
+  },
+  "occulta.mob.torment.laugh": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/torment/laugh"
+    ]
+  },
+  "occulta.mob.treefyd.treefyd_say": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/mob/treefyd/treefyd_say"
+    ]
+  },
+  "occulta.mob.wolfman.death": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/wolfman/death"
+    ]
+  },
+  "occulta.mob.wolfman.eat": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/wolfman/eat"
+    ]
+  },
+  "occulta.mob.wolfman.hit": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/wolfman/hit"
+    ]
+  },
+  "occulta.mob.wolfman.howl": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/wolfman/howl"
+    ]
+  },
+  "occulta.mob.wolfman.lord": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/wolfman/lord"
+    ]
+  },
+  "occulta.mob.wolfman.say": {
+    "category": "hostile",
+    "sounds": [
+      "thaumcraft:occulta/mob/wolfman/say1",
+      "thaumcraft:occulta/mob/wolfman/say2"
+    ]
+  },
+  "occulta.random.blop": {
+    "category": "block",
+    "sounds": [
+      "thaumcraft:occulta/random/blop"
+    ]
+  },
+  "occulta.random.chalk": {
+    "category": "block",
+    "sounds": [
+      "thaumcraft:occulta/random/chalk"
+    ]
+  },
+  "occulta.random.click": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:occulta/random/click"
+    ]
+  },
+  "occulta.random.drink": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:occulta/random/drink"
+    ]
+  },
+  "occulta.random.heartbeat": {
+    "category": "block",
+    "sounds": [
+      "thaumcraft:occulta/random/heartbeat1"
+    ]
+  },
+  "occulta.random.horn": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/random/horn"
+    ]
+  },
+  "occulta.random.hypnosis": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:occulta/random/hypnosis"
+    ]
+  },
+  "occulta.random.loved": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/random/loved"
+    ]
+  },
+  "occulta.random.mantrap": {
+    "category": "block",
+    "sounds": [
+      "thaumcraft:occulta/random/mantrap"
+    ]
+  },
+  "occulta.random.poof": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/random/poof"
+    ]
+  },
+  "occulta.random.splash": {
+    "category": "neutral",
+    "sounds": [
+      "thaumcraft:occulta/random/splash"
+    ]
+  },
+  "occulta.random.sworddraw": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:occulta/random/sworddraw"
+    ]
+  },
+  "occulta.random.swordsheathe": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:occulta/random/swordsheathe"
+    ]
+  },
+  "occulta.random.theycome": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:occulta/random/theycome"
+    ]
+  },
+  "occulta.random.wind_up": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:occulta/random/wind_up"
+    ]
+  },
+  "occulta.random.wood_creak": {
+    "category": "player",
+    "sounds": [
+      "thaumcraft:occulta/random/wood_creak1",
+      "thaumcraft:occulta/random/wood_creak2",
+      "thaumcraft:occulta/random/wood_creak3"
+    ]
+  },
   "page": {
     "category": "player",
     "sounds": [

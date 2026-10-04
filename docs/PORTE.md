@@ -8699,3 +8699,77 @@ quatro baús com zero, um, dois e três nomes, um de lado onde a tampa se vê, e
 **E uma ordem que importa:** o desenhista vira o modelo de cabeça para baixo **antes** de o girar para o lado
 em que foi posto. Girando primeiro, o giro sai espelhado e a frente do baú — onde moram os sacos — fica do
 lado de lá. Foi assim que esta fatia descobriu que a ordem do original não era um acaso.
+
+## Os sons do ofício (2026-10-04)
+
+Até aqui, o Ars Occulta **soava a Minecraft**. Um devorador rugia no lugar do lobisomem, um bloco de notas
+estalava no lugar do baú, um papagaio piava no lugar da coruja e um sapo do pântano coaxava no lugar do sapo
+da bruxa. Estava declarado, e era honesto, mas era um remendo — e o Thaumcraft, que veio primeiro, já tinha os
+**cento e dezessete arquivos dele** no `sounds.json` desde o princípio. Só o ofício é que ficou de fora.
+
+Esta fatia fecha isso. São os **sessenta e quatro eventos** e os **noventa arquivos** do jar de 2014, nos
+mesmos agrupamentos em que ele os tinha — um evento pode ter mais de um arquivo, e o jogo sorteia qual toca.
+
+### O nome deles
+
+O original os chamava `witchery:mob.wolfman.howl`, `witchery:random.mantrap`. Aqui eles se chamam
+`thaumcraft:occulta.mob.wolfman.howl` e `thaumcraft:occulta.random.mantrap`: **o nome que o original lhes
+deu**, com `occulta.` na frente para não se confundirem com os do Thaumcraft, que vivem no mesmo
+`sounds.json`. Os arquivos ficam em `sounds/occulta/`, na árvore em que vieram.
+
+### O que trocou de som
+
+| Quem | Soava a | Soa a |
+| --- | --- | --- |
+| **O lobisomem** | devorador | o uivo, a fala, o golpe e a morte dele — e **uma fala em vinte é um uivo** |
+| **A estátua do lobo** | devorador | o **Senhor dos Lobos** |
+| **A lua apanhando alguém** | rugido | o **uivo** |
+| **O lobisomem comendo** | comer genérico | o **mastigar** dele |
+| **A Baba Yagá** | bruxa do jogo | a voz dela viva, e a morte dela |
+| **A bruxa do coven** | bruxa do jogo | **calada** quando parada, como no original — e **a voz da Baba** quando fala |
+| **A coruja e o sapo** | papagaio e sapo | os do ofício |
+| **O duende** | aldeão | o dele |
+| **O Reflexo** | gente levando dano | a fala, o golpe e a morte dele |
+| **O pesadelo** | vex | os três dele |
+| **Lilith** | bruxa do jogo | os dela |
+| **O giz** | areia caindo | o **giz** |
+| **O chifre da caça** | chifre de cabra | o **chifre** |
+| **O caldeirão fervendo** | coluna de bolhas | o **blop** |
+| **O Coração de Demônio** | coração do Protetor | o **coração** |
+| **O vampiro sumindo** | fogo apagando | o **poof** |
+| **Beber sangue** | beber genérico | o **gole** |
+| **A hipnose** | ilusionista | a **hipnose** |
+| **O Espelho chamando a cara** | invocador | a **fala do Reflexo** |
+| **Atravessar o Espelho** | chape de água | o **chape** dele |
+| **Os caçadores chegando** | corno de ataque | o **"eles vêm"** |
+
+### O que ficou igual, e é de propósito
+
+Nem tudo soava emprestado. O original também usa sons do próprio jogo em muitos lugares, e esses já estavam
+certos: o **fizz** de quem volta a ser gente, o **estouro do Wither** na entrada do Caçador Cornudo, o
+**toque de caixa** de quando um poder não dá — e o **golpe** da Baba Yagá e da bruxa do coven, que no original
+são os da bruxa do Minecraft mesmo.
+
+### E dois que o original trocou
+
+O **pesadelo** toca o arquivo chamado `nightmare_dead` quando leva um golpe, e o chamado `nightmare_hit`
+quando morre. Quem escreveu o Witchery trocou os dois, e o jogo de 2014 toca assim desde 2014.
+
+Fica trocado aqui também, com o porquê escrito no javadoc. O porte copia o original — inclusive onde o
+original se enganou.
+
+E o `playWitchTalk` da bruxa do coven **recebe um volume e não o usa**: ele sempre manda um. Fica assim.
+
+### Os que ainda não têm onde tocar
+
+Dos sessenta e quatro, **vinte e três** são de coisas que ainda não vieram: o diabrete, o macaco de asas, o
+Senhor do Tormento, Leonardo, o Treefyd, a banshee, o poltergeist, o espectro, a Marca Escura, o Gulg, o Mog,
+o regatear do duende, a bengala-espada, o arco de mão e a adivinhação do amor.
+
+Eles ficam **registrados e esperando**. Quando a fatia deles vier, o som já está lá — e é o certo, em vez de
+ser um empréstimo que depois alguém teria de vir trocar. Foi por isso que esta fatia veio antes delas.
+
+**Guardas:** `OccultaSoundsGameTest`, com três — os **sessenta e quatro** eventos registrados; os que esta
+fatia foi buscar, um de cada canto; e a prova que importa, que é **cada arquivo que o `sounds.json` promete
+estar no jar**. Um som registrado sem arquivo não dá erro nenhum: ele só não toca, e ninguém descobre até
+estar jogando.

@@ -2,7 +2,6 @@ package net.thaumcraft.occulta.familiar;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
@@ -136,16 +135,17 @@ public class OwlEntity extends TamableAnimal {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.PARROT_AMBIENT;
+        return net.thaumcraft.occulta.OccultaSounds.OWL_HOOT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource fonte) {
-        return SoundEvents.PARROT_HURT;
+        return net.thaumcraft.occulta.OccultaSounds.OWL_HURT.value();
     }
 
+    /** O original dá a ela o <b>mesmo som</b> para o golpe e para a morte. */
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.PARROT_DEATH;
+        return net.thaumcraft.occulta.OccultaSounds.OWL_HURT.value();
     }
 }

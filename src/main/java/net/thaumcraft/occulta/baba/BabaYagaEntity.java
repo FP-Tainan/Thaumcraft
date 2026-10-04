@@ -359,7 +359,7 @@ public class BabaYagaEntity extends Monster implements RangedAttackMob {
 
     @Override
     protected @Nullable SoundEvent getAmbientSound() {
-        return SoundEvents.WITCH_AMBIENT;
+        return net.thaumcraft.occulta.OccultaSounds.BABA_LIVING.value();
     }
 
     @Override
@@ -367,9 +367,13 @@ public class BabaYagaEntity extends Monster implements RangedAttackMob {
         return SoundEvents.WITCH_HURT;
     }
 
+    /**
+     * E a morte é a dela. O <b>golpe</b>, não: o original deixa nele o som da bruxa do jogo, e é o que
+     * fica aqui.
+     */
     @Override
     protected @Nullable SoundEvent getDeathSound() {
-        return SoundEvents.WITCH_DEATH;
+        return net.thaumcraft.occulta.OccultaSounds.BABA_DEATH.value();
     }
 
     @Override

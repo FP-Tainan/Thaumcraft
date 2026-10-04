@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
@@ -129,8 +128,8 @@ public final class WitchHunters {
             if (nasce(level, quem)) vieram++;
         }
         if (vieram > 0) {
-            level.playSound(null, quem.blockPosition(), SoundEvents.RAID_HORN.value(), SoundSource.HOSTILE,
-                    1.0f, 1.0f);
+            level.playSound(null, quem.blockPosition(),
+                    net.thaumcraft.occulta.OccultaSounds.THEY_COME.value(), SoundSource.HOSTILE, 1.0f, 1.0f);
         }
         return vieram;
     }

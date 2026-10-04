@@ -77,8 +77,8 @@ public class HornOfTheHuntItem extends Item {
     public void onUseTick(Level level, LivingEntity quem, ItemStack chifre, int falta) {
         if (falta != 1 || !(level instanceof ServerLevel server) || !(quem instanceof Player gente)) return;
 
-        level.playSound(null, gente.getX(), gente.getY(), gente.getZ(), SoundEvents.GOAT_HORN_SOUND_VARIANTS
-                        .getFirst().value(), SoundSource.PLAYERS, 1.0f, 1.0f);
+        level.playSound(null, gente.getX(), gente.getY(), gente.getZ(),
+                net.thaumcraft.occulta.OccultaSounds.HORN.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
 
         var bicho = Spawn.perto(server, OccultaEntities.HORNED_HUNTSMAN, gente.blockPosition(), PERTO, LONGE);
         if (!(bicho instanceof HornedHuntsmanEntity caçador)) return;

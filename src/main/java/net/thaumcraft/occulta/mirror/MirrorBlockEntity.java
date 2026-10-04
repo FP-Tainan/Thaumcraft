@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -238,7 +237,7 @@ public class MirrorBlockEntity extends BlockEntity {
         MirrorFaceEntity.show(level, this.worldPosition, olha);
         level.sendParticles(ParticleTypes.WITCH, this.worldPosition.getX() + 0.5,
                 this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5, 16, 0.5, 0.5, 0.5, 0.0);
-        level.playSound(null, this.worldPosition, SoundEvents.EVOKER_PREPARE_SUMMON, SoundSource.BLOCKS,
+        level.playSound(null, this.worldPosition, net.thaumcraft.occulta.OccultaSounds.REFLECTION_SPEECH.value(), SoundSource.BLOCKS,
                 1.0f, 1.0f);
 
         for (Player outro : level.players()) {

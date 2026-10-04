@@ -298,13 +298,18 @@ public class ReflectionEntity extends Monster implements RangedAttackMob {
     }
 
     @Override
+    protected SoundEvent getAmbientSound() {
+        return net.thaumcraft.occulta.OccultaSounds.REFLECTION_SAY.value();
+    }
+
+    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.PLAYER_HURT;
+        return net.thaumcraft.occulta.OccultaSounds.REFLECTION_HIT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.PLAYER_HURT;
+        return net.thaumcraft.occulta.OccultaSounds.REFLECTION_DEATH.value();
     }
 
     @Override

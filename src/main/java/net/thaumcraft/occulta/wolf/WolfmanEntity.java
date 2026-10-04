@@ -183,19 +183,27 @@ public class WolfmanEntity extends Monster {
         return false;
     }
 
+    /**
+     * A fala dele é uma de duas, e <b>uma vez em vinte ele uiva</b> em vez de falar: é o original, e é o
+     * que faz uma noite de lua cheia soar como soa.
+     */
     @Override
     protected @Nullable SoundEvent getAmbientSound() {
-        return SoundEvents.RAVAGER_AMBIENT;
+        return (this.random.nextInt(UIVA_UMA_EM) == 0 ? net.thaumcraft.occulta.OccultaSounds.WOLFMAN_HOWL
+                : net.thaumcraft.occulta.OccultaSounds.WOLFMAN_SAY).value();
     }
+
+    /** De quantas em quantas falas ele uiva. */
+    public static final int UIVA_UMA_EM = 20;
 
     @Override
     protected @Nullable SoundEvent getHurtSound(DamageSource fonte) {
-        return SoundEvents.RAVAGER_HURT;
+        return net.thaumcraft.occulta.OccultaSounds.WOLFMAN_HIT.value();
     }
 
     @Override
     protected @Nullable SoundEvent getDeathSound() {
-        return SoundEvents.RAVAGER_DEATH;
+        return net.thaumcraft.occulta.OccultaSounds.WOLFMAN_DEATH.value();
     }
 
     @Override
@@ -221,8 +229,8 @@ public class WolfmanEntity extends Monster {
         aldeão.discard();
         level.addFreshEntity(lobo);
         level.levelEvent(null, 1027, lobo.blockPosition(), 0);
-        level.playSound(null, lobo.blockPosition(), SoundEvents.RAVAGER_ROAR, net.minecraft.sounds.SoundSource.HOSTILE,
-                1.0f, 0.8f);
+        level.playSound(null, lobo.blockPosition(), net.thaumcraft.occulta.OccultaSounds.WOLFMAN_HOWL.value(),
+                net.minecraft.sounds.SoundSource.HOSTILE, 1.0f, 1.0f);
     }
 
     /**

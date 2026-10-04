@@ -1,7 +1,6 @@
 package net.thaumcraft.occulta.demon;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,7 +39,7 @@ public class DemonHeartBlockEntity extends BlockEntity {
         if (this.level == null) return;
 
         this.level.playLocalSound(this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5,
-                this.getBlockPos().getZ() + 0.5, SoundEvents.WARDEN_HEARTBEAT, SoundSource.BLOCKS,
-                0.8f, 1.0f, false);
+                this.getBlockPos().getZ() + 0.5, net.thaumcraft.occulta.OccultaSounds.HEARTBEAT.value(),
+                SoundSource.BLOCKS, 0.8f, 1.0f, false);
     }
 }

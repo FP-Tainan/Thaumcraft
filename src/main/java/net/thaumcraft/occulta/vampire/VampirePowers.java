@@ -357,7 +357,7 @@ public final class VampirePowers {
     }
 
     private static void barulho(ServerLevel level, LivingEntity deQuem) {
-        level.playSound(null, deQuem.blockPosition(), SoundEvents.GENERIC_DRINK.value(),
+        level.playSound(null, deQuem.blockPosition(), net.thaumcraft.occulta.OccultaSounds.DRINK.value(),
                 SoundSource.PLAYERS, 1.0f, 1.0f);
     }
 
@@ -538,7 +538,7 @@ public final class VampirePowers {
         int quanto = (PRENDE_BASE + grau / 2 + Math.max(0, (grau - 4) / 2)) * 20;
         emQuem.addEffect(new MobEffectInstance(net.thaumcraft.occulta.OccultaEffects.PARALYSIS, quanto,
                 grau >= PRENDE_AOS ? PRENDE_GRAU_ALTO : PRENDE_GRAU));
-        level.playSound(null, emQuem.blockPosition(), SoundEvents.ILLUSIONER_CAST_SPELL,
+        level.playSound(null, emQuem.blockPosition(), net.thaumcraft.occulta.OccultaSounds.HYPNOSIS.value(),
                 SoundSource.PLAYERS, 0.5f, 1.0f);
         return true;
     }

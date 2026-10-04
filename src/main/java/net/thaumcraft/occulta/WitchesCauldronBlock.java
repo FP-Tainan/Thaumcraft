@@ -141,9 +141,14 @@ public class WitchesCauldronBlock extends BaseEntityBlock {
                     pos.getX() + 0.2 + random.nextDouble() * 0.6, altura,
                     pos.getZ() + 0.2 + random.nextDouble() * 0.6, 0.0, 0.0, 0.0);
         }
-        if (random.nextInt(5) == 0) {
-            level.playLocalSound(pos.getX() + 0.5, altura, pos.getZ() + 0.5, SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT,
-                    SoundSource.BLOCKS, 0.4f, 0.8f + random.nextFloat() * 0.2f, false);
+        /*
+         * O blop do que afunda. No original ele só soa com <b>alguma coisa dentro</b>: o caldeirão de água
+         * limpa ferve calado, porque a cor dele é a cor de nada e o original pula o som nesse caso.
+         */
+        if (!caldeirão.inside().isEmpty() && random.nextInt(5) == 0) {
+            level.playLocalSound(pos.getX() + 0.5, altura, pos.getZ() + 0.5,
+                    net.thaumcraft.occulta.OccultaSounds.BLOP.value(), SoundSource.BLOCKS,
+                    0.8f + random.nextFloat() * 0.2f, 0.8f + random.nextFloat() * 0.2f, false);
         }
     }
 }

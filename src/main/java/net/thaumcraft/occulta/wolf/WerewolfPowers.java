@@ -253,8 +253,8 @@ public final class WerewolfPowers {
 
     /** O uivo, que se ouve de longe. */
     private static void som(ServerLevel level, Player quem) {
-        level.playSound(null, quem.getX(), quem.getY(), quem.getZ(), SoundEvents.RAVAGER_ROAR,
-                SoundSource.PLAYERS, 1.0f, 1.0f);
+        level.playSound(null, quem.getX(), quem.getY(), quem.getZ(),
+                net.thaumcraft.occulta.OccultaSounds.WOLFMAN_HOWL.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
     }
 
     // ------------------------------------------------------------------ o salto e a pancada
@@ -428,7 +428,7 @@ public final class WerewolfPowers {
         level.sendParticles(net.minecraft.core.particles.DustParticleOptions.REDSTONE,
                 oquê.getX(), oquê.getY() + 1.0, oquê.getZ(), 16, 1.0, 2.0, 1.0, 0.0);
         if (level.getRandom().nextInt(BARULHO_UMA_EM) != 0) return;
-        level.playSound(null, oquê.blockPosition(), SoundEvents.GENERIC_EAT.value(),
+        level.playSound(null, oquê.blockPosition(), net.thaumcraft.occulta.OccultaSounds.WOLFMAN_EAT.value(),
                 SoundSource.PLAYERS, 1.0f, 1.0f);
     }
 

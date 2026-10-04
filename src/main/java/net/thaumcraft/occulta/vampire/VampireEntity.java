@@ -203,8 +203,7 @@ public class VampireEntity extends PathfinderMob {
     private void fumaça(ServerLevel level) {
         level.sendParticles(net.minecraft.core.particles.ParticleTypes.SMOKE,
                 this.getX(), this.getY() + 0.8, this.getZ(), 24, 0.4, 0.6, 0.4, 0.02);
-        level.playSound(null, this.blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundSource.HOSTILE,
-                0.8f, 1.5f);
+        level.playSound(null, this.blockPosition(), net.thaumcraft.occulta.OccultaSounds.POOF.value(), SoundSource.HOSTILE, 1.0f, 1.0f);
     }
 
     /** Se o sol lhe bate: céu aberto, de dia, e sem chuva. */
@@ -258,8 +257,7 @@ public class VampireEntity extends PathfinderMob {
         this.heal(POR_GOLE);
         level.sendParticles(net.minecraft.core.particles.ParticleTypes.DAMAGE_INDICATOR,
                 quem.getX(), quem.getY() + quem.getBbHeight() * 0.8, quem.getZ(), 8, 0.2, 0.2, 0.2, 0.0);
-        level.playSound(null, quem.blockPosition(), SoundEvents.GENERIC_DRINK.value(),
-                SoundSource.HOSTILE, 0.6f, 0.8f);
+        level.playSound(null, quem.blockPosition(), net.thaumcraft.occulta.OccultaSounds.DRINK.value(), SoundSource.HOSTILE, 1.0f, 1.0f);
     }
 
     /**
