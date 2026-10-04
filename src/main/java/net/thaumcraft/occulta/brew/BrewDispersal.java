@@ -83,6 +83,47 @@ public interface BrewDispersal {
      * <p>O frasco não estoura — ele <b>abre</b>. Onde bateu fica uma nuvem que cresce sozinha e demora a sumir,
      * e quem passa por dentro dela apanha o cozimento aos poucos.
      */
+    /**
+     * <b>O gatilho</b>: o {@code DispersalTriggered}.
+     *
+     * <p>Este frasco não arrebenta em ninguém. Ele <b>fica</b>: acertando um botão, uma alavanca, uma porta
+     * ou uma placa de pressão, troca a peça por uma {@linkplain net.thaumcraft.occulta.curse.CursedTwins
+     * gêmea amaldiçoada} e espera ali, calado, até alguém mexer.
+     *
+     * <p>Acertando qualquer outra coisa — uma parede, um bicho, o chão —, <b>não faz nada</b>. O frasco se
+     * perde. É o único jeito de espalhar do mod que pode ser desperdiçado, e é de propósito: ele vale por
+     * acertar o lugar certo.
+     *
+     * <p>Duas vezes no mesmo botão com a mesma receita <b>somam</b>: a peça fica armada para duas pessoas.
+     *
+     * <p>É a armadilha mais limpa que o mod tem, porque ela não se vê. Um botão amaldiçoado é exatamente um
+     * botão.
+     */
+    class Triggered implements BrewDispersal {
+        @Override
+        public void onImpact(ServerLevel level, List<Item> dentro, HitResult onde, BrewImpact espalha) {
+            if (!(onde instanceof BlockHitResult bateu)) return;
+            var quem = espalha.thrower;
+            String nome = quem == null ? "" : quem.getName().getString();
+
+            /*
+             * O original olha duas casas: a de <b>dentro</b> do que foi acertado e a que fica <b>à frente</b>
+             * da face. É por isso que um frasco que bate no chão ao pé de uma placa apanha a placa, e um que
+             * bate de frente numa alavanca apanha a alavanca.
+             */
+            if (net.thaumcraft.occulta.curse.CursedBlocks.prende(level, bateu.getBlockPos(), dentro, nome)) {
+                return;
+            }
+            net.thaumcraft.occulta.curse.CursedBlocks.prende(level,
+                    bateu.getBlockPos().relative(bateu.getDirection()), dentro, nome);
+        }
+
+        @Override
+        public String nameKey() {
+            return "tc.brew.dispersal.triggered";
+        }
+    }
+
     class Gas implements BrewDispersal {
         @Override
         public void onImpact(ServerLevel level, List<Item> dentro, HitResult onde, BrewImpact espalha) {

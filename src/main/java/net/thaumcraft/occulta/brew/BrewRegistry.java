@@ -92,10 +92,12 @@ public final class BrewRegistry {
         // A pólvora e o globo de alcachofra fazem o cozimento se atirar. Um espalhamento desfaz o outro: dois
         // não convivem na mesma panela, e é por isso que cada um apaga todos (inclusive outro igual).
         List<Item> jeitos = List.of(Items.GUNPOWDER, OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.BAT_WOOL,
-                OccultaItems.WORMWOOD_SPRIG);
-        for (Item qual : List.of(Items.GUNPOWDER, OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.BAT_WOOL)) {
-            BrewDispersal jeito = qual == OccultaItems.BAT_WOOL
-                    ? new BrewDispersal.Gas() : new BrewDispersal.Instant();
+                OccultaItems.WORMWOOD_SPRIG, Items.ZOMBIE_HEAD);
+        for (Item qual : List.of(Items.GUNPOWDER, OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.BAT_WOOL,
+                Items.ZOMBIE_HEAD)) {
+            BrewDispersal jeito = qual == OccultaItems.BAT_WOOL ? new BrewDispersal.Gas()
+                    : qual == Items.ZOMBIE_HEAD ? new BrewDispersal.Triggered()
+                    : new BrewDispersal.Instant();
             BrewAction ação = new BrewActions.Dispersal(qual, 0, jeito);
             for (Item outro : jeitos) ação.nullifies(outro, false);
             register(ação);

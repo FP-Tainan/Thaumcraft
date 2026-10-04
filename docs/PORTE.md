@@ -8417,3 +8417,63 @@ vidro, como o gelo.
 oca e o raio que desconta um; a bola posta no mundo, com casca a dois e meio vazio; as portas sobre o gelo; os
 três tamanhos do rito; e o raio do cozimento com quem o aguenta e quem não. E `OccultaIceClientTest`, com três
 telas: a família de gelo em fila, a de neve, e as peças no inventário.
+
+## O cozimento que fica preso na maçaneta (2026-10-04)
+
+O ofício tem quatro jeitos de um frasco se espalhar. Três deles arrebentam: de uma vez, em névoa, em poça. O
+quarto **não arrebenta**. Ele fica.
+
+### O gatilho
+
+Um frasco com uma **cabeça de zumbi** no caldeirão não se gasta em quem acerta. Acertando um **botão**, uma
+**alavanca**, uma **porta** ou uma **placa de pressão**, ele troca a peça por uma **gêmea amaldiçoada** e
+espera ali, calado.
+
+Quem mexer nela leva o cozimento inteiro na cara, e a peça **volta a ser o que era**.
+
+Acertando qualquer outra coisa — uma parede, um bicho, o chão —, não faz nada. É o único jeito de espalhar do
+mod que pode ser **desperdiçado**, e é de propósito: ele vale por acertar o lugar certo.
+
+### E ela não se vê
+
+É a armadilha mais limpa que este mod tem. Um botão amaldiçoado é **exatamente** um botão: mesmo desenho —
+porque o estado de bloco dele aponta para o modelo do botão de pedra do jogo, e não para um modelo nosso —,
+mesma queda, mesmo barulho, mesma peça no botão do meio. Não tem item, não tem receita, não aparece no
+criativo. Ninguém a põe no mundo: ela **acontece** a uma peça que já lá estava.
+
+A única maneira de saber é ter visto o frasco bater nela.
+
+### A conta
+
+Dois frascos da **mesma receita** no mesmo botão não se trocam: **somam**. A peça fica armada para duas
+pessoas seguidas, e a conta desce de um em um até acabar. Um de receita **diferente** troca o que lá estava,
+e a conta volta a um.
+
+Gasta a última carga, a peça volta ao normal. É a diferença entre uma armadilha e uma praga: a armadilha
+acaba.
+
+### As sete peças
+
+Os dois botões, a alavanca, a porta de carvalho e as três placas — de madeira, de pedra e de **neve**, que é
+a do próprio mod, e que só agora existe para poder ser amaldiçoada.
+
+A porta de ferro não entra, e a razão é a do jogo e não a do mod: ela não se abre com a mão.
+
+A **placa** é a pior das quatro famílias. As outras precisam que alguém **decida** mexer; a placa só precisa
+que alguém **passe**. E ela dispara quando passa de solta a pisada, e não a cada batida em que há alguém em
+cima — senão, quem ficasse parado nela levava o cozimento sem parar.
+
+### A alma
+
+A maldição mora numa alma de bloco com a receita inteira dentro, a conta das cargas e o **nome de quem
+atirou** — porque o que o cozimento fizer é feito em nome dele, e quem vem atrás tem de saber de quem foi.
+
+Numa porta, ela mora na **metade de baixo**, como a chave da porta de sorveira: a porta tem duas casas e a
+alma é uma só.
+
+**Guardas:** `OccultaCursedBlocksGameTest`, com cinco — o frasco que troca o botão pela gêmea com a mesma
+face e o mesmo rumo, que é a prova que carrega a fatia; o frasco que se perde numa pedra; os dois da mesma
+receita que somam e o diferente que troca; a última carga que devolve o botão ao que era; e a lista das sete
+peças, com a porta de ferro e a pedra de fora. E `OccultaCursedBlocksClientTest`, com duas telas — e é
+a única tela deste porte cujo acerto é a **ausência** de diferença: em cima as peças do mundo, em baixo as
+gêmeas, e as duas filas iguais.

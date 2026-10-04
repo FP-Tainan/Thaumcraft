@@ -7,8 +7,10 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.thaumcraft.Thaumcraft;
@@ -164,6 +166,59 @@ public final class OccultaBlocks {
                     net.minecraft.world.level.block.state.properties.BlockSetType.STONE,
                     properties.mapColor(MapColor.SNOW).strength(0.2f, 0.2f).sound(SoundType.SNOW)
                             .noCollision().forceSolidOn()));
+
+    // ------------------------------------------------------------ as gêmeas amaldiçoadas
+    /*
+     * Nenhuma delas tem item, receita ou lugar no criativo: ninguém as põe no mundo. Elas acontecem a uma
+     * peça que já lá estava, quando um frasco de gatilho bate nela.
+     */
+
+    public static final Block CURSED_STONE_BUTTON = register("cursed_stone_button", properties ->
+            new net.thaumcraft.occulta.curse.CursedTwins.CursedButton(BlockSetType.STONE, 20,
+                    () -> Blocks.STONE_BUTTON, properties.mapColor(MapColor.NONE).noCollision()
+                    .strength(0.5f).pushReaction(PushReaction.DESTROY)));
+
+    public static final Block CURSED_WOODEN_BUTTON = register("cursed_wooden_button", properties ->
+            new net.thaumcraft.occulta.curse.CursedTwins.CursedButton(BlockSetType.OAK, 30,
+                    () -> Blocks.OAK_BUTTON, properties.mapColor(MapColor.NONE).noCollision()
+                    .strength(0.5f).pushReaction(PushReaction.DESTROY).ignitedByLava()));
+
+    public static final Block CURSED_LEVER = register("cursed_lever", properties ->
+            new net.thaumcraft.occulta.curse.CursedTwins.CursedLever(
+                    () -> Blocks.LEVER, properties.mapColor(MapColor.NONE).noCollision()
+                    .strength(0.5f).sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    public static final Block CURSED_WOODEN_DOOR = register("cursed_wooden_door", properties ->
+            new net.thaumcraft.occulta.curse.CursedTwins.CursedDoor(BlockSetType.OAK,
+                    () -> Blocks.OAK_DOOR, properties.mapColor(MapColor.WOOD).strength(3.0f)
+                    .noOcclusion().ignitedByLava().pushReaction(PushReaction.DESTROY)));
+
+    public static final Block CURSED_WOODEN_PRESSURE_PLATE = register("cursed_wooden_pressure_plate",
+            properties -> new net.thaumcraft.occulta.curse.CursedTwins.CursedPlate(BlockSetType.OAK,
+                    () -> Blocks.OAK_PRESSURE_PLATE, properties.mapColor(MapColor.WOOD).forceSolidOn()
+                    .noCollision().strength(0.5f).ignitedByLava().pushReaction(PushReaction.DESTROY)));
+
+    public static final Block CURSED_STONE_PRESSURE_PLATE = register("cursed_stone_pressure_plate",
+            properties -> new net.thaumcraft.occulta.curse.CursedTwins.CursedPlate(BlockSetType.STONE,
+                    () -> Blocks.STONE_PRESSURE_PLATE, properties.mapColor(MapColor.STONE).forceSolidOn()
+                    .requiresCorrectToolForDrops().noCollision().strength(0.5f)
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final Block CURSED_SNOW_PRESSURE_PLATE = register("cursed_snow_pressure_plate",
+            properties -> new net.thaumcraft.occulta.curse.CursedTwins.CursedPlate(BlockSetType.STONE,
+                    () -> OccultaBlocks.SNOW_PRESSURE_PLATE, properties.mapColor(MapColor.SNOW)
+                    .forceSolidOn().noCollision().strength(0.2f).sound(SoundType.SNOW)
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** E a alma que todas elas carregam: o cozimento preso à espera. */
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.curse.CursedBlockEntity> CURSED_BLOCK_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("cursed_block"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.curse.CursedBlockEntity::new,
+                            java.util.Set.of(CURSED_STONE_BUTTON, CURSED_WOODEN_BUTTON, CURSED_LEVER,
+                                    CURSED_WOODEN_DOOR, CURSED_WOODEN_PRESSURE_PLATE,
+                                    CURSED_STONE_PRESSURE_PLATE, CURSED_SNOW_PRESSURE_PLATE)));
 
     /**
      * A <b>Porta de Amieiro</b>, que é uma porta e mais nada — e é de propósito: ela existe para que a de
