@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "##",
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": "thaumcraft:perpetual_ice"
+  },
+  "result": {
+    "id": "thaumcraft:ice_door",
+    "count": 3
+  }
+}

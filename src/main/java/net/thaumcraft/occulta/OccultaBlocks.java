@@ -102,6 +102,70 @@ public final class OccultaBlocks {
     public static final Block ALDER_SLAB = slab("alder_slab");
 
     /**
+     * O <b>Gelo Perpétuo</b>: o {@code BlockPerpetualIce}.
+     *
+     * <p>Gelo que <b>não derrete</b>. É a única diferença entre ele e o gelo do mundo, e é a diferença
+     * inteira: um bloco de gelo ao sol é um relógio, e este não é. Com ele se constrói — e por isso ele tem
+     * escada, laje, cerca, portão, placa e porta, que o gelo comum nunca teve.
+     *
+     * <p>Ele é <b>duro</b> onde o gelo é mole: dois de dureza e cinco de resistência, contra meio do gelo
+     * comum. E escorrega igual.
+     */
+    public static final Block PERPETUAL_ICE = register("perpetual_ice", properties ->
+            new net.minecraft.world.level.block.HalfTransparentBlock(gelo(properties)));
+
+    public static final Block ICE_STAIRS = register("ice_stairs", properties ->
+            new net.minecraft.world.level.block.StairBlock(PERPETUAL_ICE.defaultBlockState(),
+                    gelo(properties)));
+
+    public static final Block ICE_SLAB = register("ice_slab", properties ->
+            new net.minecraft.world.level.block.SlabBlock(gelo(properties)));
+
+    public static final Block ICE_FENCE = register("ice_fence", properties ->
+            new net.minecraft.world.level.block.FenceBlock(gelo(properties)));
+
+    public static final Block ICE_FENCE_GATE = register("ice_fence_gate", properties ->
+            new net.minecraft.world.level.block.FenceGateBlock(
+                    net.minecraft.world.level.block.state.properties.WoodType.OAK, gelo(properties)));
+
+    /** A placa de gelo, que é <b>mole</b>: dois décimos de dureza, como todas as placas. */
+    public static final Block ICE_PRESSURE_PLATE = register("ice_pressure_plate", properties ->
+            new net.minecraft.world.level.block.PressurePlateBlock(
+                    net.minecraft.world.level.block.state.properties.BlockSetType.STONE,
+                    properties.mapColor(MapColor.ICE).strength(0.2f, 5.0f).sound(SoundType.GLASS)
+                            .noCollision().noOcclusion().forceSolidOn()));
+
+    /**
+     * A <b>Porta de Gelo</b>.
+     *
+     * <p><b>Declarado:</b> no original ela é uma classe à parte por uma razão só — no jogo de 2014, o gelo
+     * não contava como chão sólido, e uma porta comum não ficava de pé sobre ele. O {@code
+     * BlockPerpetualIceDoor} existia para abrir essa exceção.
+     *
+     * <p>No jogo de hoje a conta é outra: o que decide é o <b>feitio</b> do que está por baixo, e o gelo
+     * perpétuo é um cubo inteiro. <b>Qualquer</b> porta já fica de pé sobre ele, e a exceção deixou de ter
+     * o que fazer. Fica como porta comum.
+     */
+    public static final Block ICE_DOOR = register("ice_door", properties ->
+            new net.minecraft.world.level.block.DoorBlock(
+                    net.minecraft.world.level.block.state.properties.BlockSetType.STONE, gelo(properties)
+                    .noOcclusion().pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+
+    /** E a neve, que ganha escada, laje e placa pelo mesmo motivo: para dar para construir com ela. */
+    public static final Block SNOW_STAIRS = register("snow_stairs", properties ->
+            new net.minecraft.world.level.block.StairBlock(
+                    net.minecraft.world.level.block.Blocks.SNOW_BLOCK.defaultBlockState(), neve(properties)));
+
+    public static final Block SNOW_SLAB = register("snow_slab", properties ->
+            new net.minecraft.world.level.block.SlabBlock(neve(properties)));
+
+    public static final Block SNOW_PRESSURE_PLATE = register("snow_pressure_plate", properties ->
+            new net.minecraft.world.level.block.PressurePlateBlock(
+                    net.minecraft.world.level.block.state.properties.BlockSetType.STONE,
+                    properties.mapColor(MapColor.SNOW).strength(0.2f, 0.2f).sound(SoundType.SNOW)
+                            .noCollision().forceSolidOn()));
+
+    /**
      * A <b>Porta de Amieiro</b>, que é uma porta e mais nada — e é de propósito: ela existe para que a de
      * sorveira não seja a única porta do ofício, e para que escolher a trancada seja uma escolha.
      */
@@ -528,6 +592,17 @@ public final class OccultaBlocks {
     private static Block slab(String name) {
         return register(name, properties -> new net.minecraft.world.level.block.SlabBlock(properties
                 .mapColor(MapColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD).ignitedByLava()));
+    }
+
+    /** Os números do gelo perpétuo, que são os mesmos em toda a família dele. */
+    private static BlockBehaviour.Properties gelo(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.ICE).strength(2.0f, 5.0f).friction(0.98f)
+                .sound(SoundType.GLASS).noOcclusion();
+    }
+
+    /** E os da neve. */
+    private static BlockBehaviour.Properties neve(BlockBehaviour.Properties properties) {
+        return properties.mapColor(MapColor.SNOW).strength(0.2f, 0.2f).sound(SoundType.SNOW);
     }
 
     private static Block register(String name, Function<BlockBehaviour.Properties, Block> factory) {

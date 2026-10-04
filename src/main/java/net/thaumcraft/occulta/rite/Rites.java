@@ -1590,6 +1590,100 @@ public final class Rites {
         }
     }
 
+    /**
+     * <b>A Expansão Gelada</b>: o {@code RiteSphereEffect} do Witchery, com o Gelo Perpétuo dentro.
+     *
+     * <p>Ele abre uma <b>bola oca de gelo que não derrete</b> à volta do círculo, e cresce de cinco em cinco
+     * batidas até ao tamanho que o coven der: <b>oito</b> com duas bruxas, <b>doze</b> até cinco,
+     * <b>dezesseis</b> acima disso. Sozinha, ninguém o faz — e é o único rito deste porte que <b>desiste e
+     * devolve</b> o que se ofereceu quando o coven é pequeno demais.
+     *
+     * <p>A cada passo <b>par</b> ele risca a casca no raio de agora e risca <b>ar</b> dois raios para dentro,
+     * de modo que a bola se abre por fora e se esvazia por dentro ao mesmo tempo. No último passo, o que
+     * sobrou de água lá dentro vira ar.
+     *
+     * <p>É a maneira do ofício de <b>fazer um lugar</b>: uma bolha no fundo de um lago, uma cúpula no meio de
+     * um campo. O preço diz o que ele vale — uma <b>espada de diamante</b>, um <b>Coração Congelado</b> e uma
+     * <b>Pedra Sintonizada Carregada</b> —, e o que fica é uma casa.
+     *
+     * @param radius o tamanho com duas bruxas; o resto sai dele
+     */
+    public record IceShell(int radius) implements Rite {
+        /** Quantas bruxas ele pede, e como o coven estica a bola. */
+        public static final int COVEN = 2;
+        public static final int MÉDIO = 5;
+        public static final double VEZ_E_MEIA = 1.5;
+        public static final double DUAS_VEZES = 2.0;
+
+        /** O raio começa em quatro e cresce de cinco em cinco batidas. */
+        public static final int DE = 5;
+        public static final int COMEÇA = 4;
+        public static final int OCO = 2;
+        public static final int TETO = 250;
+
+        /** Até onde a bola chega com este tanto de bruxas. */
+        public static int até(int radius, int coven) {
+            if (coven <= COVEN) return radius;
+            return (int) ((coven <= MÉDIO ? VEZ_E_MEIA : DUAS_VEZES) * radius);
+        }
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of(new Passo(this));
+        }
+
+        /** O passo que faz a bola crescer. */
+        private static final class Passo implements RiteStep {
+            private final IceShell rite;
+            private int stage;
+            private boolean começou;
+
+            private Passo(IceShell rite) {
+                this.rite = rite;
+            }
+
+            @Override
+            public Result run(ServerLevel level, BlockPos onde, long ticks, ActiveRite rito) {
+                if (!this.começou) {
+                    if (ticks % 20L != 0L) return Result.STARTING;
+                    this.começou = true;
+                    level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
+                }
+                if (ticks % DE != 0L) return Result.UPKEEP;
+
+                if (rito.coven() < COVEN) {
+                    avisa(level, onde, rito, "message.thaumcraft.coven_too_small");
+                    return Result.ABORTED_REFUND;
+                }
+
+                this.stage++;
+                int teto = até(this.rite.radius, rito.coven());
+                int raio = this.stage + COMEÇA;
+                if (raio <= teto) {
+                    if (this.stage % 2 == 0) {
+                        net.thaumcraft.occulta.ice.IceSphere.casca(onde, raio, casa -> {
+                            if (level.getBlockState(casa).canBeReplaced()) {
+                                level.setBlockAndUpdate(casa, net.thaumcraft.occulta.OccultaBlocks
+                                        .PERPETUAL_ICE.defaultBlockState());
+                            }
+                        });
+                        net.thaumcraft.occulta.ice.IceSphere.casca(onde, raio - OCO, casa -> {
+                            if (level.getBlockState(casa).is(
+                                    net.thaumcraft.occulta.OccultaBlocks.PERPETUAL_ICE)) {
+                                level.setBlockAndUpdate(casa, Blocks.AIR.defaultBlockState());
+                            }
+                        });
+                    }
+                    if (raio == teto) {
+                        net.thaumcraft.occulta.ice.IceSphere.enche(level, onde, teto, Blocks.AIR,
+                                net.thaumcraft.occulta.OccultaBlocks.PERPETUAL_ICE);
+                    }
+                }
+                return this.stage <= TETO && raio < teto ? Result.UPKEEP : Result.COMPLETED;
+            }
+        }
+    }
+
     // ================================================================= os que empurram e puxam
 
     /**
@@ -2299,6 +2393,16 @@ public final class Rites {
          * uma delas carregada, e é por isso que se chama caro: as pedras custam mais do que um aldeão custa
          * a quem não se importa com aldeões.
          */
+        /*
+         * E o Rito da Expansão Gelada, que é o único que desiste e devolve o que se ofereceu quando o coven
+         * é pequeno demais. Ele faz uma casa de gelo onde não havia casa nenhuma.
+         */
+        RiteRegistry.register("tc.rite.iceshell", new IceShell(8),
+                new Sacrifice.Items(Items.DIAMOND_SWORD,
+                        net.thaumcraft.occulta.OccultaItems.FROZEN_HEART,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE);
+
         RiteRegistry.register("tc.rite.summondemon",
                 new SummonCreature(() -> net.thaumcraft.occulta.OccultaEntities.DEMON, 0),
                 new Sacrifice.Both(

@@ -118,6 +118,7 @@
       "net.thaumcraft.test.OccultaRoseAndGarlicGameTest",
       "net.thaumcraft.test.OccultaDemonGameTest",
       "net.thaumcraft.test.OccultaDoorsGameTest",
+      "net.thaumcraft.test.OccultaIceGameTest",
       "net.thaumcraft.test.OccultaVillageGuardGameTest",
       "net.thaumcraft.test.OccultaVillageSpreadGameTest",
       "net.thaumcraft.test.OccultaVillagePiecesGameTest",
@@ -306,6 +307,7 @@
       "net.thaumcraft.test.client.OccultaRoseAndGarlicClientTest",
       "net.thaumcraft.test.client.OccultaDemonClientTest",
       "net.thaumcraft.test.client.OccultaDoorsClientTest",
+      "net.thaumcraft.test.client.OccultaIceClientTest",
       "net.thaumcraft.test.client.OccultaLilithClientTest"
     ],
     "main": [

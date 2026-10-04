@@ -370,4 +370,87 @@ public final class BrewWorldActions {
             }
         }
     }
+
+    // ------------------------------------------------------------------ a casca de gelo
+
+    /**
+     * A <b>Casca de Gelo</b>: o cozimento que cobre uma bola do mundo com gelo que não derrete.
+     *
+     * <p>É o único do mod que <b>constrói</b>. Todos os outros fazem alguma coisa a quem bebe ou a quem
+     * apanha o frasco; este deixa um lugar <b>diferente</b> no mapa, e o lugar fica.
+     *
+     * <p>Derramado no chão, abre uma <b>bola oca</b> de gelo com o raio que a força der — mais um, ou mais
+     * dois acima do quarto grau. Acertando alguém, dá-lhe <b>Arrepio</b> por dez segundos e abre a bola à
+     * volta dele, que é como ficar emparedado em gelo.
+     *
+     * <p>E há quem não se emparede: um <b>demônio</b>, um <b>blaze</b>, um <b>Ent</b>, um <b>golem de
+     * ferro</b> ou um chefe não apanham nada disto. Em vez da bola, fora do Nether, fica-lhes uma <b>água
+     * correndo</b> aos pés — que é o jeito do original de dizer que o frasco se gastou neles sem pegar.
+     */
+    public static class IceShell extends WorldEffect {
+        /** Quanto a bola cresce com a força, e a partir de que grau cresce mais. */
+        public static final int MAIS = 1;
+        public static final int MAIS_AINDA = 2;
+        public static final int FORTE = 3;
+
+        /** E o que o Arrepio dura em quem apanha. */
+        public static final int ARREPIO = 200;
+
+        public IceShell(Item key, int power, int weight) {
+            super(key, new BrewName.Text("tc.brew.iceshell").lasting(ARREPIO, ARREPIO), power, weight);
+        }
+
+        /** O raio da bola, pela força do frasco. */
+        public static int raio(int força) {
+            return força + (força > FORTE ? MAIS_AINDA : MAIS);
+        }
+
+        /** Quem não se emparede. */
+        public static boolean aguenta(LivingEntity quem) {
+            return quem instanceof net.thaumcraft.occulta.demon.DemonEntity
+                    || quem instanceof net.minecraft.world.entity.monster.Blaze
+                    || quem instanceof net.thaumcraft.occulta.EntEntity
+                    || quem instanceof net.minecraft.world.entity.animal.golem.IronGolem
+                    || quem instanceof net.minecraft.world.entity.boss.wither.WitherBoss
+                    || quem instanceof net.minecraft.world.entity.boss.enderdragon.EnderDragon
+                    || quem instanceof net.thaumcraft.occulta.baba.BabaYagaEntity;
+        }
+
+        @Override
+        protected void onBlock(ServerLevel level, BlockPos onde, Direction lado, int raio,
+                               BrewModifiers temperos) {
+            bola(level, onde, raio(temperos.getStrength()));
+        }
+
+        @Override
+        protected void onEntity(ServerLevel level, LivingEntity quem, BrewModifiers temperos) {
+            if (aguenta(quem)) {
+                // fora do Nether, fica-lhe uma água correndo aos pés
+                if (!level.dimension().equals(Level.NETHER)) {
+                    BlockPos casa = quem.blockPosition();
+                    if (level.getBlockState(casa).canBeReplaced()) {
+                        level.setBlockAndUpdate(casa,
+                                net.minecraft.world.level.block.Blocks.WATER.defaultBlockState());
+                    }
+                }
+                return;
+            }
+            BrewActions.Potion.apply(quem, temperos, net.thaumcraft.occulta.OccultaEffects.CHILLED,
+                    ARREPIO, BrewModifiers.STRENGTH_CEILING);
+            bola(level, quem.blockPosition(), raio(temperos.getStrength()));
+        }
+
+        /** A bola: a casca de gelo, e o de dentro limpo de água. */
+        private static void bola(ServerLevel level, BlockPos meio, int raio) {
+            net.thaumcraft.occulta.ice.IceSphere.casca(meio, raio, casa -> {
+                if (level.getBlockState(casa).canBeReplaced()) {
+                    level.setBlockAndUpdate(casa,
+                            net.thaumcraft.occulta.OccultaBlocks.PERPETUAL_ICE.defaultBlockState());
+                }
+            });
+            net.thaumcraft.occulta.ice.IceSphere.enche(level, meio, raio,
+                    net.minecraft.world.level.block.Blocks.AIR,
+                    net.thaumcraft.occulta.OccultaBlocks.PERPETUAL_ICE);
+        }
+    }
 }

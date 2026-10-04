@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#i#",
+    "#i#"
+  ],
+  "key": {
+    "#": "thaumcraft:perpetual_ice",
+    "i": "minecraft:stick"
+  },
+  "result": {
+    "id": "thaumcraft:ice_fence",
+    "count": 3
+  }
+}

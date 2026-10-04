@@ -61,9 +61,17 @@ public class ArcanaSummonGameTest {
      * da mesma batida, e a prova da trela chama duas vezes seguidas. Sem este cuidado, a segunda chamada
      * achava a primeira, já morta, e a prova falhava a dizer que a com nome tinha morrido.
      */
+    /**
+     * O esqueleto <b>desta</b> prova.
+     *
+     * <p>A procura é à volta de quem chamou, e não no mundo todo: o jogador de mentira das provas tem sempre
+     * a mesma marca, de modo que um esqueleto chamado na arena do lado é dele também. Procurando longe,
+     * acha-se o da vizinha e prova-se outra coisa.
+     */
     private static Skeleton oEsqueleto(GameTestHelper helper, ServerPlayer quem) {
-        for (var bicho : helper.getLevel().getAllEntities()) {
-            if (!(bicho instanceof Skeleton osso) || !osso.isAlive()) continue;
+        var roda = net.minecraft.world.phys.AABB.ofSize(quem.position(), 24.0, 24.0, 24.0);
+        for (var osso : helper.getLevel().getEntitiesOfClass(Skeleton.class, roda)) {
+            if (!osso.isAlive()) continue;
             var dado = osso.getAttached(Summons.DATA);
             if (dado != null && dado.dono().equals(quem.getUUID())) return osso;
         }

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "n",
+    "h",
+    "t"
+  ],
+  "key": {
+    "n": "thaumcraft:icy_needle",
+    "h": "thaumcraft:creeper_heart",
+    "t": "minecraft:ghast_tear"
+  },
+  "result": {
+    "id": "thaumcraft:frozen_heart",
+    "count": 1
+  }
+}

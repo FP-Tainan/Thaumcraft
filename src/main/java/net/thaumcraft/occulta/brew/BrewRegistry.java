@@ -181,6 +181,12 @@ public final class BrewRegistry {
                 net.thaumcraft.occulta.OccultaEffects.STOUT_BELLY, secs(90), GRAVE));
         register(new BrewActions.Potion(Items.SALMON, new BrewName.Text("tc.brew.allergysun"), 1000,
                 net.thaumcraft.occulta.OccultaEffects.SUN_ALLERGY, secs(60), 6));
+        /*
+          * A <b>Casca de Gelo</b>, que é o único cozimento do mod que constrói alguma coisa: ele deixa uma
+          * bola de gelo que não derrete onde cai, e o gelo fica depois de todo o resto passar.
+          */
+        register(new BrewWorldActions.IceShell(OccultaItems.FROZEN_HEART, 500, 5));
+
         register(new BrewActions.Potion(Items.SOUL_SAND, new BrewName.Text("tc.brew.allergydark"), 4000,
                 net.thaumcraft.occulta.OccultaEffects.DARKNESS_ALLERGY, mins(2), GRAVE));
 

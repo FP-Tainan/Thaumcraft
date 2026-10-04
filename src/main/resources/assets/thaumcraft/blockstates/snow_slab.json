@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "thaumcraft:block/snow_slab"
+    },
+    "type=top": {
+      "model": "thaumcraft:block/snow_slab_top"
+    },
+    "type=double": {
+      "model": "minecraft:block/snow_block"
+    }
+  }
+}

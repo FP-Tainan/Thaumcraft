@@ -212,6 +212,51 @@ public final class OccultaItems {
     /** E o Mal Refinado, que é o que sobra do que era bom. */
     public static final Item REFINED_EVIL = register("refined_evil", Item::new);
 
+    /**
+     * O <b>Coração Congelado</b>: o {@code itemFrozenHeart}.
+     *
+     * <p>Uma agulha de gelo enfiada num coração de creeper, com uma lágrima de ghast por baixo. É o que acende
+     * o <b>Cozimento da Casca de Gelo</b> e o <b>Rito da Expansão Gelada</b> — as duas maneiras que o ofício
+     * tem de cobrir um pedaço do mundo com gelo que não derrete.
+     *
+     * <p><b>Declarado:</b> no original, comê-lo <b>apaga os efeitos de infusão</b> de quem o come, que é o
+     * botão de desfazer daquele ramo. A infusão não está portada; quando vier, é aqui que isto entra.
+     */
+    public static final Item FROZEN_HEART = register("frozen_heart", properties ->
+            new Item(properties.food(new net.minecraft.world.food.FoodProperties.Builder()
+                    .nutrition(1).saturationModifier(0.0f).build())));
+
+    public static final Item PERPETUAL_ICE = register("perpetual_ice", properties ->
+            new BlockItem(OccultaBlocks.PERPETUAL_ICE, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ICE_STAIRS = register("ice_stairs", properties ->
+            new BlockItem(OccultaBlocks.ICE_STAIRS, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ICE_SLAB = register("ice_slab", properties ->
+            new BlockItem(OccultaBlocks.ICE_SLAB, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ICE_FENCE = register("ice_fence", properties ->
+            new BlockItem(OccultaBlocks.ICE_FENCE, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ICE_FENCE_GATE = register("ice_fence_gate", properties ->
+            new BlockItem(OccultaBlocks.ICE_FENCE_GATE, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ICE_PRESSURE_PLATE = register("ice_pressure_plate", properties ->
+            new BlockItem(OccultaBlocks.ICE_PRESSURE_PLATE, properties.useBlockDescriptionPrefix()));
+
+    public static final Item ICE_DOOR = register("ice_door", properties ->
+            new net.minecraft.world.item.DoubleHighBlockItem(OccultaBlocks.ICE_DOOR,
+                    properties.useBlockDescriptionPrefix()));
+
+    public static final Item SNOW_STAIRS = register("snow_stairs", properties ->
+            new BlockItem(OccultaBlocks.SNOW_STAIRS, properties.useBlockDescriptionPrefix()));
+
+    public static final Item SNOW_SLAB = register("snow_slab", properties ->
+            new BlockItem(OccultaBlocks.SNOW_SLAB, properties.useBlockDescriptionPrefix()));
+
+    public static final Item SNOW_PRESSURE_PLATE = register("snow_pressure_plate", properties ->
+            new BlockItem(OccultaBlocks.SNOW_PRESSURE_PLATE, properties.useBlockDescriptionPrefix()));
+
     /** A <b>Porta de Amieiro</b>, que é só uma porta. */
     public static final Item ALDER_DOOR = register("alder_door", properties ->
             new net.minecraft.world.item.DoubleHighBlockItem(OccultaBlocks.ALDER_DOOR,

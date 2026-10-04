@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "thaumcraft:block/snow_pressure_plate"
+    },
+    "powered=true": {
+      "model": "thaumcraft:block/snow_pressure_plate_down"
+    }
+  }
+}

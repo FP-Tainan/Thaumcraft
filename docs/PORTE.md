@@ -8337,3 +8337,83 @@ que vale pelas duas metades; os vinte e quatro gravetos de quem arromba e a port
 chave; o chaveiro que guarda cada porta uma vez só e vale por todas; e a de amieiro, que abre para quem a
 empurrar. E `OccultaDoorsClientTest`, com três telas: as duas na parede fechadas, abertas, e as quatro peças
 no inventário.
+
+## O gelo que não derrete (2026-10-04)
+
+O Witchery tem um bloco de gelo com uma diferença só, e a diferença é tudo: **ele não derrete**.
+
+Um bloco de gelo ao sol é um relógio. Este não tem relógio nenhum — e é por não ter que se pode construir com
+ele. Por isso ele tem **escada, laje, cerca, portão, placa e porta**, que o gelo do mundo nunca teve, e por
+isso a neve ganhou **escada, laje e placa** no mesmo pacote.
+
+Ele é duro onde o gelo é mole — dois de dureza e cinco de resistência, contra meio do gelo comum — e escorrega
+igual.
+
+### A esfera
+
+As duas maneiras de o fazer usam a mesma conta: o `BlockActionSphere`, que é o **método de Bresenham em três
+dimensões**. Risca-se um círculo e, para cada ponto dele, risca-se outro perpendicular, espelhando os oito
+octantes nos três eixos: trinta e dois pontos por volta, sem uma única raiz quadrada. Era como se faziam estas
+coisas quando a máquina não dava para mais, e continua a ser mais rápido do que a conta direta.
+
+**Fiel ao original:** o raio **desconta um** antes de começar. Uma esfera de raio oito tem casca de sete. Não
+é engano — é a conta a começar de dentro —, mas quem não souber faz uma bolha um bloco menor do que pediu.
+
+E a casca é só a casca: quem a usa risca a casca com gelo e depois **enche** o de dentro, trocando por ar a
+água que lá estiver. É isso que faz uma casca de gelo no fundo de um lago ficar com **bolha de ar** dentro em
+vez de uma casca à volta de um afogamento.
+
+**Engano do original que fica:** na varredura em X do recheio, ele pergunta pelo bloco em `(realX, x, posZ)` —
+o contador do laço no lugar da altura. A parada por casca, nesse sentido, é lida na altura errada, e o recheio
+às vezes atravessa a casca de lado. Fica como está: a bolha sai com o mesmo feitio torto que o jogo de 2014
+lhe dá.
+
+### As duas maneiras
+
+O **Cozimento da Casca de Gelo** é o único cozimento do mod que **constrói**. Todos os outros fazem alguma
+coisa a quem bebe ou a quem apanha o frasco; este deixa um lugar diferente no mapa, e o lugar fica.
+
+Derramado no chão, abre uma bola oca com o raio que a força der — mais um, ou mais dois acima do quarto grau.
+Acertando alguém, dá-lhe **Arrepio** por dez segundos e abre a bola à volta dele, que é como ficar emparedado.
+
+E há quem não se emparede: um **demônio**, um **blaze**, um **Ent**, um **golem de ferro** ou um chefe. Em vez
+da bola, fora do Nether, fica-lhes uma **água correndo aos pés** — que é o jeito do original de dizer que o
+frasco se gastou neles sem pegar.
+
+O **Rito da Expansão Gelada** faz a mesma bola, maior e devagar: cresce de cinco em cinco batidas até **oito**
+com duas bruxas, **doze** até cinco, **dezesseis** acima disso. A cada passo par ele risca a casca no raio de
+agora e risca **ar** dois raios para dentro, de modo que a bola se abre por fora e se esvazia por dentro ao
+mesmo tempo.
+
+É o único rito deste porte que **desiste e devolve** o que se ofereceu: sozinha, ninguém o faz. E o preço diz
+o que ele vale — uma espada de diamante, um **Coração Congelado** e uma Pedra Sintonizada Carregada. O que
+fica é uma casa.
+
+### O Coração Congelado
+
+Uma **Agulha de Gelo** enfiada num **Coração de Creeper**, com uma lágrima de ghast por baixo. É a chave das
+duas coisas acima.
+
+**Declarado:** no original, comê-lo **apaga os efeitos de infusão** de quem o come — é o botão de desfazer
+daquele ramo. A infusão não está portada; ele come-se e não faz nada, e quando a infusão vier é aqui que isto
+entra.
+
+### A porta de gelo, e uma exceção que o tempo apagou
+
+No original a Porta de Gelo é uma classe à parte por uma razão só: no jogo de 2014, o gelo **não contava como
+chão sólido**, e uma porta comum não ficava de pé sobre ele. O `BlockPerpetualIceDoor` existia para abrir essa
+exceção.
+
+No jogo de hoje a conta é outra — o que decide é o **feitio** do que está por baixo, e o gelo perpétuo é um
+cubo inteiro. Qualquer porta já fica de pé sobre ele. Eu tinha escrito a exceção na mesma; a prova mostrou que
+ela não fazia nada, e ela saiu. A prova ficou, a dizer o contrário: as duas portas ficam de pé, e no ar
+nenhuma fica.
+
+**Declarado:** o **portão** e as **placas** usam os sons de carvalho e de pedra do jogo, porque o som de
+uma porta é hoje uma coisa registrada e o original não tinha nenhuma registrada para gelo. O bloco soa a
+vidro, como o gelo.
+
+**Guardas:** `OccultaIceGameTest`, com seis — o gelo sem relógio, que é a prova que carrega a fatia; a esfera
+oca e o raio que desconta um; a bola posta no mundo, com casca a dois e meio vazio; as portas sobre o gelo; os
+três tamanhos do rito; e o raio do cozimento com quem o aguenta e quem não. E `OccultaIceClientTest`, com três
+telas: a família de gelo em fila, a de neve, e as peças no inventário.
