@@ -8557,3 +8557,76 @@ no quinto grau e por meio segundo; e as duas mutações, uma por prova, porque m
 duas na mesma arena fazia o musgo de uma cair em cima da outra. E `OccultaBramblesClientTest`, com quatro
 telas: as três sarças em fila, as mesmas de noite — que é onde a do Vazio se vê brilhar —, o nenúfar numa
 poça, e as quatro no inventário.
+
+## O Apanha-Erva, e uma conta que estava declarada (2026-10-04)
+
+A fatia das sarças ficou com um buraco declarado: as duas mutações pediam, no original, **quatro
+Apanha-Ervas** nas diagonais, cada um com a coisa certa na boca — e o Apanha-Erva não existia.
+
+Agora existe, e a conta é a do original.
+
+### O que ele é
+
+Uma planta que **segura o que lhe dão**. Clicada de mão cheia, tira **uma** coisa da mão e fica com ela à
+vista; clicada outra vez, larga o que tinha no chão.
+
+A ordem importa e é a do original: **cheio, ele sempre larga**, mesmo que quem o toque traga outra coisa na
+mão. Não há como trocar o que ele segura sem primeiro o esvaziar — e é essa regra que faz dele uma peça de
+receita em que se pode confiar, porque quem monta um quadrado de quatro sabe exatamente o que está em cada
+um.
+
+Parece um enfeite e não é. Um Apanha-Erva com uma pérola do fim na boca não é uma planta bonita: é meia
+receita de uma **Sarça do Fim**.
+
+### O que se desenhou
+
+Ele não se desenha como bloco — o `BlockContainer` da 1.7.10 devolve tipo de desenho −1 — e quem o põe no
+mundo é um desenhista de alma com **dez caixas**: quatro **folhas chatas** de oito por oito deitadas no
+chão, cada uma inclinada trinta graus para o seu lado; dois pedaços de **caule** tortos em sentidos opostos,
+que é o que lhe dá o jeito de planta vergada; e quatro **pétalas** de um pixel abrindo em volta da boca.
+
+As folhas são chapas sem grossura nenhuma. Vistas de cima são uma estrela de quatro pontas; vistas de lado,
+quase desaparecem — e é por isso que um Apanha-Erva no chão parece uma moita até alguém lhe pôr alguma coisa
+na boca.
+
+E o que ele segura **roda devagar**, a três quartos do tamanho, logo acima da boca. O giro é o que faz a
+coisa ser **vista**: um item parado num canto some na paisagem; um item que roda chama o olho, e é por ele
+que se lê uma receita de quatro Apanha-Ervas sem precisar de chegar perto.
+
+### De onde ele vem
+
+Um **baú vazio**, com **quatro tufos de grama** à volta e **água por baixo**, passado ao Mutandis Extremis: o
+baú some e no lugar dos quatro tufos ficam quatro Apanha-Ervas.
+
+É o `isMutatableChest` do original, inteiro — e é a conta que este documento já esperava desde a fatia da
+Rosa de Sangue, onde ficou escrito que "o baú comum vira um Apanha-Erva". Agora vira.
+
+O baú tem de estar **vazio**, como lá: o que estiver dentro não se perde por um descuido.
+
+### E as sarças voltam à conta certa
+
+A mutação da **cana** pede agora, além do musgo e da água, **quatro Apanha-Ervas com pérolas do fim** nas
+diagonais. A do **cato** pede **dois com farinha de osso e dois com pó de blaze** — e a ordem não importa,
+que é como o original conta.
+
+Fica de pé a declaração que resta: quem faz estas mutações, no original, é a **Vara Mutante**, e aqui é o
+Mutandis Extremis. A vara ainda não está portada.
+
+**Guardas:** `OccultaGrassperGameTest`, com três — o pegar uma e o largar sempre, que é a prova que carrega a
+fatia; o que ele larga ao ser quebrado; e o baú de grama que o faz, com o baú cheio recusado. E as duas
+provas de mutação das sarças passam a montar os quatro Apanha-Ervas, com uma linha a mais que diz que **sem
+eles ainda não é**. E `OccultaGrassperClientTest`, com três telas: um vazio e um cheio lado a lado, o
+quadrado de quatro de uma mutação, e ele no inventário.
+
+#### Uma lição de onde se larga o que uma alma guarda
+
+As duas provas que caíram primeiro ensinaram duas coisas.
+
+A primeira: **o que uma alma de bloco guarda larga-se no `preRemoveSideEffects` dela**, e não no
+`affectNeighborsAfterRemoval` do bloco. Quando o bloco some, a alma já foi, e o que ela tinha ia com ela.
+O jogo de hoje dá este aviso à alma **antes** de a tirar, e é o único lugar de onde ainda se vê o que estava
+lá dentro.
+
+A segunda: **o musgo-espanhol cai ao primeiro aviso de vizinho novo**, porque ele se pendura e não se aguenta
+sozinho. Montar um quadrado de mutação põe o musgo **por último** — e isso não é um truque de prova, é como a
+coisa se monta no jogo.

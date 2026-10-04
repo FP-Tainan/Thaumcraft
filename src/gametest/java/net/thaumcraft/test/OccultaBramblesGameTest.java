@@ -231,11 +231,17 @@ public class OccultaBramblesGameTest {
             level.setBlockAndUpdate(cana.relative(lado).below(), Blocks.WATER.defaultBlockState());
         }
         level.setBlockAndUpdate(cana, Blocks.SUGAR_CANE.defaultBlockState());
+        quinas(helper, cana, Items.ENDER_PEARL, Items.ENDER_PEARL);
+        if (net.thaumcraft.occulta.MutandisItem.éCanaDeSarça(level, cana)) {
+            helper.fail("sem o musgo à volta, ainda não é");
+        }
+
+        // o musgo por último: ele se pendura e cai ao primeiro aviso de vizinho novo
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(cana.relative(lado), OccultaBlocks.SPANISH_MOSS.defaultBlockState());
         }
         if (!net.thaumcraft.occulta.MutandisItem.éCanaDeSarça(level, cana)) {
-            helper.fail("cercada de musgo e com água em baixo, é");
+            helper.fail("com musgo, água e quatro pérolas do fim nas quinas, é");
         }
         if (net.thaumcraft.occulta.MutandisItem.éCatoDeSarça(level, cana)) {
             helper.fail("e uma cana não é um cato");
@@ -257,12 +263,12 @@ public class OccultaBramblesGameTest {
         // areia por baixo, senão o cato se desfaz ao primeiro aviso de vizinho
         level.setBlockAndUpdate(cato.below(), Blocks.SAND.defaultBlockState());
         level.setBlockAndUpdate(cato, Blocks.CACTUS.defaultBlockState());
+        quinas(helper, cato, Items.BONE_MEAL, Items.BLAZE_POWDER);
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(cato.relative(lado), OccultaBlocks.SPANISH_MOSS.defaultBlockState());
         }
-
         if (!net.thaumcraft.occulta.MutandisItem.éCatoDeSarça(level, cato)) {
-            helper.fail("um cato cercado de musgo é a Selvagem");
+            helper.fail("um cato cercado de musgo, com dois ossos e dois pós nas quinas, é a Selvagem");
         }
         if (net.thaumcraft.occulta.MutandisItem.éCanaDeSarça(level, cato)) {
             helper.fail("e um cato não é uma cana");
@@ -272,12 +278,34 @@ public class OccultaBramblesGameTest {
         helper.succeed();
     }
 
+    /**
+     * Põe os <b>quatro Apanha-Ervas</b> nas quinas, com o que eles têm de segurar.
+     *
+     * <p>Dois de cada, que é como o original conta quando a receita pede duas coisas diferentes.
+     */
+    private static void quinas(GameTestHelper helper, BlockPos meio,
+                               net.minecraft.world.item.Item um, net.minecraft.world.item.Item outro) {
+        ServerLevel level = helper.getLevel();
+        BlockPos[] onde = {meio.offset(1, 0, 1), meio.offset(1, 0, -1),
+                meio.offset(-1, 0, 1), meio.offset(-1, 0, -1)};
+        for (int i = 0; i < onde.length; i++) {
+            level.setBlockAndUpdate(onde[i], OccultaBlocks.GRASSPER.defaultBlockState());
+            if (level.getBlockEntity(onde[i]) instanceof net.thaumcraft.occulta.GrassperBlockEntity alma) {
+                alma.põe(new ItemStack(i < 2 ? um : outro));
+            }
+        }
+    }
+
     /** Arruma o que a prova montou. */
     private static void limpa(GameTestHelper helper, BlockPos meio) {
         ServerLevel level = helper.getLevel();
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(meio.relative(lado), Blocks.AIR.defaultBlockState());
             level.setBlockAndUpdate(meio.relative(lado).below(), Blocks.STONE.defaultBlockState());
+        }
+        for (BlockPos quina : new BlockPos[]{meio.offset(1, 0, 1), meio.offset(1, 0, -1),
+                meio.offset(-1, 0, 1), meio.offset(-1, 0, -1)}) {
+            level.setBlockAndUpdate(quina, Blocks.AIR.defaultBlockState());
         }
         level.setBlockAndUpdate(meio, Blocks.AIR.defaultBlockState());
     }

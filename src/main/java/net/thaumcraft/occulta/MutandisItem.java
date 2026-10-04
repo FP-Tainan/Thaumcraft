@@ -62,7 +62,8 @@ public class MutandisItem extends Item {
      * faz com o Baú de Sanguessugas. Quando eles vierem, a conta volta ao que era.
      */
     public static boolean éCanaDeSarça(Level level, BlockPos onde) {
-        return level.getBlockState(onde).is(Blocks.SUGAR_CANE) && cercada(level, onde);
+        return level.getBlockState(onde).is(Blocks.SUGAR_CANE)
+                && cercada(level, onde, net.minecraft.world.item.Items.ENDER_PEARL);
     }
 
     /**
@@ -72,14 +73,80 @@ public class MutandisItem extends Item {
      * <b>dois com pó de blaze</b> nas diagonais. Vale aqui o mesmo que para a cana.
      */
     public static boolean éCatoDeSarça(Level level, BlockPos onde) {
-        return level.getBlockState(onde).is(Blocks.CACTUS) && cercada(level, onde);
+        return level.getBlockState(onde).is(Blocks.CACTUS)
+                && cercada(level, onde, net.minecraft.world.item.Items.BONE_MEAL,
+                        net.minecraft.world.item.Items.BLAZE_POWDER);
     }
 
-    /** As quatro de musgo ao lado e as quatro de água na quina de baixo. */
-    private static boolean cercada(Level level, BlockPos onde) {
+    /**
+     * <b>De onde vem o Apanha-Erva</b>: um <b>baú vazio</b>, com <b>quatro tufos de grama</b> à volta e
+     * <b>água por baixo</b>. O baú some e no lugar dos quatro tufos ficam quatro Apanha-Ervas.
+     *
+     * <p>É o {@code isMutatableChest} do original, inteiro — e é a conta que o {@code PORTE.md} já esperava
+     * desde a fatia da Rosa de Sangue, onde ficou escrito que "o baú comum vira um Apanha-Erva". Agora vira.
+     */
+    public static boolean éBaúDeApanhaErva(Level level, BlockPos onde) {
+        if (!level.getBlockState(onde).is(Blocks.CHEST)) return false;
+        if (!level.getBlockState(onde.below()).is(Blocks.WATER)) return false;
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            if (!level.getBlockState(onde.relative(lado)).is(Blocks.SHORT_GRASS)) return false;
+        }
+        return baúVazio(level, onde);
+    }
+
+    /**
+     * As quatro de musgo ao lado, as quatro de água na quina de baixo — e os <b>quatro Apanha-Ervas</b> nas
+     * diagonais, cada um com a coisa certa na boca.
+     *
+     * <p>Esta última parte estava declarada como buraco desde a fatia das sarças, porque o Apanha-Erva não
+     * existia. Agora existe, e a conta é a do original.
+     */
+    private static boolean cercada(Level level, BlockPos onde, net.minecraft.world.item.Item... naBoca) {
         for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
             if (!level.getBlockState(onde.relative(lado)).is(OccultaBlocks.SPANISH_MOSS)) return false;
             if (!level.getBlockState(onde.relative(lado).below()).is(Blocks.WATER)) return false;
+        }
+        return nasQuinas(level, onde, naBoca);
+    }
+
+    /**
+     * O que os quatro Apanha-Ervas das diagonais têm de segurar.
+     *
+     * <p>Dando-se <b>uma</b> coisa, os quatro seguram a mesma; dando-se <b>duas</b>, dois seguram cada —
+     * e a ordem não importa, que é como o original conta.
+     */
+    private static boolean nasQuinas(Level level, BlockPos onde, net.minecraft.world.item.Item... quais) {
+        BlockPos[] quinas = {onde.offset(1, 0, 1), onde.offset(1, 0, -1),
+                onde.offset(-1, 0, 1), onde.offset(-1, 0, -1)};
+        if (quais.length == 1) {
+            for (BlockPos quina : quinas) {
+                if (!GrassperBlock.segura(level, quina, quais[0])) return false;
+            }
+            return true;
+        }
+        int[] conta = new int[quais.length];
+        for (BlockPos quina : quinas) {
+            for (int i = 0; i < quais.length; i++) {
+                if (GrassperBlock.segura(level, quina, quais[i])) {
+                    conta[i]++;
+                    break;
+                }
+            }
+        }
+        for (int quantos : conta) {
+            if (quantos < 2) return false;
+        }
+        return true;
+    }
+
+    /** Se este baú está vazio: o que lá estiver não se perde por um descuido. */
+    private static boolean baúVazio(Level level, BlockPos onde) {
+        if (!(level.getBlockEntity(onde)
+                instanceof net.minecraft.world.level.block.entity.ChestBlockEntity baú)) {
+            return false;
+        }
+        for (int casa = 0; casa < baú.getContainerSize(); casa++) {
+            if (!baú.getItem(casa).isEmpty()) return false;
         }
         return true;
     }
@@ -202,6 +269,18 @@ public class MutandisItem extends Item {
          * quatro quinas de baixo, viram a coluna inteira em sarça — a cana em <b>Sarça do Fim</b>, o cato em
          * <b>Sarça Selvagem</b>.
          */
+        // e um baú vazio, com quatro tufos de grama à volta e água por baixo, vira quatro Apanha-Ervas
+        if (this.extremis && éBaúDeApanhaErva(level, onde)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            level.removeBlock(onde, false);
+            for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+                level.setBlock(onde.relative(lado),
+                        OccultaBlocks.GRASSPER.defaultBlockState(), Block.UPDATE_ALL);
+            }
+            this.spend(context, level, onde);
+            return InteractionResult.SUCCESS;
+        }
+
         if (this.extremis && éCanaDeSarça(level, onde)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
             vira(level, onde, Blocks.SUGAR_CANE, OccultaBlocks.ENDER_BRAMBLE, CANA_ALTA);

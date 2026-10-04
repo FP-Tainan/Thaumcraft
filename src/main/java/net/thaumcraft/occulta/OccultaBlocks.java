@@ -167,6 +167,19 @@ public final class OccultaBlocks {
                     properties.mapColor(MapColor.SNOW).strength(0.2f, 0.2f).sound(SoundType.SNOW)
                             .noCollision().forceSolidOn()));
 
+    /** O <b>Apanha-Erva</b>: a planta que segura o que lhe dão, e que as mutações pedem. */
+    public static final Block GRASSPER = register("grassper", properties ->
+            new net.thaumcraft.occulta.GrassperBlock(properties.mapColor(MapColor.PLANT)
+                    .instabreak().sound(SoundType.GRASS).noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.GrassperBlockEntity> GRASSPER_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("grassper"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.GrassperBlockEntity::new,
+                            java.util.Set.of(GRASSPER)));
+
     // ------------------------------------------------------------ as sarças e o nenúfar
 
     /** A <b>Sarça Selvagem</b>, que espinha quem passa — e que cortada se espalha. */

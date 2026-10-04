@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/grassper"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/grassper"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/grassper"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/grassper"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "__comment": "O Apanha-Erva se desenha pelo GrassperRenderer, como no original; aqui só a cor das lascas.",
+  "textures": {
+    "particle": "thaumcraft:block/grassper"
+  }
+}

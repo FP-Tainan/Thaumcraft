@@ -228,6 +228,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.GARLIC_GARLAND_ENTITY,
                 net.thaumcraft.occulta.client.GarlicGarlandRenderer::new);
 
+        // o Apanha-Erva, que não se desenha como bloco e mostra o que segura
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.GrassperModel.APANHA_ERVA,
+                net.thaumcraft.occulta.client.GrassperModel::apanhaErva);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.GRASSPER_ENTITY,
+                net.thaumcraft.occulta.client.GrassperRenderer::new);
+
         // o Coração de Demônio, que não se desenha como bloco nenhum: ele bate
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.DemonHeartModel.CORAÇÃO,
