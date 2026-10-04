@@ -7885,3 +7885,63 @@ décimo degrau, uma a uma; as páginas que só caem para quem já tem o livro; o
 dá a granada cheio; e a tampa do Caixão que abre as duas metades e não abre debaixo de um bloco. E
 `OccultaVampireBookClientTest`, com oito telas: o índice, o rito desenhado, a gaiola desenhada, a seta
 apagada, o caixão fechado e aberto, o coletor pela metade e cheio, e as coisas novas no inventário.
+
+## O Ent e o Lobisomem com os corpos do Mo'Creatures (2026-10-03)
+
+**Esta fatia quebra a regra do porte de propósito, e é a primeira que o faz.**
+
+Tudo o resto deste repositório é fiel: quando o original está errado, fica errado; quando o original é feio,
+fica feio. Aqui não. Dois modelos do Witchery foram **trocados pelos do Mo'Creatures** porque os do Witchery
+são simples demais, e porque um bicho que não impressiona não assusta — e tanto o Ent como o Lobisomem são
+bichos cujo trabalho inteiro é assustar.
+
+### O que havia, e o que há
+
+**O Ent do Witchery** são dezesseis caixas: um paralelepípedo de dezesseis por quarenta e oito, quatro
+borrões de folha por cima, duas tábuas por braços e oito palitos por raízes. Funciona, mas não é uma árvore
+que anda — é uma caixa com cara.
+
+**O do Mo'Creatures** são quarenta e quatro peças: braços em cinco pedaços cada (ombro, braço, pulso, mão e
+**dedos**), pernas em cinco (perna, coxa, joelho, tornozelo e um pé que se inclina quinze graus para a
+frente, como raiz que pisa), uma cara com pescoço, rosto, testa, **nariz** e boca, e uma copa de **dezesseis
+blocos de folha** em dois andares à volta de um tronco.
+
+E ela anda: braços e pernas em compasso oposto, os pulsos com um balanço lento tirado do relógio do mundo, e
+a **copa inteira vira com a cabeça** — dezesseis blocos de folha a rodar quando ele olha para o lado.
+
+**O Lobisomem do Witchery** é um boneco de jogador com um focinho: o mesmo corpo de seis caixas que todo
+biped tem, com uma cabeça de lobo por cima. De longe não se distingue de um zumbi de chapéu.
+
+**O do Mo'Creatures** são quarenta e quatro peças: uma cabeça em nove — crânio, focinho, nariz, **dentes de
+cima e de baixo**, boca, duas orelhas e duas suíças —, pescoço em dois pedaços inclinados, peito e barriga
+separados, **rabo em quatro segmentos**, braços e pernas em três pedaços cada, e **cinco dedos em cada mão**.
+
+Dez dedos. É o detalhe que diz tudo: o do Witchery tem dois cubos por mãos.
+
+### O que não mudou
+
+**Nada de comportamento.** O Ent continua a ser o Ent do Witchery — o que o faz nascer, o que ele larga, como
+ele bate, o pender de planta por cima do passo. O Lobisomem continua a ser o do Witchery em tudo o que não é
+desenho, e a troca apanha de uma vez as **três** coisas que vestiam aquele corpo: o bicho, o aldeão que vira,
+e a **forma de lobisomem de um jogador**.
+
+**Os tamanhos.** O Ent do Mo'Creatures é de um bicho de quase oito blocos; o deste mod mede três de caixa e
+desenhava-se com quatro e meio. Os **seis décimos** de escala põem o corpo novo exatamente onde o velho
+estava, de modo que a troca seja de **feitio** e não de tamanho.
+
+**As malhas antigas ficam escritas.** O `WolfmanModel` continua no repositório, inteiro e comentado, e o que
+sobrou dele em uso é a **camada**. Quem quiser o lobisomem do Witchery de volta troca uma linha no
+`ThaumcraftClient`.
+
+### As texturas vêm junto, e tinham de vir
+
+Um corpo novo pede o desenho que foi feito para ele: as coordenadas de textura do Mo'Creatures não têm nada
+que ver com as do Witchery, e a pele antiga no corpo novo daria um borrão. Então vieram as duas — o
+`ent_oak` e o `brownwerewolf` —, e com elas a casca com musgo e os olhos cor de brasa do Ent, e o pelo
+castanho com os olhos vermelhos e os dentes do Lobisomem.
+
+### E a regra, para o que vier depois
+
+Esta é a exceção, não o novo costume. O resto do porte continua fiel, e qualquer outra troca de gosto tem de
+ser pedida e escrita aqui do mesmo jeito: **o que se trocou, por que se trocou, e o que ficou guardado para
+quem quiser o original de volta**.

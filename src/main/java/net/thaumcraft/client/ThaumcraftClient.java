@@ -75,7 +75,7 @@ public class ThaumcraftClient implements ClientModInitializer {
                                 net.thaumcraft.occulta.client.CreatureModels::minedrake),
                 java.util.Map.entry(net.thaumcraft.occulta.client.CreatureRenderers.ENT,
                         (java.util.function.Supplier<net.minecraft.client.model.geom.builders.LayerDefinition>)
-                                net.thaumcraft.occulta.client.CreatureModels::ent))) {
+                                net.thaumcraft.occulta.client.EntModel::ent))) {
             net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                     bicho.getKey(), bicho.getValue()::get);
         }
@@ -163,7 +163,7 @@ public class ThaumcraftClient implements ClientModInitializer {
         // o Ars Occulta: o lobisomem e o aldeão que vira
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.WolfmanModel.WOLFMAN,
-                net.thaumcraft.occulta.client.WolfmanModel::wolfman);
+                net.thaumcraft.occulta.client.WerewolfModel::lobisomem);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.WOLFMAN,
                 net.thaumcraft.occulta.client.WolfmanRenderer::new);

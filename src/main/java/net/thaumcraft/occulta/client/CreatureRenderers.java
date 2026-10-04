@@ -34,6 +34,9 @@ public final class CreatureRenderers {
     private static final Identifier MINEDRAKE_SKIN = Thaumcraft.id("textures/entity/minedrake.png");
     private static final Identifier ENT_SKIN = Thaumcraft.id("textures/entity/ent.png");
 
+    /** O quanto o corpo do Mo'Creatures encolhe para caber onde o do Witchery estava. */
+    public static final float ENT_SIZE = 0.6f;
+
     private CreatureRenderers() {
     }
 
@@ -116,15 +119,35 @@ public final class CreatureRenderers {
         }
     }
 
-    /** E o Ent, que é do tamanho de uma árvore pequena. */
-    public static class Ent extends MobRenderer<EntEntity, LivingEntityRenderState, PlantModel> {
+    /**
+     * E o Ent, que é do tamanho de uma árvore pequena.
+     *
+     * <p>O corpo dele é o do <b>Mo'Creatures</b> e não o do Witchery — uma troca de gosto, declarada no
+     * {@link EntModel} e no {@code PORTE.md}. Com ela vem o <b>balanço do passo</b>, que o modelo faz
+     * sozinho; o <b>pender</b> do original fica à mesma por cima, porque ele não é do passo, é do corpo
+     * inteiro a oscilar como uma planta.
+     */
+    public static class Ent extends MobRenderer<EntEntity, LivingEntityRenderState, EntModel> {
         public Ent(EntityRendererProvider.Context context) {
-            super(context, new PlantModel(context.bakeLayer(ENT)), 0.5f);
+            super(context, new EntModel(context.bakeLayer(ENT)), 0.5f);
         }
 
         @Override
         public LivingEntityRenderState createRenderState() {
             return new LivingEntityRenderState();
+        }
+
+        /**
+         * E ele encolhe para a altura que o do Witchery tinha.
+         *
+         * <p>O corpo do Mo'Creatures é de um Ent de quase oito blocos; o deste mod mede três de caixa e
+         * desenhava-se com quatro e meio. Os <b>seis décimos</b> põem o novo onde o velho estava, de modo
+         * que a troca seja de <b>feitio</b> e não de tamanho.
+         */
+        @Override
+        protected void scale(LivingEntityRenderState state, PoseStack pose) {
+            super.scale(state, pose);
+            pose.scale(ENT_SIZE, ENT_SIZE, ENT_SIZE);
         }
 
         @Override

@@ -14,7 +14,14 @@ import net.minecraft.util.Mth;
 import net.thaumcraft.Thaumcraft;
 
 /**
- * O Lobisomem desenhado: o {@code ModelWolfman} do Witchery, caixa por caixa.
+ * O Lobisomem do Witchery desenhado: o {@code ModelWolfman}, caixa por caixa.
+ *
+ * <p><b>O jogo não usa mais esta malha</b>, e é uma escolha declarada: o corpo que se vê é o do
+ * {@link WerewolfModel}, tirado do Mo'Creatures, porque este tem dez peças e aquele tem quarenta e quatro.
+ * O que fica daqui é a <b>camada</b> {@link #WOLFMAN}, que é onde o lobisomem mora.
+ *
+ * <p>Ela fica escrita por inteiro de propósito. É o porte fiel do original, e quem quiser o lobisomem do
+ * Witchery de volta troca uma linha no {@code ThaumcraftClient} e tem-no outra vez.
  *
  * <p>Dez partes, e a graça delas é que ele <b>não é um homem com cabeça de lobo</b>: o tronco inclina-se para
  * a frente, as pernas são de bicho — coxa e canela em dois pedaços, dobradas ao contrário —, os braços caem

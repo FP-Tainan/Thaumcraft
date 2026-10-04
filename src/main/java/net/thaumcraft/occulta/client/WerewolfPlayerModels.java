@@ -45,7 +45,7 @@ public final class WerewolfPlayerModels {
     private static final float RABO_PARADO = 0.62831855f;
 
     @Nullable
-    private static WolfmanModel lobisomem;
+    private static WerewolfModel lobisomem;
 
     @Nullable
     private static AdultWolfModel lobo;
@@ -57,9 +57,9 @@ public final class WerewolfPlayerModels {
     }
 
     /** O modelo do lobisomem, assado na primeira vez que alguém o pedir. */
-    public static WolfmanModel lobisomem() {
+    public static WerewolfModel lobisomem() {
         if (lobisomem == null) {
-            lobisomem = new WolfmanModel(
+            lobisomem = new WerewolfModel(
                     Minecraft.getInstance().getEntityModels().bakeLayer(WolfmanModel.WOLFMAN));
         }
         return lobisomem;

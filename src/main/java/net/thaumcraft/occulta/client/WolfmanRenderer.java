@@ -9,11 +9,11 @@ import net.thaumcraft.occulta.wolf.WolfmanEntity;
 
 /** O desenhista do Lobisomem: o modelo traduzido e a pele do original. */
 public class WolfmanRenderer
-        extends MobRenderer<WolfmanEntity, LivingEntityRenderState, WolfmanModel> {
+        extends MobRenderer<WolfmanEntity, LivingEntityRenderState, WerewolfModel> {
     private static final Identifier PELE = Thaumcraft.id("textures/entity/wolfman.png");
 
     public WolfmanRenderer(EntityRendererProvider.Context contexto) {
-        super(contexto, new WolfmanModel(contexto.bakeLayer(WolfmanModel.WOLFMAN)), 0.5f);
+        super(contexto, new WerewolfModel(contexto.bakeLayer(WolfmanModel.WOLFMAN)), 0.5f);
     }
 
     @Override
