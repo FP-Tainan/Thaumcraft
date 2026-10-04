@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/garlic_garland"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/garlic_garland"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/garlic_garland"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/garlic_garland"
+    }
+  }
+}

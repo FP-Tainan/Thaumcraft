@@ -84,6 +84,12 @@ public final class AltarPower {
         source(state -> state.is(OccultaBlocks.BELLADONNA) || state.is(OccultaBlocks.MANDRAKE)
                 || state.is(OccultaBlocks.WATER_ARTICHOKE) || state.is(OccultaBlocks.SNOWBELL), 4, 20);
 
+        // e o Coração de Demônio é a fonte mais forte que há: quarenta cada, até dois
+        source(state -> state.is(OccultaBlocks.DEMON_HEART), 40, 2);
+
+        // a Rosa de Sangue vale dois e conta até dez, como no original
+        source(state -> state.is(OccultaBlocks.BLOOD_ROSE), 2, 10);
+
         // e, por último, qualquer outra planta ou plantação, que no original vale dois e conta até quatro
         source(state -> state.is(BlockTags.CROPS) || state.is(BlockTags.FLOWERS), 2, 4);
     }

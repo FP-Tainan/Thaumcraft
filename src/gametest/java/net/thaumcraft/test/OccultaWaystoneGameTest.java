@@ -255,8 +255,12 @@ public class OccultaWaystoneGameTest {
         BlockPos meio = helper.absolutePos(new BlockPos(5, 2, 5));
         risca(helper, meio, PEQUENO);
 
-        // o destino: um chão de pedra longe do anel
-        BlockPos destino = helper.absolutePos(new BlockPos(5, 2, 5)).offset(0, 0, 40);
+        /*
+         * O destino: um chão de pedra longe do anel, e <b>por cima</b> dele. A suíte corre num mundo só e as
+         * arenas ficam lado a lado no mesmo andar; quarenta blocos para o lado caem dentro da arena de outra
+         * prova, que varre o que lá estiver quando se arruma. Para cima não há arena nenhuma.
+         */
+        BlockPos destino = helper.absolutePos(new BlockPos(5, 2, 5)).offset(0, 40, 0);
         level.setBlockAndUpdate(destino.below(), Blocks.STONE.defaultBlockState());
         level.setBlockAndUpdate(destino, Blocks.AIR.defaultBlockState());
         level.setBlockAndUpdate(destino.above(), Blocks.AIR.defaultBlockState());
@@ -266,7 +270,7 @@ public class OccultaWaystoneGameTest {
                 new Waystones.Lugar(level.dimension(), destino));
 
         var galinha = helper.spawn(EntityTypes.CHICKEN, new BlockPos(5, 2, 5));
-        double daqui = galinha.getZ();
+        double daqui = galinha.getY();
 
         ItemEntity largada = larga(helper, meio, presa);
         if (!Waystones.tentaLevar(level, largada)) {
@@ -276,8 +280,8 @@ public class OccultaWaystoneGameTest {
         }
         if (!largada.isRemoved()) helper.fail("e a pedra largada some");
 
-        if (Math.abs(galinha.getZ() - daqui) < 20.0) {
-            helper.fail("a galinha vai para onde a pedra aponta; ficou em " + galinha.getZ());
+        if (Math.abs(galinha.getY() - daqui) < 20.0) {
+            helper.fail("a galinha vai para onde a pedra aponta; ficou em " + galinha.getY());
         }
 
         // <b>e a pedra que sobrou vai pela porta também</b>, como no original: ela cai no meio do anel, e o

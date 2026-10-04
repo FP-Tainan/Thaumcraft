@@ -92,16 +92,20 @@ public class OccultaCovenGameTest {
             helper.fail("o sapo devia vincular-se");
         }
 
-        // procura-se uma bruxa que peça o de buscar, que é o que esta prova sabe resolver
+        /*
+          * Procura-se uma bruxa que peça os <b>ossos</b>. Os outros pedidos de buscar são de coisas do ofício
+          * — um coração de demônio, cinco cozimentos, uma pedra necrótica —, e esta prova resolve o pedido
+          * com o que se arranja sem ofício nenhum.
+          */
         CovenWitchEntity bruxa = null;
-        for (int tentativa = 0; tentativa < 40 && bruxa == null; tentativa++) {
+        for (int tentativa = 0; tentativa < 120 && bruxa == null; tentativa++) {
             var tentada = bruxa(helper, 2, 2, 2);
             tentada.mobInteract(quem, InteractionHand.MAIN_HAND);
-            if (tentada.pedidoÉDeBuscar()) bruxa = tentada;
+            if ("quest.getbones".equals(tentada.pedidoAtual())) bruxa = tentada;
             else tentada.discard();
         }
         if (bruxa == null) {
-            helper.fail("em quarenta bruxas nenhuma pediu o de buscar — o sorteio não está dando os três");
+            helper.fail("em cento e vinte bruxas nenhuma pediu os ossos — o sorteio não está dando todos");
             return;
         }
 
@@ -142,7 +146,7 @@ public class OccultaCovenGameTest {
 
         var bruxa = bruxa(helper, 2, 2, 2);
         bruxa.mobInteract(quem, InteractionHand.MAIN_HAND);
-        if (bruxa.pedidoÉDeBuscar()) helper.fail("sem familiar ela não chega a pedir nada");
+        if (bruxa.pedidoAtual() != null) helper.fail("sem familiar ela não chega a pedir nada");
         bruxa.mobInteract(quem, InteractionHand.MAIN_HAND);
         if (Coven.tamanho(quem) != 0) helper.fail("e não entra em coven nenhum");
 
@@ -178,16 +182,27 @@ public class OccultaCovenGameTest {
         helper.succeed();
     }
 
-    /** Os três pedidos do original que dão para portar estão todos lá. */
+    /**
+     * Os pedidos do original que dão para portar estão todos lá.
+     *
+     * <p>São <b>sete</b> no original e eram <b>três</b> aqui, porque as coisas que os outros quatro pediam
+     * não existiam. Com o <b>Coração de Demônio</b>, a <b>Pedra Necrótica</b> e o <b>Cozimento Grotesco</b>
+     * no mod, são <b>seis</b> — e fica faltando só o que pede uma <b>Bola de Cristal</b>.
+     */
     @GameTest(maxTicks = 20)
-    public void theThreePortableQuestsAreThere(GameTestHelper helper) {
-        if (CovenQuest.TODAS.size() != 3) {
-            helper.fail("são três pedidos portáveis, são " + CovenQuest.TODAS.size());
+    public void thePortableQuestsAreAllThere(GameTestHelper helper) {
+        if (CovenQuest.TODAS.size() != 6) {
+            helper.fail("são seis pedidos portáveis, são " + CovenQuest.TODAS.size());
         }
         long brigas = CovenQuest.TODAS.stream().filter(q -> q instanceof CovenQuest.Briga).count();
         long buscas = CovenQuest.TODAS.stream().filter(q -> q instanceof CovenQuest.Busca).count();
         if (brigas != 2) helper.fail("duas são de brigar, são " + brigas);
-        if (buscas != 1) helper.fail("e uma é de buscar, são " + buscas);
+        if (buscas != 4) helper.fail("e quatro são de buscar, são " + buscas);
+
+        // e cada um deles tem fala nos dois idiomas, que é o que uma chave sem tradução não tem
+        for (CovenQuest pedido : CovenQuest.TODAS) {
+            if (pedido.chave().isBlank()) helper.fail("um pedido sem chave de fala");
+        }
         helper.succeed();
     }
 }

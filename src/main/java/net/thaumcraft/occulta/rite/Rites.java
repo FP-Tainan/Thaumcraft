@@ -1399,6 +1399,197 @@ public final class Rites {
         }
     }
 
+    // ================================================================= os do demônio
+
+    /**
+     * <b>Banir</b>: o {@code RiteBanishDemon} do Witchery.
+     *
+     * <p>De segundo em segundo, tudo o que é <b>de lá</b> a nove blocos do círculo <b>deixa de existir</b> —
+     * sem dano, sem luta, sem queda: some, e no lugar fica um estouro de partículas.
+     *
+     * <p>E a lista do que ele apanha é a lista das coisas que o ofício pode chamar e não consegue despedir:
+     * o <b>Demônio</b>, a <b>Morte</b>, o <b>Senhor do Tormento</b>, o <b>Imp</b> e o <b>Reflexo</b>. É o
+     * botão de desfazer de quem chamou mais do que devia — e por isso ele é barato: pó de blaze e uma pedra.
+     *
+     * <p><b>Declarado:</b> deste porte entram o Demônio e o Reflexo, que são os dois que existem aqui. A
+     * Morte, o Senhor do Tormento e o Imp ainda não estão portados, e a lista já os espera.
+     *
+     * @param radius a que distância ele alcança
+     */
+    public record BanishDemon(int radius) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+                level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
+
+                var caixa = new AABB(onde).inflate(this.radius);
+                for (var bicho : level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, caixa)) {
+                    if (!deLá(bicho)) continue;
+                    if (bicho.distanceToSqr(onde.getX(), onde.getY(), onde.getZ())
+                            >= (double) this.radius * this.radius) {
+                        continue;
+                    }
+                    level.sendParticles(net.minecraft.core.particles.ParticleTypes.EXPLOSION,
+                            bicho.getX(), bicho.getY() + 1.0, bicho.getZ(), 8, 0.5, 1.0, 0.5, 0.0);
+                    bicho.discard();
+                }
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+
+        /** O que é de lá, e por isso se despede. */
+        public static boolean deLá(net.minecraft.world.entity.Entity quem) {
+            return quem instanceof net.thaumcraft.occulta.demon.DemonEntity
+                    || quem instanceof net.thaumcraft.occulta.mirror.ReflectionEntity;
+        }
+    }
+
+    /**
+     * <b>O inferno na terra</b>: o {@code RiteHellOnEarth} do Witchery, e o rito mais caro que ele tem.
+     *
+     * <p>Ele é um rito que <b>se abre em círculo</b>, e o que ele faz enquanto cresce é <b>estragar o
+     * chão</b>: onde o anel passa, a terra, a grama, o micélio, a terra arada e a areia viram
+     * <b>pedra do Nether</b> — e viram mais perto do meio do que na borda, que é o que deixa no fim uma
+     * mancha de inferno densa no centro e esfarrapada nas pontas.
+     *
+     * <p>Com a <b>maestria da maldição</b>, a grama alta e as flores que o anel atravessa <b>pegam fogo</b>
+     * em vez de só sumirem.
+     *
+     * <p>E quando o círculo chega ao tamanho dele, o rito <b>não acaba</b>: de duas em duas segundas ele
+     * cospe uma criatura do Nether no meio, <b>para sempre</b>, duzentos de poder por vez. O que sai não é a
+     * esmo: <b>dois em cem</b> é um <b>Demônio</b>, oito um ghast, trinta um blaze, vinte um cubo de magma, e
+     * o resto zumbis-porcos.
+     *
+     * <p>Dois por cento é de propósito. Quem quiser um coração <b>compra</b>; quem quiser um demônio
+     * <b>espera</b> — e o demônio que sai daqui <b>não foi chamado por ninguém</b>, de modo que vai embora se
+     * ninguém estiver olhando.
+     *
+     * <p>O preço de acendê-lo diz o resto: Sopa de Pedra Vermelha, um <b>Coração de Demônio</b>, uma Pedra
+     * de Caminho, uma <b>Estrela do Nether</b>, um <b>aldeão vivo</b> e cinco mil de poder. Ele pede um
+     * coração para dar corações.
+     *
+     * <p><b>Declarado:</b> o original tranca o fogo atrás de uma opção de configuração; este porte não tem
+     * arquivo de configuração e deixa o fogo sempre ligado para quem tem a maestria, que é o que a opção faz
+     * por omissão.
+     */
+    public static final class HellOnEarth extends Expanding {
+        /** De quantas em quantas batidas sai um, e as quatro fatias da sorte. */
+        public static final int DE = 40;
+        public static final double DEMÔNIO = 0.02;
+        public static final double GHAST = 0.1;
+        public static final double BLAZE = 0.4;
+        public static final double MAGMA = 0.6;
+
+        /** E de quantas em quantas casas o chão estraga: mais perto do meio, mais fundo. */
+        public static final int PERTO = 2;
+        public static final int MEIO = 4;
+        public static final int LONGE = 6;
+
+        private final float upkeep;
+
+        public HellOnEarth(int radius, int height, float upkeep) {
+            super(radius, height, true);
+            this.upkeep = upkeep;
+        }
+
+        public float upkeep() {
+            return this.upkeep;
+        }
+
+        /**
+         * O chão, casa por casa.
+         *
+         * <p>A grama alta e as plantas de lavoura <b>queimam</b>, e o que está debaixo delas é que estraga; o
+         * resto estraga onde está, se for sólido, ou um abaixo, se não for.
+         */
+        @Override
+        public void onBlock(ServerLevel level, BlockPos onde, int raio, Player quem, boolean mordeFundo) {
+            net.minecraft.world.level.block.state.BlockState aqui = level.getBlockState(onde);
+            if (aqui.is(net.minecraft.world.level.block.Blocks.SHORT_GRASS) || éLavoura(aqui)) {
+                if (mordeFundo) {
+                    level.setBlockAndUpdate(onde, net.minecraft.world.level.block.Blocks.FIRE
+                            .defaultBlockState());
+                }
+                estraga(level, onde.below(), raio);
+            } else if (aqui.isSolid()) {
+                estraga(level, onde, raio);
+            } else {
+                BlockPos abaixo = onde.below();
+                if (level.getBlockState(abaixo).isSolid()) estraga(level, abaixo, raio);
+            }
+        }
+
+        /** As plantas que o anel queima em vez de atravessar. */
+        private static boolean éLavoura(net.minecraft.world.level.block.state.BlockState oquê) {
+            return oquê.is(net.minecraft.tags.BlockTags.SMALL_FLOWERS)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.CARROTS)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.WHEAT)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.POTATOES)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.MELON_STEM)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.ATTACHED_MELON_STEM)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.PUMPKIN_STEM)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.ATTACHED_PUMPKIN_STEM)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.MELON)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.PUMPKIN)
+                    || oquê.is(net.minecraft.world.level.block.Blocks.CARVED_PUMPKIN);
+        }
+
+        /**
+         * E o estrago: uma casa em duas no terço de dentro, uma em quatro na metade, uma em seis no resto.
+         *
+         * <p>Só a terra, a grama, o micélio, a terra arada e a areia estragam. Pedra não; madeira não. O
+         * inferno na terra <b>come o que é vivo</b> e deixa o que é construído.
+         */
+        private void estraga(ServerLevel level, BlockPos onde, int raio) {
+            net.minecraft.world.level.block.state.BlockState oquê = level.getBlockState(onde);
+            if (!oquê.is(net.minecraft.world.level.block.Blocks.DIRT)
+                    && !oquê.is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK)
+                    && !oquê.is(net.minecraft.world.level.block.Blocks.MYCELIUM)
+                    && !oquê.is(net.minecraft.world.level.block.Blocks.FARMLAND)
+                    && !oquê.is(net.minecraft.world.level.block.Blocks.SAND)) {
+                return;
+            }
+            int uma = raio < this.maxRadius / 3 ? PERTO : raio < this.maxRadius / 2 ? MEIO : LONGE;
+            if (level.getRandom().nextInt(uma) != 0) return;
+            level.setBlockAndUpdate(onde, net.minecraft.world.level.block.Blocks.NETHERRACK
+                    .defaultBlockState());
+        }
+
+        /** E, cheio, ele cospe o Nether pela porta que abriu — até o altar secar. */
+        @Override
+        protected boolean done(ServerLevel level, BlockPos meio, int raio, boolean cheio, long ticks) {
+            if (!cheio || ticks % DE != 0L) return false;
+
+            var altar = net.thaumcraft.occulta.PowerSources.closest(level, meio);
+            if (altar == null || !altar.consume(this.upkeep)) return true;
+
+            var qual = sorteia(level.getRandom().nextDouble());
+            var bicho = qual.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            if (bicho == null) return false;
+
+            bicho.snapTo(meio.getX() + 0.5, meio.getY() + 2.0, meio.getZ() + 0.5, 0.0f, 0.0f);
+            if (bicho instanceof net.minecraft.world.entity.Mob mob) {
+                mob.finalizeSpawn(level, level.getCurrentDifficultyAt(meio),
+                        net.minecraft.world.entity.EntitySpawnReason.TRIGGERED, null);
+            }
+            level.addFreshEntity(bicho);
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.EXPLOSION_EMITTER,
+                    meio.getX() + 0.5, meio.getY() + 2.0, meio.getZ() + 0.5, 1, 1.0, 2.0, 1.0, 0.0);
+            level.playSound(null, meio, SoundEvents.BLAZE_DEATH, SoundSource.BLOCKS, 1.0f, 1.0f);
+            return false;
+        }
+
+        /** O que sai, pela ordem das fatias do original. */
+        public static net.minecraft.world.entity.EntityType<?> sorteia(double sorte) {
+            if (sorte < DEMÔNIO) return net.thaumcraft.occulta.OccultaEntities.DEMON;
+            if (sorte < GHAST) return net.minecraft.world.entity.EntityTypes.GHAST;
+            if (sorte < BLAZE) return net.minecraft.world.entity.EntityTypes.BLAZE;
+            if (sorte < MAGMA) return net.minecraft.world.entity.EntityTypes.MAGMA_CUBE;
+            return net.minecraft.world.entity.EntityTypes.ZOMBIFIED_PIGLIN;
+        }
+    }
+
     // ================================================================= os que empurram e puxam
 
     /**
@@ -1884,6 +2075,13 @@ public final class Rites {
                 quem.snapTo(onde.getX() + 0.5, onde.getY() + 1.0, onde.getZ() + 0.5, 1.0f, 0.0f);
                 quem.finalizeSpawn(level, level.getCurrentDifficultyAt(quem.blockPosition()),
                         net.minecraft.world.entity.EntitySpawnReason.TRIGGERED, null);
+                /*
+                 * E quem é chamado por alguém <b>fica</b>: o original marca o demônio como feito por mão de
+                 * gente, e é essa marca que o impede de sumir quando ninguém está olhando.
+                 */
+                if (quem instanceof net.thaumcraft.occulta.demon.DemonEntity demônio) {
+                    demônio.marcaComoChamado();
+                }
                 level.addFreshEntity(quem);
 
                 level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
@@ -2057,6 +2255,69 @@ public final class Rites {
     }
 
     public static void register() {
+        /*
+         * Os dois do demônio: o que o despede e o que o chama.
+         *
+         * O de banir vem em duas — a de círculo, que paga em poder, e a <b>portátil</b>, que paga numa Pedra
+         * Sintonizada Carregada. É a mesma escada que os outros ritos portáteis do mod usam, e aqui ela
+         * importa mais do que nos outros: quem precisa de banir um demônio raramente está ao pé do altar.
+         */
+        RiteRegistry.register("tc.rite.banishdemon", new BanishDemon(9),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.BLAZE_POWDER,
+                                net.thaumcraft.occulta.OccultaItems.WAYSTONE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE);
+
+        RiteRegistry.register("tc.rite.banishdemonportable", new BanishDemon(9),
+                new Sacrifice.Items(Items.BLAZE_POWDER,
+                        net.thaumcraft.occulta.OccultaItems.WAYSTONE,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE);
+
+        /*
+         * E o Inferno na Terra, que é o rito mais caro do mod: ele pede um Coração de Demônio para fazer
+         * nascer demônios, e um aldeão vivo. Dois por cento do que sai dele é um demônio; o resto é o
+         * Nether entrando pela porta que ele abriu.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.hellonearth",
+                new HellOnEarth(20, 15, 200.0f),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.REDSTONE_SOUP,
+                                net.thaumcraft.occulta.OccultaItems.DEMON_HEART,
+                                net.thaumcraft.occulta.OccultaItems.WAYSTONE,
+                                Items.NETHER_STAR),
+                        new Sacrifice.Living(net.minecraft.world.entity.EntityTypes.VILLAGER),
+                        new Sacrifice.Power(5000.0f, 20)),
+                new RiteRegistry.Ring(0, 0, 16), new RiteRegistry.Ring(0, 28, 0),
+                new RiteRegistry.Ring(0, 0, 40),
+                java.util.EnumSet.of(RiteRegistry.When.OVERWORLD, RiteRegistry.When.NIGHT)));
+
+        /*
+         * E os dois jeitos de chamar um demônio, que são os dois ritos que o original tem para isso. O
+         * primeiro pede um <b>aldeão vivo</b>; o segundo troca o aldeão por <b>duas pedras sintonizadas</b>,
+         * uma delas carregada, e é por isso que se chama caro: as pedras custam mais do que um aldeão custa
+         * a quem não se importa com aldeões.
+         */
+        RiteRegistry.register("tc.rite.summondemon",
+                new SummonCreature(() -> net.thaumcraft.occulta.OccultaEntities.DEMON, 0),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.REFINED_EVIL,
+                                Items.BLAZE_POWDER, Items.ENDER_PEARL),
+                        new Sacrifice.Living(net.minecraft.world.entity.EntityTypes.VILLAGER),
+                        new Sacrifice.Power(3000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 40));
+
+        RiteRegistry.register("tc.rite.summondemonexpensive",
+                new SummonCreature(() -> net.thaumcraft.occulta.OccultaEntities.DEMON, 0),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.REFINED_EVIL,
+                                Items.BLAZE_ROD, Items.ENDER_PEARL,
+                                net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE,
+                                net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                        new Sacrifice.Power(3000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 40));
+
         RiteRegistry.register("tc.rite.cook", new Cook(5.0f, 0.08),
                 new Sacrifice.Both(
                         new Sacrifice.Items(Items.BLAZE_ROD, net.thaumcraft.occulta.OccultaItems.WOOD_ASH,

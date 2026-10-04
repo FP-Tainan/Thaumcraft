@@ -21,7 +21,7 @@ import java.util.List;
 public final class RiteRegistry {
     /** A hora que um rito pede. */
     public enum When {
-        DAY, NIGHT, RAIN, THUNDER
+        DAY, NIGHT, RAIN, THUNDER, OVERWORLD
     }
 
     /** O que um anel tem de ter: quantos glifos de cada giz. */
@@ -61,6 +61,7 @@ public final class RiteRegistry {
                     case NIGHT -> !level.isBrightOutside();
                     case RAIN -> level.isRaining();
                     case THUNDER -> level.isThundering();
+                    case OVERWORLD -> level.dimension() == net.minecraft.world.level.Level.OVERWORLD;
                 };
                 if (!bate) return false;
             }

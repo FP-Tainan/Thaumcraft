@@ -1,0 +1,6 @@
+{
+  "__comment": "O Coração se desenha pelo DemonHeartRenderer, como no original; aqui só a cor das lascas.",
+  "textures": {
+    "particle": "thaumcraft:block/demon_heart"
+  }
+}

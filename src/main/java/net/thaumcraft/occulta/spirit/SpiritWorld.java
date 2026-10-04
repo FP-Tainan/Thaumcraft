@@ -52,6 +52,16 @@ public final class SpiritWorld {
     public static final double COTTON = -0.1;
     public static final int COTTONS = 2;
     public static final double FIRE = 0.1;
+
+    /**
+     * E o <b>Coração de Demônio</b>, que é a única coisa que <b>sobe</b> a conta de verdade: trinta e cinco
+     * por cento cada, até dois.
+     *
+     * <p>Dois corações ao pé da cama somam <b>setenta por cento</b> de pesadelo, e é com eles que se faz o
+     * <b>pesadelo demoníaco</b> — o sonho de que nem toda a gente volta.
+     */
+    public static final double HEART = 0.35;
+    public static final int HEARTS = 2;
     public static final int FIRES = 3;
     /** E a poça de Espírito Fluente, que tira um décimo cada, até três. */
     public static final double POOL = -0.1;
@@ -98,6 +108,7 @@ public final class SpiritWorld {
         int algodões = 0;
         int fogos = 0;
         int poças = 0;
+        int corações = 0;
 
         for (BlockPos casa : BlockPos.betweenClosed(onde.offset(-LOOK, -LOOK, -LOOK),
                 onde.offset(LOOK, LOOK, LOOK))) {
@@ -110,6 +121,10 @@ public final class SpiritWorld {
             if (algodões < COTTONS && feitio.is(OccultaBlocks.WISPY_COTTON)) {
                 algodões++;
                 chance += COTTON;
+            }
+            if (corações < HEARTS && feitio.is(OccultaBlocks.DEMON_HEART)) {
+                corações++;
+                chance += HEART;
             }
             if (fogos < FIRES && feitio.is(Blocks.FIRE)) {
                 fogos++;

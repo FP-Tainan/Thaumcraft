@@ -227,6 +227,20 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.vampire.SunGrenadeEntity::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
+    /**
+     * O <b>Demônio</b>, que não é um monstro: é um mercador.
+     *
+     * <p>Cem de vida, imune ao fogo, com teto de quinze de dano por pancada — e uma lista de trocas em que
+     * se compra o Coração dele.
+     */
+    public static final EntityType<net.thaumcraft.occulta.demon.DemonEntity> DEMON =
+            register("demon", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.demon.DemonEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.demon.DemonEntity::attributes))
+                    .fireImmune()
+                    .sized(1.0f, 2.9f).eyeHeight(2.6f).clientTrackingRange(16));
+
     /** O feitiço que ela atira. */
     public static final EntityType<net.thaumcraft.occulta.vampire.LilithSpellEntity> LILITH_SPELL =
             register("lilith_spell", net.minecraft.world.entity.EntityType.Builder
@@ -315,6 +329,8 @@ public final class OccultaEntities {
                 .register(FOLLOWER, net.thaumcraft.occulta.vampire.FollowerEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(LILITH, net.thaumcraft.occulta.vampire.LilithEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(DEMON, net.thaumcraft.occulta.demon.DemonEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(ATTACK_BAT, net.minecraft.world.entity.ambient.Bat.createAttributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry

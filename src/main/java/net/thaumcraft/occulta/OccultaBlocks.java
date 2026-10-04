@@ -343,6 +343,52 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.vampire.CoffinBlockEntity::new,
                             java.util.Set.of(COFFIN)));
 
+    /**
+     * A <b>Rosa de Sangue</b>, que se lembra de quem pisou nela.
+     *
+     * <p>Não se colhe com a mão: só a Boline a tira do chão, e tira-a com o que ela guarda dentro.
+     */
+    public static final Block BLOOD_ROSE = register("blood_rose", properties ->
+            new BloodRoseBlock(properties.mapColor(MapColor.COLOR_RED)
+                    .noCollision().instabreak().noLootTable().sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<BloodRoseBlockEntity>
+            BLOOD_ROSE_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("blood_rose"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            BloodRoseBlockEntity::new, java.util.Set.of(BLOOD_ROSE)));
+
+    /** E a <b>Guirlanda de Alho</b>, que cospe vampiros para fora e queima quem a quiser arrancar. */
+    public static final Block GARLIC_GARLAND = register("garlic_garland", properties ->
+            new GarlicGarlandBlock(properties.mapColor(MapColor.TERRACOTTA_WHITE)
+                    .strength(0.2f).sound(SoundType.GRASS).noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<GarlicGarlandBlockEntity>
+            GARLIC_GARLAND_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("garlic_garland"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            GarlicGarlandBlockEntity::new, java.util.Set.of(GARLIC_GARLAND)));
+
+    /**
+     * O <b>Coração de Demônio</b> posto no chão, que bate de vinte e cinco em vinte e cinco batidas.
+     *
+     * <p>É a fonte de poder mais forte que um Altar pode ter — quarenta cada, até dois.
+     */
+    public static final Block DEMON_HEART = register("demon_heart", properties ->
+            new net.thaumcraft.occulta.demon.DemonHeartBlock(properties.mapColor(MapColor.COLOR_RED)
+                    .strength(1.0f).sound(SoundType.SLIME_BLOCK).noOcclusion()
+                    .lightLevel(state -> net.thaumcraft.occulta.demon.DemonHeartBlock.LUZ)
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.demon.DemonHeartBlockEntity> DEMON_HEART_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("demon_heart"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.demon.DemonHeartBlockEntity::new,
+                            java.util.Set.of(DEMON_HEART)));
+
     // ------------------------------------------------------------------ o marcador da muralha
 
     /**

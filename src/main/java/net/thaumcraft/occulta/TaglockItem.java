@@ -52,6 +52,38 @@ public class TaglockItem extends Item {
         return preso != null && preso.owner().equals(quem.getUUID());
     }
 
+    /**
+     * <b>Encostar o frasco numa Rosa de Sangue tira dela quem ela apanhou</b>: o ramo do
+     * {@code ItemTaglockKit} que clica numa rosa.
+     *
+     * <p>É a única maneira do ofício inteiro de prender alguém <b>sem lhe chegar perto</b>. Tudo o resto —
+     * a boneca, a maldição, o espelho — precisa de um fio de quem se quer, e um fio pede um encontro. A rosa
+     * não pede: planta-se no caminho e espera-se.
+     */
+    @Override
+    public InteractionResult useOn(net.minecraft.world.item.context.UseOnContext onde) {
+        if (isBound(onde.getItemInHand())) return InteractionResult.PASS;
+        if (!(onde.getLevel() instanceof net.minecraft.server.level.ServerLevel level)) {
+            return InteractionResult.PASS;
+        }
+        Player quem = onde.getPlayer();
+        if (quem == null) return InteractionResult.PASS;
+        if (!level.getBlockState(onde.getClickedPos()).is(OccultaBlocks.BLOOD_ROSE)) {
+            return InteractionResult.PASS;
+        }
+
+        Taglock tinha = BloodRoseBlock.tira(level, onde.getClickedPos());
+        if (tinha == null) return InteractionResult.SUCCESS;
+
+        ItemStack cheio = onde.getItemInHand().copyWithCount(1);
+        cheio.set(OccultaComponents.TAGLOCK, tinha);
+        onde.getItemInHand().shrink(1);
+        if (!quem.getInventory().add(cheio)) quem.drop(cheio, false);
+        level.playSound(null, onde.getClickedPos(), SoundEvents.BOTTLE_FILL,
+                SoundSource.BLOCKS, 1.0f, 1.2f);
+        return InteractionResult.SUCCESS;
+    }
+
     /** O {@code onLeftClickEntity}: tocar alguém enche o frasco com ele. */
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player quem, LivingEntity alvo,

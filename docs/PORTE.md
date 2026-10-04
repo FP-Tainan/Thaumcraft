@@ -7945,3 +7945,292 @@ castanho com os olhos vermelhos e os dentes do Lobisomem.
 Esta é a exceção, não o novo costume. O resto do porte continua fiel, e qualquer outra troca de gosto tem de
 ser pedida e escrita aqui do mesmo jeito: **o que se trocou, por que se trocou, e o que ficou guardado para
 quem quiser o original de volta**.
+
+## A Rosa de Sangue e a Guirlanda de Alho (2026-10-03)
+
+As duas pontas do ramo do vampiro: a que **prende** e a que **defende**. E a primeira é, sem exagero, a coisa
+mais sinistra que este mod tem.
+
+### A Rosa de Sangue
+
+Uma flor pequena que **se lembra de quem pisou nela**. Quem passar por cima deixa o nome lá dentro, e a flor
+**fecha** — muda de desenho, e quem olhar vê que ela comeu. Depois disso, um **Frasco de Vínculo** encostado
+nela sai **cheio daquela pessoa**, sem que ela jamais tenha sido tocada.
+
+É isso: um **vínculo à distância**. Todo o resto do ofício que prende alguém — a boneca, a maldição, o
+espelho — precisa de um fio de quem se quer, e um fio pede um **encontro**. A rosa não pede. Planta-se no
+caminho de alguém e espera-se.
+
+**E ela não se colhe.** Quebrada de qualquer jeito, não deixa nada. Só a **Boline** a tira do chão — e tirada
+com a Boline ela sai **com quem tem dentro**, de modo que se pode arrancar a flor que apanhou alguém e
+levá-la para casa. Plantada outra vez, volta cheia.
+
+No Altar ela vale **dois de poder**, contando até dez.
+
+#### De onde vem a primeira, e um elo que falta
+
+Um **baú vazio**, com **quatro flores** à volta e **água por baixo**, passado a **Mutandis Extremis**: o baú
+some, e no lugar das quatro flores ficam quatro rosas.
+
+**Declarado:** no original esta corrente tem um elo no meio. O baú comum vira um **Apanha-Erva**, e é o **Baú
+de Sanguessugas** — que também guarda nomes, e também se faz assim — que vira as rosas. Nenhum dos dois está
+portado, e por isso o baú comum faz aqui o que o Baú de Sanguessugas fazia lá. Quando eles vierem, a corrente
+ganha o elo de volta.
+
+### A Guirlanda de Alho
+
+Cinco cabeças de alho enfiadas num cordel e penduradas numa parede. É a coisa mais barata do ramo — cinco
+alhos e dois fios — e a única defesa contra um vampiro que não pede ofício nenhum.
+
+Um **vampiro** que encoste nela é **empurrado**, com o mesmo empurrão do anel de proteção do ofício, e isso
+vale tanto para o bicho como para **um jogador que seja vampiro**. E um vampiro que **bata nela** para a
+arrancar **pega fogo**, um segundo.
+
+Repare no que isso significa para quem joga de vampiro: a casa de qualquer aldeão com uma guirlanda à porta
+passa a ser um lugar de onde ele é **cuspido para fora** sem poder sequer tirar o alho sem se queimar. É a
+primeira coisa deste mod que torna o jogador **indesejado na própria aldeia**, e custa cinco alhos.
+
+No criativo ela não faz nada, nem empurra nem queima.
+
+### O que se desenhou
+
+O modelo da guirlanda são **vinte e nove caixas** numa chapa de trinta e dois, e a graça está em como uma
+cabeça de alho é feita: um **talo** de um pixel de grosso com **quatro chapas penduradas nele**, cada uma mais
+larga do que a de cima — três, cinco, sete e quatro. É a silhueta de um bolbo visto de fora, estreito no
+pescoço e bojudo no meio, feita com quatro caixas e **nenhuma rotação**.
+
+As cinco penduram-se em **ziguezague**, e os quatro cordéis as ligam em **V**, com as caixas encolhidas
+quatro décimos — que é o truque de 2014 para um fio parecer um fio e não uma tábua.
+
+E a rosa tem **dois desenhos**, aberto e fechado. A diferença entre eles é tudo o que denuncia que ela comeu
+alguém: iguais, a flor deixaria de avisar e passaria a ser uma armadilha perfeita, que é exatamente o que ela
+não deve ser.
+
+### Uma prova antiga que esta fatia derrubou
+
+A da **Pedra de Caminho** largava o destino a quarenta blocos para o lado — que é dentro da arena de outra
+prova, e essa arena varre o que lá estiver quando se arruma. Passou a largá-lo **quarenta blocos para cima**,
+onde arena nenhuma mora. É a terceira prova deste porte a cair por causa disso, e as três ficaram
+independentes da vizinhança.
+
+**Guardas:** `OccultaRoseAndGarlicGameTest`, com cinco — a rosa que se lembra de quem pisou e o frasco que o
+tira de lá, que é a prova que carrega a fatia; a Boline que a colhe com quem ela guarda, e a replantação que
+o devolve; os dois de poder no Altar; a guirlanda que se pendura numa parede e cai com ela; e a que não
+estorva ninguém que não seja vampiro. E `OccultaRoseAndGarlicClientTest`, com quatro telas: as duas rosas
+lado a lado, a guirlanda de frente e de lado, e as duas no inventário.
+
+## O Demônio, e o Coração que ele vende (2026-10-04)
+
+O Witchery tem um vendedor que não é um aldeão. É alto, tem chifres, não se mata a bater, e vende uma coisa
+que nenhuma outra parte do mod dá: um **Coração de Demônio**.
+
+### Primeiro, uma lição que esta fatia ensinou
+
+Os fontes de 1.7.10 estão em nomes SRG: `Items.field_151064_bs`. Eu li `field_151064_bs` e escrevi **pó de
+blaze**, porque estava ao lado de uma vara de blaze e o número era vizinho do `field_151065_br`, que é o pó.
+
+`field_151064_bs` é **creme de magma**.
+
+Um nome errado e três coisas saem erradas de uma vez: a moeda que o demônio cobra, o que ele deixa quando
+morre, e **o que o faz estourar**. E a armadilha dele deixa de funcionar, porque o pó de blaze é justamente o
+que o **manda embora** no rito de banir — quem lesse o mod porteado aprenderia o contrário do que o original
+ensina.
+
+As tabelas que traduzem isso estão no maven da Forge e agora estão baixadas em
+`Base Extras/mcp_stable_12-1.7.10/`. **Nenhum campo SRG se adivinha mais.**
+
+### O que ele é, por dentro
+
+Um **golem**. Literalmente: o original estende o golem de ferro, e isso explica tudo o que ele faz de
+estranho. Anda com o passo duro do golem, atira as pernas na **curva de triângulo** em vez do seno de gente,
+e **oscila seis graus e meio** de lado a cada passo.
+
+Cem de vida — e o número que conta é outro: **nada lhe tira mais do que quinze de uma vez**. Uma espada de
+diamante encantada ao máximo demora o mesmo que uma de madeira a derrubá-lo, e o que decide a luta deixa de
+ser a arma e passa a ser a **paciência** de quem bate. É o jeito do original de dizer, sem uma linha de
+texto, que ele não é para matar.
+
+De perto bate **sete mais até quinze**, e com o golpe vem um **empurrão para cima** — o truque do golem, que
+manda quem lhe chega perto pelos ares. De longe atira **bolas de fogo grandes**, as do ghast, e cobra quinze.
+É imune ao fogo, **não se afoga nem gasta o ar**, e **brilha sempre**: o `getBrightness` dele devolve um, de
+modo que um demônio parado no escuro parece trazer a luz com ele.
+
+E ele **some sozinho** se ninguém estiver perto, como qualquer bicho. Só o demônio **chamado por alguém**
+fica — e é o rito de chamar que o marca. O Inferno na Terra não marca os dele, e por isso o rito mais caro do
+mod dá demônios que vão embora se ninguém estiver olhando.
+
+### O negócio
+
+Ele é um **Merchant** — abre a mesma tela de trocas de um aldeão, com a mesma barra e os mesmos botões, e é
+isso que faz a cena funcionar: a interface diz "mercador" e a criatura diz "demônio", e o jogador tem de
+decidir em qual das duas acreditar.
+
+A lista se monta nesta ordem, e a ordem é tudo:
+
+1. **tantos livros encantados quantas trocas vão caber** — de seis a nove —, cada um com um encantamento
+   sorteado e um preço que sobe com o grau;
+2. uma em quatro vezes cada, **Pó Espectral** e **Língua de Cão**; e uma em seis e dois terços cada, **Sopa
+   de Pedra Vermelha**, **duas lágrimas de ghast** por um diamante e **duas pérolas do fim** por um diamante;
+3. a lista se **embaralha**;
+4. o **Coração** é enfiado num dos **três primeiros lugares**;
+5. e então se **corta** no número de trocas que saiu.
+
+Como os livros entram primeiro e enchem a lista, o embaralhar é o que decide quais das coisas do ofício
+sobrevivem ao corte. E o Coração, enfiado **depois** de embaralhar, nunca é cortado: um demônio pode não ter
+uma única coisa do ofício para vender, mas tem sempre o coração.
+
+Cada troca se faz **duas vezes** — sete de um pedido novo menos as cinco que o original desconta. Um demônio
+vende dois corações e nunca mais.
+
+#### A moeda, e a armadilha
+
+Cada troca é cobrada **numa moeda sorteada só para ela**, e não uma por demônio: **um em cinco** em vara de
+blaze, um em cinco em **creme de magma**, um em dez em diamante, um em quatro em esmeralda, e o resto em
+ouro. O preço é o mesmo em valor; o que muda é quantas peças dele cabem numa esmeralda. O Coração sorteia a
+dele à parte, e custa trinta peças se for ouro, ou três.
+
+E então: **pagar a um demônio com a matéria do inferno faz o demônio estourar**. Ele aceita a vara, aceita o
+creme, entrega o que prometeu — e **cinquenta batidas depois**, que é o tempo exato de quem fez o negócio se
+virar e começar a andar, explode com força três e fogo.
+
+No original o campo que conta essas batidas se chama `tryEscape`: o estouro é a **fuga** dele. **Ele não
+morre nele** — abre um buraco no chão e vai embora. Quem fica no buraco é quem pagou.
+
+Dois em cinco das trocas do mundo são cobradas em matéria do inferno. Nada no jogo avisa. É a melhor
+armadilha deste mod porque não está escondida em lugar nenhum: está escrita na **moeda que ele pediu**, e
+quem souber ler a moeda nunca cai nela.
+
+### O Coração
+
+Um bloco que **bate**. De vinte e cinco em vinte e cinco batidas toca uma batida de coração no lugar onde
+está, e quem entrar numa casa com um coração no canto ouve a casa pulsando antes de ver por quê. O som é
+tocado **do lado de cá** — um som mandado pelo servidor chegaria a toda a gente ao mesmo tempo e perderia o
+que ele tem de bom, que é **vir daquele canto**.
+
+É a **fonte de poder de Altar mais forte** que conta mais do que uma vez: quarenta cada, contando até dois.
+Oitenta de poder em dois blocos, quando oitenta blocos de grama dão cento e sessenta e pedem oitenta blocos.
+E no **Mundo dos Espíritos** ele torna o pesadelo **demoníaco**, que é a coisa mais perigosa que aquele lugar
+tem.
+
+Também é o que acende o **Inferno na Terra** e o que entra no cozimento da **Paralisia**. Ele pede um coração
+para dar corações.
+
+No alambique ele dá, com Vapor de Diamante, **quatro Sangues Infernais e um Mal Refinado**; com pedra do
+Nether, **areia das almas e dois Sangues Infernais**.
+
+**Declarado:** no original ele entra ainda em três coisas que este porte não tem — o **Ânimo Infernal** no
+caldeirão, a **Língua do Diabo** na bancada e a **Estátua da Deusa**. As três ficam esperando as peças delas.
+
+#### E o que o coração destrancou em quem já estava aqui
+
+O **Reflexo** — o demônio que guarda a cela de um espelho — larga **um Coração** quando morre, sempre, e isso
+estava faltando desde a fatia dos espelhos porque o coração não existia. Agora existe.
+
+E a **bruxa do coven** volta a ter o pedido dela. A lista de pedidos do original tem **sete**, e aqui eram
+**três**, porque as coisas que os outros quatro pediam não existiam. Com o Coração, a **Pedra Necrótica** e o
+**Cozimento Grotesco** no mod, entram mais três — fica faltando o que pede uma **Bola de Cristal**.
+
+#### E come-se
+
+Por **dois minutos**: Vida Extra V, Regeneração II, Força III, Rapidez III e Resistência ao Fogo III. É mais
+poder do que qualquer outra coisa deste mod dá de uma vez. Com ele vêm **Cegueira** pelos mesmos dois minutos
+e **Fome II** por três.
+
+E comê-lo **põe fogo em quem come**, por **dois minutos e doze segundos**.
+
+A Resistência ao Fogo dura **dois minutos**. **O fogo passa dela por doze segundos** — e é nesses doze
+segundos, cego, com a proteção acabada e as chamas ainda acesas, que o negócio se cobra. Nenhuma linha do
+jogo o diz. É a mesma piada da moeda, contada outra vez: o preço está todo escrito nos números, e os números
+estão todos à vista.
+
+A ordem em que os efeitos entram importa e é a do original: os efeitos primeiro, o fogo depois. É por isso
+que os primeiros dois minutos não doem.
+
+### Os ritos
+
+**Banir** apaga, de segundo em segundo, tudo o que é **de lá** a nove blocos do círculo — sem dano, sem luta,
+sem queda: some. É o botão de desfazer de quem chamou mais do que devia, e por isso é barato: **pó de blaze**
+e uma pedra.
+
+**Declarado:** a lista do original tem cinco nomes — o Demônio, a Morte, o Senhor do Tormento, o Imp e o
+Reflexo. Entram os **dois que existem aqui**, e a lista já espera os outros três.
+
+**Chamar** tem dois ritos, e a diferença entre eles diz o que o mod pensa de quem joga: o primeiro pede Mal
+Refinado, pó de blaze, uma pérola do fim e um **aldeão vivo**; o segundo troca o aldeão por **duas pedras
+sintonizadas**, uma delas carregada. O segundo se chama "caro" no código do original — ou seja, as pedras
+custam mais do que um aldeão custa a quem não se importa com aldeões.
+
+**O Inferno na Terra** é um rito que **se abre em círculo**, e o que ele faz enquanto cresce é **estragar o
+chão**: onde o anel passa, a terra, a grama, o micélio, a terra arada e a areia viram **pedra do Nether** —
+uma casa em duas no terço de dentro, uma em quatro na metade, uma em seis no resto. É isso que deixa no fim
+uma mancha de inferno densa no centro e esfarrapada nas pontas, em vez de um disco. Pedra não estraga;
+madeira não estraga. Ele **come o que é vivo e deixa o que é construído**.
+
+Com a **maestria da maldição**, a grama alta e as flores que o anel atravessa **pegam fogo** em vez de só
+sumirem.
+
+E quando o círculo chega ao tamanho dele, o rito **não acaba**: de duas em duas segundas cospe uma criatura
+do Nether no meio, **para sempre**, duzentos de poder por vez. **Dois em cem** é um **Demônio**, oito um
+ghast, trinta um blaze, vinte um cubo de magma, e o resto zumbis-porcos.
+
+Dois por cento é de propósito. Quem quiser um coração **compra**; quem quiser um demônio **espera**.
+
+Ele só pega **no Mundo de Cima**, **de noite**, e o preço de acendê-lo diz o resto: Sopa de Pedra Vermelha,
+um **Coração de Demônio**, uma Pedra de Caminho, uma **Estrela do Nether**, um **aldeão vivo** e cinco mil de
+poder — e os **três anéis** de glifos, dezesseis infernais dentro, vinte e oito de outro-lugar no meio e
+quarenta infernais fora. É o único rito do mod que pede os três anéis cheios.
+
+**Declarado:** o original tranca o fogo atrás de uma opção de configuração; este porte não tem arquivo de
+configuração e deixa o fogo sempre ligado para quem tem a maestria, que é o que a opção faz por omissão. E a
+Pedra de Caminho Ligada, que no original entra como oferta opcional, fica para quando ela vier.
+
+### O que se desenhou
+
+Cento e vinte e oito por trinta e dois de textura, e **sete caixas só na cabeça** — cara, dois chifres de um
+pixel que sobem oito, dois dentes que descem do lábio de cima, um focinho e um lábio de baixo. O original
+lhes dá nome, uma a uma, que era o jeito de então de pôr sete desenhos numa peça só.
+
+Braços de **vinte** de comprido, que lhe chegam abaixo dos joelhos e balançam na mesma curva de triângulo das
+pernas, com um **desconto de dois décimos** que os deixa pendurados um dedo à frente do corpo. No golpe, o
+**braço direito** sai de dois radianos atrás e desce em dez quadros — o martelo do golem de ferro. O esquerdo
+fica onde estava: o original não o toca, e é por isso que ele parece bater com um lado só.
+
+E duas **asas chatas** de catorze por vinte e um, sem grossura nenhuma, presas às costas em ângulos
+diferentes uma da outra: uma a trinta e oito graus do corpo, a outra virada ao contrário. Elas nunca se mexem
+e ele não voa. Estão ali para dizer o que ele é.
+
+#### E o Coração não é um bloco: é um modelo que bate
+
+Esta parte eu fiz errado primeiro, e a tela mostrou. Eu tinha pegado o `demonHeart.png` do Witchery como
+textura de bloco e feito uma caixinha de oito por treze com ela. A textura é de **trinta e dois por trinta e
+dois** e não é uma face de bloco nenhuma — é a **chapa de um modelo**, com as peças espalhadas pelo canto
+como num bicho. Na tela saiu um recorte vermelho achatado dentro de uma moldura.
+
+No original o Coração é um `BlockContainer`, e o `BlockContainer` do jogo de então devolve tipo de desenho
+**−1**: o bloco não se desenha. Quem o põe no mundo é um desenhista de alma com **dez caixas** — quatro de
+músculo e **seis de cano**, cinco deles finos e torcidos cada um para o seu lado, como veias cortadas.
+
+E então o que faz o bloco inteiro funcionar: o **músculo incha e desincha**, numa onda de seno, entre 1,11 e
+1,20 do tamanho dele, com período de **vinte e cinco batidas**. Os canos ficam parados.
+
+Vinte e cinco batidas é **exatamente** o intervalo do som de coração. O inchaço e a batida são a mesma
+batida: ouve-se o coração e, olhando, vê-se o coração fazer o barulho. Sem o inchaço — que foi o que eu tinha
+—, o som vinha de um enfeite parado, e o melhor bloco de atmosfera do mod virava um erro de áudio.
+
+O modelo de bloco deste porte não tem, por isso, uma única caixa: só diz de que cor são as lascas quando
+alguém o parte.
+
+As duas saem **da mesma esquina da chapa** e nenhuma é espelhada: o original liga o espelho depois de criar
+as caixas, e depois de criada a caixa o espelho não faz mais nada. Eu havia espelhado a esquerda, que é o
+engano do espelho morto outra vez.
+
+**Guardas:** `OccultaDemonGameTest`, com nove — o teto de quinze, que é o que o torna uma coisa de negociar
+em vez de matar; **a matéria do inferno que tem nome**, com o pó de blaze de fora e o creme de magma dentro;
+o estouro, que ele não morre nele e que fere quem está ao lado; a lista que tem sempre um coração nos três
+primeiros lugares e duas vendas por troca; **o fogo que passa da proteção por doze segundos**, que é a prova
+que carrega a fatia; o Coração como a fonte de Altar mais forte que conta duas vezes; o demônio que só fica
+se foi chamado; o Banir que só apanha o que é de lá; as cinco fatias do Inferno na Terra; e o chão que ele
+estraga, onde o que é vivo vira pedra do Nether e o que é construído fica. E `OccultaDemonClientTest`, com
+seis telas: ele de frente, de lado e de trás — porque uma chapa posta no ângulo trocado desaparece quando se
+olha de frente para ela —, o Coração no chão, o Coração de perto, onde o músculo inchando se vê, e o Coração
+no inventário.

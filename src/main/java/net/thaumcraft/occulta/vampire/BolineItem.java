@@ -31,6 +31,34 @@ public class BolineItem extends Item {
     }
 
     /** O que ela corta de graça: o que uma faca de colher corta. */
+    /**
+     * <b>E só ela colhe a Rosa de Sangue.</b>
+     *
+     * <p>Quebrada de qualquer outro jeito, a rosa não deixa nada. Colhida com a Boline, ela cai inteira — e
+     * <b>com quem tem dentro</b>, de modo que se pode arrancar a flor que apanhou alguém e levá-la para
+     * casa. É o {@code ItemBoline.onBlockStartBreak} do original.
+     *
+     * @return se ela era uma rosa e já foi colhida
+     */
+    public static boolean colheARosa(net.minecraft.server.level.ServerLevel level,
+                                     net.minecraft.core.BlockPos onde,
+                                     net.minecraft.world.entity.player.Player quem) {
+        BlockState oquê = level.getBlockState(onde);
+        if (!oquê.is(net.thaumcraft.occulta.OccultaBlocks.BLOOD_ROSE)) return false;
+
+        var rosa = level.getBlockEntity(onde) instanceof net.thaumcraft.occulta.BloodRoseBlockEntity alma
+                ? alma.vê() : null;
+        net.minecraft.world.item.ItemStack caiu =
+                new net.minecraft.world.item.ItemStack(net.thaumcraft.occulta.OccultaItems.BLOOD_ROSE);
+        if (rosa != null) {
+            caiu.set(net.thaumcraft.occulta.OccultaComponents.TAGLOCK, rosa);
+        }
+
+        level.removeBlock(onde, false);
+        net.minecraft.world.level.block.Block.popResource(level, onde, caiu);
+        return true;
+    }
+
     public static boolean deGraça(BlockState oquê) {
         return oquê.is(net.minecraft.tags.BlockTags.LEAVES)
                 || oquê.is(Blocks.COBWEB)

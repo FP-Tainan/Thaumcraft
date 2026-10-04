@@ -32,6 +32,18 @@ public final class OccultaEvents {
             volatility(level, quemLevou, fonte);
         });
 
+        /*
+         * A Boline colhe a Rosa de Sangue antes de o jogo lhe tocar: a rosa não deixa nada quando se quebra,
+         * e só a faca de colher do ofício a tira do chão inteira, com o que ela guarda dentro.
+         */
+        net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents.BEFORE.register(
+                (level, quem, onde, oquê, alma) -> {
+                    if (!(level instanceof ServerLevel mundo)) return true;
+                    if (!oquê.is(OccultaBlocks.BLOOD_ROSE)) return true;
+                    if (!quem.getMainHandItem().is(OccultaItems.BOLINE)) return true;
+                    return !net.thaumcraft.occulta.vampire.BolineItem.colheARosa(mundo, onde, quem);
+                });
+
         ServerLivingEntityEvents.AFTER_DEATH.register((quemMorreu, fonte) -> {
             if (!(quemMorreu.level() instanceof ServerLevel level)) return;
             onDeath(level, quemMorreu, fonte);

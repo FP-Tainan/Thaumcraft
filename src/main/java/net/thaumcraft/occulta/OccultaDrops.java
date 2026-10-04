@@ -56,6 +56,15 @@ public final class OccultaDrops {
     public static final float DUST_SKELETON = 0.04f;
     public static final float DUST_ZOMBIE = 0.03f;
 
+    /**
+     * E o <b>Coração de Demônio</b> do próprio demônio: <b>uma em três</b>, e só com a faca.
+     *
+     * <p>É a única coisa que se arranca de um demônio em vez de se lhe comprar — e o preço é ter de o matar,
+     * o que, com o teto de quinze de dano por pancada que ele tem, leva muito mais tempo do que juntar o
+     * ouro de o comprar.
+     */
+    public static final float DEMON_HEART_ARTHANA = 0.33f;
+
     /** E as caveiras: cinco em cem do esqueleto, duas do zumbi, uma do creeper. */
     public static final float SKULL_SKELETON = 0.05f;
     public static final float SKULL_ZOMBIE = 0.02f;
@@ -139,7 +148,8 @@ public final class OccultaDrops {
             new Queda("zombie", OccultaItems.SPECTRAL_DUST, DUST_ZOMBIE, true),
             new Queda("skeleton", net.minecraft.world.item.Items.SKELETON_SKULL, SKULL_SKELETON, true),
             new Queda("zombie", net.minecraft.world.item.Items.ZOMBIE_HEAD, SKULL_ZOMBIE, true),
-            new Queda("creeper", net.minecraft.world.item.Items.CREEPER_HEAD, SKULL_CREEPER, true));
+            new Queda("creeper", net.minecraft.world.item.Items.CREEPER_HEAD, SKULL_CREEPER, true),
+            new Queda("demon", OccultaItems.DEMON_HEART, DEMON_HEART_ARTHANA, true));
 
     /** Sem uso fora do porte: serve à prova para contar as quedas. */
     public static int count() {

@@ -184,6 +184,19 @@ public final class BrewRegistry {
         register(new BrewActions.Potion(Items.SOUL_SAND, new BrewName.Text("tc.brew.allergydark"), 4000,
                 net.thaumcraft.occulta.OccultaEffects.DARKNESS_ALLERGY, mins(2), GRAVE));
 
+        /*
+         * A <b>Paralisia</b>, que pede um <b>Coração de Demônio</b> e setecentos e cinquenta de poder de
+         * altar — o segundo cozimento mais caro em matéria-prima que o mod tem, porque o coração só se
+         * compra a um demônio.
+         *
+         * <p>E vale o preço por causa de uma conta de outro lugar: do <b>quinto grau</b> em diante a presa
+         * {@linkplain net.thaumcraft.occulta.vampire.Blood conta como desacordada} e dá todo o sangue que se
+         * lhe pedir. Fortalecido até lá, este frasco é o jeito de um vampiro beber sem prender ninguém pelo
+         * olhar.
+         */
+        register(new BrewActions.Potion(OccultaItems.DEMON_HEART, new BrewName.Text("tc.brew.paralysis"), 750,
+                net.thaumcraft.occulta.OccultaEffects.PARALYSIS, secs(10), GRAVE));
+
         register(new BrewActions.Potion(Items.RED_MUSHROOM, new BrewName.Text("tc.brew.poisonweapons"), 200,
                 net.thaumcraft.occulta.OccultaEffects.POISON_WEAPONS, secs(90), COMUM));
         register(new BrewActions.Potion(Items.COBWEB,

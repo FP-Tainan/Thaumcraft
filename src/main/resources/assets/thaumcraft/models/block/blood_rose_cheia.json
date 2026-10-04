@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "thaumcraft:block/blood_rose_full"
+  }
+}

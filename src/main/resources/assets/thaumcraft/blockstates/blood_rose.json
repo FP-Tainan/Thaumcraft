@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "cheia=false": {
+      "model": "thaumcraft:block/blood_rose_vazia"
+    },
+    "cheia=true": {
+      "model": "thaumcraft:block/blood_rose_cheia"
+    }
+  }
+}

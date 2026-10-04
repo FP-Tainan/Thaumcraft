@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "s s",
+    "GsG",
+    "GGG"
+  ],
+  "key": {
+    "G": "thaumcraft:garlic",
+    "s": "minecraft:string"
+  },
+  "result": {
+    "id": "thaumcraft:garlic_garland",
+    "count": 1
+  }
+}

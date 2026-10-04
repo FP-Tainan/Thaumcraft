@@ -39,11 +39,22 @@ public sealed interface CovenQuest {
         return false;
     }
 
-    /** As três que dão para pedir. */
+    /**
+     * As que dão para pedir.
+     *
+     * <p>São <b>sete</b> no original, e eram três aqui porque <b>as coisas que as outras pediam ainda não
+     * existiam</b>. Com o Coração de Demônio, a Pedra Necrótica e o Cozimento Grotesco no mod, entram mais
+     * três.
+     *
+     * <p><b>Declarado:</b> falta a sétima, que pede uma <b>Bola de Cristal</b>. Ela entra quando a bola vier.
+     */
     List<CovenQuest> TODAS = List.of(
             new Briga("quest.fightspider", EntityTypes.SPIDER),
             new Briga("quest.fightzombie", EntityTypes.ZOMBIE),
-            new Busca("quest.getbones", Items.BONE, 30));
+            new Busca("quest.getbones", Items.BONE, 30),
+            new Busca("quest.getdemonheart", net.thaumcraft.occulta.OccultaItems.DEMON_HEART, 1),
+            new Busca("quest.makegrotesquebrew", net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE, 5),
+            new Busca("quest.makenecrostone", net.thaumcraft.occulta.OccultaItems.NECROTIC_STONE, 1));
 
     /**
      * A de brigar: ela <b>solta o bicho ali</b> e manda resolver.

@@ -228,6 +228,16 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
                 && CovenQuest.TODAS.get(this.qualPedido) instanceof CovenQuest.Busca;
     }
 
+    /**
+     * <b>Qual</b> pedido ela está fazendo, pela chave da fala dele.
+     *
+     * <p>Serve às provas: dos de buscar, só o dos <b>ossos</b> se resolve com uma coisa que se arranja sem
+     * ofício nenhum, e por isso a prova tem de saber distinguir um pedido do outro e não só o tipo dele.
+     */
+    public @org.jetbrains.annotations.Nullable String pedidoAtual() {
+        return this.qualPedido < 0 ? null : CovenQuest.TODAS.get(this.qualPedido).chave();
+    }
+
     private void esquece() {
         this.pedidoA = null;
         this.qualPedido = -1;

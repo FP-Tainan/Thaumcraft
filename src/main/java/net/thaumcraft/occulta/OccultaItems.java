@@ -246,6 +246,16 @@ public final class OccultaItems {
             new net.thaumcraft.occulta.vampire.VampireBookItem(
                     properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
 
+    /**
+     * O <b>Coração de Demônio</b>: agachado põe-se no chão, de pé come-se.
+     *
+     * <p>Comê-lo dá mais poder do que qualquer outra coisa deste mod — e põe fogo em quem o comeu por doze
+     * segundos a mais do que a proteção contra fogo dura.
+     */
+    public static final Item DEMON_HEART = register("demon_heart", properties ->
+            new net.thaumcraft.occulta.demon.DemonHeartItem(
+                    properties.rarity(net.minecraft.world.item.Rarity.RARE)));
+
     /** O Galho de Ent, que o Ent larga. */
     public static final Item ENT_BRANCH = register("ent_branch", Item::new);
 
@@ -384,6 +394,19 @@ public final class OccultaItems {
     /** E o Crisol de Sangue. */
     public static final Item BLOOD_CRUCIBLE = register("blood_crucible", properties ->
             new BlockItem(OccultaBlocks.BLOOD_CRUCIBLE, properties.useBlockDescriptionPrefix()));
+
+    /**
+     * A <b>Rosa de Sangue</b> na mão.
+     *
+     * <p>Ela existe como item porque a Boline a colhe, e não porque se compre em lado nenhum: a única
+     * maneira de ter a primeira é fazê-la nascer com Mutandis Extremis.
+     */
+    public static final Item BLOOD_ROSE = register("blood_rose", properties ->
+            new BlockItem(OccultaBlocks.BLOOD_ROSE, properties.useBlockDescriptionPrefix()));
+
+    /** E a <b>Guirlanda de Alho</b>, que se pendura numa parede. */
+    public static final Item GARLIC_GARLAND = register("garlic_garland", properties ->
+            new BlockItem(OccultaBlocks.GARLIC_GARLAND, properties.useBlockDescriptionPrefix()));
 
     /** O <b>Coletor de Luz</b>, que enche a Esfera de Quartzo de sol. */
     public static final Item DAYLIGHT_COLLECTOR = register("daylight_collector", properties ->

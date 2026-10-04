@@ -113,6 +113,28 @@ public final class DistilleryRecipes {
 
         // o Cozimento do Espírito Corrente com óleo de vitríolo: a Vontade Focada, o Medo Condensado e oito
         // frascos de Lágrimas Ocas. É a destilação que abre o fim da linha do outro lado.
+        /*
+         * O <b>Coração de Demônio</b>, que é a única fonte de <b>Sangue Infernal</b> que se renova. Ele
+         * destila de duas maneiras, e as duas são do original:
+         *
+         * <ul>
+         *   <li>com <b>Vapor de Diamante</b>, quatro potes: <b>quatro</b> de sangue e um Mal Refinado;</li>
+         *   <li>com <b>pedra do Nether</b>, dois potes: areia-das-almas e <b>dois</b> de sangue.</li>
+         * </ul>
+         *
+         * <p>O segundo é o mais estranho e o mais bonito: passar um coração de demônio por pedra do Nether
+         * devolve <b>areia-das-almas</b>. O mod nunca o diz, mas a conta está lá — a areia-das-almas é feita
+         * de alguém.
+         */
+        add(um(OccultaItems.DEMON_HEART), um(OccultaItems.DIAMOND_VAPOUR), 4,
+                new ItemStack(OccultaItems.INFERNAL_BLOOD, 2),
+                new ItemStack(OccultaItems.INFERNAL_BLOOD, 2),
+                um(OccultaItems.REFINED_EVIL));
+        add(um(OccultaItems.DEMON_HEART), um(Items.NETHERRACK), 2,
+                um(Items.SOUL_SAND),
+                um(OccultaItems.INFERNAL_BLOOD),
+                um(OccultaItems.INFERNAL_BLOOD));
+
         add(um(OccultaItems.BREW_OF_FLOWING_SPIRIT), um(OccultaItems.OIL_OF_VITRIOL), 2,
                 um(OccultaItems.FOCUSED_WILL), um(OccultaItems.CONDENSED_FEAR),
                 tantos(OccultaItems.BREW_OF_HOLLOW_TEARS, 4), tantos(OccultaItems.BREW_OF_HOLLOW_TEARS, 4));

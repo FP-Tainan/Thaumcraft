@@ -212,6 +212,30 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.ATTACK_BAT,
                 net.minecraft.client.renderer.entity.BatRenderer::new);
 
+        // o Demônio, que é um golem de ferro com um corpo de demônio por cima
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.DemonModel.DEMÔNIO,
+                net.thaumcraft.occulta.client.DemonModel::demônio);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.DEMON,
+                net.thaumcraft.occulta.client.DemonRenderer::new);
+
+        // a Guirlanda de Alho, que são vinte e nove caixas e por isso se desenha sozinha
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.GarlicGarlandModel.GUIRLANDA,
+                net.thaumcraft.occulta.client.GarlicGarlandModel::guirlanda);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.GARLIC_GARLAND_ENTITY,
+                net.thaumcraft.occulta.client.GarlicGarlandRenderer::new);
+
+        // o Coração de Demônio, que não se desenha como bloco nenhum: ele bate
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.DemonHeartModel.CORAÇÃO,
+                net.thaumcraft.occulta.client.DemonHeartModel::coração);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.DEMON_HEART_ENTITY,
+                net.thaumcraft.occulta.client.DemonHeartRenderer::new);
+
         // o Caixão, que é uma cama com tampa e se desenha sozinho
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.CoffinModel.CAIXÃO,

@@ -45,6 +45,39 @@ public class MutandisItem extends Item {
         return this.extremis;
     }
 
+    /**
+     * <b>De onde vem a primeira Rosa de Sangue</b>: um <b>baú vazio</b>, com <b>quatro flores</b> à volta e
+     * <b>água por baixo</b>, passado a Mutandis Extremis. O baú some, e no lugar das quatro flores ficam
+     * quatro rosas.
+     *
+     * <p><b>Declarado:</b> no original esta corrente tem um elo no meio. O baú comum vira um <b>Apanha-Erva
+     * </b>, e é o <b>Baú de Sanguessugas</b> — que também guarda nomes, e também é feito assim — que vira as
+     * rosas. Nenhum dos dois está portado, e por isso o baú comum faz aqui o que o Baú de Sanguessugas fazia
+     * lá. Quando eles vierem, a corrente ganha o elo de volta e esta conta passa para o baú certo.
+     */
+    private static boolean éBaúDeRosas(Level level, BlockPos onde) {
+        if (!level.getBlockState(onde).is(Blocks.CHEST)) return false;
+        if (!level.getBlockState(onde.below()).is(Blocks.WATER)) return false;
+
+        int flores = 0;
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            if (level.getBlockState(onde.relative(lado)).is(net.minecraft.tags.BlockTags.SMALL_FLOWERS)) {
+                flores++;
+            }
+        }
+        if (flores < 4) return false;
+
+        // e o baú tem de estar vazio: o que lá estiver não se perde por um descuido
+        if (!(level.getBlockEntity(onde)
+                instanceof net.minecraft.world.level.block.entity.ChestBlockEntity baú)) {
+            return false;
+        }
+        for (int casa = 0; casa < baú.getContainerSize(); casa++) {
+            if (!baú.getItem(casa).isEmpty()) return false;
+        }
+        return true;
+    }
+
     /** As plantas que o Mutandis comum troca entre si. */
     public static List<Block> common() {
         List<Block> lista = new ArrayList<>(List.of(
@@ -96,6 +129,18 @@ public class MutandisItem extends Item {
                 for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
                     clay(level, onde.relative(lado));
                 }
+            }
+            this.spend(context, level, onde);
+            return InteractionResult.SUCCESS;
+        }
+
+        // e um baú vazio, com quatro flores à volta e água por baixo, vira quatro Rosas de Sangue
+        if (this.extremis && éBaúDeRosas(level, onde)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            level.removeBlock(onde, false);
+            for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+                level.setBlock(onde.relative(lado),
+                        OccultaBlocks.BLOOD_ROSE.defaultBlockState(), Block.UPDATE_ALL);
             }
             this.spend(context, level, onde);
             return InteractionResult.SUCCESS;

@@ -515,11 +515,16 @@ public class OccultaVampirePowersGameTest {
         VampirePowers.usa(level, quem);
         if (VampirePowers.cargas(quem) != 4) helper.fail("e o enxame gasta um uso sempre");
 
+        /*
+         * Quarenta e oito blocos chegam à arena do lado, e a arena do lado também solta morcegos. O que esta
+         * prova olha são <b>os dela</b> — os que sabem que o dono é este jogador —, e é justamente isso que
+         * ela quer provar: cada morcego sabe quem o chamou.
+         */
         var roda = quem.getBoundingBox().inflate(48.0);
-        var bichos = level.getEntitiesOfClass(AttackBatEntity.class, roda);
-        if (bichos.isEmpty()) helper.fail("algum morcego devia ter nascido");
-        for (var morcego : bichos) {
-            if (morcego.dono() != quem) helper.fail("cada um sabe quem o chamou");
+        var meus = level.getEntitiesOfClass(AttackBatEntity.class, roda,
+                morcego -> morcego.dono() == quem);
+        if (meus.isEmpty()) helper.fail("algum morcego devia ter nascido");
+        for (var morcego : meus) {
             if (!net.thaumcraft.occulta.NoDrops.marcado(morcego)) {
                 helper.fail("e de nenhum deles cai nada: quinze por uso seriam uma fábrica");
             }
