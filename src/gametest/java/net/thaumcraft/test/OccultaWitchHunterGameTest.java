@@ -25,10 +25,19 @@ import net.thaumcraft.occulta.hunter.WitchHunters;
  * e vem com atraso.
  */
 public class OccultaWitchHunterGameTest {
+    /**
+     * O chão da arena, <b>largo o bastante para o anel deles</b>.
+     *
+     * <p>Os caçadores nascem num anel de três a oito blocos de quem os chamou, e quem os põe <b>desce até
+     * achar chão</b>. Num chão de dez por dez, metade do anel cai fora dele — e aí a conta desce até o fundo
+     * do mundo e o caçador nasce a setenta blocos de distância, vivo e longe da vista.
+     *
+     * <p>A prova passava por sorte. Agora o chão cobre o anel inteiro: de menos quatro a catorze.
+     */
     private static void piso(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        for (int x = 0; x < 10; x++) {
-            for (int z = 0; z < 10; z++) {
+        for (int x = -4; x < 15; x++) {
+            for (int z = -4; z < 15; z++) {
                 level.setBlockAndUpdate(helper.absolutePos(new BlockPos(x, 1, z)),
                         Blocks.STONE.defaultBlockState());
                 level.setBlockAndUpdate(helper.absolutePos(new BlockPos(x, 2, z)),

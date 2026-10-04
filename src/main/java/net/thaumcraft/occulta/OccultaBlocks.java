@@ -192,6 +192,19 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ a Mina de Planta
+
+    /**
+     * A <b>Mina de Planta</b>: a flor que não é uma flor.
+     *
+     * <p>Os números do original: <b>seis de dureza</b> e <b>mil de resistência</b> — mais do que a obsidiana.
+     * Não se abre caminho num campo de minas com TNT.
+     */
+    public static final Block PLANT_MINE = register("plant_mine", properties ->
+            new net.thaumcraft.occulta.PlantMineBlock(properties.mapColor(MapColor.PLANT)
+                    .strength(6.0f, 1000.0f).sound(SoundType.GRASS).noOcclusion().noCollision()
+                    .pushReaction(PushReaction.DESTROY)));
+
     // ------------------------------------------------------------ o Apanha-Bicho
 
     /**

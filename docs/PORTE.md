@@ -9000,3 +9000,74 @@ carrega a fatia, que é a **gosma grande não caber e a pequena caber**; a teia 
 zumbi; e a Coruja pedindo tudo o que ela pede, com o lobo e a pedra sintonizada a serem tirados um por um. E
 `OccultaCritterSnareClientTest`, com três telas — os cinco lado a lado, um de perto, e o item com o morcego
 no inventário.
+
+## A Mina de Planta, e os quatro efeitos do projétil (2026-10-04)
+
+Uma flor que **não é uma flor**. Ela parece uma papoula, um dente-de-leão ou um arbusto seco — as três
+plantas mais inofensivas que o jogo tem — e quem passa por cima dela leva o que o projétil de bruxa leva.
+
+São **doze**, que é o que dá cruzar as três caras com os quatro efeitos. E a cara **não diz nada** sobre o
+efeito: uma papoula de teias e uma papoula de espinhos são a mesma papoula, pelo mesmo desenho, porque o
+original faz o ícone depender só de `(meta >>> 2) & 3`. Quem a planta sabe o que ela é; quem passa, não.
+
+Ela é **duríssima de explodir** — mil de resistência, mais do que a obsidiana —, de modo que não se abre
+caminho num campo de minas com TNT. E **nada cai dela**: uma mina desarmada é uma mina gasta.
+
+### Os quatro efeitos, que não são só dela
+
+Os efeitos vivem num lugar à parte, `WitchProjectile`, porque no original eles vivem no
+`EntityWitchProjectile` e são usados por **mais de uma coisa**: as minas, os cozimentos atirados e os
+frascos. Portá-los aqui destrava os quatro cozimentos quando a fatia deles vier.
+
+- a **teia** enche a cruz à volta de onde bateu — onze blocos, quinze reforçada;
+- a **tinta** cega num raio de quatro blocos, e **quanto mais perto, mais tempo**: vinte segundos no meio,
+  nada na borda. Todo bicho que estava perseguindo alguém **perde o alvo**, que é o que ela faz de melhor;
+- os **espinhos** plantam um cato, e o chão **vira areia** debaixo dele — é por isso que o cato do ofício
+  deixa uma mancha de deserto por onde passou. Acertando num cato que já existe, ele **sobe ao topo da
+  coluna** e cresce dali, de modo que acertar duas vezes no mesmo lugar faz uma coluna mais alta e não duas;
+- e o **brotar** faz nascer um galho **para fora da face em que bateu**, largando folhas pelo caminho uma vez
+  em quatro. Crescendo **para cima**, ele **levanta para o topo** tudo o que estiver vivo até dois blocos
+  acima — que é como o original manda alguém para o céu numa árvore sem lhe tocar.
+
+Todos passam pelo mesmo crivo: **só põem bloco onde não há bloco sólido**. A única exceção é a teia, que
+passa por cima de uma **camada de neve** — uma exceção escrita de propósito no original, que não se adivinha.
+
+E a madeira do galho é a **do lugar**: batendo num tronco, o galho é daquele tronco; batendo noutra coisa,
+sorteia entre a do jogo e a do ofício.
+
+### Dois que ficam de fora, declarados
+
+O primeiro: o original guarda também o **feitio** da madeira em que bateu, de modo que bater numas **tábuas**
+de bétula dá um galho de bétula. Aqui só o tronco leva o feitio consigo; tábuas e folhas dão carvalho ou
+sorveira, conforme a família. O caminho curto custava uma tabela de doze entradas que o original tinha de
+graça no número.
+
+O segundo: o `BlockProtect.canBreak`, que é o gancho de proteção de território do original. Não há equivalente
+portado.
+
+### E um rótulo escrito à mão
+
+O cato precisa saber **em que chão ele pega**, e o original pergunta pelo **material** do bloco — ele
+aceita nove deles. Os materiais sumiram do jogo.
+
+A tradução óbvia seria pelos rótulos de hoje, e ela **não funciona**: o `#minecraft:dirt` da 26.2 são **três
+blocos** — terra, terra grossa e terra enraizada — e **não inclui a grama**. Custou uma volta de suíte
+descobrir isso, com a prova a dizer que o chão não virava areia e o rol a ter trinta e seis entradas sem a
+que importava.
+
+Por isso o rol vai escrito à mão em `tags/block/cactus_ground.json`, com os blocos que tinham aqueles nove
+materiais em 2014 — e quem jogar pode mexer nele, que é a vantagem de ser rótulo e não lista no código.
+
+**Guardas:** `OccultaPlantMineGameTest`, com seis — os números, incluindo **a grama estar no rol**, que é a
+linha que parece boba e não é; a prova que carrega a fatia, que é a **cara não dizer o efeito**; e os quatro
+efeitos, um por prova, com a de brotos a verificar que a ovelha **subiu com o galho**. E
+`OccultaPlantMineClientTest`, com duas telas: as doze em fileiras de quatro — onde se vê que são três
+desenhos e não doze — e três delas no inventário, com nomes diferentes e caras iguais aos pares.
+
+**E uma lição de arena:** a mina de espinhos troca o chão por **areia**, e areia sem nada por baixo **cai**.
+O chão da prova passou a ter **duas camadas**; com uma só, ela falharia dizendo que o chão não virou areia
+quando ele virou e foi-se embora.
+
+E, de caminho, a prova dos **caçadores de bruxas** deixou de passar por sorte. Eles nascem num anel de três a
+oito blocos, e quem os põe **desce até achar chão**: num chão de dez por dez, metade do anel caía fora dele e
+o caçador ia parar no fundo do mundo, vivo e longe da vista. O chão da arena passou a cobrir o anel inteiro.

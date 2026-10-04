@@ -263,6 +263,9 @@ public final class OccultaItems {
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
+    public static final Item PLANT_MINE = register("plant_mine", properties ->
+            new net.thaumcraft.occulta.PlantMineItem(properties.useBlockDescriptionPrefix()));
+
     public static final Item CRITTER_SNARE = register("critter_snare", properties ->
             new net.thaumcraft.occulta.CritterSnareItem(properties.useBlockDescriptionPrefix()));
 

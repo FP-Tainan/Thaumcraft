@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "look=rose,effect=webs": {
+      "model": "thaumcraft:block/plant_mine_rose"
+    },
+    "look=rose,effect=ink": {
+      "model": "thaumcraft:block/plant_mine_rose"
+    },
+    "look=rose,effect=thorns": {
+      "model": "thaumcraft:block/plant_mine_rose"
+    },
+    "look=rose,effect=sprouting": {
+      "model": "thaumcraft:block/plant_mine_rose"
+    },
+    "look=dandelion,effect=webs": {
+      "model": "thaumcraft:block/plant_mine_dandelion"
+    },
+    "look=dandelion,effect=ink": {
+      "model": "thaumcraft:block/plant_mine_dandelion"
+    },
+    "look=dandelion,effect=thorns": {
+      "model": "thaumcraft:block/plant_mine_dandelion"
+    },
+    "look=dandelion,effect=sprouting": {
+      "model": "thaumcraft:block/plant_mine_dandelion"
+    },
+    "look=grass,effect=webs": {
+      "model": "thaumcraft:block/plant_mine_grass"
+    },
+    "look=grass,effect=ink": {
+      "model": "thaumcraft:block/plant_mine_grass"
+    },
+    "look=grass,effect=thorns": {
+      "model": "thaumcraft:block/plant_mine_grass"
+    },
+    "look=grass,effect=sprouting": {
+      "model": "thaumcraft:block/plant_mine_grass"
+    }
+  }
+}
