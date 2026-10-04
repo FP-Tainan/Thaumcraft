@@ -68,6 +68,15 @@ public class TaglockItem extends Item {
         }
         Player quem = onde.getPlayer();
         if (quem == null) return InteractionResult.PASS;
+        /*
+         * O <b>Baú de Sanguessugas</b>: ele anota o nome de quem o abre, e o frasco sai com um desses nomes.
+         * É a armadilha mais paciente do mod — ninguém se fere, ninguém se prende; alguém só <b>teve
+         * curiosidade</b>, e isso bastou.
+         */
+        if (level.getBlockState(onde.getClickedPos()).is(OccultaBlocks.LEECH_CHEST)) {
+            return doBaú(level, onde, quem);
+        }
+
         if (!level.getBlockState(onde.getClickedPos()).is(OccultaBlocks.BLOOD_ROSE)) {
             return InteractionResult.PASS;
         }
@@ -77,6 +86,40 @@ public class TaglockItem extends Item {
 
         ItemStack cheio = onde.getItemInHand().copyWithCount(1);
         cheio.set(OccultaComponents.TAGLOCK, tinha);
+        onde.getItemInHand().shrink(1);
+        if (!quem.getInventory().add(cheio)) quem.drop(cheio, false);
+        level.playSound(null, onde.getClickedPos(), SoundEvents.BOTTLE_FILL,
+                SoundSource.BLOCKS, 1.0f, 1.2f);
+        return InteractionResult.SUCCESS;
+    }
+
+    /**
+     * O frasco enchido num <b>Baú de Sanguessugas</b>.
+     *
+     * <p>Ele devolve um nome que não seja o de quem está perguntando, e só de quem está no mundo agora: um
+     * nome de alguém que saiu não serve para prender ninguém, e fica guardado para quando ele voltar.
+     *
+     * <p>Não havendo nome nenhum, o baú range e nada acontece — que é o original dizendo "ainda não caiu
+     * ninguém".
+     */
+    private static InteractionResult doBaú(net.minecraft.server.level.ServerLevel level,
+                                           net.minecraft.world.item.context.UseOnContext onde, Player quem) {
+        if (!(level.getBlockEntity(onde.getClickedPos())
+                instanceof net.thaumcraft.occulta.LeechChestBlockEntity baú)) {
+            return InteractionResult.PASS;
+        }
+        String nome = baú.tiraUmNome(quem);
+        if (nome == null) {
+            level.playSound(null, onde.getClickedPos(), SoundEvents.NOTE_BLOCK_SNARE.value(),
+                    SoundSource.BLOCKS, 1.0f, 1.0f);
+            return InteractionResult.SUCCESS;
+        }
+
+        var achado = level.getServer().getPlayerList().getPlayerByName(nome);
+        if (achado == null) return InteractionResult.SUCCESS;
+
+        ItemStack cheio = onde.getItemInHand().copyWithCount(1);
+        cheio.set(OccultaComponents.TAGLOCK, new Taglock(achado.getUUID(), nome));
         onde.getItemInHand().shrink(1);
         if (!quem.getInventory().add(cheio)) quem.drop(cheio, false);
         level.playSound(null, onde.getClickedPos(), SoundEvents.BOTTLE_FILL,

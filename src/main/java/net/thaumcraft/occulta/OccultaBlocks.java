@@ -167,6 +167,18 @@ public final class OccultaBlocks {
                     properties.mapColor(MapColor.SNOW).strength(0.2f, 0.2f).sound(SoundType.SNOW)
                             .noCollision().forceSolidOn()));
 
+    /** O <b>Baú de Sanguessugas</b>: o baú que anota o nome de quem o abre. */
+    public static final Block LEECH_CHEST = register("leech_chest", properties ->
+            new net.thaumcraft.occulta.LeechChestBlock(properties.mapColor(MapColor.CRIMSON_HYPHAE)
+                    .strength(2.5f).sound(SoundType.WOOD).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.LeechChestBlockEntity> LEECH_CHEST_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("leech_chest"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.LeechChestBlockEntity::new,
+                            java.util.Set.of(LEECH_CHEST)));
+
     /** O <b>Apanha-Erva</b>: a planta que segura o que lhe dão, e que as mutações pedem. */
     public static final Block GRASSPER = register("grassper", properties ->
             new net.thaumcraft.occulta.GrassperBlock(properties.mapColor(MapColor.PLANT)

@@ -8630,3 +8630,72 @@ lá dentro.
 A segunda: **o musgo-espanhol cai ao primeiro aviso de vizinho novo**, porque ele se pendura e não se aguenta
 sozinho. Montar um quadrado de mutação põe o musgo **por último** — e isso não é um truque de prova, é como a
 coisa se monta no jogo.
+
+## O Baú de Sanguessugas, e o elo que faltava (2026-10-04)
+
+A fatia da Rosa de Sangue deixou escrito aqui que a corrente dela tinha um elo a menos:
+
+> O baú comum vira um **Apanha-Erva**, e é o **Baú de Sanguessugas** — que também guarda nomes, e também se
+> faz assim — que vira as rosas. Nenhum dos dois está portado, e por isso o baú comum faz aqui o que o Baú de
+> Sanguessugas fazia lá. Quando eles vierem, a corrente ganha o elo de volta.
+
+Os dois vieram. A corrente está inteira.
+
+### O que ele é
+
+Por fora, um baú com **sacos de sangue** na frente, cuja tampa abre em **quatro quartos** que se afastam uns
+dos outros em vez de dobrar numa dobradiça. Por dentro, um baú comum de vinte e sete lugares.
+
+O que ele tem a mais é a **memória**: ele anota o nome de quem o abre — até **três**, os mais recentes, e
+ninguém duas vezes — e um **Frasco de Vínculo** usado nele sai com um desses nomes.
+
+É a armadilha mais paciente deste mod. Não fere, não prende, não some: fica ali, parecendo um baú
+interessante, e espera que alguém tenha curiosidade.
+
+E ele anota **antes** de abrir. Quem desistir no meio do caminho já deixou o nome — é aí que ela pega.
+
+### E é honesta
+
+Os sacos aparecem **um por nome**, em relevo na frente — por cima do desenho de sacos que a própria folha já
+traz. É um relevo de **um pixel**, e vê-se de perto: o original fez a frente do baú parecer cheia de sacos e
+depois pôs os de verdade por cima dela.
+
+A ideia é que ele é honesto: o que é preciso para não cair nele está do lado de fora, antes de se tocar em
+nada. Quem cai, cai por não ter olhado de perto.
+
+### Duas regras do frasco
+
+Ele **não devolve o nome de quem pergunta**: ninguém se prende a si mesmo abrindo o próprio baú.
+
+E só devolve o nome de quem está **no mundo agora**. Um nome de alguém que saiu fica guardado para quando ele
+voltar, em vez de dar um frasco que não prende ninguém — e nesse caso o baú só range, que é o original
+dizendo "ainda não".
+
+### De onde ele vem
+
+Um **baú armadilhado** vazio, com **quatro trepadeiras** à volta e **água nas quatro quinas de baixo**,
+passado ao Mutandis Extremis.
+
+O original pede o **armadilhado** e não o comum, e a escolha é dele: o que vai nascer dali é uma armadilha, e
+ela começa numa armadilha.
+
+### O que se desenhou
+
+Oito peças numa chapa de sessenta e quatro: um corpo de catorze por nove, **quatro quartos de tampa** e os
+**três sacos**.
+
+A tampa em quatro quartos é a ideia inteira do bloco. Ela não dobra: os quatro pedaços afastam-se uns dos
+outros em **três eixos ao mesmo tempo**, cada um para o seu canto. Um baú comum range; este **floresce**.
+
+A curva é a dos baús do jogo — um menos o cubo do que falta —, de modo que ele abre depressa no princípio e
+vai parando no fim, como uma coisa pesada que cede.
+
+**Guardas:** `OccultaLeechChestGameTest`, com cinco — os três nomes e os vinte e sete lugares; o nome anotado
+uma vez só, que é a prova que carrega a fatia; o frasco que nunca devolve o nome de quem pergunta; o baú
+armadilhado que o faz, com o comum recusado; e a **Rosa de Sangue pedindo o Baú de Sanguessugas**, com o baú
+comum agora recusado — que é o elo declarado se fechando. E `OccultaLeechChestClientTest`, com três telas: os
+quatro baús com zero, um, dois e três nomes, um de lado onde a tampa se vê, e ele no inventário.
+
+**E uma ordem que importa:** o desenhista vira o modelo de cabeça para baixo **antes** de o girar para o lado
+em que foi posto. Girando primeiro, o giro sai espelhado e a frente do baú — onde moram os sacos — fica do
+lado de lá. Foi assim que esta fatia descobriu que a ordem do original não era um acaso.

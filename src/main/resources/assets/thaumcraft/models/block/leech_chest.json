@@ -1,0 +1,6 @@
+{
+  "__comment": "O Baú de Sanguessugas se desenha pelo LeechChestRenderer; aqui só a cor das lascas.",
+  "textures": {
+    "particle": "thaumcraft:block/leech_chest"
+  }
+}

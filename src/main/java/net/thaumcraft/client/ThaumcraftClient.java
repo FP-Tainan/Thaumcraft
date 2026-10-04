@@ -228,6 +228,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.GARLIC_GARLAND_ENTITY,
                 net.thaumcraft.occulta.client.GarlicGarlandRenderer::new);
 
+        // o Baú de Sanguessugas, cuja tampa abre em quatro quartos
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.LeechChestModel.BAÚ,
+                net.thaumcraft.occulta.client.LeechChestModel::baú);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.LEECH_CHEST_ENTITY,
+                net.thaumcraft.occulta.client.LeechChestRenderer::new);
+
         // o Apanha-Erva, que não se desenha como bloco e mostra o que segura
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.GrassperModel.APANHA_ERVA,

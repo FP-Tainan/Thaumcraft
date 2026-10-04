@@ -85,6 +85,22 @@ public class MutandisItem extends Item {
      * <p>É o {@code isMutatableChest} do original, inteiro — e é a conta que o {@code PORTE.md} já esperava
      * desde a fatia da Rosa de Sangue, onde ficou escrito que "o baú comum vira um Apanha-Erva". Agora vira.
      */
+    /**
+     * <b>De onde vem o Baú de Sanguessugas</b>: um <b>baú armadilhado</b> vazio, com <b>quatro
+     * trepadeiras</b> à volta e <b>água nas quatro quinas de baixo</b>.
+     *
+     * <p>O original pede o baú <b>armadilhado</b> e não o comum, e a escolha é dele: o que vai nascer dali é
+     * uma armadilha, e ela começa numa armadilha.
+     */
+    public static boolean éBaúArmadilhado(Level level, BlockPos onde) {
+        if (!level.getBlockState(onde).is(Blocks.TRAPPED_CHEST)) return false;
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            if (!level.getBlockState(onde.relative(lado)).is(Blocks.VINE)) return false;
+            if (!level.getBlockState(onde.relative(lado).below()).is(Blocks.WATER)) return false;
+        }
+        return baúVazio(level, onde);
+    }
+
     public static boolean éBaúDeApanhaErva(Level level, BlockPos onde) {
         if (!level.getBlockState(onde).is(Blocks.CHEST)) return false;
         if (!level.getBlockState(onde.below()).is(Blocks.WATER)) return false;
@@ -141,10 +157,7 @@ public class MutandisItem extends Item {
 
     /** Se este baú está vazio: o que lá estiver não se perde por um descuido. */
     private static boolean baúVazio(Level level, BlockPos onde) {
-        if (!(level.getBlockEntity(onde)
-                instanceof net.minecraft.world.level.block.entity.ChestBlockEntity baú)) {
-            return false;
-        }
+        if (!(level.getBlockEntity(onde) instanceof net.minecraft.world.Container baú)) return false;
         for (int casa = 0; casa < baú.getContainerSize(); casa++) {
             if (!baú.getItem(casa).isEmpty()) return false;
         }
@@ -173,8 +186,8 @@ public class MutandisItem extends Item {
      * rosas. Nenhum dos dois está portado, e por isso o baú comum faz aqui o que o Baú de Sanguessugas fazia
      * lá. Quando eles vierem, a corrente ganha o elo de volta e esta conta passa para o baú certo.
      */
-    private static boolean éBaúDeRosas(Level level, BlockPos onde) {
-        if (!level.getBlockState(onde).is(Blocks.CHEST)) return false;
+    public static boolean éBaúDeRosas(Level level, BlockPos onde) {
+        if (!level.getBlockState(onde).is(OccultaBlocks.LEECH_CHEST)) return false;
         if (!level.getBlockState(onde.below()).is(Blocks.WATER)) return false;
 
         int flores = 0;
@@ -186,14 +199,7 @@ public class MutandisItem extends Item {
         if (flores < 4) return false;
 
         // e o baú tem de estar vazio: o que lá estiver não se perde por um descuido
-        if (!(level.getBlockEntity(onde)
-                instanceof net.minecraft.world.level.block.entity.ChestBlockEntity baú)) {
-            return false;
-        }
-        for (int casa = 0; casa < baú.getContainerSize(); casa++) {
-            if (!baú.getItem(casa).isEmpty()) return false;
-        }
-        return true;
+        return baúVazio(level, onde);
     }
 
     /** As plantas que o Mutandis comum troca entre si. */
@@ -269,6 +275,18 @@ public class MutandisItem extends Item {
          * quatro quinas de baixo, viram a coluna inteira em sarça — a cana em <b>Sarça do Fim</b>, o cato em
          * <b>Sarça Selvagem</b>.
          */
+        // um baú armadilhado, com quatro trepadeiras à volta e água nas quinas, vira quatro Baús de Sanguessugas
+        if (this.extremis && éBaúArmadilhado(level, onde)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            level.removeBlock(onde, false);
+            for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+                level.setBlock(onde.relative(lado),
+                        OccultaBlocks.LEECH_CHEST.defaultBlockState(), Block.UPDATE_ALL);
+            }
+            this.spend(context, level, onde);
+            return InteractionResult.SUCCESS;
+        }
+
         // e um baú vazio, com quatro tufos de grama à volta e água por baixo, vira quatro Apanha-Ervas
         if (this.extremis && éBaúDeApanhaErva(level, onde)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;

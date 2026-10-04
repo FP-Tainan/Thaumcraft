@@ -257,6 +257,9 @@ public final class OccultaItems {
     public static final Item SNOW_PRESSURE_PLATE = register("snow_pressure_plate", properties ->
             new BlockItem(OccultaBlocks.SNOW_PRESSURE_PLATE, properties.useBlockDescriptionPrefix()));
 
+    public static final Item LEECH_CHEST = register("leech_chest", properties ->
+            new BlockItem(OccultaBlocks.LEECH_CHEST, properties.useBlockDescriptionPrefix()));
+
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
