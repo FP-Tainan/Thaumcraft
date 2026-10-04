@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "caught=empty": {
+      "model": "thaumcraft:block/critter_snare_empty"
+    },
+    "caught=bat": {
+      "model": "thaumcraft:block/critter_snare_bat"
+    },
+    "caught=silverfish": {
+      "model": "thaumcraft:block/critter_snare_silverfish"
+    },
+    "caught=slime": {
+      "model": "thaumcraft:block/critter_snare_slime"
+    },
+    "caught=magmacube": {
+      "model": "thaumcraft:block/critter_snare_magmacube"
+    }
+  }
+}

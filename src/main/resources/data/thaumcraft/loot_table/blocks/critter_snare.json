@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "thaumcraft:critter_snare",
+          "functions": [
+            {
+              "function": "minecraft:copy_state",
+              "block": "thaumcraft:critter_snare",
+              "properties": [
+                "caught"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

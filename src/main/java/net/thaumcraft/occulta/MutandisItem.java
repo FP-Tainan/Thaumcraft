@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +106,99 @@ public class MutandisItem extends Item {
     }
 
     /**
+     * <b>De onde vem o Apanha-Bicho</b>: uma <b>teia</b>, com <b>quatro mudas de amieiro</b> à volta, <b>água
+     * por baixo</b> — e um <b>zumbi</b> ao lado, que é o que se gasta.
+     *
+     * <p>É a primeira de três mutações que partem de uma teia, e a única que não pede Apanha-Ervas. As mudas
+     * viram os quatro Apanha-Bichos; o zumbi e a teia somem.
+     */
+    public static boolean éTeiaDeApanhaBicho(Level level, BlockPos onde) {
+        if (!level.getBlockState(onde).is(Blocks.COBWEB)) return false;
+        if (!level.getBlockState(onde.below()).is(Blocks.WATER)) return false;
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            if (!level.getBlockState(onde.relative(lado)).is(OccultaBlocks.ALDER_SAPLING)) return false;
+        }
+        return bichoPerto(level, onde, net.minecraft.world.entity.monster.zombie.Zombie.class) != null;
+    }
+
+    /**
+     * <b>De onde vem a Coruja</b>: a mesma teia, com <b>dois Apanha-Bichos de morcego</b> ao lado, água por
+     * baixo, <b>três Apanha-Ervas com Mutandis Extremis</b> e <b>um com a Pedra Sintonizada carregada</b> nas
+     * diagonais — e um <b>lobo</b>, que é o que se gasta.
+     *
+     * <p>É a receita mais longa do ramo das plantas, e vale olhar para ela inteira: um morcego apanhado numa
+     * planta, um lobo ao lado, e a planta trocando um pelo outro. <b>Cada</b> Apanha-Bicho de morcego vira
+     * uma coruja, de modo que quem puser os quatro leva quatro.
+     */
+    public static boolean éTeiaDeCoruja(Level level, BlockPos onde) {
+        return éTeiaDeBicho(level, onde, CritterSnareBlock.Caught.BAT)
+                && bichoPerto(level, onde, net.minecraft.world.entity.animal.wolf.Wolf.class) != null;
+    }
+
+    /** <b>E o Sapo</b>: a mesma coisa com <b>gosma</b> no lugar do morcego e um <b>jaguatirica</b> ao lado. */
+    public static boolean éTeiaDeSapo(Level level, BlockPos onde) {
+        return éTeiaDeBicho(level, onde, CritterSnareBlock.Caught.SLIME)
+                && bichoPerto(level, onde, net.minecraft.world.entity.animal.feline.Ocelot.class) != null;
+    }
+
+    /** O que a coruja e o sapo têm em comum, que é quase tudo. */
+    private static boolean éTeiaDeBicho(Level level, BlockPos onde, CritterSnareBlock.Caught oquê) {
+        if (!level.getBlockState(onde).is(Blocks.COBWEB)) return false;
+        if (!level.getBlockState(onde.below()).is(Blocks.WATER)) return false;
+        if (quantosLados(level, onde, oquê) < APANHA_BICHOS) return false;
+        if (quantosSeguram(level, onde, OccultaItems.MUTANDIS_EXTREMIS) < APANHA_ERVAS) return false;
+        return quantosSeguram(level, onde, OccultaItems.ATTUNED_STONE_CHARGED) >= 1;
+    }
+
+    /** Quantos Apanha-Bichos do feitio certo há nos quatro lados. */
+    public static int quantosLados(Level level, BlockPos onde, CritterSnareBlock.Caught oquê) {
+        int quantos = 0;
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            BlockState feitio = level.getBlockState(onde.relative(lado));
+            if (feitio.is(OccultaBlocks.CRITTER_SNARE)
+                    && feitio.getValue(CritterSnareBlock.APANHADO) == oquê) {
+                quantos++;
+            }
+        }
+        return quantos;
+    }
+
+    /** E quantos dos quatro Apanha-Ervas das diagonais seguram esta coisa. */
+    public static int quantosSeguram(Level level, BlockPos onde, net.minecraft.world.item.Item oquê) {
+        int quantos = 0;
+        for (BlockPos quina : quinas(onde)) {
+            if (GrassperBlock.segura(level, quina, oquê)) quantos++;
+        }
+        return quantos;
+    }
+
+    /**
+     * O bicho que a mutação gasta, na caixa do original.
+     *
+     * <p>Ela é pequena e torta: <b>um bloco para cada lado</b>, <b>um para baixo</b> e <b>dois para cima</b>.
+     * O bicho tem de estar quase em cima da teia.
+     */
+    @Nullable
+    public static <T extends net.minecraft.world.entity.Entity> T bichoPerto(
+            Level level, BlockPos onde, Class<T> qual) {
+        var caixa = new net.minecraft.world.phys.AABB(
+                onde.getX() - 1, onde.getY() - 1, onde.getZ() - 1,
+                onde.getX() + 1, onde.getY() + 2, onde.getZ() + 1);
+        var achados = level.getEntitiesOfClass(qual, caixa);
+        return achados.isEmpty() ? null : achados.getFirst();
+    }
+
+    /** Quantos lados e quantas diagonais as duas receitas de bicho pedem. */
+    public static final int APANHA_BICHOS = 2;
+    public static final int APANHA_ERVAS = 3;
+
+    /** As quatro diagonais, que é onde os Apanha-Ervas moram. */
+    private static BlockPos[] quinas(BlockPos onde) {
+        return new BlockPos[]{onde.offset(1, 0, 1), onde.offset(1, 0, -1),
+                onde.offset(-1, 0, 1), onde.offset(-1, 0, -1)};
+    }
+
+    /**
      * As quatro de musgo ao lado, as quatro de água na quina de baixo — e os <b>quatro Apanha-Ervas</b> nas
      * diagonais, cada um com a coisa certa na boca.
      *
@@ -126,8 +220,7 @@ public class MutandisItem extends Item {
      * e a ordem não importa, que é como o original conta.
      */
     private static boolean nasQuinas(Level level, BlockPos onde, net.minecraft.world.item.Item... quais) {
-        BlockPos[] quinas = {onde.offset(1, 0, 1), onde.offset(1, 0, -1),
-                onde.offset(-1, 0, 1), onde.offset(-1, 0, -1)};
+        BlockPos[] quinas = quinas(onde);
         if (quais.length == 1) {
             for (BlockPos quina : quinas) {
                 if (!GrassperBlock.segura(level, quina, quais[0])) return false;
@@ -288,6 +381,42 @@ public class MutandisItem extends Item {
             return InteractionResult.SUCCESS;
         }
 
+        // uma teia, com quatro mudas de amieiro à volta, água por baixo e um zumbi ao lado
+        if (this.extremis && éTeiaDeApanhaBicho(level, onde)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            gasta(level, onde, net.minecraft.world.entity.monster.zombie.Zombie.class,
+                    SoundEvents.ZOMBIE_DEATH);
+            level.removeBlock(onde, false);
+            for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+                level.setBlock(onde.relative(lado),
+                        OccultaBlocks.CRITTER_SNARE.defaultBlockState(), Block.UPDATE_ALL);
+            }
+            this.spend(context, level, onde);
+            return InteractionResult.SUCCESS;
+        }
+
+        /*
+         * E as duas que saem dela: a <b>Coruja</b>, de morcegos e um lobo, e o <b>Sapo</b>, de gosma e um
+         * jaguatirica. Cada Apanha-Bicho do feitio certo vira um bicho, de modo que quem puser os quatro
+         * leva quatro — e os quatro Apanha-Ervas ficam de boca vazia, porque foi o que seguravam que se
+         * gastou.
+         */
+        if (this.extremis && éTeiaDeCoruja(level, onde)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            gasta(level, onde, net.minecraft.world.entity.animal.wolf.Wolf.class, morteDeLobo(level));
+            vira(level, onde, CritterSnareBlock.Caught.BAT, OccultaEntities.OWL);
+            this.spend(context, level, onde);
+            return InteractionResult.SUCCESS;
+        }
+        if (this.extremis && éTeiaDeSapo(level, onde)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            gasta(level, onde, net.minecraft.world.entity.animal.feline.Ocelot.class,
+                    SoundEvents.OCELOT_DEATH);
+            vira(level, onde, CritterSnareBlock.Caught.SLIME, OccultaEntities.TOAD);
+            this.spend(context, level, onde);
+            return InteractionResult.SUCCESS;
+        }
+
         /*
          * E as duas sarças: uma <b>cana</b> ou um <b>cato</b> cercados de musgo-espanhol, com água nas
          * quatro quinas de baixo, viram a coluna inteira em sarça — a cana em <b>Sarça do Fim</b>, o cato em
@@ -315,6 +444,77 @@ public class MutandisItem extends Item {
         level.setBlock(onde, aged(nova, qual), Block.UPDATE_ALL);
         this.spend(context, level, onde);
         return InteractionResult.SUCCESS;
+    }
+
+    /**
+     * O bicho que a mutação <b>gasta</b>, com os pós e o barulho da morte dele.
+     *
+     * <p>O original não o mata: ele o <b>faz desaparecer</b>, e toca o som de morte por cima. A diferença
+     * importa — nada cai dele, e nada o conta como morto.
+     */
+    private static void gasta(Level level, BlockPos onde,
+                              Class<? extends net.minecraft.world.entity.Entity> qual,
+                              net.minecraft.sounds.SoundEvent som) {
+        var bicho = bichoPerto(level, onde, qual);
+        if (bicho == null || !(level instanceof ServerLevel mundo)) return;
+        mundo.sendParticles(ParticleTypes.ITEM_SLIME, bicho.getX(), bicho.getY() + 1.0, bicho.getZ(),
+                16, 1.5, 1.0, 1.5, 0.0);
+        mundo.playSound(null, bicho.blockPosition(), som, SoundSource.NEUTRAL, 1.0f, 1.0f);
+        bicho.discard();
+    }
+
+    /**
+     * A morte de um lobo, que o jogo de hoje guarda num <b>feitio de som</b> e não num campo.
+     *
+     * <p>O original toca o {@code mob.wolf.death} e pronto. Hoje cada lobo tem a sua voz — há sete feitios
+     * de som —, e qual delas ele tem não se pergunta de fora. Toca-se a do <b>clássico</b>, que é a voz que
+     * um lobo tem quando ninguém escolheu outra. Fica <b>declarado</b>.
+     */
+    private static net.minecraft.sounds.SoundEvent morteDeLobo(Level level) {
+        var registro = level.registryAccess()
+                .lookupOrThrow(net.minecraft.core.registries.Registries.WOLF_SOUND_VARIANT);
+        return registro.getOrThrow(net.minecraft.world.entity.animal.wolf.WolfSoundVariants.CLASSIC)
+                .value().adultSounds().deathSound().value();
+    }
+
+    /**
+     * Troca <b>cada</b> Apanha-Bicho do feitio certo pelo bicho que ele dá, e esvazia os quatro
+     * Apanha-Ervas das diagonais.
+     *
+     * <p>É o {@code convertToEntity} do original junto com o {@code clearGrassperAt}: o que estava preso
+     * sai vivo, e o que estava na boca dos Apanha-Ervas se gastou na troca.
+     */
+    private static void vira(Level level, BlockPos onde, CritterSnareBlock.Caught oquê,
+                             net.minecraft.world.entity.EntityType<?> qual) {
+        if (!(level instanceof ServerLevel mundo)) return;
+        level.removeBlock(onde, false);
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            BlockPos ali = onde.relative(lado);
+            BlockState feitio = level.getBlockState(ali);
+            if (!feitio.is(OccultaBlocks.CRITTER_SNARE)) continue;
+            if (feitio.getValue(CritterSnareBlock.APANHADO) != oquê) continue;
+            level.removeBlock(ali, false);
+            var bicho = qual.create(mundo, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            if (bicho == null) continue;
+            bicho.snapTo(ali.getX() + 0.5, ali.getY() + 0.001, ali.getZ() + 0.5, 1.0f, 0.0f);
+            if (bicho instanceof net.minecraft.world.entity.Mob mob) {
+                mob.setPersistenceRequired();
+                mob.finalizeSpawn(mundo, mundo.getCurrentDifficultyAt(ali),
+                        net.minecraft.world.entity.EntitySpawnReason.TRIGGERED, null);
+            }
+            mundo.addFreshEntity(bicho);
+        }
+        for (BlockPos quina : quinas(onde)) esvazia(mundo, quina);
+    }
+
+    /** Tira o que um Apanha-Erva tem na boca, com os pós de gosma do original. */
+    private static void esvazia(ServerLevel level, BlockPos onde) {
+        if (!level.getBlockState(onde).is(OccultaBlocks.GRASSPER)) return;
+        if (!(level.getBlockEntity(onde) instanceof GrassperBlockEntity planta)) return;
+        if (planta.naBoca().isEmpty()) return;
+        planta.põe(net.minecraft.world.item.ItemStack.EMPTY);
+        level.sendParticles(ParticleTypes.ITEM_SLIME, onde.getX() + 0.5, onde.getY(), onde.getZ() + 0.5,
+                16, 1.0, 2.0, 1.0, 0.0);
     }
 
     /** A nova planta com a idade da velha, sem passar do que ela aguenta. */

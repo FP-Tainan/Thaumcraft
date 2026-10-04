@@ -8911,3 +8911,92 @@ as vinte batidas antes de morder; ela apanhando quem pisa, com dano e paralisia;
 ovelha; a de lobo recusando um lobisomem que não é o dela; e a prova que carrega a fatia, que é a **mordida
 que não pega** num lobisomem comum. E `OccultaBeartrapClientTest`, com três telas — as quatro lado a lado
 (disparada, armada, escondida e a de lobo), os dentes de perto, e as duas no inventário.
+
+## O Apanha-Bicho, e os dois familiares que saem dele (2026-10-04)
+
+Uma planta que **engole o que é pequeno**. Um morcego, uma lepisma, uma bolha de gosma ou de magma do
+**menor tamanho** — e só do menor — desaparecem nela, e ela passa a mostrar o que apanhou.
+
+A gosma grande é o detalhe que diz o que ela é. Uma bolha de tamanho dois passa por cima dela e nada lhe
+acontece: o Apanha-Bicho não é uma armadilha, é um **passarinheiro**. O que ele apanha é o que não machuca
+ninguém.
+
+### Ela se ouve
+
+De vez em quando ela faz o **barulho do bicho lá dentro**, uma vez em vinte e quatro batidas de desenho. Um
+Apanha-Bicho cheio não se vê de longe: **ouve-se**. É o detalhe que faz dela o que ela é — não é um enfeite
+com uma cor diferente, é uma planta com um morcego vivo dentro reclamando.
+
+### Soltar e levar
+
+**Agacha-se e clica** para soltar o bicho. Sem agachar não acontece nada, e o original pede isso de
+propósito: ninguém esvazia um Apanha-Bicho por acidente ao passar a mão por ele.
+
+O morcego sai **por cima**, que é o único jeito de ele não ficar entalado. Os outros saem **ao lado de quem
+abriu**, do lado para onde ele está — uma lepisma que saísse debaixo dos pés de quem a soltou seria uma
+crueldade mesmo para o original.
+
+E ela **cai com o bicho dentro**: quebrá-la devolve o Apanha-Bicho ainda cheio, e pô-lo noutro lugar põe o
+bicho com ele. É assim que se leva um morcego para longe.
+
+### Cinco nomes num item só
+
+No original isto eram **cinco itens** — um por bicho, cada um com o seu nome. Aqui é **um item só**, e o que
+ele apanhou viaja no feitio do bloco, que o jogo de hoje já sabe guardar num item e copiar na queda.
+
+O **nome** e a **cara**, porém, são os do original: o item lê o que leva dentro, se chama em conformidade e
+**muda de desenho** — são as mesmas cinco folhas do bloco. Quem tem um na mochila vê, sem o pôr no chão, o
+que há nele: a boca aberta se estiver vazio, a boca fechada em volta de um morcego se não estiver.
+
+**Uma linha a mais, declarada:** o jogo de hoje escreve o feitio guardado na dica do item por conta própria,
+de modo que um Apanha-Bicho com morcego diz "caught: bat" debaixo do nome. O original não tinha essa linha
+porque não tinha o mecanismo.
+
+### De onde ele vem
+
+Uma **teia**, com **quatro mudas de amieiro** à volta, **água por baixo** — e um **zumbi** ao lado, que é o
+que se gasta.
+
+As mudas têm de ser de **amieiro**, e a escolha é do original: o amieiro é a árvore que ele associa ao que
+prende e ao que guarda, e é a mesma madeira das portas que só a bruxa abre.
+
+### E as duas que saem dele
+
+A **Coruja**: a mesma teia, com **dois Apanha-Bichos de morcego** ao lado, água por baixo, **três
+Apanha-Ervas com Mutandis Extremis** e **um com a Pedra Sintonizada carregada** nas diagonais — e um
+**lobo**, que é o que se gasta.
+
+O **Sapo**: a mesma coisa, com **gosma** no lugar do morcego e um **jaguatirica** no lugar do lobo.
+
+É a receita mais longa do ramo das plantas, e vale olhar para ela inteira: um morcego apanhado numa planta,
+um lobo ao lado, e a planta trocando um pelo outro. **Cada** Apanha-Bicho do feitio certo vira um bicho, de
+modo que quem puser os quatro leva quatro — e os quatro Apanha-Ervas ficam de boca vazia, porque foi o que
+seguravam que se gastou.
+
+E isto fecha uma corrente que estava partida pelo meio. A coruja e o sapo são os **familiares** do ofício, e
+até aqui eles existiam no mod sem ter de onde vir: quem os queria tinha de os pedir por comando. Agora eles
+vêm de onde vinham.
+
+O bicho que a mutação gasta **não morre**: ele **desaparece**, com os pós de gosma e o som da morte dele por
+cima. A diferença importa — nada cai dele, e nada o conta como morto.
+
+### Duas coisas que ficam de fora, declaradas
+
+A primeira é o **Piolho Parasítico**, que sai de um Apanha-Bicho **com lepisma** e pede mais quatro
+Apanha-Ervas com coisas que ainda não existem — a Língua de Cão entre elas. O piolho não está portado.
+
+A segunda é o **bit do morcego de loja**: no original, um morcego que tenha sido feito mercador pelo **Encanto
+da Polinésia** carrega essa marca para dentro do Apanha-Bicho e a leva de volta ao sair. O encanto não está
+portado, de modo que nenhum morcego tem a marca, e a marca não se guarda. Quando ele vier, é uma chave a mais
+no feitio.
+
+E uma terceira, menor: o original sorteia até **vinte bolhas** à procura de uma do menor tamanho e, não
+achando nenhuma, **larga uma bola de gosma no chão**. O jogo de hoje deixa pôr o tamanho da bolha à mão, de
+modo que as vinte tentativas nunca falham e a bola de gosma é um caminho que já não se percorre. O código dele
+está escrito; é só nunca chamado.
+
+**Guardas:** `OccultaCritterSnareGameTest`, com cinco — os números; ela engolindo o morcego; a prova que
+carrega a fatia, que é a **gosma grande não caber e a pequena caber**; a teia de amieiro com o zumbi, e sem o
+zumbi; e a Coruja pedindo tudo o que ela pede, com o lobo e a pedra sintonizada a serem tirados um por um. E
+`OccultaCritterSnareClientTest`, com três telas — os cinco lado a lado, um de perto, e o item com o morcego
+no inventário.

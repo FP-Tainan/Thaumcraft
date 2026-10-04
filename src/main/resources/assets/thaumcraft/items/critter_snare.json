@@ -1,0 +1,41 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:block_state",
+    "block_state_property": "caught",
+    "cases": [
+      {
+        "when": "bat",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/critter_snare_bat"
+        }
+      },
+      {
+        "when": "silverfish",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/critter_snare_silverfish"
+        }
+      },
+      {
+        "when": "slime",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/critter_snare_slime"
+        }
+      },
+      {
+        "when": "magmacube",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/critter_snare_magmacube"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "thaumcraft:item/critter_snare_empty"
+    }
+  }
+}

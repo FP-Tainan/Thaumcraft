@@ -192,6 +192,19 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ o Apanha-Bicho
+
+    /**
+     * O <b>Apanha-Bicho</b>: a planta que engole o que é pequeno.
+     *
+     * <p>Ela é uma planta de verdade — quebra-se à mão, não estorva a passagem, e vai-se embora se o chão
+     * debaixo dela sair.
+     */
+    public static final Block CRITTER_SNARE = register("critter_snare", properties ->
+            new net.thaumcraft.occulta.CritterSnareBlock(properties.mapColor(MapColor.PLANT)
+                    .instabreak().sound(SoundType.GRASS).noOcclusion().noCollision()
+                    .pushReaction(PushReaction.DESTROY)));
+
     // ------------------------------------------------------------ as duas armadilhas
 
     /**
