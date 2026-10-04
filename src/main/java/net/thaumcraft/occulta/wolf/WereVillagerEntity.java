@@ -26,6 +26,35 @@ public class WereVillagerEntity extends Villager {
         super(type, level);
     }
 
+    /**
+     * Se a <b>mordida dele vai pegar</b> quando ele virar: o {@code infectious} do original.
+     *
+     * <p>Ele não morde ninguém assim, de aldeão — a chave fica guardada e passa ao lobisomem na lua cheia.
+     * Quase nenhum aldeão a tem: ela vem de um lobisomem contagioso ter voltado a ser gente, e esse só
+     * aparece pela <b>Armadilha de Prata</b>.
+     */
+    public boolean contagioso() {
+        return this.contagioso;
+    }
+
+    public void contagioso(boolean pega) {
+        this.contagioso = pega;
+    }
+
+    private boolean contagioso;
+
+    @Override
+    protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput dados) {
+        super.addAdditionalSaveData(dados);
+        dados.putBoolean("Infectious", this.contagioso);
+    }
+
+    @Override
+    protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput dados) {
+        super.readAdditionalSaveData(dados);
+        this.contagioso = dados.getBooleanOr("Infectious", false);
+    }
+
     @Override
     protected void customServerAiStep(ServerLevel level) {
         super.customServerAiStep(level);
@@ -34,6 +63,6 @@ public class WereVillagerEntity extends Villager {
         if (!Moon.cheia(level)) return;
         if (this.hasEffect(OccultaEffects.WOLFSBANE)) return;
 
-        WolfmanEntity.doAldeão(level, this);
+        WolfmanEntity.doAldeão(level, this, this.contagioso);
     }
 }

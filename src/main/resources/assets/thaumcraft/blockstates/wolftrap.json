@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/wolftrap"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/wolftrap"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/wolftrap"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/wolftrap"
+    }
+  }
+}

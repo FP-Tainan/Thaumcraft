@@ -1,6 +1,9 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "thaumcraft:item/leech_chest"
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/leech_chest",
+    "model": {
+      "type": "thaumcraft:leech_chest"
+    }
   }
 }

@@ -510,7 +510,7 @@ public final class WerewolfPowers {
         if (level.getRandom().nextInt(WolfmanEntity.PEGA_UMA_EM) != 0) return;
 
         if (emQuem instanceof net.minecraft.world.entity.npc.villager.Villager aldeão) {
-            WolfmanEntity.doAldeão(level, aldeão);
+            WolfmanEntity.doAldeão(level, aldeão, false);
             return;
         }
         if (!(emQuem instanceof Player vítima)) return;

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "iii",
+    "bpb",
+    "iii"
+  ],
+  "key": {
+    "i": "minecraft:iron_ingot",
+    "b": "minecraft:shears",
+    "p": "minecraft:heavy_weighted_pressure_plate"
+  },
+  "result": {
+    "id": "thaumcraft:beartrap",
+    "count": 1
+  }
+}

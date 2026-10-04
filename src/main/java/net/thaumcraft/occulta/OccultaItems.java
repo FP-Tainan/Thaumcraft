@@ -263,6 +263,12 @@ public final class OccultaItems {
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
+    public static final Item BEARTRAP = register("beartrap", properties ->
+            new BlockItem(OccultaBlocks.BEARTRAP, properties.useBlockDescriptionPrefix()));
+
+    public static final Item WOLFTRAP = register("wolftrap", properties ->
+            new BlockItem(OccultaBlocks.WOLFTRAP, properties.useBlockDescriptionPrefix()));
+
     public static final Item WILD_BRAMBLE = register("wild_bramble", properties ->
             new BlockItem(OccultaBlocks.WILD_BRAMBLE, properties.useBlockDescriptionPrefix()));
 

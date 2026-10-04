@@ -19,6 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.thaumcraft.Thaumcraft;
 import net.thaumcraft.occulta.LeechChestBlockEntity;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Quaternionf;
 
 /**
  * O Baú de Sanguessugas no mundo: o {@code RenderLeechChest} do Witchery.
@@ -34,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class LeechChestRenderer implements BlockEntityRenderer<LeechChestBlockEntity,
         LeechChestRenderer.State> {
-    private static final Identifier FOLHA = Thaumcraft.id("textures/block/leech_chest.png");
+    public static final Identifier FOLHA = Thaumcraft.id("textures/block/leech_chest.png");
 
     /** O quanto cada quarto se abre, nos três eixos. */
     public static final float QUARTO = (float) (Math.PI / 2.0);
@@ -71,8 +72,18 @@ public class LeechChestRenderer implements BlockEntityRenderer<LeechChestBlockEn
 
     @Override
     public void submit(State estado, PoseStack pose, SubmitNodeCollector coletor, CameraRenderState câmara) {
+        desenha(pose, coletor, this.raiz, estado.lightCoords, estado.facing, estado.tampa, estado.sacos);
+    }
+
+    /**
+     * Desenha o baú, no mundo ou na mão.
+     *
+     * <p>Na mão ele vem <b>fechado, sem saco nenhum e sem giro</b>: o original liga o mesmo desenhista ao
+     * bloco e ao item, e sem alma o baú cai no lado de "ninguém o abriu ainda".
+     */
+    public static void desenha(PoseStack pose, SubmitNodeCollector coletor, ModelPart raiz, int luz,
+                               @Nullable Direction para, float tampa, int sacos) {
         RenderType tipo = RenderTypes.entityCutout(FOLHA);
-        int luz = estado.lightCoords;
 
         /*
          * A ordem é a do original, e ela importa: <b>primeiro o virar de cabeça para baixo</b>, depois o
@@ -83,52 +94,82 @@ public class LeechChestRenderer implements BlockEntityRenderer<LeechChestBlockEn
         pose.translate(0.0f, 1.0f, 1.0f);
         pose.scale(1.0f, -1.0f, -1.0f);
         pose.translate(0.5f, 0.5f, 0.5f);
-        pose.mulPose(Axis.YP.rotationDegrees(giro(estado.facing)));
+        if (para != null) pose.mulPose(Axis.YP.rotationDegrees(giro(para)));
         pose.translate(-0.5f, -0.5f, -0.5f);
 
         /*
          * A curva dos baús do jogo: um menos o cubo do que falta. Ela abre depressa no princípio e vai
          * parando no fim, como uma coisa pesada que cede.
          */
-        float quanto = 1.0f - estado.tampa;
+        float quanto = 1.0f - tampa;
         quanto = 1.0f - quanto * quanto * quanto;
 
-        quarto(coletor, pose, tipo, luz, "lidbl",
+        quarto(coletor, pose, raiz, tipo, luz, "lidbl",
                 -quanto * QUARTO / DE_LADO, quanto * QUARTO / DE_FRENTE, quanto * QUARTO / DE_LADO);
-        quarto(coletor, pose, tipo, luz, "lidbr",
+        quarto(coletor, pose, raiz, tipo, luz, "lidbr",
                 -quanto * QUARTO / DE_LADO, -quanto * QUARTO / DE_FRENTE, -quanto * QUARTO / DE_LADO);
-        quarto(coletor, pose, tipo, luz, "lidfl",
+        quarto(coletor, pose, raiz, tipo, luz, "lidfl",
                 quanto * QUARTO / DE_LADO, -quanto * QUARTO / DE_FRENTE, quanto * QUARTO / DE_LADO);
-        quarto(coletor, pose, tipo, luz, "lidfr",
+        quarto(coletor, pose, raiz, tipo, luz, "lidfr",
                 quanto * QUARTO / DE_LADO, quanto * QUARTO / DE_FRENTE, -quanto * QUARTO / DE_LADO);
 
-        desenha(coletor, pose, tipo, luz, "below");
-        if (estado.sacos >= 1) desenha(coletor, pose, tipo, luz, "sac1");
-        if (estado.sacos >= 2) desenha(coletor, pose, tipo, luz, "sac2");
-        if (estado.sacos >= 3) desenha(coletor, pose, tipo, luz, "sac3");
+        peça(coletor, pose, raiz, tipo, luz, "below");
+        if (sacos >= 1) peça(coletor, pose, raiz, tipo, luz, "sac1");
+        if (sacos >= 2) peça(coletor, pose, raiz, tipo, luz, "sac2");
+        if (sacos >= 3) peça(coletor, pose, raiz, tipo, luz, "sac3");
         pose.popPose();
     }
 
-    /** Um quarto de tampa, com os três ângulos dele. */
-    private void quarto(SubmitNodeCollector coletor, PoseStack pose, RenderType tipo, int luz, String qual,
-                        float xRot, float yRot, float zRot) {
-        ModelPart peça = this.raiz.getChild(qual);
-        peça.xRot = xRot;
-        peça.yRot = yRot;
-        peça.zRot = zRot;
+    /**
+     * Um quarto de tampa, com os três ângulos dele — <b>postos na pilha e não na peça</b>.
+     *
+     * <p>É preciso dizer por quê, porque o jeito óbvio está errado. O jogo de hoje <b>não desenha na hora</b>:
+     * ele junta tudo o que lhe mandam e desenha depois, de uma vez. A peça do modelo é <b>uma só</b>,
+     * compartilhada por todos os baús do mundo; mexer no ângulo dela antes de a mandar faz com que, na hora
+     * de desenhar, <b>todos</b> saiam com o ângulo do último — e uma sala de baús com um deles aberto
+     * apareceria com todos abertos.
+     *
+     * <p>Girando a pilha à volta do eixo da peça, cada submissão leva o seu próprio giro. A ordem dos três
+     * ângulos é a do {@code translateAndRotate}: Z, depois Y, depois X.
+     */
+    private static void quarto(SubmitNodeCollector coletor, PoseStack pose, ModelPart raiz, RenderType tipo,
+                               int luz, String qual, float xRot, float yRot, float zRot) {
+        ModelPart peça = raiz.getChild(qual);
+        if (xRot == 0.0f && yRot == 0.0f && zRot == 0.0f) {
+            coletor.submitModelPart(peça, pose, tipo, luz, OverlayTexture.NO_OVERLAY, null);
+            return;
+        }
+        pose.pushPose();
+        pose.translate(peça.x / 16.0f, peça.y / 16.0f, peça.z / 16.0f);
+        pose.mulPose(new Quaternionf().rotationZYX(zRot, yRot, xRot));
+        pose.translate(-peça.x / 16.0f, -peça.y / 16.0f, -peça.z / 16.0f);
         coletor.submitModelPart(peça, pose, tipo, luz, OverlayTexture.NO_OVERLAY, null);
+        pose.popPose();
     }
 
-    private void desenha(SubmitNodeCollector coletor, PoseStack pose, RenderType tipo, int luz, String qual) {
-        coletor.submitModelPart(this.raiz.getChild(qual), pose, tipo, luz, OverlayTexture.NO_OVERLAY, null);
+    private static void peça(SubmitNodeCollector coletor, PoseStack pose, ModelPart raiz, RenderType tipo,
+                             int luz, String qual) {
+        coletor.submitModelPart(raiz.getChild(qual), pose, tipo, luz, OverlayTexture.NO_OVERLAY, null);
     }
 
-    /** Para onde ele olha, pelos quatro ângulos do original. */
+    /**
+     * Para onde ele olha, pelos quatro ângulos do original.
+     *
+     * <p>E eles <b>não são os da Armadilha de Urso</b>, embora as duas façam a mesma coisa: o baú está
+     * <b>meia volta adiantado</b>. A razão está no jeito de o virar de cabeça para baixo. A armadilha usa um
+     * <b>giro de meia volta em Z</b>, que troca o sinal de X e Y; o baú usa uma <b>escala negativa em Y e
+     * Z</b>, que troca o sinal de Y e Z. Os dois viram o modelo, mas deixam-no olhando para lados opostos — e
+     * a tabela de giros de cada um corrige o seu.
+     *
+     * <p>Copiar a tabela da armadilha para o baú — que foi o que esta fatia encontrou feito — põe os
+     * <b>sacos de sangue no fundo</b>, do lado em que ninguém os vê. Era por isso que eles custavam tanto a
+     * aparecer numa tela de prova.
+     */
     public static float giro(Direction para) {
         return switch (para) {
-            case SOUTH -> 180.0f;
-            case WEST -> 270.0f;
-            case EAST -> 90.0f;
+            case NORTH -> 180.0f;
+            case WEST -> 90.0f;
+            case EAST -> 270.0f;
             default -> 0.0f;
         };
     }

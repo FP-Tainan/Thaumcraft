@@ -14,6 +14,10 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
  *
  * <p>A <b>tampa de quatro quartos</b> é a outra coisa que esta tela guarda: ela não dobra, ela se abre.
  *
+ * <p>Os quatro ficam <b>olhando para o norte</b>, que é para onde a câmara está: a frente de um baú aponta
+ * para o lado que o {@code facing} dele diz, e fotografá-los de costas foi o que escondeu os sacos a primeira
+ * vez.
+ *
  * <p>As fotos ficam em {@code build/run/clientGameTest/screenshots}.
  */
 public class OccultaLeechChestClientTest implements FabricClientGameTest {
@@ -37,7 +41,7 @@ public class OccultaLeechChestClientTest implements FabricClientGameTest {
             for (int i = 0; i < quantos.length; i++) {
                 int x = -3 + i * 2;
                 server.runCommand("execute at @p run setblock ~" + x + " ~ ~5 "
-                        + "thaumcraft:leech_chest[facing=south]");
+                        + "thaumcraft:leech_chest[facing=north]");
                 server.runCommand("execute at @p run data merge block ~" + x + " ~ ~5 " + quantos[i]);
             }
             server.runCommand("execute at @p run tp @p ~ ~ ~1 0 22");

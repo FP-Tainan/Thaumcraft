@@ -192,6 +192,29 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ as duas armadilhas
+
+    /**
+     * A <b>Armadilha de Urso</b>: rasa, sem colisão, e invisível para quem não a pôs.
+     *
+     * <p>Os números do original: <b>cinco de dureza</b> e <b>dez de resistência</b>, que é ferro.
+     */
+    public static final Block BEARTRAP = register("beartrap", properties ->
+            new net.thaumcraft.occulta.trap.BeartrapBlock(properties.mapColor(MapColor.METAL)
+                    .strength(5.0f, 10.0f).sound(SoundType.METAL).noOcclusion().noCollision()));
+
+    /** E a <b>Armadilha de Prata</b>, que é a mesma com uma chave virada: só apanha o lobisomem dela. */
+    public static final Block WOLFTRAP = register("wolftrap", properties ->
+            new net.thaumcraft.occulta.trap.BeartrapBlock(properties.mapColor(MapColor.METAL)
+                    .strength(5.0f, 10.0f).sound(SoundType.METAL).noOcclusion().noCollision()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.trap.BeartrapBlockEntity> BEARTRAP_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("beartrap"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.trap.BeartrapBlockEntity::new,
+                            java.util.Set.of(BEARTRAP, WOLFTRAP)));
+
     // ------------------------------------------------------------ as sarças e o nenúfar
 
     /** A <b>Sarça Selvagem</b>, que espinha quem passa — e que cortada se espalha. */

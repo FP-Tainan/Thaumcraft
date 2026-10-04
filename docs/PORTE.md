@@ -8773,3 +8773,141 @@ ser um empréstimo que depois alguém teria de vir trocar. Foi por isso que esta
 fatia foi buscar, um de cada canto; e a prova que importa, que é **cada arquivo que o `sounds.json` promete
 estar no jar**. Um som registrado sem arquivo não dá erro nenhum: ele só não toca, e ninguém descobre até
 estar jogando.
+
+## As duas armadilhas, e a mordida que pega (2026-10-04)
+
+Um bloco só com uma chave virada, e as duas coisas que ele faz não têm nada a ver uma com a outra.
+
+### A de ferro
+
+Rasa — pouco mais de um pixel de alto —, **sem colisão nenhuma**, e **invisível para quem não a pôs**. Quem
+pisa nela leva **quatro de dano de bigorna** e fica **trinta segundos preso no lugar**, com a paralisia no
+terceiro grau.
+
+O dano de bigorna é do original e vale repetir, porque quase se adivinhou como cacto: o
+`field_82728_o` é o `anvil`. As tabelas do MCP continuam pagando o trabalho que deu baixá-las.
+
+Ela **nasce disparada**. Quem a põe no chão tem de se abaixar e armá-la com um clique, e outro clique volta a
+desarmá-la — que é também o jeito de recarregá-la, porque ela não se recarrega sozinha. Armada, ela leva
+**vinte batidas** para ficar sensível: o tempo de quem a armou tirar o pé de cima dela.
+
+E quem está no **criativo** leva o dano e não leva a paralisia. É a única misericórdia que ela tem.
+
+### E ela se esconde
+
+Uma armadilha **armada**, **de ferro** e **posta por alguém** fica a **três décimos de opaca** para todos
+menos para quem a pôs. Num chão de pedra isso é quase nada.
+
+Disparada, deixa de se esconder — já não serve de nada. Sem dono, também não: é o caso de quem a põe por
+comando. E a de lobo nunca se esconde, que não é para pegar gente.
+
+No original isto vem com uma segunda parte que **fica de fora, declarada**: ele também apaga a **caixa de
+seleção** da armadilha escondida, pelo `DrawBlockHighlightEvent`. Aqui ela continua aparecendo quando se olha
+para ela de perto. Fica para quando houver uma fatia de ganchos de desenho; o que ela tem hoje é a
+transparência, que é a parte que se vê de longe.
+
+### A de lobo, que não é uma armadilha
+
+A **Armadilha de Lobo** — a prateada — não espera que um lobisomem passe. Ela **chama um**.
+
+Posta ao pé de um **Altar do Lobo**, com uma **ovelha na corda** a oito blocos, ela espera a **lua cheia**,
+espera **uma volta do relógio** com tudo no lugar — e põe um lobisomem no mato, a dezesseis ou trinta e dois
+blocos. E anota **qual**.
+
+Depois ela só aceita **aquele**. Nenhum outro lobisomem a dispara. Quando o certo pisa nela, ela o
+**torna contagioso**, com o som do Senhor dos Lobos.
+
+A corda é o que faz a diferença. Uma ovelha solta não serve: ela tem de estar **presa**, porque o original
+quer que alguém a tenha levado até lá de propósito. E a ovelha que se solta no meio da espera **desfaz a
+espera** — o relógio volta a zero.
+
+Em troca de tudo isso, ela **não volta para a mão**: quebrá-la não devolve nada, porque a prata se gastou no
+que ela fez.
+
+Que é dizer: a Armadilha de Lobo não é uma armadilha. É o **fim de uma receita**, e a ovelha é o anzol.
+
+### O que isto corrige
+
+E aqui está o que esta fatia foi mesmo buscar.
+
+Até agora, **todo** lobisomem deste porte passava licantropia a quem mordesse, abaixo de um quarto de vida e
+uma vez em quatro. Estava errado. No original, a mordida de um lobisomem **só pega se ele for contagioso**, e
+a **única** coisa no mod inteiro que torna um lobisomem contagioso é esta armadilha.
+
+Com a chave no lugar, as contas do original aparecem e são outras:
+
+- um **aldeão** vira abaixo de um quarto de vida — e vira num aldeão que **não é contagioso**, de modo que o
+  contágio **para na primeira geração**;
+- uma **pessoa** apanha a doença **sem conta de vida nenhuma e sem sorteio**. Uma mordida basta.
+
+A diferença no jogo é grande. Antes, andar num mato de lobisomens era um risco de se apanhar a doença por
+azar. Agora **não é risco nenhum** — e quem quer a doença **tem de a preparar**: a ovelha, o altar, a lua, a
+Armadilha de Lobo e o pé do bicho em cima dela.
+
+O contágio anda nos dois sentidos pela corrente do aldeão: um aldeão contagioso vira um lobisomem contagioso,
+e esse, ao voltar a ser aldeão com a lua, leva a chave consigo. É o `convertToVillager` do original
+passando a chave de mão em mão.
+
+### O que se desenhou
+
+Vinte peças numa chapa de trinta e dois. A **base** é uma barra de dez; os dois **discos** são as molas; a
+**placa** no meio é o gatilho, e ela afunda meio pixel ao disparar. E os dois **arcos** levam cada um as suas
+duas hastes e os seus **cinco dentes**.
+
+Os dentes e as hastes são **filhos dos arcos**, e é por isso que ela funciona com dois números: basta girar o arco
+e tudo o que está pregado nele gira junto. Armada, 0; disparada, **1,2 radiano** cada um, em sentidos opostos,
+e os dentes se encontram no meio.
+
+**E a mesma ordem do Baú de Sanguessugas:** o virar de cabeça para baixo — que aqui é uma meia volta em Z, e
+espelha o X de passagem — vem **antes** do giro para o lado em que ela foi posta.
+
+### E um que o Baú de Sanguessugas escondeu
+
+As quatro armadilhas lado a lado da tela de prova encontraram um erro que estava no porte desde o baú.
+
+O jogo de hoje **não desenha na hora**: ele junta tudo o que lhe mandam e desenha depois, de uma vez. A peça
+do modelo é **uma só**, compartilhada por todas as armadilhas do mundo — de modo que mexer no ângulo dela
+antes de a mandar faz com que, na hora de desenhar, **todas saiam com o ângulo da última**.
+
+Na primeira tela, as quatro apareceram **armadas**, inclusive a disparada: o ângulo que valeu foi o da última
+submetida. O jeito certo é não tocar na peça — gira-se a **pilha de poses** à volta do eixo dela, e cada
+submissão leva o seu próprio giro.
+
+E não se via antes porque **é preciso haver duas no mesmo quadro com poses diferentes**. O Baú de
+Sanguessugas tinha o mesmo erro e passou: numa sala de baús todos fechados, a pose do último é a de todos.
+Ficou corrigido nos dois.
+
+### E mais dois, no mesmo baú
+
+Olhar para a armadilha fez olhar outra vez para o baú, e ele tinha **outros dois**.
+
+O primeiro: ele estava **virado ao contrário**, meia volta. A tabela de giros dele tinha sido copiada da
+armadilha, e as duas **não podem ter a mesma tabela**: a armadilha vira o modelo de cabeça para baixo com um
+**giro de meia volta em Z**, que troca o sinal de X e Y; o baú vira com uma **escala negativa em Y e Z**, que
+troca o sinal de Y e Z. Os dois modos viram o modelo e deixam-no olhando para lados opostos, e por isso o
+original dá a cada um a sua tabela.
+
+Com a tabela errada, os **sacos de sangue ficavam no fundo** — do lado em que ninguém os vê. Era por isso que
+a fatia do baú custou tanto a fotografá-los: a tela estava olhando para as costas dele.
+
+O segundo: o **item** era uma folha achatada. O original liga o mesmo desenhista ao bloco e ao item, de modo
+que um Baú de Sanguessugas na mochila é o baú de verdade — tampa de quatro quartos e tudo —, fechado e sem
+saco nenhum, porque sem alma ele cai no lado de "ninguém o abriu ainda". Agora é.
+
+Na **mão e no inventário** ela aparece **armada e deitada**, sem giro nenhum. O original liga o mesmo
+desenhista ao bloco e ao item, e sem alma o modelo cai no lado de "ainda não disparou" — de modo que o item
+mostra a armadilha como ela é quando serve para alguma coisa.
+
+### De onde elas vêm
+
+A de ferro: três ferros, duas **tesouras** e uma **placa de pressão pesada** no meio.
+
+A de lobo: a de ferro no meio, quatro **pós de prata** nas quinas, dois **catalisadores nulos** acima e
+abaixo, e dois **acônitos** aos lados. O original tem uma segunda receita que troca o pó de prata por um
+lingote de prata quando algum mod oferecer um; aqui não há lingote de prata, e **fica de fora, declarado**.
+
+**Guardas:** `OccultaBeartrapGameTest`, com sete — os números; ela nascendo disparada e o clique que a arma;
+as vinte batidas antes de morder; ela apanhando quem pisa, com dano e paralisia; a de lobo ignorando uma
+ovelha; a de lobo recusando um lobisomem que não é o dela; e a prova que carrega a fatia, que é a **mordida
+que não pega** num lobisomem comum. E `OccultaBeartrapClientTest`, com três telas — as quatro lado a lado
+(disparada, armada, escondida e a de lobo), os dentes de perto, e as duas no inventário.

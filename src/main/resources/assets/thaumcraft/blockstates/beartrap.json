@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/beartrap"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/beartrap"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/beartrap"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/beartrap"
+    }
+  }
+}

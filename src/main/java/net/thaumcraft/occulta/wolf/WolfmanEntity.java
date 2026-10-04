@@ -107,6 +107,28 @@ public class WolfmanEntity extends Monster {
         this.profissão = qual;
     }
 
+    /**
+     * Se a <b>mordida dele pega</b>: o {@code infectious} do original.
+     *
+     * <p>É o que separa um lobisomem qualquer do lobisomem que importa. Quase nenhum deles é contagioso — a
+     * mordida de um lobisomem do mato <b>não dá licantropia a ninguém</b>, e o original é claro nisso.
+     *
+     * <p>Só há <b>uma</b> maneira de aparecer um contagioso, e ela é a <b>Armadilha de Prata</b>: posta ao pé
+     * de um Altar do Lobo com uma ovelha na corda, ela chama um lobisomem na lua cheia, espera que ele pise
+     * nela, e só então o torna contagioso.
+     *
+     * <p>Que é dizer: quem quer ser lobisomem <b>tem de o preparar</b>. Ninguém apanha a doença por azar.
+     */
+    public boolean contagioso() {
+        return this.contagioso;
+    }
+
+    public void contagioso(boolean pega) {
+        this.contagioso = pega;
+    }
+
+    private boolean contagioso;
+
     @Nullable
     public VillagerData profissão() {
         return this.profissão;
@@ -155,6 +177,7 @@ public class WolfmanEntity extends Monster {
         aldeão.finalizeSpawn(level, level.getCurrentDifficultyAt(aldeão.blockPosition()),
                 EntitySpawnReason.CONVERSION, null);
         if (this.profissão != null) aldeão.setVillagerData(this.profissão);
+        aldeão.contagioso(this.contagioso);
         aldeão.setPersistenceRequired();
         this.discard();
         level.addFreshEntity(aldeão);
@@ -210,18 +233,27 @@ public class WolfmanEntity extends Monster {
     public void addAdditionalSaveData(ValueOutput dados) {
         super.addAdditionalSaveData(dados);
         if (this.profissão != null) dados.store("FormerVillager", VillagerData.CODEC, this.profissão);
+        dados.putBoolean("Infectious", this.contagioso);
     }
 
     @Override
     public void readAdditionalSaveData(ValueInput dados) {
         super.readAdditionalSaveData(dados);
         this.profissão = dados.read("FormerVillager", VillagerData.CODEC).orElse(null);
+        this.contagioso = dados.getBooleanOr("Infectious", false);
     }
 
-    /** Faz de um aldeão um lobisomem, guardando quem ele era. */
-    public static void doAldeão(ServerLevel level, Villager aldeão) {
+    /**
+     * Faz de um aldeão um lobisomem, guardando quem ele era — e <b>se a mordida dele pega</b>.
+     *
+     * <p>O contágio anda nos dois sentidos: um aldeão contagioso vira um lobisomem contagioso, e esse, ao
+     * voltar a ser aldeão com a lua, leva o contágio consigo. É o {@code convertToVillager} do original
+     * passando a chave de mão em mão.
+     */
+    public static void doAldeão(ServerLevel level, Villager aldeão, boolean contagioso) {
         var lobo = OccultaEntities.WOLFMAN.create(level, EntitySpawnReason.CONVERSION);
         if (lobo == null) return;
+        lobo.contagioso(contagioso);
         lobo.copyPosition(aldeão);
         lobo.finalizeSpawn(level, level.getCurrentDifficultyAt(lobo.blockPosition()),
                 EntitySpawnReason.CONVERSION, null);
@@ -258,14 +290,24 @@ public class WolfmanEntity extends Monster {
     @Override
     public boolean doHurtTarget(ServerLevel level, Entity alvo) {
         boolean acertou = super.doHurtTarget(level, alvo);
-        if (!acertou || !(alvo instanceof LivingEntity vivo)) return acertou;
-        if (vivo.getHealth() <= 0.0f || vivo.getHealth() >= vivo.getMaxHealth() * QUASE_MORTO) return acertou;
-        if (level.getRandom().nextInt(PEGA_UMA_EM) != 0) return acertou;
+        if (!acertou || !this.contagioso || !(alvo instanceof LivingEntity vivo)) return acertou;
 
+        /*
+         * O aldeão vira <b>abaixo de um quarto de vida</b>, e vira num aldeão que <b>não é contagioso</b>:
+         * uma aldeia mordida por um lobisomem de armadilha enche-se de lobisomens, mas eles não espalham
+         * mais nada. O contágio para na primeira geração, e é de propósito.
+         */
         if (alvo instanceof Villager aldeão) {
-            doAldeão(level, aldeão);
+            if (vivo.getHealth() > 0.0f && vivo.getHealth() < vivo.getMaxHealth() * QUASE_MORTO) {
+                doAldeão(level, aldeão, false);
+            }
             return acertou;
         }
+
+        /*
+         * E a pessoa apanha a doença <b>sem conta de vida nenhuma e sem sorteio</b>. Uma mordida basta.
+         * Quem foi preparar um lobisomem contagioso sabia o que ia acontecer.
+         */
         if (!(alvo instanceof net.minecraft.world.entity.player.Player gente)) return acertou;
         if (net.thaumcraft.occulta.hunter.HunterClothes.protegeDeLobo(gente)) return acertou;
         if (Werewolf.grauDe(gente) > 0) return acertou;
@@ -277,8 +319,15 @@ public class WolfmanEntity extends Monster {
         return acertou;
     }
 
-    /** Abaixo de que parte da vida a mordida pega, e de quantas em quantas. */
+    /** Abaixo de que parte da vida um aldeão vira. */
     public static final float QUASE_MORTO = 0.25f;
+
+    /**
+     * E de quantas em quantas pega a <b>mordida de uma pessoa</b> em forma de bicho.
+     *
+     * <p>Fica aqui porque as duas contas vinham juntas no original, e porque é a mesma vida de um quarto. A
+     * mordida <b>deste</b> bicho não tem sorteio nenhum — veja {@link #doHurtTarget}.
+     */
     public static final int PEGA_UMA_EM = 4;
 
     /** O tipo do aldeão que ele vira e de que veio, para quem precisar. */

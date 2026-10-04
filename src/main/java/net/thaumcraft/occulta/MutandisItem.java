@@ -56,10 +56,11 @@ public class MutandisItem extends Item {
      * <p>Vira <b>Sarça do Fim</b>, a coluna inteira, até quinze de altura — e o musgo à volta some, porque
      * foi ele que se gastou na troca.
      *
-     * <p><b>Declarado:</b> no original esta mutação pede ainda <b>quatro Apanha-Ervas</b> nas diagonais, cada
-     * um segurando uma <b>pérola do fim</b>, e quem a faz é a <b>Vara Mutante</b> e não o Mutandis. O
-     * Apanha-Erva e a vara não estão portados; o Mutandis Extremis faz aqui o que a vara fazia lá, como já
-     * faz com o Baú de Sanguessugas. Quando eles vierem, a conta volta ao que era.
+     * <p>E ela pede ainda <b>quatro Apanha-Ervas</b> nas diagonais, cada um segurando uma <b>pérola do
+     * fim</b> — o que esteve declarado como buraco enquanto o Apanha-Erva não existia, e já não está.
+     *
+     * <p><b>Fica de fora, declarado:</b> no original quem faz esta mutação é a <b>Vara Mutante</b> e não o
+     * Mutandis. A vara não está portada, e o Mutandis Extremis faz aqui o que ela fazia lá.
      */
     public static boolean éCanaDeSarça(Level level, BlockPos onde) {
         return level.getBlockState(onde).is(Blocks.SUGAR_CANE)
@@ -69,8 +70,8 @@ public class MutandisItem extends Item {
     /**
      * E um <b>cato</b> do mesmo jeito vira <b>Sarça Selvagem</b>, até quatro de altura.
      *
-     * <p><b>Declarado:</b> no original ela pede ainda <b>dois Apanha-Ervas com farinha de osso</b> e
-     * <b>dois com pó de blaze</b> nas diagonais. Vale aqui o mesmo que para a cana.
+     * <p>E ela pede <b>dois Apanha-Ervas com farinha de osso</b> e <b>dois com pó de blaze</b> nas
+     * diagonais, que é a conta do original. A <b>Vara Mutante</b> continua a ser o buraco, como na cana.
      */
     public static boolean éCatoDeSarça(Level level, BlockPos onde) {
         return level.getBlockState(onde).is(Blocks.CACTUS)
@@ -78,13 +79,6 @@ public class MutandisItem extends Item {
                         net.minecraft.world.item.Items.BLAZE_POWDER);
     }
 
-    /**
-     * <b>De onde vem o Apanha-Erva</b>: um <b>baú vazio</b>, com <b>quatro tufos de grama</b> à volta e
-     * <b>água por baixo</b>. O baú some e no lugar dos quatro tufos ficam quatro Apanha-Ervas.
-     *
-     * <p>É o {@code isMutatableChest} do original, inteiro — e é a conta que o {@code PORTE.md} já esperava
-     * desde a fatia da Rosa de Sangue, onde ficou escrito que "o baú comum vira um Apanha-Erva". Agora vira.
-     */
     /**
      * <b>De onde vem o Baú de Sanguessugas</b>: um <b>baú armadilhado</b> vazio, com <b>quatro
      * trepadeiras</b> à volta e <b>água nas quatro quinas de baixo</b>.
@@ -270,11 +264,6 @@ public class MutandisItem extends Item {
             return InteractionResult.SUCCESS;
         }
 
-        /*
-         * E as duas sarças: uma <b>cana</b> ou um <b>cato</b> cercados de musgo-espanhol, com água nas
-         * quatro quinas de baixo, viram a coluna inteira em sarça — a cana em <b>Sarça do Fim</b>, o cato em
-         * <b>Sarça Selvagem</b>.
-         */
         // um baú armadilhado, com quatro trepadeiras à volta e água nas quinas, vira quatro Baús de Sanguessugas
         if (this.extremis && éBaúArmadilhado(level, onde)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
@@ -299,6 +288,11 @@ public class MutandisItem extends Item {
             return InteractionResult.SUCCESS;
         }
 
+        /*
+         * E as duas sarças: uma <b>cana</b> ou um <b>cato</b> cercados de musgo-espanhol, com água nas
+         * quatro quinas de baixo, viram a coluna inteira em sarça — a cana em <b>Sarça do Fim</b>, o cato em
+         * <b>Sarça Selvagem</b>.
+         */
         if (this.extremis && éCanaDeSarça(level, onde)) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
             vira(level, onde, Blocks.SUGAR_CANE, OccultaBlocks.ENDER_BRAMBLE, CANA_ALTA);

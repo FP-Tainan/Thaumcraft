@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "sns",
+    "w#w",
+    "sns"
+  ],
+  "key": {
+    "#": "thaumcraft:beartrap",
+    "s": "thaumcraft:silver_dust",
+    "n": "thaumcraft:null_catalyst",
+    "w": "thaumcraft:wolfsbane_sprig"
+  },
+  "result": {
+    "id": "thaumcraft:wolftrap",
+    "count": 1
+  }
+}

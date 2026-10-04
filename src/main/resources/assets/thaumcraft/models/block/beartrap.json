@@ -1,0 +1,6 @@
+{
+  "__comment": "A armadilha se desenha pelo BeartrapRenderer; aqui só a cor das lascas.",
+  "textures": {
+    "particle": "thaumcraft:block/beartrap"
+  }
+}

@@ -236,6 +236,20 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.LEECH_CHEST_ENTITY,
                 net.thaumcraft.occulta.client.LeechChestRenderer::new);
 
+        // as duas armadilhas, que são o mesmo desenho com uma chave virada
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.BeartrapModel.ARMADILHA,
+                net.thaumcraft.occulta.client.BeartrapModel::armadilha);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.BEARTRAP_ENTITY,
+                net.thaumcraft.occulta.client.BeartrapRenderer::new);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("beartrap"),
+                net.thaumcraft.occulta.client.BeartrapItemRenderer.Unbaked.CODEC);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("leech_chest"),
+                net.thaumcraft.occulta.client.LeechChestItemRenderer.Unbaked.CODEC);
+
         // o Apanha-Erva, que não se desenha como bloco e mostra o que segura
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.GrassperModel.APANHA_ERVA,

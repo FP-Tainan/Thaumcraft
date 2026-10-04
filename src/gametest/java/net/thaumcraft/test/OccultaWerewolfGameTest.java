@@ -171,7 +171,7 @@ public class OccultaWerewolfGameTest {
         var aldeão = helper.spawn(EntityTypes.VILLAGER, new BlockPos(3, 2, 3));
         var qualEra = aldeão.getVillagerData();
 
-        WolfmanEntity.doAldeão(level, aldeão);
+        WolfmanEntity.doAldeão(level, aldeão, false);
         if (aldeão.isAlive()) helper.fail("o aldeão sai");
 
         var lobos = level.getEntitiesOfClass(WolfmanEntity.class,
