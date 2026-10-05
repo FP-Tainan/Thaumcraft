@@ -9674,3 +9674,72 @@ estado já atravessa a rede para o lado do cliente, à espera dela.
 prova que carrega a fatia, que é o **cantil esvaziando e castigando**; o encher que não passa do teto; o
 lugar de voltar guardando o mundo em que se estava; e os números todos. E `OccultaInfusionClientTest`, com
 duas telas: as duas coisas no inventário e a Mão segurada.
+
+## A Infusão da Luz, e a barra de poder (2026-10-05)
+
+A segunda das quatro. Se a do Outro Lugar é a de **não estar onde se está**, esta é a de **não ser visto, e
+pôr paredes onde não há**. Ela não mata ninguém: tudo o que faz é com **luz** — luz que se dobra à volta de
+quem a tem, e luz que endurece e vira muro.
+
+### O que ela dá
+
+| o que se faz | o que acontece | custa |
+| --- | --- | --- |
+| segurar a Mão | de trinta em trinta batidas, fica **invisível** — e **tudo o que o perseguia a vinte blocos perde o alvo** | **1** |
+| agachado, largar antes de um segundo, olhando um **bicho** | ergue à volta dele uma **gaiola de luz** | **3** |
+| …olhando o **topo** de um bloco | levanta um **escudo de três colunas** à sua frente | **3** |
+| …olhando o **lado** de um bloco | faz brotar dali uma **parede de dezesseis** naquele rumo | **3** |
+| socar um bicho | se houver três blocos de ar **quatro acima dele**, ele é posto lá e **trancado numa gaiola** | **5** |
+
+Esse último é o poder mais útil deste mod e ninguém diz isso em voz alta: **tirar uma coisa do chão e
+trancá-la no ar** resolve qualquer luta sem um golpe. Custa cinco de duzentos e só pede que haja céu.
+
+### A metade que ninguém espera
+
+A invisibilidade de trinta batidas só esconde. O que faz esta infusão valer é a segunda metade: **tudo o que
+estava perseguindo você perde o alvo**. Quem já vinha atrás de você deixa de saber para onde ia — e isso não
+é esconder, é **desfazer a perseguição**.
+
+E a luz some quando o poder acaba: a invisibilidade é renovada de trinta em trinta batidas, e **tirada** no
+instante em que você larga a Mão ou a carga acaba. O original é explícito nisso. Quem se esconde com luz
+emprestada fica visível quando o empréstimo acaba.
+
+### O alvo cru
+
+O original lê o campo do alvo **direto**. O jogo de hoje passa o `getTarget` por um filtro que recusa, entre
+outros, quem está no criativo — e por isso o porte usa o `getTargetUnchecked`, que é o campo. **Quem está
+perseguindo você está perseguindo você.**
+
+Essa mesma coisa teve consequências na arena das provas, e vale guardá-las:
+
+- o `setTarget` de qualquer bicho passa o alvo pelo mesmo filtro, de modo que **nenhum bicho mira num
+  jogador criativo**;
+- o jogador de mentira que entra no mundo (`makeMockServerPlayerInLevel`) nasce **criativo** e não há como o
+  tirar de lá — nem pelo modo de jogo, nem mexendo nas capacidades à mão;
+- o outro (`makeMockServerPlayer`) aceita o modo de jogo de partida, mas **não tem ligação de rede**, e por
+  isso não se lhe podem dar poções.
+
+Por isso as duas metades do poder são provadas **em duas provas**: o esquecer com o jogador da sobrevivência,
+e o esconder com o que está no mundo.
+
+### A barra de poder
+
+Um **tubo de vidro** de oito por trinta e dois, encostado à direita da tela e no meio dela, que se enche de
+baixo para cima com a carga que a pessoa tem.
+
+E o que o enche **muda com a infusão**: a do Outro Lugar o enche com a textura do **portal**, a da Luz com a
+da **neve**. É um detalhe pequeno do original e é o que torna a barra legível de relance — não se precisa de
+ler um número para saber qual delas se tem.
+
+Ela só aparece a quem **está infundido**. Sem infusão não há tubo nenhum.
+
+**Fica de fora, declarado:** a **segunda barra**, a dos poderes de bicho da Infusão Infernal, que o original
+desenha ao lado desta com a textura de argila. Ela entra com a infusão dela.
+
+### O Fantasma da Luz
+
+O que o rito pede, e o **mais barato dos quatro**: dois mil de poder em vez de quatro mil. É por ele que
+quase toda gente começa.
+
+**Guardas:** no `OccultaInfusionGameTest`, mais duas — o **esquecer** e o **esconder**. E, no
+`OccultaInfusionClientTest`, mais uma tela: a **barra de poder** cheia a dois terços com a textura do portal.

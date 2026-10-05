@@ -275,6 +275,21 @@ public final class OccultaItems {
                     .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
 
     /**
+     * O <b>Fantasma da Luz</b>: o que o rito da Infusão da Luz pede.
+     *
+     * <p>Bebido, dá <b>Veneno II por um minuto</b>. Ele também não existe para se beber.
+     */
+    public static final Item GHOST_OF_THE_LIGHT = register("ghost_of_the_light", properties ->
+            new Item(properties.stacksTo(2).food(
+                    new net.minecraft.world.food.FoodProperties.Builder()
+                            .alwaysEdible().nutrition(0).saturationModifier(0.0f).build(),
+                    net.minecraft.world.item.component.Consumables.defaultDrink().onConsume(
+                            new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                                    new net.minecraft.world.effect.MobEffectInstance(
+                                            net.minecraft.world.effect.MobEffects.POISON, 1200, 1)))
+                            .build())));
+
+    /**
      * O <b>Espírito do Outro Lugar</b>: o que o rito da Infusão do Outro Lugar pede.
      *
      * <p>Bebido, dá <b>Veneno II por um minuto</b> — e é o que ele merece. Ele não existe para se

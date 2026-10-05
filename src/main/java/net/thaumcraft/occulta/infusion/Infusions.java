@@ -77,6 +77,7 @@ public final class Infusions {
 
     static {
         põe(NENHUMA);
+        põe(new LightInfusion(1));
         põe(new OtherwhereInfusion(3));
     }
 

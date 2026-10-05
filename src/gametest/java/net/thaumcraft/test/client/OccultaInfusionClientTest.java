@@ -35,6 +35,24 @@ public class OccultaInfusionClientTest implements FabricClientGameTest {
             context.waitTicks(10);
 
             context.takeScreenshot("infusao_2_a_mao_na_mao");
+
+            /*
+             * E a <b>barra de poder</b>: um tubo de vidro à direita da tela, no meio dela, cheio da
+             * textura da infusão que se tem. Aqui a do Outro Lugar, que é o portal.
+             */
+            context.runOnClient(minecraft -> {
+                var servidor = minecraft.getSingleplayerServer();
+                if (servidor == null) return;
+                servidor.execute(() -> {
+                    for (var quem : servidor.getPlayerList().getPlayers()) {
+                        net.thaumcraft.occulta.infusion.Infusions.infunde(quem,
+                                net.thaumcraft.occulta.infusion.Infusions.daquele(3), 200);
+                        net.thaumcraft.occulta.infusion.Infusions.põeEnergia(quem, 130);
+                    }
+                });
+            });
+            context.waitTicks(40);
+            context.takeScreenshot("infusao_3_a_barra_de_poder");
         }
     }
 }

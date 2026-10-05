@@ -2927,6 +2927,21 @@ public final class Rites {
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
+         * O <b>Rito da Infusão da Luz</b>, que é o mais barato dos quatro: dois mil de poder em vez de
+         * quatro mil. É por ele que quase toda gente começa.
+         */
+        RiteRegistry.register("tc.rite.infusionlight",
+                new InfusePlayers(net.thaumcraft.occulta.infusion.Infusions.daquele(1),
+                        net.thaumcraft.occulta.infusion.Infusions.CARGAS,
+                        net.thaumcraft.occulta.infusion.Infusions.ALCANCE),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(
+                                net.thaumcraft.occulta.OccultaItems.GHOST_OF_THE_LIGHT),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE);
+
+        /*
          * O <b>Rito da Infusão do Outro Lugar</b>, que é o primeiro dos quatro ritos que mudam o
          * próprio corpo de quem os faz. Ele <b>mata quase</b>: cem de dano mágico a tudo o que for gente
          * num raio de quatro blocos, e só quem sobreviver fica infundido.

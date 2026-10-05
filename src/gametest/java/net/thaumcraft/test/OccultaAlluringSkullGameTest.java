@@ -123,13 +123,16 @@ public class OccultaAlluringSkullGameTest {
         var ovelha = helper.spawn(EntityTypes.SHEEP, new BlockPos(5, 2, 5));
         helper.runAfterDelay(20, () -> {
             ovelha.getNavigation().stop();
+            /*
+             * E a pergunta é feita <b>à ovelha</b>, e não ao número que o chamado devolve: ele tem sessenta
+             * e quatro blocos de alcance, e as arenas das provas são vizinhas — um zumbi da prova do lado
+             * entra na conta e não diz nada sobre esta.
+             */
             for (int quadrante = 0; quadrante < AlluringSkullBlock.QUADRANTES; quadrante++) {
-                if (AlluringSkullBlockEntity.chama(level, onde, quadrante) != 0) {
-                    helper.fail("uma ovelha não ouve o chamado dos mortos");
-                }
+                AlluringSkullBlockEntity.chama(level, onde, quadrante);
             }
             if (!ovelha.getNavigation().isDone()) {
-                helper.fail("e não se põe a andar por causa dele");
+                helper.fail("uma ovelha não ouve o chamado dos mortos");
             }
             ovelha.discard();
             helper.succeed();

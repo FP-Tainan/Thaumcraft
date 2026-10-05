@@ -40,6 +40,14 @@ public final class KettleTable {
                 OccultaItems.REDSTONE_SOUP, Items.SPLASH_POTION, Items.DIAMOND, Items.FEATHER,
                 OccultaItems.BAT_WOOL, OccultaItems.BELLADONNA_FLOWER);
 
+        // ---------------------------------------------------------- o Fantasma da Luz
+        // A cor é o -5584658 do original lido como cor de 32 bits, e o poder são quatro mil.
+        // O original pede duas poções com números de 1.7.10; aqui entra a poção, qualquer que seja, e por
+        // isso só uma — o mesmo desvio do Unguento do Voo, e a tocha entra no lugar da segunda.
+        KettleRecipes.add(OccultaItems.GHOST_OF_THE_LIGHT, 2, 0xFFAABBAE, 4000.0f,
+                OccultaItems.REDSTONE_SOUP, Items.POTION, OccultaItems.FIRE_POPPET, Items.TORCH,
+                OccultaItems.DOG_TONGUE, Items.GLOWSTONE_DUST);
+
         // ---------------------------------------------------------- o Espírito do Outro Lugar
         // A cor é o -7128833 do original lido como cor de 32 bits, e o poder são quatro mil.
         // O mesmo desvio da poção já declarado para o Unguento do Voo.

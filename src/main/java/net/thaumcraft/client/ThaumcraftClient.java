@@ -228,6 +228,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.GARLIC_GARLAND_ENTITY,
                 net.thaumcraft.occulta.client.GarlicGarlandRenderer::new);
 
+        // a barra de poder da infusão, que se enche com a textura da infusão que se tem
+        net.thaumcraft.occulta.client.InfusionBar.init();
+
         // a Caveira do Chamado, que é a cabeça de esqueleto do jogo com outra pele
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.AlluringSkullRenderer.CAVEIRA,
