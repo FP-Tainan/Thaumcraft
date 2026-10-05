@@ -192,6 +192,18 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ o Feixe de Vime
+
+    /**
+     * O <b>Feixe de Vime</b>: a peça de que se constrói o Homem de Vime.
+     *
+     * <p>Os números do original: <b>meio de dureza</b>, som de grama, e pega fogo como madeira — vinte de
+     * chama e vinte de espalhar, que é mais do que qualquer tronco.
+     */
+    public static final Block WICKER_BUNDLE = register("wicker_bundle", properties ->
+            new net.thaumcraft.occulta.WickerBundleBlock(properties.mapColor(MapColor.WOOD)
+                    .strength(0.5f).sound(SoundType.GRASS).ignitedByLava()));
+
     // ------------------------------------------------------------ o vidro, a lã e o globo
 
     /**

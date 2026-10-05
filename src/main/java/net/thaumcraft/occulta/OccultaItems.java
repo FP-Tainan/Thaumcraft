@@ -263,6 +263,9 @@ public final class OccultaItems {
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
+    public static final Item WICKER_BUNDLE = register("wicker_bundle", properties ->
+            new net.thaumcraft.occulta.WickerBundleItem(properties.useBlockDescriptionPrefix()));
+
     public static final Item SHADED_GLASS = register("shaded_glass", properties ->
             new net.thaumcraft.occulta.ShadedGlassItem(properties.useBlockDescriptionPrefix()));
 

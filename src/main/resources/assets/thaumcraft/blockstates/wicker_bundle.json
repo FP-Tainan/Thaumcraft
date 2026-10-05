@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "axis=y,bloodied=false": {
+      "model": "thaumcraft:block/wicker_bundle_plain"
+    },
+    "axis=z,bloodied=false": {
+      "model": "thaumcraft:block/wicker_bundle_plain",
+      "x": 90
+    },
+    "axis=x,bloodied=false": {
+      "model": "thaumcraft:block/wicker_bundle_plain",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,bloodied=true": {
+      "model": "thaumcraft:block/wicker_bundle_bloodied"
+    },
+    "axis=z,bloodied=true": {
+      "model": "thaumcraft:block/wicker_bundle_bloodied",
+      "x": 90
+    },
+    "axis=x,bloodied=true": {
+      "model": "thaumcraft:block/wicker_bundle_bloodied",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

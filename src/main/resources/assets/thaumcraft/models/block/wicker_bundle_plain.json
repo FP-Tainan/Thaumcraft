@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "thaumcraft:block/wicker_bundle_plain_top",
+    "side": "thaumcraft:block/wicker_bundle_plain_side"
+  }
+}

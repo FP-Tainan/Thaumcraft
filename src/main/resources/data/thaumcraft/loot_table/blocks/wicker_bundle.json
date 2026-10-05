@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "thaumcraft:wicker_bundle",
+          "functions": [
+            {
+              "function": "minecraft:copy_state",
+              "block": "thaumcraft:wicker_bundle",
+              "properties": [
+                "bloodied"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

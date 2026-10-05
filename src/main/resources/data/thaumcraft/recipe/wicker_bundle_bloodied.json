@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#b#",
+    "###"
+  ],
+  "key": {
+    "#": "thaumcraft:wicker_bundle",
+    "b": "thaumcraft:infernal_blood"
+  },
+  "result": {
+    "id": "thaumcraft:wicker_bundle",
+    "count": 5,
+    "components": {
+      "minecraft:block_state": {
+        "bloodied": "true"
+      }
+    }
+  }
+}

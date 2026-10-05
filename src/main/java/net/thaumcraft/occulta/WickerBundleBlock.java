@@ -89,6 +89,22 @@ public class WickerBundleBlock extends RotatedPillarBlock {
     /** Quantos pós a chegada dele levanta. */
     public static final int PÓS = 120;
 
+    /**
+     * O quanto ele <b>arde</b>: vinte de chama e vinte de espalhar.
+     *
+     * <p>É mais do que qualquer tronco do jogo, e não é enfeite — é o que segura o fogo que o Homem de Vime
+     * leva por dentro. Sem isto, os fogos das pernas e da barriga, que não têm chão por baixo, <b>apagam-se
+     * no mesmo instante</b>: eles ficam de pé porque o vime ao lado deles pega.
+     */
+    public static final int ARDE = 20;
+    public static final int ESPALHA = 20;
+
+    /** E é preciso dizê-lo ao fogo, como o original diz no {@code setFireInfo}. */
+    public static void init() {
+        net.fabricmc.fabric.api.registry.FlammableBlockRegistry.getDefaultInstance()
+                .add(OccultaBlocks.WICKER_BUNDLE, ARDE, ESPALHA);
+    }
+
     public WickerBundleBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
@@ -96,7 +112,7 @@ public class WickerBundleBlock extends RotatedPillarBlock {
     }
 
     @Override
-    protected MapCodec<? extends RotatedPillarBlock> codec() {
+    public MapCodec<? extends RotatedPillarBlock> codec() {
         return CODEC;
     }
 
@@ -158,14 +174,19 @@ public class WickerBundleBlock extends RotatedPillarBlock {
         boolean emZ = norte || sul;
         if (emX == emZ) return false;
 
+        /*
+         * O primeiro passo do original, e ele tem <b>três</b> casos e não dois: havendo feixe só de um
+         * lado, anda-se para esse lado; havendo <b>dos dois</b>, <b>não se anda</b>. Colapsar o terceiro
+         * caso num dos outros leva o caminho para fora da figura e ela deixa de ser reconhecida pelo meio.
+         */
         BlockPos pés = daqui;
-        Direction aoLongo;
+        Direction aoLongo = emX ? Direction.EAST : Direction.SOUTH;
         if (!emX) {
-            pés = norte && !sul ? pés.north() : pés.south();
-            aoLongo = Direction.SOUTH;
+            if (norte && !sul) pés = pés.north();
+            else if (!norte) pés = pés.south();
         } else {
-            pés = oeste && !leste ? pés.west() : pés.east();
-            aoLongo = Direction.EAST;
+            if (oeste && !leste) pés = pés.west();
+            else if (!oeste) pés = pés.east();
         }
         while (éFeixe(level, pés.below())) pés = pés.below();
         while (éFeixe(level, pés.relative(aoLongo.getOpposite()))) {

@@ -9184,3 +9184,63 @@ o item levando a sua; e a agulha tingindo a lã **só na mão de um vampiro** co
 `OccultaShadedGlassClientTest`, com três telas: as dezesseis em duas fileiras, aberta por cima e fechada por
 baixo, para se ver a diferença lado a lado; a lã ao lado de uma lã branca e o globo aceso de noite; e as
 quatro coisas no inventário.
+
+## O Homem de Vime, e o segundo caminho para o Caçador (2026-10-05)
+
+O **Feixe de Vime** é, por fora, um fardo de galhos amarrados — um tronco com casca de vime, que se deita em
+qualquer dos três eixos como um tronco se deita. Por dentro, é a peça de que se constrói uma coisa só.
+
+### A figura
+
+O **Homem de Vime**: oito blocos de altura, duas colunas de largura, com os **braços abertos** no meio. Acesa
+com um isqueiro, ela **arde** — doze fogos, no peito, na barriga, nas pernas e nas duas pontas dos braços — e
+de dentro dela sai o **Caçador Cornudo**, de pé, com a entrada que estoura.
+
+É a única coisa deste ramo que se **constrói** em vez de se pôr. E é o segundo caminho para o Caçador: o
+**Chifre da Caça** chama-o de qualquer lugar, mas o Homem de Vime pede que alguém o levante, o encha de
+sangue e lhe ponha fogo. O primeiro é um pedido; o segundo é um sacrifício.
+
+### E o sangue é que faz
+
+São **dois feixes**: o **simples**, que são nove mudas atadas, e o **ensanguentado**, que é o simples passado
+por **Sangue Infernal** — cinco de cada vez.
+
+E só o ensanguentado serve. A mesma figura, bloco por bloco, feita de feixes simples **não acende**: o molde
+do original pergunta pelo número um do feixe em cada um dos dezenove lugares. O que faz o Homem de Vime é o
+sangue, não a forma — a de feixes simples é madeira empilhada com jeito.
+
+Mas o **caminho até aos pés** usa qualquer feixe. O original desce e anda para trás com
+`block == WICKER_BUNDLE`, sem olhar o número, e só depois compara com o molde. É uma distinção fina e está
+portada: quem puser um feixe simples debaixo da figura não a estraga, só muda onde o molde começa a ler.
+
+### O molde
+
+Dezenove lugares cheios e **dezesseis vazios** — e os vazios são o que lhe dá contorno. Sem eles, uma parede
+de feixes acenderia.
+
+E falta um: o **(+1, +1)**, o ombro direito, que o molde do original **não pergunta**. Ele checa ali o bloco
+de baixo outra vez, por descuido de quem o escreveu, e o jogo de 2014 aceita desde então uma figura com
+aquele lugar cheio ou vazio. Fica assim.
+
+### Como ele se procura
+
+A conta é curiosa e vale copiá-la inteira: a partir do feixe em que se bateu, o original descobre **em que
+eixo** a figura foi construída olhando os quatro vizinhos — e desiste se houver vizinhos nos dois eixos ou em
+nenhum. Depois **desce** até aos pés e **anda para trás** até à coluna mais baixa do eixo. Só então compara.
+
+Quer dizer que o isqueiro acende a figura a partir de **qualquer** feixe dela, e não só do pé.
+
+### E dois fogos não ficam
+
+Postos os doze, ficam **dez**. Dois deles — o do peito e o do ombro — ficam **cercados de fogo** depois de
+todos postos: sem chão por baixo e sem vime ao lado que ainda seja vime, o jogo apaga-os no mesmo instante.
+
+O original perde-os pela mesma razão — ele também põe os doze com aviso aos vizinhos — e não faz diferença
+nenhuma: o vime arde a **vinte de espalhar**, que é mais do que qualquer tronco, e os outros dez voltam a
+acendê-los antes de a figura cair. A prova pede **dez ou mais**, e não doze, por isso.
+
+**Guardas:** `OccultaWickerManGameTest`, com cinco — os números; a figura ensanguentada sendo reconhecida; a
+prova que carrega a fatia, que é a **mesma figura em feixes simples não ser reconhecida**; a acesa com os
+doze fogos e o Caçador de pé; e o feixe sozinho, que não é figura nenhuma. E `OccultaWickerManClientTest`,
+com três telas: o Homem inteiro visto do chão, os dois feixes lado a lado — um deitado, para se ver a tampa —
+e os dois no inventário.

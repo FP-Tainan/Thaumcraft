@@ -30,10 +30,13 @@ public class CreatureGameTest {
     @GameTest
     public void theAngryZombieIsTougher(GameTestHelper helper) {
         var zombie = helper.spawn(TCEntities.BRAINY_ZOMBIE, new BlockPos(1, 1, 1));
-        // a vida de base, sem o tanto sorteado que todo zumbi ganha ao nascer
+        // Os valores de base, sem os bônus de fora: todo zumbi ganha um tanto sorteado de vida ao nascer, e
+        // um zumbi cerebral tem 25 de vida de base, o que o põe na lista dos que podem nascer Campeões — e um
+        // Campeão morde mais forte. Nenhum dos dois muda o que o bicho é, que é o que esta prova pergunta.
         double vida = zombie.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).getBaseValue();
         if (vida != 25.0) helper.fail("o zumbi zangado tem 25 de vida: " + vida);
-        if (zombie.getAttributeValue(Attributes.ATTACK_DAMAGE) != 5.0) helper.fail("e morde com cinco");
+        double mordida = zombie.getAttribute(Attributes.ATTACK_DAMAGE).getBaseValue();
+        if (mordida != 5.0) helper.fail("e morde com cinco: " + mordida);
         if (zombie.getArmorValue() < 3) helper.fail("e tem três de armadura a mais: " + zombie.getArmorValue());
         if (zombie.getAttributeValue(Attributes.SPAWN_REINFORCEMENTS_CHANCE) != 0.0) helper.fail("e não chama reforços");
         helper.succeed();
