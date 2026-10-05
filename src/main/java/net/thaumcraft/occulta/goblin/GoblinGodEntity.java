@@ -102,6 +102,9 @@ public abstract class GoblinGodEntity extends Monster {
     /** Qual dos dois é o par deste. */
     protected abstract Class<? extends GoblinGodEntity> oPar();
 
+    /** E a peça de roupa que ele larga, metade das vezes. */
+    protected abstract net.minecraft.world.item.Item aSuaPeça();
+
     // ------------------------------------------------------------------ o despertar
 
     /** <b>O despertar</b>: cento e cinquenta batidas de invencibilidade, como o do Wither. */
@@ -273,6 +276,15 @@ public abstract class GoblinGodEntity extends Monster {
         this.spawnAtLocation(level, net.minecraft.world.item.enchantment.EnchantmentHelper
                 .enchantItem(this.random, malha, ENCANTO, level.registryAccess(),
                         java.util.Optional.empty()), 0.0f);
+
+        /*
+         * E <b>metade das vezes</b>, a peça de roupa dele: a Aljava do Mog ou a Cinta do Gulg. Elas não
+         * se fabricam, e é esta a única porta delas — o que quer dizer que a conta de distância que os
+         * torna invencíveis <b>passa para quem os matou</b>, e só se os dois forem mortos.
+         */
+        if (this.random.nextInt(2) == 0) {
+            this.spawnAtLocation(level, new ItemStack(this.aSuaPeça()), 0.0f);
+        }
     }
 
     @Override

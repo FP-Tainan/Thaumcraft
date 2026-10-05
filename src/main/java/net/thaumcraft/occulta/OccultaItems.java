@@ -322,6 +322,42 @@ public final class OccultaItems {
                                     1.0f))
                             .build())));
 
+    // ------------------------------------------------------------------ a roupa de goblin
+
+    /**
+     * A <b>Fita Torcida</b>: o {@code kobolditehelm} do Witchery.
+     *
+     * <p>Quem <b>estiver olhando</b> para quem a tem, a dezesseis blocos, fica <b>enjoado</b> — e, se
+     * for gente, é <b>virado ao contrário</b>. É a única peça das três que se fabrica.
+     */
+    public static final Item KOBOLDITE_HELM = register("koboldite_helm", properties ->
+            new Item(properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)
+                    .humanoidArmor(OccultaMaterials.GOBLIN_BAND,
+                            net.minecraft.world.item.equipment.ArmorType.HELMET)));
+
+    /**
+     * A <b>Aljava do Mog</b>: metade das vezes que o Mog morre.
+     *
+     * <p>Com ela, o arco dispara <b>sem flecha</b> — e a flecha que sai faz <b>três vezes</b> o dano em
+     * quem estiver <b>no ar</b>.
+     */
+    public static final Item MOGS_QUIVER = register("mogs_quiver", properties ->
+            new Item(properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC)
+                    .humanoidArmor(OccultaMaterials.GOBLIN_CLOTH,
+                            net.minecraft.world.item.equipment.ArmorType.CHESTPLATE)));
+
+    /**
+     * E a <b>Cinta do Gulg</b>: metade das vezes que o Gulg morre.
+     *
+     * <p>Com ela, o <b>murro de mão vazia</b> faz <b>cinco</b> de dano e atira quem apanha um bloco para
+     * cima. E quem a tem, perto de quem tem a Aljava, fica <b>mais duro</b> — que é a conta dos deuses
+     * virada para quem joga.
+     */
+    public static final Item GULGS_GURDLE = register("gulgs_gurdle", properties ->
+            new Item(properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.EPIC)
+                    .humanoidArmor(OccultaMaterials.GOBLIN_CLOTH,
+                            net.minecraft.world.item.equipment.ArmorType.LEGGINGS)));
+
     // ------------------------------------------------------------------ o koboldite
 
     /**

@@ -40,6 +40,7 @@ public final class Occulta {
         net.thaumcraft.occulta.divine.Predictions.init();
         net.thaumcraft.occulta.infusion.Infusions.init();
         net.thaumcraft.occulta.infusion.beast.CreaturePowers.init();
+        net.thaumcraft.occulta.goblin.GoblinClothes.init();
         net.thaumcraft.occulta.symbol.Symbols.init();
         net.thaumcraft.occulta.symbol.Spells.init();
         net.thaumcraft.occulta.symbol.SpellNetwork.init();

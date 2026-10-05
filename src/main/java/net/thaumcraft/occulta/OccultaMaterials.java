@@ -69,6 +69,40 @@ public final class OccultaMaterials {
             15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f,
             TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_hunter_clothes")), HUNTER_ASSET);
 
+    /**
+     * A cara da <b>roupa de goblin</b>.
+     *
+     * <p>Como a das roupas de caçador: existe porque o jogo pede uma, e não tem arquivo nenhum — quem a
+     * desenha é o {@link net.thaumcraft.occulta.client.GoblinClothesRenderer}, com o modelo do original.
+     */
+    public static final ResourceKey<EquipmentAsset> GOBLIN_ASSET =
+            ResourceKey.create(EquipmentAssets.ROOT_ID, Thaumcraft.id("goblin_clothes"));
+
+    /** A conta de durabilidade do diamante, que é a da Fita Torcida. */
+    public static final int DIAMOND_WEAR = 33;
+
+    /**
+     * De que é feita a <b>Fita Torcida</b>: a proteção do <b>ferro</b> com a durabilidade do
+     * <b>diamante</b>.
+     *
+     * <p>É o que o original faz — {@code ArmorMaterial.IRON} com {@code DIAMOND.getDurability} — e diz o
+     * que ela é: uma fita de metal que não se parte.
+     */
+    public static final ArmorMaterial GOBLIN_BAND = new ArmorMaterial(DIAMOND_WEAR,
+            Map.of(ArmorType.HELMET, 2), 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f,
+            TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_goblin_clothes")), GOBLIN_ASSET);
+
+    /**
+     * E de que são feitas a <b>Aljava do Mog</b> e a <b>Cinta do Gulg</b>: a proteção do <b>couro</b>
+     * com a durabilidade do <b>ferro</b>.
+     *
+     * <p>A mesma piada das roupas de caçador: elas não protegem quase nada, e duram.
+     */
+    public static final ArmorMaterial GOBLIN_CLOTH = new ArmorMaterial(IRON_WEAR,
+            Map.of(ArmorType.CHESTPLATE, 3, ArmorType.LEGGINGS, 2), 15,
+            SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f,
+            TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_goblin_clothes")), GOBLIN_ASSET);
+
     private OccultaMaterials() {
     }
 }

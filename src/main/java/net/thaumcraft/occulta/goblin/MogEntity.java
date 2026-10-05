@@ -88,6 +88,11 @@ public class MogEntity extends GoblinGodEntity implements RangedAttackMob {
     }
 
     @Override
+    protected net.minecraft.world.item.Item aSuaPeça() {
+        return net.thaumcraft.occulta.OccultaItems.MOGS_QUIVER;
+    }
+
+    @Override
     public @org.jetbrains.annotations.Nullable net.minecraft.world.entity.SpawnGroupData finalizeSpawn(
             net.minecraft.world.level.ServerLevelAccessor level,
             net.minecraft.world.DifficultyInstance quão,

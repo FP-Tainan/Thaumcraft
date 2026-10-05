@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "iii",
+    "iai"
+  ],
+  "key": {
+    "i": "thaumcraft:koboldite_ingot",
+    "a": "thaumcraft:attuned_stone_charged"
+  },
+  "result": {
+    "id": "thaumcraft:koboldite_helm",
+    "count": 1
+  }
+}

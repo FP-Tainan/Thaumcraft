@@ -888,6 +888,19 @@ net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.occulta.client.EarmuffsRenderer::createLayer);
         net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(
                 net.thaumcraft.occulta.client.EarmuffsRenderer::new, net.thaumcraft.occulta.OccultaItems.EARMUFFS);
+        // a roupa de goblin do Ars Occulta, com o modelo do ModelGoblinClothes
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.GoblinClothesRenderer.PEITO,
+                net.thaumcraft.occulta.client.GoblinClothesRenderer::peito);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.GoblinClothesRenderer.PERNAS,
+                net.thaumcraft.occulta.client.GoblinClothesRenderer::pernas);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(
+                net.thaumcraft.occulta.client.GoblinClothesRenderer::new,
+                net.thaumcraft.occulta.OccultaItems.KOBOLDITE_HELM,
+                net.thaumcraft.occulta.OccultaItems.MOGS_QUIVER,
+                net.thaumcraft.occulta.OccultaItems.GULGS_GURDLE);
+
         // as roupas de caçador do Ars Occulta, com o modelo do ModelHunterClothes
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.HunterClothesRenderer.PEITO,

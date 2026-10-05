@@ -19,6 +19,8 @@
     "ItemEntityAccessor",
     "LivingEntityJumpingAccessor",
     "LivingEntityBeastFallMixin",
+    "LivingEntityGoblinClothesMixin",
+    "LivingEntityQuiverAmmoMixin",
     "LivingEntityInfusionFallMixin",
     "StructureTemplatePoolAccessor",
     "PlayerFamiliarMixin",

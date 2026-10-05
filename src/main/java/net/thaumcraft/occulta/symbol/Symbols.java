@@ -124,7 +124,7 @@ public final class Symbols {
          * <b>Ennervate</b>: o avesso do Confundus e de metade do que o mod sabe fazer — tira a
          * <b>lentidão</b>, a <b>fraqueza</b> e a <b>náusea</b> de quem a bola acertar.
          *
-         * <p>E a bola dele <b>cai</b>: ela não voa a direito, vai descendo. É o original a dizer que quem
+         * <p>E a bola dele <b>cai</b>: ela não voa a direito, vai descendo. É o original dizendo que quem
          * se cura dos outros tem de chegar perto.
          */
         põe(new Ennervate(12), "1,0,3,0,2,3,0,2", "2,0,3,3,0,2,2,3,3,0,2,2",

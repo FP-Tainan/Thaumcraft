@@ -10357,11 +10357,8 @@ metal que só sai de um goblin sai, em dobro, dos deuses deles.
    «este arco não é seu». Hoje o tempo de vida de um item largado não se mexe de fora, e a **chance de
    queda zero** diz a mesma coisa sem rodeios.
 
-2. **A Aljava do Mog e a Cinta do Gulg ficam para a fatia da roupa.** Metade das vezes, cada um larga uma
-   peça de roupa de goblin: a aljava dá **flechas sem fim que esmagam quem está no ar**, e a cinta dá
-   **murros que atiram para cima** — e as duas ficam mais duras quando quem as tem está perto de quem tem a
-   outra, que é a mesma conta de distância aplicada a quem jogar. Elas pendem do `ItemGoblinClothes`, que é
-   a fatia das roupas inteira.
+2. **A Aljava do Mog e a Cinta do Gulg entram na fatia seguinte a esta** — e entraram: veja «A roupa de
+   goblin», logo abaixo. Metade das vezes, cada deus larga a sua.
 
 3. **A chance de eles virem sozinhos é a do ajuste padrão do original**, que são dez em cem multiplicados
    pelo centésimo que ele escreve à mão. O original deixa mexer nisso num arquivo de ajustes; aqui é um
@@ -10372,3 +10369,73 @@ que é a prova que carrega a fatia; o murro do Gulg, que é o espelho dela; os d
 afastados, com o teto de quinze; os deuses que não caçam os seus; e a Estrela do Nether, que os chama e come
 cinco adoradores. E o `OccultaGoblinGodsClientTest`, com a tela dos dois lado a lado e um goblin comum entre
 eles para a escala.
+
+## A roupa de goblin (2026-10-05)
+
+Três peças, e uma ideia que fecha o que os deuses começaram.
+
+### As três
+
+| peça | onde | o que faz |
+| --- | --- | --- |
+| **Fita Torcida** | cabeça | quem **estiver olhando** para quem a tem, a dezesseis blocos, fica **enjoado** cinco segundos — e, se for gente, é **virado ao contrário** na hora. Um bicho fica **fraco** em vez disso: não tem tela para lhe virar |
+| **Aljava do Mog** | peito | o arco dispara **sem flecha**, e a flecha que sai faz **três vezes** o dano em quem estiver **no ar** e deixa **Fraqueza** dez segundos |
+| **Cinta do Gulg** | pernas | o **murro de mão vazia** faz **cinco** de dano — valor fixo, nem mais nem menos — e atira quem apanha **um bloco para cima** |
+
+A Fita é a única que se fabrica: `iii / iai`, quatro lingotes de koboldite e uma **Pedra Afinada
+carregada**. As outras duas **não se fazem**: caem dos deuses goblins, metade das vezes cada uma.
+
+### E a ideia
+
+**Dois jogadores a oito blocos** um do outro, um com a Aljava e outro com a Cinta, ganham os dois
+**Resistência II**.
+
+É a **mesma conta de distância** que faz o Mog e o Gulg invencíveis — a tabela de três, seis, nove e
+dezesseis blocos —, virada para quem joga. O Mog e o Gulg eram fortes juntos; as roupas deles continuam a
+sê-lo.
+
+Repare no que isso quer dizer de desenho: é o único par de peças do mod inteiro que **só vale a dois**. Uma
+pessoa com as duas vestidas **não ganha nada** com isso — o original confere expressamente que o outro não é
+você. Para o par valer, é preciso matar os **dois** deuses, ter sorte nas **duas** quedas, e ter com quem
+jogar.
+
+### O cone de quem olha
+
+A Fita usa o cone do enderman, com a folga do original: `produto > 1 − 0,025 / distância`. Ele **aperta com
+a distância** — de longe é preciso olhar bem certo, de perto basta ter a pessoa à frente — e exige linha de
+vista.
+
+E não pega em quem traz uma **abóbora na cabeça**, que é o original dizendo que quem não vê não se
+desnorteia.
+
+### O desenho
+
+Um bípede comum com **quatro caixas a mais** presas ao tronco — a **aljava** e as **três flechas** dentro
+dela —, tombadas vinte graus. São elas que fazem a silhueta: de costas, quem tem a Aljava do Mog vê-se de
+longe. As folgas são as do original: o peito com `0,61` e as pernas com zero.
+
+São **três folhas**, uma por casa. O original tem uma quarta de cada, para a tinta, e não a usa: estas
+peças não se pintam.
+
+### Desvios declarados
+
+1. **As flechas sem fim entram por outra porta.** O original cancela o disparo do jogo e atira uma flecha
+   sua, de graça, pelo `ArrowLooseEvent` do Forge. Aqui, quando o arco procura flecha e não acha nenhuma, a
+   Aljava **lhe dá uma** que não está na mochila de ninguém: o jogo a atira e gasta uma pilha que não
+   existe. O efeito é o mesmo, e o caminho é mais curto.
+
+2. **A flecha não se apanha do chão**, como no original — lá por o tipo de apanha ser dois, aqui por ela
+   nascer marcada. Sem isso, a Aljava não seria flechas sem fim: seria uma **fábrica de flechas**.
+
+3. **A marca da flecha é um apego, e não uma etiqueta.** O `WITCMogged` do original é uma etiqueta no
+   bicho; aqui é um apego persistente, que é o que lhe corresponde hoje.
+
+4. **O virar de quem olha** é feito com o teleporte do servidor, que é o que o pacote de posição do original
+   fazia à mão.
+
+**Guardas:** o `OccultaGoblinClothesGameTest`, com cinco — os números do original; o **par**, que é a prova
+que carrega a fatia e confere que uma pessoa com as duas peças não ganha nada; a Fita, que só pega em quem
+está olhando e não pega em quem traz abóbora; o murro da Cinta, que só vale de mão vazia; e a flecha da
+Aljava, que vale o triplo no ar e deixa Fraqueza sempre. E o `OccultaGoblinClothesClientTest`, com duas
+telas: dois manequins, um de frente e um de costas — e é o de costas que importa, porque é onde a aljava se
+vê — e as três peças no cinto.

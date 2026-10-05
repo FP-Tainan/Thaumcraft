@@ -81,6 +81,11 @@ public class GulgEntity extends GoblinGodEntity {
         return MogEntity.class;
     }
 
+    @Override
+    protected net.minecraft.world.item.Item aSuaPeça() {
+        return net.thaumcraft.occulta.OccultaItems.GULGS_GURDLE;
+    }
+
     /** Quanto o murro dele sorteia, conforme a distância ao Mog. */
     public static int força(double longe) {
         if (longe <= INVENCÍVEL) return 20;

@@ -424,7 +424,7 @@ public class GoblinEntity extends AgeableMob implements Merchant {
      *
      * <p>De setenta em setenta batidas, mais um bocado, ele procura a aldeia — e, achando-a, <b>deixa de
      * sumir</b> e passa a ter casa. E, esgotada a última troca, quarenta batidas depois ele põe mais uma
-     * e ganha regeneração por dez segundos, que é o original a dizer que regatear cansa.
+     * e ganha regeneração por dez segundos, que é o original dizendo que regatear cansa.
      */
     @Override
     protected void customServerAiStep(ServerLevel level) {
