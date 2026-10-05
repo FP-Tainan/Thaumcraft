@@ -125,6 +125,7 @@
       "net.thaumcraft.test.OccultaBeartrapGameTest",
       "net.thaumcraft.test.OccultaCritterSnareGameTest",
       "net.thaumcraft.test.OccultaPlantMineGameTest",
+      "net.thaumcraft.test.OccultaShadedGlassGameTest",
       "net.thaumcraft.test.OccultaStockadeGameTest",
       "net.thaumcraft.test.OccultaLeechChestGameTest",
       "net.thaumcraft.test.OccultaSoundsGameTest",
@@ -323,6 +324,7 @@
       "net.thaumcraft.test.client.OccultaBeartrapClientTest",
       "net.thaumcraft.test.client.OccultaCritterSnareClientTest",
       "net.thaumcraft.test.client.OccultaPlantMineClientTest",
+      "net.thaumcraft.test.client.OccultaShadedGlassClientTest",
       "net.thaumcraft.test.client.OccultaStockadeClientTest",
       "net.thaumcraft.test.client.OccultaLeechChestClientTest",
       "net.thaumcraft.test.client.OccultaLilithClientTest"

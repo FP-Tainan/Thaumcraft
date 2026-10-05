@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "thaumcraft:shaded_glass",
+          "functions": [
+            {
+              "function": "minecraft:copy_state",
+              "block": "thaumcraft:shaded_glass",
+              "properties": [
+                "color"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

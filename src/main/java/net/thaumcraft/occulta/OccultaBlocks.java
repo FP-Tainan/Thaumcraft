@@ -192,6 +192,35 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ o vidro, a lã e o globo
+
+    /**
+     * O <b>Vidro Sombreado</b>: o vidro tingido que a redstone fecha, e com ele a luz.
+     *
+     * <p>Os números do original: <b>três décimos de dureza</b>, que é a do vidro.
+     */
+    public static final Block SHADED_GLASS = register("shaded_glass", properties ->
+            new net.thaumcraft.occulta.ShadedGlassBlock(properties.mapColor(MapColor.NONE)
+                    .strength(0.3f).sound(SoundType.GLASS).noOcclusion()
+                    .isValidSpawn((f, l, p, t) -> false).isRedstoneConductor((f, l, p) -> false)
+                    .isSuffocating((f, l, p) -> false).isViewBlocking((f, l, p) -> false)));
+
+    /** A <b>Lã Ensanguentada</b>: a lã branca que um vampiro tingiu com o próprio sangue. */
+    public static final Block BLOODED_WOOL = register("blooded_wool", properties ->
+            new Block(properties.mapColor(MapColor.COLOR_RED).strength(0.8f)
+                    .sound(SoundType.WOOL).ignitedByLava()));
+
+    /**
+     * O <b>Globo de Luz</b>: a bolinha que o símbolo da luz deixa onde cai.
+     *
+     * <p>Dureza zero, acende quinze, e <b>não tem item</b> — não se apanha, não cai de nada e não está na
+     * aba do criativo, como no original.
+     */
+    public static final Block GLOW_GLOBE = register("glow_globe", properties ->
+            new net.thaumcraft.occulta.GlowGlobeBlock(properties.mapColor(MapColor.NONE)
+                    .instabreak().noCollision().noOcclusion().pushReaction(PushReaction.DESTROY)
+                    .lightLevel(f -> net.thaumcraft.occulta.GlowGlobeBlock.ACENDE)));
+
     // ------------------------------------------------------------ a Paliçada
 
     /**

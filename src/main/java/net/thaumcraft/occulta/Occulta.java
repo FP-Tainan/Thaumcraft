@@ -23,6 +23,7 @@ public final class Occulta {
     public static void init() {
         OccultaComponents.init();
         OccultaSounds.init();
+        net.thaumcraft.occulta.vampire.BloodedWool.init();
         net.thaumcraft.occulta.spirit.SpiritFluids.init();
         OccultaEffects.init();
         OccultaBlocks.init();

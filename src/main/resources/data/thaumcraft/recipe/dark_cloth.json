@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": "thaumcraft:blooded_wool",
+  "result": {
+    "id": "thaumcraft:dark_cloth"
+  },
+  "experience": 0,
+  "cookingtime": 200
+}

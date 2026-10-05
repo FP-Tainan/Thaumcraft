@@ -1,0 +1,100 @@
+{
+  "variants": {
+    "color=white,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_white"
+    },
+    "color=white,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_white"
+    },
+    "color=orange,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_orange"
+    },
+    "color=orange,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_orange"
+    },
+    "color=magenta,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_magenta"
+    },
+    "color=magenta,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_magenta"
+    },
+    "color=light_blue,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_light_blue"
+    },
+    "color=light_blue,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_light_blue"
+    },
+    "color=yellow,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_yellow"
+    },
+    "color=yellow,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_yellow"
+    },
+    "color=lime,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_lime"
+    },
+    "color=lime,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_lime"
+    },
+    "color=pink,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_pink"
+    },
+    "color=pink,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_pink"
+    },
+    "color=gray,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_gray"
+    },
+    "color=gray,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_gray"
+    },
+    "color=light_gray,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_light_gray"
+    },
+    "color=light_gray,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_light_gray"
+    },
+    "color=cyan,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_cyan"
+    },
+    "color=cyan,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_cyan"
+    },
+    "color=purple,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_purple"
+    },
+    "color=purple,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_purple"
+    },
+    "color=blue,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_blue"
+    },
+    "color=blue,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_blue"
+    },
+    "color=brown,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_brown"
+    },
+    "color=brown,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_brown"
+    },
+    "color=green,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_green"
+    },
+    "color=green,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_green"
+    },
+    "color=red,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_red"
+    },
+    "color=red,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_red"
+    },
+    "color=black,powered=false": {
+      "model": "thaumcraft:block/shaded_glass_black"
+    },
+    "color=black,powered=true": {
+      "model": "thaumcraft:block/shaded_glass_lit_black"
+    }
+  }
+}

@@ -9131,3 +9131,56 @@ cruz; e as três no inventário.
 **morria**. O estouro reparte o dano por raios sorteados, e a mesma ovelha no mesmo lugar ora cai ora fica
 com um fio de vida — mudar de arena basta para virar a moeda. Ela passou a perguntar se a ovelha **levou**,
 que é o que o estouro tem de provar.
+
+## O vidro que se fecha, a lã que se tinge e a luz que não se apanha (2026-10-05)
+
+Três blocos pequenos que não têm nada a ver uns com os outros, menos uma coisa: os três servem ao
+**vampiro**.
+
+### O Vidro Sombreado
+
+Um vidro tingido que **se fecha com redstone**. Sem corrente, ele deixa passar a luz como qualquer vidro;
+com corrente, ele escurece e **a luz para ali**.
+
+É uma persiana, e serve ao ofício por uma razão só: um vampiro queima ao sol, e uma casa de vidro sombreado é
+uma casa com janelas que se fecham **de dentro**. Quem o inventou pensou nisso.
+
+São as **dezesseis cores**, cada uma com as suas duas folhas — a aberta e a fechada. A fechada é mais escura
+e deixa ver menos, que é o que se espera de uma persiana corrida.
+
+**Uma mudança declarada:** no original isto são **dois blocos**, `shadedglass` e `shadedglass_active`, porque
+o jogo de 2014 não deixava a opacidade à luz mudar de um feitio para outro do mesmo bloco. Hoje deixa — o
+`getLightDampening` recebe o feitio —, e por isso aqui é **um bloco com uma chave**. O que se vê e o que a luz
+faz são os mesmos; o que mudou foi o número de nomes no registro.
+
+### A Lã Ensanguentada
+
+Um **vampiro do quarto grau** com uma **Agulha de Osso** fura a si mesmo sobre um bloco de **lã branca** e
+tinge-a com o próprio sangue: **cento e vinte e cinco** de poder, que é o mesmo que um primeiro gole lhe dá.
+
+Só a **branca** serve. O original pergunta pelo número zero da lã, e faz sentido: é a única que ainda tem
+lugar para outra cor.
+
+E a lã tinta, **no forno**, vira **Pano Escuro** — o tecido de que se fazem as roupas do ofício. É um caminho
+curioso e vale dizê-lo inteiro: para ter uma capa de bruxa é preciso um vampiro, uma ovelha branca e um forno.
+
+O Pano Escuro entra aqui porque a lã precisa dele para ter para onde ir. As roupas que o gastam ainda não
+vieram.
+
+### O Globo de Luz
+
+Uma bolinha de luz no ar, de dois pixels, que ilumina como uma tocha e meia e larga uma chama **duas vezes em
+três**. Não estorva a passagem, não cai de nada e **não se apanha** — nem com o clique do meio.
+
+Ela não é um bloco que se põe: é o que o **símbolo da luz** deixa onde foi lançado. Por isso **não tem item**
+e não está na aba do criativo, exatamente como no original. Fica aqui à espera dos símbolos, que são a fatia
+grande que ainda falta.
+
+E é a coisa mais barata de quebrar do mod inteiro: dureza zero.
+
+**Guardas:** `OccultaShadedGlassGameTest`, com cinco — os números; a prova que carrega a fatia, que é o
+**vidro comer a luz toda fechado e nenhuma aberto**; a redstone que o fecha e o abre; as dezesseis cores com
+o item levando a sua; e a agulha tingindo a lã **só na mão de um vampiro** com sangue que chegue. E
+`OccultaShadedGlassClientTest`, com três telas: as dezesseis em duas fileiras, aberta por cima e fechada por
+baixo, para se ver a diferença lado a lado; a lã ao lado de uma lã branca e o globo aceso de noite; e as
+quatro coisas no inventário.

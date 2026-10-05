@@ -263,6 +263,15 @@ public final class OccultaItems {
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
+    public static final Item SHADED_GLASS = register("shaded_glass", properties ->
+            new net.thaumcraft.occulta.ShadedGlassItem(properties.useBlockDescriptionPrefix()));
+
+    public static final Item BLOODED_WOOL = register("blooded_wool", properties ->
+            new BlockItem(OccultaBlocks.BLOODED_WOOL, properties.useBlockDescriptionPrefix()));
+
+    /** O <b>Pano Escuro</b>: o que sai da lã ensanguentada no forno, e de que se fazem as roupas. */
+    public static final Item DARK_CLOTH = register("dark_cloth", Item::new);
+
     public static final Item STOCKADE = register("stockade", properties ->
             new net.thaumcraft.occulta.StockadeItem(properties.useBlockDescriptionPrefix()));
 

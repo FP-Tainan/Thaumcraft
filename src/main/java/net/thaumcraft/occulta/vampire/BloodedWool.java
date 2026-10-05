@@ -3,6 +3,7 @@ package net.thaumcraft.occulta.vampire;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -45,7 +46,7 @@ public final class BloodedWool {
         if (!naMão.is(net.thaumcraft.mortuorum.MortuorumItems.BONE_NEEDLE)) {
             return InteractionResult.PASS;
         }
-        if (!level.getBlockState(acertou.getBlockPos()).is(Blocks.WHITE_WOOL)) {
+        if (!level.getBlockState(acertou.getBlockPos()).is(Blocks.WOOL.pick(DyeColor.WHITE))) {
             return InteractionResult.PASS;
         }
         if (!Vampire.é(quem) || Vampire.grauDe(quem) < GRAU) return InteractionResult.PASS;

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "#r#",
+    "###"
+  ],
+  "key": {
+    "#": "minecraft:cyan_stained_glass",
+    "r": "minecraft:redstone"
+  },
+  "result": {
+    "id": "thaumcraft:shaded_glass",
+    "count": 8,
+    "components": {
+      "minecraft:block_state": {
+        "color": "cyan"
+      }
+    }
+  }
+}
