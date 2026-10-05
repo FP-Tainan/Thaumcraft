@@ -6535,7 +6535,7 @@ exemplo. Quase nenhum efeito precisa dele; os que precisam, precisam muito.
    perto, com a vantagem de o alvo nunca chegar a existir, nem por uma batida.
 
 **Guardas:** `OccultaEnslaveGameTest`, com oito — quem não se escraviza; **o escravo que nunca mira no dono**;
-o que ele continua a mirar; o laço que não se põe duas vezes; a vontade que entra pela batida e não entra
+o que ele continua mirando; o laço que não se põe duas vezes; a vontade que entra pela batida e não entra
 duas vezes; o morto levantado que é de quem o levantou e de quem não cai nada; o levantado por ninguém; e a
 gente, de quem cai sempre.
 
@@ -7250,7 +7250,7 @@ A distância da queda **encolhe** pelo tanto que o grau perdoa, e o que sobra é
 perdoa cinco blocos; um lobisomem de grau dez, sete.
 
 O original mexe na **distância** e não no dano, e a diferença importa: perdoando a distância, tudo o que o
-jogo conta em cima dela — o dano, o barulho, o pó, a Queda Suave — continua a bater certo. Um lobo de grau dez
+jogo conta em cima dela — o dano, o barulho, o pó, a Queda Suave — continua batendo certo. Um lobo de grau dez
 cai cinco blocos e não **caiu** de todo.
 
 ### O que lhe tiram, que é o que o faz duro
@@ -9987,3 +9987,129 @@ catorze com nome e o desenho de dois traços do Protego; o custo que dobra por g
 o feitiço que se prepara antes de se lançar; o grau comprido que precisa de Adoração; o Incendio pondo fogo;
 e a vara deitada no altar. E `OccultaSymbolClientTest`, com duas
 telas: a vara no inventário e as quatro bolas lado a lado, para se verem as cores.
+
+## A Infusão do Mundo, e a onda de choque (2026-10-05)
+
+A quarta e última, e a que menos parece magia. As outras três fazem coisas que só a magia faz —
+teleportar, apagar a luz, tomar bichos para si. Esta faz **peso**: ela pega no chão e no metal e os usa
+como um ferreiro usaria, se um ferreiro tivesse quarenta toneladas de braço.
+
+### O que ela dá
+
+| o que se faz | o que acontece | custa |
+| --- | --- | --- |
+| cair mais de três blocos em terra mole | o bloco de baixo é **arrancado** e cai em item; a queda não dói | **5** |
+| o mesmo, **agachado** | um **estouro de força três** no lugar dele; a queda também não dói | **10** |
+| socar com a Mão quem tem **metal** no corpo | ele **voa** na direção do olhar, com três décimos de salto | **2** |
+| o mesmo, **agachado** | voa com **um e meio** de salto, que é para cima | **4** |
+| segurar a Mão **agachado**, passados dois segundos | de quatro em quatro batidas, todo o **metal largado** a seis blocos vem para a mão | **1** |
+| e, na mesma batida, todo o **minério** a seis blocos | funde-se sozinho em lingote | **2** por minério |
+| largar olhando para um **bicho** | ele é **desarmado**: o metal que tinha na mão cai no chão | **2** |
+| largar olhando para o **topo** de um bloco | uma **coluna de seis** blocos sobe **três níveis**, com quem estiver nela | **2** |
+| largar olhando para o **lado** de um bloco | ele é **arrancado da parede e atirado** | **3** |
+| largar **agachado** olhando para um minério | funde-se em **dois** lingotes | **2** |
+| largar olhando para **nada**, depois de a segurar | a **onda de choque** | **6 por segundo** |
+
+Repare na coluna da direita: o único poder que escala com o tempo é a onda, e ela escala nas duas pontas —
+o raio é `2 × segundos + 2` e o preço é `6 × segundos`. Segurar a Mão dez segundos abre um anel de vinte e
+dois blocos de raio e custa sessenta cargas, que é quase um terço do cantil.
+
+### O metal é a fraqueza
+
+O soco e o desarmamento só pegam em quem tem **ferro, ouro ou malha**. A lista do original tem **vinte e
+cinco** coisas, escritas à mão: as dez ferramentas de ferro e de ouro, os doze pedaços de armadura dos três
+metais, os dois lingotes e a pepita de ouro.
+
+Nada de diamante. Nada de couro. Nada de pedra.
+
+Quer dizer que, contra quem tem esta infusão, **a boa armadura é um perigo** e a armadura ruim é segurança.
+É a única vez em todo o mod em que o original faz isso, e é uma ideia melhor do que a maior parte do que
+ele faz: o caro vira risco.
+
+Aqui a lista é o rótulo `thaumcraft:earth_metal`, de modo que quem jogar possa mexer nela. A **pepita de
+ferro** fica de fora porque não existia em 2014, e a **netherita** também, pela mesma razão.
+
+### A onda de choque
+
+É o poder mais bonito do mod de se ver e o mais caro, e vale a sua própria classe. Um **anel de chão que
+se levanta e volta a cair**, abrindo-se a partir de quem o fez, um bloco de raio por batida. O que estiver
+na crista leva **oito de dano** e é atirado para longe com o mesmo empurrão do círculo de proteção.
+
+A parte que importa é a segunda metade: ele **não é um estouro**. Dois blocos de fundura sobem um nível na
+crista e são postos de volta atrás dela, de modo que, **passada a onda, o terreno está como estava**. Uma
+onda que deixasse cratera seria só uma bomba lenta; esta é um poder de bruxa, e a prova que carrega a fatia
+é exatamente essa — o chão volta.
+
+O anel é desenhado com o **algoritmo do círculo de Bresenham**, à letra, com um oitavo andado e espelhado
+nas outras sete partes. É o desenho que um jogo de 1985 usaria para uma circunferência, e é por isso que a
+onda tem o aspecto quadrado que tem. Foi portado tal e qual, incluindo os espelhos na ordem em que o
+original os escreve.
+
+### A Rocha
+
+O bloco que foi arrancado da parede, a caminho de quem estiver à frente. **Seis de dano** onde bater, e
+nada mais. Ela não se fabrica e não serve para nada na mão: existe para voar — no original ela é item só
+porque o projétil dele precisa de um item para se desenhar, e aqui é o mesmo.
+
+E nem todo bloco se atira. São os **vinte e quatro** que o original lista à mão — terra, relva, micélio,
+pedra, pedregulho, areia, saibro, arenito, argila, terracota, tijolo, pedra do Nether e as escadas e lajes
+deles —, e com uma condição a mais: o bloco tem de estar **solto por trás**. É o que faz do poder uma
+escolha e não um botão: só se arranca da parede o bloco que já estava à beira de não ter parede.
+
+O original escreve essa condição com quatro ramos espelhados e **os nomes dos lados trocados** — o
+`BlockSide` dele chama NORTE ao oeste do jogo e ESTE ao norte, que é um engano famoso da 1.7.10 —, mas os
+quatro dizem a mesma coisa, e é essa. Aqui ela é uma linha.
+
+### A Alma do Mundo
+
+O que o rito pede: **quatro mil** de poder, e leva dentro uma **Pedra Afinada** — que já pediu uma viagem
+para se carregar — mais a maçã dourada encantada, a raiz de mandrágora e uma muda de sorveira. Bebida, dá
+**Veneno II por um minuto**, como as outras três. Nenhuma delas se bebe.
+
+O anel do rito é o **mesmo do rito da Luz**: dezesseis dentro e vinte e oito no meio, no eixo do giz comum.
+
+### Desvios declarados
+
+1. **O dicionário de minérios morreu.** O original pergunta ao dicionário de 2014 que lingote sai de cada
+   minério: qualquer coisa chamada `oreX` com um `ingotX` do outro lado servia. Esse dicionário não existe
+   mais. Hoje a pergunta é feita aos **rótulos** que o jogo já tem — `#minecraft:iron_ores` e
+   `#minecraft:gold_ores` —, mais o **cobre**, que em 2014 não era do jogo mas hoje é e cai exatamente na
+   regra que o original escreveu. E o que fica no lugar é **ardósia** se o minério era de ardósia, em vez
+   da pedra que o original punha sempre.
+
+2. **O ímã tem dois cuidados que o original não tem.** A conta do puxão é estranha de propósito: o original
+   divide as **três** componentes pelo módulo da **primeira**, o que faz do empurrão em X sempre um bloco e
+   dos outros dois um múltiplo de quantos blocos o item está desalinhado em X. O resultado é o puxão aos
+   saltos que se vê no original, e foi portado assim. Mas o módulo ganhou um **piso** — sem ele, um item
+   exatamente alinhado em X divide por zero e sai com a posição estragada — e cada componente é **cortada
+   ao cubo de seis blocos**, para um item quase alinhado não ser atirado para fora do mundo. São os dois
+   cuidados mínimos para o porte aguentar o que o original escreveu.
+
+3. **A fundição de longe para quando a carga acaba.** O original segue varrendo o cubo inteiro e falha num
+   minério por vez. Como ficar sem carga **apaga o que sobrava**, o que acontece ao mundo é o mesmo nos
+   dois; a diferença é que o original toca o tambor da falha até mil cento e oitenta e três vezes seguidas.
+
+4. **O empurrão em quem é gente.** O original manda um pacote próprio ao cliente para empurrar outro
+   jogador, porque na 1.7.10 o movimento de um jogador não atravessava a rede de outro jeito. Hoje
+   atravessa: `setDeltaMovement` com `hurtMarked` faz o jogo mandar o pacote certo sozinho, e o efeito é o
+   mesmo.
+
+5. **A lista do que não se mexe.** A `BlockProtect` do original recusa o que tem alma, a rocha-mãe, o ovo
+   de dragão e dois blocos do próprio Witchery — a Força e a Barreira — que ainda não estão portados.
+   Ficam os três primeiros; os outros dois entram quando os blocos entrarem.
+
+### O que a arena de prova ensinou
+
+A arena do `runGameTest` tem **oito blocos de altura e uma tampa de barreira** por cima, no oitavo nível.
+De pé no sétimo, os **olhos** de quem olha já estão dentro da tampa, e o traçado para baixo acerta nela e
+não no chão — o que, com este poder, levanta a tampa e não a coluna. A prova da coluna é montada a meia
+altura por causa disso, e os dez blocos de chão firme que o poder exige descem por baixo do piso da arena,
+até o fundo do mundo.
+
+**Guardas:** o `OccultaOverworldInfusionGameTest`, com dez — os números do original; o anel do rito, que é
+o **mesmo do rito da Luz** e só se distingue dele pelo frasco que está no chão; o que ela chama de metal
+(ferro, ouro e malha, nunca o diamante); a queda que arranca o chão e não dói; o soco que só atira quem tem
+metal, de pé e agachado; o ímã que puxa o metal e deixa o resto; o desarmamento; a coluna que sobe três
+níveis; a fundição de perto que dá dois lingotes; e a **onda de choque que põe o chão de volta**, que é a
+que carrega a fatia. E o `OccultaInfusionClientTest` ganhou a quinta tela: a barra de poder cheia da
+textura da **terra**, que é a desta infusão.

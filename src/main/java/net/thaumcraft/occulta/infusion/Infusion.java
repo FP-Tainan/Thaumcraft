@@ -51,6 +51,16 @@ public abstract class Infusion {
         falha(level, quem);
     }
 
+    /**
+     * O gancho da <b>queda</b>, que devolve a distância que o jogo deve contar.
+     *
+     * <p>É o único gancho que <b>não precisa da Mão</b>: ele chega de qualquer jeito, porque cair não
+     * é uma coisa que se faça com as mãos. Só a Infusão do Mundo o usa.
+     */
+    public double cai(ServerLevel level, ServerPlayer quem, double quanto) {
+        return quanto;
+    }
+
     /** O gancho de cada batida com a Mão <b>segurada</b>. */
     public void segurando(ServerLevel level, ServerPlayer quem, ItemStack mão, int faltam) {
     }

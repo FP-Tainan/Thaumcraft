@@ -19,6 +19,7 @@
     "ItemEntityAccessor",
     "LivingEntityJumpingAccessor",
     "LivingEntityBeastFallMixin",
+    "LivingEntityInfusionFallMixin",
     "StructureTemplatePoolAccessor",
     "PlayerFamiliarMixin",
     "MobGoalAccessor",

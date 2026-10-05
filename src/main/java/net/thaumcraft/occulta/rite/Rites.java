@@ -2970,6 +2970,22 @@ public final class Rites {
                 RiteRegistry.Ring.NONE);
 
         /*
+         * O <b>Rito da Infusão do Mundo</b>, que partilha com o da Luz o mesmo anel — dezesseis e
+         * vinte e oito no eixo do giz comum. É o último dos quatro, e o mais caro de preparar: a Alma
+         * do Mundo pede uma Pedra Afinada, que já pediu uma viagem.
+         */
+        RiteRegistry.register("tc.rite.infusionearth",
+                new InfusePlayers(net.thaumcraft.occulta.infusion.Infusions.daquele(2),
+                        net.thaumcraft.occulta.infusion.Infusions.CARGAS,
+                        net.thaumcraft.occulta.infusion.Infusions.ALCANCE),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(
+                                net.thaumcraft.occulta.OccultaItems.SOUL_OF_THE_WORLD),
+                        new Sacrifice.Power(4000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE);
+
+        /*
          * O <b>Rito da Infusão do Outro Lugar</b>, que é o primeiro dos quatro ritos que mudam o
          * próprio corpo de quem os faz. Ele <b>mata quase</b>: cem de dano mágico a tudo o que for gente
          * num raio de quatro blocos, e só quem sobreviver fica infundido.

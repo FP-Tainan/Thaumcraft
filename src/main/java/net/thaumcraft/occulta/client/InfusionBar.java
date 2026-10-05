@@ -16,7 +16,8 @@ import net.thaumcraft.occulta.infusion.Infusions;
  * enche de baixo para cima com a quantidade de carga que a pessoa tem.
  *
  * <p>E o que o enche <b>muda com a infusão</b>: a do Outro Lugar o enche com a textura do <b>portal</b>, a
- * da Luz com a da <b>neve</b> e a Infernal com a da <b>pedra do Nether</b>. É um detalhe pequeno do original e é o que torna a barra legível de relance —
+ * da Luz com a da <b>neve</b>, a do Mundo com a da <b>terra</b> e a Infernal com a da <b>pedra do
+ * Nether</b>. É um detalhe pequeno do original e é o que torna a barra legível de relance —
  * não se precisa de ler um número para saber qual delas se tem.
  *
  * <p>Ela só aparece a quem <b>está infundido</b>. Sem infusão não há tubo nenhum.
@@ -48,6 +49,7 @@ public final class InfusionBar {
     private static final Identifier NETHERRACK =
             Identifier.withDefaultNamespace("textures/block/netherrack.png");
     private static final Identifier TÁBUAS = Identifier.withDefaultNamespace("textures/block/oak_planks.png");
+    private static final Identifier TERRA = Identifier.withDefaultNamespace("textures/block/dirt.png");
 
     private InfusionBar() {
     }
@@ -60,6 +62,7 @@ public final class InfusionBar {
     public static Identifier doquê(int id) {
         return switch (id) {
             case 1 -> NEVE;
+            case 2 -> TERRA;
             case 3 -> PORTAL;
             case 4 -> NETHERRACK;
             default -> TÁBUAS;

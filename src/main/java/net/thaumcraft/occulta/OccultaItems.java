@@ -323,6 +323,29 @@ public final class OccultaItems {
                             .build())));
 
     /**
+     * A <b>Alma do Mundo</b>: o que o rito da Infusão do Mundo pede.
+     *
+     * <p>Bebida, dá <b>Veneno II por um minuto</b>, como as outras três. Nenhuma delas se bebe.
+     */
+    public static final Item SOUL_OF_THE_WORLD = register("soul_of_the_world", properties ->
+            new Item(properties.stacksTo(2).food(
+                    new net.minecraft.world.food.FoodProperties.Builder()
+                            .alwaysEdible().nutrition(0).saturationModifier(0.0f).build(),
+                    net.minecraft.world.item.component.Consumables.defaultDrink().onConsume(
+                            new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                                    new net.minecraft.world.effect.MobEffectInstance(
+                                            net.minecraft.world.effect.MobEffects.POISON, 1200, 1)))
+                            .build())));
+
+    /**
+     * A <b>Rocha</b>: o bloco que a Infusão do Mundo arrancou de uma parede.
+     *
+     * <p>Ela não se fabrica e não serve para nada na mão: existe para <b>voar</b>. O original a guarda
+     * como item só porque o projétil dele precisa de um item para se desenhar.
+     */
+    public static final Item ROCK = register("rock", properties -> new Item(properties));
+
+    /**
      * O <b>Fantasma da Luz</b>: o que o rito da Infusão da Luz pede.
      *
      * <p>Bebido, dá <b>Veneno II por um minuto</b>. Ele também não existe para se beber.

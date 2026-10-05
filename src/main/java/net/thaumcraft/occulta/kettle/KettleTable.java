@@ -61,6 +61,14 @@ public final class KettleTable {
                 OccultaItems.REDSTONE_SOUP, Items.POTION, OccultaItems.FIRE_POPPET, Items.TORCH,
                 OccultaItems.DOG_TONGUE, Items.GLOWSTONE_DUST);
 
+        // ---------------------------------------------------------- a Alma do Mundo
+        // A cor é o -16003328 do original lido como cor de 32 bits, e o poder são quatro mil.
+        // O mesmo desvio da poção já declarado para o Unguento do Voo.
+        KettleRecipes.add(OccultaItems.SOUL_OF_THE_WORLD, 2, 0xFF0BCF00, 4000.0f,
+                OccultaItems.REDSTONE_SOUP, Items.POTION, Items.ENCHANTED_GOLDEN_APPLE,
+                OccultaItems.ATTUNED_STONE, OccultaItems.MANDRAKE_ROOT,
+                OccultaItems.WOOD.get("rowan_sapling"));
+
         // ---------------------------------------------------------- o Espírito do Outro Lugar
         // A cor é o -7128833 do original lido como cor de 32 bits, e o poder são quatro mil.
         // O mesmo desvio da poção já declarado para o Unguento do Voo.

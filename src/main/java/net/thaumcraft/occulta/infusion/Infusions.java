@@ -78,6 +78,7 @@ public final class Infusions {
     static {
         põe(NENHUMA);
         põe(new LightInfusion(1));
+        põe(new OverworldInfusion(2));
         põe(new OtherwhereInfusion(3));
         põe(new InfernalInfusion(4));
     }
@@ -91,6 +92,7 @@ public final class Infusions {
 
     /** Sem uso fora do porte: obriga a classe a carregar, e com ela o apego e a lista. */
     public static void init() {
+        Shockwave.init();
     }
 
     /** A infusão daquele número, ou a de ninguém. */

@@ -106,6 +106,11 @@ public class ThaumcraftClient implements ClientModInitializer {
                     }
                 }), net.thaumcraft.occulta.OccultaBlocks.BREW_GAS);
 
+        // e a Rocha também, que é o que o original faz com ela
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.ROCK,
+                net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+
         // o frasco do pote voando é o próprio item, como a poção de arremesso do jogo
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.KETTLE_BREW,

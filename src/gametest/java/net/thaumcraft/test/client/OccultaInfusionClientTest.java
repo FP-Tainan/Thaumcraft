@@ -8,8 +8,9 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
  * As duas coisas da <b>Infusão</b> que se pegam na mão: a <b>Mão de Bruxa</b> e o <b>Espírito do Outro
  * Lugar</b>.
  *
- * <p>A primeira tela é o inventário com a Mão e os três cozimentos que os três ritos de infusão pedem. A segunda é a Mão <b>na mão</b>, porque ela é um item que
- * se segura e tem de se ver segurada.
+ * <p>A primeira tela é o inventário com a Mão, os <b>quatro</b> cozimentos que os quatro ritos de
+ * infusão pedem e a <b>Rocha</b>, que a Infusão do Mundo arranca de uma parede. A segunda é a Mão <b>na
+ * mão</b>, porque ela é um item que se segura e tem de se ver segurada.
  *
  * <p>As fotos ficam em {@code build/run/clientGameTest/screenshots}.
  */
@@ -28,6 +29,8 @@ public class OccultaInfusionClientTest implements FabricClientGameTest {
             server.runCommand("give @p thaumcraft:spirit_of_otherwhere");
             server.runCommand("give @p thaumcraft:ghost_of_the_light");
             server.runCommand("give @p thaumcraft:infernal_animus");
+            server.runCommand("give @p thaumcraft:soul_of_the_world");
+            server.runCommand("give @p thaumcraft:rock");
             context.waitTicks(20);
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(
                     new net.minecraft.client.gui.screens.inventory.InventoryScreen(minecraft.player)));
@@ -75,6 +78,25 @@ public class OccultaInfusionClientTest implements FabricClientGameTest {
             });
             context.waitTicks(40);
             context.takeScreenshot("infusao_4_as_duas_barras");
+
+            /*
+             * E a barra da <b>Infusão do Mundo</b>, que se enche com a textura da <b>terra</b>. É assim
+             * que se sabe de relance qual das quatro se tem, sem ler número nenhum.
+             */
+            context.runOnClient(minecraft -> {
+                var servidor = minecraft.getSingleplayerServer();
+                if (servidor == null) return;
+                servidor.execute(() -> {
+                    for (var quem : servidor.getPlayerList().getPlayers()) {
+                        quem.removeAttached(net.thaumcraft.occulta.infusion.beast.CreaturePowers.BICHO);
+                        net.thaumcraft.occulta.infusion.Infusions.infunde(quem,
+                                net.thaumcraft.occulta.infusion.Infusions.daquele(2), 200);
+                        net.thaumcraft.occulta.infusion.Infusions.põeEnergia(quem, 160);
+                    }
+                });
+            });
+            context.waitTicks(40);
+            context.takeScreenshot("infusao_5_a_barra_do_mundo");
         }
     }
 }

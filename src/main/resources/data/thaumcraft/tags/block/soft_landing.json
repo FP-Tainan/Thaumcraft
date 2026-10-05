@@ -1,0 +1,12 @@
+{
+  "__comment": "Onde vale a pena cair com a Infusão do Mundo: a relva, o micélio, o saibro, a areia e a neve que o original lista, mais a terra de que todos eles são feitos.",
+  "values": [
+    "#minecraft:dirt",
+    "minecraft:grass_block",
+    "minecraft:mycelium",
+    "minecraft:gravel",
+    "#minecraft:sand",
+    "minecraft:snow",
+    "minecraft:snow_block"
+  ]
+}

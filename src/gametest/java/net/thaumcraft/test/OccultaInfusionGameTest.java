@@ -45,8 +45,8 @@ public class OccultaInfusionGameTest {
         if (Infusions.energia(quem) != 0 || Infusions.teto(quem) != 0) {
             helper.fail("e sem infusão não há carga nenhuma");
         }
-        if (Infusions.quantas() != 4) {
-            helper.fail("há a de ninguém, a da Luz, a do Outro Lugar e a Infernal; há "
+        if (Infusions.quantas() != 5) {
+            helper.fail("há a de ninguém, a da Luz, a do Mundo, a do Outro Lugar e a Infernal; há "
                     + Infusions.quantas());
         }
         helper.succeed();

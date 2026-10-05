@@ -77,6 +77,13 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.kettle.KettleBrewProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
+    /** A Rocha que a Infusão do Mundo arranca de uma parede e atira. */
+    public static final EntityType<net.thaumcraft.occulta.infusion.RockEntity> ROCK =
+            register("rock", EntityType.Builder
+                    .<net.thaumcraft.occulta.infusion.RockEntity>of(
+                            net.thaumcraft.occulta.infusion.RockEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
+
     /** O corpo que fica deitado enquanto o espírito anda. */
     public static final EntityType<net.thaumcraft.occulta.spirit.CorpseEntity> CORPSE =
             register("corpse", FabricEntityType.Builder.createMob(

@@ -1,0 +1,30 @@
+{
+  "__comment": "Os blocos que a Infusão do Mundo arranca de uma parede e atira: os vinte e quatro que o original lista à mão, com os nomes de hoje — o stone_stairs de 2014 era a escada de pedregulho e o hardened_clay era a terracota.",
+  "values": [
+    "minecraft:dirt",
+    "minecraft:grass_block",
+    "minecraft:mycelium",
+    "minecraft:stone",
+    "minecraft:cobblestone",
+    "minecraft:mossy_cobblestone",
+    "minecraft:sand",
+    "minecraft:gravel",
+    "minecraft:sandstone",
+    "minecraft:stone_slab",
+    "minecraft:smooth_stone_slab",
+    "minecraft:bricks",
+    "minecraft:brick_stairs",
+    "minecraft:cobblestone_stairs",
+    "minecraft:stone_stairs",
+    "minecraft:stone_bricks",
+    "minecraft:stone_brick_stairs",
+    "minecraft:sandstone_stairs",
+    "minecraft:clay",
+    "minecraft:terracotta",
+    "minecraft:soul_sand",
+    "minecraft:netherrack",
+    "minecraft:nether_bricks",
+    "minecraft:nether_brick_stairs",
+    "minecraft:coal_block"
+  ]
+}
