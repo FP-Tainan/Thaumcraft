@@ -17,7 +17,7 @@ import java.util.List;
  * que ela pega, se for de um mundo só.
  *
  * <p>O casamento é o do original, e tem dois feitios: <b>inteiro</b>, quando as seis casas estão cheias e a lista
- * tem de bater exatamente; e <b>pela metade</b>, enquanto se enche o pote — aí basta que o que já lá está caiba
+ * tem de bater exatamente; e <b>pela metade</b>, enquanto se enche o pote — aí basta que o que já está ali caiba
  * na receita, e é assim que o líquido ganha cor antes de a última coisa entrar.
  */
 public final class KettleRecipes {

@@ -138,7 +138,7 @@ public class GoblinDropOffGoal extends Goal {
         return melhor;
     }
 
-    /** Põe o que ele traz onde couber, juntando ao que já lá está primeiro. */
+    /** Põe o que ele traz onde couber, juntando ao que já está ali primeiro. */
     private boolean guarda(ItemStack oQueTraz, Container dentro) {
         for (int casa = 0; casa < dentro.getContainerSize(); casa++) {
             ItemStack lá = dentro.getItem(casa);

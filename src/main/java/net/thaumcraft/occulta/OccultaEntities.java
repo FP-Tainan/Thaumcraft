@@ -77,6 +77,24 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.kettle.KettleBrewProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
+    /**
+     * O <b>Mog</b>, o arqueiro dos dois deuses goblins.
+     *
+     * <p>Oito décimos por um e oito, como no original, e <b>não pega fogo</b>.
+     */
+    public static final EntityType<net.thaumcraft.occulta.goblin.MogEntity> MOG =
+            register("mog", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.goblin.MogEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(net.thaumcraft.occulta.goblin.MogEntity::attributes))
+                    .sized(0.8f, 1.8f).eyeHeight(1.62f).clientTrackingRange(16).fireImmune());
+
+    /** E o <b>Gulg</b>, o murro. */
+    public static final EntityType<net.thaumcraft.occulta.goblin.GulgEntity> GULG =
+            register("gulg", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.goblin.GulgEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(net.thaumcraft.occulta.goblin.GulgEntity::attributes))
+                    .sized(0.8f, 1.8f).eyeHeight(1.62f).clientTrackingRange(16).fireImmune());
+
     /** A Rocha que a Infusão do Mundo arranca de uma parede e atira. */
     public static final EntityType<net.thaumcraft.occulta.infusion.RockEntity> ROCK =
             register("rock", EntityType.Builder

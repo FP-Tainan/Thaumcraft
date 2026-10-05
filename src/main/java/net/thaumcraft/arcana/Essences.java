@@ -1885,7 +1885,7 @@ public final class Essences {
      * <b>Intervenção do Fim</b>: leva ao Nether.
      *
      * <p>A irmã da outra, e o original a escreve quase igual: no Fim não faz nada, e a quem já está no Nether
-     * responde que já lá está — e essa recusa, ao contrário das outras, devolve <b>falso</b> e sai de graça.
+     * responde que já está ali — e essa recusa, ao contrário das outras, devolve <b>falso</b> e sai de graça.
      */
     public static final SpellPart.Essence ENDER_INTERVENTION = SpellParts.essence(new SpellPart.Essence() {
         public static final float MANA = 400.0f;

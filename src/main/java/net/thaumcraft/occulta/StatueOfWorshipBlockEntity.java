@@ -47,6 +47,21 @@ public class StatueOfWorshipBlockEntity extends BlockEntity {
     /** Quanto dura a Adoração que ela dá: o minuto do original. */
     public static final int DURA = 1200;
 
+    /** Quantos goblins a Estrela do Nether come, e a quantos blocos ela os procura. */
+    public static final int COME = 5;
+
+    /** A que distância ela procura os deuses, e a que distância os põe: com a estrela e sem ela. */
+    public static final double PROCURA_COM_A_ESTRELA = 16.0;
+    public static final int PÕE_COM_A_ESTRELA = 8;
+    public static final double PROCURA_SOZINHA = 64.0;
+    public static final int PÕE_SOZINHA = 16;
+
+    /**
+     * De quantas em quantas vezes eles vêm <b>sozinhos</b>, com quinze adoradores: o dez em cem do
+     * original, multiplicado pelo centésimo que ele escreve à mão.
+     */
+    public static final double VÊM_SOZINHOS = 0.01 * 10 * 0.01;
+
     private @Nullable TaglockItem.Taglock dono;
     private int quantos;
 
@@ -113,6 +128,58 @@ public class StatueOfWorshipBlockEntity extends BlockEntity {
             dono.addEffect(new MobEffectInstance(OccultaEffects.WORSHIP, DURA,
                     adoram >= ADORA_MAIS ? 1 : 0, true, true));
         }
+
+        /*
+         * <b>E, com quinze, eles podem vir sem ninguém os chamar.</b> Uma vez em mil pulsos — que são
+         * umas quatro horas de jogo com a estátua cheia —, o Mog e o Gulg aparecem a dezesseis blocos
+         * e vêm atrás do dono. O original chama a isto uma <i>chance</i>; quem já estava ali chama-lhe
+         * outra coisa.
+         */
+        if (adoram >= ADORA_MAIS && level.getRandom().nextDouble() < VÊM_SOZINHOS) {
+            chamaOsDeuses(level, onde, dono, PROCURA_SOZINHA, PÕE_SOZINHA);
+        }
+    }
+
+    /**
+     * <b>Chama o Mog e o Gulg.</b>
+     *
+     * <p>Eles vêm <b>aos pares</b>, e isso não é enfeite: a graça deles é a distância entre os dois, e
+     * um sozinho é só um bicho grande. O Gulg nasce <b>em cima do Mog</b>, e os dois acordam já olhando
+     * para quem os chamou.
+     *
+     * <p>E não vêm se já houver um deles por perto. Dois pares de deuses goblins não é um desafio: é um
+     * engano.
+     */
+    public static boolean chamaOsDeuses(ServerLevel level, BlockPos onde, ServerPlayer quem,
+                                        double procura, int põe) {
+        AABB olha = new AABB(onde).inflate(procura);
+        if (!level.getEntitiesOfClass(net.thaumcraft.occulta.goblin.GoblinGodEntity.class, olha)
+                .isEmpty()) {
+            return false;
+        }
+
+        var mog = net.thaumcraft.occulta.Spawn.perto(level, OccultaEntities.MOG, onde, 0, põe);
+        if (!(mog instanceof net.thaumcraft.occulta.goblin.MogEntity oArqueiro)) return false;
+        oArqueiro.finalizeSpawn(level, level.getCurrentDifficultyAt(oArqueiro.blockPosition()),
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED, null);
+        oArqueiro.setTarget(quem);
+
+        var gulg = OccultaEntities.GULG.create(level,
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        if (gulg != null) {
+            gulg.snapTo(oArqueiro.getX(), oArqueiro.getY(), oArqueiro.getZ(), 0.0f, 0.0f);
+            level.addFreshEntity(gulg);
+            gulg.finalizeSpawn(level, level.getCurrentDifficultyAt(gulg.blockPosition()),
+                    net.minecraft.world.entity.EntitySpawnReason.TRIGGERED, null);
+            gulg.setTarget(quem);
+        }
+
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.FLAME,
+                oArqueiro.getX(), oArqueiro.getY() + 1.0, oArqueiro.getZ(), 32, 0.5, 0.5, 0.5, 0.05);
+        level.playSound(null, oArqueiro.blockPosition(),
+                net.minecraft.sounds.SoundEvents.WITHER_SPAWN,
+                net.minecraft.sounds.SoundSource.HOSTILE, 1.0f, 1.0f);
+        return true;
     }
 
     /**
@@ -133,6 +200,22 @@ public class StatueOfWorshipBlockEntity extends BlockEntity {
         }
         this.quantos = adoram;
         return adoram;
+    }
+
+    /**
+     * <b>E a Estrela do Nether come cinco adoradores.</b>
+     *
+     * <p>O original mata os <b>cinco primeiros</b> goblins que encontra a oito blocos, com dano mágico.
+     * É a única vez em todo o mod em que uma coisa boa se paga com a vida de quem a adorava, e vale
+     * dizer o que isso quer dizer: você não pede os deuses, você <b>os compra</b>.
+     */
+    public void comeOsAdoradores(ServerLevel level) {
+        AABB cubo = new AABB(this.worldPosition).inflate(CUBO);
+        int comeu = 0;
+        for (GoblinEntity goblin : level.getEntitiesOfClass(GoblinEntity.class, cubo)) {
+            if (comeu++ >= COME) break;
+            goblin.hurtServer(level, level.damageSources().magic(), goblin.getMaxHealth());
+        }
     }
 
     // ------------------------------------------------------------------ o que fica guardado

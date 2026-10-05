@@ -2336,7 +2336,7 @@ são os **Reinos Fragmentados** — os bolsos que se abrem entre um lugar e outr
 `net.thaumcraft.shattered`, as figuras e os textos no espaço de nome `thaumcraft`, e as chaves de pesquisa levam o
 prefixo `SR_`.
 
-### O que já lá está
+### O que já está ali
 
 - Os **trinta e quatro tecidos**: dezesseis cores de tecido comum, dezesseis de tecido antigo, o **Tecido Eterno**
   e o **Tecido Desfiado**, que é o chão do Limbo.
@@ -2624,7 +2624,7 @@ raiz no pé até zero na ponta. Cada fenda tem a sua, do número que sorteou ao 
   isso não serve, porque o pé dela está preso ao mundo. Aqui o esvoaçar cresce com o quadrado da altura do canto:
   o pé fica quieto e a ponta ondula.
 
-O `RiftTear` chato ficou no histórico, ao lado do `RiftCurves` que já lá estava.
+O `RiftTear` chato ficou no histórico, ao lado do `RiftCurves` que já estava ali.
 
 ## As salas do original, todas as cento e dezesseis (2026-09-26)
 
@@ -5680,7 +5680,7 @@ perde o fio sem perder o bicho.
 ## Fatia H — a Invocação do Ars Magica 2
 
 A **Invocação** é a peça 61 do Ars Magica 2, e é a primeira deste porte que põe um **bicho** no mundo em vez de
-pôr um efeito em quem já lá está. Lançada num ponto do chão, ela traz um **esqueleto com arco**; lançada em
+pôr um efeito em quem já está ali. Lançada num ponto do chão, ela traz um **esqueleto com arco**; lançada em
 cima de alguém, traz o esqueleto no lugar dele e **o resto da etapa cai na invocação**, que é o
 `applyStageToEntity` do original — uma frase que diga *Invocação + Cura* cura o que acabou de chegar.
 
@@ -6741,7 +6741,7 @@ caçador de verdade tem o chapéu que ninguém mais tem.
 1. **UUID em vez de nome**, para quem ele veio buscar — pela mesma razão do Escravizado.
 2. **O vampirismo de jogador** é a outra razão por que eles aparecem no original: um vampiro de grau dez,
    malvisto numa aldeia, atrai caçadores. Isso pede a vampirice de jogador, que este porte ainda não tem;
-   quando vier, é no relógio que se pergunta, ao lado do que já lá está.
+   quando vier, é no relógio que se pergunta, ao lado do que já está ali.
 3. **O aparecimento natural** fica de fora: o original deixa o caçador nascer à noite como monstro comum,
    além de vir pelo relógio. Aqui só vem pelo relógio — que é o que o torna o que ele é.
 
@@ -7860,7 +7860,7 @@ fica ao lado de quem, e duas provas antigas que dependiam disso caíram.
 
 A do **apanhador de sonhos** contava com o algodão à volta baixar a conta, mas o algodão só conta **até
 dois** — e se as provas ao lado já tiverem gasto os dois, o dela não tem onde entrar. Agora ela conta o que
-já lá está antes de exigir a descida.
+já está ali antes de exigir a descida.
 
 A do **chamado dos bichos** largava um camelo a quarenta blocos, que é dentro da arena de outra prova — e
 essa arena varre-o quando se arruma. Agora o camelo fica dentro da arena dela, a dez blocos, que é mais do
@@ -8021,7 +8021,7 @@ lado a lado, a guirlanda de frente e de lado, e as duas no inventário.
 
 ## O Demônio, e o Coração que ele vende (2026-10-04)
 
-O Witchery tem um vendedor que não é um aldeão. É alto, tem chifres, não se mata a bater, e vende uma coisa
+O Witchery tem um vendedor que não é um aldeão. É alto, tem chifres, não se mata batendo, e vende uma coisa
 que nenhuma outra parte do mod dá: um **Coração de Demônio**.
 
 ### Primeiro, uma lição que esta fatia ensinou
@@ -8439,7 +8439,7 @@ mod que pode ser **desperdiçado**, e é de propósito: ele vale por acertar o l
 É a armadilha mais limpa que este mod tem. Um botão amaldiçoado é **exatamente** um botão: mesmo desenho —
 porque o estado de bloco dele aponta para o modelo do botão de pedra do jogo, e não para um modelo nosso —,
 mesma queda, mesmo barulho, mesma peça no botão do meio. Não tem item, não tem receita, não aparece no
-criativo. Ninguém a põe no mundo: ela **acontece** a uma peça que já lá estava.
+criativo. Ninguém a põe no mundo: ela **acontece** a uma peça que já estava ali.
 
 A única maneira de saber é ter visto o frasco bater nela.
 
@@ -9382,7 +9382,7 @@ tesouro enterrado, seria um baú aparecendo. Essa só acontece a quem cava.
 **Uma de cada vez.** Quem já tem uma por cumprir não ganha outra: bater na bola outra vez **repete o recado**
 da que ele já tem. É de propósito — a profecia é para se viver, não para se colecionar.
 
-A do **Nether** só se diz a quem **já lá esteve**. Faz sentido: dizer a um principiante que ele vai ao Nether
+A do **Nether** só se diz a quem **já esteve lá**. Faz sentido: dizer a um principiante que ele vai ao Nether
 não é ler a sorte, é dar-lhe uma missão.
 
 ### O salvamento, que é a melhor delas
@@ -10277,14 +10277,98 @@ original e uma ideia boa: sem isso, quatro estátuas num baú são quatro itens 
    usa e que o porte mantém para a folha de pedra encaixar. Com uma pele de hoje nota-se: a manga esquerda
    da estátua é a direita virada.
 
-3. **Os deuses goblins ficam para a fatia deles.** Com quinze adoradores e uma **Estrela do Nether** na
-   mão, o original faz nascer o **Mog** e o **Gulg** — dois chefes de quatrocentas linhas cada, com modelos
-   próprios —, matando cinco goblins de caminho. E com quinze adoradores há também uma chance pequena, de
-   cinco em cinco segundos, de eles virem sozinhos. Os sons deles já estão portados desde a fatia dos sons;
-   o resto entra com eles.
+3. **Os deuses goblins entram na fatia seguinte a esta** — e entraram: veja «Os deuses goblins: o Mog e
+   o Gulg», logo abaixo. A Estrela do Nether na estátua chama-os, e com quinze adoradores eles vêm
+   sozinhos de vez em quando.
 
 **Guardas:** o `OccultaStatueGameTest`, com sete — os números do original; a estátua de bancada que **não é
 de ninguém** e nem conta; o rito que lhe dá uma cara; o **dono que atravessa o item**, partida e posta
 outra vez; os **três degraus**, que é a prova que carrega a fatia e vai até conferir que a Adoração II
 destrava o terceiro grau dos símbolos; o teto, que ela nunca passa; e a ordem de contar antes de chamar. E o `OccultaStatueClientTest`, com duas telas: a estátua com goblins
 ajoelhados à volta e a estátua na grade de quem a tem.
+
+## Os deuses goblins: o Mog e o Gulg (2026-10-05)
+
+Dois chefes de **quatrocentos de vida** cada, e a graça deles não está em nenhum dos dois: está na
+**distância entre eles**.
+
+### A conta que é a luta toda
+
+| distância um do outro | quanto do dano passa | o murro do Gulg |
+| --- | --- | --- |
+| **três blocos ou menos** | **nada** — os dois são invencíveis | 6 + d20, e um bloco de voo |
+| até seis | um quinto | 6 + d15, oito décimos |
+| até nove | metade | 6 + d10, meio bloco |
+| até dezesseis | quatro quintos | 6 + d6, dois décimos |
+| mais longe | tudo | 6 + d4, e nada de voo |
+
+E, por cima de tudo isso, **nunca mais de quinze por golpe**. Um diamante encantado na cara de um deus
+goblin vale o mesmo que uma pedra.
+
+Leia a tabela duas vezes e veja o que ela diz: a **mesma distância** que os torna invencíveis torna o Gulg
+um martelo. Juntos, são uma parede que mata; separados, são dois bichos grandes que se matam. A luta inteira
+é **sobre separá-los** — e não há nisto um só poder novo, só uma conta de distância escrita duas vezes com
+o sinal trocado. É o melhor desenho de chefe que o Witchery tem.
+
+### E os dois trabalham contra isso
+
+- o **Gulg** tem uma vontade própria que o leva de volta para **seis blocos** do Mog, de até sessenta e
+  quatro de distância. Afastá-lo uma vez não basta: é preciso **mantê-lo** afastado;
+- o **Mog** fica longe e atira. Preso sem caminho até quem o persegue, de cinco em cinco segundos ele
+  **salta dezesseis blocos para trás dele**, como um enderman — e é o que impede que se o mate de cima de
+  uma torre.
+
+E os dois **se curam**: um de vida por segundo, sempre. Quem não os separa não os mata: fica ali batendo até
+acabar a comida.
+
+### O que cada um é
+
+O **Mog** é o arqueiro. Cinco de armadura, um arco na mão, e uma assinatura: a flecha dele sai com uma e
+meia vezes a velocidade de sempre — e com **duas e meia** contra quem estiver **no ar**. Saltar à frente do
+Mog é uma má ideia. Perdendo o arco, ele arranja outro: uma vez em cem batidas, do nada, com um estalo.
+
+O **Gulg** é o murro. Oito de armadura, resistência a empurrões **um** — a máxima —, braços de dezesseis em
+vez de catorze e um peito de dez por oito por seis. Um barril com punhos.
+
+Nenhum dos dois caça goblins, nem o outro. Um deus goblin que caçasse goblins não seria um deus goblin.
+
+### Como eles chegam
+
+Pela **Estátua de Adoração**, de duas maneiras:
+
+1. uma **Estrela do Nether** na mão, clicada na estátua, com o **dono** dela e **cinco adoradores**. A
+   estrela some — e com ela somem **cinco goblins**, que o original mata com dano mágico. É a única vez em
+   todo o mod em que uma coisa boa se paga com a vida de quem a adorava: você não pede os deuses, você **os
+   compra**;
+2. ou sozinhos, com **quinze adoradores**, uma vez em mil pulsos — que são umas quatro horas de jogo com a
+   estátua cheia. O original chama a isto uma *chance*; quem já estava ali lhe chama outra coisa.
+
+Eles vêm sempre **aos pares**, e não vêm se já houver um deles por perto. E acordam com **cento e cinquenta
+batidas de invencibilidade**, curando vinte por décimo de segundo, que é o despertar do Wither.
+
+### O que eles largam
+
+Uma a três **pepitas de koboldite** e uma peça de **malha encantada ao nível trinta**. Fecha-se o círculo: o
+metal que só sai de um goblin sai, em dobro, dos deuses deles.
+
+### Desvios declarados
+
+1. **O arco do Mog não cai.** No original ele cai e some em cinco segundos, que é o jeito de 2014 de dizer
+   «este arco não é seu». Hoje o tempo de vida de um item largado não se mexe de fora, e a **chance de
+   queda zero** diz a mesma coisa sem rodeios.
+
+2. **A Aljava do Mog e a Cinta do Gulg ficam para a fatia da roupa.** Metade das vezes, cada um larga uma
+   peça de roupa de goblin: a aljava dá **flechas sem fim que esmagam quem está no ar**, e a cinta dá
+   **murros que atiram para cima** — e as duas ficam mais duras quando quem as tem está perto de quem tem a
+   outra, que é a mesma conta de distância aplicada a quem jogar. Elas pendem do `ItemGoblinClothes`, que é
+   a fatia das roupas inteira.
+
+3. **A chance de eles virem sozinhos é a do ajuste padrão do original**, que são dez em cem multiplicados
+   pelo centésimo que ele escreve à mão. O original deixa mexer nisso num arquivo de ajustes; aqui é um
+   número.
+
+**Guardas:** o `OccultaGoblinGodsGameTest`, com seis — os números do original; a **conta da distância**,
+que é a prova que carrega a fatia; o murro do Gulg, que é o espelho dela; os dois no mundo, colados e
+afastados, com o teto de quinze; os deuses que não caçam os seus; e a Estrela do Nether, que os chama e come
+cinco adoradores. E o `OccultaGoblinGodsClientTest`, com a tela dos dois lado a lado e um goblin comum entre
+eles para a escala.

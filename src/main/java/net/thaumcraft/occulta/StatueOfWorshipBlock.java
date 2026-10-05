@@ -2,7 +2,11 @@ package net.thaumcraft.occulta;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -94,6 +98,60 @@ public class StatueOfWorshipBlock extends HorizontalDirectionalBlock implements 
             saiu.set(OccultaComponents.TAGLOCK, estátua.dono());
         }
         return saiu;
+    }
+
+    /**
+     * <b>A Estrela do Nether na estátua chama os deuses.</b>
+     *
+     * <p>É preciso ser o <b>dono</b> dela e ter <b>cinco adoradores</b>. A estrela some, e com ela somem
+     * <b>cinco goblins</b>: o original mata os cinco primeiros que encontra a oito blocos, e é a única
+     * vez em todo o mod em que uma coisa boa se paga com a vida de quem a adorava.
+     *
+     * <p>No criativo não some nada e não morre ninguém.
+     */
+    @Override
+    protected InteractionResult useItemOn(ItemStack oquê, BlockState feitio, Level mundo,
+                                          BlockPos onde, Player quem, InteractionHand mão,
+                                          BlockHitResult bateu) {
+        if (!(mundo instanceof net.minecraft.server.level.ServerLevel level)) {
+            return InteractionResult.SUCCESS;
+        }
+        if (!oquê.is(net.minecraft.world.item.Items.NETHER_STAR)) return InteractionResult.PASS;
+        if (!(quem instanceof net.minecraft.server.level.ServerPlayer gente)) {
+            return InteractionResult.PASS;
+        }
+        if (!(level.getBlockEntity(onde) instanceof StatueOfWorshipBlockEntity estátua)
+                || estátua.dono() == null
+                || !estátua.dono().owner().equals(gente.getUUID())) {
+            return recusa(level, onde);
+        }
+
+        if (estátua.conta(level) < StatueOfWorshipBlockEntity.ENCHE
+                || !StatueOfWorshipBlockEntity.chamaOsDeuses(level, onde, gente,
+                        StatueOfWorshipBlockEntity.PROCURA_COM_A_ESTRELA,
+                        StatueOfWorshipBlockEntity.PÕE_COM_A_ESTRELA)) {
+            return recusa(level, onde);
+        }
+
+        if (!gente.getAbilities().instabuild) {
+            oquê.shrink(1);
+            estátua.comeOsAdoradores(level);
+        }
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.FLAME,
+                onde.getX() + 0.5, onde.getY() + 0.5, onde.getZ() + 0.5, 32, 0.5, 0.5, 0.5, 0.05);
+        level.playSound(null, onde, net.minecraft.sounds.SoundEvents.ENDER_DRAGON_GROWL,
+                net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
+        return InteractionResult.SUCCESS;
+    }
+
+    /** O «não dá» dela: fumaça e tambor, como no original. */
+    private static InteractionResult recusa(net.minecraft.server.level.ServerLevel level,
+                                            BlockPos onde) {
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.SMOKE,
+                onde.getX() + 0.5, onde.getY() + 0.5, onde.getZ() + 0.5, 16, 0.5, 0.5, 0.5, 0.0);
+        level.playSound(null, onde, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_SNARE.value(),
+                net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
+        return InteractionResult.SUCCESS;
     }
 
     @Override

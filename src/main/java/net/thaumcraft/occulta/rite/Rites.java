@@ -2767,7 +2767,7 @@ public final class Rites {
 
         /*
          * E o que repinta um anel de glifos com o giz que se largar: gesso e a Arthana, mil de poder, e
-         * nenhum anel pedido — porque o anel que ele muda é o que já lá estiver.
+         * nenhum anel pedido — porque o anel que ele muda é o que já estiver ali.
          */
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.glyphictransform",
                 new GlyphicTransformation(),

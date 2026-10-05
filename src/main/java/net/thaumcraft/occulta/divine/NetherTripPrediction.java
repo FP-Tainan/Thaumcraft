@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 /**
  * <b>Vais ao Nether</b>: a {@code PredictionNetherTrip} do Witchery.
  *
- * <p>É a única que só se diz a quem <b>já lá esteve</b> — o original guarda no jogador uma marca de que ele
+ * <p>É a única que só se diz a quem <b>já esteve lá</b> — o original guarda no jogador uma marca de que ele
  * visitou o Nether, e sem ela esta profecia nem entra no sorteio. Faz sentido: dizer a um principiante que
  * ele vai ao Nether não é ler a sorte, é dar-lhe uma missão.
  *

@@ -97,7 +97,7 @@ public enum Curse implements StringRepresentable {
     }
 
     /**
-     * Põe a maldição no grau que se pedir — nunca abaixo do que já lá está, que é o original.
+     * Põe a maldição no grau que se pedir — nunca abaixo do que já está ali, que é o original.
      *
      * <p><b>Menos em quem veste as roupas de caçador inteiras</b>, que nove vezes em dez não apanha nada: é o
      * {@code isCurseProtectionActive} do {@code ItemHunterClothes}, e é a melhor razão que alguém tem para

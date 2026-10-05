@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * As essências que <b>empurram</b>, e a que puxa.
  *
- * <p>Nenhuma delas fere ninguém. O que elas fazem é mexer em quem já lá está — e num jogo em que se cai de
+ * <p>Nenhuma delas fere ninguém. O que elas fazem é mexer em quem já está ali — e num jogo em que se cai de
  * alturas e se morre disso, empurrar é uma arma tão boa como qualquer outra.
  */
 public class ArcanaPushGameTest {

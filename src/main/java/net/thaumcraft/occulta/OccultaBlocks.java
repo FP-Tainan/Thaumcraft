@@ -439,7 +439,7 @@ public final class OccultaBlocks {
     // ------------------------------------------------------------ as gêmeas amaldiçoadas
     /*
      * Nenhuma delas tem item, receita ou lugar no criativo: ninguém as põe no mundo. Elas acontecem a uma
-     * peça que já lá estava, quando um frasco de gatilho bate nela.
+     * peça que já estava ali, quando um frasco de gatilho bate nela.
      */
 
     public static final Block CURSED_STONE_BUTTON = register("cursed_stone_button", properties ->

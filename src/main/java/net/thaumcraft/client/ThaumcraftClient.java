@@ -141,6 +141,20 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.NIGHTMARE,
                 net.thaumcraft.occulta.client.SpiritRenderers.Nightmare::new);
 
+        // o Ars Occulta: os dois deuses goblins
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.GoblinGodRenderer.MOG,
+                net.thaumcraft.occulta.client.GoblinGodRenderer::mog);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.GoblinGodRenderer.GULG,
+                net.thaumcraft.occulta.client.GoblinGodRenderer::gulg);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.MOG,
+                net.thaumcraft.occulta.client.GoblinGodRenderer.Mog::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.GULG,
+                net.thaumcraft.occulta.client.GoblinGodRenderer.Gulg::new);
+
         // o Ars Occulta: a Estátua de Adoração, com a pele do dono por baixo da pedra
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.StatueOfWorshipModel.PEDRA_MALHA,

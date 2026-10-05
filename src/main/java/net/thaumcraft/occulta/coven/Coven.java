@@ -63,7 +63,7 @@ public record Coven(List<UUID> bruxas) {
     /**
      * Põe mais uma no coven.
      *
-     * @return falso se já estava cheio ou se aquela bruxa já lá estava — que é quando o original a faz
+     * @return falso se já estava cheio ou se aquela bruxa já estava ali — que é quando o original a faz
      *         sentir-se enganada e virar contra quem falou com ela
      */
     public static boolean junta(Player quem, UUID bruxa) {
