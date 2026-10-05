@@ -37,6 +37,7 @@ public final class Occulta {
         net.thaumcraft.occulta.enslave.Enslavement.init();
         NoDrops.init();
         ExtraDrops.init();
+        net.thaumcraft.occulta.divine.Predictions.init();
         net.thaumcraft.occulta.door.KeyringRecipe.init();
         net.thaumcraft.occulta.waystone.Waystones.init();
         net.thaumcraft.occulta.hunter.WitchHunters.init();

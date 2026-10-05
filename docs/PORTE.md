@@ -6302,7 +6302,7 @@ tem para ser plantada ao pé de uma aldeia.
 No jogo de 2014 a fase da lua era `dimensionType.moonPhase(dayTime)`. O jogo de hoje **mudou o tempo de
 lugar**: há relógios (`WorldClock`), linhas do tempo (`Timeline`) e marcas, e a lua passou a ser uma linha do
 tempo de **192000 batidas** — que são os mesmos oito dias de sempre. A conta fica a mesma, e a fase zero
-continua a ser a cheia.
+continua sendo a cheia.
 
 ### O modelo
 
@@ -7920,8 +7920,8 @@ Dez dedos. É o detalhe que diz tudo: o do Witchery tem dois cubos por mãos.
 
 ### O que não mudou
 
-**Nada de comportamento.** O Ent continua a ser o Ent do Witchery — o que o faz nascer, o que ele larga, como
-ele bate, o pender de planta por cima do passo. O Lobisomem continua a ser o do Witchery em tudo o que não é
+**Nada de comportamento.** O Ent continua sendo o Ent do Witchery — o que o faz nascer, o que ele larga, como
+ele bate, o pender de planta por cima do passo. O Lobisomem continua sendo o do Witchery em tudo o que não é
 desenho, e a troca apanha de uma vez as **três** coisas que vestiam aquele corpo: o bicho, o aldeão que vira,
 e a **forma de lobisomem de um jogador**.
 
@@ -8354,7 +8354,7 @@ igual.
 As duas maneiras de o fazer usam a mesma conta: o `BlockActionSphere`, que é o **método de Bresenham em três
 dimensões**. Risca-se um círculo e, para cada ponto dele, risca-se outro perpendicular, espelhando os oito
 octantes nos três eixos: trinta e dois pontos por volta, sem uma única raiz quadrada. Era como se faziam estas
-coisas quando a máquina não dava para mais, e continua a ser mais rápido do que a conta direta.
+coisas quando a máquina não dava para mais, e continua sendo mais rápido do que a conta direta.
 
 **Fiel ao original:** o raio **desconta um** antes de começar. Uma esfera de raio oito tem casca de sete. Não
 é engano — é a conta a começar de dentro —, mas quem não souber faz uma bolha um bloco menor do que pediu.
@@ -9316,3 +9316,137 @@ itens pondo o mesmo bloco de dois jeitos e devolvendo cada um o seu; e a queda d
 nada, o cálice vazio somando um e o cheio dois, e o segundo cálice não somando nada**. E
 `OccultaChaliceClientTest`, com quatro telas: o candelabro à meia-noite, para se ver a luz; os dois cálices
 lado a lado; o altar posto como se usa; e os três itens no inventário.
+
+## A Bola de Cristal, e as dezessete profecias (2026-10-05)
+
+A ideia mais bonita do Witchery, e a que mais custa a explicar a quem nunca a viu: **a profecia não prevê o
+futuro, ela o fabrica**.
+
+### Como funciona
+
+Uma esfera de vidro num pé de três degraus. Batida, ela procura **outro jogador** num retângulo de cinco por
+dois por cinco à volta de si e lê a sorte **dele** — só se não houver mais ninguém ali é que lê a de quem
+bateu.
+
+Quer dizer que a Bola de Cristal é feita **para duas pessoas**. Quem a tem em casa não lê o próprio futuro;
+lê o dos outros, e são os outros que carregam a profecia. É a única coisa deste mod que só serve em
+companhia.
+
+Custa **quinhentos** de poder de um altar a dezesseis blocos, por leitura, e tem **cem batidas** de recarga.
+E para ler a sorte de outro é preciso ser **vidente** — o que só se consegue fazendo o **Rito da Infusão do
+Futuro**, que é o mesmo que faz aparecer a bola. É o único rito do mod que muda alguma coisa **em quem o
+faz** e não no mundo: a bola é um objeto e qualquer um a pode roubar; o que não se rouba é saber usá-la.
+
+### E então ela persegue você
+
+Dita a profecia, o mod guarda-a e passa a vigiar o jogador por três portas: o **golpe levado**, a **batida** e
+o **bloco partido**. Enquanto ela está **em dia** — oito minutos —, só se cumpre se o mundo a cumprir.
+Passado o prazo, ela fica **atrasada**, e a cada batida há cinco por cento de chance de o mod a **forçar**:
+
+- a da **queda** põe cascalho nos nove blocos debaixo dele e **esvazia seis** por baixo deles;
+- a da **água** faz o mesmo, com três de fundo e água dentro — e repare na piada: a profecia que promete o
+  menor dos incômodos é a que faz o maior estrago na casa de quem a leva;
+- a da **briga** faz nascer o bicho a dois ou quatro blocos dele, já olhando para ele;
+- a do **Nether** manda-lhe um recado e um blaze.
+
+Passada **meia hora** ela fica **muito velha**, e algumas afrouxam o que pedem: a do diamante deixa de pedir
+o minério e passa a aceitar **pedra qualquer**. Quer dizer que quanto mais alguém demora a achar um diamante,
+mais perto está de lhe cair um na mão — a profecia dizendo «eu avisei».
+
+E há uma que **nunca se força**: a do **tesouro enterrado**, a quem o original desliga as duas portas do
+cumprimento por si próprio. Com razão: um baú que aparecesse debaixo de quem estivesse parado não seria um
+tesouro enterrado, seria um baú aparecendo. Essa só acontece a quem cava.
+
+### As dezessete
+
+| id | peso | o que diz |
+| --- | --- | --- |
+| 1 | 13 | vai topar com um **zumbi** |
+| 2 | 13 | vai levar uma **flecha** |
+| 3 | 3 | vai encontrar um **Ent** |
+| 4 | 13 | vai **cair** |
+| 5 | 8 | vai se afogar em **ferro** (8 a 20 de uma vez) |
+| 6 | 3 | vai achar um **diamante** |
+| 7 | 3 | vai achar uma **esmeralda** |
+| 8 | 2 | vai achar um **tesouro enterrado** |
+| 9 | 2 | vai **se apaixonar** |
+| 10 | 2 | irritou a **Baba Yaga** |
+| 11 | 2 | **agradou** à Baba Yaga |
+| 12 | 3 | vai fazer um **amigo** (um lobo dele) |
+| 13 | 13 | vai ser **salvo por uma coruja** |
+| 14 | 13 | vai ser **salvo por um lobo** |
+| 15 | 13 | vai **se molhar** |
+| 16 | 3 | vai ao **Nether** |
+| 17 | 13 | vai juntar **carvão** (10 a 20) |
+
+**Uma de cada vez.** Quem já tem uma por cumprir não ganha outra: bater na bola outra vez **repete o recado**
+da que ele já tem. É de propósito — a profecia é para se viver, não para se colecionar.
+
+A do **Nether** só se diz a quem **já lá esteve**. Faz sentido: dizer a um principiante que ele vai ao Nether
+não é ler a sorte, é dar-lhe uma missão.
+
+### O salvamento, que é a melhor delas
+
+A do salvamento é a única que se cumpre **no pior momento possível**: o gancho dela não é o de a profecia
+vencer, é o de **alguém bater em quem foi avisado**. No instante em que ele leva um golpe, nasce ao lado dele
+uma coruja — ou um lobo — que vai direto a quem o atacou.
+
+A coruja é **passageira**: vive trezentas batidas, ou menos se aquilo de que ela o salvou morrer primeiro, e
+depois estoura num pó e vai-se. E não larga nada — no original porque ela sabe que é temporária, aqui porque
+leva a marca do `NoDrops`, que dá no mesmo e já existia.
+
+### O amor, que é a mais descarada
+
+A profecia do amor faz nascer um **aldeão** a quatro ou seis blocos do jogador, com uma tarefa própria —
+cortejá-lo — enfiada no topo da lista. Ele anda atrás dele, solta corações e, quando chega perto, **faz um
+filho**. O jogador não é consultado, não há cortejo nenhum, e o que sai dali é um bebê aldeão. É uma piada de
+2014 e está portada como estava.
+
+**O que mudou:** o aldeão de hoje pensa por **cérebro** e não por tarefas, e o cérebro dele quer levá-lo para
+a cama e para o posto de trabalho. A tarefa entra na lista de tarefas, que ainda roda, e ganha sempre que o
+cérebro não tiver para onde ir — de modo que o aldeão apaixonado às vezes para no meio do caminho para ir
+dormir. O original não tinha esse problema porque o aldeão dele não tinha cérebro.
+
+### O oito que queria dizer outra coisa
+
+O original escreve, na profecia da queda, `y > 8`: oito blocos de margem por baixo do buraco, num mundo que
+acabava no **zero**. O mundo de hoje acaba em **menos sessenta e quatro**, e oito à letra proibiria a
+profecia em quase toda a parte. O que se mede aqui é a **distância ao fundo do mundo**, que é o que o oito
+queria dizer.
+
+E o chão que ela sabe abrir é um rótulo próprio — `thaumcraft:soft_ground` —, porque o `#minecraft:dirt` de
+hoje são três blocos e **não inclui a grama**, que era metade do que o original aceitava.
+
+### O miolo que respira
+
+A casca de dentro da esfera **pulsa com a hora do mundo**: toma-se a hora, dá-se o resto por cento e
+sessenta, mede-se a distância desse resto a oitenta e tira-se isso de cem. O que sai vai de vinte a cem e
+volta, num vaivém de oito segundos.
+
+Quer dizer que **todas as bolas do mundo respiram ao mesmo tempo**, porque todas leem a mesma hora. Numa casa
+com duas, elas batem juntas. O original não fez isso por acaso.
+
+A conta mora na **alma do bloco** e não no desenhista: é uma conta de números, e o servidor também a tem de
+poder ver, nem que seja só para a provar.
+
+### O engano do original, portado
+
+Ao escolher a vítima entre os jogadores por perto, o original mede sempre a distância de **quem bateu** à
+bola, e não a do jogador que está olhando. A conta dá o mesmo número em todas as voltas, de modo que o que
+ele realmente escolhe é o **último da lista**, e não o mais perto. Com um só a assistir — que é o caso de
+quase sempre — não faz diferença nenhuma. **Fica como está.**
+
+### Dois desvios declarados
+
+- **O que cai da profecia do minério guarda-se como item e não como pilha**, porque a lista das dezessete é
+  montada quando a classe carrega, e nessa altura uma pilha ainda não se pode fazer: os componentes dos itens
+  só se ligam depois. A pilha faz-se na hora de cair.
+- **O Óleo do Acaso pede «a poção», qualquer que seja**, e não a Poção de Visão Noturna — o mesmo desvio já
+  declarado para o Unguento do Voo, e pela mesma razão: a tabela do pote casa por item, e uma poção de hoje
+  leva o que é num componente.
+
+**Guardas:** `OccultaCrystalBallGameTest`, com cinco — as dezessete com os números e os prazos do original; a
+marca de vidente; a de uma só de cada vez, com a segunda leitura repetindo a primeira; a prova que carrega a
+fatia, que é **a profecia da queda abrindo o chão depois do prazo**; a recarga de cem batidas; e o vaivém do
+miolo. E `OccultaCrystalBallClientTest`, com três telas: a bola num pedestal, a mesma oitenta batidas depois
+— para se ver o miolo noutro tom — e os dois itens no inventário.

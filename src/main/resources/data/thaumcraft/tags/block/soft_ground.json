@@ -1,0 +1,16 @@
+{
+  "__comment": "A terra mole em que a profecia da queda e a da água sabem abrir um buraco: os blocos que tinham, em 2014, os materiais ground e grass. O #minecraft:dirt de hoje são três blocos e não inclui a grama.",
+  "values": [
+    "#minecraft:dirt",
+    "minecraft:grass_block",
+    "minecraft:podzol",
+    "minecraft:mycelium",
+    "minecraft:dirt_path",
+    "minecraft:farmland",
+    "minecraft:mud",
+    "minecraft:muddy_mangrove_roots",
+    "minecraft:moss_block",
+    "minecraft:pale_moss_block",
+    "minecraft:soul_soil"
+  ]
+}

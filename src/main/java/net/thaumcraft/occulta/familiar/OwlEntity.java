@@ -116,6 +116,50 @@ public class OwlEntity extends TamableAnimal {
         this.setPersistenceRequired();
     }
 
+    /**
+     * <b>A coruja passageira</b>: o {@code timeToLive} do original.
+     *
+     * <p>A que a {@linkplain net.thaumcraft.occulta.divine.RescuePrediction profecia do salvamento} faz
+     * nascer não veio para ficar. Ela vive o tanto que lhe disserem — e menos do que isso se aquilo de que
+     * ela veio salvar alguém <b>morrer primeiro</b>, que é o caso bom. Depois estoura num pó e vai-se.
+     *
+     * <p>Menos um por batida; <b>menos um</b> quer dizer «para sempre», que é a coruja de verdade.
+     */
+    private int viveAté = -1;
+
+    /** Dá-lhe um prazo. */
+    public void viveSó(int batidas) {
+        this.viveAté = batidas;
+    }
+
+    /** Se ela é das passageiras. */
+    public boolean passageira() {
+        return this.viveAté != -1;
+    }
+
+    @Override
+    protected void customServerAiStep(ServerLevel level) {
+        super.customServerAiStep(level);
+        if (this.viveAté == -1 || this.isRemoved()) return;
+        var alvo = this.getTarget();
+        if (--this.viveAté > 0 && alvo != null && alvo.isAlive()) return;
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.EXPLOSION,
+                this.getX(), this.getY() + 1.0, this.getZ(), 16, 1.0, 1.0, 1.0, 0.0);
+        this.discard();
+    }
+
+    @Override
+    protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput dados) {
+        super.addAdditionalSaveData(dados);
+        dados.putInt("SuicideIn", this.viveAté);
+    }
+
+    @Override
+    protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput dados) {
+        super.readAdditionalSaveData(dados);
+        this.viveAté = dados.getIntOr("SuicideIn", -1);
+    }
+
     /** Coruja não se machuca de cair. */
     @Override
     public boolean causeFallDamage(double distância, float fator,

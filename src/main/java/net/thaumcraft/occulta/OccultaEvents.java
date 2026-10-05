@@ -30,7 +30,30 @@ public final class OccultaEvents {
             if (!(quemLevou.level() instanceof ServerLevel level)) return;
             poisonWeapons(level, quemLevou, fonte);
             volatility(level, quemLevou, fonte);
+            if (quemLevou instanceof net.minecraft.server.level.ServerPlayer quem) {
+                net.thaumcraft.occulta.divine.Predictions.levouDano(level, quem, fonte);
+            }
         });
+
+        /*
+         * As <b>profecias</b>, que precisam de três portas: a do golpe levado, a da batida — que é onde
+         * elas se forçam quando o prazo passa — e a do bloco partido, que é por onde o ferro e o diamante
+         * caem a mais.
+         */
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(servidor -> {
+            for (var quem : servidor.getPlayerList().getPlayers()) {
+                if (quem.level() instanceof ServerLevel level) {
+                    net.thaumcraft.occulta.divine.Predictions.batida(level, quem);
+                }
+            }
+        });
+
+        net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents.AFTER.register(
+                (level, quem, onde, oquê, alma) -> {
+                    if (!(level instanceof ServerLevel mundo)) return;
+                    if (!(quem instanceof net.minecraft.server.level.ServerPlayer gente)) return;
+                    net.thaumcraft.occulta.divine.Predictions.partiu(mundo, gente, oquê, onde);
+                });
 
         /*
          * A Boline colhe a Rosa de Sangue antes de o jogo lhe tocar: a rosa não deixa nada quando se quebra,

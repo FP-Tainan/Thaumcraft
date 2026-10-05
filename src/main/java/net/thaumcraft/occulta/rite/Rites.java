@@ -1025,7 +1025,16 @@ public final class Rites {
         @Override
         public List<RiteStep> steps(int coven) {
             return List.of((level, onde, ticks, rito) -> {
-                Block.popResource(level, onde.above(), this.what.get());
+                ItemStack oquê = this.what.get();
+                /*
+                 * E há uma exceção, que é a do original: se o que aparece for a <b>Bola de Cristal</b>,
+                 * quem começou o rito fica <b>vidente</b>. O rito não dá só o objeto — dá o ofício.
+                 */
+                if (oquê.is(net.thaumcraft.occulta.OccultaItems.CRYSTAL_BALL)
+                        && rito.starter(level) instanceof net.minecraft.server.level.ServerPlayer quem) {
+                    net.thaumcraft.occulta.divine.Predictions.ensina(quem);
+                }
+                Block.popResource(level, onde.above(), oquê);
                 level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
                         onde.getZ() + 0.5, 48, 0.5, 1.0, 0.5, 0.1);
                 level.playSound(null, onde, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0f, 0.8f);
@@ -2871,6 +2880,21 @@ public final class Rites {
                         net.thaumcraft.occulta.OccultaItems.BELLADONNA_FLOWER),
                 RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * O Rito da Infusão do Futuro, que faz aparecer a Bola de Cristal — e, de caminho, ensina a
+         * <b>ler a sorte</b> a quem o fez. É o único rito do mod que muda alguma coisa <b>em quem o
+         * faz</b>, e não no mundo: a bola que sai dele é só um objeto, e qualquer um a pode roubar; o
+         * que não se rouba é saber usá-la.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.infusionfuture",
+                new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.CRYSTAL_BALL)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.QUARTZ_SPHERE,
+                                Items.GOLD_INGOT, net.thaumcraft.occulta.OccultaItems.HAPPENSTANCE_OIL),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
 
         // o Rito de Infusão, que prende um demônio num espelho — e é de onde todo espelho vem
         RiteRegistry.register("tc.rite.mirror",

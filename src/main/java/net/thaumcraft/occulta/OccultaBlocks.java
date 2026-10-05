@@ -192,6 +192,23 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ a Bola de Cristal
+
+    /**
+     * A <b>Bola de Cristal</b>, que lê a sorte de quem estiver perto.
+     *
+     * <p>Os números do original: <b>dois de dureza</b> e som de metal. Ela não dá luz.
+     */
+    public static final Block CRYSTAL_BALL = register("crystal_ball", properties ->
+            new CrystalBallBlock(properties.mapColor(MapColor.QUARTZ).strength(2.0f)
+                    .sound(SoundType.METAL).noOcclusion().pushReaction(PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<CrystalBallBlockEntity>
+            CRYSTAL_BALL_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("crystal_ball"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            CrystalBallBlockEntity::new, java.util.Set.of(CRYSTAL_BALL)));
+
     // ------------------------------------------------------------ o candelabro e o cálice
 
     /**

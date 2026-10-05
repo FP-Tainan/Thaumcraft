@@ -40,6 +40,14 @@ public final class KettleTable {
                 OccultaItems.REDSTONE_SOUP, Items.SPLASH_POTION, Items.DIAMOND, Items.FEATHER,
                 OccultaItems.BAT_WOOL, OccultaItems.BELLADONNA_FLOWER);
 
+        // ---------------------------------------------------------- o Óleo do Acaso
+        // A cor é o 8534058 do original lido como cor de 32 bits, e o poder são dois mil.
+        // <b>O mesmo desvio do Unguento do Voo:</b> o original pede uma poção com o número de 1.7.10
+        // (8262, que era Visão Noturna), e aqui entra a poção, qualquer que seja. Está no PORTE.md.
+        KettleRecipes.add(OccultaItems.HAPPENSTANCE_OIL, 1, 0xFF823CAA, 2000.0f,
+                OccultaItems.REDSTONE_SOUP, Items.POTION, Items.ENDER_EYE, Items.GOLDEN_CARROT,
+                Items.SPIDER_EYE, OccultaItems.MANDRAKE_ROOT);
+
         KettleRecipes.add(OccultaItems.BREW_OF_VINES, BREW_COUNT, 0xFF005B07, 0.0f,
                 Items.VINE, Items.BROWN_MUSHROOM, Items.RED_MUSHROOM,
                 OccultaItems.DOG_TONGUE, Items.WHEAT, OccultaItems.REEK_OF_MISFORTUNE);

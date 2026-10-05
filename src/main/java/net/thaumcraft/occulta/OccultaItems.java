@@ -263,6 +263,27 @@ public final class OccultaItems {
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
+    /** A <b>Bola de Cristal</b>, que não se compra: sai do rito que a faz aparecer. */
+    public static final Item CRYSTAL_BALL = register("crystal_ball", properties ->
+            new BlockItem(OccultaBlocks.CRYSTAL_BALL, properties.useBlockDescriptionPrefix()));
+
+    /**
+     * O <b>Óleo do Acaso</b>: o {@code itemHappenstanceOil} do original.
+     *
+     * <p>Bebido, dá <b>Visão Noturna por um minuto</b>, e é um uso bobo para ele: o que ele serve mesmo
+     * é para o rito que faz aparecer a Bola de Cristal. O nome diz o que ele é — o acaso engarrafado —,
+     * e é por isso que a adivinhação começa por ele.
+     */
+    public static final Item HAPPENSTANCE_OIL = register("happenstance_oil", properties ->
+            new Item(properties.stacksTo(1).food(
+                    new net.minecraft.world.food.FoodProperties.Builder()
+                            .alwaysEdible().nutrition(0).saturationModifier(0.0f).build(),
+                    net.minecraft.world.item.component.Consumables.defaultDrink().onConsume(
+                            new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                                    new net.minecraft.world.effect.MobEffectInstance(
+                                            net.minecraft.world.effect.MobEffects.NIGHT_VISION, 1200, 0)))
+                            .build())));
+
     /** O <b>Candelabro</b>, que se põe em qualquer chão firme. */
     public static final Item CANDELABRA = register("candelabra", properties ->
             new BlockItem(OccultaBlocks.CANDELABRA, properties.useBlockDescriptionPrefix()));
