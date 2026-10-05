@@ -79,6 +79,7 @@ public final class Infusions {
         põe(NENHUMA);
         põe(new LightInfusion(1));
         põe(new OtherwhereInfusion(3));
+        põe(new InfernalInfusion(4));
     }
 
     private Infusions() {

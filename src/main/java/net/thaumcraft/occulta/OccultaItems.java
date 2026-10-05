@@ -275,6 +275,27 @@ public final class OccultaItems {
                     .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
 
     /**
+     * O <b>Ânimo Infernal</b>: o que o rito da Infusão Infernal pede.
+     *
+     * <p>Bebido, dá <b>Veneno II por um minuto</b> <i>e</i> <b>Deperecimento III por três</b> — e é o único
+     * dos quatro que mata de verdade quem o beber. O Coração de Demônio, que é um dos que entram nele,
+     * estava esperando por ele desde que foi portado.
+     */
+    public static final Item INFERNAL_ANIMUS = register("infernal_animus", properties ->
+            new Item(properties.stacksTo(2).food(
+                    new net.minecraft.world.food.FoodProperties.Builder()
+                            .alwaysEdible().nutrition(0).saturationModifier(0.0f).build(),
+                    net.minecraft.world.item.component.Consumables.defaultDrink().onConsume(
+                            new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                                    java.util.List.of(
+                                            new net.minecraft.world.effect.MobEffectInstance(
+                                                    net.minecraft.world.effect.MobEffects.POISON, 1200, 1),
+                                            new net.minecraft.world.effect.MobEffectInstance(
+                                                    net.minecraft.world.effect.MobEffects.WITHER, 3600, 2)),
+                                    1.0f))
+                            .build())));
+
+    /**
      * O <b>Fantasma da Luz</b>: o que o rito da Infusão da Luz pede.
      *
      * <p>Bebido, dá <b>Veneno II por um minuto</b>. Ele também não existe para se beber.

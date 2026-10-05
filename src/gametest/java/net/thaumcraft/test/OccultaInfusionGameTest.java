@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.thaumcraft.occulta.OccultaItems;
 import net.thaumcraft.occulta.infusion.Infusion;
 import net.thaumcraft.occulta.infusion.Infusions;
+import net.thaumcraft.occulta.infusion.InfernalInfusion;
 import net.thaumcraft.occulta.infusion.LightInfusion;
 import net.thaumcraft.occulta.infusion.OtherwhereInfusion;
 
@@ -44,8 +45,9 @@ public class OccultaInfusionGameTest {
         if (Infusions.energia(quem) != 0 || Infusions.teto(quem) != 0) {
             helper.fail("e sem infusão não há carga nenhuma");
         }
-        if (Infusions.quantas() != 3) {
-            helper.fail("há a de ninguém, a da Luz e a do Outro Lugar; há " + Infusions.quantas());
+        if (Infusions.quantas() != 4) {
+            helper.fail("há a de ninguém, a da Luz, a do Outro Lugar e a Infernal; há "
+                    + Infusions.quantas());
         }
         helper.succeed();
     }
@@ -201,6 +203,48 @@ public class OccultaInfusionGameTest {
         quem.removeAttached(Infusions.CARGA);
         helper.succeed();
     }
+    /**
+     * <b>A Infusão Infernal toma bichos para si, e depois os aponta.</b>
+     *
+     * <p>Um soco agachado escraviza; um soco sem agachar manda <b>todos os seus</b> irem atrás do que
+     * levou o soco. É a diferença entre lutar e <b>apontar</b>.
+     */
+    @GameTest(maxTicks = 60)
+    public void theInfernalTakesAndThenPoints(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        piso(helper);
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 2, 2));
+        ServerPlayer quem = (ServerPlayer) helper.makeMockServerPlayer(
+                net.minecraft.world.level.GameType.SURVIVAL);
+        quem.setPos(onde.getX() + 0.5, onde.getY(), onde.getZ() + 0.5);
+        Infusions.infunde(quem, Infusions.daquele(4), Infusions.CARGAS);
+
+        var zumbi = helper.spawn(net.minecraft.world.entity.EntityTypes.ZOMBIE, new BlockPos(4, 2, 4));
+        var ovelha = helper.spawn(net.minecraft.world.entity.EntityTypes.SHEEP, new BlockPos(6, 2, 6));
+        var mão = new ItemStack(OccultaItems.WITCH_HAND);
+
+        // agachado, o soco toma-o para si
+        quem.setShiftKeyDown(true);
+        Infusions.de(quem).soca(level, quem, mão, zumbi);
+        if (!net.thaumcraft.occulta.enslave.Enslavement.escravoDe(zumbi, quem)) {
+            helper.fail("o soco agachado devia tomá-lo para si");
+        }
+        if (Infusions.energia(quem) != Infusions.CARGAS - InfernalInfusion.CUSTO_ESCRAVIZAR) {
+            helper.fail("e custa cinco; custou "
+                    + (Infusions.CARGAS - Infusions.energia(quem)));
+        }
+
+        // e sem agachar, o soco noutro manda-o atrás dele
+        quem.setShiftKeyDown(false);
+        Infusions.de(quem).soca(level, quem, mão, ovelha);
+        if (zumbi.getTargetUnchecked() != ovelha) {
+            helper.fail("e o soco sem agachar manda os seus atrás de quem o levou");
+        }
+        zumbi.discard();
+        ovelha.discard();
+        helper.succeed();
+    }
+
     /** Os números da Infusão do Outro Lugar são os do original. */
     @GameTest
     public void itsNumbersAreTheOriginals(GameTestHelper helper) {

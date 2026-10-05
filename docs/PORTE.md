@@ -9743,3 +9743,53 @@ quase toda gente começa.
 
 **Guardas:** no `OccultaInfusionGameTest`, mais duas — o **esquecer** e o **esconder**. E, no
 `OccultaInfusionClientTest`, mais uma tela: a **barra de poder** cheia a dois terços com a textura do portal.
+
+## A Infusão Infernal, e o Ânimo que o Coração de Demônio esperava (2026-10-05)
+
+A terceira das quatro, e a que muda **o que você é para os outros**. As outras duas lhe dão coisas para
+fazer; esta lhe dá **gente**.
+
+### O que ela dá
+
+| o que se faz | o que acontece | custa |
+| --- | --- | --- |
+| agachado, socar um bicho | ele passa a ser **seu** | **5** |
+| socar um bicho sem agachar | **todos os seus**, a cinquenta blocos, vão **atrás dele** | **1** |
+| agachado, largar a Mão olhando o chão | todos os seus **largam o alvo e vão para ali** | — |
+
+Repare na diferença entre o segundo e o terceiro: um manda **atacar**, o outro manda **ir**. Com os dois,
+quem tem esta infusão deixa de lutar — ele **aponta**. E o terceiro é **de graça**, porque sem ele um
+exército não é um exército: é uma matilha.
+
+O alcance é de **cinquenta blocos** para os lados e **quinze** para cima e para baixo. Não é um raio de
+comando curto: é meio bairro.
+
+### O Ânimo Infernal
+
+O que o rito pede, e o cozimento mais caro dos três: **quatro mil** de poder, e leva dentro o **Coração de
+Demônio** e o **Mal Refinado**. O Coração de Demônio estava portado desde a fatia dele à espera de ter para
+onde ir, e é aqui que ele vai.
+
+Bebido, dá **Veneno II por um minuto** <i>e</i> **Deperecimento III por três** — e é o único dos quatro que
+mata de verdade quem o beber.
+
+### O giz
+
+O anel deste rito é todo de **giz infernal**: dezesseis dentro e vinte e oito no meio. É o único dos três
+que pede esse giz, e isso diz-lhe, antes de ele acabar, o que você vai ser.
+
+### O que fica de fora, declarado
+
+O **sacrifício**: agachado, socar outra vez um bicho que já é seu o mata e **lhe toma o poder**. Os poderes
+de bicho são um ramo inteiro do original — **vinte e cinco deles**, treze famílias e uma **segunda barra**
+na tela — e entram numa fatia só sua. Até lá, sacrificar um escravo toca o tambor de «não dá».
+
+A lista, para quando essa fatia vier: aranha e aranha-das-cavernas (teia e trepar), creeper (estourar e
+engolir raios), morcego e coruja (voar e visão noturna), lula (tinta e respirar na água), ghast e blaze
+(bolas de fogo), homem-porco, zumbi, esqueleto, cubo de magma, slime e sapo (saltar), peixinho-de-prata,
+jaguatirica, lobo e cavalo (correr), enderman, e os sete de **curar** — ovelha, vaca, galinha, porco,
+aldeão e cogumelada.
+
+**Guardas:** no `OccultaInfusionGameTest`, mais uma — **tomar e apontar**, que é a fatia inteira numa prova
+só: o soco agachado escraviza por cinco, e o soco sem agachar manda o escravo atrás de quem o levou. E a
+barra de poder ganha a textura da **pedra do Nether**, que é a desta infusão.

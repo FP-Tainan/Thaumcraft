@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
  * As duas coisas da <b>Infusão</b> que se pegam na mão: a <b>Mão de Bruxa</b> e o <b>Espírito do Outro
  * Lugar</b>.
  *
- * <p>A primeira tela é o inventário com as duas. A segunda é a Mão <b>na mão</b>, porque ela é um item que
+ * <p>A primeira tela é o inventário com a Mão e os três cozimentos que os três ritos de infusão pedem. A segunda é a Mão <b>na mão</b>, porque ela é um item que
  * se segura e tem de se ver segurada.
  *
  * <p>As fotos ficam em {@code build/run/clientGameTest/screenshots}.
@@ -26,6 +26,8 @@ public class OccultaInfusionClientTest implements FabricClientGameTest {
 
             server.runCommand("give @p thaumcraft:witch_hand");
             server.runCommand("give @p thaumcraft:spirit_of_otherwhere");
+            server.runCommand("give @p thaumcraft:ghost_of_the_light");
+            server.runCommand("give @p thaumcraft:infernal_animus");
             context.waitTicks(20);
             context.runOnClient(minecraft -> minecraft.setScreenAndShow(
                     new net.minecraft.client.gui.screens.inventory.InventoryScreen(minecraft.player)));

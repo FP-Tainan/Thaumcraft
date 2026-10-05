@@ -40,6 +40,12 @@ public final class KettleTable {
                 OccultaItems.REDSTONE_SOUP, Items.SPLASH_POTION, Items.DIAMOND, Items.FEATHER,
                 OccultaItems.BAT_WOOL, OccultaItems.BELLADONNA_FLOWER);
 
+        // ---------------------------------------------------------- o Ânimo Infernal
+        // A cor é o -7598080 do original lido como cor de 32 bits, e o poder são quatro mil.
+        KettleRecipes.add(OccultaItems.INFERNAL_ANIMUS, 2, 0xFF8C0000, 4000.0f,
+                OccultaItems.REDSTONE_SOUP, Items.POTION, OccultaItems.VOODOO_POPPET,
+                OccultaItems.DEMON_HEART, OccultaItems.REFINED_EVIL, Items.BLAZE_ROD);
+
         // ---------------------------------------------------------- o Fantasma da Luz
         // A cor é o -5584658 do original lido como cor de 32 bits, e o poder são quatro mil.
         // O original pede duas poções com números de 1.7.10; aqui entra a poção, qualquer que seja, e por

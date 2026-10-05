@@ -2927,6 +2927,20 @@ public final class Rites {
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
+         * O <b>Rito da Infusão Infernal</b>, cujo anel é todo de <b>giz infernal</b> — dezesseis dentro e
+         * vinte e oito no meio. É o único dos três que pede esse giz, e isso diz-lhe o que você vai ser.
+         */
+        RiteRegistry.register("tc.rite.infusionhell",
+                new InfusePlayers(net.thaumcraft.occulta.infusion.Infusions.daquele(4),
+                        net.thaumcraft.occulta.infusion.Infusions.CARGAS,
+                        net.thaumcraft.occulta.infusion.Infusions.ALCANCE),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.INFERNAL_ANIMUS),
+                        new Sacrifice.Power(4000.0f, 20)),
+                new RiteRegistry.Ring(0, 0, 16), new RiteRegistry.Ring(0, 0, 28),
+                RiteRegistry.Ring.NONE);
+
+        /*
          * O <b>Rito da Infusão da Luz</b>, que é o mais barato dos quatro: dois mil de poder em vez de
          * quatro mil. É por ele que quase toda gente começa.
          */
