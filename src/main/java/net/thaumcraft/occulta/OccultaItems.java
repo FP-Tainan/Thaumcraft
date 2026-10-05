@@ -482,6 +482,10 @@ public final class OccultaItems {
             new net.thaumcraft.occulta.StatueOfWorshipItem(OccultaBlocks.STATUE_OF_WORSHIP,
                     properties.useBlockDescriptionPrefix().stacksTo(1)));
 
+    /** A <b>Tina de Prata</b>, que se encosta a uma fornalha. */
+    public static final Item SILVER_VAT = register("silver_vat", properties ->
+            new BlockItem(OccultaBlocks.SILVER_VAT, properties.useBlockDescriptionPrefix()));
+
     /** O <b>Candelabro</b>, que se põe em qualquer chão firme. */
     public static final Item CANDELABRA = register("candelabra", properties ->
             new BlockItem(OccultaBlocks.CANDELABRA, properties.useBlockDescriptionPrefix()));

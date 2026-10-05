@@ -141,6 +141,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.NIGHTMARE,
                 net.thaumcraft.occulta.client.SpiritRenderers.Nightmare::new);
 
+        // o Ars Occulta: a Tina de Prata, com os bicos que ela cria para as máquinas ao lado
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.SilverVatRenderer.TINA,
+                net.thaumcraft.occulta.client.SilverVatRenderer::tina);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.SILVER_VAT_ENTITY,
+                net.thaumcraft.occulta.client.SilverVatRenderer::new);
+
         // o Ars Occulta: os dois deuses goblins
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.GoblinGodRenderer.MOG,

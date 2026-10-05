@@ -10516,3 +10516,48 @@ Luz e servem à Infernal, com as duas maldições comuns a servirem a qualquer u
 conferida nas quatro bandas dela; e os **desenhos** dos novos, traço por traço. E o
 `OccultaSymbolClientTest` passou de quatro bolas a **oito**, para as cores e os tamanhos das maldições se
 verem ao lado dos dos feitiços comuns.
+
+## A Tina de Prata (2026-10-05)
+
+Uma bacia de ferro que se encosta a uma fornalha e **apanha o que escorre**.
+
+### O que ela faz
+
+De segundo em segundo ela olha os quatro lados. Numa máquina que tenha uma **casa de saída** com
+**lingotes de ouro**, se a pilha estiver maior do que da última vez que ela olhou, há **uma chance em
+cinco** de aparecer um **pó de prata** dentro dela.
+
+Repare no que ela olha: não é o ouro **que está lá**, é o ouro **que apareceu**. Uma fornalha cheia de ouro
+parada não lhe dá nada; uma fornalha que acabou de fundir mais um lingote, sim. O original não explica a
+física e não precisa — o que ele diz é que **fundir ouro suja alguma coisa**, e a tina é onde a sujeira
+assenta.
+
+E ela sabe distinguir o ouro que entrou do ouro que saiu porque só olha para a prateleira de onde se pode
+**tirar** e na qual não se pode **pôr**. É a casa de resultado de uma fornalha, e nada mais.
+
+Não tem tela, não tem botão e não tem receita de dentro: **clica-se nela e tira-se o que lá está**. E é de
+longe o jeito mais barato de arranjar prata no ofício — o outro é matar quem a traz.
+
+### O corpo dela conta o estado
+
+É o melhor exemplo do mod de um bloco que **se explica pela forma**, e não por um número numa tela:
+
+- **os bicos**: de cada lado em que houver uma máquina — uma coisa com alma —, ela mostra um bico virado
+  para ela. Uma tina entre duas fornalhas tem dois bicos; uma tina no meio do campo não tem nenhum;
+- **as camadas**: o pó lá dentro sobe em **oito pedacinhos**, um por cada oito pós. De fora vê-se quanto
+  ela já juntou.
+
+São vinte e uma caixas, portadas número por número, numa folha de sessenta e quatro por trinta e dois.
+
+### Desvio declarado
+
+**O relógio é dela, e não da fornalha.** O original é avisado pelo Forge sempre que a alma de um vizinho
+muda, e olha só nessa hora. O jogo de hoje não tem esse aviso; aqui ela olha sozinha, **uma vez por
+segundo**. O que se vê é o mesmo — a pilha que cresce dá pó —, só que a conta é feita por relógio e não
+por sobressalto.
+
+**Guardas:** o `OccultaSilverVatGameTest`, com três — os números do original; a tina que nasce vazia,
+conta as camadas e devolve o que tem quando se clica nela; e o **ouro que cresce**, que é a prova que
+carrega a fatia: vinte voltas com a pilha parada não dão nada, e sessenta com ela crescendo dão. E o
+`OccultaSilverVatClientTest`, com três tinas lado a lado — uma sozinha, uma com fornalhas ao lado e uma
+cheia.

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ibi",
+    "ifi"
+  ],
+  "key": {
+    "i": "minecraft:iron_ingot",
+    "b": "minecraft:water_bucket",
+    "f": "minecraft:furnace"
+  },
+  "result": {
+    "id": "thaumcraft:silver_vat",
+    "count": 1
+  }
+}

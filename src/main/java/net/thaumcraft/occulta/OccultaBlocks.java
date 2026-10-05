@@ -310,6 +310,22 @@ public final class OccultaBlocks {
                             StatueOfWorshipBlockEntity::new,
                             java.util.Set.of(STATUE_OF_WORSHIP)));
 
+    /**
+     * A <b>Tina de Prata</b>: a bacia que se encosta a uma fornalha e apanha o que escorre.
+     *
+     * <p>Os números do original: <b>oito de dureza</b> e som de metal. Ela não é um bloco inteiro.
+     */
+    public static final Block SILVER_VAT = register("silver_vat", properties ->
+            new SilverVatBlock(properties.mapColor(MapColor.METAL).strength(8.0f)
+                    .sound(SoundType.METAL).noOcclusion()
+                    .pushReaction(PushReaction.BLOCK)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<SilverVatBlockEntity>
+            SILVER_VAT_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("silver_vat"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            SilverVatBlockEntity::new, java.util.Set.of(SILVER_VAT)));
+
     // ------------------------------------------------------------ o Feixe de Vime
 
     /**
