@@ -9450,3 +9450,55 @@ marca de vidente; a de uma só de cada vez, com a segunda leitura repetindo a pr
 fatia, que é **a profecia da queda abrindo o chão depois do prazo**; a recarga de cem batidas; e o vaivém do
 miolo. E `OccultaCrystalBallClientTest`, com três telas: a bola num pedestal, a mesma oitenta batidas depois
 — para se ver o miolo noutro tom — e os dois itens no inventário.
+
+## O Item Posto, e a Arthana deitada no altar (2026-10-05)
+
+Um bloco que **não é nada**: não tem forma, não tem textura, não se fabrica, não aparece em aba nenhuma e
+não tem item próprio. O que ele faz é guardar **uma coisa deitada no chão** e desenhá-la ali, parada, virada
+para o lado de quem a pôs.
+
+### Por que ele existe
+
+Porque **o altar precisa de saber o que está em cima dele**, e um item largado no chão não serve: ele rola,
+se junta a outro igual, o jogo o apanha quando alguém passa por perto, e some ao fim de cinco minutos. Nada
+disso vale para um altar que conta o que tem em cima de cada pedra.
+
+A resposta do original é simples e boa: a coisa **vira bloco**. E um bloco fica onde o puseram.
+
+### O que ele dá ao altar
+
+A **Arthana** deitada numa das seis pedras **dobra o alcance** do altar: dezesseis blocos viram trinta e
+dois. É um gesto, e vale ver o que ele diz: a faca que abre o que os bichos guardam, pousada na pedra, faz o
+altar alcançar mais longe. O original não explica, e não precisa.
+
+No original há mais dois que se deitam no mesmo bloco e que ainda não foram portados: o **Ramo Místico**,
+que soma ao poder de encanto, e o **Pentáculo de Kobolditas**, que **dobra** a velocidade de recarga. Entram
+quando entrarem.
+
+### Como se põe e como se tira
+
+Com a Arthana na mão, clicando no **topo de uma pedra de altar** com ar por cima. Ela sai do inventário e
+fica deitada ali. Partindo o bloco, ela volta — a não ser no **criativo**.
+
+No original, essa exceção é feita acendendo o **número oito** do bloco quando quem o parte está no criativo,
+e o `getDrops` dele olha esse número antes de largar o que quer que seja. Aqui a pergunta é feita direto no
+`playerWillDestroy`, que dá no mesmo e poupa um feitio inteiro só para dizer «foi o criativo».
+
+E a **tabela de despojos dele é vazia de propósito**: o que estava deitado nele é largado pelo próprio bloco,
+que é o único que sabe o que era.
+
+### A quietude
+
+A coisa é desenhada como um item largado no chão, menos as duas coisas que o tornariam vivo: ela **não
+boia** e **não gira**. O original escreve isso à mão, sobrepondo o `shouldBob` e o `shouldSpreadItems` do
+desenhista de itens.
+
+Essa quietude é o ponto todo. Uma faca largada no chão de um altar é lixo; uma faca **deitada** nele é um
+instrumento. O original gastou um bloco inteiro para fazer essa diferença, e ela só se vê porque a coisa
+está parada.
+
+**Guardas:** `OccultaPlacedItemGameTest`, com quatro — o bloco guardando o que lhe deitaram e o botão do meio
+tirando a coisa e não o bloco; a queda com o chão; o lado para onde ele está virado; e a prova que carrega a
+fatia, que é a **faca deitada dobrando o alcance do altar**, com a segunda faca não somando nada. E
+`OccultaPlacedItemClientTest`, com duas telas: a faca deitada numa pedra de altar e as quatro voltas lado a
+lado.

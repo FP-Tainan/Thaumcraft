@@ -1,0 +1,5 @@
+{
+  "__comment": "Ele não larga nada por tabela: o que estava deitado nele é largado pelo próprio bloco, que é o único que sabe o que era.",
+  "type": "minecraft:block",
+  "pools": []
+}

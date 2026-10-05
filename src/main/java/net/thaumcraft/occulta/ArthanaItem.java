@@ -1,8 +1,14 @@
 package net.thaumcraft.occulta;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ToolMaterial;
 
 /**
@@ -15,9 +21,14 @@ import net.minecraft.world.item.ToolMaterial;
  *
  * <p>O ouro é escolha do original, e faz sentido nela: é o metal que não serve para lutar.
  *
- * <p><b>Desvio declarado:</b> no original ela também se <b>pousa no Altar</b>, com um {@code BlockPlacedItem} que
- * a deixa à vista em cima da pedra. Esse bloco não está portado — nem para ela, nem para as outras coisas que o
- * original pousa lá —, e entra quando ele entrar.
+ * <h2>E ela se deita no altar</h2>
+ *
+ * <p>Clicando no <b>topo de uma pedra de altar</b> com ar por cima, ela sai do inventário e fica
+ * <b>deitada</b> ali, num {@link PlacedItemBlock}. O altar passa a contá-la e <b>dobra o alcance</b> dele:
+ * dezesseis blocos viram trinta e dois.
+ *
+ * <p>É um gesto, e vale ver o que ele diz: a faca que abre o que os bichos guardam, pousada na pedra, faz o
+ * altar <b>alcançar mais longe</b>. O original não explica, e não precisa.
  */
 public class ArthanaItem extends Item {
     /**
@@ -30,5 +41,28 @@ public class ArthanaItem extends Item {
 
     public ArthanaItem(Properties properties) {
         super(properties);
+    }
+
+    /**
+     * <b>Deitada no altar.</b>
+     *
+     * <p>Só no <b>topo</b> de uma pedra de altar, e só se houver <b>ar</b> por cima dela. O original tira a
+     * faca do lugar em que ela estava, e não da pilha — de modo que ela sai inteira, com o estrago e o nome
+     * que tivesse.
+     */
+    @Override
+    public InteractionResult useOn(UseOnContext onde) {
+        Level mundo = onde.getLevel();
+        BlockPos pedra = onde.getClickedPos();
+        if (onde.getClickedFace() != Direction.UP) return super.useOn(onde);
+        if (!mundo.getBlockState(pedra).is(OccultaBlocks.WITCH_ALTAR)) return super.useOn(onde);
+        if (!mundo.getBlockState(pedra.above()).isAir()) return super.useOn(onde);
+
+        if (!mundo.isClientSide()) {
+            ItemStack faca = onde.getItemInHand();
+            PlacedItemBlock.põe(mundo, pedra.above(), faca.copyWithCount(1), onde.getPlayer());
+            faca.shrink(1);
+        }
+        return InteractionResult.SUCCESS;
     }
 }

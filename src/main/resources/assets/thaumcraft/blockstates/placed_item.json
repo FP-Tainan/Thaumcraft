@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/placed_item"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/placed_item"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/placed_item"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/placed_item"
+    }
+  }
+}

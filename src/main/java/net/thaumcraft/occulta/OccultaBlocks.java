@@ -192,6 +192,25 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ o Item Posto
+
+    /**
+     * O <b>Item Posto</b>: um bloco que não é nada e que guarda uma coisa deitada no chão.
+     *
+     * <p>Os números do original: <b>dureza zero</b> — parte-se com um sopro — e som de metal. Ele não se
+     * fabrica, não aparece em aba nenhuma e não tem item próprio: quem o põe é a Arthana.
+     */
+    public static final Block PLACED_ITEM = register("placed_item", properties ->
+            new PlacedItemBlock(properties.mapColor(MapColor.NONE).strength(0.0f)
+                    .sound(SoundType.METAL).noOcclusion().noCollision()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<PlacedItemBlockEntity>
+            PLACED_ITEM_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("placed_item"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            PlacedItemBlockEntity::new, java.util.Set.of(PLACED_ITEM)));
+
     // ------------------------------------------------------------ a Bola de Cristal
 
     /**

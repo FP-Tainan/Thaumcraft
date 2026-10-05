@@ -228,6 +228,11 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.GARLIC_GARLAND_ENTITY,
                 net.thaumcraft.occulta.client.GarlicGarlandRenderer::new);
 
+        // o Item Posto, que desenha o que lhe deitaram em cima
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.PLACED_ITEM_ENTITY,
+                net.thaumcraft.occulta.client.PlacedItemRenderer::new);
+
         // a Bola de Cristal, cujo miolo pulsa com a hora do mundo
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.CrystalBallModel.BOLA,

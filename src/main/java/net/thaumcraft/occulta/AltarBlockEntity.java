@@ -30,13 +30,15 @@ import java.util.List;
  *       esqueleto wither soma dois, de gente soma três;</li>
  *   <li>um <b>candelabro</b> ou uma <b>tocha</b>: o candelabro soma dois à velocidade, a tocha um — e é o
  *       mesmo lugar, porque o altar conta <b>uma luz só</b>;</li>
- *   <li>e um <b>cálice</b>: soma um ao teto se estiver vazio, dois se estiver cheio.</li>
+ *   <li>um <b>cálice</b>: soma um ao teto se estiver vazio, dois se estiver cheio;</li>
+ *   <li>e a <b>Arthana deitada</b> num {@link PlacedItemBlock}: <b>dobra o alcance</b> do altar.</li>
  * </ul>
  *
  * <p>De cada um <b>conta-se um</b>: dois candelabros valem o mesmo que um, e o segundo cálice não soma nada.
  *
- * <p><b>Do original ficam de fora, por agora,</b> a Arthana, o Ramo Místico, o pentáculo de kobolditas e o Ovo
- * do Infinito — que ainda não foram portados. Eles dão alcance, poder de encanto e multiplicam a velocidade.
+ * <p><b>Do original ficam de fora, por agora,</b> o Ramo Místico, o pentáculo de kobolditas e o Ovo do
+ * Infinito — que ainda não foram portados. Os dois primeiros deitam-se no mesmo bloco que a Arthana e dão
+ * poder de encanto e o dobro da velocidade; o terceiro multiplica tudo por dez.
  */
 public class AltarBlockEntity extends BlockEntity {
     /** Quanto poder entra a cada segundo, antes dos enfeites. */
@@ -168,9 +170,11 @@ public class AltarBlockEntity extends BlockEntity {
     private void artefacts(ServerLevel level) {
         int novoPoder = 1;
         int novaVelocidade = 1;
+        int novoAlcance = 1;
         boolean caveira = false;
         boolean luz = false;
         boolean taça = false;
+        boolean faca = false;
 
         for (BlockPos onde : this.pieces(level)) {
             BlockState acima = level.getBlockState(onde.above());
@@ -195,11 +199,18 @@ public class AltarBlockEntity extends BlockEntity {
             } else if (!taça && acima.is(OccultaBlocks.CHALICE)) {
                 taça = true;
                 novoPoder += acima.getValue(ChaliceBlock.CHEIO) ? 2 : 1;
+            } else if (acima.is(OccultaBlocks.PLACED_ITEM)
+                    && level.getBlockEntity(onde.above()) instanceof PlacedItemBlockEntity posto) {
+                if (!faca && posto.oquê().is(OccultaItems.ARTHANA)) {
+                    faca = true;
+                    novoAlcance++;
+                }
             }
         }
 
         this.powerScale = novoPoder;
         this.rechargeScale = novaVelocidade;
+        this.rangeScale = novoAlcance;
     }
 
     /** Os blocos do altar de que este faz parte, a partir de quem manda. */
