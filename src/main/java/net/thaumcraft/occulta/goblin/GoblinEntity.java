@@ -107,6 +107,7 @@ public class GoblinEntity extends AgeableMob implements Merchant {
     private int riqueza;
     private int atéProcurar;
     private boolean semSumir;
+    private GoblinWorshipGoal adoração;
 
     public GoblinEntity(EntityType<? extends GoblinEntity> type, Level level) {
         super(type, level);
@@ -138,6 +139,7 @@ public class GoblinEntity extends AgeableMob implements Merchant {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, this.adoração = new GoblinWorshipGoal(this));
         this.goalSelector.addGoal(2, new GoblinPickUpGoal(this, GoblinPickUpGoal.ALCANCE));
         this.goalSelector.addGoal(2, new GoblinDropOffGoal(this, GoblinDropOffGoal.ALCANCE));
         this.goalSelector.addGoal(2, new GoblinDigGoal(this, GoblinDigGoal.ALCANCE));
@@ -198,6 +200,15 @@ public class GoblinEntity extends AgeableMob implements Merchant {
 
     public boolean adorando() {
         return this.fazendo() == ADORANDO;
+    }
+
+    /**
+     * <b>O chamado da Estátua de Adoração.</b>
+     *
+     * <p>Ela manda; ele atende <b>duas vezes em três</b>. Ver o {@link GoblinWorshipGoal}.
+     */
+    public void começaAAdorar(net.minecraft.core.BlockPos daqui) {
+        if (this.adoração != null) this.adoração.chama(daqui);
     }
 
     public void adorando(boolean sim) {

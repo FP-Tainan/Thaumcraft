@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "sks",
+    " s ",
+    "s s"
+  ],
+  "key": {
+    "s": "minecraft:stone",
+    "k": "thaumcraft:koboldite_ingot"
+  },
+  "result": {
+    "id": "thaumcraft:statue_of_worship",
+    "count": 1
+  }
+}

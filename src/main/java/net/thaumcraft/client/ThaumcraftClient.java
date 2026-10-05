@@ -141,6 +141,17 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.NIGHTMARE,
                 net.thaumcraft.occulta.client.SpiritRenderers.Nightmare::new);
 
+        // o Ars Occulta: a Estátua de Adoração, com a pele do dono por baixo da pedra
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.StatueOfWorshipModel.PEDRA_MALHA,
+                net.thaumcraft.occulta.client.StatueOfWorshipModel::pedra);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.StatueOfWorshipModel.PELE_MALHA,
+                net.thaumcraft.occulta.client.StatueOfWorshipModel::pele);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.STATUE_OF_WORSHIP_ENTITY,
+                net.thaumcraft.occulta.client.StatueOfWorshipRenderer::new);
+
         // o Ars Occulta: os familiares
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.FamiliarModels.TOAD,
@@ -981,6 +992,8 @@ net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.registry.TCBlockEntities.NODE, net.thaumcraft.client.render.NodeRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("wand"), net.thaumcraft.client.render.WandRenderer.Unbaked.CODEC);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("alembic"), net.thaumcraft.client.render.AlembicItemRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("statue_of_worship"),
+                net.thaumcraft.occulta.client.StatueOfWorshipItemRenderer.Unbaked.CODEC);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("tube_valve"), net.thaumcraft.client.render.TubeValveItemRenderer.Unbaked.CODEC);
 
         // o que os Óculos da Revelação mostram no recipiente na mira

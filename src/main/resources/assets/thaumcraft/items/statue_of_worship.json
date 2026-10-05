@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/statue_of_worship",
+    "model": {
+      "type": "thaumcraft:statue_of_worship"
+    }
+  }
+}

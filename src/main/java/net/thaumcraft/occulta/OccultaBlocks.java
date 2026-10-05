@@ -291,6 +291,25 @@ public final class OccultaBlocks {
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(
                             ChaliceBlockEntity::new, java.util.Set.of(CHALICE)));
 
+    /**
+     * A <b>Estátua de Adoração</b>: a única coisa do mod que enche uma infusão.
+     *
+     * <p>Os números do original: <b>três e meio de dureza</b>, <b>vinte de resistência</b> e som de
+     * pedra. Ela não é um bloco inteiro e não tapa a luz.
+     */
+    public static final Block STATUE_OF_WORSHIP = register("statue_of_worship", properties ->
+            new StatueOfWorshipBlock(properties.mapColor(MapColor.STONE)
+                    .strength(3.5f, 20.0f).sound(SoundType.STONE).noOcclusion()
+                    .pushReaction(PushReaction.BLOCK)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<StatueOfWorshipBlockEntity>
+            STATUE_OF_WORSHIP_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
+                    Thaumcraft.id("statue_of_worship"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            StatueOfWorshipBlockEntity::new,
+                            java.util.Set.of(STATUE_OF_WORSHIP)));
+
     // ------------------------------------------------------------ o Feixe de Vime
 
     /**

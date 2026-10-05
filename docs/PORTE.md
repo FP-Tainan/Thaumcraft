@@ -10200,3 +10200,91 @@ duzentos goblins, com o pó a sair menos vezes que a esmeralda; e o goblin **no 
 dá nível. E no `OccultaAltarGameTest`, o **Pentáculo**, que dobra a recarga, dobra depois de a tocha somar, e
 não dobra duas vezes. E duas telas no `OccultaGoblinClientTest`: os quatro pedaços do metal no inventário e o
 **balcão** aberto no primeiro degrau da escada.
+
+## A Estátua de Adoração (2026-10-05)
+
+É a **única coisa do mod que enche uma infusão**. Sem ela, a infusão é um cantil que se enche uma vez e
+acabou: o rito custa quatro mil de altar e quase mata, e o que ele der é o que há. Com ela, é uma barra que
+volta.
+
+### Ela precisa de goblins
+
+De cinco em cinco segundos a estátua conta quantos goblins a adoram num cubo de oito blocos — e manda
+adorar os que ainda não adoram. O que ela faz depende do número:
+
+| adoradores | o que acontece |
+| --- | --- |
+| **cinco** | o dono, a sessenta e quatro blocos ou menos, ganha **trinta de carga** por pulso |
+| **dez** | o dono ganha **Adoração** |
+| **quinze** | a Adoração sobe para o **segundo nível** |
+
+O segundo nível é o que o **terceiro grau dos símbolos** pede. Quer dizer que lançar um Accio comprido
+custa, lá atrás na cadeia, **quinze goblins num cubo de oito blocos** — que é uma aldeia inteira de goblins
+junta à volta de um ídolo com a sua cara. O ofício não é discreto nesta ponta.
+
+E eles não obedecem sempre: a estátua manda, e o goblin atende **duas vezes em três**. Com isso, vinte
+goblins à volta dela nunca dão vinte adoradores — dão catorze ou quinze, e é por isso que o terceiro degrau
+custa o que custa. Cada um fica meio minuto e depois sai quando lhe dá na gana, com dois terços de chance
+por batida.
+
+E ela conta **antes** de mandar: quem acabou de ser chamado só entra na conta do pulso seguinte. Uma
+estátua recém-posta leva uns segundos a pagar.
+
+### Ela tem a cara de alguém
+
+O desenhista dela é o **boneco de sempre**, desenhado **duas vezes** com a mesma malha: primeiro com a
+**pele do dono**, puxada a setenta por cento para parecer pedra, e depois com uma **folha de pedra
+translúcida** por cima. O que se vê é a cara de alguém **debaixo** de pedra, e não uma pedra com uma cara
+pintada. É uma diferença pequena de desenho e é toda a graça da coisa.
+
+E é um **boneco de criança**: o original liga o `isChild` do `ModelBiped`, que desenha a cabeça a três
+quartos e o resto a metade, cada um deslocado para baixo. Uma estátua de cabeça grande, que é o que a faz
+parecer ídolo e não enfeite. As duas contas — `0.75` com um bloco de descida, `0.5` com um bloco e meio —
+são portadas à letra.
+
+A malha é assada **duas vezes**, com tamanhos de folha diferentes: a pedra do Witchery é de **sessenta e
+quatro por trinta e dois**, que é o formato de pele de 2014, e a pele de quem jogar é de **sessenta e quatro
+por sessenta e quatro**, que é o de hoje. Elas encaixam porque o formato antigo é, à letra, a metade de
+cima do novo.
+
+E o item na mão é a **mesma estátua**: o original prende o desenhista da alma também ao item, e aqui isso é
+um `SpecialModelRenderer`. Sem ele, o item seria um quadrado chapado com uma folha desenhada para um boneco
+— que é o engano que a lição da *chapa de modelo* deste porte já ensinou a evitar.
+
+### Uma estátua de bancada não é de ninguém
+
+Ela sai da bancada — `sks / " s " / s s`, um lingote de koboldite e cinco pedras — **pelada**, sem dono, e
+assim não faz absolutamente nada. Para lhe dar uma cara é preciso o **Rito de Prender a Estátua**: ela
+entra no círculo com uma flor de beladona, uma papoila e um dente-de-leão, mais quatro mil de poder, e sai
+com o nome e o número de quem o fez.
+
+É de propósito que seja assim, e diz o que a coisa é: ela não é uma máquina de encher infusões, é um
+**ídolo**. Os goblins não adoram a estátua — adoram **você**.
+
+E, posta, ela guarda o dono que vinha no item, e **não** quem a pôs. Uma estátua presa a alguém, roubada e
+posta por outro, continua enchendo a infusão do primeiro. Partida, ela leva o dono consigo.
+
+O item leva o nome do dono atrás do seu — `Estátua de Adoração (Fulano)` —, que é o `ClassItemBlock` do
+original e uma ideia boa: sem isso, quatro estátuas num baú são quatro itens iguais.
+
+### Desvios declarados
+
+1. **A pele vem do número, e não do nome.** Em 2014 bastava o nome de quem jogava para ir buscar uma pele;
+   hoje é preciso o número, e o servidor de peles não responde a quem joga sozinho sem rede. Não
+   respondendo, fica a pele de sempre — que é o que o original também fazia quando o download falhava.
+
+2. **O braço e a perna esquerdos são os direitos ao espelho.** É o formato de pele de 2014, que o original
+   usa e que o porte mantém para a folha de pedra encaixar. Com uma pele de hoje nota-se: a manga esquerda
+   da estátua é a direita virada.
+
+3. **Os deuses goblins ficam para a fatia deles.** Com quinze adoradores e uma **Estrela do Nether** na
+   mão, o original faz nascer o **Mog** e o **Gulg** — dois chefes de quatrocentas linhas cada, com modelos
+   próprios —, matando cinco goblins de caminho. E com quinze adoradores há também uma chance pequena, de
+   cinco em cinco segundos, de eles virem sozinhos. Os sons deles já estão portados desde a fatia dos sons;
+   o resto entra com eles.
+
+**Guardas:** o `OccultaStatueGameTest`, com sete — os números do original; a estátua de bancada que **não é
+de ninguém** e nem conta; o rito que lhe dá uma cara; o **dono que atravessa o item**, partida e posta
+outra vez; os **três degraus**, que é a prova que carrega a fatia e vai até conferir que a Adoração II
+destrava o terceiro grau dos símbolos; o teto, que ela nunca passa; e a ordem de contar antes de chamar. E o `OccultaStatueClientTest`, com duas telas: a estátua com goblins
+ajoelhados à volta e a estátua na grade de quem a tem.

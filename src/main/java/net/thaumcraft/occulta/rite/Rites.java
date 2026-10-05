@@ -1088,6 +1088,31 @@ public final class Rites {
         }
     }
 
+    /**
+     * Fazer aparecer uma coisa <b>presa a quem fez o rito</b>: o {@code Binding.PLAYER} do original.
+     *
+     * <p>É o mesmo que o {@link SummonItem}, com uma diferença que muda tudo: o que sai do círculo
+     * leva o <b>nome e o número</b> de quem o começou. É assim que a Estátua de Adoração ganha cara —
+     * e é por isso que uma estátua de bancada não serve para nada.
+     */
+    public record SummonBoundItem(java.util.function.Supplier<ItemStack> what) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                ItemStack oquê = this.what.get();
+                if (rito.starter(level) instanceof net.minecraft.server.level.ServerPlayer quem) {
+                    net.thaumcraft.occulta.TaglockItem.bind(oquê, quem);
+                }
+                Block.popResource(level, onde.above(), oquê);
+                level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
+                        onde.getZ() + 0.5, 48, 0.5, 1.0, 0.5, 0.1);
+                level.playSound(null, onde, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS,
+                        1.0f, 0.8f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
     /** A lista da primeira leva, posta na tabela. */
     /**
      * A <b>Maldição da Praga</b>: o {@code RiteBlight} do Witchery.
@@ -2967,6 +2992,24 @@ public final class Rites {
                                 net.thaumcraft.occulta.OccultaItems.GHOST_OF_THE_LIGHT),
                         new Sacrifice.Power(2000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE);
+
+        /*
+         * O <b>Rito de Prender a Estátua</b>: a estátua entra pelada e sai com a cara de quem o fez.
+         * Sem ele, a Estátua de Adoração é uma pedra que não faz nada — e é de propósito, porque ela
+         * não é uma máquina: é um <b>ídolo</b>, e um ídolo é de alguém.
+         */
+        RiteRegistry.register("tc.rite.bindstatuetoplayer",
+                new SummonBoundItem(() -> new ItemStack(
+                        net.thaumcraft.occulta.OccultaBlocks.STATUE_OF_WORSHIP)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(
+                                net.thaumcraft.occulta.OccultaBlocks.STATUE_OF_WORSHIP.asItem(),
+                                net.thaumcraft.occulta.OccultaItems.BELLADONNA_FLOWER,
+                                net.minecraft.world.item.Items.POPPY,
+                                net.minecraft.world.item.Items.DANDELION),
+                        new Sacrifice.Power(4000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE,
                 RiteRegistry.Ring.NONE);
 
         /*

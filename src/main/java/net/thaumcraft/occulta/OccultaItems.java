@@ -436,6 +436,16 @@ public final class OccultaItems {
                                             net.minecraft.world.effect.MobEffects.NIGHT_VISION, 1200, 0)))
                             .build())));
 
+    /**
+     * A <b>Estátua de Adoração</b>, que leva o nome do dono atrás do seu.
+     *
+     * <p>É o {@code ClassItemBlock} do original, e é uma ideia boa: uma estátua pelada e uma presa a
+     * alguém são o mesmo item com a mesma folha, e sem o nome não havia como as distinguir no baú.
+     */
+    public static final Item STATUE_OF_WORSHIP = register("statue_of_worship", properties ->
+            new net.thaumcraft.occulta.StatueOfWorshipItem(OccultaBlocks.STATUE_OF_WORSHIP,
+                    properties.useBlockDescriptionPrefix().stacksTo(1)));
+
     /** O <b>Candelabro</b>, que se põe em qualquer chão firme. */
     public static final Item CANDELABRA = register("candelabra", properties ->
             new BlockItem(OccultaBlocks.CANDELABRA, properties.useBlockDescriptionPrefix()));
