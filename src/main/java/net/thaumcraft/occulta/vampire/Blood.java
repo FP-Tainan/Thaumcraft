@@ -90,7 +90,7 @@ public final class Blood {
         quem.setAttached(DATA, Math.clamp(quanto, 0, TETO));
     }
 
-    /** Dá sangue, até ao teto: é o que o corpo repõe sozinho, e o que dormir repõe de uma vez. */
+    /** Dá sangue, até o teto: é o que o corpo repõe sozinho, e o que dormir repõe de uma vez. */
     public static void dá(LivingEntity quem, int quanto) {
         int tem = de(quem);
         if (tem >= TETO) return;

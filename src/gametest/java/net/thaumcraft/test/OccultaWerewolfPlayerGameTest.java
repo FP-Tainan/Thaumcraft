@@ -211,7 +211,7 @@ public class OccultaWerewolfPlayerGameTest {
             helper.fail("um lobo de grau um já é mais depressa que gente");
         }
 
-        // o lobisomem não vale nada até ao quinto
+        // o lobisomem não vale nada até o quinto
         Werewolf.forma(quem, Werewolf.Forma.GENTE);
         Werewolf.grau(quem, 4);
         Werewolf.forma(quem, Werewolf.Forma.LOBISOMEM);

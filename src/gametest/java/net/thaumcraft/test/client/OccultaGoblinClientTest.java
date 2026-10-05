@@ -47,7 +47,7 @@ public class OccultaGoblinClientTest implements FabricClientGameTest {
                     goblin.setYHeadRot(180.0f);
                     goblin.setPersistenceRequired();
                     goblin.setNoAi(true);
-                    // o último leva a picareta e está a martelar, para o braço aparecer levantado
+                    // o último leva a picareta e está martelando, para o braço aparecer levantado
                     if (ofício == 3) {
                         goblin.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_PICKAXE));
                         goblin.trabalhando(true);

@@ -12,7 +12,7 @@ import net.thaumcraft.occulta.OccultaEntities;
  * As três caras do Caçador de Bruxas, lado a lado.
  *
  * <p>É o chapéu que importa nesta tela: <b>aba de catorze</b>, maior que a das roupas que se podem vestir, e o
- * casaco que desce até ao joelho. São as três caixas a mais do {@code ModelWitchHunter}, e é por elas que um
+ * casaco que desce até o joelho. São as três caixas a mais do {@code ModelWitchHunter}, e é por elas que um
  * caçador se reconhece de longe.
  */
 public class OccultaWitchHunterClientTest implements FabricClientGameTest {

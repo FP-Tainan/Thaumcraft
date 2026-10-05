@@ -375,7 +375,7 @@ public final class WerewolfPowers {
      * <b>A armadura rasgada</b>: o {@code rendArmor} do original, do <b>nono grau</b> e só de lobisomem.
      *
      * <p>Cada golpe escolhe <b>uma peça de armadura ao acaso</b> e lhe tira <b>um quarto da vida dela</b>. O
-     * que não se gasta — o que não tem durabilidade — é <b>arrancado logo</b>; e o que se gastar até ao fim
+     * que não se gasta — o que não tem durabilidade — é <b>arrancado logo</b>; e o que se gastar até o fim
      * cai no chão, com <b>cinco segundos</b> antes de se poder apanhar outra vez.
      *
      * <p>Arrancar só vale contra <b>gente</b>, como no original: é um poder feito para o combate entre

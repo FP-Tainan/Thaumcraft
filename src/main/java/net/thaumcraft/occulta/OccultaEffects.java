@@ -599,7 +599,7 @@ public final class OccultaEffects {
      * antes de beber, e o leite não a tira.
      *
      * <p><b>Fica de fora, declarado:</b> no original, num <b>aldeão</b> ela não paralisa — faz o contrário: o
-     * aldeão larga o que estava a fazer e <b>anda até o vampiro</b>. Isso pede a vampirice de jogador, que
+     * aldeão larga o que estava fazendo e <b>anda até o vampiro</b>. Isso pede a vampirice de jogador, que
      * este porte ainda não tem.
      */
     public static final Holder<MobEffect> PARALYSIS = register("paralysis",

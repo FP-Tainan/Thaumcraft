@@ -175,7 +175,7 @@ public class ArcanaProjectileGameTest {
 
         helper.succeedWhen(() -> {
             if (primeiro.getHealth() >= tinhaUm) helper.fail("devia bater no primeiro porco");
-            if (segundo.getHealth() >= tinhaDois) helper.fail("e atravessar até ao segundo");
+            if (segundo.getHealth() >= tinhaDois) helper.fail("e atravessar até o segundo");
         });
     }
 

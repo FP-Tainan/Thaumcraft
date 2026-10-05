@@ -21,7 +21,7 @@ import net.thaumcraft.occulta.hunter.WitchHunterEntity;
  *
  * <p>Ele é um <b>bípede com três caixas a mais</b>: a <b>aba do chapéu</b>, de catorze por um por catorze; o
  * <b>topo</b>, de seis por dois por seis; e a <b>saia do casaco</b>, de dez por onze por cinco, presa ao
- * tronco e descendo até ao joelho.
+ * tronco e descendo até o joelho.
  *
  * <p><b>As roupas dele estão pintadas na pele</b>, e não vestidas. São <b>três peles</b>, sorteadas ao
  * nascer, e é a única coisa que distingue um caçador de outro — porque o que eles fazem é todos o mesmo.

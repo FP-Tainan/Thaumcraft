@@ -85,7 +85,7 @@ public class OccultaVampireLadderGameTest {
      * <b>E esta é a prova que carrega a fatia: sem livro, ele para no terceiro grau.</b>
      *
      * <p>O teto nasce em três e só o livro o levanta. Um vampiro que morda a aldeia inteira e passe a noite
-     * acordado sobe até ao terceiro e <b>para ali para sempre</b> — e o jogo não lhe diz uma palavra sobre o
+     * acordado sobe até o terceiro e <b>para ali para sempre</b> — e o jogo não lhe diz uma palavra sobre o
      * porquê. É a coisa mais cruel que este mod faz, e é o que torna o livro o centro do ramo.
      */
     @GameTest(maxTicks = 20)

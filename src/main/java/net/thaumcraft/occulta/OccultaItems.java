@@ -263,6 +263,33 @@ public final class OccultaItems {
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
+    // ------------------------------------------------------------------ a infusão
+
+    /**
+     * A <b>Mão de Bruxa</b>: a única coisa que a infusão sabe atravessar.
+     *
+     * <p>Uma só de cada vez, e não se fabrica: cai de uma bruxa morta.
+     */
+    public static final Item WITCH_HAND = register("witch_hand", properties ->
+            new net.thaumcraft.occulta.WitchHandItem(properties.stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
+    /**
+     * O <b>Espírito do Outro Lugar</b>: o que o rito da Infusão do Outro Lugar pede.
+     *
+     * <p>Bebido, dá <b>Veneno II por um minuto</b> — e é o que ele merece. Ele não existe para se
+     * beber; existe para se oferecer no círculo.
+     */
+    public static final Item SPIRIT_OF_OTHERWHERE = register("spirit_of_otherwhere", properties ->
+            new Item(properties.stacksTo(2).food(
+                    new net.minecraft.world.food.FoodProperties.Builder()
+                            .alwaysEdible().nutrition(0).saturationModifier(0.0f).build(),
+                    net.minecraft.world.item.component.Consumables.defaultDrink().onConsume(
+                            new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                                    new net.minecraft.world.effect.MobEffectInstance(
+                                            net.minecraft.world.effect.MobEffects.POISON, 1200, 1)))
+                            .build())));
+
     /** A <b>Caveira do Chamado</b>, que se prega no chão ou numa parede. */
     public static final Item ALLURING_SKULL = register("alluring_skull", properties ->
             new BlockItem(OccultaBlocks.ALLURING_SKULL, properties.useBlockDescriptionPrefix()

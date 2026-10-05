@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * <b>O goblin apanha o que está no chão</b>: o {@code EntityAIPickUpBlocks} do Witchery.
  *
- * <p>Só <b>na corda</b>, e só de <b>mãos vazias</b> — um goblin com uma picareta na mão está a cavar, e não
+ * <p>Só <b>na corda</b>, e só de <b>mãos vazias</b> — um goblin com uma picareta na mão está cavando, e não
  * apanha nada. Ele vai até o item e o <b>põe na mão</b>, e fica com ele até alguém lho tirar.
  *
  * <p>É o que faz dele um ajudante e não um bicho: ninguém lhe manda apanhar, ele apanha porque está preso e

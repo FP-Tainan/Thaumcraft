@@ -194,7 +194,7 @@ public record Vampire(int grau, int sangue, int teto, int conta) {
      * <p><b>Declarado, e é a mesma coisa por outro caminho:</b> no original o teto nasce em <b>zero</b>, e
      * os dois primeiros degraus — encher o sangue e os cinco aldeões — simplesmente <b>não perguntam</b> por
      * ele; só do terceiro em diante é que alguém olha. Aqui quem olha é um lugar só, e por isso o chão é
-     * escrito: três. O que o jogador sente é idêntico — sobe-se até ao terceiro sem livro nenhum, e dali em
+     * escrito: três. O que o jogador sente é idêntico — sobe-se até o terceiro sem livro nenhum, e dali em
      * diante é o livro que manda.
      */
     public static int tetoDoGrau(Player quem) {
@@ -222,7 +222,7 @@ public record Vampire(int grau, int sangue, int teto, int conta) {
     /**
      * Bebeu: o sangue sobe.
      *
-     * <p>E há uma coisa que acontece aqui e em mais lado nenhum: <b>encher o sangue até ao teto no primeiro
+     * <p>E há uma coisa que acontece aqui e em mais lado nenhum: <b>encher o sangue até o teto no primeiro
      * grau sobe o vampiro ao segundo</b>. É o único degrau da escada que não se procura — ele vem de beber o
      * bastante, e é como o mod diz ao jogador que a sede é o caminho.
      */

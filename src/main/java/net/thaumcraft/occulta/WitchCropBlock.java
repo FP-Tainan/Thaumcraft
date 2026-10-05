@@ -31,7 +31,7 @@ import java.util.function.Supplier;
  *
  * <ul>
  *   <li><b>quantas idades</b> muda de planta para planta: a maioria tem quatro, o alho cinco e a acônito sete;</li>
- *   <li><b>a farinha de osso</b> adianta de duas idades até ao fim nas que aceitam, e só uma nas que não
+ *   <li><b>a farinha de osso</b> adianta de duas idades até o fim nas que aceitam, e só uma nas que não
  *       ({@code canFertilize} do original) — nenhuma a recusa de todo;</li>
  *   <li>a <b>mindrake</b> cresce uma vez e meia mais devagar que as outras;</li>
  *   <li>a <b>losna</b> se empilha: feita, sobe outra em cima dela;</li>
@@ -166,7 +166,7 @@ public class WitchCropBlock extends CropBlock {
     }
 
     /**
-     * O {@code fertilize} do original: de duas idades até ao fim nas que aceitam farinha de osso, e de uma só nas
+     * O {@code fertilize} do original: de duas idades até o fim nas que aceitam farinha de osso, e de uma só nas
      * que não — a mindrake e a acônito.
      */
     @Override

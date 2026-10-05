@@ -40,6 +40,13 @@ public final class KettleTable {
                 OccultaItems.REDSTONE_SOUP, Items.SPLASH_POTION, Items.DIAMOND, Items.FEATHER,
                 OccultaItems.BAT_WOOL, OccultaItems.BELLADONNA_FLOWER);
 
+        // ---------------------------------------------------------- o Espírito do Outro Lugar
+        // A cor é o -7128833 do original lido como cor de 32 bits, e o poder são quatro mil.
+        // O mesmo desvio da poção já declarado para o Unguento do Voo.
+        KettleRecipes.add(OccultaItems.SPIRIT_OF_OTHERWHERE, 2, 0xFF9370FF, 4000.0f,
+                OccultaItems.REDSTONE_SOUP, Items.POTION, Items.ENDER_EYE, Items.ENDER_PEARL,
+                OccultaItems.DROP_OF_LUCK, OccultaItems.BAT_WOOL);
+
         // ---------------------------------------------------------- o Óleo do Acaso
         // A cor é o 8534058 do original lido como cor de 32 bits, e o poder são dois mil.
         // <b>O mesmo desvio do Unguento do Voo:</b> o original pede uma poção com o número de 1.7.10

@@ -114,7 +114,7 @@ public class ShatteredGameTest {
         if (!ShatteredRealms.isOurs(limbo)) helper.fail("e ser um mundo do ramo");
         if (ShatteredRealms.isPocket(limbo)) helper.fail("mas não um bolso");
 
-        // o chão: tudo até ao oitavo é tecido eterno
+        // o chão: tudo até o oitavo é tecido eterno
         BlockPos fundo = new BlockPos(8, 0, 8);
         if (!limbo.getBlockState(fundo).is(net.thaumcraft.shattered.FabricBlocks.ETERNAL)) {
             helper.fail("o fundo do Limbo é tecido eterno; achei " + limbo.getBlockState(fundo));
@@ -329,7 +329,7 @@ public class ShatteredGameTest {
         helper.succeed();
     }
 
-    /** A fenda solta sorteia o rosto dela e cresce sozinha, até ao tamanho máximo. */
+    /** A fenda solta sorteia o rosto dela e cresce sozinha, até o tamanho máximo. */
     @GameTest(maxTicks = 100)
     public void theRiftGrowsAndGetsAFace(GameTestHelper helper) {
         BlockPos onde = new BlockPos(1, 2, 1);

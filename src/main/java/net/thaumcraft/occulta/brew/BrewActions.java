@@ -43,7 +43,7 @@ public final class BrewActions {
             return new Modifier(key, namePart, power, null, tempero, 0);
         }
 
-        /** Um ingrediente de porte: abre espaço até ao teto dele. */
+        /** Um ingrediente de porte: abre espaço até o teto dele. */
         public static Modifier room(Item key, int power, int quanto, int teto) {
             return new Modifier(key, null, power, espaço -> espaço.openIf(quanto, teto), null, 0);
         }

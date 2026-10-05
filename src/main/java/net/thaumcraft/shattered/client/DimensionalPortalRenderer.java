@@ -299,7 +299,7 @@ public class DimensionalPortalRenderer
     }
 
     /**
-     * O pano: a cara da folha da porta, dos dois lados dela, de baixo até ao alto das duas metades.
+     * O pano: a cara da folha da porta, dos dois lados dela, de baixo até o alto das duas metades.
      *
      * <p>Não se corta face nenhuma, e por isso o mesmo pano vai nas duas voltas — visto de um lado e do outro.
      */

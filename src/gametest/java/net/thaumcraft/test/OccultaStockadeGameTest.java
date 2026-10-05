@@ -102,7 +102,7 @@ public class OccultaStockadeGameTest {
     /**
      * <b>E empilhada ela vira parede.</b>
      *
-     * <p>Uma paliçada com outra por cima deixa de apontar: a estaca vai a direito até ao teto, e as duas
+     * <p>Uma paliçada com outra por cima deixa de apontar: a estaca vai a direito até o teto, e as duas
      * juntas são um muro sem frestas. É a chave {@code up} do feitio, e é o que o original faz com o
      * {@code oneAbove}.
      */

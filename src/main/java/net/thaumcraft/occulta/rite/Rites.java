@@ -1016,6 +1016,51 @@ public final class Rites {
     }
 
     /**
+     * <b>Infundir quem estiver no círculo</b>: o {@code RiteInfusePlayers} do original.
+     *
+     * <p>É o rito mais violento do mod, e o mais curto de ler: ele faz <b>cem de dano mágico</b> a tudo o
+     * que for gente num raio de quatro blocos, e <b>infunde quem sobreviver</b>.
+     *
+     * <p>Cem. Um jogador de armadura cheia e coração cheio tem vinte. O que salva quem se infunde não é
+     * aguentar o golpe — é <b>ter mais vida do que o golpe tira</b>, o que só se consegue com cozimentos,
+     * com absorção ou com resistência. A infusão é uma coisa que se sobrevive, e o original nunca fingiu
+     * o contrário.
+     *
+     * <p>E ela corre <b>de segundo em segundo</b>, e não a cada batida: o passo devolve «ainda estou
+     * começando» vinte vezes antes de fazer o que faz.
+     */
+    public record InfusePlayers(net.thaumcraft.occulta.infusion.Infusion qual, int cargas, int alcance)
+            implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                var caixa = new net.minecraft.world.phys.AABB(
+                        onde.getX() - this.alcance, onde.getY(), onde.getZ() - this.alcance,
+                        onde.getX() + this.alcance, onde.getY() + 1, onde.getZ() + this.alcance);
+                for (var quem : level.getEntitiesOfClass(
+                        net.minecraft.server.level.ServerPlayer.class, caixa)) {
+                    if (quem.distanceToSqr(onde.getX() + 0.5, onde.getY(), onde.getZ() + 0.5)
+                            > (double) this.alcance * this.alcance) {
+                        continue;
+                    }
+                    quem.hurtServer(level, level.damageSources().magic(),
+                            net.thaumcraft.occulta.infusion.Infusions.DANO);
+                    if (quem.getHealth() > 0.1f) {
+                        net.thaumcraft.occulta.infusion.Infusions.infunde(quem, this.qual, this.cargas);
+                    }
+                }
+
+                level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, onde.getX() + 0.5,
+                        onde.getY() + 1.0, onde.getZ() + 0.5, 1, 3.0, 3.0, 3.0, 0.0);
+                level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    /**
      * Fazer aparecer uma coisa: o {@code RiteSummonItem} do original.
      *
      * <p>É o rito mais simples que há: o que se ofereceu some, e no meio do círculo fica <b>aquilo</b>. É assim
@@ -1603,7 +1648,7 @@ public final class Rites {
      * <b>A Expansão Gelada</b>: o {@code RiteSphereEffect} do Witchery, com o Gelo Perpétuo dentro.
      *
      * <p>Ele abre uma <b>bola oca de gelo que não derrete</b> à volta do círculo, e cresce de cinco em cinco
-     * batidas até ao tamanho que o coven der: <b>oito</b> com duas bruxas, <b>doze</b> até cinco,
+     * batidas até o tamanho que o coven der: <b>oito</b> com duas bruxas, <b>doze</b> até cinco,
      * <b>dezesseis</b> acima disso. Sozinha, ninguém o faz — e é o único rito deste porte que <b>desiste e
      * devolve</b> o que se ofereceu quando o coven é pequeno demais.
      *
@@ -2117,7 +2162,7 @@ public final class Rites {
      * o que se ofereceu; e o bloco <b>do meio</b> conta por cem, ou seja: pôr uma laje em cima do glifo já
      * chega para ele recusar. É o que impede alguém de chamar um Wither dentro de uma caixa de obsidiana.
      *
-     * <p><b>Um engano do original que fica:</b> ele percorre o desenho do teto até ao <b>penúltimo</b> z, e
+     * <p><b>Um engano do original que fica:</b> ele percorre o desenho do teto até o <b>penúltimo</b> z, e
      * por isso a fila de trás nunca é olhada. O teto que ele mede é de sete por seis, e não de sete por sete.
      *
      * @param tipo  quem vem
@@ -2880,6 +2925,22 @@ public final class Rites {
                         net.thaumcraft.occulta.OccultaItems.BELLADONNA_FLOWER),
                 RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * O <b>Rito da Infusão do Outro Lugar</b>, que é o primeiro dos quatro ritos que mudam o
+         * próprio corpo de quem os faz. Ele <b>mata quase</b>: cem de dano mágico a tudo o que for gente
+         * num raio de quatro blocos, e só quem sobreviver fica infundido.
+         */
+        RiteRegistry.register("tc.rite.infusionender",
+                new InfusePlayers(net.thaumcraft.occulta.infusion.Infusions.daquele(3),
+                        net.thaumcraft.occulta.infusion.Infusions.CARGAS,
+                        net.thaumcraft.occulta.infusion.Infusions.ALCANCE),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(
+                                net.thaumcraft.occulta.OccultaItems.SPIRIT_OF_OTHERWHERE),
+                        new Sacrifice.Power(4000.0f, 20)),
+                new RiteRegistry.Ring(0, 16, 0), new RiteRegistry.Ring(0, 28, 0),
+                RiteRegistry.Ring.NONE);
 
         /*
          * O Rito da Infusão do Futuro, que faz aparecer a Bola de Cristal — e, de caminho, ensina a

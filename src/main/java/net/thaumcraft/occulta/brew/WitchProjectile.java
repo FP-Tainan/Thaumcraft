@@ -94,7 +94,7 @@ public final class WitchProjectile {
      * tempo</b>: vinte segundos no meio, nada na borda. A conta é a do original, e é linear na distância.
      *
      * <p>Quem foi acertado em cheio leva os vinte segundos cheios, esteja onde estiver. E todo bicho que
-     * estava a perseguir alguém <b>perde o alvo</b>, que é o que a tinta faz de melhor.
+     * estava perseguindo alguém <b>perde o alvo</b>, que é o que a tinta faz de melhor.
      */
     public static void tinta(ServerLevel level, double x, double y, double z, @Nullable Entity emCheio,
                              AABB daí, boolean forte) {

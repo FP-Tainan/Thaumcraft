@@ -70,7 +70,7 @@ public class GoblinEntity extends AgeableMob {
     /** Os quatro ofícios, que são só a cara dele. */
     public static final int OFÍCIOS = 4;
 
-    /** O que ele está a fazer: nada, trabalhar ou adorar. */
+    /** O que ele está fazendo: nada, trabalhar ou adorar. */
     public static final byte PARADO = 0;
     public static final byte TRABALHANDO = 1;
     public static final byte ADORANDO = 2;
@@ -156,7 +156,7 @@ public class GoblinEntity extends AgeableMob {
         this.entityData.set(OFÍCIO, qual);
     }
 
-    /** O que ele está a fazer: nada, trabalhar ou adorar. */
+    /** O que ele está fazendo: nada, trabalhar ou adorar. */
     public byte fazendo() {
         return this.entityData.get(FAZENDO);
     }

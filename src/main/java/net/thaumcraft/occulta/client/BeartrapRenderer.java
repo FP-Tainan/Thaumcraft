@@ -123,7 +123,7 @@ public class BeartrapRenderer implements BlockEntityRenderer<BeartrapBlockEntity
      * <p><b>O giro vai na pilha, e não na peça</b> — e é preciso dizer por quê, porque o jeito óbvio está
      * errado. O jogo de hoje <b>não desenha na hora</b>: ele junta tudo o que lhe mandam e desenha depois, de
      * uma vez. A peça do modelo é <b>uma só</b>, compartilhada por todas as armadilhas do mundo; mexer no
-     * ângulo dela antes de a mandar faz com que, na hora de desenhar, <b>todas</b> saiam com o ângulo da
+     * ângulo dela antes de mandá-la faz com que, na hora de desenhar, <b>todas</b> saiam com o ângulo da
      * última — e um campo de armadilhas disparadas aparece todo armado.
      *
      * <p>Girando a pilha à volta do eixo da peça, cada submissão leva o seu próprio giro e a peça vai tal

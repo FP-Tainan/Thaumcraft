@@ -25,7 +25,7 @@ import net.thaumcraft.occulta.OccultaItems;
  * pede a quem joga.
  *
  * <p>Quem apanha a licantropia fica no <b>grau um</b>, e no grau um a lua manda nele e ele não manda em nada.
- * Daí até ao décimo vão dez degraus, e a <b>Estátua do Lobisomem</b> é quem os dá — um a um, e nunca dois.
+ * Daí até o décimo vão dez degraus, e a <b>Estátua do Lobisomem</b> é quem os dá — um a um, e nunca dois.
  *
  * <h2>O que ela pede, e porquê</h2>
  *

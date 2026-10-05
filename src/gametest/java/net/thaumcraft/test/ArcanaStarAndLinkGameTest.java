@@ -103,7 +103,7 @@ public class ArcanaStarAndLinkGameTest {
         helper.succeed();
     }
 
-    /** A Estrela cai, e cai cada vez mais depressa — até ao teto de dois por batida. */
+    /** A Estrela cai, e cai cada vez mais depressa — até o teto de dois por batida. */
     @GameTest(maxTicks = 100)
     public void theStarFallsFasterAndFaster(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();

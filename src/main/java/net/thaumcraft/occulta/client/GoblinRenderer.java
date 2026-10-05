@@ -27,7 +27,7 @@ import net.thaumcraft.occulta.goblin.GoblinEntity;
  *
  * <p><b>E o braço dele sacode quando trabalha.</b> O original soma ao giro do braço direito um resto do
  * relógio — um décimo por batida, numa volta de vinte —, e o que se vê é um goblin a martelar. É a única coisa
- * que diz, de longe, que ele está a cavar e não só parado ao pé de uma pedra.
+ * que diz, de longe, que ele está cavando e não só parado ao pé de uma pedra.
  */
 public final class GoblinRenderer {
     public static final ModelLayerLocation LAYER = new ModelLayerLocation(Thaumcraft.id("goblin"), "main");
@@ -85,7 +85,7 @@ public final class GoblinRenderer {
         return LayerDefinition.create(malha, 64, 32);
     }
 
-    /** O que o desenhista precisa de saber dele: a pele, e se ele está a martelar. */
+    /** O que o desenhista precisa de saber dele: a pele, e se ele está martelando. */
     public static class Estado extends LivingEntityRenderState {
         public int pele;
         public boolean trabalhando;

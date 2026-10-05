@@ -67,9 +67,17 @@ public final class OccultaEvents {
                     return !net.thaumcraft.occulta.vampire.BolineItem.colheARosa(mundo, onde, quem);
                 });
 
+        /*
+         * O soco com a <b>Mão de Bruxa</b>, que não magoa ninguém: ele é só o jeito de a infusão de quem
+         * a tem chegar ao mundo.
+         */
+        net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(
+                net.thaumcraft.occulta.WitchHandItem::soco);
+
         ServerLivingEntityEvents.AFTER_DEATH.register((quemMorreu, fonte) -> {
             if (!(quemMorreu.level() instanceof ServerLevel level)) return;
             onDeath(level, quemMorreu, fonte);
+            net.thaumcraft.occulta.WitchHandItem.deUmaBruxaMorta(level, quemMorreu, fonte);
         });
 
         // e o jogador novo recebe o que o velho guardou: as poções que atravessaram a morte

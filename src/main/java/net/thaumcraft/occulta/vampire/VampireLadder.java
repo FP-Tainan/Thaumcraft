@@ -32,7 +32,7 @@ import java.util.List;
  *
  * <ol>
  *   <li><b>Virar</b> — beber o sangue de Lilith, ou o de outro vampiro, num Cálice.</li>
- *   <li><b>Encher o sangue</b> até ao teto, uma vez. <i>"a sede daquela primeira noite era avassaladora,
+ *   <li><b>Encher o sangue</b> até o teto, uma vez. <i>"a sede daquela primeira noite era avassaladora,
  *       ele teve de a saciar por inteiro"</i> — e está no {@link Vampire#bebe}, porque é o único degrau que
  *       não se procura.</li>
  *   <li><b>Cinco aldeões</b> mordidos <b>sem os esvaziar</b>: o sangue de cada um tem de ficar entre

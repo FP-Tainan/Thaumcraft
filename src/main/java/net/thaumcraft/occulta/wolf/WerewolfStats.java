@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  * <ul>
  *   <li><b>O lobo é depressa desde o princípio</b>: meio ponto de velocidade já no primeiro grau, e um ponto
  *       e três quartos no décimo. Ele é o que foge e o que persegue.</li>
- *   <li><b>O lobisomem não vale nada até ao quinto grau</b> — zeros em tudo — e então, de uma vez, passa a ter
+ *   <li><b>O lobisomem não vale nada até o quinto grau</b> — zeros em tudo — e então, de uma vez, passa a ter
  *       <b>vinte de vida a mais</b>, quatro de dano e salto. É a forma que se ganha, não a que se recebe.</li>
  *   <li><b>E o teto da pancada desce com o grau</b>: quatro no princípio, dois do quinto em diante. É o único
  *       número que melhora <i>baixando</i>, e é o que faz um lobisomem de grau alto difícil de matar.</li>

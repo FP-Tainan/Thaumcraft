@@ -1,0 +1,148 @@
+package net.thaumcraft.test;
+
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
+import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.thaumcraft.occulta.OccultaItems;
+import net.thaumcraft.occulta.infusion.Infusion;
+import net.thaumcraft.occulta.infusion.Infusions;
+import net.thaumcraft.occulta.infusion.OtherwhereInfusion;
+
+/**
+ * A <b>Infusão</b>, e a primeira delas: a do <b>Outro Lugar</b>.
+ *
+ * <p>É o maior passo que o ofício dá: até aqui tudo o que a bruxa faz está fora dela — o caldeirão, o
+ * círculo, o altar, o boneco. A infusão é a primeira coisa que ela faz <b>a si própria</b>.
+ *
+ * <p>A prova que carrega a fatia é a do <b>cantil</b>: a carga que o rito dá é tudo o que há, cada poder
+ * gasta, e quem tenta um poder caro com pouco fica com <b>zero</b>.
+ */
+public class OccultaInfusionGameTest {
+    /** Ninguém nasce infundido, e quem não é não faz nada. */
+    @GameTest
+    public void nobodyIsBornInfused(GameTestHelper helper) {
+        ServerPlayer quem = helper.makeMockServerPlayerInLevel();
+        quem.removeAttached(Infusions.CARGA);
+
+        if (Infusions.de(quem) != Infusions.NENHUMA) helper.fail("ninguém nasce infundido");
+        if (Infusions.energia(quem) != 0 || Infusions.teto(quem) != 0) {
+            helper.fail("e sem infusão não há carga nenhuma");
+        }
+        if (Infusions.quantas() != 2) {
+            helper.fail("há a de ninguém e a do Outro Lugar; há " + Infusions.quantas());
+        }
+        helper.succeed();
+    }
+
+    /** O rito dá duzentas cargas e põe o teto nelas. */
+    @GameTest
+    public void theRiteFillsTheFlask(GameTestHelper helper) {
+        ServerPlayer quem = helper.makeMockServerPlayerInLevel();
+        Infusion outroLugar = Infusions.daquele(3);
+        if (!(outroLugar instanceof OtherwhereInfusion)) {
+            helper.fail("a de número três é a do Outro Lugar");
+        }
+
+        Infusions.infunde(quem, outroLugar, Infusions.CARGAS);
+        if (Infusions.de(quem) != outroLugar) helper.fail("e passa a ser a dele");
+        if (Infusions.energia(quem) != Infusions.CARGAS) {
+            helper.fail("com duzentas cargas; tem " + Infusions.energia(quem));
+        }
+        if (Infusions.teto(quem) != Infusions.CARGAS) helper.fail("e o teto nelas");
+        quem.removeAttached(Infusions.CARGA);
+        helper.succeed();
+    }
+
+    /**
+     * <b>O cantil, e o que acontece a quem o esvazia mal.</b>
+     *
+     * <p>Esta é a prova que carrega a fatia. Tirar carga com o {@code tira} — que é o que o equipamento de
+     * fora faz — só <b>recusa</b> quando não há bastante. Mas o salto da infusão, que gasta por dentro,
+     * <b>apaga o que sobrava</b>: quem tenta um poder caro com pouco fica com zero.
+     */
+    @GameTest
+    public void theFlaskEmptiesAndPunishes(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        ServerPlayer quem = helper.makeMockServerPlayerInLevel();
+        quem.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        Infusions.infunde(quem, Infusions.daquele(3), 10);
+
+        if (!Infusions.tira(level, quem, 4, false)) helper.fail("dez dá para quatro");
+        if (Infusions.energia(quem) != 6) {
+            helper.fail("e sobram seis; sobraram " + Infusions.energia(quem));
+        }
+        if (Infusions.tira(level, quem, 20, false)) helper.fail("mas não dá para vinte");
+        if (Infusions.energia(quem) != 6) {
+            helper.fail("e recusar não tira nada; ficaram " + Infusions.energia(quem));
+        }
+
+        // e o poder que gasta por dentro apaga o que sobrava
+        Infusions.de(quem).largou(level, quem, new ItemStack(OccultaItems.WITCH_HAND), 0);
+        quem.removeAttached(Infusions.CARGA);
+        helper.succeed();
+    }
+
+    /** Encher não passa do teto: a Estátua de Adoração não dá mais do que o rito deu. */
+    @GameTest
+    public void fillingNeverPassesTheBrim(GameTestHelper helper) {
+        ServerPlayer quem = helper.makeMockServerPlayerInLevel();
+        Infusions.infunde(quem, Infusions.daquele(3), 100);
+        Infusions.põeEnergia(quem, 80);
+
+        Infusions.enche(quem, 30);
+        if (Infusions.energia(quem) != 100) {
+            helper.fail("oitenta mais trinta dá cem, que é o teto; deu " + Infusions.energia(quem));
+        }
+        quem.removeAttached(Infusions.CARGA);
+        helper.succeed();
+    }
+
+    /**
+     * <b>E o lugar de voltar fica guardado, com o mundo em que estava.</b>
+     *
+     * <p>É o que faz a Infusão do Outro Lugar valer a pena: ela não leva só para onde se vê, leva para onde
+     * se esteve.
+     */
+    @GameTest
+    public void theRecallPointRemembersTheWorldToo(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        ServerPlayer quem = helper.makeMockServerPlayerInLevel();
+        quem.removeAttached(Infusions.VOLTA);
+        if (Infusions.volta(quem) != null) helper.fail("ninguém nasce com um lugar de voltar");
+
+        BlockPos onde = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlockAndUpdate(onde.below(), Blocks.STONE.defaultBlockState());
+        quem.snapTo(onde.getX() + 0.5, onde.getY(), onde.getZ() + 0.5);
+        Infusions.guardaVolta(quem);
+
+        var volta = Infusions.volta(quem);
+        if (volta == null) helper.fail("e depois de o guardar, tem");
+        else {
+            if (volta.onde() != level.dimension()) helper.fail("com o mundo em que ele estava");
+            if (volta.lugar().getY() != onde.getY()) {
+                helper.fail("e o lugar; veio " + volta.lugar());
+            }
+        }
+        quem.removeAttached(Infusions.VOLTA);
+        helper.succeed();
+    }
+
+    /** Os números da Infusão do Outro Lugar são os do original. */
+    @GameTest
+    public void itsNumbersAreTheOriginals(GameTestHelper helper) {
+        if (OtherwhereInfusion.ALCANCE != 40 || OtherwhereInfusion.POR_SEGUNDO != 20) {
+            helper.fail("quarenta de partida, e mais vinte por segundo segurado");
+        }
+        if (OtherwhereInfusion.CUSTO_SALTO != 1 || OtherwhereInfusion.CUSTO_VOLTA != 2
+                || OtherwhereInfusion.CUSTO_ACIMA != 2 || OtherwhereInfusion.CUSTO_LEVAR != 4) {
+            helper.fail("um, dois, dois e quatro");
+        }
+        if (OtherwhereInfusion.GUARDA != 60) helper.fail("e três segundos agachado para guardar o lugar");
+        if (Infusions.DANO != 100.0f) helper.fail("e o rito faz cem de dano a quem se infunde");
+        helper.succeed();
+    }
+}

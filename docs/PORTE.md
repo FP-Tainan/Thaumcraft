@@ -4070,7 +4070,7 @@ ofereceu e diz ao dono do círculo por quê.
 **Achando, ele levanta um cone** de quinze em quinze batidas, camada a camada, com a beira de baixo salpicada de
 relva e quem estiver em cima a subir junto. Erguido o cone, a lava **sobe por dentro** até o alto; no penúltimo
 passo ela transborda e o cume **se rompe por um dos quatro lados**, a esmo. No último, a coluna que veio de baixo
-é fechada — e o que fica é um monte com uma cratera, e não um cano de lava aberto até ao fundo do mundo.
+é fechada — e o que fica é um monte com uma cratera, e não um cano de lava aberto até o fundo do mundo.
 
 **Os números são os do original**, incluindo os que parecem enganos e não são: o raio da camada `y` se conta
 como `raio - (alto - fase - 1 + y) * raio / alto`, e é essa conta torta que faz o cone crescer de dentro para
@@ -4995,7 +4995,7 @@ caixas com a pele dele — mas o desenhista dela começa por perguntar se é uma
 **não desenha nada**. O que se vê é só o rastro: brasas azuladas ao longo do caminho, uma a cada décimo de
 bloco que ela desce. A cor é a do original, `0.24, 0.58, 0.71` — um azul de madrugada.
 
-**E ela acelera**: um décimo por batida, até ao teto de dois blocos por batida. Uma estrela chamada de muito
+**E ela acelera**: um décimo por batida, até o teto de dois blocos por batida. Uma estrela chamada de muito
 alto chega a cair mais depressa do que se vê.
 
 ### Fatia 25 — o Elo de Mana (2026-09-30)
@@ -5938,7 +5938,7 @@ cima antes de virar o modelo**, e eu tinha posto 0,375 — a vassoura estava ent
 Nenhuma das seis provas de servidor diria isso.
 
 E a segunda saiu com as vassouras **de pé**, o que me pareceu errado até eu virá-las de lado: elas estavam
-deitadas, e eu estava a olhar pela ponta. A foto que fica é a de lado, por isso.
+deitadas, e eu estava olhando pela ponta. A foto que fica é a de lado, por isso.
 
 **Guardas:** `OccultaBroomGameTest`, com seis — os números da conta de voo; a tinta que pinta em vez de montar;
 montar de mão vazia; **a coruja**; a encantada que fica no chão quando a vassoura se desfaz; e a vassoura que
@@ -5960,7 +5960,7 @@ devolvendo o que se ofereceu.
 E o bloco **do meio conta por cem**. Ou seja: uma laje em cima do glifo já chega para ele recusar. É o que
 impede alguém de chamar um Wither dentro de uma caixa de obsidiana, e é metade do rito.
 
-**Um engano do original que fica:** ele percorre o desenho até ao **penúltimo** z, e por isso a fila de trás
+**Um engano do original que fica:** ele percorre o desenho até o **penúltimo** z, e por isso a fila de trás
 nunca é olhada. O teto que ele mede é de sete por **seis**.
 
 Com ele vieram dois ritos: a **Bruxa** (a do próprio jogo, não a do coven — dois mil de poder, anel de
@@ -6308,7 +6308,7 @@ continua sendo a cheia.
 
 Dez caixas traduzidas do `ModelWolfman`, e a graça delas é que ele **não é um homem com cabeça de lobo**: o
 tronco inclina-se para a frente, as pernas são de bicho — coxa e canela em dois pedaços, dobradas ao
-contrário —, os braços caem até ao chão e há cauda. Ele corre como um lobo e levanta-se como um homem.
+contrário —, os braços caem até o chão e há cauda. Ele corre como um lobo e levanta-se como um homem.
 
 Duas coisas do original ficam: o **braço direito nasce meio bloco mais para dentro** do que o esquerdo, e as
 pernas têm um **teto na dobra** (`Math.max(..., -0.8)`) que as impede de abrir para trás ao correr.
@@ -6566,7 +6566,7 @@ até alguém soltar o gatilho. São dois gestos, e os dois começam do mesmo jei
   bota-o crítico**.
 - **Agachado:** segurar **troca o virote** pelo seguinte que houver na mochila, e **devolve o que estava
   dentro** — por isso trocar não custa munição. Três estalos, aos cinco, dez e quinze tiques, dizem que a
-  troca está a acontecer.
+  troca está acontecendo.
 
 É o gesto que faz dela o que ela é: quem caça o que a espada não mata precisa de escolher a munição **com o
 bicho em cima**, e agachar-se é exatamente o tempo que isso devia custar. Não há menu nenhum.
@@ -6772,7 +6772,7 @@ Seis delas se perguntam **no mesmo instante** — entre o golpe e a vida — e p
 As duas primeiras puxam o fogo para lados opostos, e é a melhor prova da fatia: se a ordem entre elas se
 perder, as duas param de fazer sentido.
 
-E repare no **piso** do Enregelado, que é o detalhe que é fácil perder: até ao segundo grau o fogo sempre
+E repare no **piso** do Enregelado, que é o detalhe que é fácil perder: até o segundo grau o fogo sempre
 deixa **um ponto**; é só do terceiro em diante que ele pode não passar de todo. Não é o quanto que muda com o
 grau — é o chão.
 
@@ -6982,12 +6982,12 @@ Segurado na mão, ele muda a forma à vontade, e **demora menos quanto maior o g
 | | o lobo | o lobisomem |
 | --- | --- | --- |
 | **velocidade** | meia já no primeiro grau, uma e três quartos no décimo | dois décimos, e só do quinto |
-| **vida** | nada até ao sétimo, doze no décimo | **vinte de uma vez ao quinto**, quarenta no décimo |
-| **queda** | perdoa dois blocos cedo, cinco no fim | nada até ao quinto, sete no fim |
+| **vida** | nada até o sétimo, doze no décimo | **vinte de uma vez ao quinto**, quarenta no décimo |
+| **queda** | perdoa dois blocos cedo, cinco no fim | nada até o quinto, sete no fim |
 | **teto da pancada** | quatro, baixando a dois | quatro, baixando a dois |
 
 O lobo **é depressa desde o princípio**: ele é a forma que foge e que persegue. O lobisomem **não vale nada
-até ao quinto grau** — zeros em tudo — e então, de uma vez, ganha vinte de vida e quatro de dano. É a forma
+até o quinto grau** — zeros em tudo — e então, de uma vez, ganha vinte de vida e quatro de dano. É a forma
 que se **ganha**, não a que se recebe.
 
 E repare no **teto da pancada**: é o único número que melhora **baixando**. Quatro no princípio, dois do
@@ -7106,7 +7106,7 @@ E o que vem é a **caça ao contrário**: o lobisomem, que é o que caça, chama
 - **Quatrocentos de vida**, e **nenhuma pancada lhe tira mais de quinze** — vinte e sete golpes, no mínimo,
   enquanto ele **sara um por segundo**.
 - **Ele entra com um estouro**: cento e cinquenta batidas de invulnerabilidade, começando com um quarto da
-  vida e sarando vinte de dez em dez até aos quatrocentos, e saindo com o estouro de seis do Wither. Esse
+  vida e sarando vinte de dez em dez até os quatrocentos, e saindo com o estouro de seis do Wither. Esse
   tempo serve para uma coisa só, que é correr.
 - **Ele atira**, uma vez em cinco e de segundo a segundo, e a flecha dele é mais forte **quanto mais longe**
   estiver o alvo — ao contrário do que se espera, e é do original.
@@ -7145,7 +7145,7 @@ E o mesmo gesto faz **três coisas diferentes**, pela ordem em que o original as
 
 Os dois últimos esperam um minuto entre si. E repare na ordem: um **lobo de grau sete não tem uivo nenhum** —
 o primeiro ramo quer grau seis, o segundo quer oito, e o terceiro quer lobisomem. É do original, e é o degrau
-em que ele está a aprender.
+em que ele está aprendendo.
 
 O **zero de experiência** dos cães sai por onde no original saía por reflexão: um acessório ao `xpReward` do
 bicho. Sem isso, um lobisomem de grau dez tem uma fábrica de experiência que basta uivar para ligar.
@@ -7272,7 +7272,7 @@ que caia de cem blocos morre como qualquer um.
 ### A armadura rasgada
 
 Do **nono grau** e só de lobisomem, cada golpe escolhe **uma peça de armadura ao acaso** de quem apanhou e
-lhe tira **um quarto da vida dela**. O que não se gasta é **arrancado logo**, e o que se gastar até ao fim cai
+lhe tira **um quarto da vida dela**. O que não se gasta é **arrancado logo**, e o que se gastar até o fim cai
 no chão com cinco segundos antes de se poder apanhar outra vez.
 
 Arrancar só vale contra **gente**, como no original: é um poder feito para o combate entre jogadores, e é o
@@ -7456,7 +7456,7 @@ A fatia anterior deixou o corpo do vampiro pronto e **sem porta**. Esta é a por
 que ela é, porque o Witchery escondeu-a melhor do que escondeu qualquer outra coisa:
 
 > Desenhe um círculo de fio-armadilha com um crânio de esqueleto no meio. Mate uma galinha em cima dele com
-> uma faca que o mod nunca diz que serve para isso. Leve o cálice que ela encheu até ao crânio, **de noite**, e
+> uma faca que o mod nunca diz que serve para isso. Leve o cálice que ela encheu até o crânio, **de noite**, e
 > toque. Uma mulher aparece. Siga-a até à lava. Lá, ela deixa de ser ela — e o que fica no lugar **tem de ser
 > vencido**. Vencida, ela enche o seu cálice do próprio sangue. Beba.
 
@@ -7751,9 +7751,9 @@ O que ele tem é um **livro**. E o livro não é um manual.
 ### Observações de um Imortal
 
 É o diário de um erudito condenado que jantou com um vampiro e anotou o que ele contou — em reticências,
-meias-frases e dois desenhos à pressa. O autor não sabia que estava a escrever as instruções de uma escada.
+meias-frases e dois desenhos à pressa. O autor não sabia que estava escrevendo as instruções de uma escada.
 
-Lê-lo **levanta o teto do grau** até ao número de páginas que ele tem, e isso é tudo o que ele faz. Um
+Lê-lo **levanta o teto do grau** até o número de páginas que ele tem, e isso é tudo o que ele faz. Um
 vampiro sem livro sobe ao segundo e ao terceiro grau e **para ali para sempre**, por mais aldeões que morda —
 e nada no jogo lhe diz por quê. É a coisa mais cruel que este mod faz, e é o que põe o livro no centro do
 ramo.
@@ -7777,7 +7777,7 @@ diário fez.
 | degrau | o que ele pede |
 | --- | --- |
 | 1 | **virar** — beber sangue de Lilith, ou de outro vampiro, num Cálice |
-| 2 | **encher o sangue** até ao teto, uma vez |
+| 2 | **encher o sangue** até o teto, uma vez |
 | 3 | **cinco aldeões** mordidos sem os esvaziar |
 | 4 | **dez minutos de noite**, acordado |
 | 5 | **queimar-se dez vezes** com o sol engarrafado |
@@ -8867,7 +8867,7 @@ As quatro armadilhas lado a lado da tela de prova encontraram um erro que estava
 
 O jogo de hoje **não desenha na hora**: ele junta tudo o que lhe mandam e desenha depois, de uma vez. A peça
 do modelo é **uma só**, compartilhada por todas as armadilhas do mundo — de modo que mexer no ângulo dela
-antes de a mandar faz com que, na hora de desenhar, **todas saiam com o ângulo da última**.
+antes de mandá-la faz com que, na hora de desenhar, **todas saiam com o ângulo da última**.
 
 Na primeira tela, as quatro apareceram **armadas**, inclusive a disparada: o ângulo que valeu foi o da última
 submetida. O jeito certo é não tocar na peça — gira-se a **pilha de poses** à volta do eixo dela, e cada
@@ -9087,7 +9087,7 @@ por cima dele, **quatro degraus** que vão estreitando — quatro centésimos de
 e meio de alto cada um — com a **textura do topo** do tronco em todas as faces. É a conta do original, e dela
 sai uma estaca que termina em bico.
 
-Havendo **outra paliçada por cima**, a estaca deixa de apontar e vai a direito até ao teto. Duas empilhadas
+Havendo **outra paliçada por cima**, a estaca deixa de apontar e vai a direito até o teto. Duas empilhadas
 são um muro sem frestas, e é o que separa uma cerca de uma parede.
 
 E as juntas: sem vizinhos, **uma** estaca no meio; com vizinhos de um lado, **duas**; com vizinhos nos dois
@@ -9209,7 +9209,7 @@ E só o ensanguentado serve. A mesma figura, bloco por bloco, feita de feixes si
 do original pergunta pelo número um do feixe em cada um dos dezenove lugares. O que faz o Homem de Vime é o
 sangue, não a forma — a de feixes simples é madeira empilhada com jeito.
 
-Mas o **caminho até aos pés** usa qualquer feixe. O original desce e anda para trás com
+Mas o **caminho até os pés** usa qualquer feixe. O original desce e anda para trás com
 `block == WICKER_BUNDLE`, sem olhar o número, e só depois compara com o molde. É uma distinção fina e está
 portada: quem puser um feixe simples debaixo da figura não a estraga, só muda onde o molde começa a ler.
 
@@ -9226,7 +9226,7 @@ aquele lugar cheio ou vazio. Fica assim.
 
 A conta é curiosa e vale copiá-la inteira: a partir do feixe em que se bateu, o original descobre **em que
 eixo** a figura foi construída olhando os quatro vizinhos — e desiste se houver vizinhos nos dois eixos ou em
-nenhum. Depois **desce** até aos pés e **anda para trás** até à coluna mais baixa do eixo. Só então compara.
+nenhum. Depois **desce** até os pés e **anda para trás** até à coluna mais baixa do eixo. Só então compara.
 
 Quer dizer que o isqueiro acende a figura a partir de **qualquer** feixe dela, e não só do pé.
 
@@ -9588,3 +9588,89 @@ pilar, e o ovo em cima de um altar.
 traça caminho nenhum para quem está no ar. O chamado achava o zumbi, contava-o, mandava-o andar — e ele
 ficava parado. Vinte batidas de espera e passou. É o terceiro jeito que a arena de uma prova tem de mentir,
 depois de **cair** e de estar **girada**.
+
+## A Infusão, e a primeira delas: o Outro Lugar (2026-10-05)
+
+É o maior passo que o ofício dá, e vale dizê-lo por extenso: até aqui, **tudo o que a bruxa faz está fora
+dela** — o caldeirão, o círculo de giz, o altar, o boneco, o espelho. A infusão é a primeira coisa que ela
+faz **a si própria**.
+
+### O rito que mata quase
+
+O Rito da Infusão faz **cem de dano mágico** a tudo o que for gente num raio de quatro blocos, e infunde
+**quem sobreviver**.
+
+Cem. Um jogador de armadura cheia e coração cheio tem vinte. O que salva quem se infunde não é aguentar o
+golpe: é **ter mais vida do que o golpe tira**, o que só se consegue com cozimentos, com absorção ou com
+resistência. A infusão é uma coisa que **se sobrevive**, e o original nunca fingiu o contrário.
+
+Quem sobreviver fica com **duzentas cargas** e o teto nelas.
+
+### E a carga não volta sozinha
+
+É a decisão de desenho mais importante deste ramo: **não há recarga passiva**. O que o rito der é o que há,
+e cada poder gasta. Para encher outra vez é preciso ou **refazer o rito** — quatro mil de altar e quase
+morrer — ou ir a uma **Estátua de Adoração**, que dá trinta de cada vez e ainda não está portada.
+
+A infusão não é uma barra de mana: é um **cantil**. Quem se infunde anda a contar as goladas.
+
+E há uma crueldade no original que está portada: tentar um poder **sem carga bastante** não só recusa como
+**apaga o que sobrava**. Quem tem seis e tenta um de dez fica com zero. O que o equipamento de fora chama —
+o `aquireEnergy` — só recusa; o que a própria infusão gasta por dentro é que castiga.
+
+### A Mão de Bruxa
+
+A infusão **não faz nada sozinha**. Tudo o que ela sabe fazer passa pela **Mão de Bruxa**: segurá-la, socar
+com ela, largá-la — tudo isso chega à infusão de quem a tem, e sem ela a infusão fica calada.
+
+E ela **não se fabrica**. Cai de uma **bruxa morta**, uma vez em três — ou uma em duas, se quem a matou
+tinha a **Arthana** na mão.
+
+Junte as duas coisas e veja o que o original está dizendo: para usar o poder que você pôs dentro de si, você
+precisa da mão de alguém que o tinha. O ofício não é gentil.
+
+### A Infusão do Outro Lugar
+
+É a do **enderman**, e dá quatro coisas — as quatro formas de **não estar onde se está**:
+
+| o que se faz | o que acontece | custa |
+| --- | --- | --- |
+| segurar e largar a Mão | salta para onde se está olhando | **1** |
+| agachado, segurar três segundos e largar | guarda o **lugar de voltar** | — |
+| agachado, largar antes disso | volta para ele, de onde quer que se esteja | **2** |
+| socar um bicho | atira-o — e a si — **oito blocos para cima** | **2** |
+| agachado, socar um bicho | **o leva consigo** para o lugar de voltar | **4** |
+
+Repare no último: ele é a razão de a infusão existir. Levar **outra pessoa**, à força, de qualquer
+distância, para um lugar que você escolheu, é o poder mais bruto que este mod dá — e custa quatro de
+duzentos.
+
+### O salto que sonda
+
+A conta do alcance é do original e é esquisita de boa: o alcance **cresce enquanto se segura** — quarenta
+blocos de partida, e mais vinte por segundo —, e a cada segundo o jogo **diz se há onde chegar**: um tinir se
+há, um estouro se não há.
+
+Quem segura a Mão está **sondando o mundo à frente**, e o ouve. É um mecanismo de mira feito só com som, e
+funciona.
+
+### Desvios declarados
+
+- **A trava depois de um salto é a do jogo.** O original tranca a Mão por mil e quinhentos milésimos de
+  segundo num número que ele escreve na própria peça; aqui é a trava que uma bola de ender usa, e por isso
+  **se vê** no inventário. São trinta batidas, que é o mesmo tempo.
+- **O soco é um gancho de fora.** O original sobrepõe o `onLeftClickEntity` do item; aqui é o
+  `AttackEntityCallback`, que engole o golpe do mesmo jeito.
+- **O Espírito do Outro Lugar pede «a poção», qualquer que seja**, pelo mesmo motivo já declarado para o
+  Unguento do Voo.
+
+### O que falta deste ramo
+
+As outras **três infusões** — a do Mundo (com os símbolos que se desenham no ar), a da Luz e a Infernal
+(com os poderes de bicho) —, a **Estátua de Adoração** que enche o cantil, e a **barra de poder** na tela. O
+estado já atravessa a rede para o lado do cliente, à espera dela.
+
+**Guardas:** `OccultaInfusionGameTest`, com seis — ninguém nascendo infundido; o rito enchendo o cantil; a
+prova que carrega a fatia, que é o **cantil esvaziando e castigando**; o encher que não passa do teto; o
+lugar de voltar guardando o mundo em que se estava; e os números todos. E `OccultaInfusionClientTest`, com
+duas telas: as duas coisas no inventário e a Mão segurada.

@@ -57,7 +57,7 @@ public class OccultaPotionsGameTest {
         if (comGelo != 5.0f) helper.fail("o primeiro grau do gelo tira um: deu " + comGelo);
 
         /*
-         * O terceiro grau tira três — e o que muda nele não é o quanto, é o <b>piso</b>: até ao segundo grau
+         * O terceiro grau tira três — e o que muda nele não é o quanto, é o <b>piso</b>: até o segundo grau
          * o fogo sempre deixa um ponto, e do terceiro em diante pode chegar a zero.
          */
         var muitoGelado = helper.spawn(EntityTypes.PIG, new BlockPos(4, 2, 2));

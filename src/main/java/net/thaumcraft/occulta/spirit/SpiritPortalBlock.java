@@ -99,7 +99,7 @@ public class SpiritPortalBlock extends Block {
     /**
      * Tirada a moldura, o portal cai: é o {@code onNeighborBlockChange} do original.
      *
-     * <p>A conta dele é a mesma do portal do Nether: desce até ao pé do vão, confere que há moldura por baixo,
+     * <p>A conta dele é a mesma do portal do Nether: desce até o pé do vão, confere que há moldura por baixo,
      * conta a altura, confere a moldura por cima e a dos dois lados. Faltando qualquer uma, a casa some.
      */
     @Override

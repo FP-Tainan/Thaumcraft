@@ -9,7 +9,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
  *
  * <p>São <b>dez caixas</b> traduzidas do {@code ModelWolfman}, e a graça delas é que ele não é um homem com
  * cabeça de lobo: o tronco inclina-se para a frente, as pernas são de bicho — coxa e canela dobradas ao
- * contrário —, os braços caem até ao chão e há uma cauda. Nenhuma prova de servidor sabe se uma dessas caixas
+ * contrário —, os braços caem até o chão e há uma cauda. Nenhuma prova de servidor sabe se uma dessas caixas
  * ficou do lado errado.
  *
  * <p>Ele entra na foto <b>ao lado de um aldeão</b>, que é o que ele era, e de um lobo do jogo, que é o que ele

@@ -22,7 +22,7 @@ import java.util.function.Consumer;
  *
  * <h2>O que ele faz, e é uma coisa só</h2>
  *
- * <p>Lê-lo <b>levanta o teto do grau</b> do vampiro até ao número de páginas que ele tem. Um vampiro sem
+ * <p>Lê-lo <b>levanta o teto do grau</b> do vampiro até o número de páginas que ele tem. Um vampiro sem
  * livro para no <b>terceiro</b> grau para sempre, por mais aldeões que morda — e nada no jogo lhe diz porquê.
  *
  * <p>E o livro chega <b>rasgado</b>. Ele vem sem nenhuma das nove páginas, e cada uma delas tem de ser
@@ -32,7 +32,7 @@ import java.util.function.Consumer;
  * <h2>E só se lê até onde ele chega</h2>
  *
  * <p>Cada capítulo pede um número de páginas, e um capítulo que peça mais do que o livro tem <b>não abre</b>.
- * Quem tiver três páginas lê até ao terceiro degrau e vê, na folha seguinte, que há mais. É a melhor coisa
+ * Quem tiver três páginas lê até o terceiro degrau e vê, na folha seguinte, que há mais. É a melhor coisa
  * que este livro faz: ele mostra <b>que falta</b> sem dizer o quê.
  */
 public class VampireBookItem extends Item {

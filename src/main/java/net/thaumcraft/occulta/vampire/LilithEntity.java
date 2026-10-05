@@ -172,7 +172,7 @@ public class LilithEntity extends Monster implements RangedAttackMob {
         return this.entityData.get(PANCADA_NO_BRAÇO);
     }
 
-    /** Começa a espera, como o Caçador: um quarto da vida, e sarando até ao fim dela. */
+    /** Começa a espera, como o Caçador: um quarto da vida, e sarando até o fim dela. */
     public void acendeAEspera() {
         this.entityData.set(ESPERANDO, ESPERA);
         this.setHealth(this.getMaxHealth() / 4.0f);

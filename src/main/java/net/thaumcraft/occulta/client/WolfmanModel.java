@@ -25,7 +25,7 @@ import net.thaumcraft.Thaumcraft;
  *
  * <p>Dez partes, e a graça delas é que ele <b>não é um homem com cabeça de lobo</b>: o tronco inclina-se para
  * a frente, as pernas são de bicho — coxa e canela em dois pedaços, dobradas ao contrário —, os braços caem
- * até ao chão e há uma cauda. Ele corre como um lobo e levanta-se como um homem, e é isso que o faz assustar.
+ * até o chão e há uma cauda. Ele corre como um lobo e levanta-se como um homem, e é isso que o faz assustar.
  *
  * <p>As duas orelhas e o focinho são caixas <b>somadas à cabeça</b>, e por isso acompanham o olhar. E o
  * espelho do original está onde vale: na perna e no braço esquerdos, ligados <b>antes</b> das caixas.

@@ -125,7 +125,7 @@ public class LeechChestRenderer implements BlockEntityRenderer<LeechChestBlockEn
      *
      * <p>É preciso dizer por quê, porque o jeito óbvio está errado. O jogo de hoje <b>não desenha na hora</b>:
      * ele junta tudo o que lhe mandam e desenha depois, de uma vez. A peça do modelo é <b>uma só</b>,
-     * compartilhada por todos os baús do mundo; mexer no ângulo dela antes de a mandar faz com que, na hora
+     * compartilhada por todos os baús do mundo; mexer no ângulo dela antes de mandá-la faz com que, na hora
      * de desenhar, <b>todos</b> saiam com o ângulo do último — e uma sala de baús com um deles aberto
      * apareceria com todos abertos.
      *

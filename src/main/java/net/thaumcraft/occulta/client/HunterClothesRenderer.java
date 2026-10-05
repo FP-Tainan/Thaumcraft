@@ -38,7 +38,7 @@ import net.thaumcraft.Thaumcraft;
  * {@code 0,01}: o casaco tem de sobrar do corpo, e as calças têm de ficar coladas à perna. Fica igual.
  *
  * <p>O casaco é <b>comprido e de mangas</b>: a caixa a mais desce dez pontos abaixo do tronco, e é ela que
- * faz a silhueta — um chapéu de aba larga por cima de um casaco que vai até ao joelho. É o que se reconhece de
+ * faz a silhueta — um chapéu de aba larga por cima de um casaco que vai até o joelho. É o que se reconhece de
  * longe, e é o que o Witchery desenhou.
  */
 public final class HunterClothesRenderer implements ArmorRenderer {

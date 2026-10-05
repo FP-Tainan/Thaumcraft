@@ -160,7 +160,7 @@ public record Werewolf(int grau, Forma forma) {
         if (quem.level() instanceof ServerLevel level) WerewolfTick.arruma(level, quem);
     }
 
-    /** Sobe um grau, até ao teto. */
+    /** Sobe um grau, até o teto. */
     public static void sobeUmGrau(Player quem) {
         grau(quem, de(quem).grau() + 1);
     }
@@ -170,7 +170,7 @@ public record Werewolf(int grau, Forma forma) {
      *
      * <p>E virando bicho, a <b>forma de morcego</b> cai. No original as duas maldições partilham um único
      * contador de forma, e por isso ser lobo e morcego ao mesmo tempo é impossível por construção; aqui são
-     * dois apegos separados, e a lua ganha — quem estiver a voar na noite de lua cheia <b>cai</b>.
+     * dois apegos separados, e a lua ganha — quem estiver voando na noite de lua cheia <b>cai</b>.
      */
     public static void forma(Player quem, Forma qual) {
         Werewolf era = de(quem);

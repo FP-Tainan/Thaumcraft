@@ -263,7 +263,7 @@ public final class KettleBrews {
     }
 
     /**
-     * O galho em si, à parte do frasco: cresce de um lugar, numa direção, até ao tamanho que se pedir.
+     * O galho em si, à parte do frasco: cresce de um lugar, numa direção, até o tamanho que se pedir.
      *
      * <p>Está à parte porque a <b>poção de Brotar</b> também o pede — e lá não há frasco nem lugar batido: há
      * alguém de pé, e o galho sobe dele.
