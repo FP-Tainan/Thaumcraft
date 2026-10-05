@@ -34,12 +34,13 @@ import java.util.Map;
  *
  * <h2>O que esta fatia traz</h2>
  *
- * <p><b>Seis</b> dos trinta e um símbolos do original, escolhidos para pôr a máquina inteira de pé: cinco
- * que atiram uma bola — <b>Accio</b>, <b>Aguamenti</b>, <b>Incendio</b>, <b>Flipendo</b> e <b>Lumos</b> — e
- * um que não atira nada e age à volta de quem o lança, o <b>Nox</b>.
+ * <p><b>Catorze</b> dos trinta e um símbolos do original. Onze deles <b>atiram uma bola</b> — Accio,
+ * Aguamenti, Alohomora, Confundus, Ennervate, Expelliarmus, Flipendo, Impedimenta, Incendio, Lumos e
+ * Stupefy — e três agem <b>a partir de quem os lança</b>: Episkey, Protego e Nox.
  *
- * <p>Os outros vinte e cinco entram nas fatias seguintes. Os números e os desenhos deles já estão
- * levantados do original, traço por traço.
+ * <p>Os outros dezessete entram nas fatias seguintes: eles pedem coisas que ainda não estão portadas — as
+ * portas do ofício, o Tormento, o Leonard, as maldições imperdoáveis. Os números e os desenhos deles já
+ * estão levantados do original, traço por traço.
  */
 public final class Symbols {
     /** Os quatro traços que a vara sabe ler. */
@@ -106,6 +107,64 @@ public final class Symbols {
          * que vem com <b>grau zero</b>. Não é engano: com grau zero o custo é <b>metade</b>, e o original
          * preferiu escrever o preço assim a mexer no número.
          */
+        /*
+         * <b>Alohomora</b>: abre ou fecha a porta em que a bola bate. É o feitiço mais pequeno do mod —
+         * dois traços e meio — e o único que não tem grau nenhum acima do primeiro.
+         */
+        põe(new Alohomora(3), "2,0,2,2,1", "2,0,2,2,2,1", "2,0,0,2,2,1,1", "2,0,0,2,2,2,1,1");
+
+        /*
+         * <b>Confundus</b>: confunde. Dez segundos de náusea em quem a bola acertar, ou em tudo o que
+         * estiver a dois ou quatro blocos.
+         */
+        põe(new Confundus(8), "1,3,3,0,0,2", "1,3,3,3,0,0,2,2", "2,3,3,3,0,0,0,2,2",
+                "3,3,3,3,3,0,0,0,0,2,2,2");
+
+        /*
+         * <b>Ennervate</b>: o avesso do Confundus e de metade do que o mod sabe fazer — tira a
+         * <b>lentidão</b>, a <b>fraqueza</b> e a <b>náusea</b> de quem a bola acertar.
+         *
+         * <p>E a bola dele <b>cai</b>: ela não voa a direito, vai descendo. É o original a dizer que quem
+         * se cura dos outros tem de chegar perto.
+         */
+        põe(new Ennervate(12), "1,0,3,0,2,3,0,2", "2,0,3,3,0,2,2,3,3,0,2,2",
+                "3,0,3,3,3,0,2,2,2,3,3,3,0,2,2,2");
+
+        /*
+         * <b>Episkey</b>: cura — e <b>cobra a comida por ela</b>. Quem é curado perde da barriga o que
+         * ganhou de vida, e fica com náusea quatro segundos.
+         *
+         * <p>É o único feitiço de cura do mod, e é de propósito que ele não é de graça: curar alguém é
+         * <b>passar-lhe a conta</b>.
+         */
+        põe(new Episkey(13), "1,2,0,3,1,1,2", "2,2,0,0,3,1,1,1,1,2", "2,2,2,0,3,3,1,1,2,2",
+                "3,2,2,0,0,3,3,1,1,1,1,2,2");
+
+        /*
+         * <b>Expelliarmus</b>: desarma. O que estiver na mão de quem a bola acertar <b>cai no chão</b>.
+         * E não vale contra quem o lançou.
+         */
+        põe(new Expelliarmus(15), "1,0,0,1", "1,0,0,0,1,1", "2,0,0,0,0,1,1,1",
+                "3,0,0,0,0,0,1,1,1,1");
+
+        /* <b>Impedimenta</b>: trava. Lentidão II por trinta segundos, e nunca em quem o lançou. */
+        põe(new Impedimenta(19), "1,3,3,2", "1,3,3,3,2,2", "2,3,3,3,3,2,2,2",
+                "3,3,3,3,3,3,2,2,2,2");
+
+        /*
+         * <b>Protego</b>: um <b>escudo de luz</b> à frente de quem o lança, com a mesma parede de três
+         * colunas da Infusão da Luz. Quatro blocos de alcance, e só contra o chão.
+         */
+        põe(new Protego(31), "1,1,0", "1,1,1,0,0", "1,1,1,1,0,0,0");
+
+        /*
+         * <b>Stupefy</b>: estonteia. <b>Lentidão X por cinco minutos</b> em quem a bola acertar — o que
+         * é, na prática, pô-lo de pé e parado onde está.
+         *
+         * <p>Custa <b>cinco</b>, e a bola dele também cai. É o feitiço que acaba uma luta sem a ganhar.
+         */
+        põe(new Stupefy(36), "1,2,2,0,3,0,2");
+
         põe(new Nox(26), "0,0,2,1,2,0");
     }
 
@@ -361,6 +420,204 @@ public final class Symbols {
             }
         }
     }
+    /** <b>Alohomora</b>: abre ou fecha a porta em que bate. */
+    private static final class Alohomora extends ProjectileSymbol {
+        Alohomora(int id) {
+            super(id, "alohomora");
+            this.cor(0x513666).tamanho(0.5f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (!(onde instanceof BlockHitResult bateu)) return;
+            BlockPos ali = bateu.getBlockPos();
+            var feitio = level.getBlockState(ali);
+            if (!(feitio.getBlock() instanceof net.minecraft.world.level.block.DoorBlock porta)) return;
+            porta.setOpen(quem, level, feitio, ali,
+                    !feitio.getValue(net.minecraft.world.level.block.DoorBlock.OPEN));
+        }
+    }
+
+    /** <b>Confundus</b>: confunde. */
+    private static final class Confundus extends ProjectileSymbol {
+        /** Quanto a náusea dura. */
+        public static final int DURA = 600;
+
+        Confundus(int id) {
+            super(id, "confundus");
+            this.cor(0xFFE300).tamanho(1.5f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            double raio = grau == 1 ? 0.0 : (grau == 2 ? 2.0 : 4.0);
+            emVolta(level, quem, onde, raio, bicho -> {
+                if (bicho.hasEffect(net.minecraft.world.effect.MobEffects.NAUSEA)) return;
+                bicho.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                        net.minecraft.world.effect.MobEffects.NAUSEA, DURA, 0));
+            });
+        }
+    }
+
+    /** <b>Ennervate</b>: tira a lentidão, a fraqueza e a náusea. */
+    private static final class Ennervate extends ProjectileSymbol {
+        Ennervate(int id) {
+            super(id, "ennervate", 1, false, false, 0);
+            this.cor(0xFF187B).tamanho(1.5f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            double raio = grau == 1 ? 0.0 : (grau == 2 ? 2.0 : 4.0);
+            emVolta(level, quem, onde, raio, bicho -> {
+                bicho.removeEffect(net.minecraft.world.effect.MobEffects.SLOWNESS);
+                bicho.removeEffect(net.minecraft.world.effect.MobEffects.WEAKNESS);
+                bicho.removeEffect(net.minecraft.world.effect.MobEffects.NAUSEA);
+            });
+        }
+    }
+
+    /** <b>Episkey</b>: cura, e cobra a comida por ela. */
+    private static final class Episkey extends Symbol {
+        /** Quanto ele cura de cada vez, e quanto a náusea de depois dura. */
+        public static final int CURA = 5;
+        public static final int ENJOA = 80;
+
+        Episkey(int id) {
+            super(id, "episkey", 1, false, false, 0);
+        }
+
+        @Override
+        public void lança(ServerLevel level, ServerPlayer quem, int grau) {
+            double raio = grau == 1 ? 0.0 : (grau == 2 ? 2.0 : 4.0);
+            if (raio <= 0.0) {
+                cura(quem);
+                return;
+            }
+            AABB caixa = quem.getBoundingBox().inflate(raio);
+            for (LivingEntity bicho : level.getEntitiesOfClass(LivingEntity.class, caixa)) {
+                if (bicho.distanceToSqr(quem) > raio * raio) continue;
+                cura(bicho);
+            }
+        }
+
+        /**
+         * E a conta: quem é curado <b>perde da barriga</b> o que ganhou de vida.
+         *
+         * <p>Quem não tem barriga — tudo o que não é gente — conta como tendo cinco, e por isso se cura
+         * sem pagar nada. É assim no original.
+         */
+        private static void cura(LivingEntity bicho) {
+            boolean temBarriga = bicho instanceof net.minecraft.world.entity.player.Player;
+            int comida = temBarriga
+                    ? ((net.minecraft.world.entity.player.Player) bicho).getFoodData().getFoodLevel()
+                    : CURA;
+            if (comida <= 1 || bicho.getHealth() >= bicho.getMaxHealth()) return;
+            int quanto = Math.min(CURA, comida);
+            bicho.heal(quanto);
+            if (temBarriga) {
+                ((net.minecraft.world.entity.player.Player) bicho).getFoodData().eat(-quanto, 0.0f);
+            }
+            if (!bicho.hasEffect(net.minecraft.world.effect.MobEffects.NAUSEA)) {
+                bicho.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                        net.minecraft.world.effect.MobEffects.NAUSEA, ENJOA));
+            }
+        }
+    }
+
+    /** <b>Expelliarmus</b>: desarma. */
+    private static final class Expelliarmus extends ProjectileSymbol {
+        Expelliarmus(int id) {
+            super(id, "expelliarmus");
+            this.cor(0xFF9E42).tamanho(3.0f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            double raio = grau == 1 ? 0.0 : (grau == 2 ? 3.0 : 5.0);
+            emVolta(level, quem, onde, raio, bicho -> {
+                if (bicho == quem) return;
+                if (bicho instanceof ServerPlayer gente) {
+                    gente.drop(gente.getInventory().getSelectedItem(), true);
+                    gente.getInventory().setSelectedItem(net.minecraft.world.item.ItemStack.EMPTY);
+                    return;
+                }
+                var mão = bicho.getMainHandItem();
+                if (mão.isEmpty()) return;
+                bicho.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,
+                        net.minecraft.world.item.ItemStack.EMPTY);
+                bicho.spawnAtLocation(level, mão);
+            });
+        }
+    }
+
+    /** <b>Impedimenta</b>: trava. */
+    private static final class Impedimenta extends ProjectileSymbol {
+        /** Quanto a lentidão dura. */
+        public static final int DURA = 600;
+
+        Impedimenta(int id) {
+            super(id, "impedimenta");
+            this.cor(0x5E7FFF).tamanho(1.5f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            double raio = grau == 1 ? 0.0 : (grau == 2 ? 3.0 : 6.0);
+            emVolta(level, quem, onde, raio, bicho -> {
+                if (bicho == quem) return;
+                if (bicho.hasEffect(net.minecraft.world.effect.MobEffects.SLOWNESS)) return;
+                bicho.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                        net.minecraft.world.effect.MobEffects.SLOWNESS, DURA, 1));
+            });
+        }
+    }
+
+    /** <b>Protego</b>: um escudo de luz à frente. */
+    private static final class Protego extends Symbol {
+        /** Até onde o olhar dele chega. */
+        public static final double OLHAR = 4.0;
+
+        Protego(int id) {
+            super(id, "protego");
+        }
+
+        @Override
+        public void lança(ServerLevel level, ServerPlayer quem, int grau) {
+            Vec3 olhos = quem.getEyePosition();
+            Vec3 rumo = olhos.add(quem.getLookAngle().scale(OLHAR));
+            BlockHitResult bateu = level.clip(new net.minecraft.world.level.ClipContext(olhos, rumo,
+                    net.minecraft.world.level.ClipContext.Block.COLLIDER,
+                    net.minecraft.world.level.ClipContext.Fluid.NONE, quem));
+            if (bateu.getType() == HitResult.Type.MISS) {
+                net.thaumcraft.occulta.infusion.Infusion.falha(level, quem);
+                return;
+            }
+            net.thaumcraft.occulta.infusion.LightInfusion.escudo(level, quem, bateu);
+        }
+    }
+
+    /** <b>Stupefy</b>: estonteia. */
+    private static final class Stupefy extends ProjectileSymbol {
+        /** Quanto a lentidão dura, e de que grau ela é. */
+        public static final int DURA = 6000;
+        public static final int QUANTA = 9;
+
+        Stupefy(int id) {
+            super(id, "stupefy", 5, false, false, 0);
+            this.cor(0x0004FF).tamanho(1.5f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (!(onde instanceof EntityHitResult bateu)) return;
+            if (!(bateu.getEntity() instanceof LivingEntity bicho)) return;
+            if (bicho.hasEffect(net.minecraft.world.effect.MobEffects.SLOWNESS)) return;
+            bicho.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                    net.minecraft.world.effect.MobEffects.SLOWNESS, DURA, QUANTA));
+        }
+    }
+
     /** Põe um bloco ali, se houver lugar. */
     private static void põeSeCouber(ServerLevel level, BlockPos onde,
                                     net.minecraft.world.level.block.Block oquê) {

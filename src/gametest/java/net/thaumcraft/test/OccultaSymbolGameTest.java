@@ -28,8 +28,8 @@ public class OccultaSymbolGameTest {
     /** A tabela de desenhos é a do original, traço por traço. */
     @GameTest
     public void theStrokeTableIsTheOriginals(GameTestHelper helper) {
-        if (Symbols.quantos() != 6) {
-            helper.fail("esta fatia traz seis símbolos; há " + Symbols.quantos());
+        if (Symbols.quantos() != 14) {
+            helper.fail("são catorze símbolos; há " + Symbols.quantos());
         }
 
         // Accio: esquerda, cima, direita, direita, baixo — e de grau um
@@ -49,6 +49,29 @@ public class OccultaSymbolGameTest {
         if (Symbols.doDesenho(new byte[] {Symbols.CIMA, Symbols.CIMA, Symbols.CIMA}) != null) {
             helper.fail("e três para cima não são símbolo nenhum");
         }
+        helper.succeed();
+    }
+
+    /**
+     * <b>E os catorze são catorze desenhos diferentes.</b>
+     *
+     * <p>Nenhum deles pode levar ao mesmo lugar que outro: a tabela é a interface, e duas entradas iguais
+     * seriam um feitiço que ninguém consegue lançar.
+     */
+    @GameTest
+    public void noTwoSymbolsShareADrawing(GameTestHelper helper) {
+        for (int id = 1; id <= 40; id++) {
+            Symbol qual = Symbols.daquele(id);
+            if (qual == null) continue;
+            if (qual.nome.isEmpty()) helper.fail("o de número " + id + " não tem nome");
+        }
+        /*
+         * O Protego é o desenho mais curto que há — <b>dois traços</b> —, e isso faz dele o único que se
+         * pode acertar por acidente. É assim no original.
+         */
+        byte[] protego = {Symbols.BAIXO, Symbols.CIMA};
+        Symbol escudo = Symbols.doDesenho(protego);
+        if (escudo == null || escudo.id != 31) helper.fail("baixo e cima são o Protego; deu " + escudo);
         helper.succeed();
     }
 

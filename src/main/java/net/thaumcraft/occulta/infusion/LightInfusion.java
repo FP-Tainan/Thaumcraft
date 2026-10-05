@@ -243,7 +243,7 @@ public class LightInfusion extends Infusion {
      * <p>O original acha o rumo pelo ângulo da cara e põe uma coluna no lugar em que se bateu e duas a um
      * bloco de cada lado — de modo que o escudo sai <b>atravessado</b> ao olhar, e não ao longo dele.
      */
-    private static void escudo(ServerLevel level, ServerPlayer quem, BlockHitResult bateu) {
+    public static void escudo(ServerLevel level, ServerPlayer quem, BlockHitResult bateu) {
         BlockPos onde = bateu.getBlockPos();
         int acima = level.getBlockState(onde).isSolidRender() ? 1 : 0;
         BlockPos pé = onde.above(acima);

@@ -9910,18 +9910,45 @@ Quem lê o desenho é o **lado do cliente**: é lá que a cabeça do jogador se 
 torto; lido do lado de cá e **confirmado** do outro, o que se desenha é o que sai. E o servidor **confere**:
 um recado que diga um símbolo que não existe é largado sem mais.
 
-### Os seis desta fatia
+### Os catorze desta fatia
 
-De trinta e um do original, seis — escolhidos para pôr a máquina inteira de pé:
+De trinta e um do original, catorze:
 
 | símbolo | o que faz | custa |
 | --- | --- | --- |
 | **Accio** | puxa para si tudo o que estiver largado à volta de onde a bola bateu: oito décimos de bloco no grau um, três no dois, **nove** no três | 1 |
 | **Aguamenti** | água onde a bola bate — e **no Nether só no grau três**, porque lá ela some | 1 |
-| **Incendio** | fogo onde a bola bate; nos graus dois e três, pega fogo a tudo a três ou seis blocos. E **acende o Homem de Vime** | 1 |
+| **Alohomora** | abre ou fecha a porta em que a bola bate | 1 |
+| **Confundus** | náusea de dez segundos em quem a bola acertar | 1 |
+| **Ennervate** | tira a **lentidão**, a **fraqueza** e a **náusea** — e a bola dele **cai** em vez de voar a direito | 1 |
+| **Episkey** | cura, e **cobra a comida por ela** | 1 |
+| **Expelliarmus** | desarma: o que estiver na mão cai no chão | 1 |
 | **Flipendo** | empurra o que a bola acertar; nos graus dois e três, tudo a três ou seis blocos | 1 |
+| **Impedimenta** | lentidão II por trinta segundos, nunca em quem o lançou | 1 |
+| **Incendio** | fogo onde a bola bate; nos graus dois e três, pega fogo a tudo a três ou seis blocos. E **acende o Homem de Vime** | 1 |
 | **Lumos** | um **Globo de Luz** onde a bola bate | 1 |
 | **Nox** | tira **tudo o que der luz** num cubo de dez blocos à volta de quem o lança | 50 |
+| **Protego** | um **escudo de luz** à frente, com a parede de três colunas da Infusão da Luz | 1 |
+| **Stupefy** | **lentidão X por cinco minutos** em quem a bola acertar | 5 |
+
+Três deles — **Episkey**, **Protego** e **Nox** — não atiram nada: agem a partir de quem os lança. Os
+outros onze atiram a bola.
+
+E dois merecem uma linha a mais:
+
+- o **Episkey** é o único feitiço de cura do mod, e **não é de graça**: quem é curado perde da barriga o
+  que ganhou de vida e fica com náusea quatro segundos. Curar alguém é **passar-lhe a conta**. Quem não
+  tem barriga — tudo o que não é gente — se cura sem pagar nada, e é assim no original;
+- o **Protego** tem o desenho mais curto que há, **dois traços**, o que faz dele o único que se pode
+  acertar por acidente.
+
+### Os dezessete que faltam
+
+Eles pedem coisas que ainda não estão portadas: as **portas do ofício** (Colloportus), o **Tormento**
+(Tormentum), o **Leonard** (os quatro dele), as **maldições imperdoáveis** (Avada Kedavra, Crucio,
+Imperio, Morsmordre), e um punhado de outros — Attraho, Carnosa Diem, Cave Inimicum, Defodio, Flagrate,
+Ignianima, Meteolojinx Recanto. Os números e os desenhos de todos já estão levantados do original, traço
+por traço.
 
 E dois detalhes do original que ficam como estão:
 
@@ -9955,7 +9982,8 @@ três mil que leva diamante, muda, Coração de Creeper e Sangue Infernal.
 E ela também se **deita no altar**, como a Arthana: aí o altar ganha **um de poder de encanto**. Com isso, a
 única coisa que falta ao altar do original é o **pentáculo de kobolditas**.
 
-**Guardas:** `OccultaSymbolGameTest`, com seis — a tabela de desenhos (a prova que carrega a fatia); o custo
-que dobra por grau, com o grau zero do Nox; o feitiço que se prepara antes de se lançar; o grau comprido que
-precisa de Adoração; o Incendio pondo fogo; e a vara deitada no altar. E `OccultaSymbolClientTest`, com duas
+**Guardas:** `OccultaSymbolGameTest`, com sete — a tabela de desenhos (a prova que carrega a fatia); os
+catorze com nome e o desenho de dois traços do Protego; o custo que dobra por grau, com o grau zero do Nox;
+o feitiço que se prepara antes de se lançar; o grau comprido que precisa de Adoração; o Incendio pondo fogo;
+e a vara deitada no altar. E `OccultaSymbolClientTest`, com duas
 telas: a vara no inventário e as quatro bolas lado a lado, para se verem as cores.
