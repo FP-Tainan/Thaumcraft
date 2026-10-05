@@ -21,8 +21,9 @@ import net.thaumcraft.occulta.infusion.Infusions;
  *
  * <p>Ela só aparece a quem <b>está infundido</b>. Sem infusão não há tubo nenhum.
  *
- * <p><b>Fica de fora, declarado:</b> a <b>segunda barra</b>, a dos poderes de bicho da Infusão Infernal, que
- * o original desenha ao lado desta com a textura de argila. Ela entra com a infusão dela.
+ * <p>E há uma <b>segunda</b>, dez pixels mais para dentro: a dos <b>poderes de bicho</b>. Essa não é um
+ * tubo que se enche: é uma <b>pilha de riscos</b>, um por carga — porque elas são poucas, no máximo vinte, e
+ * contar vinte riscos é mais rápido do que medir um nível.
  */
 public final class InfusionBar {
     /** O tamanho do tubo. */
@@ -31,6 +32,12 @@ public final class InfusionBar {
 
     /** E onde ele fica: encostado à direita e no meio. */
     public static final int DA_DIREITA = 20;
+
+    /** A segunda barra, a dos bichos, fica dez para dentro. */
+    public static final int A_SEGUNDA = 30;
+
+    /** E a argila é o que a enche, como no original. */
+    private static final Identifier ARGILA = Identifier.withDefaultNamespace("textures/block/clay.png");
 
     /** O vidro por cima, que é uma tira de oito por um esticada. */
     public static final Identifier VIDRO = Thaumcraft.id("textures/gui/glass.png");
@@ -88,5 +95,23 @@ public final class InfusionBar {
 
         // e o vidro por cima, que é a tira de um esticada pelo tubo inteiro
         graphics.blit(RenderPipelines.GUI_TEXTURED, VIDRO, x, y, 0.0f, 0.0f, LARGO, ALTO, LARGO, 1);
+
+        desenhaOBicho(graphics, quem, y);
+    }
+
+    /**
+     * <b>A segunda barra: a do bicho.</b>
+     *
+     * <p>Um risco de <b>dois pixels</b> por carga, empilhados de baixo para cima. São no máximo vinte, e
+     * por isso cabem no mesmo tubo de trinta e dois sem se tocarem.
+     */
+    private static void desenhaOBicho(GuiGraphicsExtractor graphics, Player quem, int y) {
+        int cargas = net.thaumcraft.occulta.infusion.beast.CreaturePowers.cargas(quem);
+        if (cargas <= 0 || net.thaumcraft.occulta.infusion.beast.CreaturePowers.dele(quem) == null) return;
+        int x = graphics.guiWidth() - A_SEGUNDA;
+        for (int risco = 0; risco < cargas; risco++) {
+            graphics.blit(RenderPipelines.GUI_TEXTURED, ARGILA, x, y + ALTO - 2 - risco * 2,
+                    0.0f, 0.0f, LARGO, 1, 16, 16);
+        }
     }
 }

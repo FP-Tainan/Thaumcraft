@@ -68,6 +68,19 @@ public final class OccultaEvents {
                 });
 
         /*
+         * <b>O golpe que o bicho no bolso engole.</b>
+         *
+         * <p>O creeper engole raios — e ainda enche a infusão em vinte e cinco —, o homem-porco engole
+         * fogo e a lula engole o afogamento. Os três custam carga de <b>infusão</b>, e não de bicho.
+         */
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((quem, fonte, quanto) -> {
+            if (!(quem.level() instanceof ServerLevel level)) return true;
+            if (!(quem instanceof net.minecraft.server.level.ServerPlayer gente)) return true;
+            var poder = net.thaumcraft.occulta.infusion.beast.CreaturePowers.dele(gente);
+            return poder == null || !poder.levouGolpe(level, gente, fonte);
+        });
+
+        /*
          * O soco com a <b>Mão de Bruxa</b>, que não magoa ninguém: ele é só o jeito de a infusão de quem
          * a tem chegar ao mundo.
          */

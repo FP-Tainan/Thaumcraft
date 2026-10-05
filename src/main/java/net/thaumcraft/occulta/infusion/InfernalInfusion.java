@@ -36,10 +36,12 @@ import net.thaumcraft.occulta.enslave.Enslavement;
  * <p>Repare na diferença entre o segundo e o terceiro: um manda <b>atacar</b>, o outro manda <b>ir</b>. Com
  * os dois, quem tem esta infusão deixa de lutar — ele <b>aponta</b>.
  *
- * <p><b>Fica de fora, por agora:</b> o <b>sacrifício</b> — agachado, socar outra vez um bicho que já é seu
- * o mata e <b>lhe toma o poder</b>. Os poderes de bicho são um ramo inteiro do original, com vinte e cinco
- * deles e uma barra própria, e entram numa fatia só sua. Até lá, sacrificar um escravo toca o tambor de
- * «não dá».
+ * <h2>E o sacrifício</h2>
+ *
+ * <p>Agachado, socar outra vez um bicho que <b>já é seu</b> o mata e <b>lhe toma o poder</b>. É a ideia mais
+ * estranha deste ramo e a melhor: a Infusão Infernal não lhe dá poderes, ela deixa-o <b>tirá-los de quem os
+ * tem</b>. Os {@linkplain net.thaumcraft.occulta.infusion.beast.CreaturePower poderes de bicho} são vinte e
+ * cinco, e usam-se largando a Mão <b>sem agachar</b>.
  */
 public class InfernalInfusion extends Infusion {
     /** A que distância os seus o ouvem. */
@@ -54,6 +56,7 @@ public class InfernalInfusion extends Infusion {
     /** O que cada coisa custa. */
     public static final int CUSTO_ESCRAVIZAR = 5;
     public static final int CUSTO_APONTAR = 1;
+    public static final int CUSTO_SACRIFICAR = 1;
 
     public InfernalInfusion(int id) {
         super(id);
@@ -87,7 +90,7 @@ public class InfernalInfusion extends Infusion {
             return;
         }
         if (Enslavement.escravoDe(escravo, quem)) {
-            falha(level, quem);
+            sacrifica(level, quem, escravo);
             return;
         }
         if (!this.gasta(level, quem, CUSTO_ESCRAVIZAR)) return;
@@ -121,11 +124,7 @@ public class InfernalInfusion extends Infusion {
     @Override
     public void largou(ServerLevel level, ServerPlayer quem, ItemStack mão, int faltam) {
         if (!quem.isShiftKeyDown()) {
-            /*
-             * Sem agachar, isto usaria o <b>poder de bicho</b> que se tomou do último sacrifício. Enquanto
-             * esse ramo não entra, não há o que usar.
-             */
-            falha(level, quem);
+            usaOPoder(level, quem, this.quantoSeSegura() - faltam);
             return;
         }
 
@@ -168,6 +167,69 @@ public class InfernalInfusion extends Infusion {
                         ParticleTypes.INSTANT_EFFECT, 1.0f, 1.0f, 1.0f, 1.0f),
                 onde.getX() + 0.5, onde.getY() + 0.5, onde.getZ() + 0.5, 16, 0.5, 2.0, 0.5, 0.0);
         toca(level, quem, SoundEvents.ITEM_PICKUP);
+    }
+
+    /**
+     * <b>O sacrifício.</b>
+     *
+     * <p>Socar outra vez, agachado, um bicho que já é seu <b>mata-o</b> e <b>toma-lhe o poder</b>. É a
+     * ideia mais estranha do ramo e a melhor: a Infusão Infernal não lhe dá poderes, ela deixa-o tirá-los
+     * de quem os tem.
+     *
+     * <p>Custa <b>uma</b> carga de infusão, e o bicho morre do golpe que o mata — a vida inteira dele mais
+     * um, em dano de jogador, como no original.
+     */
+    private void sacrifica(ServerLevel level, ServerPlayer quem, Mob escravo) {
+        var poder = net.thaumcraft.occulta.infusion.beast.CreaturePowers.de(escravo);
+        if (poder == null) {
+            falha(level, quem);
+            return;
+        }
+        if (!this.gasta(level, quem, CUSTO_SACRIFICAR)) return;
+
+        net.thaumcraft.occulta.infusion.beast.CreaturePowers.toma(quem, poder);
+        escravo.hurtServer(level, level.damageSources().playerAttack(quem),
+                escravo.getHealth() + 1.0f);
+    }
+
+    /**
+     * <b>E o poder que se tomou usa-se largando a Mão sem agachar.</b>
+     *
+     * <p>Ele custa <b>uma carga de infusão</b> <i>e</i> o que o poder pedir de <b>carga de bicho</b> — as
+     * duas, e não uma ou outra. Sem bicho nenhum no bolso, o tambor.
+     */
+    private void usaOPoder(ServerLevel level, ServerPlayer quem, int segurou) {
+        var poder = net.thaumcraft.occulta.infusion.beast.CreaturePowers.dele(quem);
+        if (poder == null) {
+            falha(level, quem);
+            return;
+        }
+        int tem = net.thaumcraft.occulta.infusion.beast.CreaturePowers.cargas(quem);
+        int pede = poder.custo(segurou);
+        if (tem - pede < 0 || !this.gasta(level, quem, CUSTO_APONTAR)) {
+            falha(level, quem);
+            return;
+        }
+
+        poder.usa(level, quem, segurou, olhaParaOPoder(level, quem));
+        if (!quem.getAbilities().instabuild) {
+            net.thaumcraft.occulta.infusion.beast.CreaturePowers.põeCargas(quem, tem - pede);
+        }
+    }
+
+    /** O que ele está olhando, até quinze blocos: é o que os poderes que miram recebem. */
+    public static @org.jetbrains.annotations.Nullable HitResult olhaParaOPoder(ServerLevel level,
+                                                                               ServerPlayer quem) {
+        Vec3 olhos = quem.getEyePosition();
+        Vec3 rumo = olhos.add(quem.getLookAngle().scale(OLHAR));
+        for (Entity bicho : level.getEntities(quem, new AABB(olhos, rumo).inflate(1.0))) {
+            if (!(bicho instanceof LivingEntity)) continue;
+            var ali = bicho.getBoundingBox().inflate(0.3).clip(olhos, rumo);
+            if (ali.isPresent()) return new net.minecraft.world.phys.EntityHitResult(bicho, ali.get());
+        }
+        BlockHitResult bateu = level.clip(new ClipContext(olhos, rumo, ClipContext.Block.COLLIDER,
+                ClipContext.Fluid.NONE, quem));
+        return bateu.getType() == HitResult.Type.MISS ? null : bateu;
     }
 
     /** Os bichos que estão perto bastante para o ouvir. */

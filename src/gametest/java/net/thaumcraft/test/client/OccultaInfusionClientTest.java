@@ -55,6 +55,26 @@ public class OccultaInfusionClientTest implements FabricClientGameTest {
             });
             context.waitTicks(40);
             context.takeScreenshot("infusao_3_a_barra_de_poder");
+
+            /*
+             * E a <b>segunda barra</b>: a dos poderes de bicho, dez pixels mais para dentro, que não é um
+             * tubo que se enche mas uma <b>pilha de riscos</b>, um por carga.
+             */
+            context.runOnClient(minecraft -> {
+                var servidor = minecraft.getSingleplayerServer();
+                if (servidor == null) return;
+                servidor.execute(() -> {
+                    for (var quem : servidor.getPlayerList().getPlayers()) {
+                        net.thaumcraft.occulta.infusion.Infusions.infunde(quem,
+                                net.thaumcraft.occulta.infusion.Infusions.daquele(4), 200);
+                        net.thaumcraft.occulta.infusion.Infusions.põeEnergia(quem, 90);
+                        net.thaumcraft.occulta.infusion.beast.CreaturePowers.toma(quem,
+                                net.thaumcraft.occulta.infusion.beast.CreaturePowers.daquele(6));
+                    }
+                });
+            });
+            context.waitTicks(40);
+            context.takeScreenshot("infusao_4_as_duas_barras");
         }
     }
 }

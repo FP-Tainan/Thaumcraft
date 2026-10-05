@@ -9793,3 +9793,80 @@ aldeão e cogumelada.
 **Guardas:** no `OccultaInfusionGameTest`, mais uma — **tomar e apontar**, que é a fatia inteira numa prova
 só: o soco agachado escraviza por cinco, e o soco sem agachar manda o escravo atrás de quem o levou. E a
 barra de poder ganha a textura da **pedra do Nether**, que é a desta infusão.
+
+## Os poderes de bicho (2026-10-05)
+
+A ideia mais estranha do Witchery e a melhor: a Infusão Infernal **não lhe dá poderes**. Ela deixa-o
+**tirá-los de quem os tem**.
+
+Toma-se um bicho para si, leva-se para onde se quiser, e então **mata-se** — e o que ele sabia fazer passa a
+ser seu. Um de cada vez: tomar o poder de outra espécie **apaga** o que se tinha.
+
+### Os vinte e cinco
+
+| nº | bicho | o que ele dá |
+| --- | --- | --- |
+| 1, 2 | aranha-das-cavernas, aranha | **teia** onde se olha; e trepar paredes, travar a queda sob um teto, e parar na parede agachado |
+| 3 | creeper | **estourar** em si próprio (três, ou seis por duas cargas se segurar); e **engolir raios**, enchendo a infusão em vinte e cinco |
+| 4, 24 | morcego, coruja | visão noturna; e o **voo**: segurando o pular se sobe, e a queda nunca passa de cinco |
+| 5 | lula | **cegar** quem se olha; nadar quinze por cento mais depressa; e **não se afogar** |
+| 6 | ghast | **bola de fogo grande** |
+| 7 | blaze | **três bolas pequenas** em leque |
+| 8 | homem-porco | Resistência III e Força III; e **engolir fogo**, com resistência a ele de presente |
+| 9 | zumbi | Resistência II e Força I |
+| 10 | esqueleto | uma **flecha**, com a força do arco do jogo — crítica ao segundo cheio |
+| 11, 12, 25 | cubo de magma, slime, sapo | Impulso IV; subir mais no ar; e **não cair** |
+| 13–16 | peixinho-de-prata, jaguatirica, lobo, cavalo | Velocidade IV; e andar **quarenta e cinco por cento mais depressa**, sempre |
+| 17 | enderman | o **salto** da Infusão do Outro Lugar, emprestado |
+| 18–23 | ovelha, vaca, galinha, porco, aldeão, cogumelada | **curar meio coração** |
+
+### O que a lista diz
+
+Metade dela são bichos de capoeira que só sabem **curar**, e esses dão **uma carga** em vez de dez. Matar
+uma ovelha para se curar meio coração é um péssimo negócio, e o original quis que fosse: o poder de bicho é
+para os bichos que **custam a apanhar**.
+
+E repare quais são os melhores. O **ghast** e o **enderman** são os mais caros de encher e os mais fortes de
+usar. Os **que correm** — peixinho-de-prata, jaguatirica, lobo, cavalo — são dos mais fáceis de apanhar e
+dão um acréscimo de velocidade **maior do que o da poção e que não acaba**. É a troca ao contrário, e é de
+propósito: quem anda muito escolhe o lobo, quem luta escolhe o ghast.
+
+### As cargas, e as duas que se gastam
+
+Um bicho dá **dez** cargas (um, se for de capoeira), até um teto de **vinte**. E usar um poder custa
+**duas coisas ao mesmo tempo**: uma carga de **infusão** <i>e</i> o que o poder pedir de carga de **bicho**.
+
+Os três poderes que **engolem golpes** — o raio do creeper, o fogo do homem-porco, o afogamento da lula —
+custam carga de **infusão** e não de bicho. Quer dizer que eles funcionam mesmo com o bicho vazio, enquanto
+houver infusão.
+
+E os poderes de **andar** não custam nada. Trepar, voar, nadar e correr são de graça, para sempre. É o
+melhor que o ramo tem, e o original não o cobra.
+
+### Onde eles correm
+
+Os poderes de andar correm **no cliente**, a cada batida, e é assim no original por uma razão boa: mexer na
+velocidade de quem joga só fica macio se for do lado dele. Feito do lado do servidor, o jogador veria o
+próprio passo a corrigir-se de volta duas vezes por segundo.
+
+O que torna isso possível aqui é a carga de bicho **atravessar a rede**: o lado de cá sabe que poder a
+pessoa tem sem ter de perguntar.
+
+### A segunda barra
+
+Ao lado da barra da infusão, dez pixels mais para dentro, fica a dos **poderes de bicho**. Essa não é um
+tubo que se enche: é uma **pilha de riscos**, um por carga — porque elas são poucas, no máximo vinte, e
+contar vinte riscos é mais rápido do que medir um nível.
+
+### Dois desvios declarados
+
+- **A teia da aranha nasce onde o olhar bate**, até dezesseis blocos, em vez de ser atirada como frasco: o
+  porte não tem ainda a entidade que atira frascos de ingrediente. O resultado no chão é o mesmo; o que se
+  perde é o arco da coisa no ar.
+- **O creeper pergunta à fonte do dano** se o golpe veio de um raio. O original descobre isso **lendo a
+  pilha de chamadas** à procura do `onStruckByLightning`, porque em 2014 não havia como perguntar.
+
+**Guardas:** `OccultaBeastPowerGameTest`, com quatro — os vinte e cinco com os números e as cargas do
+original; cada poder saindo do bicho certo; a prova que carrega a fatia, que é o **sacrifício** (o primeiro
+soco toma, o segundo mata e toma o poder); e a troca de poder, que apaga o que se tinha e soma só até vinte.
+E, no `OccultaInfusionClientTest`, mais uma tela: as **duas barras** lado a lado.

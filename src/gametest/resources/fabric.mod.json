@@ -130,6 +130,7 @@
       "net.thaumcraft.test.OccultaCrystalBallGameTest",
       "net.thaumcraft.test.OccultaPlacedItemGameTest",
       "net.thaumcraft.test.OccultaAlluringSkullGameTest",
+      "net.thaumcraft.test.OccultaBeastPowerGameTest",
       "net.thaumcraft.test.OccultaInfusionGameTest",
       "net.thaumcraft.test.OccultaWickerManGameTest",
       "net.thaumcraft.test.OccultaStockadeGameTest",

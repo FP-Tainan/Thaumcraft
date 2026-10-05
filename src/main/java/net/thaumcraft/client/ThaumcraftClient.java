@@ -228,6 +228,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.GARLIC_GARLAND_ENTITY,
                 net.thaumcraft.occulta.client.GarlicGarlandRenderer::new);
 
+        // os poderes de andar do bicho no bolso, que correm do lado de cá
+        net.thaumcraft.occulta.client.BeastMotion.init();
+
         // a barra de poder da infusão, que se enche com a textura da infusão que se tem
         net.thaumcraft.occulta.client.InfusionBar.init();
 
