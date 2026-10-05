@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "b",
+    "a"
+  ],
+  "key": {
+    "a": "thaumcraft:chalice",
+    "b": "thaumcraft:redstone_soup"
+  },
+  "result": {
+    "id": "thaumcraft:filled_chalice",
+    "count": 1
+  }
+}

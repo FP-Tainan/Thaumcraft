@@ -28,12 +28,15 @@ import java.util.List;
  * <ul>
  *   <li>uma <b>caveira</b> em cima de qualquer bloco do altar: de esqueleto soma um ao teto e à velocidade, de
  *       esqueleto wither soma dois, de gente soma três;</li>
- *   <li>e uma <b>tocha</b>: soma um à velocidade.</li>
+ *   <li>um <b>candelabro</b> ou uma <b>tocha</b>: o candelabro soma dois à velocidade, a tocha um — e é o
+ *       mesmo lugar, porque o altar conta <b>uma luz só</b>;</li>
+ *   <li>e um <b>cálice</b>: soma um ao teto se estiver vazio, dois se estiver cheio.</li>
  * </ul>
  *
- * <p><b>Do original ficam de fora, por agora,</b> o candelabro, o cálice, a Arthana, o Ramo Místico, o pentáculo
- * de kobolditas e o Ovo do Infinito — que ainda não foram portados. Os dois primeiros somam ao teto e à
- * velocidade; os outros dão alcance, poder de encanto e multiplicam a velocidade.
+ * <p>De cada um <b>conta-se um</b>: dois candelabros valem o mesmo que um, e o segundo cálice não soma nada.
+ *
+ * <p><b>Do original ficam de fora, por agora,</b> a Arthana, o Ramo Místico, o pentáculo de kobolditas e o Ovo
+ * do Infinito — que ainda não foram portados. Eles dão alcance, poder de encanto e multiplicam a velocidade.
  */
 public class AltarBlockEntity extends BlockEntity {
     /** Quanto poder entra a cada segundo, antes dos enfeites. */
@@ -120,6 +123,11 @@ public class AltarBlockEntity extends BlockEntity {
         return this.maxPower * this.powerScale;
     }
 
+    /** O quanto os enfeites multiplicam o teto: um altar pelado vale um. */
+    public int powerScale() {
+        return this.powerScale;
+    }
+
     public int rechargeScale() {
         return this.rechargeScale;
     }
@@ -162,6 +170,7 @@ public class AltarBlockEntity extends BlockEntity {
         int novaVelocidade = 1;
         boolean caveira = false;
         boolean luz = false;
+        boolean taça = false;
 
         for (BlockPos onde : this.pieces(level)) {
             BlockState acima = level.getBlockState(onde.above());
@@ -177,9 +186,15 @@ public class AltarBlockEntity extends BlockEntity {
                     novaVelocidade += quanto;
                     caveira = true;
                 }
+            } else if (!luz && acima.is(OccultaBlocks.CANDELABRA)) {
+                luz = true;
+                novaVelocidade += 2;
             } else if (!luz && (acima.is(Blocks.TORCH) || acima.is(Blocks.WALL_TORCH))) {
                 luz = true;
                 novaVelocidade++;
+            } else if (!taça && acima.is(OccultaBlocks.CHALICE)) {
+                taça = true;
+                novoPoder += acima.getValue(ChaliceBlock.CHEIO) ? 2 : 1;
             }
         }
 

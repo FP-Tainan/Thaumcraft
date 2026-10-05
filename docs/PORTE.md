@@ -9244,3 +9244,75 @@ prova que carrega a fatia, que é a **mesma figura em feixes simples não ser re
 doze fogos e o Caçador de pé; e o feixe sozinho, que não é figura nenhuma. E `OccultaWickerManClientTest`,
 com três telas: o Homem inteiro visto do chão, os dois feixes lado a lado — um deitado, para se ver a tampa —
 e os dois no inventário.
+
+## O Candelabro e o Cálice, e o altar que enfim os conta (2026-10-05)
+
+Dois enfeites, e o fim de uma lista de espera. O miolo do Altar da Bruxa já dizia, em letra miúda, que
+**ficavam de fora, por agora, o candelabro e o cálice** — e esta fatia tira-lhes o «por agora».
+
+### O que eles valem
+
+O altar olha o que está posto **em cima de cada uma das suas seis pedras** e conta:
+
+| posto em cima | o que soma |
+| --- | --- |
+| tocha | **um** à velocidade |
+| **candelabro** | **dois** à velocidade |
+| cálice vazio | **um** ao teto |
+| cálice cheio | **dois** ao teto |
+
+E de cada coisa conta-se **uma só**. O candelabro e a tocha disputam o **mesmo lugar** — quem já tem
+candelabro não ganha nada por pôr uma tocha ao lado —, e o segundo cálice não vale nada.
+
+Repare na conta: um altar com candelabro e cálice cheio recarrega **três vezes** mais depressa e tem o
+**triplo** do teto. É mais do que a caveira de gente dá, e custa muito menos.
+
+### O candelabro
+
+Cinco velas num pé de ferro, quatro em volta e uma no meio — e a do meio é **cinco mais comprida** que as
+outras, com o pratinho dela **dois mais abaixo**, o que a faz sobressair pelo dobro. Dá **luz cheia** e
+**arde sempre**: não há feitio aceso e apagado, há o candelabro.
+
+As chamas são **pós**, e não peças do modelo: cinco chamas com cinco fumos, e cada par só aparece em **três
+de cada quatro** batidas. É esse sorteio que dá ao fogo dele o piscar irregular de vela de verdade.
+
+### O cálice
+
+Uma taça de ouro feita de **caixas chatas** — quatro paredes de espessura zero e um fundo de espessura zero.
+É como se fazia um copo oco antes de haver jeito melhor: uma caixa sem espessura desenha as duas faces no
+mesmo lugar, uma virada para cada lado, e o resultado é uma parede que se vê por dentro e por fora. O
+**líquido** é outra chapa chata, solta da taça, que só se desenha quando ela está cheia.
+
+E ele põe-se **cheio ou vazio** e fica como o puseram. Não se enche no lugar: o que o enche é a **Sopa de
+Redstone**, na bancada, antes de ele descer ao altar — que é a única razão de a Sopa de Redstone existir.
+
+### O cheio, e onde ele passou a morar
+
+No original são **dois itens** e **um bloco com dois números**, e a alma do bloco guarda a mesma coisa que o
+número, com os dois a serem postos de acordo um com o outro a cada mudança — três lugares para um booleano.
+
+Aqui são os mesmos **dois itens**, mas o cheio vive **só no feitio do bloco**, que é onde o jogo de hoje
+guarda esse tipo de coisa e já o manda pela rede sozinho. As duas almas — a do cálice e a do candelabro —
+ficaram **vazias**: existem só porque um bloco que se desenha por fora precisa de uma alma a que o
+desenhista se pendure, que é exatamente o que elas são no original (a do candelabro, lá, não tem uma única
+linha que não seja um `canFalse`).
+
+### As caixas de textura negativas
+
+As do cálice são **negativas** no original: `(0, -5)`, `(-5, 4)`, `(-4, 18)`. Não é engano. A folha repete-se
+nas duas direções, e ler cinco acima do topo de uma folha de trinta e dois é o mesmo que ler na linha vinte e
+sete. **Ficam como estão** — mudá-las para o número de dentro daria o mesmo desenho e deixaria de se parecer
+com o original.
+
+### O chão de que precisam
+
+O original pede que o bloco de baixo **tranque o passo e tape a luz**. Aqui pede-se que a **face de cima
+dele seja firme**, que é o que o jogo de hoje pergunta às tochas e dá o mesmo resultado em todos os blocos
+que existiam em 2014.
+
+**Guardas:** `OccultaChaliceGameTest`, com quatro — a luz cheia do candelabro; a queda dele sem chão; os dois
+itens pondo o mesmo bloco de dois jeitos e devolvendo cada um o seu; e a queda do cálice. E, no
+`OccultaAltarGameTest`, a prova que carrega a fatia: **o candelabro somando dois, a tocha ao lado não somando
+nada, o cálice vazio somando um e o cheio dois, e o segundo cálice não somando nada**. E
+`OccultaChaliceClientTest`, com quatro telas: o candelabro à meia-noite, para se ver a luz; os dois cálices
+lado a lado; o altar posto como se usa; e os três itens no inventário.

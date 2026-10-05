@@ -263,6 +263,18 @@ public final class OccultaItems {
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
+    /** O <b>Candelabro</b>, que se põe em qualquer chão firme. */
+    public static final Item CANDELABRA = register("candelabra", properties ->
+            new BlockItem(OccultaBlocks.CANDELABRA, properties.useBlockDescriptionPrefix()));
+
+    /** O <b>Cálice</b> vazio. */
+    public static final Item CHALICE = register("chalice", properties ->
+            new ChaliceItem(false, properties));
+
+    /** E o <b>cheio</b>, que é o mesmo bloco posto de outro jeito. */
+    public static final Item FILLED_CHALICE = register("filled_chalice", properties ->
+            new ChaliceItem(true, properties));
+
     public static final Item WICKER_BUNDLE = register("wicker_bundle", properties ->
             new net.thaumcraft.occulta.WickerBundleItem(properties.useBlockDescriptionPrefix()));
 

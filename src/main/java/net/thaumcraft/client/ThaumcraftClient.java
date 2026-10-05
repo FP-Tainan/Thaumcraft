@@ -228,6 +228,20 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.GARLIC_GARLAND_ENTITY,
                 net.thaumcraft.occulta.client.GarlicGarlandRenderer::new);
 
+        // o candelabro e o cálice, que se põem em cima do altar
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.CandelabraModel.CANDELABRO,
+                net.thaumcraft.occulta.client.CandelabraModel::candelabro);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.CANDELABRA_ENTITY,
+                net.thaumcraft.occulta.client.CandelabraRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.ChaliceModel.CÁLICE,
+                net.thaumcraft.occulta.client.ChaliceModel::cálice);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.CHALICE_ENTITY,
+                net.thaumcraft.occulta.client.ChaliceRenderer::new);
+
         // o Baú de Sanguessugas, cuja tampa abre em quatro quartos
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.LeechChestModel.BAÚ,

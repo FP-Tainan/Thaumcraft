@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "yay",
+    "yxy",
+    " x "
+  ],
+  "key": {
+    "x": "minecraft:gold_ingot",
+    "y": "minecraft:gold_nugget",
+    "a": "thaumcraft:attuned_stone"
+  },
+  "result": {
+    "id": "thaumcraft:chalice",
+    "count": 1
+  }
+}

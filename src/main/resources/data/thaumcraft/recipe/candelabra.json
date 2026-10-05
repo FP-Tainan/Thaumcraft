@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "xxx",
+    "yay",
+    " y "
+  ],
+  "key": {
+    "x": "minecraft:torch",
+    "y": "minecraft:iron_ingot",
+    "a": "thaumcraft:attuned_stone"
+  },
+  "result": {
+    "id": "thaumcraft:candelabra",
+    "count": 1
+  }
+}

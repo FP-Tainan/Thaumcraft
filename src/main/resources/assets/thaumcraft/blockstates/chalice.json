@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=false": {
+      "model": "thaumcraft:block/chalice"
+    },
+    "filled=true": {
+      "model": "thaumcraft:block/chalice"
+    }
+  }
+}

@@ -10,6 +10,7 @@ import net.thaumcraft.api.aspects.ObjectAspects;
 import net.thaumcraft.occulta.AltarBlock;
 import net.thaumcraft.occulta.AltarBlockEntity;
 import net.thaumcraft.occulta.AltarPower;
+import net.thaumcraft.occulta.ChaliceBlock;
 import net.thaumcraft.occulta.OccultaBlocks;
 import net.thaumcraft.occulta.OccultaItems;
 import net.thaumcraft.occulta.PowerSources;
@@ -123,6 +124,74 @@ public class OccultaAltarGameTest {
         manda.refresh();
         if (manda.rechargeScale() != 4) {
             helper.fail("a do wither soma dois; ficou " + manda.rechargeScale());
+        }
+        helper.succeed();
+    }
+
+    /**
+     * <b>O candelabro e o cálice somam mais do que a tocha e a caveira.</b>
+     *
+     * <p>O candelabro vale <b>dois</b> de velocidade, o dobro de uma tocha — e é o <b>mesmo lugar</b>: o
+     * altar conta uma luz só, e quem já tem candelabro não ganha nada por pôr uma tocha ao lado. O cálice
+     * vale <b>um</b> de teto vazio e <b>dois</b> cheio, e também se conta um só.
+     */
+    @GameTest
+    public void theCandelabraAndTheChaliceCountToo(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos canto = helper.absolutePos(new BlockPos(1, 2, 1));
+        AltarBlockEntity manda = build(helper, canto);
+        if (manda == null) return;
+
+        manda.refresh();
+        if (manda.rechargeScale() != 1 || manda.powerScale() != 1) {
+            helper.fail("um altar pelado vale um de cada");
+        }
+
+        level.setBlockAndUpdate(canto.above(), OccultaBlocks.CANDELABRA.defaultBlockState());
+        manda.refresh();
+        if (manda.rechargeScale() != 3) {
+            helper.fail("o candelabro soma dois; ficou " + manda.rechargeScale());
+        }
+
+        /*
+         * E a tocha ao lado não soma por cima dele: o altar conta uma luz só, e a que conta é a
+         * <b>primeira que encontrar</b> ao andar pelas seis pedras — candelabro ou tocha, conforme a
+         * ordem em que elas lhe aparecem. Os dois juntos nunca valem três de luz.
+         */
+        level.setBlockAndUpdate(canto.offset(1, 1, 0), Blocks.TORCH.defaultBlockState());
+        manda.refresh();
+        if (manda.rechargeScale() != 2 && manda.rechargeScale() != 3) {
+            helper.fail("candelabro e tocha contam por um só; ficou " + manda.rechargeScale());
+        }
+        level.setBlockAndUpdate(canto.offset(1, 1, 0), Blocks.AIR.defaultBlockState());
+
+        // e o segundo candelabro também não soma
+        level.setBlockAndUpdate(canto.offset(1, 1, 0), OccultaBlocks.CANDELABRA.defaultBlockState());
+        manda.refresh();
+        if (manda.rechargeScale() != 3) {
+            helper.fail("o segundo candelabro não soma; ficou " + manda.rechargeScale());
+        }
+        level.setBlockAndUpdate(canto.offset(1, 1, 0), Blocks.AIR.defaultBlockState());
+
+        level.setBlockAndUpdate(canto.offset(2, 1, 0), OccultaBlocks.CHALICE.defaultBlockState());
+        manda.refresh();
+        if (manda.powerScale() != 2) {
+            helper.fail("o cálice vazio soma um ao teto; ficou " + manda.powerScale());
+        }
+
+        level.setBlockAndUpdate(canto.offset(2, 1, 0), OccultaBlocks.CHALICE.defaultBlockState()
+                .setValue(ChaliceBlock.CHEIO, true));
+        manda.refresh();
+        if (manda.powerScale() != 3) {
+            helper.fail("e cheio soma dois; ficou " + manda.powerScale());
+        }
+
+        // o segundo cálice não soma: conta-se um de cada
+        level.setBlockAndUpdate(canto.offset(0, 1, 1), OccultaBlocks.CHALICE.defaultBlockState()
+                .setValue(ChaliceBlock.CHEIO, true));
+        manda.refresh();
+        if (manda.powerScale() != 3) {
+            helper.fail("o segundo cálice não soma; ficou " + manda.powerScale());
         }
         helper.succeed();
     }

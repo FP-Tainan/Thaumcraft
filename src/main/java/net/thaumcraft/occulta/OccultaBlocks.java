@@ -192,6 +192,39 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ o candelabro e o cálice
+
+    /**
+     * O <b>Candelabro</b>: cinco velas que ardem sempre, e dois de velocidade no altar.
+     *
+     * <p>Os números do original: <b>dois de dureza</b>, som de metal e <b>luz cheia</b>.
+     */
+    public static final Block CANDELABRA = register("candelabra", properties ->
+            new CandelabraBlock(properties.mapColor(MapColor.METAL).strength(2.0f)
+                    .sound(SoundType.METAL).lightLevel(feitio -> 15).noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<CandelabraBlockEntity>
+            CANDELABRA_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("candelabra"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            CandelabraBlockEntity::new, java.util.Set.of(CANDELABRA)));
+
+    /**
+     * O <b>Cálice</b>: uma taça de ouro que vale mais cheia do que vazia.
+     *
+     * <p>Os números do original: <b>três de dureza</b> e som de metal. Ele não dá luz.
+     */
+    public static final Block CHALICE = register("chalice", properties ->
+            new ChaliceBlock(properties.mapColor(MapColor.GOLD).strength(3.0f)
+                    .sound(SoundType.METAL).noOcclusion().pushReaction(PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<ChaliceBlockEntity>
+            CHALICE_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("chalice"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            ChaliceBlockEntity::new, java.util.Set.of(CHALICE)));
+
     // ------------------------------------------------------------ o Feixe de Vime
 
     /**
