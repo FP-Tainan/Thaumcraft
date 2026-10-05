@@ -1,0 +1,29 @@
+{
+  "__comment": "O que o Defodio cava: os sete materiais moles que o original lista — argila, neve, terra, grama, gelo, pedra e areia —, com os nomes de hoje. O material 'rock' de 2014 era largo demais para se escrever todo; aqui ficam as pedras do mundo, que é o que ele queria dizer.",
+  "values": [
+    "#minecraft:dirt",
+    "minecraft:grass_block",
+    "minecraft:mycelium",
+    "minecraft:dirt_path",
+    "minecraft:farmland",
+    "minecraft:mud",
+    "minecraft:clay",
+    "minecraft:snow",
+    "minecraft:snow_block",
+    "minecraft:powder_snow",
+    "#minecraft:ice",
+    "minecraft:frosted_ice",
+    "#minecraft:base_stone_overworld",
+    "#minecraft:base_stone_nether",
+    "minecraft:cobblestone",
+    "minecraft:mossy_cobblestone",
+    "#minecraft:stone_bricks",
+    "#minecraft:sand",
+    "minecraft:gravel",
+    "minecraft:sandstone",
+    "minecraft:red_sandstone",
+    "minecraft:soul_sand",
+    "minecraft:soul_soil",
+    "minecraft:terracotta"
+  ]
+}

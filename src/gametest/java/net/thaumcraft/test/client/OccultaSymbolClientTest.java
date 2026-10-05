@@ -37,8 +37,10 @@ public class OccultaSymbolClientTest implements FabricClientGameTest {
             context.waitTicks(10);
 
             /*
-             * As quatro bolas que esta fatia traz, paradas: o Accio roxo, o Aguamenti azul e grande, o
-             * Incendio vermelho e o Flipendo amarelo, que é o maior de todos.
+             * Oito bolas, paradas, para as cores e os tamanhos se verem: o Accio roxo, o Aguamenti azul
+             * e grande, o Incendio vermelho e o Flipendo amarelo — e as quatro das maldições: o <b>Avada
+             * Kedavra verde</b>, o <b>Crucio roxo</b>, o <b>Ignianima dourado</b>, que é o maior de todos
+             * com três, e o <b>Imperio lilás</b>.
              */
             context.runOnClient(minecraft -> {
                 var servidor = minecraft.getSingleplayerServer();
@@ -46,14 +48,14 @@ public class OccultaSymbolClientTest implements FabricClientGameTest {
                 servidor.execute(() -> {
                     var mundo = servidor.overworld();
                     for (var quem : servidor.getPlayerList().getPlayers()) {
-                        int[] quais = {1, 2, 21, 17};
+                        int[] quais = {1, 2, 21, 17, 4, 9, 39, 20};
                         for (int volta = 0; volta < quais.length; volta++) {
                             var qual = net.thaumcraft.occulta.symbol.Symbols.daquele(quais[volta]);
                             var bola = new net.thaumcraft.occulta.symbol.SpellEffectEntity(
                                     mundo, quem, new net.minecraft.world.phys.Vec3(0.0, 0.0, 0.0),
                                     qual, 1);
-                            bola.setPos(quem.getX() - 3.0 + volta * 2.0, quem.getY() + 1.0,
-                                    quem.getZ() + 4.0);
+                            bola.setPos(quem.getX() - 5.6 + volta * 1.6, quem.getY() + 1.0,
+                                    quem.getZ() + 9.0);
                             bola.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
                             mundo.addFreshEntity(bola);
                         }

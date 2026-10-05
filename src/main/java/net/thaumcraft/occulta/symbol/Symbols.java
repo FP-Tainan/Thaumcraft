@@ -8,6 +8,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -34,13 +36,19 @@ import java.util.Map;
  *
  * <h2>O que esta fatia traz</h2>
  *
- * <p><b>Catorze</b> dos trinta e um símbolos do original. Onze deles <b>atiram uma bola</b> — Accio,
- * Aguamenti, Alohomora, Confundus, Ennervate, Expelliarmus, Flipendo, Impedimenta, Incendio, Lumos e
- * Stupefy — e três agem <b>a partir de quem os lança</b>: Episkey, Protego e Nox.
+ * <p><b>Vinte e quatro</b> dos trinta e um símbolos do original.
  *
- * <p>Os outros dezessete entram nas fatias seguintes: eles pedem coisas que ainda não estão portadas — as
- * portas do ofício, o Tormento, o Leonard, as maldições imperdoáveis. Os números e os desenhos deles já
- * estão levantados do original, traço por traço.
+ * <p>Dezoito deles <b>atiram uma bola</b> — Accio, Aguamenti, Alohomora, Attraho, Avada Kedavra, Cave
+ * Inimicum, Confundus, Crucio, Defodio, Ennervate, Expelliarmus, Flipendo, Ignianima, Imperio, Incendio,
+ * Lumos e Stupefy — e seis agem <b>a partir de quem os lança</b>: Carnosa Diem, Episkey, Flagrate,
+ * Meteolojinx Recanto, Nox e Protego.
+ *
+ * <p>E <b>três deles são imperdoáveis</b>: o Avada Kedavra, o Crucio e o Imperio só se lançam com a
+ * <b>Infusão Infernal</b> no corpo. É a única porta trancada da tabela.
+ *
+ * <p>Os sete que faltam pedem coisas que ainda não estão portadas: as <b>portas do ofício</b>
+ * (Colloportus), o <b>Tormento</b> (Tormentum), a <b>Marca Negra</b> (Morsmordre) e o <b>Leonard</b> (os
+ * quatro dele). Os números e os desenhos deles já estão levantados do original, traço por traço.
  */
 public final class Symbols {
     /** Os quatro traços que a vara sabe ler. */
@@ -107,6 +115,49 @@ public final class Symbols {
          * que vem com <b>grau zero</b>. Não é engano: com grau zero o custo é <b>metade</b>, e o original
          * preferiu escrever o preço assim a mexer no número.
          */
+        /*
+         * <b>Attraho</b>: o avesso do Flipendo — puxa para si o que for vivo, em vez de o empurrar.
+         */
+        põe(new Attraho(47), "1,0,0,0,2,2,1,3");
+
+        /*
+         * <b>Avada Kedavra</b>, <b>Crucio</b> e <b>Imperio</b>: as três <b>imperdoáveis</b>, que só se
+         * lançam com a <b>Infusão Infernal</b> no corpo. Matar, doer e escravizar — e nenhuma delas tem
+         * um desenho que se acerte por acaso: a do Avada Kedavra tem <b>doze traços</b>.
+         */
+        põe(new AvadaKedavra(4), "1,1,2,2,0,0,3,3,3,3,1,1,2");
+        põe(new Crucio(9), "1,1,3,1,1,2", "1,1,3,3,1,1,2,2", "2,1,3,1,1,1,2",
+                "2,1,3,3,1,1,1,2,2", "3,1,3,3,3,1,1,1,1,2,2,2");
+        põe(new Imperio(20), "2,1,1,1,1");
+
+        /*
+         * <b>Carnosa Diem</b> e <b>Ignianima</b>: as duas maldições que <b>não são imperdoáveis</b>,
+         * porque o original as tranca atrás de um apontamento no livro em vez de uma infusão. Uma troca
+         * vida por poder, a outra queima mais quanto pior estiver quem a lança.
+         */
+        põe(new CarnosaDiem(40), "2,2,0,1,1", "2,2,0,0,1,1,1,1", "2,2,2,0,1,1",
+                "2,2,2,0,0,1,1,1,1", "2,2,2,2,0,1,1", "2,2,2,2,0,0,1,1,1,1");
+        põe(new Ignianima(39), "3,3,0,1,1", "3,3,0,0,1,1,1,1", "3,3,3,0,1,1",
+                "3,3,3,0,0,1,1,1,1", "3,3,3,3,0,1,1", "3,3,3,3,0,0,1,1,1,1");
+
+        /*
+         * <b>Cave Inimicum</b> e <b>Defodio</b>: os dois que mexem em bloco e não em bicho. Um endurece
+         * o que é mole, o outro cava o que é duro — e os dois num <b>quadrado da face</b> que cresce com
+         * o grau.
+         */
+        põe(new CaveInimicum(5), "1,0,3,0,0,2", "1,0,3,0,0,0,2", "1,0,3,3,0,0,2,2",
+                "2,0,3,3,0,0,0,2,2", "3,0,3,3,3,0,0,0,0,2,2,2");
+        põe(new Defodio(10), "1,0,0,3,1", "1,0,0,0,3,1,1", "1,0,0,3,3,1,2",
+                "2,0,0,0,3,3,1,1,2", "2,0,0,0,0,3,3,1,1,1,2", "2,0,0,0,3,3,3,1,1,2,2",
+                "3,0,0,0,0,3,3,3,1,1,1,2,2");
+
+        /*
+         * E os dois que não atiram nada: o <b>Flagrate</b>, que risca um glifo infernal na parede, e o
+         * <b>Meteolojinx Recanto</b>, que <b>para a chuva</b> por cem cargas.
+         */
+        põe(new Flagrate(16), "2,0,2,3,0,2");
+        põe(new MeteolojinxRecanto(23), "0,0,0,2,2,1,0,2,2,1,1");
+
         /*
          * <b>Alohomora</b>: abre ou fecha a porta em que a bola bate. É o feitiço mais pequeno do mod —
          * dois traços e meio — e o único que não tem grau nenhum acima do primeiro.
@@ -228,6 +279,24 @@ public final class Symbols {
         return feito.toString();
     }
 
+    /** O que o <b>Defodio</b> cava: os sete materiais moles do original, com os nomes de hoje. */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> CAVÁVEL =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK,
+                    net.thaumcraft.Thaumcraft.id("defodio"));
+
+    /** De quantos blocos é o lado do quadrado que os feitiços de bloco pegam, por grau. */
+    public static final int LADO_MÁXIMO = 3;
+
+    /**
+     * Quanto o <b>Ignianima</b> dói, conforme a vida de quem o lança.
+     *
+     * <p>Fora daqui só a prova a usa, e vale a pena: é a única conta do mod que premeia estar quase
+     * morto, e uma conta dessas merece ser conferida de fora.
+     */
+    public static float ignianima(@Nullable LivingEntity quem) {
+        return Ignianima.quanto(quem);
+    }
+
     // ------------------------------------------------------------------ o que eles partilham
 
     /** O bloco do lado de cá da face em que a bola bateu, que é onde as coisas se põem. */
@@ -237,6 +306,41 @@ public final class Symbols {
         BlockPos ali = onde.relative(face);
         if (face == Direction.UP && !level.getBlockState(onde).isSolidRender()) return ali.below();
         return ali;
+    }
+
+    /**
+     * Corre uma coisa num <b>quadrado da face</b> em que a bola bateu: o {@code applyBlockEffect} do
+     * original.
+     *
+     * <p>No grau um é um bloco só; nos outros é um quadrado de lado <b>dois vezes o grau menos um</b>,
+     * desenhado <b>no plano da face</b> — de modo que acertar no chão pega um tapete e acertar numa
+     * parede pega um painel.
+     */
+    public static void naFace(ServerLevel level, BlockHitResult bateu, int grau,
+                              java.util.function.Consumer<BlockPos> oquê) {
+        BlockPos meio = bateu.getBlockPos();
+        if (grau <= 1) {
+            if (podeMexer(level, meio)) oquê.accept(meio);
+            return;
+        }
+        int r = Math.min(grau - 1, LADO_MÁXIMO);
+        Direction face = bateu.getDirection();
+        for (int k = -r; k <= r; k++) {
+            for (int j = -r; j <= r; j++) {
+                BlockPos ali = switch (face.getAxis()) {
+                    case Y -> meio.offset(k, 0, j);
+                    case Z -> meio.offset(k, j, 0);
+                    case X -> meio.offset(0, k, j);
+                };
+                if (podeMexer(level, ali)) oquê.accept(ali);
+            }
+        }
+    }
+
+    /** E o que o ofício não mexe: ar, e o que a {@link net.thaumcraft.occulta.BlockProtect} recusa. */
+    private static boolean podeMexer(ServerLevel level, BlockPos onde) {
+        return !level.getBlockState(onde).isAir()
+                && net.thaumcraft.occulta.BlockProtect.podeMexer(level, onde);
     }
 
     /** Onde a bola bateu, seja num bicho ou num bloco. */
@@ -619,6 +723,335 @@ public final class Symbols {
     }
 
     /** Põe um bloco ali, se houver lugar. */
+    /**
+     * <b>Attraho</b>: o avesso do Flipendo. Puxa para quem o lançou tudo o que for vivo à volta de onde a
+     * bola bateu — dois blocos no grau um, três no dois, <b>nove</b> no três.
+     *
+     * <p>Com o Accio, que puxa o que está largado, ele faz o par completo: um traz as coisas, o outro traz
+     * a gente.
+     */
+    private static final class Attraho extends ProjectileSymbol {
+        Attraho(int id) {
+            super(id, "attraho");
+            this.cor(0x513666).tamanho(1.0f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (quem == null) return;
+            double raio = grau == 1 ? 2.0 : (grau == 2 ? 3.0 : 9.0);
+            emVolta(level, quem, onde, raio, bicho ->
+                    net.thaumcraft.occulta.rite.Rites.PushCircle.puxa(bicho, quem.getX(),
+                            quem.getY(), quem.getZ(), (int) Math.ceil(raio)));
+        }
+    }
+
+    /**
+     * <b>Avada Kedavra</b>: a primeira das três <b>imperdoáveis</b>, e a que faz o que o nome diz.
+     *
+     * <p>Em gente, <b>mata na hora</b> — e só onde houver briga entre jogadores ligada. Em bicho, duzentos
+     * de dano no que pode ser escravizado, numa bruxa, num Ent ou num golem de até duzentos de vida;
+     * <b>vinte e cinco</b> em tudo o resto. No criativo, mata qualquer coisa.
+     *
+     * <p>Ela custa <b>cento e um</b>, que é mais do que o cantil inteiro de uma infusão recém-feita: não é
+     * um feitiço que se use, é um que se guarda.
+     */
+    private static final class AvadaKedavra extends ProjectileSymbol {
+        /** O que ela faz a um bicho grande, e a um comum. */
+        public static final float AOS_GRANDES = 200.0f;
+        public static final float AOS_OUTROS = 25.0f;
+
+        AvadaKedavra(int id) {
+            super(id, "avadakedavra", 101, true, true, 0);
+            this.cor(0x00FF00).tamanho(2.0f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (!(onde instanceof EntityHitResult bateu)
+                    || !(bateu.getEntity() instanceof LivingEntity alvo)) {
+                return;
+            }
+            var fonte = level.damageSources().magic();
+
+            if (alvo instanceof ServerPlayer gente) {
+                if (!(quem instanceof net.minecraft.world.entity.player.Player lançou)
+                        || lançou.canHarmPlayer(gente)) {
+                    gente.hurtServer(level, fonte, Float.MAX_VALUE);
+                }
+                return;
+            }
+            if (!(alvo instanceof net.minecraft.world.entity.Mob bicho)) return;
+
+            if (quem instanceof net.minecraft.world.entity.player.Player lançou
+                    && lançou.getAbilities().instabuild) {
+                bicho.hurtServer(level, fonte, Float.MAX_VALUE);
+                return;
+            }
+
+            boolean grande = net.thaumcraft.occulta.enslave.Enslavement.podeSerEscravizado(bicho)
+                    || bicho instanceof net.minecraft.world.entity.monster.Witch
+                    || bicho instanceof net.thaumcraft.occulta.EntEntity
+                    || bicho instanceof net.minecraft.world.entity.animal.golem.AbstractGolem;
+            bicho.hurtServer(level, fonte,
+                    grande && bicho.getMaxHealth() <= AOS_GRANDES ? AOS_GRANDES : AOS_OUTROS);
+        }
+    }
+
+    /**
+     * <b>Carnosa Diem</b>: o feitiço que se lança <b>em si próprio</b>.
+     *
+     * <p>Tira um décimo da vida de quem o lança e devolve <b>dez de carga de infusão</b>. É a única coisa
+     * do mod que troca vida por poder sem passar por ninguém — e é por isso que ela é maldição sem ser
+     * imperdoável: não faz mal a mais ninguém.
+     */
+    private static final class CarnosaDiem extends Symbol {
+        /** Quanto da vida ela tira, e quanta carga devolve. */
+        public static final float TIRA = 0.1f;
+        public static final int DÁ = 10;
+
+        CarnosaDiem(int id) {
+            super(id, "carnosadiem", 1, true, false, 0);
+        }
+
+        @Override
+        public void lança(ServerLevel level, ServerPlayer quem, int grau) {
+            float dói = quem.getMaxHealth() * TIRA;
+            quem.hurtServer(level, level.damageSources().magic(), dói);
+            net.thaumcraft.occulta.infusion.Infusions.enche(quem, DÁ);
+            level.sendParticles(net.minecraft.core.particles.ParticleTypes.DUST_PLUME,
+                    quem.getX(), quem.getY() + 1.0, quem.getZ(), 16, 0.5, 1.0, 0.5, 0.0);
+            level.playSound(null, quem.blockPosition(),
+                    net.minecraft.sounds.SoundEvents.ENDER_DRAGON_GROWL,
+                    net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 1.0f);
+        }
+    }
+
+    /**
+     * <b>Cave Inimicum</b>: constrói parede.
+     *
+     * <p>Onde a bola bate, o que for mole <b>endurece</b>: terra, grama, micélio, pedregulho e tábua viram
+     * <b>pedra</b>; tijolo de pedra vira <b>tijolo</b>; areia vira <b>arenito</b>; argila vira
+     * <b>terracota</b>; e uma <b>porta de madeira</b> vira uma <b>porta de ferro</b>.
+     *
+     * <p>Num quadrado da face, que cresce com o grau: um bloco, três por três, cinco por cinco.
+     */
+    private static final class CaveInimicum extends ProjectileSymbol {
+        CaveInimicum(int id) {
+            super(id, "caveinimicum");
+            this.cor(0x303030).tamanho(3.0f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (!(onde instanceof BlockHitResult bateu)) return;
+            naFace(level, bateu, grau, ali -> {
+                BlockState feitio = level.getBlockState(ali);
+                Block vira = endurece(feitio);
+                if (vira != null) level.setBlockAndUpdate(ali, vira.defaultBlockState());
+            });
+        }
+
+        /** No que aquilo endurece, ou nada. */
+        private static @Nullable Block endurece(BlockState feitio) {
+            if (feitio.is(net.minecraft.tags.BlockTags.DIRT) || feitio.is(Blocks.GRASS_BLOCK)
+                    || feitio.is(Blocks.MYCELIUM) || feitio.is(Blocks.COBBLESTONE)
+                    || feitio.is(net.minecraft.tags.BlockTags.PLANKS)) {
+                return Blocks.STONE;
+            }
+            if (feitio.is(Blocks.STONE_BRICKS)) return Blocks.BRICKS;
+            if (feitio.is(net.minecraft.tags.BlockTags.SAND)) return Blocks.SANDSTONE;
+            if (feitio.is(Blocks.CLAY)) return Blocks.TERRACOTTA;
+            if (feitio.is(net.minecraft.tags.BlockTags.WOODEN_DOORS)) return Blocks.IRON_DOOR;
+            return null;
+        }
+    }
+
+    /**
+     * <b>Crucio</b>: a segunda das <b>imperdoáveis</b>. Dói, e mais nada.
+     *
+     * <p>Em gente, <b>quatro mais quatro por grau</b> — doze no grau três. Em bicho, quatro sempre: ela
+     * não foi feita para bichos.
+     */
+    private static final class Crucio extends ProjectileSymbol {
+        /** O que ela faz de base, e o que cada grau soma. */
+        public static final float DÓI = 4.0f;
+
+        Crucio(int id) {
+            super(id, "crucio", 5, true, true, 0);
+            this.cor(0x66007F).tamanho(2.0f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (!(onde instanceof EntityHitResult bateu)
+                    || !(bateu.getEntity() instanceof LivingEntity alvo)) {
+                return;
+            }
+            var fonte = level.damageSources().magic();
+            if (alvo instanceof ServerPlayer gente) {
+                if (!(quem instanceof net.minecraft.world.entity.player.Player lançou)
+                        || lançou.canHarmPlayer(gente)) {
+                    gente.hurtServer(level, fonte, DÓI + DÓI * (grau - 1));
+                }
+            } else if (alvo instanceof net.minecraft.world.entity.Mob bicho) {
+                bicho.hurtServer(level, fonte, DÓI);
+            }
+        }
+    }
+
+    /**
+     * <b>Defodio</b>: cava.
+     *
+     * <p>O que for terra, grama, argila, areia, neve, gelo ou pedra <b>desaparece e cai em item</b>, num
+     * quadrado da face que cresce com o grau. É o feitiço de minerar do mod, e custa três — que é o preço
+     * de não ter de trazer picareta.
+     */
+    private static final class Defodio extends ProjectileSymbol {
+        Defodio(int id) {
+            super(id, "defodio", 3, false, false, 0);
+            this.cor(0x3D291C).tamanho(2.5f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (!(onde instanceof BlockHitResult bateu)) return;
+            naFace(level, bateu, grau, ali -> {
+                if (!level.getBlockState(ali).is(CAVÁVEL)) return;
+                level.destroyBlock(ali, true);
+            });
+        }
+    }
+
+    /**
+     * <b>Flagrate</b>: risca um <b>glifo infernal</b> na face do bloco para onde se olha.
+     *
+     * <p>É o único feitiço do mod que <b>desenha</b>, e vale pelo que poupa: um giz infernal gasta-se a
+     * cada risco, e um círculo de rito leva dezenas deles.
+     */
+    private static final class Flagrate extends Symbol {
+        /** Até onde o olhar dele chega. */
+        public static final double OLHAR = 4.0;
+
+        Flagrate(int id) {
+            super(id, "flagrate", 1, false, false, 0);
+        }
+
+        @Override
+        public void lança(ServerLevel level, ServerPlayer quem, int grau) {
+            var onde = net.thaumcraft.occulta.infusion.InfernalInfusion.olhaParaOPoder(level, quem);
+            if (onde instanceof BlockHitResult bateu
+                    && net.thaumcraft.occulta.ChalkItem.drawOn(level,
+                            bateu.getBlockPos().relative(bateu.getDirection()),
+                            net.thaumcraft.occulta.OccultaBlocks.INFERNAL_GLYPH)) {
+                return;
+            }
+            net.thaumcraft.occulta.infusion.Infusion.falha(level, quem);
+        }
+    }
+
+    /**
+     * <b>Ignianima</b>: queima — e queima <b>mais quanto pior</b> estiver quem a lança.
+     *
+     * <p>É a única conta do mod inteiro que premeia estar quase morto: com a vida cheia são dois de dano, e
+     * com a vida no fundo são seis mais metade do que falta. Quem a lança sabendo disso lança-a sangrando.
+     *
+     * <p>Em gente, o dano é ainda <b>multiplicado pela vida máxima</b> dela sobre vinte — de modo que um
+     * jogador com coração reforçado apanha mais, e não menos.
+     */
+    private static final class Ignianima extends ProjectileSymbol {
+        /** O raio em que ela queima. */
+        public static final double RAIO = 1.5;
+
+        Ignianima(int id) {
+            super(id, "ignianima", 2, true, false, 0);
+            this.cor(0xFFE060).tamanho(3.0f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            Vec3 meio = ondeBateu(onde);
+            AABB caixa = new AABB(meio.x - RAIO, meio.y - RAIO, meio.z - RAIO,
+                    meio.x + RAIO, meio.y + RAIO, meio.z + RAIO);
+            float base = quanto(quem);
+            for (LivingEntity bicho : level.getEntitiesOfClass(LivingEntity.class, caixa)) {
+                if (bicho.distanceToSqr(meio) > RAIO * RAIO) continue;
+                float vezes = bicho instanceof net.minecraft.world.entity.player.Player
+                        ? bicho.getMaxHealth() / 20.0f : 1.0f;
+                bicho.hurtServer(level, level.damageSources().magic(), base * vezes);
+                level.sendParticles(net.minecraft.core.particles.ParticleTypes.FLAME,
+                        bicho.getX(), bicho.getY() + 1.0, bicho.getZ(), 16, 0.5, 1.0, 0.5, 0.0);
+            }
+        }
+
+        /** A escada do original: quanto pior a vida de quem lança, mais ela dói. */
+        public static float quanto(@Nullable LivingEntity quem) {
+            if (quem == null) return 4.0f;
+            float vida = 20.0f * (quem.getHealth() / quem.getMaxHealth());
+            if (vida > 19.0f) return 2.0f;
+            if (vida > 15.0f) return 3.0f;
+            if (vida > 10.0f) return 5.0f;
+            return 6.0f + (12.0f - vida) / 2.0f;
+        }
+    }
+
+    /**
+     * <b>Imperio</b>: a terceira das <b>imperdoáveis</b>. <b>Escraviza</b> o que a bola acertar.
+     *
+     * <p>É o mesmo escravizar da Infusão Infernal — e é por isso que as três imperdoáveis só se lançam com
+     * ela. Custa dez, que é o dobro do soco agachado, e é o preço de o fazer de longe.
+     */
+    private static final class Imperio extends ProjectileSymbol {
+        Imperio(int id) {
+            super(id, "imperio", 10, true, true, 0);
+            this.cor(0xA30AFF).tamanho(1.5f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (!(quem instanceof net.minecraft.world.entity.player.Player lançou)) return;
+            if (!(onde instanceof EntityHitResult bateu)
+                    || !(bateu.getEntity() instanceof net.minecraft.world.entity.Mob bicho)) {
+                return;
+            }
+            if (!net.thaumcraft.occulta.enslave.Enslavement.escraviza(bicho, lançou)) return;
+            level.sendParticles(net.minecraft.core.particles.SpellParticleOption.create(
+                            net.minecraft.core.particles.ParticleTypes.EFFECT, 1.0f, 1.0f, 1.0f, 1.0f),
+                    bicho.getX(), bicho.getY() + 1.0, bicho.getZ(), 16, 0.5, 1.0, 0.5, 0.0);
+            level.playSound(null, bicho.blockPosition(),
+                    net.minecraft.sounds.SoundEvents.ZOMBIE_INFECT,
+                    net.minecraft.sounds.SoundSource.HOSTILE, 1.0f, 1.0f);
+        }
+    }
+
+    /**
+     * <b>Meteolojinx Recanto</b>: <b>para a chuva</b>.
+     *
+     * <p>Custa <b>cem</b>, que é o dobro do Nox e o segundo preço mais alto do mod — e não há nele poder
+     * nenhum: ele só muda o tempo. É o original dizendo o que vale um dia de sol.
+     *
+     * <p>Sem chuva, ele toca o tambor e não gasta nada.
+     */
+    private static final class MeteolojinxRecanto extends Symbol {
+        MeteolojinxRecanto(int id) {
+            super(id, "meteolojinxrecanto", 100, false, false, 0);
+        }
+
+        @Override
+        public void lança(ServerLevel level, ServerPlayer quem, int grau) {
+            if (!level.isRaining() && !level.isThundering()) {
+                net.thaumcraft.occulta.infusion.Infusion.falha(level, quem);
+                return;
+            }
+            // no jogo de hoje o tempo mora num guardado à parte, e não no mundo
+            var tempo = level.getWeatherData();
+            tempo.setClearWeatherTime(0);
+            tempo.setRainTime(0);
+            tempo.setRaining(false);
+            tempo.setThundering(false);
+        }
+    }
+
     private static void põeSeCouber(ServerLevel level, BlockPos onde,
                                     net.minecraft.world.level.block.Block oquê) {
         var estava = level.getBlockState(onde);

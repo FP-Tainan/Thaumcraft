@@ -9942,13 +9942,12 @@ E dois merecem uma linha a mais:
 - o **Protego** tem o desenho mais curto que há, **dois traços**, o que faz dele o único que se pode
   acertar por acidente.
 
-### Os dezessete que faltam
+### Os dezessete que faltavam
 
-Eles pedem coisas que ainda não estão portadas: as **portas do ofício** (Colloportus), o **Tormento**
-(Tormentum), o **Leonard** (os quatro dele), as **maldições imperdoáveis** (Avada Kedavra, Crucio,
-Imperio, Morsmordre), e um punhado de outros — Attraho, Carnosa Diem, Cave Inimicum, Defodio, Flagrate,
-Ignianima, Meteolojinx Recanto. Os números e os desenhos de todos já estão levantados do original, traço
-por traço.
+Dez deles entraram na fatia «Mais dez símbolos, e as três imperdoáveis», logo abaixo. Os **sete** que
+sobram pedem coisas que ainda não estão portadas: as **portas do ofício** (Colloportus), o **Tormento**
+(Tormentum), a **Marca Negra** (Morsmordre) e o **Leonard** (os quatro dele). Os números e os desenhos
+deles já estão levantados do original, traço por traço.
 
 E dois detalhes do original que ficam como estão:
 
@@ -10439,3 +10438,81 @@ está olhando e não pega em quem traz abóbora; o murro da Cinta, que só vale 
 Aljava, que vale o triplo no ar e deixa Fraqueza sempre. E o `OccultaGoblinClothesClientTest`, com duas
 telas: dois manequins, um de frente e um de costas — e é o de costas que importa, porque é onde a aljava se
 vê — e as três peças no cinto.
+
+## Mais dez símbolos, e as três imperdoáveis (2026-10-05)
+
+De catorze para **vinte e quatro** dos trinta e um. E com eles entra a única **porta trancada** da tabela.
+
+### As três imperdoáveis
+
+| símbolo | o que faz | custa |
+| --- | --- | --- |
+| **Avada Kedavra** | **mata na hora** quem for gente — e só onde houver briga entre jogadores. Em bicho: **duzentos** no que pode ser escravizado, numa bruxa, num Ent ou num golem de até duzentos de vida; **vinte e cinco** no resto | **101** |
+| **Crucio** | dói, e mais nada: **quatro mais quatro por grau** em gente, quatro em bicho | 5 |
+| **Imperio** | **escraviza** o que a bola acertar, que é o mesmo escravizar da Infusão Infernal | 10 |
+
+As três **só se lançam com a Infusão Infernal no corpo**. É a única coisa de todo o ramo dos símbolos que
+pede uma infusão em particular, e o original é explícito sobre o que a define: imperdoável é a maldição que
+**não tem apontamento no livro** — o que não se pode aprender, só se pode tomar.
+
+E repare no preço do Avada Kedavra: **cento e um**, que é mais do que o cantil inteiro de uma infusão
+recém-feita, que são cem. Não é um feitiço que se use: é um que se junta para usar **uma vez**.
+
+### As duas maldições que não são imperdoáveis
+
+| símbolo | o que faz | custa |
+| --- | --- | --- |
+| **Carnosa Diem** | lançado **em si próprio**: tira um décimo da vida e devolve **dez de carga de infusão** | 1 |
+| **Ignianima** | queima tudo a um bloco e meio — e **dói mais quanto pior** estiver quem o lança | 2 |
+
+O Ignianima é a melhor conta do mod inteiro. Com a vida cheia são **dois** de dano; acima de quinze, três;
+acima de dez, cinco; e abaixo disso, **seis mais metade do que falta**. Quem o lança sabendo disso lança-o
+sangrando.
+
+E em gente o dano é ainda **multiplicado pela vida máxima dela sobre vinte** — de modo que um jogador com
+coração reforçado apanha **mais**, e não menos. É o avesso do que toda a gente espera de uma armadura de
+vida.
+
+O Carnosa Diem é a única coisa do mod que **troca vida por poder sem passar por ninguém**, e é por isso que
+é maldição sem ser imperdoável: não faz mal a mais ninguém.
+
+### Os cinco que sobram
+
+| símbolo | o que faz | custa |
+| --- | --- | --- |
+| **Attraho** | o avesso do Flipendo: **puxa** o que for vivo para quem o lançou — dois blocos, três, **nove** | 1 |
+| **Cave Inimicum** | **endurece** o que é mole: terra, grama, micélio, pedregulho e tábua viram **pedra**; tijolo de pedra vira **tijolo**; areia vira **arenito**; argila vira **terracota**; e uma **porta de madeira** vira uma de **ferro** | 1 |
+| **Defodio** | **cava**: o que for terra, argila, areia, neve, gelo ou pedra desaparece e cai em item | 3 |
+| **Flagrate** | risca um **glifo infernal** na parede para onde se olha | 1 |
+| **Meteolojinx Recanto** | **para a chuva** | **100** |
+
+O Cave Inimicum e o Defodio são os dois que mexem em bloco, e os dois num **quadrado da face**: um bloco no
+grau um, três por três no dois, cinco por cinco no três — desenhado **no plano da face** em que a bola
+bateu, de modo que acertar no chão pega um tapete e acertar numa parede pega um painel.
+
+E o Meteolojinx Recanto é o segundo preço mais alto do mod, atrás do Avada Kedavra, e não há nele poder
+nenhum: ele só muda o tempo. É o original dizendo o que vale um dia de sol.
+
+### Desvios declarados
+
+1. **O apontamento no livro não entra.** O original tranca o Ignianima, o Carnosa Diem e o Morsmordre atrás
+   de uma entrada no livro de bruxaria — e é essa falta de apontamento que torna as outras três
+   *imperdoáveis*. O livro de bruxaria ainda não está portado; a classificação ficou (quem é maldição, quem
+   é imperdoável) e a tranca do apontamento fica para quando o livro vier.
+
+2. **A briga entre jogadores é a de hoje.** O original pergunta ao servidor se o PvP está ligado; aqui
+   pergunta-se ao próprio jogador, com o `canHarmPlayer` do jogo, que responde a mesma coisa e ainda conta
+   com equipes.
+
+3. **O dano demoníaco é o dano mágico.** O `DemonicDamageSource` do original é um tipo próprio só para
+   contornar armadura; o porte usa o dano mágico do jogo, que faz o mesmo.
+
+4. **O que o Defodio cava é um rótulo.** O original lista sete *materiais* de 2014 — argila, neve, terra,
+   grama, gelo, pedra e areia —, e o material «rock» de então era largo demais para se escrever todo. Aqui
+   é o rótulo `thaumcraft:defodio`, com as pedras do mundo e do Nether, que é o que ele queria dizer.
+
+**Guardas:** no `OccultaSymbolGameTest`, mais três — as **três imperdoáveis**, que não servem à Infusão da
+Luz e servem à Infernal, com as duas maldições comuns a servirem a qualquer uma; a escada do **Ignianima**,
+conferida nas quatro bandas dela; e os **desenhos** dos novos, traço por traço. E o
+`OccultaSymbolClientTest` passou de quatro bolas a **oito**, para as cores e os tamanhos das maldições se
+verem ao lado dos dos feitiços comuns.

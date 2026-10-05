@@ -28,8 +28,8 @@ public class OccultaSymbolGameTest {
     /** A tabela de desenhos é a do original, traço por traço. */
     @GameTest
     public void theStrokeTableIsTheOriginals(GameTestHelper helper) {
-        if (Symbols.quantos() != 14) {
-            helper.fail("são catorze símbolos; há " + Symbols.quantos());
+        if (Symbols.quantos() != 24) {
+            helper.fail("são vinte e quatro símbolos; há " + Symbols.quantos());
         }
 
         // Accio: esquerda, cima, direita, direita, baixo — e de grau um
@@ -73,6 +73,110 @@ public class OccultaSymbolGameTest {
         Symbol escudo = Symbols.doDesenho(protego);
         if (escudo == null || escudo.id != 31) helper.fail("baixo e cima são o Protego; deu " + escudo);
         helper.succeed();
+    }
+
+    /**
+     * <b>As três imperdoáveis só se lançam com a Infusão Infernal.</b>
+     *
+     * <p>É a única porta trancada da tabela, e vale uma prova própria: matar, doer e escravizar de longe
+     * não se emprestam a quem tomou a luz ou o mundo para dentro de si.
+     */
+    @GameTest
+    public void theThreeUnforgivablesNeedTheInfernalInfusion(GameTestHelper helper) {
+        /*
+         * O jogador de mentira tem de ser o <b>da sobrevivência</b>: no criativo tudo serve, e a porta
+         * trancada não se vê.
+         */
+        ServerPlayer quem = (ServerPlayer) helper.makeMockServerPlayer(
+                net.minecraft.world.level.GameType.SURVIVAL);
+        for (int qual : new int[]{4, 9, 20}) {
+            Symbol maldito = Symbols.daquele(qual);
+            if (maldito == null) {
+                helper.fail("o de número " + qual + " devia estar na tabela");
+                return;
+            }
+            if (!maldito.maldição || !maldito.imperdoável) {
+                helper.fail(maldito.nome + " é maldição e é imperdoável");
+            }
+            if (maldito.serveAInfusão(quem, Infusions.daquele(1).id)) {
+                helper.fail("e não serve à Infusão da Luz");
+            }
+            if (!maldito.serveAInfusão(quem, Symbols.A_INFERNAL)) {
+                helper.fail("mas serve à Infernal");
+            }
+        }
+
+        // e as duas maldições que não são imperdoáveis servem a qualquer uma
+        for (int qual : new int[]{39, 40}) {
+            Symbol maldito = Symbols.daquele(qual);
+            if (maldito == null || !maldito.maldição || maldito.imperdoável) {
+                helper.fail("o de número " + qual + " é maldição, mas não imperdoável");
+            } else if (!maldito.serveAInfusão(quem, Infusions.daquele(1).id)) {
+                helper.fail("e serve a qualquer infusão");
+            }
+        }
+        helper.succeed();
+    }
+
+    /**
+     * <b>O Ignianima dói mais quanto pior estiver quem o lança.</b>
+     *
+     * <p>É a única conta do mod inteiro que premeia estar quase morto: com a vida cheia são dois, e com
+     * a vida no fundo são seis mais metade do que falta. Quem o lança sabendo disso lança-o sangrando.
+     */
+    @GameTest
+    public void theIgnianimaRewardsBleeding(GameTestHelper helper) {
+        ServerPlayer quem = helper.makeMockServerPlayerInLevel();
+        quem.setHealth(quem.getMaxHealth());
+        float cheio = net.thaumcraft.occulta.symbol.Symbols.ignianima(quem);
+        if (cheio != 2.0f) helper.fail("com a vida cheia, dois; deu " + cheio);
+
+        // com doze de vida ainda está na terceira banda da escada, e vale cinco
+        quem.setHealth(quem.getMaxHealth() * 0.6f);
+        float meio = net.thaumcraft.occulta.symbol.Symbols.ignianima(quem);
+        if (meio != 5.0f) helper.fail("com doze de vida, cinco; deu " + meio);
+
+        // e a dez já cai na conta de baixo, que é seis mais metade do que falta
+        quem.setHealth(quem.getMaxHealth() * 0.5f);
+        float metade = net.thaumcraft.occulta.symbol.Symbols.ignianima(quem);
+        if (metade != 7.0f) helper.fail("com dez de vida, sete; deu " + metade);
+
+        quem.setHealth(1.0f);
+        float quase = net.thaumcraft.occulta.symbol.Symbols.ignianima(quem);
+        if (quase <= metade) helper.fail("e quase morto, mais ainda; deu " + quase);
+        quem.setHealth(quem.getMaxHealth());
+        helper.succeed();
+    }
+
+    /**
+     * <b>E os desenhos dos dez novos são os do original, traço por traço.</b>
+     */
+    @GameTest
+    public void theTenNewDrawingsAreTheOriginals(GameTestHelper helper) {
+        // Imperio: direita, baixo, baixo, baixo — e de grau dois
+        confere(helper, new byte[]{Symbols.BAIXO, Symbols.BAIXO, Symbols.BAIXO, Symbols.BAIXO}, 20, 2);
+        // Flagrate: cima, direita, esquerda, cima, direita — grau dois
+        confere(helper, new byte[]{Symbols.CIMA, Symbols.DIREITA, Symbols.ESQUERDA, Symbols.CIMA,
+                Symbols.DIREITA}, 16, 2);
+        // Attraho: três cimas, duas direitas, baixo, esquerda — grau um
+        confere(helper, new byte[]{Symbols.CIMA, Symbols.CIMA, Symbols.CIMA, Symbols.DIREITA,
+                Symbols.DIREITA, Symbols.BAIXO, Symbols.ESQUERDA}, 47, 1);
+        // Crucio: baixo, esquerda, baixo, baixo, direita — grau um
+        confere(helper, new byte[]{Symbols.BAIXO, Symbols.ESQUERDA, Symbols.BAIXO, Symbols.BAIXO,
+                Symbols.DIREITA}, 9, 1);
+        helper.succeed();
+    }
+
+    /** Confere que aquele desenho é aquele símbolo, daquele grau. */
+    private static void confere(GameTestHelper helper, byte[] desenho, int id, int grau) {
+        Symbol qual = Symbols.doDesenho(desenho);
+        if (qual == null || qual.id != id) {
+            helper.fail("esse desenho é o de número " + id + "; deu " + qual);
+            return;
+        }
+        if (Symbols.grauDoDesenho(desenho) != grau) {
+            helper.fail("e de grau " + grau + "; deu " + Symbols.grauDoDesenho(desenho));
+        }
     }
 
     /** O custo dobra por grau, como no original. */
