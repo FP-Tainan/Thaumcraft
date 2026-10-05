@@ -9870,3 +9870,92 @@ contar vinte riscos é mais rápido do que medir um nível.
 original; cada poder saindo do bicho certo; a prova que carrega a fatia, que é o **sacrifício** (o primeiro
 soco toma, o segundo mata e toma o poder); e a troca de poder, que apaga o que se tinha e soma só até vinte.
 E, no `OccultaInfusionClientTest`, mais uma tela: as **duas barras** lado a lado.
+
+## A Vara Mística e os símbolos (2026-10-05)
+
+A parte do mod em que **o gesto é a interface**. Não há menu, não há lista, não há botão: há um desenho que
+se sabe ou não se sabe fazer.
+
+### Como se lança um feitiço
+
+Segura-se o botão com a **Vara Mística** na mão e move-se a cabeça. Cada **sete graus** de giro contam um
+**traço** — cima, baixo, direita, esquerda —, e quinze traços é o máximo. Quando o que foi desenhado bate com
+um dos desenhos da tabela, o nome do feitiço aparece. Largando a vara, ele sai.
+
+E cada símbolo tem **vários desenhos**, um ou dois por grau: o de grau um é curto, e os de dois e três
+repetem traços para ficarem mais longos. Quanto mais comprido o desenho, mais forte o feitiço — e mais fácil
+de errar.
+
+### O que ele custa
+
+O custo **dobra por grau**: um feitiço de custo um gasta uma carga no grau um, duas no dois e quatro no
+três. E o grau comprido só vale o grau dele a quem tiver **Adoração** bastante — sem ela, um desenho de grau
+três é lançado como **grau um** e o esforço foi para nada.
+
+É o que liga os símbolos à **Estátua de Adoração**. Enquanto ela não estiver portada, os graus dois e três
+só se alcançam no criativo. **Fica declarado.**
+
+### A ordem das recusas
+
+A vara recusa por cinco razões, e a ordem delas conta uma história: primeiro se pergunta se **há feitiço**,
+depois se **há infusão**, depois se **a infusão serve** — os imperdoáveis só se lançam com a Infernal —,
+depois se o feitiço **está de molho**, e só no fim se **há carga**. Cada recusa tem o seu recado.
+
+### Desenhado de cá, lançado de lá
+
+Quem lê o desenho é o **lado do cliente**: é lá que a cabeça do jogador se move. Ele manda dizer ao servidor
+**qual** símbolo e de que **grau**, e o servidor os guarda até a vara ser largada.
+
+É o único jeito de o gesto ser confiável. Lido do lado do servidor, o atraso da rede faria o desenho sair
+torto; lido do lado de cá e **confirmado** do outro, o que se desenha é o que sai. E o servidor **confere**:
+um recado que diga um símbolo que não existe é largado sem mais.
+
+### Os seis desta fatia
+
+De trinta e um do original, seis — escolhidos para pôr a máquina inteira de pé:
+
+| símbolo | o que faz | custa |
+| --- | --- | --- |
+| **Accio** | puxa para si tudo o que estiver largado à volta de onde a bola bateu: oito décimos de bloco no grau um, três no dois, **nove** no três | 1 |
+| **Aguamenti** | água onde a bola bate — e **no Nether só no grau três**, porque lá ela some | 1 |
+| **Incendio** | fogo onde a bola bate; nos graus dois e três, pega fogo a tudo a três ou seis blocos. E **acende o Homem de Vime** | 1 |
+| **Flipendo** | empurra o que a bola acertar; nos graus dois e três, tudo a três ou seis blocos | 1 |
+| **Lumos** | um **Globo de Luz** onde a bola bate | 1 |
+| **Nox** | tira **tudo o que der luz** num cubo de dez blocos à volta de quem o lança | 50 |
+
+E dois detalhes do original que ficam como estão:
+
+- **o Flipendo empurra quem o lançou, no grau dois.** A pergunta que o original faz é «se o raio for três,
+  ou se o alvo não for quem lançou», e o «ou» deixa o próprio passar. É um descuido, e é engraçado.
+- **o desenho do Nox vem com grau zero.** Não é engano: com grau zero o custo é **metade**, e o original
+  preferiu escrever o preço assim a mexer no número.
+
+### A bola
+
+A mesma para todos os símbolos que atiram alguma coisa: um **quadrado sempre virado para quem olha**,
+pintado da **cor do símbolo** e a pouco mais de metade de opaco. É por ela que se reconhece de longe qual
+feitiço vem vindo.
+
+A cor e o tamanho **não estão na entidade**: estão no símbolo, e a entidade só leva o número dele. É por
+isso que o número atravessa a rede — para o lado de cá poder perguntar de que cor é a bola que está vendo.
+
+E ela deixa um rastro de **gosma**, meio bloco acima de si. Uma maldição deixaria, em vez disso, pó de poção
+e uma chama; nenhum destes seis é maldição, mas a pergunta já está feita.
+
+**A folha da bola é a da bola de neve do jogo**, e não uma do mod. Parece engano e não é: o original **tem**
+uma folha própria para isto — a `spelleffect.png` — e **não a usa**. O desenhista dele liga o atlas dos
+itens e pede o ícone da bola de neve, que é redondo e branco, para o poder pintar de qualquer cor. A folha
+própria ficou no mod sem ninguém lhe chamar.
+
+### De onde vem a vara
+
+Do **Rito da Árvore**, só de noite, com um **Galho de Ent** e o **Unguento Místico** — que é um cozimento de
+três mil que leva diamante, muda, Coração de Creeper e Sangue Infernal.
+
+E ela também se **deita no altar**, como a Arthana: aí o altar ganha **um de poder de encanto**. Com isso, a
+única coisa que falta ao altar do original é o **pentáculo de kobolditas**.
+
+**Guardas:** `OccultaSymbolGameTest`, com seis — a tabela de desenhos (a prova que carrega a fatia); o custo
+que dobra por grau, com o grau zero do Nox; o feitiço que se prepara antes de se lançar; o grau comprido que
+precisa de Adoração; o Incendio pondo fogo; e a vara deitada no altar. E `OccultaSymbolClientTest`, com duas
+telas: a vara no inventário e as quatro bolas lado a lado, para se verem as cores.

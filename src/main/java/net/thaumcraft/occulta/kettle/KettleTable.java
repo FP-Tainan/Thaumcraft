@@ -40,6 +40,13 @@ public final class KettleTable {
                 OccultaItems.REDSTONE_SOUP, Items.SPLASH_POTION, Items.DIAMOND, Items.FEATHER,
                 OccultaItems.BAT_WOOL, OccultaItems.BELLADONNA_FLOWER);
 
+        // ---------------------------------------------------------- o Unguento Místico
+        // A cor é o -14333109 do original lido como cor de 32 bits, e o poder são três mil.
+        KettleRecipes.add(OccultaItems.MYSTIC_UNGUENT, 1, 0xFF49790B, 3000.0f,
+                OccultaItems.REDSTONE_SOUP, Items.POTION, Items.DIAMOND,
+                OccultaItems.WOOD.get("rowan_sapling"), OccultaItems.CREEPER_HEART,
+                OccultaItems.INFERNAL_BLOOD);
+
         // ---------------------------------------------------------- o Ânimo Infernal
         // A cor é o -7598080 do original lido como cor de 32 bits, e o poder são quatro mil.
         KettleRecipes.add(OccultaItems.INFERNAL_ANIMUS, 2, 0xFF8C0000, 4000.0f,

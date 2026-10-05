@@ -228,6 +228,12 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.GARLIC_GARLAND_ENTITY,
                 net.thaumcraft.occulta.client.GarlicGarlandRenderer::new);
 
+        // a Vara Mística, que lê os traços do lado de cá, e a bola que ela atira
+        net.thaumcraft.occulta.client.StrokeReader.init();
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.SPELL_EFFECT,
+                net.thaumcraft.occulta.client.SpellEffectRenderer::new);
+
         // os poderes de andar do bicho no bolso, que correm do lado de cá
         net.thaumcraft.occulta.client.BeastMotion.init();
 

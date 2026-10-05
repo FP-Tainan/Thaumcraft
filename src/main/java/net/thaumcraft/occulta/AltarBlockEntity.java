@@ -32,14 +32,14 @@ import java.util.List;
  *       mesmo lugar, porque o altar conta <b>uma luz só</b>;</li>
  *   <li>um <b>cálice</b>: soma um ao teto se estiver vazio, dois se estiver cheio;</li>
  *   <li>a <b>Arthana deitada</b> num {@link PlacedItemBlock}: <b>dobra o alcance</b> do altar;</li>
+ *   <li>a <b>Vara Mística</b> deitada no mesmo bloco: soma <b>um ao poder de encanto</b>;</li>
  *   <li>e o <b>Ovo do Infinito</b>: <b>multiplica por dez</b> o teto e a velocidade.</li>
  * </ul>
  *
  * <p>De cada um <b>conta-se um</b>: dois candelabros valem o mesmo que um, e o segundo cálice não soma nada.
  *
- * <p><b>Do original ficam de fora, por agora,</b> o Ramo Místico e o pentáculo de kobolditas — que ainda
- * não foram portados. Os dois deitam-se no mesmo bloco que a Arthana, e dão poder de encanto e o dobro da
- * velocidade.
+ * <p><b>Do original fica de fora, por agora,</b> o <b>pentáculo de kobolditas</b>, que se deita no mesmo
+ * bloco que a Arthana e <b>dobra a velocidade</b> do altar. Ele pede a koboldite, que ainda não foi portada.
  */
 public class AltarBlockEntity extends BlockEntity {
     /** Quanto poder entra a cada segundo, antes dos enfeites. */
@@ -172,10 +172,12 @@ public class AltarBlockEntity extends BlockEntity {
         int novoPoder = 1;
         int novaVelocidade = 1;
         int novoAlcance = 1;
+        int novoEncanto = 0;
         boolean caveira = false;
         boolean luz = false;
         boolean taça = false;
         boolean faca = false;
+        boolean vara = false;
         boolean ovo = false;
 
         for (BlockPos onde : this.pieces(level)) {
@@ -206,6 +208,9 @@ public class AltarBlockEntity extends BlockEntity {
                 if (!faca && posto.oquê().is(OccultaItems.ARTHANA)) {
                     faca = true;
                     novoAlcance++;
+                } else if (!vara && posto.oquê().is(OccultaItems.MYSTIC_BRANCH)) {
+                    vara = true;
+                    novoEncanto++;
                 }
             } else if (!ovo && acima.is(OccultaBlocks.INFINITY_EGG)) {
                 ovo = true;
@@ -224,6 +229,7 @@ public class AltarBlockEntity extends BlockEntity {
         this.powerScale = novoPoder;
         this.rechargeScale = novaVelocidade;
         this.rangeScale = novoAlcance;
+        this.enhancement = novoEncanto;
     }
 
     /** Os blocos do altar de que este faz parte, a partir de quem manda. */

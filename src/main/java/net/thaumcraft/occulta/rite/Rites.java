@@ -2927,6 +2927,20 @@ public final class Rites {
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
+         * O <b>Rito da Árvore</b>, que faz aparecer a <b>Vara Mística</b> — a que desenha os símbolos.
+         * Só de noite, e pede o Galho de Ent com o Unguento Místico.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.infusiontree",
+                new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.MYSTIC_BRANCH)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.ENT_BRANCH,
+                                net.thaumcraft.occulta.OccultaItems.MYSTIC_UNGUENT),
+                        new Sacrifice.Power(3000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE,
+                java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
+
+        /*
          * O <b>Rito da Infusão Infernal</b>, cujo anel é todo de <b>giz infernal</b> — dezesseis dentro e
          * vinte e oito no meio. É o único dos três que pede esse giz, e isso diz-lhe o que você vai ser.
          */

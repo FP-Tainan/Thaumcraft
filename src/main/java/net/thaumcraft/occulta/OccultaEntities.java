@@ -45,6 +45,17 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.brew.BrewProjectile::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
+    /**
+     * A <b>bola de feitiço</b>, que é a mesma para todos os símbolos que atiram alguma coisa.
+     *
+     * <p>Não é bicho: é o {@code EntitySpellEffect}, que voa com aceleração própria e some onde bate.
+     */
+    public static final EntityType<net.thaumcraft.occulta.symbol.SpellEffectEntity> SPELL_EFFECT =
+            register("witch_spell", EntityType.Builder
+                    .<net.thaumcraft.occulta.symbol.SpellEffectEntity>of(
+                            net.thaumcraft.occulta.symbol.SpellEffectEntity::new, MobCategory.MISC)
+                    .sized(1.0f, 1.0f).clientTrackingRange(4).updateInterval(10));
+
     /** A cara que aparece no vidro de um espelho a quem lhe pergunta. */
     public static final EntityType<net.thaumcraft.occulta.mirror.MirrorFaceEntity> MIRROR_FACE =
             register("mirror_face", FabricEntityType.Builder.createMob(

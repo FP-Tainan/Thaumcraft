@@ -266,6 +266,33 @@ public final class OccultaItems {
     // ------------------------------------------------------------------ a infusão
 
     /**
+     * O <b>Unguento Místico</b>: o que o rito da Vara Mística pede, com o Galho de Ent.
+     *
+     * <p>Bebido, dá <b>Fraqueza II por um minuto</b>.
+     */
+    public static final Item MYSTIC_UNGUENT = register("mystic_unguent", properties ->
+            new Item(properties.stacksTo(2).food(
+                    new net.minecraft.world.food.FoodProperties.Builder()
+                            .alwaysEdible().nutrition(0).saturationModifier(0.0f).build(),
+                    net.minecraft.world.item.component.Consumables.defaultDrink().onConsume(
+                            new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(
+                                    new net.minecraft.world.effect.MobEffectInstance(
+                                            net.minecraft.world.effect.MobEffects.WEAKNESS, 1200, 1)))
+                            .build())));
+
+    /**
+     * A <b>Vara Mística</b>: a que desenha os símbolos.
+     *
+     * <p>Uma só de cada vez, e ela <b>brilha</b> como uma coisa encantada — é o que o original lhe faz,
+     * e é o único sinal de que ela não é um pau.
+     */
+    public static final Item MYSTIC_BRANCH = register("mystic_branch", properties ->
+            new net.thaumcraft.occulta.MysticBranchItem(properties.stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)
+                    .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE,
+                            true)));
+
+    /**
      * A <b>Mão de Bruxa</b>: a única coisa que a infusão sabe atravessar.
      *
      * <p>Uma só de cada vez, e não se fabrica: cai de uma bruxa morta.
