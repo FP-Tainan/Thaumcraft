@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " w ",
+    "wfw",
+    "www"
+  ],
+  "key": {
+    "w": "minecraft:jungle_log",
+    "f": "thaumcraft:exhale_of_the_horned_one"
+  },
+  "result": {
+    "id": "thaumcraft:stockade",
+    "count": 9,
+    "components": {
+      "minecraft:block_state": {
+        "wood": "jungle"
+      }
+    }
+  }
+}

@@ -192,6 +192,22 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ a Paliçada
+
+    /**
+     * A <b>Paliçada</b>, nas nove madeiras: o bloco que fere quem encosta.
+     *
+     * <p>Os números do original: <b>vinte e cinco de dureza</b> e vinte de resistência. Ela demora a cair.
+     */
+    public static final Block STOCKADE = register("stockade", properties ->
+            new net.thaumcraft.occulta.StockadeBlock.Wooden(properties.mapColor(MapColor.WOOD)
+                    .strength(25.0f, 20.0f).sound(SoundType.WOOD).noOcclusion().ignitedByLava()));
+
+    /** E a <b>de gelo</b>, que é bloco à parte e não se liga às de madeira. */
+    public static final Block ICE_STOCKADE = register("ice_stockade", properties ->
+            new net.thaumcraft.occulta.StockadeBlock(properties.mapColor(MapColor.ICE)
+                    .strength(25.0f, 20.0f).friction(0.98f).sound(SoundType.GLASS).noOcclusion()));
+
     // ------------------------------------------------------------ a Mina de Planta
 
     /**

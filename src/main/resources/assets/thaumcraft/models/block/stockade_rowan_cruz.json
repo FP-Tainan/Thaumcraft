@@ -1,0 +1,7 @@
+{
+  "parent": "thaumcraft:block/stockade_cruz",
+  "textures": {
+    "side": "thaumcraft:block/rowan_log",
+    "top": "thaumcraft:block/rowan_log_top"
+  }
+}

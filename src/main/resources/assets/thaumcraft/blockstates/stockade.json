@@ -1,0 +1,868 @@
+{
+  "variants": {
+    "wood=oak,north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_oak_meio"
+    },
+    "wood=spruce,north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_meio"
+    },
+    "wood=birch,north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_birch_meio"
+    },
+    "wood=jungle,north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_meio"
+    },
+    "wood=rowan,north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_meio"
+    },
+    "wood=alder,north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_alder_meio"
+    },
+    "wood=hawthorn,north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_meio"
+    },
+    "wood=acacia,north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_meio"
+    },
+    "wood=dark_oak,north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_meio"
+    },
+    "wood=oak,north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_oak_meio_up"
+    },
+    "wood=spruce,north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_meio_up"
+    },
+    "wood=birch,north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_birch_meio_up"
+    },
+    "wood=jungle,north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_meio_up"
+    },
+    "wood=rowan,north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_meio_up"
+    },
+    "wood=alder,north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_alder_meio_up"
+    },
+    "wood=hawthorn,north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_meio_up"
+    },
+    "wood=acacia,north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_meio_up"
+    },
+    "wood=dark_oak,north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_meio_up"
+    },
+    "wood=oak,north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_oak_lr"
+    },
+    "wood=spruce,north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_lr"
+    },
+    "wood=birch,north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_birch_lr"
+    },
+    "wood=jungle,north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_lr"
+    },
+    "wood=rowan,north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_lr"
+    },
+    "wood=alder,north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_alder_lr"
+    },
+    "wood=hawthorn,north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_lr"
+    },
+    "wood=acacia,north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_lr"
+    },
+    "wood=dark_oak,north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_lr"
+    },
+    "wood=oak,north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_oak_lr_up"
+    },
+    "wood=spruce,north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_lr_up"
+    },
+    "wood=birch,north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_birch_lr_up"
+    },
+    "wood=jungle,north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_lr_up"
+    },
+    "wood=rowan,north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_lr_up"
+    },
+    "wood=alder,north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_alder_lr_up"
+    },
+    "wood=hawthorn,north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_lr_up"
+    },
+    "wood=acacia,north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_lr_up"
+    },
+    "wood=dark_oak,north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_lr_up"
+    },
+    "wood=oak,north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_oak_lr"
+    },
+    "wood=spruce,north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_lr"
+    },
+    "wood=birch,north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_birch_lr"
+    },
+    "wood=jungle,north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_lr"
+    },
+    "wood=rowan,north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_lr"
+    },
+    "wood=alder,north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_alder_lr"
+    },
+    "wood=hawthorn,north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_lr"
+    },
+    "wood=acacia,north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_lr"
+    },
+    "wood=dark_oak,north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_lr"
+    },
+    "wood=oak,north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_oak_lr_up"
+    },
+    "wood=spruce,north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_lr_up"
+    },
+    "wood=birch,north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_birch_lr_up"
+    },
+    "wood=jungle,north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_lr_up"
+    },
+    "wood=rowan,north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_lr_up"
+    },
+    "wood=alder,north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_alder_lr_up"
+    },
+    "wood=hawthorn,north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_lr_up"
+    },
+    "wood=acacia,north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_lr_up"
+    },
+    "wood=dark_oak,north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_lr_up"
+    },
+    "wood=oak,north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_oak_lr"
+    },
+    "wood=spruce,north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_lr"
+    },
+    "wood=birch,north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_birch_lr"
+    },
+    "wood=jungle,north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_lr"
+    },
+    "wood=rowan,north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_lr"
+    },
+    "wood=alder,north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_alder_lr"
+    },
+    "wood=hawthorn,north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_lr"
+    },
+    "wood=acacia,north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_lr"
+    },
+    "wood=dark_oak,north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_lr"
+    },
+    "wood=oak,north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_oak_lr_up"
+    },
+    "wood=spruce,north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_lr_up"
+    },
+    "wood=birch,north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_birch_lr_up"
+    },
+    "wood=jungle,north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_lr_up"
+    },
+    "wood=rowan,north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_lr_up"
+    },
+    "wood=alder,north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_alder_lr_up"
+    },
+    "wood=hawthorn,north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_lr_up"
+    },
+    "wood=acacia,north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_lr_up"
+    },
+    "wood=dark_oak,north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_lr_up"
+    },
+    "wood=oak,north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_oak_ud"
+    },
+    "wood=spruce,north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_ud"
+    },
+    "wood=birch,north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_birch_ud"
+    },
+    "wood=jungle,north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_ud"
+    },
+    "wood=rowan,north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_ud"
+    },
+    "wood=alder,north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_alder_ud"
+    },
+    "wood=hawthorn,north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_ud"
+    },
+    "wood=acacia,north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_ud"
+    },
+    "wood=dark_oak,north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_ud"
+    },
+    "wood=oak,north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_oak_ud_up"
+    },
+    "wood=spruce,north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_ud_up"
+    },
+    "wood=birch,north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_birch_ud_up"
+    },
+    "wood=jungle,north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_ud_up"
+    },
+    "wood=rowan,north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_ud_up"
+    },
+    "wood=alder,north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_alder_ud_up"
+    },
+    "wood=hawthorn,north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_ud_up"
+    },
+    "wood=acacia,north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_ud_up"
+    },
+    "wood=dark_oak,north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_ud_up"
+    },
+    "wood=oak,north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_oak_cruz"
+    },
+    "wood=spruce,north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_cruz"
+    },
+    "wood=birch,north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_birch_cruz"
+    },
+    "wood=jungle,north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_cruz"
+    },
+    "wood=rowan,north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_cruz"
+    },
+    "wood=alder,north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_alder_cruz"
+    },
+    "wood=hawthorn,north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz"
+    },
+    "wood=acacia,north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_cruz"
+    },
+    "wood=dark_oak,north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz"
+    },
+    "wood=oak,north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_oak_cruz_up"
+    },
+    "wood=spruce,north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_cruz_up"
+    },
+    "wood=birch,north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_birch_cruz_up"
+    },
+    "wood=jungle,north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_cruz_up"
+    },
+    "wood=rowan,north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_cruz_up"
+    },
+    "wood=alder,north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_alder_cruz_up"
+    },
+    "wood=hawthorn,north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz_up"
+    },
+    "wood=acacia,north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_cruz_up"
+    },
+    "wood=dark_oak,north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz_up"
+    },
+    "wood=oak,north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_oak_cruz"
+    },
+    "wood=spruce,north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_cruz"
+    },
+    "wood=birch,north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_birch_cruz"
+    },
+    "wood=jungle,north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_cruz"
+    },
+    "wood=rowan,north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_cruz"
+    },
+    "wood=alder,north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_alder_cruz"
+    },
+    "wood=hawthorn,north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz"
+    },
+    "wood=acacia,north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_cruz"
+    },
+    "wood=dark_oak,north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz"
+    },
+    "wood=oak,north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_oak_cruz_up"
+    },
+    "wood=spruce,north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_cruz_up"
+    },
+    "wood=birch,north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_birch_cruz_up"
+    },
+    "wood=jungle,north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_cruz_up"
+    },
+    "wood=rowan,north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_cruz_up"
+    },
+    "wood=alder,north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_alder_cruz_up"
+    },
+    "wood=hawthorn,north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz_up"
+    },
+    "wood=acacia,north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_cruz_up"
+    },
+    "wood=dark_oak,north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz_up"
+    },
+    "wood=oak,north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_oak_cruz"
+    },
+    "wood=spruce,north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_cruz"
+    },
+    "wood=birch,north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_birch_cruz"
+    },
+    "wood=jungle,north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_cruz"
+    },
+    "wood=rowan,north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_cruz"
+    },
+    "wood=alder,north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_alder_cruz"
+    },
+    "wood=hawthorn,north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz"
+    },
+    "wood=acacia,north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_cruz"
+    },
+    "wood=dark_oak,north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz"
+    },
+    "wood=oak,north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_oak_cruz_up"
+    },
+    "wood=spruce,north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_cruz_up"
+    },
+    "wood=birch,north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_birch_cruz_up"
+    },
+    "wood=jungle,north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_cruz_up"
+    },
+    "wood=rowan,north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_cruz_up"
+    },
+    "wood=alder,north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_alder_cruz_up"
+    },
+    "wood=hawthorn,north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz_up"
+    },
+    "wood=acacia,north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_cruz_up"
+    },
+    "wood=dark_oak,north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz_up"
+    },
+    "wood=oak,north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_oak_ud"
+    },
+    "wood=spruce,north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_ud"
+    },
+    "wood=birch,north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_birch_ud"
+    },
+    "wood=jungle,north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_ud"
+    },
+    "wood=rowan,north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_ud"
+    },
+    "wood=alder,north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_alder_ud"
+    },
+    "wood=hawthorn,north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_ud"
+    },
+    "wood=acacia,north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_ud"
+    },
+    "wood=dark_oak,north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_ud"
+    },
+    "wood=oak,north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_oak_ud_up"
+    },
+    "wood=spruce,north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_ud_up"
+    },
+    "wood=birch,north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_birch_ud_up"
+    },
+    "wood=jungle,north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_ud_up"
+    },
+    "wood=rowan,north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_ud_up"
+    },
+    "wood=alder,north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_alder_ud_up"
+    },
+    "wood=hawthorn,north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_ud_up"
+    },
+    "wood=acacia,north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_ud_up"
+    },
+    "wood=dark_oak,north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_ud_up"
+    },
+    "wood=oak,north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_oak_cruz"
+    },
+    "wood=spruce,north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_cruz"
+    },
+    "wood=birch,north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_birch_cruz"
+    },
+    "wood=jungle,north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_cruz"
+    },
+    "wood=rowan,north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_cruz"
+    },
+    "wood=alder,north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_alder_cruz"
+    },
+    "wood=hawthorn,north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz"
+    },
+    "wood=acacia,north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_cruz"
+    },
+    "wood=dark_oak,north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz"
+    },
+    "wood=oak,north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_oak_cruz_up"
+    },
+    "wood=spruce,north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_cruz_up"
+    },
+    "wood=birch,north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_birch_cruz_up"
+    },
+    "wood=jungle,north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_cruz_up"
+    },
+    "wood=rowan,north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_cruz_up"
+    },
+    "wood=alder,north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_alder_cruz_up"
+    },
+    "wood=hawthorn,north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz_up"
+    },
+    "wood=acacia,north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_cruz_up"
+    },
+    "wood=dark_oak,north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz_up"
+    },
+    "wood=oak,north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_oak_cruz"
+    },
+    "wood=spruce,north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_cruz"
+    },
+    "wood=birch,north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_birch_cruz"
+    },
+    "wood=jungle,north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_cruz"
+    },
+    "wood=rowan,north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_cruz"
+    },
+    "wood=alder,north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_alder_cruz"
+    },
+    "wood=hawthorn,north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz"
+    },
+    "wood=acacia,north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_cruz"
+    },
+    "wood=dark_oak,north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz"
+    },
+    "wood=oak,north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_oak_cruz_up"
+    },
+    "wood=spruce,north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_cruz_up"
+    },
+    "wood=birch,north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_birch_cruz_up"
+    },
+    "wood=jungle,north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_cruz_up"
+    },
+    "wood=rowan,north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_cruz_up"
+    },
+    "wood=alder,north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_alder_cruz_up"
+    },
+    "wood=hawthorn,north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz_up"
+    },
+    "wood=acacia,north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_cruz_up"
+    },
+    "wood=dark_oak,north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz_up"
+    },
+    "wood=oak,north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_oak_cruz"
+    },
+    "wood=spruce,north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_cruz"
+    },
+    "wood=birch,north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_birch_cruz"
+    },
+    "wood=jungle,north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_cruz"
+    },
+    "wood=rowan,north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_cruz"
+    },
+    "wood=alder,north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_alder_cruz"
+    },
+    "wood=hawthorn,north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz"
+    },
+    "wood=acacia,north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_cruz"
+    },
+    "wood=dark_oak,north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz"
+    },
+    "wood=oak,north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_oak_cruz_up"
+    },
+    "wood=spruce,north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_cruz_up"
+    },
+    "wood=birch,north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_birch_cruz_up"
+    },
+    "wood=jungle,north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_cruz_up"
+    },
+    "wood=rowan,north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_cruz_up"
+    },
+    "wood=alder,north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_alder_cruz_up"
+    },
+    "wood=hawthorn,north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz_up"
+    },
+    "wood=acacia,north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_cruz_up"
+    },
+    "wood=dark_oak,north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz_up"
+    },
+    "wood=oak,north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_oak_ud"
+    },
+    "wood=spruce,north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_ud"
+    },
+    "wood=birch,north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_birch_ud"
+    },
+    "wood=jungle,north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_ud"
+    },
+    "wood=rowan,north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_ud"
+    },
+    "wood=alder,north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_alder_ud"
+    },
+    "wood=hawthorn,north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_ud"
+    },
+    "wood=acacia,north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_ud"
+    },
+    "wood=dark_oak,north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_ud"
+    },
+    "wood=oak,north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_oak_ud_up"
+    },
+    "wood=spruce,north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_ud_up"
+    },
+    "wood=birch,north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_birch_ud_up"
+    },
+    "wood=jungle,north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_ud_up"
+    },
+    "wood=rowan,north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_ud_up"
+    },
+    "wood=alder,north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_alder_ud_up"
+    },
+    "wood=hawthorn,north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_ud_up"
+    },
+    "wood=acacia,north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_ud_up"
+    },
+    "wood=dark_oak,north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_ud_up"
+    },
+    "wood=oak,north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_oak_cruz"
+    },
+    "wood=spruce,north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_cruz"
+    },
+    "wood=birch,north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_birch_cruz"
+    },
+    "wood=jungle,north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_cruz"
+    },
+    "wood=rowan,north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_cruz"
+    },
+    "wood=alder,north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_alder_cruz"
+    },
+    "wood=hawthorn,north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz"
+    },
+    "wood=acacia,north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_cruz"
+    },
+    "wood=dark_oak,north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz"
+    },
+    "wood=oak,north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_oak_cruz_up"
+    },
+    "wood=spruce,north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_cruz_up"
+    },
+    "wood=birch,north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_birch_cruz_up"
+    },
+    "wood=jungle,north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_cruz_up"
+    },
+    "wood=rowan,north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_cruz_up"
+    },
+    "wood=alder,north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_alder_cruz_up"
+    },
+    "wood=hawthorn,north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz_up"
+    },
+    "wood=acacia,north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_cruz_up"
+    },
+    "wood=dark_oak,north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz_up"
+    },
+    "wood=oak,north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_oak_cruz"
+    },
+    "wood=spruce,north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_cruz"
+    },
+    "wood=birch,north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_birch_cruz"
+    },
+    "wood=jungle,north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_cruz"
+    },
+    "wood=rowan,north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_cruz"
+    },
+    "wood=alder,north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_alder_cruz"
+    },
+    "wood=hawthorn,north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz"
+    },
+    "wood=acacia,north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_cruz"
+    },
+    "wood=dark_oak,north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz"
+    },
+    "wood=oak,north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_oak_cruz_up"
+    },
+    "wood=spruce,north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_cruz_up"
+    },
+    "wood=birch,north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_birch_cruz_up"
+    },
+    "wood=jungle,north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_cruz_up"
+    },
+    "wood=rowan,north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_cruz_up"
+    },
+    "wood=alder,north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_alder_cruz_up"
+    },
+    "wood=hawthorn,north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz_up"
+    },
+    "wood=acacia,north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_cruz_up"
+    },
+    "wood=dark_oak,north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz_up"
+    },
+    "wood=oak,north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_oak_cruz"
+    },
+    "wood=spruce,north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_spruce_cruz"
+    },
+    "wood=birch,north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_birch_cruz"
+    },
+    "wood=jungle,north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_jungle_cruz"
+    },
+    "wood=rowan,north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_rowan_cruz"
+    },
+    "wood=alder,north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_alder_cruz"
+    },
+    "wood=hawthorn,north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz"
+    },
+    "wood=acacia,north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_acacia_cruz"
+    },
+    "wood=dark_oak,north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz"
+    },
+    "wood=oak,north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_oak_cruz_up"
+    },
+    "wood=spruce,north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_spruce_cruz_up"
+    },
+    "wood=birch,north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_birch_cruz_up"
+    },
+    "wood=jungle,north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_jungle_cruz_up"
+    },
+    "wood=rowan,north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_rowan_cruz_up"
+    },
+    "wood=alder,north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_alder_cruz_up"
+    },
+    "wood=hawthorn,north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_hawthorn_cruz_up"
+    },
+    "wood=acacia,north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_acacia_cruz_up"
+    },
+    "wood=dark_oak,north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_dark_oak_cruz_up"
+    }
+  }
+}

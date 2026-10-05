@@ -9071,3 +9071,63 @@ quando ele virou e foi-se embora.
 E, de caminho, a prova dos **caçadores de bruxas** deixou de passar por sorte. Eles nascem num anel de três a
 oito blocos, e quem os põe **desce até achar chão**: num chão de dez por dez, metade do anel caía fora dele e
 o caçador ia parar no fundo do mundo, vivo e longe da vista. O chão da arena passou a cobrir o anel inteiro.
+
+## A Paliçada, e as estacas que apontam (2026-10-04)
+
+Uma cerca de **estacas apontadas** que **fere quem encosta**: três de dano de cato, que é dano que a armadura
+não para. Não é uma cerca que se pula; é uma cerca que se **contorna**.
+
+Vinte e cinco de dureza, mais do que a obsidiana. Quem puser uma paliçada à volta de alguma coisa pode ir
+dormir. E nada que ande no chão tenta atravessá-la, porque o original devolve que por ali não se anda.
+
+### As estacas
+
+A ponta é o que a torna o que ela é, e ela é feita de **cinco caixas**: o corpo até **meio bloco** de alto e,
+por cima dele, **quatro degraus** que vão estreitando — quatro centésimos de bloco por lado e oito centésimos
+e meio de alto cada um — com a **textura do topo** do tronco em todas as faces. É a conta do original, e dela
+sai uma estaca que termina em bico.
+
+Havendo **outra paliçada por cima**, a estaca deixa de apontar e vai a direito até ao teto. Duas empilhadas
+são um muro sem frestas, e é o que separa uma cerca de uma parede.
+
+E as juntas: sem vizinhos, **uma** estaca no meio; com vizinhos de um lado, **duas**; com vizinhos nos dois
+eixos, **quatro** — e nessas as duas primeiras começam a apontar **mais acima** que as outras duas, de modo
+que a cruz fica com as pontas desencontradas. É um detalhe gratuito do original e está portado.
+
+### Nove madeiras e um gelo, que é o que importa
+
+São **nove madeiras** — as seis do jogo e as três do ofício — e um **gelo**.
+
+E aqui está a conta que carrega a fatia: no original as nove madeiras são **um bloco só** com nove números, e
+o `canConnectFenceTo` pergunta se o bloco do lado é **este mesmo bloco**. Por isso um carvalho e uma sorveira
+dão as mãos. A de gelo é **outro bloco**, e por isso uma paliçada de gelo encostada numa de madeira fica de
+pé sozinha ao lado dela.
+
+Esse detalhe **perde-se** ao portar cada madeira como um bloco seu, que é o jeito moderno de fazer madeiras —
+e seria preciso um rótulo para o recuperar, e dois rótulos para manter o gelo de fora. Por isso aqui elas
+continuam sendo **um bloco com nove chaves**, como lá.
+
+### O que se desenhou
+
+Oito feitios de geometria — as quatro juntas, cada uma apontada e a direito —, com as texturas vindo de fora.
+Dez filhos por feitio, um por madeira e um para o gelo: **oitenta modelos**, gerados.
+
+E o feitio do bloco tem **duzentas e oitenta e oito** entradas, que é cruzar as nove madeiras com as trinta e
+duas combinações de quatro lados e um de cima. Mais trinta e duas para o gelo. Também gerados — à mão seria
+trabalho de copista.
+
+### De onde ela vem
+
+**Oito troncos** à volta de uma **Exalação do Cornudo**, e saem **nove** paliçadas da madeira dos troncos.
+Nove receitas, uma por madeira.
+
+**Guardas:** `OccultaStockadeGameTest`, com quatro — os números; a prova que carrega a fatia, que é as **nove
+madeiras darem as mãos e o gelo não**; ela ferindo quem encosta; e a empilhada que vira parede, com a de
+baixo deixando de apontar e a de cima continuando. E `OccultaStockadeClientTest`, com três telas: a fileira
+das dez, onde se vê a casca de cada uma e o gelo sozinho no fim; as pontas — uma solta, duas empilhadas e uma
+cruz; e as três no inventário.
+
+**E uma prova que passava por sorte:** a do **estouro do Demônio** perguntava se a ovelha ao lado dele
+**morria**. O estouro reparte o dano por raios sorteados, e a mesma ovelha no mesmo lugar ora cai ora fica
+com um fio de vida — mudar de arena basta para virar a moeda. Ela passou a perguntar se a ovelha **levou**,
+que é o que o estouro tem de provar.

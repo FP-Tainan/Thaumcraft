@@ -263,6 +263,12 @@ public final class OccultaItems {
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
+    public static final Item STOCKADE = register("stockade", properties ->
+            new net.thaumcraft.occulta.StockadeItem(properties.useBlockDescriptionPrefix()));
+
+    public static final Item ICE_STOCKADE = register("ice_stockade", properties ->
+            new BlockItem(OccultaBlocks.ICE_STOCKADE, properties.useBlockDescriptionPrefix()));
+
     public static final Item PLANT_MINE = register("plant_mine", properties ->
             new net.thaumcraft.occulta.PlantMineItem(properties.useBlockDescriptionPrefix()));
 

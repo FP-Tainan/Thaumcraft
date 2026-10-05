@@ -1,0 +1,7 @@
+{
+  "parent": "thaumcraft:block/stockade_ud_up",
+  "textures": {
+    "side": "minecraft:block/acacia_log",
+    "top": "minecraft:block/acacia_log_top"
+  }
+}

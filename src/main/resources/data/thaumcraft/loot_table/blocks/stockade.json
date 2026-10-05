@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "thaumcraft:stockade",
+          "functions": [
+            {
+              "function": "minecraft:copy_state",
+              "block": "thaumcraft:stockade",
+              "properties": [
+                "wood"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

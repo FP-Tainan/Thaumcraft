@@ -1,0 +1,7 @@
+{
+  "parent": "thaumcraft:block/stockade_meio_up",
+  "textures": {
+    "side": "thaumcraft:block/alder_log",
+    "top": "thaumcraft:block/alder_log_top"
+  }
+}

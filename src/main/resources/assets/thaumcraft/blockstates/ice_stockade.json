@@ -1,0 +1,100 @@
+{
+  "variants": {
+    "north=false,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_ice_meio"
+    },
+    "north=false,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_ice_meio_up"
+    },
+    "north=false,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_ice_lr"
+    },
+    "north=false,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_ice_lr_up"
+    },
+    "north=false,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_ice_lr"
+    },
+    "north=false,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_ice_lr_up"
+    },
+    "north=false,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_ice_lr"
+    },
+    "north=false,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_ice_lr_up"
+    },
+    "north=false,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_ice_ud"
+    },
+    "north=false,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_ice_ud_up"
+    },
+    "north=false,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_ice_cruz"
+    },
+    "north=false,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_ice_cruz_up"
+    },
+    "north=false,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_ice_cruz"
+    },
+    "north=false,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_ice_cruz_up"
+    },
+    "north=false,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_ice_cruz"
+    },
+    "north=false,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_ice_cruz_up"
+    },
+    "north=true,south=false,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_ice_ud"
+    },
+    "north=true,south=false,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_ice_ud_up"
+    },
+    "north=true,south=false,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_ice_cruz"
+    },
+    "north=true,south=false,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_ice_cruz_up"
+    },
+    "north=true,south=false,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_ice_cruz"
+    },
+    "north=true,south=false,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_ice_cruz_up"
+    },
+    "north=true,south=false,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_ice_cruz"
+    },
+    "north=true,south=false,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_ice_cruz_up"
+    },
+    "north=true,south=true,east=false,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_ice_ud"
+    },
+    "north=true,south=true,east=false,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_ice_ud_up"
+    },
+    "north=true,south=true,east=false,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_ice_cruz"
+    },
+    "north=true,south=true,east=false,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_ice_cruz_up"
+    },
+    "north=true,south=true,east=true,west=false,up=false": {
+      "model": "thaumcraft:block/stockade_ice_cruz"
+    },
+    "north=true,south=true,east=true,west=false,up=true": {
+      "model": "thaumcraft:block/stockade_ice_cruz_up"
+    },
+    "north=true,south=true,east=true,west=true,up=false": {
+      "model": "thaumcraft:block/stockade_ice_cruz"
+    },
+    "north=true,south=true,east=true,west=true,up=true": {
+      "model": "thaumcraft:block/stockade_ice_cruz_up"
+    }
+  }
+}

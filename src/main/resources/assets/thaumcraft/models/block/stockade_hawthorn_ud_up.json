@@ -1,0 +1,7 @@
+{
+  "parent": "thaumcraft:block/stockade_ud_up",
+  "textures": {
+    "side": "thaumcraft:block/hawthorn_log",
+    "top": "thaumcraft:block/hawthorn_log_top"
+  }
+}

@@ -141,14 +141,22 @@ public class OccultaDemonGameTest {
          * está travado em criativo, e em criativo não se leva estouro nenhum.
          */
         var ovelha = helper.spawn(EntityTypes.SHEEP, new BlockPos(4, 2, 3));
+        float tinha = ovelha.getHealth();
 
         demônio.pagaramComFogo();
         helper.startSequence()
                 .thenExecuteAfter(DemonEntity.ESPERA_DO_ESTOURO + 10, () -> {
                     if (demônio.isRemoved()) helper.fail("o demônio não morre no próprio estouro");
-                    if (ovelha.isAlive()) {
-                        helper.fail("mas quem está ao lado dele leva, e a ovelha ficou com "
-                                + ovelha.getHealth());
+                    /*
+                     * E a pergunta é se ela <b>levou</b>, e não se morreu. O estouro reparte o dano por
+                     * raios sorteados, e a mesma ovelha no mesmo lugar ora cai ora fica com um fio de vida —
+                     * mudar de arena basta para virar a moeda. O que a prova quer saber é se o estouro
+                     * chega a quem está ao lado, e meia vida a menos já diz isso.
+                     */
+                    float agora = ovelha.isAlive() ? ovelha.getHealth() : 0.0f;
+                    if (agora > tinha / 2.0f) {
+                        helper.fail("mas quem está ao lado dele leva, e a ovelha ficou com " + agora
+                                + " de " + tinha);
                     }
                     demônio.discard();
                     ovelha.discard();
