@@ -9502,3 +9502,89 @@ tirando a coisa e não o bloco; a queda com o chão; o lado para onde ele está 
 fatia, que é a **faca deitada dobrando o alcance do altar**, com a segunda faca não somando nada. E
 `OccultaPlacedItemClientTest`, com duas telas: a faca deitada numa pedra de altar e as quatro voltas lado a
 lado.
+
+## A Caveira do Chamado e o Ovo do Infinito (2026-10-05)
+
+As duas coisas que se põem no chão e **puxam o mundo para elas**: uma puxa os mortos, a outra puxa o poder.
+
+### A Caveira do Chamado
+
+Uma caveira de esqueleto que, **acordada**, puxa os mortos-vivos para si de até **sessenta e quatro blocos**
+à volta.
+
+Mas não de uma vez. De **cinco em cinco segundos** ela acorda **um oitavo do mundo** — um quadrante de
+sessenta e quatro blocos, acima ou abaixo — e manda andar na direção dela tudo o que ali for morto-vivo.
+Oito voltas e ela deu a volta ao mundo inteiro: **quarenta segundos** para um giro completo.
+
+Essa roda é o que torna a caveira útil em vez de absurda. Se ela puxasse tudo de uma vez, uma armadilha com
+uma caveira acesa seria uma panela de zumbis ao fim de meio minuto. Puxando um oitavo de cada vez, eles
+chegam **aos poucos e por um lado** — que é como se faz uma armadilha e não um massacre.
+
+E os oito quadrantes do original são copiados à letra, porque a ordem deles é esquisita: os quatro primeiros
+são os de **baixo** e os quatro últimos os de **cima**, e os de cima **não estão na mesma ordem** dos de
+baixo — o quinto é o canto noroeste, o sexto o sudeste, o sétimo o sudoeste e o oitavo o nordeste. Fica como
+está.
+
+**A Pedra Necrótica acende, e volta a tirar.** A caveira posta está dormindo. Com a pedra na mão, clicando
+numa que dorme ela **acorda**, com chamas e um relincho de cavalo esquelético; clicando numa acordada, ela
+**estoura** e volta para o chão como item. Não há como apagar uma caveira sem a levantar — acender uma é
+uma decisão, e desligá-la custa ir lá buscá-la.
+
+Ela é **inquebrável** e aguenta mil de explosão. Quem faz uma armadilha de mortos-vivos não quer que o
+primeiro deles a parta.
+
+**Ela não tem modelo próprio:** o original pega a **cabeça de esqueleto do jogo** e lhe troca a pele — uma
+folha para a que dorme e outra para a acordada. Aqui é o mesmo, com a camada de modelo do jogo pedida
+emprestada. E o **giro vai na pilha e não na peça**, porque o jogo de hoje desenha depois e a peça é uma só:
+mexer no ângulo dela faria com que todas as caveiras do mundo saíssem com o ângulo da última.
+
+**O morto-vivo é um rótulo.** O original pergunta pelo *atributo de criatura* do bicho, que era um dos cinco
+que a versão de 2014 tinha. Hoje a mesma pergunta se faz pelo `#minecraft:undead`, que é o que o encanto do
+Golpe Sagrado também usa — e que quem jogar pode mexer.
+
+### O Ovo do Infinito
+
+Por fora é um Ovo de Dragão. Por dentro é o avesso dele: **ele não foge**. O ovo do jogo é uma piada —
+bate-se nele e ele salta para outro lugar —, e este fica onde o puseram. O original consegue isso escrevendo
+duas funções vazias por cima das do ovo: a do clique e a da pancada.
+
+Perto de um altar ele vale **mil** de natureza, quatro vezes o ovo de dragão, que já era o que mais valia de
+longe. E posto **em cima** de uma das seis pedras, ele **multiplica por dez** o teto e a velocidade do altar
+inteiro.
+
+Dez. Não é um enfeite como a caveira ou o candelabro: é o fim da escala. Um altar com um Ovo do Infinito em
+cima deixa de ter contas que valha a pena fazer.
+
+E ele **não se fabrica**. O original não lhe dá receita nenhuma, nem rito, nem despojo: ele existe na aba do
+criativo e mais nada. É um objeto de quem constrói mundos, e não de quem joga neles.
+
+**Ele não estende o Ovo de Dragão**, estende o que ele estende — o bloco que cai. A razão é de carpintaria:
+o Ovo de Dragão de hoje tranca o molde dele a si próprio, e um bloco que o estenda não consegue dar o seu. O
+que se herdava dele era a forma, a queda e a cor do pó, e as três estão aqui à mão.
+
+### O que o altar passou a contar
+
+Com esta fatia, a lista do altar fica assim:
+
+| em cima de uma pedra | o que faz |
+| --- | --- |
+| caveira de esqueleto / wither / gente | soma 1 / 2 / 3 ao teto e à velocidade |
+| tocha | soma 1 à velocidade |
+| candelabro | soma 2 à velocidade |
+| cálice vazio / cheio | soma 1 / 2 ao teto |
+| Arthana deitada | **dobra** o alcance |
+| **Ovo do Infinito** | **multiplica por dez** o teto e a velocidade |
+
+Faltam só dois: o **Ramo Místico** e o **Pentáculo de Kobolditas**, que se deitam no mesmo bloco que a
+Arthana.
+
+**Guardas:** `OccultaAlluringSkullGameTest`, com seis — a caveira dormindo e a luz dela; a queda com o que a
+segura; a prova que carrega a fatia, que é **o chamado pondo um zumbi a andar**; a ovelha que não o ouve; o
+ovo multiplicando o altar por dez; e o ovo não fugindo de quem lhe bate. E
+`OccultaAlluringSkullClientTest`, com três telas: as duas caveiras lado a lado, uma em cada parede de um
+pilar, e o ovo em cima de um altar.
+
+**E uma lição da arena:** um bicho acabado de nascer numa prova ainda **não tocou o chão**, e o jogo não
+traça caminho nenhum para quem está no ar. O chamado achava o zumbi, contava-o, mandava-o andar — e ele
+ficava parado. Vinte batidas de espera e passou. É o terceiro jeito que a arena de uma prova tem de mentir,
+depois de **cair** e de estar **girada**.

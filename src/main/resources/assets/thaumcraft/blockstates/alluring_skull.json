@@ -1,0 +1,484 @@
+{
+  "variants": {
+    "facing=up,rotation=0,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=0,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=1,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=1,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=2,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=2,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=3,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=3,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=4,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=4,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=5,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=5,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=6,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=6,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=7,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=7,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=8,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=8,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=9,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=9,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=10,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=10,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=11,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=11,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=12,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=12,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=13,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=13,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=14,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=14,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=15,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=up,rotation=15,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=0,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=0,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=1,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=1,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=2,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=2,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=3,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=3,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=4,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=4,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=5,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=5,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=6,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=6,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=7,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=7,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=8,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=8,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=9,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=9,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=10,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=10,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=11,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=11,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=12,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=12,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=13,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=13,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=14,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=14,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=15,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=north,rotation=15,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=0,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=0,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=1,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=1,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=2,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=2,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=3,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=3,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=4,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=4,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=5,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=5,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=6,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=6,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=7,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=7,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=8,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=8,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=9,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=9,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=10,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=10,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=11,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=11,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=12,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=12,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=13,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=13,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=14,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=14,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=15,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=south,rotation=15,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=0,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=0,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=1,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=1,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=2,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=2,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=3,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=3,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=4,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=4,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=5,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=5,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=6,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=6,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=7,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=7,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=8,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=8,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=9,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=9,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=10,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=10,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=11,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=11,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=12,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=12,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=13,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=13,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=14,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=14,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=15,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=east,rotation=15,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=0,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=0,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=1,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=1,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=2,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=2,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=3,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=3,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=4,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=4,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=5,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=5,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=6,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=6,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=7,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=7,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=8,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=8,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=9,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=9,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=10,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=10,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=11,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=11,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=12,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=12,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=13,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=13,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=14,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=14,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=15,awake=false": {
+      "model": "thaumcraft:block/alluring_skull"
+    },
+    "facing=west,rotation=15,awake=true": {
+      "model": "thaumcraft:block/alluring_skull"
+    }
+  }
+}

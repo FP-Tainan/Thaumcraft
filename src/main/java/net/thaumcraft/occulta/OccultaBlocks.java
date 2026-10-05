@@ -192,6 +192,36 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GrassperBlockEntity::new,
                             java.util.Set.of(GRASSPER)));
 
+    // ------------------------------------------------------------ a caveira e o ovo
+
+    /**
+     * A <b>Caveira do Chamado</b>: a que puxa os mortos-vivos para si.
+     *
+     * <p>Os números do original: <b>inquebrável</b>, mil de resistência a explosão, som de pedra e
+     * <b>sete de luz</b>. Um creeper ao lado dela não a tira do lugar.
+     */
+    public static final Block ALLURING_SKULL = register("alluring_skull", properties ->
+            new AlluringSkullBlock(properties.mapColor(MapColor.SAND).strength(-1.0f, 1000.0f)
+                    .sound(SoundType.STONE).lightLevel(feitio -> 7).noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<AlluringSkullBlockEntity>
+            ALLURING_SKULL_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("alluring_skull"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            AlluringSkullBlockEntity::new, java.util.Set.of(ALLURING_SKULL)));
+
+    /**
+     * O <b>Ovo do Infinito</b>: o Ovo de Dragão que não foge.
+     *
+     * <p>Os números do original: <b>três de dureza</b>, quinze de resistência, som de pedra e <b>dois de
+     * luz</b>.
+     */
+    public static final Block INFINITY_EGG = register("infinity_egg", properties ->
+            new InfinityEggBlock(properties.mapColor(MapColor.COLOR_BLACK).strength(3.0f, 15.0f)
+                    .sound(SoundType.STONE).lightLevel(feitio -> 2).noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)));
+
     // ------------------------------------------------------------ o Item Posto
 
     /**

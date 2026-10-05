@@ -80,6 +80,9 @@ public final class AltarPower {
         source(state -> state.is(Blocks.POTATOES), 4, 20);
         source(state -> state.is(Blocks.DRAGON_EGG), 250, 1);
 
+        // e o Ovo do Infinito vale quatro vezes o de dragão, que é o fim da escala
+        source(state -> state.is(OccultaBlocks.INFINITY_EGG), InfinityEggBlock.VALE, 1);
+
         // as plantas do ofício valem como as do original
         source(state -> state.is(OccultaBlocks.BELLADONNA) || state.is(OccultaBlocks.MANDRAKE)
                 || state.is(OccultaBlocks.WATER_ARTICHOKE) || state.is(OccultaBlocks.SNOWBELL), 4, 20);

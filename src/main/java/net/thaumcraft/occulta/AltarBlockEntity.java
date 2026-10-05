@@ -31,14 +31,15 @@ import java.util.List;
  *   <li>um <b>candelabro</b> ou uma <b>tocha</b>: o candelabro soma dois à velocidade, a tocha um — e é o
  *       mesmo lugar, porque o altar conta <b>uma luz só</b>;</li>
  *   <li>um <b>cálice</b>: soma um ao teto se estiver vazio, dois se estiver cheio;</li>
- *   <li>e a <b>Arthana deitada</b> num {@link PlacedItemBlock}: <b>dobra o alcance</b> do altar.</li>
+ *   <li>a <b>Arthana deitada</b> num {@link PlacedItemBlock}: <b>dobra o alcance</b> do altar;</li>
+ *   <li>e o <b>Ovo do Infinito</b>: <b>multiplica por dez</b> o teto e a velocidade.</li>
  * </ul>
  *
  * <p>De cada um <b>conta-se um</b>: dois candelabros valem o mesmo que um, e o segundo cálice não soma nada.
  *
- * <p><b>Do original ficam de fora, por agora,</b> o Ramo Místico, o pentáculo de kobolditas e o Ovo do
- * Infinito — que ainda não foram portados. Os dois primeiros deitam-se no mesmo bloco que a Arthana e dão
- * poder de encanto e o dobro da velocidade; o terceiro multiplica tudo por dez.
+ * <p><b>Do original ficam de fora, por agora,</b> o Ramo Místico e o pentáculo de kobolditas — que ainda
+ * não foram portados. Os dois deitam-se no mesmo bloco que a Arthana, e dão poder de encanto e o dobro da
+ * velocidade.
  */
 public class AltarBlockEntity extends BlockEntity {
     /** Quanto poder entra a cada segundo, antes dos enfeites. */
@@ -175,6 +176,7 @@ public class AltarBlockEntity extends BlockEntity {
         boolean luz = false;
         boolean taça = false;
         boolean faca = false;
+        boolean ovo = false;
 
         for (BlockPos onde : this.pieces(level)) {
             BlockState acima = level.getBlockState(onde.above());
@@ -205,7 +207,18 @@ public class AltarBlockEntity extends BlockEntity {
                     faca = true;
                     novoAlcance++;
                 }
+            } else if (!ovo && acima.is(OccultaBlocks.INFINITY_EGG)) {
+                ovo = true;
             }
+        }
+
+        /*
+         * E o Ovo do Infinito é o último a contar, porque ele não soma: ele <b>multiplica</b>. Dez vezes
+         * o teto e dez vezes a velocidade, depois de tudo o resto estar contado.
+         */
+        if (ovo) {
+            novoPoder *= InfinityEggBlock.VEZES;
+            novaVelocidade *= InfinityEggBlock.VEZES;
         }
 
         this.powerScale = novoPoder;

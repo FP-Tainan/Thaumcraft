@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "bcb",
+    " d "
+  ],
+  "key": {
+    "a": "thaumcraft:necrotic_stone",
+    "b": "minecraft:glowstone_dust",
+    "c": "minecraft:skeleton_skull",
+    "d": "thaumcraft:voodoo_poppet"
+  },
+  "result": {
+    "id": "thaumcraft:alluring_skull",
+    "count": 1
+  }
+}

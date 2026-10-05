@@ -263,6 +263,15 @@ public final class OccultaItems {
     public static final Item GRASSPER = register("grassper", properties ->
             new BlockItem(OccultaBlocks.GRASSPER, properties.useBlockDescriptionPrefix()));
 
+    /** A <b>Caveira do Chamado</b>, que se prega no chão ou numa parede. */
+    public static final Item ALLURING_SKULL = register("alluring_skull", properties ->
+            new BlockItem(OccultaBlocks.ALLURING_SKULL, properties.useBlockDescriptionPrefix()
+                    .stacksTo(1)));
+
+    /** O <b>Ovo do Infinito</b>, que não se fabrica: ele só existe na aba do criativo. */
+    public static final Item INFINITY_EGG = register("infinity_egg", properties ->
+            new BlockItem(OccultaBlocks.INFINITY_EGG, properties.useBlockDescriptionPrefix()));
+
     /** A <b>Bola de Cristal</b>, que não se compra: sai do rito que a faz aparecer. */
     public static final Item CRYSTAL_BALL = register("crystal_ball", properties ->
             new BlockItem(OccultaBlocks.CRYSTAL_BALL, properties.useBlockDescriptionPrefix()));
