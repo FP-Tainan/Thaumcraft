@@ -11,9 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.thaumcraft.occulta.OccultaEntities;
+import net.thaumcraft.occulta.OccultaItems;
 import net.thaumcraft.occulta.goblin.GoblinDigGoal;
 import net.thaumcraft.occulta.goblin.GoblinDropOffGoal;
 import net.thaumcraft.occulta.goblin.GoblinEntity;
+import net.thaumcraft.occulta.goblin.GoblinTrades;
 
 /**
  * O goblin: a conta da coragem, e o que ele faz na corda.
@@ -231,6 +233,109 @@ public class OccultaGoblinGameTest {
     }
 
     /** <b>E ele trepa paredes</b>, que é o que faz uma cerca não o segurar. */
+    /**
+     * <b>A escada do koboldite, que é o que faz do goblin um mercador.</b>
+     *
+     * <p>Esta é a prova que carrega a fatia do metal. O koboldite não se mina, não se cozinha e não se
+     * invoca: sai de um goblin, e sai em <b>três degraus que ele abre um de cada vez</b>. Um goblin
+     * acabado de encontrar mostra o primeiro e mais nada.
+     */
+    @GameTest
+    public void theKobolditeLadderOpensOneStepAtATime(GameTestHelper helper) {
+        var sorte = net.minecraft.util.RandomSource.create(1234L);
+        var tem = new net.minecraft.world.item.trading.MerchantOffers();
+
+        // o primeiro degrau: nove de pó e cinco pepitas de ouro dão uma pepita de koboldite
+        GoblinTrades.monta(sorte, 1, tem, 1);
+        if (tem.size() != 1) helper.fail("um goblin novo mostra uma troca; mostrou " + tem.size());
+        var primeiro = tem.get(0);
+        if (!primeiro.getCostA().is(OccultaItems.KOBOLDITE_DUST)
+                || primeiro.getCostA().getCount() != GoblinTrades.PÓ_DO_PRIMEIRO) {
+            helper.fail("o primeiro pede nove de pó; pede " + primeiro.getCostA());
+        }
+        if (!primeiro.getCostB().is(Items.GOLD_NUGGET)
+                || primeiro.getCostB().getCount() != GoblinTrades.OURO_DO_PRIMEIRO) {
+            helper.fail("e cinco pepitas de ouro; pede " + primeiro.getCostB());
+        }
+        if (!primeiro.getResult().is(OccultaItems.KOBOLDITE_NUGGET)
+                || primeiro.getResult().getCount() != 1) {
+            helper.fail("e dá uma pepita de koboldite; dá " + primeiro.getResult());
+        }
+
+        // o segundo: dezesseis de pó e um lingote de ouro dão duas
+        GoblinTrades.monta(sorte, 1, tem, 1);
+        var segundo = tem.get(1);
+        if (!segundo.getCostA().is(OccultaItems.KOBOLDITE_DUST)
+                || segundo.getCostA().getCount() != GoblinTrades.PÓ_DO_SEGUNDO
+                || segundo.getResult().getCount() != GoblinTrades.DÁ_O_SEGUNDO) {
+            helper.fail("o segundo pede dezesseis de pó e dá duas pepitas; é " + segundo.getCostA()
+                    + " por " + segundo.getResult());
+        }
+
+        // e o terceiro: nove pepitas e uma esmeralda dão o lingote
+        GoblinTrades.monta(sorte, 1, tem, 1);
+        var terceiro = tem.get(2);
+        if (!terceiro.getCostA().is(OccultaItems.KOBOLDITE_NUGGET)
+                || terceiro.getCostA().getCount() != GoblinTrades.PEPITAS_DO_TERCEIRO
+                || !terceiro.getCostB().is(Items.EMERALD)
+                || !terceiro.getResult().is(OccultaItems.KOBOLDITE_INGOT)) {
+            helper.fail("o terceiro dá o lingote; dá " + terceiro.getResult());
+        }
+
+        // e a escada acaba: o quarto pedido não traz nada de novo
+        GoblinTrades.monta(sorte, 1, tem, 1);
+        if (tem.size() != 4 || tem.get(3).getResult().is(OccultaItems.KOBOLDITE_INGOT)) {
+            helper.fail("depois do lingote não há mais degraus; veio " + tem.get(3).getResult());
+        }
+        helper.succeed();
+    }
+
+    /**
+     * <b>E o pó, que é o primeiro degrau de todos, não se compra: cai no lugar da esmeralda.</b>
+     *
+     * <p>Uma vez em três, vender comida ou minério a um goblin paga em <b>pó de koboldite</b>. É a única
+     * porta de entrada do metal no jogo, e é por isso que ele é o fim do mod e não o meio.
+     */
+    @GameTest
+    public void theDustFallsInsteadOfTheEmerald(GameTestHelper helper) {
+        var sorte = net.minecraft.util.RandomSource.create(99L);
+        int comPó = 0;
+        int comEsmeralda = 0;
+        for (int volta = 0; volta < 200; volta++) {
+            var tem = new net.minecraft.world.item.trading.MerchantOffers();
+            GoblinTrades.monta(sorte, 0, tem, 1);
+            for (var troca : tem) {
+                if (troca.getResult().is(OccultaItems.KOBOLDITE_DUST)) comPó++;
+                else if (troca.getResult().is(Items.EMERALD)) comEsmeralda++;
+            }
+        }
+        if (comPó == 0) helper.fail("em duzentos goblins, algum devia pagar em pó");
+        if (comEsmeralda == 0) helper.fail("e algum em esmeralda");
+        if (comPó > comEsmeralda) {
+            helper.fail("mas o pó é uma em três, e por isso o raro; veio " + comPó + " contra "
+                    + comEsmeralda);
+        }
+        helper.succeed();
+    }
+
+    /**
+     * <b>Um goblin no mato não vende nada.</b>
+     *
+     * <p>Ele só regateia onde mora, e é por isso que encontrar uma aldeia com goblins é o começo da linha
+     * do koboldite. A arena da prova não é aldeia nenhuma.
+     */
+    @GameTest(maxTicks = 40)
+    public void aGoblinInTheWildDoesNotTrade(GameTestHelper helper) {
+        piso(helper);
+        var goblin = helper.spawn(OccultaEntities.GOBLIN, new BlockPos(3, 2, 3));
+        if (goblin.emAldeia()) helper.fail("a arena não é aldeia nenhuma");
+        if (goblin.regateando()) helper.fail("e ninguém está regateando com ele");
+        if (goblin.getVillagerXp() != 0) helper.fail("e com ele não se sobe de nível");
+        if (goblin.showProgressBar()) helper.fail("nem há barra de progresso");
+        goblin.discard();
+        helper.succeed();
+    }
+
     @GameTest(maxTicks = 40)
     public void heClimbsWalls(GameTestHelper helper) {
         piso(helper);

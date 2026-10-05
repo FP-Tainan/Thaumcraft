@@ -28,6 +28,9 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.Merchant;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
@@ -54,13 +57,14 @@ import org.jetbrains.annotations.Nullable;
  *
  * <p><b>Ele trepa paredes</b>, como uma aranha, e é por isso que uma cerca não o segura.
  *
- * <p><b>Fica de fora, declarado:</b> o <b>Koboldite</b> — o minério, a picareta e o que ela faz ao que se cava
- * — é uma linha de material inteira do original, e não está portada. O goblin cava com qualquer picareta; a
- * picareta de koboldite cavaria quinze vezes mais depressa e fundiria metade do minério, e isso fica para
- * quando a linha vier. Os dois <b>chefes</b> goblins (o Gulg e o Mog) pendem da mesma linha e da infusão, e
- * ficam com ela.
+ * <p><b>E ele é a única fonte de koboldite que há.</b> O metal não se mina e não se cozinha: sai de um
+ * goblin, numa escada de três degraus que ele abre um de cada vez. Veja o {@link GoblinTrades}.
+ *
+ * <p><b>Fica de fora, declarado:</b> a <b>picareta de koboldite</b> e o que ela faz ao que se cava — ela
+ * cavaria quinze vezes mais depressa e fundiria metade do minério. Os dois <b>chefes</b> goblins (o Gulg e
+ * o Mog) pendem da Estátua de Adoração, e ficam com ela.
  */
-public class GoblinEntity extends AgeableMob {
+public class GoblinEntity extends AgeableMob implements Merchant {
     /** Quantos goblins juntos bastam para eles terem coragem: os três do original. */
     public static final int CORAGEM = 3;
 
@@ -81,6 +85,28 @@ public class GoblinEntity extends AgeableMob {
             SynchedEntityData.defineId(GoblinEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> NA_PAREDE =
             SynchedEntityData.defineId(GoblinEntity.class, EntityDataSerializers.BOOLEAN);
+
+    /** Quanto tempo ele leva a pôr uma troca nova depois de se lhe esgotar a última. */
+    public static final int RECARGA = 40;
+
+    /** E de quantas em quantas batidas ele procura a aldeia dele, com o intervalo do original. */
+    public static final int PROCURA = 70;
+    public static final int MAIS_UM_BOCADO = 50;
+
+    /** A quantas seções de aldeia ele tem de estar para regatear: as duas que valem os trinta e dois
+     * blocos do original. */
+    public static final int PERTO_DA_ALDEIA = 2;
+
+    /** Quanto dura a regeneração que ele ganha ao recarregar a loja. */
+    public static final int DESCANSO = 200;
+
+    private @Nullable Player quemCompra;
+    private @Nullable MerchantOffers ofertas;
+    private int atéRecarregar;
+    private boolean precisaDeMais;
+    private int riqueza;
+    private int atéProcurar;
+    private boolean semSumir;
 
     public GoblinEntity(EntityType<? extends GoblinEntity> type, Level level) {
         super(type, level);
@@ -216,7 +242,22 @@ public class GoblinEntity extends AgeableMob {
         if (!this.isAlive() || this.isBaby() || quem.isShiftKeyDown()) {
             return super.mobInteract(quem, mão);
         }
-        if (!this.isLeashed()) return super.mobInteract(quem, mão);
+
+        /*
+         * <b>Solto, ele regateia.</b> Na corda, ele trabalha — e as duas coisas não se misturam: um goblin
+         * com picareta na mão é um empregado, e um empregado não vende nada.
+         */
+        if (!this.isLeashed()) {
+            if (this.trabalhando() || this.adorando()
+                    || naMão.getItem() instanceof net.minecraft.world.item.SpawnEggItem) {
+                return super.mobInteract(quem, mão);
+            }
+            if (this.level().isClientSide()) return InteractionResult.SUCCESS;
+            if (!emAldeia()) return super.mobInteract(quem, mão);
+            this.setTradingPlayer(quem);
+            this.openTradingScreen(quem, this.getDisplayName(), 0);
+            return InteractionResult.SUCCESS;
+        }
         if (this.level().isClientSide()) return InteractionResult.SUCCESS;
 
         ItemStack dele = this.getMainHandItem();
@@ -233,6 +274,170 @@ public class GoblinEntity extends AgeableMob {
         if (!quem.getInventory().add(dele.copy())) quem.drop(dele.copy(), false);
         this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         return InteractionResult.SUCCESS;
+    }
+
+    // ------------------------------------------------------------------ o regateio
+
+    /**
+     * <b>Se ele está em casa.</b>
+     *
+     * <p>O original pergunta à coleção de aldeias de 2014 se há uma a <b>trinta e dois blocos</b>. Essa
+     * coleção não existe mais, e o que hoje lhe corresponde é a conta de pontos de interesse do jogo —
+     * camas, bancadas, postos de trabalho — que o {@code isCloseToVillage} faz por seções de dezesseis
+     * blocos. Duas seções são os trinta e dois do original.
+     *
+     * <p>Vale a pena dizer por que a pergunta existe: um goblin <b>no mato não vende nada</b>. Ele só
+     * regateia onde mora, e é por isso que encontrar uma aldeia com goblins é o começo da linha do
+     * koboldite.
+     */
+    public boolean emAldeia() {
+        return this.level() instanceof ServerLevel level
+                && level.isCloseToVillage(this.blockPosition(), PERTO_DA_ALDEIA);
+    }
+
+    @Override
+    public void setTradingPlayer(@Nullable Player quem) {
+        this.quemCompra = quem;
+    }
+
+    @Override
+    public @Nullable Player getTradingPlayer() {
+        return this.quemCompra;
+    }
+
+    public boolean regateando() {
+        return this.quemCompra != null;
+    }
+
+    /**
+     * <b>Ele não abre a loja toda de uma vez.</b>
+     *
+     * <p>Um goblin que nunca regateou tem <b>uma</b> troca, e só. As outras vêm uma a uma, à medida que a
+     * última se lhe esgota — é o costume do aldeão de 2014, e no goblin ele tem um efeito que no aldeão
+     * não tinha: a escada do koboldite <b>é</b> essa fila, e por isso ela se sobe degrau a degrau.
+     */
+    @Override
+    public MerchantOffers getOffers() {
+        if (this.ofertas == null) {
+            this.ofertas = new MerchantOffers();
+            GoblinTrades.monta(this.getRandom(), this.ofício(), this.ofertas, 1);
+        }
+        return this.ofertas;
+    }
+
+    @Override
+    public void overrideOffers(MerchantOffers quais) {
+        this.ofertas = quais;
+    }
+
+    /** E uma troca feita começa a conta da seguinte. */
+    @Override
+    public void notifyTrade(MerchantOffer qual) {
+        qual.increaseUses();
+        this.ambientSoundTime = -this.getAmbientSoundInterval();
+        this.playSound(net.thaumcraft.occulta.OccultaSounds.GOBLIN_YES.value(),
+                this.getSoundVolume(), this.getVoicePitch());
+
+        MerchantOffers tem = this.getOffers();
+        if (!tem.isEmpty() && qual == tem.get(tem.size() - 1)) {
+            this.atéRecarregar = RECARGA;
+            this.precisaDeMais = true;
+        }
+        if (qual.getCostA().is(net.minecraft.world.item.Items.EMERALD)) {
+            this.riqueza += qual.getCostA().getCount();
+        }
+    }
+
+    /** E ele responde a quem lhe põe coisas no balcão: sim se servem, não se não servem. */
+    @Override
+    public void notifyTradeUpdated(ItemStack oquê) {
+        if (this.level().isClientSide()) return;
+        if (this.ambientSoundTime <= -this.getAmbientSoundInterval() + 20) return;
+        this.ambientSoundTime = -this.getAmbientSoundInterval();
+        this.playSound(oquê.isEmpty()
+                        ? net.thaumcraft.occulta.OccultaSounds.GOBLIN_NO.value()
+                        : net.thaumcraft.occulta.OccultaSounds.GOBLIN_YES.value(),
+                this.getSoundVolume(), this.getVoicePitch());
+    }
+
+    /**
+     * <b>Nenhuma experiência.</b>
+     *
+     * <p>O aldeão do original larga esferas a quem regateia com ele; o goblin <b>não</b> — o
+     * {@code useRecipe} dele não as larga, e é de propósito. Com ele não se sobe de nível: a barra de
+     * progresso também não aparece.
+     */
+    @Override
+    public int getVillagerXp() {
+        return 0;
+    }
+
+    @Override
+    public void overrideXp(int quanta) {
+    }
+
+    @Override
+    public boolean showProgressBar() {
+        return false;
+    }
+
+    @Override
+    public SoundEvent getNotifyTradeSound() {
+        return net.thaumcraft.occulta.OccultaSounds.GOBLIN_YES.value();
+    }
+
+    @Override
+    public boolean isClientSide() {
+        return this.level().isClientSide();
+    }
+
+    /**
+     * <b>O balcão fecha quando ele morre, e não quando quem compra se afasta.</b>
+     *
+     * <p>É o que o original faz — o balcão dele só pergunta se quem está do outro lado é o mesmo —, e é
+     * também o que o aldeão de hoje faz. Um limite de distância aqui fecharia a loja na cara de quem deu
+     * um passo atrás.
+     */
+    @Override
+    public boolean stillValid(Player quem) {
+        return this.quemCompra == quem && this.isAlive();
+    }
+
+    /** Quanta esmeralda já passou por ele, que é o {@code Riches} do original. */
+    public int riqueza() {
+        return this.riqueza;
+    }
+
+    /**
+     * A batida da aldeia e a da loja: o {@code updateAITick} do original.
+     *
+     * <p>De setenta em setenta batidas, mais um bocado, ele procura a aldeia — e, achando-a, <b>deixa de
+     * sumir</b> e passa a ter casa. E, esgotada a última troca, quarenta batidas depois ele põe mais uma
+     * e ganha regeneração por dez segundos, que é o original a dizer que regatear cansa.
+     */
+    @Override
+    protected void customServerAiStep(ServerLevel level) {
+        super.customServerAiStep(level);
+
+        if (--this.atéProcurar <= 0) {
+            this.atéProcurar = PROCURA + this.getRandom().nextInt(MAIS_UM_BOCADO);
+            if (this.emAldeia()) this.semSumir = true;
+        }
+
+        if (this.regateando() || this.atéRecarregar <= 0) return;
+        if (--this.atéRecarregar > 0) return;
+        if (this.precisaDeMais) {
+            GoblinTrades.monta(this.getRandom(), this.ofício(), this.getOffers(), 1);
+            this.precisaDeMais = false;
+        }
+        this.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                net.minecraft.world.effect.MobEffects.REGENERATION, DESCANSO, 0));
+    }
+
+    /** Um goblin que já chegou a uma aldeia <b>não some mais</b>, e um que adora também não. */
+    @Override
+    public boolean removeWhenFarAway(double longe) {
+        return !this.semSumir && !this.adorando();
     }
 
     // ------------------------------------------------------------------ o resto
@@ -281,12 +486,20 @@ public class GoblinEntity extends AgeableMob {
     protected void addAdditionalSaveData(ValueOutput saída) {
         super.addAdditionalSaveData(saída);
         saída.putInt("Profession", this.ofício());
+        saída.putInt("Riches", this.riqueza);
+        saída.putBoolean("Settled", this.semSumir);
+        if (this.ofertas != null && !this.ofertas.isEmpty()) {
+            saída.store("Offers", MerchantOffers.CODEC, this.ofertas);
+        }
     }
 
     @Override
     protected void readAdditionalSaveData(ValueInput entrada) {
         super.readAdditionalSaveData(entrada);
         this.ofício(entrada.getIntOr("Profession", 0));
+        this.riqueza = entrada.getIntOr("Riches", 0);
+        this.semSumir = entrada.getBooleanOr("Settled", false);
+        this.ofertas = entrada.read("Offers", MerchantOffers.CODEC).orElse(null);
     }
 
     /** Quantos goblins há à volta daquele ponto, para quem precisar de contar sem ser um deles. */

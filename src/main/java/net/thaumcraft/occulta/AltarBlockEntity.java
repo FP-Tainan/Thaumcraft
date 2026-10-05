@@ -157,6 +157,9 @@ public class AltarBlockEntity extends BlockEntity {
         return true;
     }
 
+    /** Quanto o Pentáculo deitado no altar multiplica a velocidade dele. */
+    public static final int PENTÁCULO = 2;
+
     /** Reconta o que há em volta e o que está posto em cima. */
     public void refresh() {
         if (!(this.level instanceof ServerLevel server) || !this.isCore()) return;
@@ -178,6 +181,7 @@ public class AltarBlockEntity extends BlockEntity {
         boolean taça = false;
         boolean faca = false;
         boolean vara = false;
+        boolean pentáculo = false;
         boolean ovo = false;
 
         for (BlockPos onde : this.pieces(level)) {
@@ -211,11 +215,20 @@ public class AltarBlockEntity extends BlockEntity {
                 } else if (!vara && posto.oquê().is(OccultaItems.MYSTIC_BRANCH)) {
                     vara = true;
                     novoEncanto++;
+                } else if (!pentáculo && posto.oquê().is(OccultaItems.PENTACLE)) {
+                    pentáculo = true;
                 }
             } else if (!ovo && acima.is(OccultaBlocks.INFINITY_EGG)) {
                 ovo = true;
             }
         }
+
+        /*
+         * O <b>Pentáculo</b> também não soma: ele <b>dobra a velocidade</b>, e é a última peça que
+         * faltava ao altar do original. Repare na ordem — primeiro o pentáculo, depois o ovo —, porque
+         * os dois multiplicam e os dois juntos dão <b>vinte vezes</b> a velocidade de um altar pelado.
+         */
+        if (pentáculo) novaVelocidade *= PENTÁCULO;
 
         /*
          * E o Ovo do Infinito é o último a contar, porque ele não soma: ele <b>multiplica</b>. Dez vezes

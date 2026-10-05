@@ -4068,7 +4068,7 @@ de lava**, medidas nas seis casas que ele olha, e não um pingo. Não achando, e
 ofereceu e diz ao dono do círculo por quê.
 
 **Achando, ele levanta um cone** de quinze em quinze batidas, camada a camada, com a beira de baixo salpicada de
-relva e quem estiver em cima a subir junto. Erguido o cone, a lava **sobe por dentro** até o alto; no penúltimo
+grama e quem estiver em cima a subir junto. Erguido o cone, a lava **sobe por dentro** até o alto; no penúltimo
 passo ela transborda e o cume **se rompe por um dos quatro lados**, a esmo. No último, a coluna que veio de baixo
 é fechada — e o que fica é um monte com uma cratera, e não um cano de lava aberto até o fundo do mundo.
 
@@ -6025,7 +6025,7 @@ Esta leva traz **um** rito, e dois consertos na maquinaria por baixo dele que va
 O `RiteBlight`: um anel de **oitenta blocos** de raio que cresce a partir do círculo e mata o que encontra.
 Quem está na faixa fica **cego** dois minutos; um aldeão em cada dez vira **zumbi**, com a mesma cara e o
 mesmo tamanho; uma vaca em cada vinte vira **cogumelada** e um bicho em cada três **morre**; e o chão **seca** —
-a relva vai embora, a flor e a plantação viram arbusto morto, a terra arada vira areia, e o que era relva,
+a grama vai embora, a flor e a plantação viram arbusto morto, a terra arada vira areia, e o que era grama,
 terra ou micélio vira areia ou terra pelada.
 
 **A faixa é só a do anel.** O rito compara a distância com o anel de agora e com o de antes, e por isso quem
@@ -6219,8 +6219,8 @@ minério que sobe e o ouro que só vem com coven cheio; o giz que repinta; e a r
 ### O Poder da Natureza
 
 O `RiteNaturesPower` é **a Praga escrita ao avesso**. De segundo em segundo ele escolhe um ponto ao acaso
-dentro do raio, procura o chão, e **enche um círculo de três blocos** com relva — virando pedra, areia e
-cascalho em terra viva, e plantando em cima mudas, flores, cogumelos e relva alta. Cento e cinquenta voltas,
+dentro do raio, procura o chão, e **enche um círculo de três blocos** com grama — virando pedra, areia e
+cascalho em terra viva, e plantando em cima mudas, flores, cogumelos e grama alta. Cento e cinquenta voltas,
 mais cinco por bruxa.
 
 Três coisas dele que valem ser ditas:
@@ -6232,7 +6232,7 @@ Três coisas dele que valem ser ditas:
 3. **E ele não planta debaixo de folha.** Onde já houver copa, só o chão muda — senão o prado crescia por
    baixo da floresta.
 
-**A lista do que nasce é a dele, com os pesos dele**: a relva alta aparece **seis vezes** na lista de vinte, e
+**A lista do que nasce é a dele, com os pesos dele**: a grama alta aparece **seis vezes** na lista de vinte, e
 cada flor uma só. É assim que um prado fica com cara de prado e não de canteiro.
 
 ### Corromper as bonecas
@@ -7292,7 +7292,7 @@ lobisomem nunca precisar de cozinhar.
 
 ### O osso que sai da terra
 
-Do **terceiro grau** e só de lobo, bater **agachado** em relva, areia, terra, micélio ou gravilha a tira de
+Do **terceiro grau** e só de lobo, bater **agachado** em grama, areia, terra, micélio ou gravilha a tira de
 uma vez — sem ferramenta e sem demora, porque um lobo não tem mãos. E cavando **terra**, uma vez em vinte sai
 um **osso** — dois, se a sorte for de uma em cinco —, e depois disso nada mais sai por **um minuto**.
 
@@ -7548,7 +7548,7 @@ Beber um cálice de sangue que **não** é de galinha, não sendo já vampiro, v
 é de propósito que ela seja tão estreita: quem não procurou Lilith não entra por acaso.
 
 A **Boline** é a faca de colher do ofício: bate como uma de madeira e dura como uma de ferro, e corta folha,
-teia, relva, trepadeira e fio-armadilha **sem se gastar**. O que ela faz de especial — sacrificar a galinha —
+teia, grama, trepadeira e fio-armadilha **sem se gastar**. O que ela faz de especial — sacrificar a galinha —
 o mod nunca explica.
 
 ### O que se desenhou
@@ -10051,8 +10051,8 @@ O bloco que foi arrancado da parede, a caminho de quem estiver à frente. **Seis
 nada mais. Ela não se fabrica e não serve para nada na mão: existe para voar — no original ela é item só
 porque o projétil dele precisa de um item para se desenhar, e aqui é o mesmo.
 
-E nem todo bloco se atira. São os **vinte e quatro** que o original lista à mão — terra, relva, micélio,
-pedra, pedregulho, areia, saibro, arenito, argila, terracota, tijolo, pedra do Nether e as escadas e lajes
+E nem todo bloco se atira. São os **vinte e quatro** que o original lista à mão — terra, grama, micélio,
+pedra, pedregulho, areia, cascalho, arenito, argila, terracota, tijolo, pedra do Nether e as escadas e lajes
 deles —, e com uma condição a mais: o bloco tem de estar **solto por trás**. É o que faz do poder uma
 escolha e não um botão: só se arranca da parede o bloco que já estava à beira de não ter parede.
 
@@ -10113,3 +10113,90 @@ metal, de pé e agachado; o ímã que puxa o metal e deixa o resto; o desarmamen
 níveis; a fundição de perto que dá dois lingotes; e a **onda de choque que põe o chão de volta**, que é a
 que carrega a fatia. E o `OccultaInfusionClientTest` ganhou a quinta tela: a barra de poder cheia da
 textura da **terra**, que é a desta infusão.
+
+## O koboldite, o regatear do goblin e o Pentáculo (2026-10-05)
+
+Esta fatia fecha o **altar**. Era a última peça dele que faltava, e ela não se faz com o que o mundo dá:
+leva um metal que **só sai de um goblin**.
+
+### O metal que não se mina
+
+Não há minério de koboldite. Não há forno que o faça, não há caldeirão que o cozinhe, não há rito que o
+invoque. Ele entra no jogo por **uma porta só**: vender comida ou minério a um goblin paga, **uma vez em
+três**, em pó de koboldite em vez de esmeralda.
+
+E do pó até o lingote vai uma escada de três degraus, que o goblin abre **um de cada vez**:
+
+| degrau | dá-se | recebe-se |
+| --- | --- | --- |
+| primeiro | **9 de pó** e 5 pepitas de ouro | 1 **pepita de koboldite** |
+| segundo | **16 de pó** e 1 lingote de ouro | **2** pepitas |
+| terceiro | **9 pepitas** e 1 esmeralda | 1 **lingote** |
+
+Qual degrau ele mostra depende de **quantas trocas ele já tem** — e, como os ofícios um e dois nunca
+oferecem mais nada, isso é o mesmo que perguntar quantos degraus já se subiram com ele. Subida a escada
+toda, ele passa a oferecer ouro por esmeralda, que é o fundo do poço do aldeão do original.
+
+Some as contas e veja o tamanho da coisa: um lingote são nove pepitas, que são quatro ou cinco trocas da
+escada, que são **cento e tal medidas de pó**, que são **cento e tal vendas com sorte** — porque o pó é uma
+em três. E o Pentáculo leva **quatro lingotes e quatro pepitas**.
+
+### O goblin é um aldeão de outra espécie
+
+As duas tabelas de quantidade que ele usa são, **à letra**, as do aldeão da 1.7.10 — a de quanto se dá por
+uma esmeralda e a do ferreiro, com os números negativos a querer dizer o contrário dos positivos (*uma
+pepita por tantas peças* em vez de *tantas pepitas por uma peça*). O que muda é a **moeda**: onde o aldeão
+pede esmeraldas, o goblin pede **pepitas de koboldite**.
+
+Os quatro ofícios: o **zero** vende comida e lã e troca cascalho por esmeralda e pederneira; o **um** e o
+**dois** são os do koboldite, e são os únicos que **não se baralham** — uma escada baralhada não é escada;
+o **três** é o ferreiro; o **quatro**, o açougueiro e o curtidor.
+
+E ele **não dá experiência**. O aldeão do original larga esferas a quem regateia com ele; o `useRecipe` do
+goblin não as larga, e é de propósito. Com ele não se sobe de nível, e a barra de progresso também não
+aparece.
+
+### Um goblin no mato não vende nada
+
+O original só o deixa regatear se ele tiver **aldeia**: a coleção de aldeias de 2014 respondia se havia uma
+a trinta e dois blocos. E ele também não regateia **na corda** — um goblin com picareta na mão é um
+empregado, e um empregado não vende.
+
+Juntas, as duas regras dizem uma coisa só: para comprar koboldite é preciso **achar uma aldeia com
+goblins**. É o começo da linha, e é a parte que leva tempo de jogo.
+
+### O Pentáculo, e o altar fechado
+
+`sks / kdk / sks` — quatro lingotes, quatro pepitas e um diamante. Deitado no altar com o Item Posto, ele
+**dobra a recarga** dele.
+
+E repare na ordem da conta: primeiro soma-se tudo o que soma — caveiras, tocha ou candelabro, cálice —,
+**depois** o Pentáculo dobra, e **só então** o Ovo do Infinito multiplica por dez. Os dois juntos dão
+**vinte vezes** a velocidade de um altar pelado.
+
+Com ele, o altar do porte tem **todas** as peças do original.
+
+### Desvios declarados
+
+1. **A aldeia de 2014 virou pontos de interesse.** A `VillageCollection` não existe mais. O que hoje lhe
+   corresponde é a conta de camas e postos de trabalho que o `isCloseToVillage` faz por seções de dezesseis
+   blocos; **duas seções** são os trinta e dois blocos do original. As peças de aldeia do porte entram nas
+   piscinas das aldeias do jogo, de modo que os goblins moram em aldeias de verdade e a conta vale.
+
+2. **O balcão fecha quando o goblin morre, e não quando quem compra se afasta.** É o que o original faz — o
+   balcão dele só pergunta se quem está do outro lado é o mesmo — e também o que o aldeão de hoje faz.
+
+3. **A reputação não entra.** O original, ao recarregar a loja, dá um ponto de reputação na aldeia a quem
+   regateou. A reputação de hoje é um sistema de gossip entre aldeões, que não é a mesma coisa e que um
+   goblin não tem como alimentar. O que fica é o resto do costume: quarenta batidas depois de se lhe esgotar
+   a última troca, ele põe mais uma e ganha **regeneração por dez segundos**.
+
+4. **A picareta de koboldite fica para depois**, com o elmo e o abafador de orelhas. Ela cavaria quinze vezes mais
+   depressa e fundiria metade do minério, e é a única coisa da linha que não é precisa para fechar o altar.
+
+**Guardas:** no `OccultaGoblinGameTest`, mais três — a **escada do koboldite**, que é a prova que carrega a
+fatia e confere os três degraus pela ordem e o fim dela; o **pó que cai no lugar da esmeralda**, contado em
+duzentos goblins, com o pó a sair menos vezes que a esmeralda; e o goblin **no mato**, que não regateia e não
+dá nível. E no `OccultaAltarGameTest`, o **Pentáculo**, que dobra a recarga, dobra depois de a tocha somar, e
+não dobra duas vezes. E duas telas no `OccultaGoblinClientTest`: os quatro pedaços do metal no inventário e o
+**balcão** aberto no primeiro degrau da escada.

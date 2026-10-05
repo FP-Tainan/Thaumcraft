@@ -18,7 +18,7 @@ import java.util.function.Consumer;
  * A <b>Boline</b>: o {@code ItemBoline} do Witchery.
  *
  * <p>É a faca de <b>colher</b> do ofício, e não a de cortar: bate como uma faca de madeira e dura como uma de
- * ferro. O que ela tem de seu é não se <b>gastar</b> no que uma faca de colher corta — folha, teia, relva,
+ * ferro. O que ela tem de seu é não se <b>gastar</b> no que uma faca de colher corta — folha, teia, grama,
  * trepadeira e fio-armadilha.
  *
  * <p>E faz uma coisa que nenhuma outra faca faz: <b>sacrificar uma galinha sobre o rito do vampiro</b>, para

@@ -125,7 +125,7 @@ public class OverworldInfusion extends Infusion {
     /**
      * <b>Cair é um poder.</b>
      *
-     * <p>Mais de três blocos em cima de terra, relva, micélio, saibro, areia ou neve, e a queda não dói:
+     * <p>Mais de três blocos em cima de terra, grama, micélio, cascalho, areia ou neve, e a queda não dói:
      * ou <b>rebenta</b> — agachado, com a força de três, que é a de um creeper — ou <b>arranca</b> o bloco
      * de baixo e o deixa em item.
      *

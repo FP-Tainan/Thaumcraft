@@ -47,7 +47,7 @@ public class OccultaMeadowRiteGameTest {
         helper.succeed();
     }
 
-    /** O Poder da Natureza vira pedra em relva, e planta coisa em cima. */
+    /** O Poder da Natureza vira pedra em grama, e planta coisa em cima. */
     @GameTest(maxTicks = 80)
     public void naturesPowerTurnsStoneIntoAMeadow(GameTestHelper helper) {
         piso(helper, Blocks.STONE);
@@ -59,16 +59,16 @@ public class OccultaMeadowRiteGameTest {
         var passo = rito.steps(0).getFirst();
         for (int volta = 0; volta < 40; volta++) passo.run(level, meio, 20L, corrido);
 
-        int relva = 0;
+        int grama = 0;
         int plantado = 0;
         for (int x = 0; x < 8; x++) {
             for (int z = 0; z < 8; z++) {
                 BlockPos chão = helper.absolutePos(new BlockPos(x, 1, z));
-                if (level.getBlockState(chão).is(Blocks.GRASS_BLOCK)) relva++;
+                if (level.getBlockState(chão).is(Blocks.GRASS_BLOCK)) grama++;
                 if (!level.getBlockState(chão.above()).isAir()) plantado++;
             }
         }
-        if (relva == 0) helper.fail("em quarenta voltas alguma pedra devia ter virado relva");
+        if (grama == 0) helper.fail("em quarenta voltas alguma pedra devia ter virado grama");
         if (plantado == 0) helper.fail("e alguma coisa devia ter nascido em cima");
         helper.succeed();
     }

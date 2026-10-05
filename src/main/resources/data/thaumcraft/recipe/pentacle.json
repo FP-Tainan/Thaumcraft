@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "sks",
+    "kdk",
+    "sks"
+  ],
+  "key": {
+    "s": "thaumcraft:koboldite_nugget",
+    "k": "thaumcraft:koboldite_ingot",
+    "d": "minecraft:diamond"
+  },
+  "result": {
+    "id": "thaumcraft:pentacle",
+    "count": 1
+  }
+}

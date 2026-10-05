@@ -29,11 +29,11 @@ public class OccultaBlightGameTest {
         helper.succeed();
     }
 
-    /** A relva e a terra secam: viram areia ou terra pelada. */
+    /** A grama e a terra secam: viram areia ou terra pelada. */
     @GameTest(maxTicks = 40)
     public void theGroundDriesToSandOrBareDirt(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        // vinte casas de relva, para o sorteio de um em cinco não ser acaso
+        // vinte casas de grama, para o sorteio de um em cinco não ser acaso
         List<BlockPos> casas = new java.util.ArrayList<>();
         for (int x = 0; x < 5; x++) {
             for (int z = 0; z < 4; z++) {
@@ -52,7 +52,7 @@ public class OccultaBlightGameTest {
             var qualé = level.getBlockState(onde);
             if (qualé.is(Blocks.SAND) || qualé.is(Blocks.DIRT)) secas++;
             else if (!qualé.is(Blocks.GRASS_BLOCK)) {
-                helper.fail("ou seca em areia e terra, ou fica relva — ficou " + qualé);
+                helper.fail("ou seca em areia e terra, ou fica grama — ficou " + qualé);
                 return;
             }
         }
@@ -61,7 +61,7 @@ public class OccultaBlightGameTest {
         helper.succeed();
     }
 
-    /** E o que não é chão de relva não seca: pedra fica pedra. */
+    /** E o que não é chão de grama não seca: pedra fica pedra. */
     @GameTest(maxTicks = 20)
     public void stoneDoesNotDry(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();

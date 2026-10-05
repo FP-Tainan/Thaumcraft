@@ -19,6 +19,9 @@ import net.thaumcraft.occulta.OccultaEntities;
  *
  * <p>E a altura: ele é <b>mais baixo que um aldeão</b> — as pernas têm metade do tamanho —, e é isso que o faz
  * parecer o que é mesmo antes de alguém lhe ver a cara.
+ *
+ * <p>As duas telas a seguir são as do <b>koboldite</b>: os quatro pedaços dele no inventário, e o
+ * <b>balcão</b> de um goblin do ofício um, com o primeiro degrau da escada à vista.
  */
 public class OccultaGoblinClientTest implements FabricClientGameTest {
     @Override
@@ -72,6 +75,39 @@ public class OccultaGoblinClientTest implements FabricClientGameTest {
             });
             context.waitTicks(40);
             context.takeScreenshot("quatro_goblins_e_um_aldeao");
+
+            /*
+             * O <b>koboldite</b>, que é a única coisa que sai de um goblin e não se faz de outro jeito:
+             * o pó, a pepita, o lingote e o Pentáculo que o altar esperava.
+             */
+            server.runCommand("gamemode creative @p");
+            server.runCommand("give @p thaumcraft:koboldite_dust 9");
+            server.runCommand("give @p thaumcraft:koboldite_nugget 9");
+            server.runCommand("give @p thaumcraft:koboldite_ingot");
+            server.runCommand("give @p thaumcraft:pentacle");
+            context.waitTicks(20);
+            context.runOnClient(minecraft -> minecraft.setScreenAndShow(
+                    new net.minecraft.client.gui.screens.inventory.InventoryScreen(minecraft.player)));
+            context.waitTicks(20);
+            context.takeScreenshot("koboldite_no_inventario");
+            context.runOnClient(minecraft -> minecraft.setScreenAndShow(null));
+            context.waitTicks(10);
+
+            /*
+             * E o <b>balcão</b>. A loja é aberta à mão, sem passar pelo gesto, porque a arena de prova
+             * não é aldeia nenhuma — e um goblin no mato não vende nada, que é a regra do original.
+             */
+            server.runOnServer(s -> {
+                var player = s.getPlayerList().getPlayers().getFirst();
+                for (var bicho : s.overworld().getEntities(OccultaEntities.GOBLIN,
+                        bicho -> bicho.ofício() == 1)) {
+                    bicho.setTradingPlayer(player);
+                    bicho.openTradingScreen(player, bicho.getDisplayName(), 0);
+                    return;
+                }
+            });
+            context.waitTicks(40);
+            context.takeScreenshot("o_balcao_do_goblin");
         }
     }
 }

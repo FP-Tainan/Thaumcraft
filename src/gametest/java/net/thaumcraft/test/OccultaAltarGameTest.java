@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.thaumcraft.api.aspects.Aspects;
 import net.thaumcraft.api.aspects.ObjectAspects;
@@ -250,6 +251,49 @@ public class OccultaAltarGameTest {
     }
 
     /** O bloco que manda no altar daquela pedra, ou nada. */
+    /**
+     * <b>O Pentáculo deitado no altar dobra a recarga dele — e com ele o altar fica completo.</b>
+     *
+     * <p>Era a última peça do altar do original que faltava ao porte, e é a única que não se faz com o
+     * que o mundo dá: ela leva <b>koboldite</b>, que só sai de um goblin.
+     *
+     * <p>E ele <b>não soma, multiplica</b> — como o Ovo do Infinito. Os dois juntos dão <b>vinte vezes</b>
+     * a velocidade de um altar pelado.
+     */
+    @GameTest
+    public void thePentacleDoublesTheRecharge(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos canto = helper.absolutePos(new BlockPos(1, 2, 1));
+        AltarBlockEntity manda = build(helper, canto);
+        if (manda == null) return;
+
+        manda.refresh();
+        if (manda.rechargeScale() != 1) helper.fail("um altar pelado recarrega no passo de sempre");
+
+        net.thaumcraft.occulta.PlacedItemBlock.põe(level, canto.above(),
+                new ItemStack(net.thaumcraft.occulta.OccultaItems.PENTACLE), null);
+        manda.refresh();
+        if (manda.rechargeScale() != net.thaumcraft.occulta.AltarBlockEntity.PENTÁCULO) {
+            helper.fail("o pentáculo dobra a recarga; ficou " + manda.rechargeScale());
+        }
+
+        // e com uma tocha ao lado, que soma um antes de ele dobrar, dá quatro
+        level.setBlockAndUpdate(canto.offset(1, 1, 0), Blocks.TORCH.defaultBlockState());
+        manda.refresh();
+        if (manda.rechargeScale() != 4) {
+            helper.fail("a tocha soma antes de ele dobrar, e dá quatro; deu " + manda.rechargeScale());
+        }
+
+        // e um segundo pentáculo não dobra outra vez
+        net.thaumcraft.occulta.PlacedItemBlock.põe(level, canto.offset(2, 1, 0),
+                new ItemStack(net.thaumcraft.occulta.OccultaItems.PENTACLE), null);
+        manda.refresh();
+        if (manda.rechargeScale() != 4) {
+            helper.fail("o segundo não dobra outra vez; ficou " + manda.rechargeScale());
+        }
+        helper.succeed();
+    }
+
     private static AltarBlockEntity core(GameTestHelper helper, BlockPos onde) {
         if (helper.getLevel().getBlockEntity(onde) instanceof AltarBlockEntity altar) return altar.core();
         return null;

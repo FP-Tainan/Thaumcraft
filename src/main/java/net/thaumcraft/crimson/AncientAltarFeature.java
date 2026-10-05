@@ -42,7 +42,7 @@ public class AncientAltarFeature extends Feature<NoneFeatureConfiguration> {
         return build(level, chão.above());
     }
 
-    /** O chão que o original aceita: terra, relva, areia ou pedra. */
+    /** O chão que o original aceita: terra, grama, areia ou pedra. */
     private static boolean ground(BlockState state) {
         MapColor cor = state.getMapColor(null, null);
         return cor == MapColor.DIRT || cor == MapColor.GRASS || cor == MapColor.SAND

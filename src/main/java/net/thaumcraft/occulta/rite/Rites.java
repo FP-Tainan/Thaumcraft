@@ -283,7 +283,7 @@ public final class Rites {
      * devolve o que se ofereceu.
      *
      * <p>Achando, ele levanta um <b>cone</b> de quinze em quinze batidas, camada a camada, com a borda de baixo
-     * salpicada de relva; quem estiver em cima sobe com ele. Erguido o cone, a lava <b>sobe por dentro</b> até
+     * salpicada de grama; quem estiver em cima sobe com ele. Erguido o cone, a lava <b>sobe por dentro</b> até
      * o alto e transborda — e o cume se rompe por um dos lados, a esmo. No fim, a coluna de lava que veio de
      * baixo é <b>drenada</b>, e o que fica é um monte com uma cratera.
      *
@@ -451,7 +451,7 @@ public final class Rites {
                     Block.UPDATE_ALL);
         }
 
-        /** Um círculo cheio de pedra, com a beira de baixo salpicada de relva. */
+        /** Um círculo cheio de pedra, com a beira de baixo salpicada de grama. */
         private static void circle(ServerLevel level, int x0, int y, int z0, int raio, int altura,
                                    boolean troca) {
             int x = raio;
@@ -1098,8 +1098,8 @@ public final class Rites {
      *   <li>quem está na faixa do anel fica <b>cego</b>, dois minutos;</li>
      *   <li>um aldeão em cada dez vira <b>zumbi</b>, com a mesma cara e o mesmo tamanho;</li>
      *   <li>uma vaca em cada vinte vira <b>cogumelada</b>, e um bicho em cada três <b>morre</b>;</li>
-     *   <li>e o chão <b>seca</b>: a relva vai embora, a flor e a plantação viram arbusto morto, a terra arada
-     *       vira areia, e o que era relva, terra ou micélio vira areia ou terra pelada.</li>
+     *   <li>e o chão <b>seca</b>: a grama vai embora, a flor e a plantação viram arbusto morto, a terra arada
+     *       vira areia, e o que era grama, terra ou micélio vira areia ou terra pelada.</li>
      * </ul>
      *
      * <p><b>Com o gato é um em cada quatro, e não um em cada cinco.</b> A maestria da maldição não muda o que
@@ -1218,7 +1218,7 @@ public final class Rites {
             else if (debaixo.isSolid()) seca(level, onde.below(), debaixo, mordeFundo);
         }
 
-        /** O chão que seca: relva, terra, micélio e terra arada viram areia ou terra pelada. */
+        /** O chão que seca: grama, terra, micélio e terra arada viram areia ou terra pelada. */
         public static void seca(ServerLevel level, BlockPos onde,
                                 net.minecraft.world.level.block.state.BlockState qualé,
                                 boolean mordeFundo) {
@@ -1238,8 +1238,8 @@ public final class Rites {
      * O <b>Poder da Natureza</b>: o {@code RiteNaturesPower} do Witchery.
      *
      * <p>De segundo em segundo ele escolhe um ponto ao acaso dentro do raio, procura o chão, e <b>enche um
-     * círculo de três blocos</b> com relva — virando pedra, areia e cascalho em terra viva, e plantando em
-     * cima mudas, flores, cogumelos e relva alta. Cento e cinquenta voltas, mais cinco por bruxa.
+     * círculo de três blocos</b> com grama — virando pedra, areia e cascalho em terra viva, e plantando em
+     * cima mudas, flores, cogumelos e grama alta. Cento e cinquenta voltas, mais cinco por bruxa.
      *
      * <p>É o contrário exato da Praga, e eles são a mesma ideia escrita ao avesso: um seca o mundo em volta,
      * o outro planta-o.
@@ -1258,7 +1258,7 @@ public final class Rites {
      * @param radius   até onde ele escolhe os pontos, antes do coven
      * @param height   quantos blocos ele procura chão, para cima e para baixo
      * @param duration quantas voltas, antes do coven
-     * @param expanse  o raio de cada remendo de relva, menos um
+     * @param expanse  o raio de cada remendo de grama, menos um
      */
     public record NaturesPower(int radius, int height, int duration, int expanse) implements Rite {
         public static final int EVERY = 20;
@@ -1309,7 +1309,7 @@ public final class Rites {
             return level.getBlockState(onde).isSolid() && level.getBlockState(onde.above()).isAir();
         }
 
-        /** Um remendo de relva: o círculo cheio, com as linhas esfarrapadas. */
+        /** Um remendo de grama: o círculo cheio, com as linhas esfarrapadas. */
         private void remendo(ServerLevel level, BlockPos meio, int raio) {
             int x = raio;
             int z = 0;
@@ -1339,7 +1339,7 @@ public final class Rites {
             }
         }
 
-        /** E uma casa: o chão que vira relva ou água, e o que nasce em cima. */
+        /** E uma casa: o chão que vira grama ou água, e o que nasce em cima. */
         private void casa(ServerLevel level, BlockPos onde) {
             var emCima = level.getBlockState(onde.above());
             if (emCima.isSolid()) return;
@@ -1375,7 +1375,7 @@ public final class Rites {
         /**
          * O que nasce em cima: a lista do original, com os pesos dele.
          *
-         * <p>Repare que a <b>relva alta aparece seis vezes</b> na lista de vinte e tal, e as flores uma vez
+         * <p>Repare que a <b>grama alta aparece seis vezes</b> na lista de vinte e tal, e as flores uma vez
          * cada: é assim que um prado fica com cara de prado, e não de canteiro.
          */
         private static Block nasce(ServerLevel level) {
@@ -2675,7 +2675,7 @@ public final class Rites {
         // ---------------------------------------------------------- o prado, e as bonecas corrompidas
 
         /*
-         * O Poder da Natureza: o contrário da Praga. Cento e cinquenta voltas plantando relva, mudas e
+         * O Poder da Natureza: o contrário da Praga. Cento e cinquenta voltas plantando grama, mudas e
          * flores num raio de catorze. Pede o de Brotação e as sete mudas, num anel de vinte e oito.
          */
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.naturespower",

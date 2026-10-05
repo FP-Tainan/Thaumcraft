@@ -322,6 +322,36 @@ public final class OccultaItems {
                                     1.0f))
                             .build())));
 
+    // ------------------------------------------------------------------ o koboldite
+
+    /**
+     * O <b>pó de koboldite</b>: a única porta de entrada deste metal no jogo.
+     *
+     * <p>Ele <b>não se mina</b>. Não há minério dele, não há forno que o faça, não há rito que o
+     * invoque: ele cai <b>uma vez em três</b> no lugar da esmeralda, quando se vende comida ou minério
+     * a um goblin. Veja o {@link net.thaumcraft.occulta.goblin.GoblinTrades}.
+     */
+    public static final Item KOBOLDITE_DUST =
+            register("koboldite_dust", properties -> new Item(properties));
+
+    /** A <b>pepita de koboldite</b>: nove de pó e cinco pepitas de ouro, com um goblin. */
+    public static final Item KOBOLDITE_NUGGET =
+            register("koboldite_nugget", properties -> new Item(properties));
+
+    /** E o <b>lingote</b>: nove pepitas e uma esmeralda, com o mesmo goblin. */
+    public static final Item KOBOLDITE_INGOT =
+            register("koboldite_ingot", properties -> new Item(properties));
+
+    /**
+     * O <b>Pentáculo</b>: a última coisa que faltava ao altar.
+     *
+     * <p>Deitado nele com o Item Posto, <b>dobra a recarga</b> dele — e é a única peça do altar do
+     * original que não se faz com o que o mundo dá.
+     */
+    public static final Item PENTACLE =
+            register("pentacle", properties -> new Item(properties.stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
     /**
      * A <b>Alma do Mundo</b>: o que o rito da Infusão do Mundo pede.
      *
@@ -1014,7 +1044,7 @@ public final class OccultaItems {
      * A <b>Boline</b>: a faca de colher do ofício.
      *
      * <p>Bate como uma de madeira e dura como uma de ferro, e é de propósito: ela não é arma, é
-     * <b>ferramenta</b>. O que ela faz de especial é cortar folha, teia, relva, trepadeira e fio-armadilha
+     * <b>ferramenta</b>. O que ela faz de especial é cortar folha, teia, grama, trepadeira e fio-armadilha
      * <b>sem se gastar</b> — e sacrificar a galinha que enche o Cálice.
      */
     public static final Item BOLINE = register("boline", properties ->

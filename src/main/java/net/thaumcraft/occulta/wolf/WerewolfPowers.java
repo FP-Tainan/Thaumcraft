@@ -465,7 +465,7 @@ public final class WerewolfPowers {
         return mais;
     }
 
-    /** O que um lobo cava com as patas: relva, areia, terra, micélio e gravilha. */
+    /** O que um lobo cava com as patas: grama, areia, terra, micélio e gravilha. */
     public static boolean cavável(net.minecraft.world.level.block.state.BlockState oquê) {
         return oquê.is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK)
                 || oquê.is(net.minecraft.world.level.block.Blocks.SAND)
