@@ -1383,6 +1383,36 @@ public final class OccultaItems {
     public static final Item NECROMANCERS_ROBES = witchClothes("necromancers_robes",
             ArmorType.CHESTPLATE, true, true, "tc.witchclothes.necro;tc.witchclothes.necro2");
 
+    // ------------------------------------------------------------------ os contratos que se lançam
+
+    /**
+     * Os <b>cinco contratos</b> que o Diabrete lê e lança: os {@code ItemGeneralContract} do Witchery.
+     *
+     * <p>Escrevem-se num Contrato em branco com uma coisa do inferno, prendem-se a alguém com um Frasco de
+     * Vínculo, e dão-se ao Diabrete — que faz o que está escrito <b>na pessoa presa ao papel</b>, esteja
+     * ela onde estiver. Um papel que não pegue <b>não se gasta</b>.
+     */
+    public static final Item CONTRACT_BLAZE = contract("contract_blaze", "tc.occulta.contract.blaze.tip",
+            net.thaumcraft.occulta.demon.Contracts::blaze);
+
+    public static final Item CONTRACT_RESIST_FIRE = contract("contract_resist_fire",
+            "tc.occulta.contract.resistfire.tip", net.thaumcraft.occulta.demon.Contracts::resisteAoFogo);
+
+    public static final Item CONTRACT_EVAPORATE = contract("contract_evaporate",
+            "tc.occulta.contract.evaporate.tip", net.thaumcraft.occulta.demon.Contracts::evapora);
+
+    public static final Item CONTRACT_FIERY_TOUCH = contract("contract_fiery_touch",
+            "tc.occulta.contract.fierytouch.tip", net.thaumcraft.occulta.demon.Contracts::toqueDeFogo);
+
+    public static final Item CONTRACT_SMELTING = contract("contract_smelting",
+            "tc.occulta.contract.smelting.tip", net.thaumcraft.occulta.demon.Contracts::funde);
+
+    private static Item contract(String nome, String dica,
+                                 net.thaumcraft.occulta.demon.ContractItem.Feitio oquê) {
+        return register(nome, properties -> new net.thaumcraft.occulta.demon.ContractItem(
+                properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE), oquê, dica));
+    }
+
     // ------------------------------------------------------------------ o Tormento
 
     /**

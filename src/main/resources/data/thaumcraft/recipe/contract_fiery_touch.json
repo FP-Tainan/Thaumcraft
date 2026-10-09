@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:contract",
+    "thaumcraft:ember_moss",
+    "minecraft:blaze_rod"
+  ],
+  "result": {
+    "id": "thaumcraft:contract_fiery_touch",
+    "count": 1
+  }
+}

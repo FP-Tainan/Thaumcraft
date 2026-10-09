@@ -46,6 +46,8 @@ public final class OccultaEvents {
                     net.thaumcraft.occulta.divine.Predictions.batida(level, quem);
                     // e o mandado do Tormento, que o original cumpre de vinte em vinte batidas
                     net.thaumcraft.occulta.torment.Torment.tick(level, quem);
+                    // e o Evaporar do contrato, que o original corre de vinte em vinte também
+                    net.thaumcraft.occulta.demon.ImpBlessings.evapora(level, quem);
                 }
             }
         });
@@ -88,6 +90,14 @@ public final class OccultaEvents {
          */
         net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(
                 net.thaumcraft.occulta.WitchHandItem::soco);
+
+        /*
+         * O <b>Toque de Fogo</b> do contrato: clicando num bloco, uma vez em cinco, acende a face
+         * clicada. Ele não toma conta do clique — devolve sempre «passa» —, de modo que o que a mão
+         * ia fazer continua acontecendo.
+         */
+        net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register(
+                net.thaumcraft.occulta.demon.ImpBlessings::toqueDeFogo);
 
         ServerLivingEntityEvents.AFTER_DEATH.register((quemMorreu, fonte) -> {
             if (!(quemMorreu.level() instanceof ServerLevel level)) return;

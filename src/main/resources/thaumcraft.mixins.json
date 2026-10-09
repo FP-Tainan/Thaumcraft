@@ -43,6 +43,7 @@
     "LivingEntityHunterArmorMixin",
     "LivingEntityOccultaHurtMixin",
     "BlockDropsFortuneMixin",
+    "BlockDropsMeltingMixin",
     "PlayerKeepInventoryMixin",
     "PlayerWerewolfSizeMixin",
     "MobXpAccessor",

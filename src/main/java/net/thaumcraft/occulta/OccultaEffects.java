@@ -878,6 +878,38 @@ public final class OccultaEffects {
         if (tinha == null || tinha != grau) quem.setAttached(COR, grau);
     }
 
+    // ------------------------------------------------------------------ o que os contratos dão
+
+    /**
+     * <b>Toque de Fogo</b>: o {@code PlayerEffects.IMP_FIRE_TOUCH}.
+     *
+     * <p>Clicando num bloco, <b>uma vez em cinco</b>, põe fogo na face clicada. Dez minutos, e vem do
+     * <b>Contrato do Toque de Fogo</b> pela mão do Diabrete.
+     */
+    public static final Holder<MobEffect> IMP_FIRE_TOUCH = register("imp_fire_touch",
+            new MobEffect(MobEffectCategory.BENEFICIAL, 0xE25822) {
+            });
+
+    /**
+     * <b>Evaporar</b>: o {@code PlayerEffects.IMP_EVAPORATION}.
+     *
+     * <p>De cinco em cinco segundos, uma vez em cinco, <b>apaga toda a água</b> num cubo de três de raio à
+     * volta de quem o tem — e só a que tiver ar por cima, que é a da superfície. Dez minutos.
+     */
+    public static final Holder<MobEffect> IMP_EVAPORATION = register("imp_evaporation",
+            new MobEffect(MobEffectCategory.BENEFICIAL, 0x8FB7C4) {
+            });
+
+    /**
+     * <b>Toque de Fundir</b>: o {@code PlayerEffects.IMP_METLING_TOUCH}.
+     *
+     * <p>O que cair de um bloco quebrado passa pela <b>receita de fornalha</b>, e <b>uma vez em quatro</b>
+     * sai <b>um a mais</b>. Dez minutos — e é o mais valioso dos três de longe.
+     */
+    public static final Holder<MobEffect> IMP_MELTING_TOUCH = register("imp_melting_touch",
+            new MobEffect(MobEffectCategory.BENEFICIAL, 0xB87333) {
+            });
+
     private static Holder<MobEffect> register(String nome, MobEffect efeito) {
         return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, Thaumcraft.id(nome), efeito);
     }
@@ -894,7 +926,9 @@ public final class OccultaEffects {
         return qual == GAS_MASK || qual == STOUT_BELLY || qual == SUN_ALLERGY || qual == DARKNESS_ALLERGY
                 || qual == COLORFUL || qual == DISEASED || qual == FEEL_NO_PAIN || qual == ILL_FITTING
                 || qual == MORTAL_COIL || qual == PARALYSIS || qual == QUEASY || qual == WRAPPED_IN_VINE
-                || qual == ENSLAVED;
+                || qual == ENSLAVED
+                // e os três do Diabrete, que no original nem poções são
+                || qual == IMP_FIRE_TOUCH || qual == IMP_EVAPORATION || qual == IMP_MELTING_TOUCH;
     }
 
     public static void init() {

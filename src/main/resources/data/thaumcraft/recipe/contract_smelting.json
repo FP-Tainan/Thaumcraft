@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:contract",
+    "minecraft:lava_bucket"
+  ],
+  "result": {
+    "id": "thaumcraft:contract_smelting",
+    "count": 1
+  }
+}

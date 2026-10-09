@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:contract",
+    "minecraft:blaze_powder"
+  ],
+  "result": {
+    "id": "thaumcraft:contract_resist_fire",
+    "count": 1
+  }
+}

@@ -11094,10 +11094,9 @@ E, ligado, ele **não lança contratos**: «há poder demais para pensar».
    a partir de vinte e um **passa de baixo da folha**. O desenho está feito para o sessenta e quatro, e é
    a linha do tamanho que está errada; aqui elas ficam em (23, 21) na folha de verdade.
 
-2. **O que ele lança fica de fora.** Com um contrato preso a outra pessoa na mão, o original manda que ele o lance
-   contra ela. Essa família de contratos — o do Blaze, o de Evaporar, o do Toque de Fogo, o de
-   Resistir ao Fogo e o de Fundir — é a fatia dos **demônios**, e nenhum deles existe ainda. Fica o
-   Contrato de Posse, que é o que o compra, e o do Tormento, que ele dá.
+2. **O que ele lança veio logo a seguir.** Com um contrato preso a outra pessoa na mão, o original manda que ele o
+   lance contra ela. Essa família — o do Blaze, o de Evaporar, o do Toque de Fogo, o de Resistir ao Fogo
+   e o de Fundir — ficou para a fatia dos **demônios**, que é a de 2026-10-09, logo abaixo.
 
 3. **O Cozimento de Alma do Tormento não tem de onde vir.** Ele existe, ensina o Tormentum e bebe-se —
    mas quem o larga é o **Senhor do Tormento**, que pede a dimensão do Tormento. E o Tormentum também
@@ -11323,3 +11322,77 @@ o um por andar; o tiro, que é um feitiço mais três bolas; o golpe demoníaco 
 inteira; o rótulo de quem é do inferno; e o círculo de pedras, levantado pedra a pedra pelo desenho do
 original e depois quebrado numa arquitrave para ver que deixa de servir. E duas fotos a mais no `OccultaTormentClientTest`: ele de frente, com os dois
 chifres e os quatro braços, e de trás, com as duas chapas de vinte por quarenta que são as asas dele.
+
+## Os contratos que o Diabrete lança (2026-10-09)
+
+São cinco, e são o que faz do Diabrete o que ele é: ele não é um bicho de estimação com poderes — é um
+**intermediário**. O poder não é dele, está no **papel**; o que ele cobra para o usar é afeição e paciência.
+
+Escrevem-se num **Contrato** em branco com uma coisa do inferno, prendem-se a alguém com um **Frasco de
+Vínculo**, e dão-se ao Diabrete, que lê e cumpre **na pessoa presa ao papel**, esteja ela onde estiver.
+
+| Contrato | Receita | O que faz |
+|---|---|---|
+| **Chama Viva** | contrato + vara de blaze + Sinal de Renascimento | um **Blaze** ao pé do alvo, com **cinquenta de vida** e **sete de murro** |
+| **Tolerância ao Fogo** | contrato + pó de blaze | **quinze minutos** de Resistência ao Fogo |
+| **Evaporação** | contrato + creme de magma + vara de blaze | dez minutos secando a água em volta |
+| **Toque de Fogo** | contrato + Musgo de Brasa + vara de blaze | dez minutos acendendo o que se toca |
+| **Toque de Fundir** | contrato + balde de lava | dez minutos fundindo o que se quebra |
+
+Os três últimos valem **só em gente**, porque um bicho não clica em blocos nem quebra pedra. Os dois
+primeiros valem em qualquer coisa viva — e um Contrato do Blaze preso a outra pessoa põe um Blaze de
+cinquenta de vida ao pé dela, sem lhe perguntar nada.
+
+### As quatro recusas
+
+Ele recusa por quatro motivos, e os quatro têm recado próprio:
+
+1. **ligado**, não lê nada: «há PODER demais para pensar». É a única coisa que o Coração de Demônio
+   **tira**, e é por isso que ligá-lo não é só ganho;
+2. **com menos de vinte de afeição**, pergunta por que haveria de o fazer;
+3. **há menos de três minutos** do último favor, manda esperar;
+4. e **não achando** a pessoa do outro lado, diz o nome dela e não faz nada.
+
+Em nenhuma delas o papel se gasta — e também não se gasta quando o contrato **não pega**, que é o
+`activate` do original devolvendo falso.
+
+### Os três estados
+
+No original eles **não são poções**: são o `PlayerEffects`, um punhado de nomes guardados no NBT do
+jogador com um prazo, pendurados em três ganchos do Forge — a batida, o clique num bloco e a queda de um
+bloco quebrado.
+
+- **Evaporar**, de vinte em vinte batidas e uma vez em cinco: num cubo de três de raio, de dois acima dos
+  pés a um abaixo, apaga **toda a água que tiver ar por cima**. A guarda do ar é o que faz dela uma coisa
+  de superfície: quem atravessa um lago a pé abre caminho; quem mergulha, não
+- **Toque de Fogo**: clicando num bloco, **uma vez em cinco**, acende a face clicada — e não toma conta do
+  clique, de modo que o que a mão ia fazer continua acontecendo
+- **Toque de Fundir**: o que cai de um bloco quebrado passa pela **receita de fornalha**, e **uma vez em
+  quatro** sai **um a mais**. É o mais valioso dos três de longe
+
+### E a lacuna do Diabrete, fechada
+
+O Contrato de Posse tinha receita e **não tinha como ser assinado**: o Frasco de Vínculo cheio só se
+prendia a bonecas, de modo que o Diabrete não se podia comprar fora do criativo. O original resolve isso
+com uma `RecipeAttachTaglock` por cada contrato; aqui a receita das bonecas passa a aceitar também o que
+estiver no rótulo `thaumcraft:prende_um_vinculo`, que são os sete papéis. É a mesma receita porque faz a
+mesma coisa.
+
+### Desvios declarados
+
+1. **Os três estados são efeitos.** No original não são poções; aqui são, pelo motivo de sempre — o efeito
+   já traz o prazo, a morte e o guardar de graça, e o que falta, que o leite não os tire, o mod já sabe
+   fazer (`Incurable`). A diferença que se vê é que eles **aparecem no canto da tela** com um ícone, coisa
+   que no original não acontece; é a favor de quem joga, porque saber quanto falta do Toque de Fundir vale
+   mais do que a surpresa de ele acabar.
+
+2. **O Toque de Fundir apanha a queda no `Block.getDrops`.** No original ele é um gancho no
+   `HarvestDropsEvent` do Forge, que hoje não existe. O lugar equivalente é o método que monta a lista do
+   que cai, e é lá que ele entra — com a mesma guarda do original e a mesma que a Fortuna já usa: o que
+   **guarda coisas dentro** fica de fora, porque um baú partido não dá um baú fundido.
+
+**Guardas:** o `OccultaDemonContractGameTest`, com sete — a Chama Viva e os números dela; os quatro
+estados, e quais deles recusam um bicho; o Evaporar, que seca a água aberta e deixa a tapada; o Fundir,
+que funde o que tem receita e deixa o que não tem; **as quatro recusas do Diabrete e o papel que não se
+gasta**; o Frasco que prende os sete papéis; e as cinco receitas. E o `OccultaDemonContractClientTest`,
+com duas fotos — os sete na barra e um deles na mão.

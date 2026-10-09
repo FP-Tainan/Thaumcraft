@@ -14,12 +14,16 @@ import net.minecraft.world.level.Level;
 import net.thaumcraft.Thaumcraft;
 
 /**
- * Prender uma boneca a alguém: o {@code RecipeShapelessPoppet} do Witchery.
+ * Prender uma coisa a alguém: o {@code RecipeShapelessPoppet} e o {@code RecipeAttachTaglock} do Witchery.
  *
- * <p>Uma boneca e um <b>Frasco de Vínculo cheio</b> na bancada, e a boneca passa a responder por quem estava no
- * frasco. O frasco se gasta.
+ * <p>Uma <b>boneca</b> ou um <b>contrato</b> e um <b>Frasco de Vínculo cheio</b> na bancada, e a peça passa
+ * a responder por quem estava no frasco. O frasco se gasta.
  *
- * <p>Uma boneca já presa não se prende outra vez: para trocar de dono, faz-se outra.
+ * <p>Uma peça já presa não se prende outra vez: para trocar de dono, faz-se outra.
+ *
+ * <p>No original são duas receitas com o mesmo feitio — uma para as bonecas e uma por cada contrato — e
+ * aqui são a mesma, porque fazem a mesma coisa. Quem pode ser preso está no rótulo
+ * {@code thaumcraft:prende_um_vinculo}, mais as bonecas, que se conhecem pela classe.</p>
  */
 public class PoppetBindingRecipe extends CustomRecipe {
     public static final PoppetBindingRecipe INSTANCE = new PoppetBindingRecipe();
@@ -39,7 +43,7 @@ public class PoppetBindingRecipe extends CustomRecipe {
         for (int i = 0; i < input.size(); i++) {
             ItemStack stack = input.getItem(i);
             if (stack.isEmpty()) continue;
-            if (stack.getItem() instanceof PoppetItem && !TaglockItem.isBound(stack)) bonecas++;
+            if (prendível(stack) && !TaglockItem.isBound(stack)) bonecas++;
             else if (stack.is(OccultaItems.TAGLOCK) && TaglockItem.isBound(stack)) frascos++;
             else outros++;
         }
@@ -52,14 +56,27 @@ public class PoppetBindingRecipe extends CustomRecipe {
         TaglockItem.Taglock vínculo = null;
         for (int i = 0; i < input.size(); i++) {
             ItemStack stack = input.getItem(i);
-            if (stack.getItem() instanceof PoppetItem) boneca = stack;
-            else if (stack.is(OccultaItems.TAGLOCK)) vínculo = TaglockItem.bound(stack);
+            if (stack.is(OccultaItems.TAGLOCK)) vínculo = TaglockItem.bound(stack);
+            else if (prendível(stack)) boneca = stack;
         }
         if (boneca.isEmpty() || vínculo == null) return ItemStack.EMPTY;
         ItemStack presa = boneca.copyWithCount(1);
         presa.set(OccultaComponents.TAGLOCK, vínculo);
         return presa;
     }
+
+    /**
+     * O que se pode prender a alguém: as <b>bonecas</b>, que se conhecem pela classe, e o que estiver no
+     * rótulo — os <b>contratos</b>, que é o que o Diabrete lê.
+     */
+    public static boolean prendível(ItemStack coisa) {
+        return coisa.getItem() instanceof PoppetItem || coisa.is(PRENDE_UM_VÍNCULO);
+    }
+
+    /** O rótulo de quem se prende a alguém e não é boneca. */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> PRENDE_UM_VÍNCULO =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                    Thaumcraft.id("prende_um_vinculo"));
 
     /** O frasco se gasta: não volta vazio para a bancada. */
     @Override

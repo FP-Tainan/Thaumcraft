@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "thaumcraft:contract",
+    "thaumcraft:contract_blaze",
+    "thaumcraft:contract_resist_fire",
+    "thaumcraft:contract_evaporate",
+    "thaumcraft:contract_fiery_touch",
+    "thaumcraft:contract_smelting"
+  ]
+}

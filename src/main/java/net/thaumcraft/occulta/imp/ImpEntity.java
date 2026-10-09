@@ -181,6 +181,18 @@ public class ImpEntity extends TamableAnimal implements Enemy, Imps.HasHome {
         return this.entityData.get(LIGADO);
     }
 
+    /** Sem uso fora do porte: serve à prova para o ligar sem lhe dar o Coração. */
+    public void liga(ServerLevel level) {
+        this.atéQuando = level.getGameTime() + LIGADO_POR;
+        this.ligado(true);
+    }
+
+    /** E para o apagar sem lhe dar a Agulha. */
+    public void desliga() {
+        this.atéQuando = 0L;
+        this.ligado(false);
+    }
+
     private void ligado(boolean sim) {
         this.entityData.set(LIGADO, sim);
     }
@@ -280,7 +292,63 @@ public class ImpEntity extends TamableAnimal implements Enemy, Imps.HasHome {
 
         if (naMão.is(OccultaItems.DEMON_HEART)) return this.liga(level, quem, naMão);
         if (naMão.is(OccultaItems.ICY_NEEDLE)) return this.desliga(level, quem, naMão);
+        if (net.thaumcraft.occulta.demon.ContractItem.preso(naMão)) {
+            return this.lança(level, quem, naMão);
+        }
         return this.oBrilho(level, quem, naMão);
+    }
+
+    /**
+     * <b>O que ele lança.</b> Um contrato preso a alguém, posto na mão dele, é lido e cumprido — na pessoa
+     * do outro lado do papel, esteja ela onde estiver.
+     *
+     * <p>E ele recusa por quatro motivos, que são os quatro do original e os quatro têm recado próprio:
+     *
+     * <ul>
+     *   <li><b>ligado</b>, não lê nada: «há poder demais para pensar». É a única coisa que o Coração de
+     *       Demônio <b>tira</b>, e é por isso que ligá-lo não é só ganho;</li>
+     *   <li><b>com pouca afeição</b> — menos de vinte —, pergunta por que haveria de o fazer;</li>
+     *   <li><b>há pouco tempo</b> — os mesmos três minutos dos presentes —, manda esperar;</li>
+     *   <li>e <b>não achando</b> a pessoa do outro lado, diz o nome dela e não faz nada.</li>
+     * </ul>
+     *
+     * <p>Um contrato que não pegue <b>não se gasta</b>: é o {@code activate} devolvendo falso.
+     */
+    private InteractionResult lança(ServerLevel level, Player quem, ItemStack papel) {
+        this.ri(level, quem);
+        if (this.ligado()) {
+            this.diz(quem, "spell.toomuchpower");
+            return InteractionResult.SUCCESS;
+        }
+        if (this.afeição() < GOSTA) {
+            this.diz(quem, "spell.notliked");
+            return InteractionResult.SUCCESS;
+        }
+        long agora = level.getGameTime();
+        if (agora <= this.últimoPresente + ENTRE_PRESENTES && !quem.hasInfiniteMaterials()) {
+            this.diz(quem, "spell.toooften");
+            return InteractionResult.SUCCESS;
+        }
+
+        var alvo = net.thaumcraft.occulta.Voodoo.bound(level, papel);
+        if (alvo == null) {
+            var vínculo = TaglockItem.bound(papel);
+            this.dizDe(quem, "spell.cannotfind", vínculo == null ? "?" : vínculo.name());
+            return InteractionResult.SUCCESS;
+        }
+        if (!(papel.getItem() instanceof net.thaumcraft.occulta.demon.ContractItem contrato)) {
+            return InteractionResult.PASS;
+        }
+
+        if (!contrato.faz(level, alvo)) {
+            this.dizDe(quem, "spell.failed", alvo.getName().getString());
+            return InteractionResult.SUCCESS;
+        }
+
+        this.últimoPresente = agora;
+        this.dizDe(quem, "spell.feelthefire", alvo.getName().getString());
+        if (!quem.hasInfiniteMaterials()) papel.shrink(1);
+        return InteractionResult.SUCCESS;
     }
 
     /** <b>O contrato</b>: assinado por quem o traz, e com vinte e cinco níveis para dar. */
@@ -405,6 +473,12 @@ public class ImpEntity extends TamableAnimal implements Enemy, Imps.HasHome {
     private void diz(Player quem, String oquê) {
         quem.sendSystemMessage(Component.translatable("tc.occulta.imp." + oquê,
                 this.getName()).withStyle(ChatFormatting.DARK_RED));
+    }
+
+    /** E o mesmo, com o nome de quem está do outro lado do papel. */
+    private void dizDe(Player quem, String oquê, String deQuem) {
+        quem.sendSystemMessage(Component.translatable("tc.occulta.imp." + oquê,
+                this.getName(), deQuem).withStyle(ChatFormatting.DARK_RED));
     }
 
     // ------------------------------------------------------------------ os sons

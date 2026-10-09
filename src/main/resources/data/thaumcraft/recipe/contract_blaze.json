@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:contract",
+    "minecraft:blaze_rod",
+    "thaumcraft:hint_of_rebirth"
+  ],
+  "result": {
+    "id": "thaumcraft:contract_blaze",
+    "count": 1
+  }
+}

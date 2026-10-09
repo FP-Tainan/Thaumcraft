@@ -201,6 +201,16 @@ public final class OccultaAspects {
                     .add(Aspects.SOUL, 2));
             r.item("thaumcraft:contract_torment", new AspectList().add(Aspects.EXCHANGE, 2)
                     .add(Aspects.TRAP, 3));
+            r.item("thaumcraft:contract_blaze", new AspectList().add(Aspects.EXCHANGE, 2)
+                    .add(Aspects.FIRE, 1).add(Aspects.BEAST, 1));
+            r.item("thaumcraft:contract_evaporate", new AspectList().add(Aspects.EXCHANGE, 2)
+                    .add(Aspects.FIRE, 1).add(Aspects.WATER, 1));
+            r.item("thaumcraft:contract_fiery_touch", new AspectList().add(Aspects.EXCHANGE, 2)
+                    .add(Aspects.FIRE, 1).add(Aspects.MECHANISM, 1));
+            r.item("thaumcraft:contract_resist_fire", new AspectList().add(Aspects.EXCHANGE, 2)
+                    .add(Aspects.FIRE, 1).add(Aspects.ARMOR, 1));
+            r.item("thaumcraft:contract_smelting", new AspectList().add(Aspects.EXCHANGE, 2)
+                    .add(Aspects.FIRE, 1).add(Aspects.MINE, 1));
             r.item("thaumcraft:brew_soul_hunger", new AspectList().add(Aspects.SOUL, 2)
                     .add(Aspects.HUNGER, 2));
             r.item("thaumcraft:brew_soul_fear", new AspectList().add(Aspects.SOUL, 2)
