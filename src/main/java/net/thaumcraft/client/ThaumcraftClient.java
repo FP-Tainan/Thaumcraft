@@ -407,6 +407,23 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.GOBLIN,
                 net.thaumcraft.occulta.client.GoblinRenderer.Goblin::new);
 
+        // o Ars Occulta: os três fantasmas do Braseiro, os três translúcidos
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.GhostRenderers.ESPECTRO,
+                net.thaumcraft.occulta.client.GhostRenderers::espectro);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.GhostRenderers.POLTERGEIST,
+                net.thaumcraft.occulta.client.GhostRenderers::poltergeist);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.SPECTRE,
+                net.thaumcraft.occulta.client.GhostRenderers.Espectro::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.BANSHEE,
+                net.thaumcraft.occulta.client.GhostRenderers.Banshee::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.POLTERGEIST,
+                net.thaumcraft.occulta.client.GhostRenderers.Poltergeist::new);
+
         // o Ars Occulta: o Caçador de Bruxas
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.WitchHunterRenderer.LAYER,

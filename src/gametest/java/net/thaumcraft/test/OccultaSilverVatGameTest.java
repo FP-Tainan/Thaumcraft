@@ -109,11 +109,18 @@ public class OccultaSilverVatGameTest {
         }
 
         /*
-         * Vinte voltas com a pilha de ouro <b>parada</b>: a primeira conta-a e as outras dezenove não
-         * mexem em nada. Com uma chance em cinco, vinte voltas dariam quatro pós se ela olhasse para o
-         * que está lá.
+         * Primeiro, uma volta só para ela <b>contar</b> o ouro que já está ali. Essa primeira volta vê a
+         * pilha crescer de zero a oito, e é crescimento de verdade: pode muito bem dar pó. Por isso o que
+         * ela der aqui é limpo antes da prova começar.
          */
         fornalha.setItem(2, new ItemStack(Items.GOLD_INGOT, 8));
+        SilverVatBlockEntity.bate(level, onde, tina);
+        tina.prata(ItemStack.EMPTY);
+
+        /*
+         * E agora vinte voltas com a pilha <b>parada</b>: nenhuma delas mexe em nada. Com uma chance em
+         * cinco, vinte voltas dariam quatro pós se ela olhasse para o que está lá.
+         */
         for (int volta = 0; volta < 20; volta++) {
             SilverVatBlockEntity.bate(level, onde, tina);
         }

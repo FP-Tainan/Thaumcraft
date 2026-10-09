@@ -29,6 +29,9 @@ import java.util.List;
  * vazio — que devolvem o que estava dentro. Quebrado <b>aceso</b>, larga cinza e mais nada.
  */
 public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer {
+    /** Quantos tiques de fogueira vale cada ponto guardado. */
+    public static final int EXTENDS = 400;
+
     /** As três casas do que se queima, e a quarta, que é a cinza. */
     public static final int SLOTS = 3;
     public static final int ASH = 3;
@@ -39,6 +42,14 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
 
     private NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
     private int burnTime;
+
+    /**
+     * O que a receita <b>guardou</b>, e que estica a queima.
+     *
+     * <p>Só a do Murchar guarda algo: cada planta que ela seca lhe dá dois, que são oitocentos tiques
+     * mais de fogueira. O original chama a isto {@code PowerStorage}, o que não ajuda ninguém.
+     */
+    private long storage;
     private int powerLevel;
     private long ticks;
     private boolean lastRedstone;
@@ -130,6 +141,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
                 this.powerLevel = PowerSources.closest(level, this.worldPosition) != null ? 1 : 0;
             }
             this.burnTime = 0;
+            this.storage = 0L;
             return;
         }
 
@@ -139,13 +151,22 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
         }
         this.powerLevel = 1;
         this.burnTime++;
-        if (this.burnTime >= receita.burn()) {
+        if (this.burnTime >= receita.burn() + this.storage * EXTENDS) {
             this.burnTime = 0;
+            /*
+             * <b>Diferença.</b> O original nunca zera o que guardou — e com isso toda receita posta
+             * naquele braseiro depois de um Murchar arde oitocentos tiques a mais por planta secada,
+             * para sempre. Isso não é desenho, é esquecimento. Aqui o que foi guardado acaba com a
+             * fogueira que o guardou.
+             */
+            this.storage = 0L;
             for (int i = 0; i < SLOTS; i++) this.items.set(i, ItemStack.EMPTY);
             this.sync();
+            // e o que ela faz quando acaba, se fizer algo: é de onde saem os três fantasmas
+            if (receita.burnt() != null) receita.burnt().onBurnt(level, this.worldPosition);
             return;
         }
-        receita.burning().onBurning(level, this.worldPosition, this.ticks);
+        this.storage += receita.burning().onBurning(level, this.worldPosition, this.ticks);
     }
 
     // ------------------------------------------------------------------ o baú
@@ -229,6 +250,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
         this.items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
         ContainerHelper.loadAllItems(input, this.items);
         this.burnTime = input.getIntOr("BurnTime", 0);
+        this.storage = input.getLongOr("Storage", 0L);
         this.lastRedstone = input.getBooleanOr("Redstone", false);
     }
 
@@ -237,6 +259,7 @@ public class BrazierBlockEntity extends BlockEntity implements WorldlyContainer 
         super.saveAdditional(output);
         ContainerHelper.saveAllItems(output, this.items);
         output.putInt("BurnTime", this.burnTime);
+        output.putLong("Storage", this.storage);
         output.putBoolean("Redstone", this.lastRedstone);
     }
 

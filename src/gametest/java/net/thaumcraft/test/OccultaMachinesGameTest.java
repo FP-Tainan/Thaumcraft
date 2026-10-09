@@ -101,11 +101,11 @@ public class OccultaMachinesGameTest {
         helper.succeed();
     }
 
-    /** As quatro receitas do braseiro são de três coisas, e nenhuma casa com as de outra. */
+    /** As oito receitas do braseiro são de três coisas, e nenhuma casa com as de outra. */
     @GameTest
     public void everyBrazierRecipeIsThreeThings(GameTestHelper helper) {
         var todas = BrazierRecipes.all();
-        if (todas.size() != 4) helper.fail("esta leva tem quatro receitas, e tem " + todas.size());
+        if (todas.size() != 8) helper.fail("as oito do original, e tem " + todas.size());
         for (var receita : todas) {
             if (receita.inputs().size() != 3) helper.fail(receita.key() + " devia ser de três coisas");
             List<ItemStack> postas = receita.inputs().stream().map(ItemStack::new).toList();

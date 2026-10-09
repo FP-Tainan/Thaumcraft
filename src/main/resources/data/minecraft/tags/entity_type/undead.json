@@ -2,6 +2,9 @@
   "replace": false,
   "values": [
     "thaumcraft:eldritch_guardian",
-    "thaumcraft:vampire"
+    "thaumcraft:vampire",
+    "thaumcraft:spectre",
+    "thaumcraft:banshee",
+    "thaumcraft:poltergeist"
   ]
 }

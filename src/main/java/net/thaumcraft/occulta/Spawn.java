@@ -79,6 +79,17 @@ public final class Spawn {
         return bicho;
     }
 
+    /**
+     * O <b>{@code CreatureUtil.spawnWithEgg}</b>: o bicho acaba de nascer como se tivesse saído de um ovo
+     * — com o acerto de dificuldade e as peças que ele vista ao nascer — e <b>fica</b>, que é o que o
+     * segundo argumento do original pede em todos os lugares onde ele é chamado.
+     */
+    public static void comOvo(ServerLevel level, net.minecraft.world.entity.Mob bicho) {
+        bicho.finalizeSpawn(level, level.getCurrentDifficultyAt(bicho.blockPosition()),
+                EntitySpawnReason.SPAWN_ITEM_USE, null);
+        bicho.setPersistenceRequired();
+    }
+
     /** O meio do bicho que acabou de nascer, para os pós e o barulho irem onde ele está. */
     public static Vec3 meio(Entity bicho) {
         return new Vec3(bicho.getX(), bicho.getY() + bicho.getBbHeight() / 2.0, bicho.getZ());

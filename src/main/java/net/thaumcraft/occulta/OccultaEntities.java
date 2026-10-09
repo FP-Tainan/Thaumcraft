@@ -346,6 +346,36 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.hunter.BoltEntity::new, MobCategory.MISC)
                     .sized(0.4f, 0.4f).eyeHeight(0.0f).clientTrackingRange(4).updateInterval(20));
 
+    /**
+     * O <b>Espectro</b>, a <b>Banshee</b> e o <b>Poltergeist</b>: os três fantasmas do Braseiro.
+     *
+     * <p>Nenhum dos três tem tamanho próprio no original — ficam todos com o do {@code EntityMob}, que
+     * é o de um jogador. E os três são {@code MONSTER} sem nascerem do mundo: quem os põe lá é a
+     * fogueira, não o relógio de aparecimentos.
+     */
+    public static final EntityType<net.thaumcraft.occulta.ghost.SpectreEntity> SPECTRE =
+            register("spectre", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.ghost.SpectreEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.ghost.SpectreEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(8));
+
+    /** A <b>Banshee</b>, que grita a seis blocos. */
+    public static final EntityType<net.thaumcraft.occulta.ghost.BansheeEntity> BANSHEE =
+            register("banshee", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.ghost.BansheeEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.ghost.BansheeEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(8));
+
+    /** E o <b>Poltergeist</b>, que não se vê: invisível por poção, e para sempre. */
+    public static final EntityType<net.thaumcraft.occulta.ghost.PoltergeistEntity> POLTERGEIST =
+            register("poltergeist", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.ghost.PoltergeistEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.ghost.PoltergeistEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(8));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));
@@ -399,6 +429,12 @@ public final class OccultaEntities {
                 .register(TOAD, net.thaumcraft.occulta.familiar.ToadEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(OWL, net.thaumcraft.occulta.familiar.OwlEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(SPECTRE, net.thaumcraft.occulta.ghost.SpectreEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(BANSHEE, net.thaumcraft.occulta.ghost.BansheeEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(POLTERGEIST, net.thaumcraft.occulta.ghost.PoltergeistEntity.attributes());
         net.thaumcraft.occulta.coven.Coven.init();
         net.thaumcraft.occulta.familiar.FamiliarData.init();
     }

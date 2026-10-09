@@ -10561,3 +10561,151 @@ conta as camadas e devolve o que tem quando se clica nela; e o **ouro que cresce
 carrega a fatia: vinte voltas com a pilha parada não dão nada, e sessenta com ela crescendo dão. E o
 `OccultaSilverVatClientTest`, com três tinas lado a lado — uma sozinha, uma com fornalhas ao lado e uma
 cheia.
+
+## Os três fantasmas do Braseiro (2026-10-08)
+
+O **Espectro**, a **Banshee** e o **Poltergeist** — e, com eles, as **quatro receitas do Braseiro que
+faltavam**. O bloco fica com as oito do original, e é a primeira máquina do ofício a ficar completa.
+
+### O toque, que é a ideia inteira
+
+Os três saem de uma fogueira que arde meio minuto e são, os três, variações de uma ideia só, escrita num
+método de vinte linhas chamado `touchOfDeath`: **o dano deles não é um número**.
+
+O Espectro leva **quinze por cento da vida máxima** de quem toca. A Banshee leva **dez**, de tudo o que
+estiver a seis blocos. E os dois levam isso **por fora da armadura**, por fora da Resistência, por fora de
+tudo.
+
+Leia o que isso faz com o jogo. Contra o Espectro, uma couraça de netherita vale **exatamente o mesmo que
+nada** — a prova do `OccultaGhostGameTest` põe dois zumbis lado a lado, um pelado e um vestido da cabeça aos
+pés, e os dois perdem três de vinte. E **vida a mais é pior**: um golem de ferro, com cem de vida, perde
+quinze por toque, enquanto o zumbi perde três. Sete toques e os dois morrem igual. Não há nada no jogo que
+se possa fazer para ser mais resistente a um Espectro.
+
+### E do outro lado: quinze, e nunca mais
+
+O contrário também é verdade, e é o que torna os três o que são: **nenhum golpe lhes tira mais de quinze**.
+Não há espada que os mate depressa, não há poção que ajude, não há queda que resolva. Quarenta de vida com
+teto de quinze são **três golpes no mínimo**, com o que quer que seja.
+
+Isso muda o que eles são. Não são bichos que se matam — são bichos de que se **foge**. E é por isso que o
+jogo os gasta de outra maneira: o fetiche, que vem a seguir, **consome** espíritos em vez de os matar.
+
+### A Banshee, e a melhor piada do mod
+
+Ela **não bate em ninguém**: o dano de ataque dela é zero, escrito assim no original. O que ela faz é
+gritar, de cinco em cinco segundos, e enquanto houver alguém no alcance ela continua gritando uma vez por
+segundo. Um décimo da vida por segundo, por fora de tudo, a seis blocos.
+
+Correr seis blocos é tudo o que é preciso — e, com a vida caindo um décimo por segundo, é tudo o que dá
+tempo de fazer.
+
+Há uma saída, e é a melhor piada que o Witchery tem: **quem traz abafadores de orelhas não ouve**. O grito
+que fura armadura de netherita não fura duas almofadas de couro e lã nas orelhas.
+
+### O Poltergeist, que não briga
+
+Três de ataque, vinte de vida, **invisível para sempre** — ele nasce com a poção, e ela não acaba. O que
+ele faz não é brigar: é **bagunçar**. De cinco em cinco segundos ele procura uma coisa para estragar, e a
+ordem importa:
+
+1. um **quadro** ou moldura de item a dezesseis blocos: chegando perto, parte-o;
+2. senão, com **quem o chamou** a oito blocos, o **baú mais perto** que tenha alguma coisa dentro: chegando
+   perto, **atira uma coisa para fora dele**;
+3. senão, qualquer **item largado** no chão: chuta-o.
+
+Repare na segunda. Ele só mexe nos baús **enquanto quem o chamou está por perto**. Não é um ladrão — é uma
+assombração doméstica, e ela precisa de plateia. (O caldeirão e o braseiro ficam de fora da lista de baús, e
+é o original sendo bonzinho: são as duas coisas em que se perde uma receita inteira por um item a menos.)
+
+E ele é o preço de chamar os outros: **cada fantasma que sai do braseiro tem cinco por cento de chance de
+trazer um Poltergeist atrás**, a seis ou dez blocos. Chamar os mortos às vezes chama o que não se pediu — e
+aquele fica.
+
+### As quatro receitas que faltavam
+
+| Receita | As três coisas | Arde | Altar? |
+|---|---|---|---|
+| Chamar Espectro | losna, lã de morcego, pó de cemitério | 30 s | sim |
+| Chamar Banshee | losna, medo condensado, pó de cemitério | 30 s | sim |
+| Chamar Poltergeist | losna, mal refinado, vontade concentrada | 45 s | **não** |
+| Drenar o Crescimento | medo condensado, maçã bichada, pó de cemitério | 1 min | **não** |
+
+As três primeiras não fazem nada enquanto ardem — só faíscam de cinco em cinco segundos — e **fazem tudo
+quando acabam**. É a maneira certa de a coisa se sentir: não dá para desistir no meio.
+
+Para isso o `BrazierRecipes.Recipe` ganhou um segundo gancho, o `burnt`, ao lado do `burning` que já tinha.
+
+**O Drenar o Crescimento** é a oitava, e a mais estranha das oito. De cinco em cinco tiques ela aponta um
+lugar ao acaso num quadrado de sete por sete em volta — e a altura dele **varre de baixo para cima**, de
+dois abaixo do braseiro a três acima, num ciclo de trinta tiques. Se o que estiver ali for uma plantação
+crescida, ela **desfaz um passo do crescimento dela** e, com isso, **cura um décimo da vida** a cada
+morto-vivo a três blocos.
+
+E então ela **guarda dois**, que são **oitocentos tiques a mais de fogueira**. É a única das oito que se
+alimenta do que faz: enquanto houver trigo em volta, ela não acaba. O braseiro ganhou o campo que guarda
+isso.
+
+### Desvios declarados
+
+1. **O que o toque faz é dano.** O original põe a vida mais baixa **à mão** e depois avisa o jogo de que
+   houve dano, com zero de dano, só para o grito e a animação saírem. Aqui é um **tipo de dano próprio**,
+   o `thaumcraft:touch_of_death`, posto nos três rótulos que o jogo já tem — «não passa pela armadura»,
+   «não passa pelos efeitos», «não passa pelos encantamentos». O efeito é o mesmo e o caminho é honesto: o
+   dano é dano, e não uma subtração escondida. O que se perde com isso é a **absorção**, que o original
+   também contornava e o jogo de hoje não deixa contornar por rótulo.
+
+2. **A armadura do Espectro é a propriedade, não um método.** O original escreve
+   `getTotalArmorValue() + 2`, com teto em vinte; aqui são dois na base da propriedade de armadura, que o
+   jogo soma à das peças vestidas. O teto não vem porque nunca se chega lá: ele só apanha capacete e peito,
+   e nem sempre.
+
+3. **O toque do Espectro não soma encantamentos.** O original lhe soma a Afiação, a Repulsão e o Fogo da
+   arma dele. Mas ele **nunca tem arma** — as peças que ele apanha ao nascer são só capacete e peito —, de
+   modo que as três somas são sempre zero.
+
+4. **O braço levantado do Poltergeist sobe liso.** O original escreve `vaiEVem(i - par4, 15)`, e o `par4`
+   ali é o **giro da cabeça em graus** — não a fração de tique, que era o que a conta do golem de ferro, de
+   onde ele a copiou, tinha nesse lugar. No original o braço levantado tremia conforme o bicho virava a
+   cabeça. Aqui desconta-se a fração de tique, que é o que a conta quer.
+
+5. **O que o braseiro guardou acaba com a fogueira que o guardou.** O original **nunca** zera o que
+   guardou, e com isso toda receita posta naquele braseiro depois de um Drenar arde oitocentos tiques a
+   mais por planta secada, para sempre. Isso não é desenho, é esquecimento.
+
+6. **O baú mais perto procura-se pelas fatias.** O original varre a lista de almas carregadas do mundo
+   inteiro, que o jogo de hoje não dá. Varrer trinta e três blocos ao cubo seriam trinta e cinco mil
+   perguntas de cinco em cinco segundos; aqui pergunta-se às fatias em volta, que é onde as almas moram.
+
+7. **O que o Drenar seca é a `CropBlock`.** O original pergunta por `IPlantable` e pelo tipo de planta ser
+   `Crop`; hoje a `CropBlock` é exatamente esse conjunto — o trigo, as cenouras, as batatas, a beterraba —
+   e as plantas do ofício herdam dela.
+
+8. **Os nomes das quatro receitas antigas foram corrigidos.** Elas estavam com nomes inventados na fatia do
+   Braseiro — «Sinal de Fumaça», «Fogo da Força» — e passam a ser os do original: **Névoa de Cemitério**,
+   **Angústia dos Mortos**, **Fortificação do Cadáver** e **Véu Mortal**. E o Chamar Poltergeist ganhou
+   nome, que no original **não tem**: a chave dele está no código e não no arquivo de textos, de modo que
+   no jogo de 2014 ele aparece sem tradução.
+
+### Os dois bonecos
+
+O `ModelSpectre` serve o Espectro **e** a Banshee, e a diferença entre eles é uma bandeira: com ela, os
+braços ficam estendidos para a frente — é o Espectro vindo buscar alguém; sem ela, caídos — é a Banshee, que
+não precisa de mãos. E a **boca** é uma caixa sem fundura presa à cabeça, que só aparece quando o bicho está
+gritando; na Banshee ela abre e os braços se levantam de lado ao mesmo tempo.
+
+O `ModelPoltergeist` tem **quatro braços** de dois por dezoito. Os de dentro andam ao passo e os de fora a
+metade dele, de modo que os quatro nunca estão na mesma posição — é isso que o faz parecer que tem mais
+braços do que tem.
+
+As transparências são as do original e dizem o que cada um é: o Espectro a **quinze centésimos** enquanto
+está apagado, que é como ele nasce, e a **seis décimos** depois; a Banshee a **sete décimos**, porque ela
+não se esconde; e o Poltergeist a **quatro décimos** — e além disso invisível por poção, de modo que só se
+vê o que ele faz, nunca ele.
+
+**Guardas:** o `OccultaGhostGameTest`, com onze — os números dos três; o **toque que ignora a armadura**,
+que é a prova que carrega a fatia; a vida a mais que é pior; o toque que não pega no invulnerável; o teto de
+quinze; o grito a seis blocos e não a dez; os **abafadores**; a Banshee que não bate; o Poltergeist que
+nasce invisível, que esvazia baús **só com o dono por perto** e que chuta o que está no chão; as oito
+receitas do braseiro; a fogueira que deixa um fantasma atrás; e o Drenar, que seca uma planta e cura um
+zumbi com o que lhe tirou. E o `OccultaGhostClientTest`, com os cinco jeitos que os três têm, em fila.
