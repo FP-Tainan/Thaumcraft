@@ -141,6 +141,9 @@ public final class OccultaEvents {
      */
     private static void onDeath(ServerLevel level, LivingEntity quemMorreu, DamageSource fonte) {
         ExtraDrops.larga(level, quemMorreu);
+        if (fonte.getEntity() instanceof net.minecraft.world.entity.player.Player quemMatou) {
+            net.thaumcraft.occulta.vampire.BloodReserve.levou(quemMatou, quemMorreu);
+        }
         reincarnate(level, quemMorreu, fonte);
         keepEffects(quemMorreu);
     }

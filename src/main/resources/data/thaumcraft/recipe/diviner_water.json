@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "yay",
+    "yay",
+    "axa"
+  ],
+  "key": {
+    "a": "minecraft:stick",
+    "y": "minecraft:potion",
+    "x": "thaumcraft:tear_of_the_goddess"
+  },
+  "result": {
+    "id": "thaumcraft:diviner_water",
+    "count": 1
+  }
+}

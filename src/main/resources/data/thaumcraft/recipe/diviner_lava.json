@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " a ",
+    " x ",
+    "a a"
+  ],
+  "key": {
+    "a": "minecraft:blaze_rod",
+    "x": "thaumcraft:diviner_water"
+  },
+  "result": {
+    "id": "thaumcraft:diviner_lava",
+    "count": 1
+  }
+}

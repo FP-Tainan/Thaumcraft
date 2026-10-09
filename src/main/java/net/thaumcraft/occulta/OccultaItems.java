@@ -1458,6 +1458,37 @@ public final class OccultaItems {
     public static final Item BARK_BELT = witchBelt("bark_belt", true, 6968628,
             "tc.barkbelt.tip;tc.barkbelt.tip2");
 
+    // ------------------------------------------------------------------ a bengala e as varas
+
+    /**
+     * A <b>Bengala-Espada</b>: uma espada de diamante escondida num pau.
+     *
+     * <p>Agachar e clicar saca ou guarda a lâmina, e o dano muda com ela. Guardada, clicando, ela bebe a
+     * reserva de sangue de quem a traz — se for vampiro. Veja a
+     * {@link net.thaumcraft.occulta.hunter.CaneSwordItem}.
+     */
+    public static final Item CANE_SWORD = register("cane_sword", properties ->
+            new net.thaumcraft.occulta.hunter.CaneSwordItem(properties
+                    .sword(net.minecraft.world.item.ToolMaterial.DIAMOND, 3.0f, -2.4f)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)
+                    .attributes(net.thaumcraft.occulta.hunter.CaneSwordItem.modificadores(false))));
+
+    /** A <b>Vara d'Água</b>: segura-se apontando para o chão e ela desce um bloco por batida. */
+    public static final Item DIVINER_WATER = diviner("diviner_water",
+            net.minecraft.world.level.block.Blocks.WATER);
+
+    /** E a <b>Vara de Lava</b>, que é a mesma vara com outro gosto. */
+    public static final Item DIVINER_LAVA = diviner("diviner_lava",
+            net.minecraft.world.level.block.Blocks.LAVA);
+
+    /** Uma vara de rabdomante: cinquenta respostas, uma por casa. */
+    private static Item diviner(String nome, net.minecraft.world.level.block.Block oQueProcura) {
+        return register(nome, properties -> new net.thaumcraft.occulta.DivinerItem(oQueProcura,
+                properties.stacksTo(1)
+                        .durability(net.thaumcraft.occulta.DivinerItem.USOS)
+                        .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+    }
+
     // ------------------------------------------------------------------ os amuletos
 
     /**

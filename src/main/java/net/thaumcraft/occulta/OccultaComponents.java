@@ -147,6 +147,15 @@ public final class OccultaComponents {
             builder -> builder.persistent(com.mojang.serialization.Codec.INT)
                     .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
 
+    /**
+     * Se a lâmina da <b>Bengala-Espada</b> está de fora: o {@code WITCBladeDeployed} do original.
+     *
+     * <p>Guardada ela faz um de dano, sacada faz sete — e é este bit que decide qual.
+     */
+    public static final DataComponentType<Boolean> BLADE_DRAWN = register("blade_drawn",
+            builder -> builder.persistent(com.mojang.serialization.Codec.BOOL)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.BOOL));
+
     private OccultaComponents() {
     }
 

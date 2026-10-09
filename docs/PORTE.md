@@ -11718,3 +11718,70 @@ espécie que decide a moeda, com a vaca-de-cogumelo incluída; a lista de em que
 mantos; o morcego que volta vazio; **o desconto da Língua do Diabo, moeda por moeda**; o Token do Lobo, que
 passa pelos graus das duas maldições; e as duas receitas. E o `OccultaCharmClientTest`, com a foto dos
 quatro na barra e **a tela de trocas aberta com uma vaca**, que é a coisa toda numa imagem.
+
+## A Bengala-Espada e as duas Varas de Rabdomante (2026-10-09)
+
+### A bengala
+
+Uma **espada de diamante escondida num pau**. Guardada ela soma um ao golpe — é um pau; **sacada**, soma
+seis, que é o que uma espada de diamante soma. Agachar e clicar saca ou guarda, com um som para cada.
+
+É a única arma do ramo que **escolhe** ser arma. Quem anda com ela guardada anda desarmado de propósito, e
+quem a saca o diz a quem está à frente.
+
+### O cantil de sangue
+
+E ela abre uma coisa que até agora não existia no porte: o **cantil**, que é o `bloodReserve` do
+`ExtendedPlayer`.
+
+Quem mata um **aldeão**, um **guarda** ou uma **pessoa** leva o sangue que a vítima ainda tinha, até
+**duzentos e cinquenta** — e esse sangue fica guardado **fora do corpo**, sem fazer nada, até alguém o
+beber. Quem o bebe é a bengala, guardada, clicando; e só se quem a traz for **vampiro** e estiver com
+fome, de modo que um gole nunca se perde.
+
+**Só um vampiro o vê.** O `getBloodReserve` do original devolve zero a quem não for, embora o número
+continue lá — e é uma crueldade pequena e deliberada: a bengala de quem não é vampiro é só uma espada.
+
+A **dica dela mostra o número**, e é por isso que ela é a única coisa no ramo com um número vivo na mão.
+
+### As varas
+
+A mesma classe duas vezes: uma procura **água**, outra **lava**. Aponta-se para o **chão** — a face de
+cima de um bloco, a seis de distância — e **segura-se**. A cada batida a vara olha **um bloco mais fundo**
+debaixo daquele ponto, e desce; achando o que procura, faz **faísca mágica** e toca o orbe; batendo na
+rocha-mãe ou no fundo do mundo, faz **fumaça** e toca a caixa. Nos dois casos para e gasta um dos
+**cinquenta** usos.
+
+Vinte segundos de segurar são quatrocentos blocos de fundura, que é mais do que o mundo tem: o tempo nunca
+acaba antes da resposta. E **deixando de apontar para o chão**, ela desiste na hora e não gasta nada — uma
+vara apontada para o ar é uma vara que não sabe por onde descer.
+
+A Vara de Lava faz-se com a d'Água dentro, e é o único item do ramo que se faz **melhorando outro**.
+
+### Desvios declarados
+
+1. **O dano da bengala mora num componente.** O original escreve o dano num `getAttributeModifiers` que lê
+   o NBT da pilha a cada pergunta; hoje os modificadores de uma pilha são um componente, de modo que sacar
+   e guardar **escrevem** o componente novo. Dá no mesmo na mão de quem a usa, e tem uma vantagem que o
+   original não tinha: a dica mostra o dano certo sem que ninguém lhe peça.
+
+2. **A bengala tem velocidade de espada.** O original não a escreve porque o jogo de 2014 não a tinha. Sem
+   ela a bengala bateria na velocidade de mão vazia, que é quase o dobro da de uma espada — e isso faria
+   dela, sacada, a melhor arma do mod por acidente.
+
+3. **O fundo do mundo pergunta-se ao mundo.** O original escreve `posY <= 1`, que em 2014 era o fundo; hoje
+   o fundo é o que o mundo disser, e pode ser qualquer número. Sem isto a vara desistia na primeira batida
+   em qualquer mundo de hoje, porque toda a gente já está abaixo de um.
+
+4. **O número do cantil chega à dica por um lugar combinado.** A dica de um item escreve-se sem o jogador
+   à mão, e o cantil mora nele. O cliente põe a pergunta num campo do `BloodReserve` ao arrancar, e a dica
+   lê-a; no servidor o campo devolve zero e ninguém o lê. É o mesmo arranjo que o `VeilSight` já usa.
+
+5. **Os aspectos da bengala são do porte.** O original não a anotou — ela é das últimas coisas que ele
+   ganhou, e a ponte para o Thaumcraft 4 ficou para trás. Os das duas varas são dele.
+
+**Guardas:** o `OccultaCaneSwordGameTest`, com seis — sacar, que muda o dano; o cantil, que se enche com
+quem morre e tem teto; o vampiro, que é o único que o vê e o bebe, e só com fome; **a vara, que desce um
+bloco por batida e para na sétima, onde está a água**; a vara que desiste olhando para o céu; e as três
+receitas. E o `OccultaCaneSwordClientTest`, com as quatro na barra e **a dica da bengala com o número do
+cantil dentro**.

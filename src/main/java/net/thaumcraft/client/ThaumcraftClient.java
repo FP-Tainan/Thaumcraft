@@ -18,6 +18,10 @@ public class ThaumcraftClient implements ClientModInitializer {
         // quem enxerga o Véu: o código comum precisa do jogador da vez, e só aqui ele existe
         net.thaumcraft.shattered.VeilSight.localPlayer = () -> net.minecraft.client.Minecraft.getInstance().player;
 
+        // e o cantil da Bengala-Espada, que a dica dela mostra: mesma razão, mesmo jeito
+        net.thaumcraft.occulta.vampire.BloodReserve.naTela = () ->
+                net.thaumcraft.occulta.vampire.BloodReserve.de(net.minecraft.client.Minecraft.getInstance().player);
+
         // a esfera de gelo e a brasa, com os desenhistas do original
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.registry.TCEntities.FROST_SHARD, net.thaumcraft.client.render.FrostShardRenderer::new);
