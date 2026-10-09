@@ -141,6 +141,19 @@ public final class Symbols {
                 "3,3,3,0,0,1,1,1,1", "3,3,3,3,0,1,1", "3,3,3,3,0,0,1,1,1,1");
 
         /*
+         * <b>Tormentum</b>: a terceira delas, e a pior. Em gente, <b>manda para o Tormento</b>; em bicho
+         * que não seja chefe, <b>mata</b> — e não é de dano que se trata, é de o bicho deixar de existir.
+         *
+         * <p>Custa <b>vinte e cinco</b> e tranca-se por <b>meia hora</b>, que é a trava mais comprida do
+         * mod. É a única que a tem, e é por um motivo: o que ela faz não se desfaz.
+         *
+         * <p>Como o Ignianima e o Carnosa Diem, ela não é imperdoável — é trancada por um <b>gole</b>, o
+         * Cozimento de Alma do Tormento, que é o que o Senhor do Tormento larga.
+         */
+        põe(new Tormentum(42), "1,1,3,2,2", "1,1,3,3,2,2,2,2", "1,1,1,3,2,2",
+                "1,1,1,3,3,2,2,2,2", "1,1,1,1,3,2,2", "1,1,1,1,3,3,2,2,2,2");
+
+        /*
          * <b>Cave Inimicum</b> e <b>Defodio</b>: os dois que mexem em bloco e não em bicho. Um endurece
          * o que é mole, o outro cava o que é duro — e os dois num <b>quadrado da face</b> que cresce com
          * o grau.
@@ -1054,6 +1067,67 @@ public final class Symbols {
             tempo.setRainTime(0);
             tempo.setRaining(false);
             tempo.setThundering(false);
+        }
+    }
+
+    /**
+     * <b>Tormentum</b>: manda gente para o <b>Tormento</b> e <b>apaga</b> o bicho que não for chefe.
+     *
+     * <p>Num raio de dois à volta de onde a bola bate, tudo o que for vivo é olhado: <b>gente</b> recebe o
+     * mandado do Tormento, e <b>bicho</b> — que não seja chefe — simplesmente <b>deixa de existir</b>. Não
+     * morre, não larga nada, não dá experiência: desaparece. É a única coisa no mod que faz isso.
+     *
+     * <p>Não funciona <b>dentro</b> do Tormento, que é a guarda do original: quem já está lá não tem para
+     * onde ser mandado.
+     *
+     * <p>A trava só corre se ela <b>pegou</b> em alguma coisa. Lançada no vazio, não gasta a meia hora —
+     * só as vinte e cinco cargas.
+     */
+    private static final class Tormentum extends ProjectileSymbol {
+        /** O raio em que ela pega: os dois do original. */
+        public static final double RAIO = 2.0;
+
+        /** E a trava: meia hora. */
+        public static final int MEIA_HORA = 20 * 60 * 30;
+
+        Tormentum(int id) {
+            super(id, "tormentum", 25, true, false, MEIA_HORA, "tormentum");
+            this.cor(0xFF222222).tamanho(4.0f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (net.thaumcraft.occulta.torment.Torment.is(level)) return;
+            Vec3 meio = ondeBateu(onde);
+            AABB caixa = new AABB(meio.x - RAIO, meio.y - RAIO, meio.z - RAIO,
+                    meio.x + RAIO, meio.y + RAIO, meio.z + RAIO);
+
+            boolean pegou = false;
+            for (LivingEntity bicho : level.getEntitiesOfClass(LivingEntity.class, caixa)) {
+                if (bicho instanceof ServerPlayer gente) {
+                    net.thaumcraft.occulta.torment.Torment.order(gente,
+                            net.thaumcraft.occulta.torment.Torment.COMEÇA, -1);
+                    pegou = true;
+                } else if (bicho instanceof net.minecraft.world.entity.Mob && !chefe(bicho)) {
+                    bicho.discard();
+                    pegou = true;
+                }
+            }
+            if (pegou && quem instanceof ServerPlayer lançou) Spells.põeTrava(lançou, this, level);
+        }
+
+        /**
+         * Os chefes, que ela não apaga.
+         *
+         * <p><b>Mudança declarada, a mesma do Imperio:</b> o original pergunta {@code instanceof
+         * IBossDisplayData}, que é a interface da barra de chefe de 2014. Hoje são os dois chefes do jogo e
+         * os do próprio mod.
+         */
+        private static boolean chefe(LivingEntity bicho) {
+            return bicho instanceof net.minecraft.world.entity.boss.enderdragon.EnderDragon
+                    || bicho instanceof net.minecraft.world.entity.boss.wither.WitherBoss
+                    || bicho instanceof net.thaumcraft.occulta.baba.BabaYagaEntity
+                    || bicho instanceof net.thaumcraft.occulta.goblin.GoblinGodEntity;
         }
     }
 

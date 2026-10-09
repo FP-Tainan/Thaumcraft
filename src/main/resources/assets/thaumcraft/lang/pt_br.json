@@ -3641,5 +3641,15 @@
   "tc.vampirebook.smashstone": "[next=bats|6]...a primeira caminhada ao sol depois de seu renascimento trouxe-lhe lágrimas de sangue; sentiu o sangue arder, mas já não num instante...[br][br]...precisava de mais força, e extinguir criaturas de fogo puro foi a solução...[br]...vinte morreram.",
   "tc.vampirebook.speed": "[next=resistsun|4][br]...a força lhe entrava quanto mais bebia; noite após noite, mais forte ficava...[br][br]...foi na quarta noite depois de dominar a bebida que o mundo se fez lento ao redor dele...",
   "tc.vampirebook.toc": "[next=ritual1][h1 Observações de um Imortal][br][br][br][darkred O relato de um erudito condenado sobre suas conversas com os mortos-vivos]",
-  "tc.vampirebook.transfix": "[next=knockback|2][br]...Hoje, ou melhor, esta noite, contou-me de sua primeira morte...[br][br][br]...a sede daquela primeira noite, disse ele, era desmedida; teve de saciá-la por inteiro..."
+  "tc.vampirebook.transfix": "[next=knockback|2][br]...Hoje, ou melhor, esta noite, contou-me de sua primeira morte...[br][br][br]...a sede daquela primeira noite, disse ele, era desmedida; teve de saciá-la por inteiro...",
+  "block.thaumcraft.force": "Força",
+  "block.thaumcraft.torment_stone": "Pedra do Tormento",
+  "block.thaumcraft.torment_portal": "Portal do Tormento",
+  "block.thaumcraft.refilling_chest": "Baú de Reabastecimento",
+  "tc.occulta.spell.tormentum": "Tormentum",
+  "tc.occulta.spell.morsmordre": "Morsmordre",
+  "entity.thaumcraft.lord_of_torment": "Senhor do Tormento",
+  "entity.thaumcraft.soulfire": "Fogo de Alma",
+  "tc.occulta.contract.torment.tip": "Leia este texto dentro de um círculo de pedras de pé. Cuidado com a entrada dele.",
+  "tc.occulta.contract.torment.nostones": "É preciso estar no meio exato de um círculo de pedras."
 }

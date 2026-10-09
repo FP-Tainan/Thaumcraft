@@ -63,17 +63,14 @@ public class SpiritLiquidBlock extends ThaumFluid.LiquidBlock {
     /**
      * Se aquela coisa é do lado que o líquido castiga.
      *
-     * <p><b>Desvio declarado:</b> o {@code CreatureUtil.isDemonic} do original conta, além dos quatro do jogo, os
-     * bichos do próprio Witchery — o Demônio, o Leonard, o Senhor do Tormento, o Diabrete e a Lilith. Nenhum
-     * deles está portado; ficam os quatro do jogo.
+     * <p>O {@code CreatureUtil.isDemonic} do original conta, além dos quatro do jogo, os bichos do próprio
+     * Witchery — o Demônio, o Leonard, o Senhor do Tormento, o Diabrete e a Lilith. <b>Oito dos nove estão
+     * portados</b>, e a lista toda mora agora no rótulo {@code thaumcraft:demonic}; falta o Leonard, que é
+     * o único que ainda não existe.
      */
     private static boolean wrongSide(LivingEntity quem, boolean nightmareBane) {
         if (quem.isInvertedHealAndHarm()) return true;
-        var tipo = quem.getType();
-        if (tipo == EntityTypes.GHAST || tipo == EntityTypes.BLAZE || tipo == EntityTypes.MAGMA_CUBE
-                || tipo == EntityTypes.WITHER) {
-            return true;
-        }
+        if (net.thaumcraft.occulta.torment.Demonic.é(quem)) return true;
         return nightmareBane && quem instanceof NightmareEntity;
     }
 

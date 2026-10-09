@@ -914,8 +914,12 @@ public final class OccultaItems {
             new Item(properties.stacksTo(1)
                     .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
 
+    /**
+     * E o <b>Contrato do Tormento</b>, que é o único papel do mod que <b>chama</b> alguma coisa: catorze
+     * segundos de mão erguida dentro de um círculo de pedras, e o <b>Senhor do Tormento</b> chega.
+     */
     public static final Item CONTRACT_TORMENT = register("contract_torment", properties ->
-            new Item(properties.stacksTo(1)
+            new net.thaumcraft.occulta.torment.ContractTormentItem(properties.stacksTo(1)
                     .rarity(net.minecraft.world.item.Rarity.RARE)));
 
     /**
@@ -1378,6 +1382,23 @@ public final class OccultaItems {
     /** E o <b>Manto de Necromante</b>, que leva ombreiras e serve ao Cozimento de Erguer. */
     public static final Item NECROMANCERS_ROBES = witchClothes("necromancers_robes",
             ArmorType.CHESTPLATE, true, true, "tc.witchclothes.necro;tc.witchclothes.necro2");
+
+    // ------------------------------------------------------------------ o Tormento
+
+    /**
+     * Os dois do Tormento que o original <b>põe na aba do criativo</b>, e só esses dois.
+     *
+     * <p>A parede de Força e a Pedra do Tormento ficam de fora — o original lhes tira a aba de propósito,
+     * porque elas são do mundo e não de quem lá entra. Mas o <b>portal</b> está lá, e isso tem uma
+     * consequência que o original quis: um portal posto no mundo de cima é uma <b>porta de entrada</b>
+     * para o Tormento, que de outro modo não teria nenhuma senão o Tormentum.
+     */
+    public static final Item TORMENT_PORTAL = register("torment_portal", properties ->
+            new BlockItem(OccultaBlocks.TORMENT_PORTAL, properties.useBlockDescriptionPrefix()));
+
+    /** E o Baú de Reabastecimento, que fora do Tormento é um baú indestrutível e mais nada. */
+    public static final Item REFILLING_CHEST = register("refilling_chest", properties ->
+            new BlockItem(OccultaBlocks.REFILLING_CHEST, properties.useBlockDescriptionPrefix()));
 
     /** Uma peça de roupa de bruxa: couro, tingível (menos a da Baba), e o que ela diz na mão. */
     private static Item witchClothes(String nome, ArmorType casa, boolean tingível, boolean necro,

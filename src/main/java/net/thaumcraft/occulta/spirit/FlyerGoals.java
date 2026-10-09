@@ -529,4 +529,133 @@ public final class FlyerGoals {
             viraParaOnde(this.quem);
         }
     }
+    // ------------------------------------------------------------------ atirar
+
+    /** Quem sabe atirar alguma coisa: a {@code IRangedAttackMob} do jogo de 2014. */
+    public interface Atirador {
+        /**
+         * <b>Atira.</b>
+         *
+         * @param quão o quanto a distância é do alcance, de um décimo a um — é o que diz a dispersão
+         */
+        void atira(net.minecraft.server.level.ServerLevel level, LivingEntity alvo, float quão);
+    }
+
+    /**
+     * <b>Atirar voando.</b> O {@code EntityAIFlyerArrowAttack}.
+     *
+     * <p>É a meta de tiro do jogo de 2014 com o empurrão dos voadores por cima: enquanto o alvo estiver
+     * longe de mais, ela <b>empurra</b> o bicho na direção dele em quinze centésimos por batida — se a
+     * linha reta estiver livre —, e enquanto estiver perto e à vista, ela conta o prazo e manda atirar.
+     *
+     * <p>O prazo é <b>a distância que diz</b>: de perto ele recarrega no tempo mínimo e de longe no
+     * máximo, de modo que a briga aperta à medida que se chega.
+     *
+     * <p><b>Desvio declarado:</b> o {@code isCourseTraversable} do original passa a caixa do <b>alvo</b>
+     * pelo caminho com um passo de <b>zero</b> — ele subtrai a posição do alvo da posição do alvo —, de
+     * modo que a conta dele dá sempre «o caminho está livre» a não ser que o alvo esteja dentro de uma
+     * parede. Aqui corre o {@link #rumoLivre}, que é a mesma conta escrita como as outras três metas de voo
+     * a escrevem: do <b>bicho</b> até o alvo, de metro em metro.
+     */
+    public static class Atira extends Goal {
+        /** O empurrão por batida: os quinze centésimos do original. */
+        public static final double EMPURRA = 0.15;
+
+        /** O castigo de cada caminho fechado, que adia a tentativa seguinte. */
+        public static final int CASTIGO = 10;
+
+        /** E de quantas em quantas batidas se tenta outra vez, mais um sorteio de sete. */
+        public static final int TENTA_DE = 4;
+        public static final int TENTA_ATÉ = 7;
+
+        private final Mob quem;
+        private final Atirador atirador;
+        private final int recargaDe;
+        private final int recargaAté;
+        private final float alcance;
+        private final float alcanceAoQuadrado;
+
+        private @Nullable LivingEntity alvo;
+        private int prazo = -1;
+        private int àVistaHá;
+        private int esperaParaAndar;
+        private int castigo;
+
+        public Atira(Atirador atirador, int recargaDe, int recargaAté, float alcance) {
+            if (!(atirador instanceof Mob bicho)) {
+                throw new IllegalArgumentException("quem atira tem de ser um bicho");
+            }
+            this.quem = bicho;
+            this.atirador = atirador;
+            this.recargaDe = recargaDe;
+            this.recargaAté = recargaAté;
+            this.alcance = alcance;
+            this.alcanceAoQuadrado = alcance * alcance;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            LivingEntity quer = this.quem.getTarget();
+            if (quer == null) return false;
+            this.alvo = quer;
+            return true;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return this.canUse();
+        }
+
+        @Override
+        public void stop() {
+            this.alvo = null;
+            this.àVistaHá = 0;
+            this.prazo = -1;
+            this.esperaParaAndar = 0;
+        }
+
+        @Override
+        public void tick() {
+            if (this.alvo == null) return;
+            if (!(this.quem.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
+
+            double longe = this.quem.distanceToSqr(this.alvo.getX(),
+                    this.alvo.getBoundingBox().minY, this.alvo.getZ());
+            boolean àVista = this.quem.getSensing().hasLineOfSight(this.alvo);
+            this.àVistaHá = àVista ? this.àVistaHá + 1 : 0;
+
+            if (longe > this.alcanceAoQuadrado && --this.esperaParaAndar <= 0) {
+                this.esperaParaAndar = this.castigo + TENTA_DE + this.quem.getRandom().nextInt(TENTA_ATÉ);
+                double dx = this.alvo.getX() - this.quem.getX();
+                double dy = this.alvo.getY() - this.quem.getY();
+                double dz = this.alvo.getZ() - this.quem.getZ();
+                double quanto = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                if (quanto > 0.0 && rumoLivre(this.quem, this.alvo.getX(), this.alvo.getY(),
+                        this.alvo.getZ(), quanto)) {
+                    this.quem.setDeltaMovement(this.quem.getDeltaMovement().add(
+                            dx / quanto * EMPURRA, dy / quanto * EMPURRA, dz / quanto * EMPURRA));
+                    this.castigo = 0;
+                } else {
+                    this.castigo += CASTIGO;
+                }
+                viraParaOnde(this.quem);
+            }
+
+            this.quem.getLookControl().setLookAt(this.alvo, 30.0f, 30.0f);
+
+            if (--this.prazo == 0) {
+                if (longe > this.alcanceAoQuadrado || !àVista) return;
+                float quão = (float) Math.sqrt(longe) / this.alcance;
+                this.atirador.atira(level, this.alvo, Math.min(Math.max(quão, 0.1f), 1.0f));
+                this.prazo = recarga(quão);
+            } else if (this.prazo < 0) {
+                this.prazo = recarga((float) Math.sqrt(longe) / this.alcance);
+            }
+        }
+
+        private int recarga(float quão) {
+            return net.minecraft.util.Mth.floor(quão * (this.recargaAté - this.recargaDe) + this.recargaDe);
+        }
+    }
 }

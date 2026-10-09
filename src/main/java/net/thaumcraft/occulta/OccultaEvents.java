@@ -44,6 +44,8 @@ public final class OccultaEvents {
             for (var quem : servidor.getPlayerList().getPlayers()) {
                 if (quem.level() instanceof ServerLevel level) {
                     net.thaumcraft.occulta.divine.Predictions.batida(level, quem);
+                    // e o mandado do Tormento, que o original cumpre de vinte em vinte batidas
+                    net.thaumcraft.occulta.torment.Torment.tick(level, quem);
                 }
             }
         });

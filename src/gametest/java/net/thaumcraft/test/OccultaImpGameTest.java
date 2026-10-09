@@ -276,9 +276,10 @@ public class OccultaImpGameTest {
         for (var qual : Symbols.todos()) {
             if (qual.chave != null) comChave.add(qual.chave);
         }
-        // dos quatro, só dois estão portados — o Morsmordre e o Tormentum ainda não existem
+        // dos quatro, três estão portados — o Morsmordre é que ainda não existe
         if (!comChave.contains("carnosadiem")) helper.fail("o Carnosa Diem pede chave");
         if (!comChave.contains("ignianima")) helper.fail("e o Ignianima também");
+        if (!comChave.contains("tormentum")) helper.fail("e o Tormentum também");
 
         // e os imperdoáveis não pedem nenhuma: é isso que os torna imperdoáveis
         for (var qual : Symbols.todos()) {

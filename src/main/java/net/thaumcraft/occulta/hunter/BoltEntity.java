@@ -188,13 +188,16 @@ public class BoltEntity extends AbstractArrow {
         this.setBaseDamage(eraTanto);
     }
 
-    /** Morto-vivo ou coisa do inferno: o {@code isUndead || isDemonic} do original. */
+    /**
+     * Morto-vivo ou coisa do inferno: o {@code isUndead || isDemonic} do original.
+     *
+     * <p>O que é do inferno mora no rótulo {@code thaumcraft:demonic}, que tem os quatro do jogo e os do
+     * mod — o Demônio, o Diabrete, a Lilith e o Senhor do Tormento.
+     */
     private static boolean impuro(net.minecraft.world.entity.Entity quem) {
         if (!(quem instanceof LivingEntity vivo)) return false;
         if (vivo.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) return true;
-        // o diabrete e o demônio do original ainda não existem aqui; o que há de inferno é o que o jogo traz
-        return vivo.getType().builtInRegistryHolder()
-                .is(net.minecraft.tags.EntityTypeTags.SENSITIVE_TO_SMITE);
+        return net.thaumcraft.occulta.torment.Demonic.é(vivo);
     }
 
     /**

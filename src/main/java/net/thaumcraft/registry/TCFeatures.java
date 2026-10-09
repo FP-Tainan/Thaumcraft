@@ -91,6 +91,11 @@ public final class TCFeatures {
             MIRROR_GENERATOR = Registry.register(BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("mirror"),
             net.thaumcraft.occulta.mirror.MirrorChunkGenerator.CODEC);
 
+    /** O gerador do Tormento: ar do fundo ao topo, e seis lajes de labirinto a flutuar nele. */
+    public static final com.mojang.serialization.MapCodec<net.thaumcraft.occulta.torment.TormentChunkGenerator>
+            TORMENT_GENERATOR = Registry.register(BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("torment"),
+            net.thaumcraft.occulta.torment.TormentChunkGenerator.CODEC);
+
     /** O gerador das Terras de Fora: chunks vazios, com os recursos do bioma. */
     public static final com.mojang.serialization.MapCodec<net.thaumcraft.world.outer.OuterChunkGenerator> OUTER_GENERATOR = Registry.register(
             BuiltInRegistries.CHUNK_GENERATOR, Thaumcraft.id("outer"), net.thaumcraft.world.outer.OuterChunkGenerator.CODEC);

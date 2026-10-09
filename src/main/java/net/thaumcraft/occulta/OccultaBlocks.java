@@ -897,6 +897,48 @@ public final class OccultaBlocks {
             new net.thaumcraft.occulta.mirror.MirrorWallBlock(properties.mapColor(MapColor.COLOR_LIGHT_BLUE)
                     .strength(-1.0f, 3600000.0f).sound(SoundType.GLASS).noLootTable()));
 
+    // ------------------------------------------------------------------ o Tormento
+
+    /**
+     * A <b>parede de Força</b>, que é o labirinto do Tormento.
+     *
+     * <p>Pedra maciça que não se vê, não se quebra e não deixa nada. É o que faz do Tormento um problema de
+     * memória e não de paciência: lá dentro o que se vê é o chão, e o caminho se aprende às topadas.
+     */
+    public static final Block FORCE = register("force", properties ->
+            new net.thaumcraft.occulta.torment.ForceBlock(tormento(properties)
+                    .mapColor(MapColor.NONE).sound(SoundType.GLASS).noOcclusion()
+                    .isValidSpawn((feitio, mundo, onde, qual) -> false)));
+
+    /**
+     * A <b>Pedra do Tormento</b>, que é o chão dele.
+     *
+     * <p>É a mesma {@code BlockForce} do original, no ramo opaco: igual à parede em tudo menos em ser
+     * visível — e a textura dela é a <b>cara do micélio</b> do jogo, nas seis faces. De cem casas de chão,
+     * uma é micélio de verdade.
+     */
+    public static final Block TORMENT_STONE = register("torment_stone", properties ->
+            new Block(tormento(properties).mapColor(MapColor.COLOR_PURPLE).sound(SoundType.STONE)));
+
+    /** O <b>Portal do Tormento</b>: a saída que, uma vez em vinte, não é saída. */
+    public static final Block TORMENT_PORTAL = register("torment_portal", properties ->
+            new net.thaumcraft.occulta.torment.TormentPortalBlock(tormento(properties)
+                    .mapColor(MapColor.COLOR_RED).noCollision().noOcclusion()
+                    .lightLevel(feitio -> net.thaumcraft.occulta.torment.TormentPortalBlock.LUZ)
+                    .sound(SoundType.GLASS).pushReaction(PushReaction.BLOCK)));
+
+    /** O <b>Baú de Reabastecimento</b>: três por andar, e de hora em hora cheios outra vez. */
+    public static final Block REFILLING_CHEST = register("refilling_chest", properties ->
+            new net.thaumcraft.occulta.torment.RefillingChestBlock(tormento(properties)
+                    .mapColor(MapColor.WOOD).sound(SoundType.WOOD).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.torment.RefillingChestBlockEntity> REFILLING_CHEST_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("refilling_chest"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.torment.RefillingChestBlockEntity::new,
+                            java.util.Set.of(REFILLING_CHEST)));
+
     // ------------------------------------------------------------------ o altar
 
     /** O Altar da Bruxa: seis deles, dois por três, fazem um altar de verdade. */
@@ -982,6 +1024,18 @@ public final class OccultaBlocks {
     /** E os da neve. */
     private static BlockBehaviour.Properties neve(BlockBehaviour.Properties properties) {
         return properties.mapColor(MapColor.SNOW).strength(0.2f, 0.2f).sound(SoundType.SNOW);
+    }
+
+    /**
+     * Os números das peças do Tormento: <b>indestrutíveis</b> e sem despojo.
+     *
+     * <p>São as quatro do labirinto, e as quatro são do mundo e não de quem lá entra. O original dá-lhes
+     * dureza menos um e resistência de nove mil novecentos e noventa e nove; aqui vão com a resistência da
+     * bedrock, que é a maneira de hoje de dizer a mesma coisa.
+     */
+    private static BlockBehaviour.Properties tormento(BlockBehaviour.Properties properties) {
+        return properties.strength(-1.0f, 3600000.0f).noLootTable()
+                .pushReaction(PushReaction.BLOCK);
     }
 
     private static Block register(String name, Function<BlockBehaviour.Properties, Block> factory) {

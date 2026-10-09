@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/torment_portal",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -65502
+      }
+    ]
+  }
+}

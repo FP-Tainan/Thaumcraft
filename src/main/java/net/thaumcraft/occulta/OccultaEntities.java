@@ -402,6 +402,29 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.imp.ImpEntity::attributes))
                     .sized(0.4f, 1.3f).eyeHeight(1.1f).clientTrackingRange(8));
 
+    /**
+     * O <b>Senhor do Tormento</b>: o chefe do Tormento, e o único bicho do mod que <b>foge da briga</b>
+     * para a continuar noutro lugar.
+     *
+     * <p>Seis décimos por um e nove, como o Demônio, e {@code MONSTER}. Ele não nasce sozinho em lugar
+     * nenhum: ou vem do Contrato do Tormento, ou já está à espera na sala do meio do labirinto.
+     */
+    public static final EntityType<net.thaumcraft.occulta.torment.LordOfTormentEntity> LORD_OF_TORMENT =
+            register("lord_of_torment", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.torment.LordOfTormentEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.torment.LordOfTormentEntity::attributes))
+                    .sized(0.6f, 1.9f).eyeHeight(1.6f).fireImmune().clientTrackingRange(10));
+
+    /** E a <b>bola de fogo de alma</b> que ele atira. */
+    public static final EntityType<net.thaumcraft.occulta.torment.SoulfireEntity> SOULFIRE =
+            register("soulfire", EntityType.Builder
+                    .<net.thaumcraft.occulta.torment.SoulfireEntity>of(
+                            net.thaumcraft.occulta.torment.SoulfireEntity::new, MobCategory.MISC)
+                    .sized(net.thaumcraft.occulta.torment.SoulfireEntity.LADO,
+                            net.thaumcraft.occulta.torment.SoulfireEntity.LADO)
+                    .clientTrackingRange(4).updateInterval(10));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));
@@ -486,6 +509,9 @@ public final class OccultaEntities {
 
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(IMP, net.thaumcraft.occulta.imp.ImpEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(LORD_OF_TORMENT,
+                        net.thaumcraft.occulta.torment.LordOfTormentEntity.attributes());
         net.thaumcraft.occulta.coven.Coven.init();
         net.thaumcraft.occulta.familiar.FamiliarData.init();
     }

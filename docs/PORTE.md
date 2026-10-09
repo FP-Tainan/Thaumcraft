@@ -4112,7 +4112,7 @@ não come nada e dura um minuto certo — é a que se leva para onde não há al
 
 ### As versões maiores e as portáteis (2026-09-27)
 
-**O original tem o mesmo rito três vezes, e a diferença não está escrita em lado nenhum: está na ferramenta.**
+**O original tem o mesmo rito três vezes, e a diferença não está escrita em lugar nenhum: está na ferramenta.**
 A Tempestade pede uma espada de **pau**; a Maior, uma de **pedra**; a Portátil, uma de **ferro**. O Eclipse pede
 um machado de pedra e o Portátil um de ferro. É a escada que diz, sem palavras, qual é qual.
 
@@ -11113,3 +11113,213 @@ assinado por outro e cobra vinte e cinco níveis; os **quatro segredos pela orde
 carrega a fatia; o que ele recusa; o coração que o liga e a agulha que o apaga; **o gole que ensina o
 feitiço**; e as três receitas. E o `OccultaImpClientTest`, com quatro — dois de frente e dois de costas,
 um de cada ligado —, porque o que ele faz com poder é engordar.
+
+## O Tormento, que é o lugar (2026-10-09)
+
+A última dimensão do ofício, e a única que não é um lugar para onde se vai: é um lugar para onde se é
+**mandado**. Não tem portal de entrada — tem o símbolo **Tormentum**, que atira alguém para lá, e tem o
+**Senhor do Tormento**, que, ferido no mundo de cima, foge e arrasta consigo quem o feriu.
+
+### Um labirinto que não se vê
+
+São **seis** labirintos empilhados, um por andar, de quinze em quinze de altura a partir do décimo. Cada um
+é uma grelha de trinta e uma por trinta e uma casas desenhada a duas casas por casa — sessenta e três por
+sessenta e três blocos — e o caminho sai de uma busca em profundidade embaralhada, a mesma do original, com
+os quatro bits por casa.
+
+As **paredes são de Força**, que é pedra maciça invisível, e o teto também. O que se vê é o **chão**: Pedra
+do Tormento, que tem a cara do micélio, e uma casa em cada cem é micélio de verdade.
+
+E há uma coisa que o original faz sem dizer e que muda tudo: **a parede não leva chão**. O `drawWall` escreve
+Força de cima a baixo e mais nada, enquanto o `drawPassage` escreve duas camadas de pedra. Quer dizer que,
+visto de cima, o labirinto é um **planalto cortado por valas de duas de fundura** — e as valas são onde
+estão as paredes. De pé lá dentro, com os olhos a um metro e meio, a vala à frente não se distingue da
+vala a vinte: o desenho está todo à vista e ao mesmo tempo não serve de nada. É o melhor engano do
+Witchery, e ele não é de propósito — é o que sai de não pôr chão debaixo de uma parede que não se vê.
+
+Entre o teto de um andar e o chão do seguinte ficam **oito casas de escuro**. Lá de dentro, o que se vê por
+cima é a barriga do andar de cima, e entre os dois uma faixa de vermelho.
+
+### As salas
+
+Depois do labirinto vêm as salas, **por esta ordem**, porque os dois desvios das salas de baú saem do mesmo
+sorteio em fila:
+
+1. a **câmara de entrada**, de sete por sete, onde quem chega cai;
+2. a **câmara de saída**, de sete por nove, que avança sete filas para fora do labirinto;
+3. o **portal**, com a moldura de três de Pedra do Tormento dos dois lados;
+4. a **sala da esquerda**, de cinco por cinco, desviada ao acaso em até cinco para cada lado, com um **Baú
+   de Reabastecimento** no meio;
+5. a **sala da direita**, igual, com outro desvio e outro baú;
+6. e a **sala do meio**, de sete por sete, com o terceiro baú.
+
+Os baús ficam **no topo do chão** e não sobre ele: eles estão **enterrados**, com a tampa ao nível dos pés
+de quem passa. É o `drawChest` do original, e fica.
+
+### O portal que mente
+
+É a **única** saída, e ela mente. Quem a atravessa, estando no Tormento, volta para casa **dezenove vezes em
+vinte** — e na vigésima vai para **outro andar**, e tem de atravessar outro labirinto para achar outra porta
+que talvez minta outra vez.
+
+Um labirinto tem saída; este tem uma **porta que às vezes é saída**, e a diferença entre as duas coisas é a
+diferença entre um lugar difícil e um castigo.
+
+### O mandado
+
+O original não teleporta na hora: ele **escreve um mandado** no jogador — `WITCForceTorment`, com quatro
+valores, e `WITCForceTormentLevel` — e o cumpre **de vinte em vinte batidas**. É por isso que quem é
+tormentado some um instante depois de ser ferido e não no mesmo golpe, e esse adiamento fica, porque é o que
+dá tempo ao bicho que mandou de desaparecer primeiro.
+
+Acabando, volta-se para a **cama** de quem é, ou para o nascimento do mundo, subindo e descendo num vaivém
+até achar chão firme com duas casas de ar em cima.
+
+### O baú que se enche sozinho
+
+De hora em hora, **estando vazio** e **estando no Tormento**, ele se enche com duas a cinco coisas de
+calabouço. Os três requisitos são do original e os três importam: vazio, porque senão transbordaria; no
+Tormento, porque um baú destes no mundo de cima seria dinheiro infinito; e de hora em hora, porque é o tempo
+de uma visita.
+
+São três por andar, dezoito ao todo, e são a razão pela qual o Tormento não é só castigo.
+
+### O Tormentum
+
+Vinte e cinco de custo, **meia hora** de trava — a única trava do mod inteiro — e raio de dois. Em **gente**,
+manda para o Tormento; em **bicho** que não seja chefe, **apaga**: não morre, não larga nada, não dá
+experiência. Desaparece. É a única coisa no mod que faz isso.
+
+E ele corrige, de passagem, uma leitura que estava por fazer: o original não tem bandeira de
+«imperdoável». O que ele tem é **`isUnforgivable() { return curse && knowledgeKey == null; }`** — uma
+maldição sem chave de saber. O Tormentum é maldição **e** tem chave (o Cozimento de Alma do Tormento), de
+modo que **não** é imperdoável: lança-se com qualquer infusão, desde que se tenha bebido o gole.
+
+### Desvios declarados
+
+1. **O labirinto passa a ser uma conta, e não uma escrita.** O original o monta no instante em que o pedaço
+   (0,0) se povoa e o escreve no mundo com um `setBlock` de cada vez, atravessando pedaços que ainda não
+   nasceram — coisa que o jogo de 2014 deixava e o de hoje não. Aqui ele é **desenhado primeiro**, inteiro,
+   numa planta tirada da semente do mundo, e o gerador copia dela o pedaço que lhe toca. O desenho é o mesmo,
+   a ordem dos sorteios é a mesma, e a recursão do `generateMaze` virou uma pilha à mão — porque numa grelha
+   de trinta e uma por trinta e uma a recursão do original chega a novecentas e sessenta e uma chamadas de
+   fundura.
+
+2. **O eixo do portal mora no feitio do bloco.** O original não o guarda em lugar nenhum: olha os dois
+   vizinhos em `x` a cada quadro e decide a caixa dali. Hoje a caixa de um bloco vem do feitio dele. No
+   labirinto dá no mesmo — ali o portal tem sempre Pedra do Tormento dos dois lados, e a conta do original
+   dá sempre o mesmo eixo, que é o que nasce por omissão.
+
+3. **A claridade vem do mundo e não do céu.** No original o Tormento tem céu (o `hasNoSky` é falso), a hora
+   está parada à meia-noite e o céu é **vermelho vivo**; a luz que chega ao labirinto é a do céu noturno a
+   atravessar o teto de Força, que tem opacidade zero. Aqui o mundo é sem céu e a mesma penumbra vem da **luz
+   de fundo** da dimensão, com a névoa vermelha fazendo o resto. O resultado na tela é o mesmo — um lugar
+   escuro e vermelho de ponta a ponta —, e a parede de Força continua a deixar passar a luz, como no
+   original.
+
+4. **A alma do baú põe-se à mão.** Um pedaço em geração não faz a alma de um bloco pelo feitio dele; quem a
+   faz é o mundo quando o pedaço entra nele. O gerador a põe, como qualquer estrutura do jogo faz com os
+   baús dela.
+
+5. **O que o baú tira do saco de calabouço.** O original usa o `ChestGenHooks.getInfo("dungeonChest")`, que
+   era a tabela do Forge; aqui as coisas saem da tabela de despojo do **calabouço simples** do jogo, que é a
+   mesma coisa com outro nome. A conta de quantas — duas mais até três — é a do original.
+
+6. **A trava mudou de mão.** A Vara Mística estava pondo-a em todo lançamento; no original quem a
+   põe é o **símbolo**, de dentro do que faz, e só se ele pegou em alguma coisa. Como só um dos trinta e um a
+   tem, a diferença só se via no Tormentum — e agora uma bola atirada ao vazio custa as cargas e não a meia
+   hora.
+
+7. **O `fallsToEarth` continua por portar.** O quinto parâmetro do `SymbolEffect` do original diz se a bola
+   do feitiço **cai**: no grau um ela perde um quinto da aceleração por batida e afunda cinco centésimos,
+   de modo que se atira em arco em vez de em linha. Três símbolos o têm — o **Ennervate**, o **Stupefy** e o
+   **Tormentum** —, e nenhum dos três o tem aqui: o quinto parâmetro desta classe é o «imperdoável», que no
+   original não é parâmetro nenhum mas uma conta (`maldição && sem chave`). A conta está certa e as bolas
+   voam em linha reta; o arco fica por fazer.
+
+8. **E o título desta fatia é o lugar, não o dono dele.** O **Senhor do Tormento** e tudo o que vem com
+   ele estão logo a seguir, na mesma leva: o mandado de «começa com o chefe», o **Contrato do Tormento**, a
+   **bola de fogo de alma** e o **Cozimento de Alma do Tormento** que destranca o Tormentum.
+
+**Guardas:** o `OccultaTormentGameTest`, com dez — os seis andares e o vão entre eles; a parede, o chão e o
+teto; **a prova de que cada um dos seis se atravessa da porta ao portal**, que é a que carrega a fatia; os
+três baús por andar; o portal na moldura dele; a casa de chão em cem que é micélio; a planta que é sempre a
+mesma na mesma semente; o mandado que se escreve e se lê; o baú que só se enche onde deve; e as quatro peças
+que não deixam nada quando se quebram. E o `OccultaTormentClientTest`, com quatro — o labirinto de dentro, o
+portal, o baú enterrado e o labirinto de cima —, porque o que há para ver aqui é **o que não se vê**.
+
+### E o Senhor do Tormento, que é quem mora lá
+
+Quinhentos de vida, cinquenta de couraça, imune a fogo — e **nenhum golpe lhe tira mais de cinco**, ou
+**oito** se for demoníaco. São cem golpes no mínimo, e há uma única maneira de baixar essa conta para
+sessenta e três: bater-lhe com o que é do inferno.
+
+**Ele não luta até morrer.** Chegado a metade da vida, **fora do Tormento**, ele some — e leva consigo toda
+gente que o feriu e toda gente que estiver a dezesseis de lado e trinta e dois de alto. Lá embaixo, no andar
+sorteado, **há outro**, com metade da vida, à espera na sala do meio. E o andar é o **mesmo** para todos os
+que ele arrastou, de modo que um coven inteiro cai junto e acha **um** chefe, não um por pessoa.
+
+É a melhor briga do mod, e é por isto: a primeira metade da vida dele é a conta de quem o chamou; a segunda
+é a conta de quem souber atravessar um labirinto invisível no escuro, com ele atrás.
+
+De perto, o murro é sete mais até vinte e um, e quem apanha é **erguido**. De longe, ele atira um
+**Ignianima** e **três bolas de fogo de alma** — **nove**, uma vez em dez. E, se o alvo estiver **voar**,
+uma vez em vinte ele lhe dá **lentidão seis por dez segundos**, que é o original dizendo que daqui não se
+foge pelo ar.
+
+O que ele larga: **dois livros encantados**, um **Coração de Demônio** e o **Cozimento de Alma do
+Tormento** — a única fonte dele no mod, e o que destranca o Tormentum. E só se consegue **lá dentro**, porque
+cá fora ele foge antes de morrer.
+
+### Como se o chama
+
+Pelo **Contrato do Tormento**, que é o que o Diabrete dá no quarto presente. Catorze segundos de mão
+erguida, dez de infusão e — isto é o que surpreende — um **círculo de pedras** de onze por onze à volta de
+quem o segura: oito pilares de três com **arquitraves** por cima e um anel de nove pedras de uma no meio,
+com o vão vazio onde a pessoa está. É o único pedido do mod que não se faz com um item; faz-se
+**construindo**.
+
+Fechado o círculo, ele chega com um estouro de sete.
+
+### O que é do inferno
+
+O `CreatureUtil.isDemonic` do original é o Demônio, o Ghast, o Blaze, o Cubo de Magma, o Leonard, o Senhor
+do Tormento, o Diabrete, a Lilith e o Wither. **Oito dos nove estão portados** — falta o Leonard — e passam
+a estar todos num **rótulo**, o `thaumcraft:demonic`, que é onde uma lista de bichos mora hoje.
+
+Com isso caem **dois desvios declarados** que diziam que o Demônio, o Diabrete e a Lilith não contavam
+porque não estavam portados: o do **Virote Sagrado**, que bate mais em coisa do inferno, e o do **Espírito
+Fluente**, que a castiga.
+
+E o **dano demoníaco** passa a existir como tipo de dano próprio: mágico, por cima da armadura, dos efeitos
+e dos encantamentos. É o que a bola de fogo de alma bate, e é o único golpe de que o Senhor apanha oito em
+vez de cinco.
+
+### Mais quatro desvios declarados
+
+9. **O caminho livre é medido do bicho e não do alvo.** O `isCourseTraversable` do original passa a caixa do
+   **alvo** pelo caminho com um passo de **zero** — ele subtrai a posição do alvo da posição do alvo —, de
+   modo que a conta dá sempre «está livre» a não ser que o alvo esteja dentro de uma parede. Aqui corre a
+   mesma conta que as outras três metas de voo já corriam: do **bicho** até o alvo, de metro em metro.
+
+10. **Os braços dele não balançam ao passo.** O original multiplica o cosseno de um número **fixo** —
+    3,8077927 e 0,6662 — pela velocidade de andar, e não pela posição do passo. Quer dizer que os quatro
+    braços ficam parados num ângulo que só depende de **quão depressa** ele anda. Fica como está.
+
+11. **As asas abrem para o norte e para o leste.** O original pergunta se a velocidade em x **ou** em z é
+    maior que zero — e não o módulo —, de modo que elas se abrem quando ele anda para o norte ou para o
+    leste e ficam respirando quando ele anda para o sul ou para o oeste. É um engano velho e é dele.
+
+12. **O murro dele precisou de uma meta.** A lista de metas do original não tem nenhuma de bater de perto
+    — e no entanto o murro existe e acontece. Em 2014 o `EntityCreature` ainda corria a **via
+    velha** por baixo das metas, e era ela que chamava o `attackEntity` quando o alvo estava a
+    menos de dois. Hoje essa via não existe: ou há uma meta, ou o murro é código morto. Fica a meta de
+    bater de perto do jogo, que é o que a via velha fazia.
+
+**Guardas:** o `OccultaTormentLordGameTest`, com oito — o teto de cinco e o de oito; a fuga, que escreve o
+mandado em quem lhe bateu e manda todos para o mesmo andar; **a morte, que só acontece lá dentro, e o
+Cozimento que ela larga**, que é a prova que fecha a cadeia Diabrete → contrato → Senhor → gole → Tormentum;
+o um por andar; o tiro, que é um feitiço mais três bolas; o golpe demoníaco que passa pela armadura
+inteira; o rótulo de quem é do inferno; e o círculo de pedras, levantado pedra a pedra pelo desenho do
+original e depois quebrado numa arquitrave para ver que deixa de servir. E duas fotos a mais no `OccultaTormentClientTest`: ele de frente, com os dois
+chifres e os quatro braços, e de trás, com as duas chapas de vinte por quarenta que são as asas dele.

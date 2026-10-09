@@ -148,8 +148,12 @@ public class MysticBranchItem extends Item {
             return false;
         }
 
+        /*
+         * E a <b>trava</b> não se põe aqui: quem a põe é o símbolo, e só se ele pegou em alguma coisa.
+         * No original só um dos trinta e um a tem — o <b>Tormentum</b> —, e ele a põe de dentro do que
+         * faz, de modo que uma bola atirada ao vazio custa as cargas e não a meia hora.
+         */
         qual.lança(level, gente, grau);
-        Spells.põeTrava(gente, qual, level);
         if (!gente.getAbilities().instabuild) {
             Infusions.põeEnergia(gente, Infusions.energia(gente) - custa);
         }

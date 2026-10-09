@@ -415,6 +415,18 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.IMP,
                 net.thaumcraft.occulta.client.ImpRenderer.Diabrete::new);
 
+        // o Ars Occulta: o Senhor do Tormento, de quatro braços, e a bola de fogo de alma que ele atira
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.LordOfTormentRenderer.LAYER,
+                net.thaumcraft.occulta.client.LordOfTormentRenderer::criaCamada);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.LORD_OF_TORMENT,
+                net.thaumcraft.occulta.client.LordOfTormentRenderer.Senhor::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.SOULFIRE,
+                contexto -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(
+                        contexto, 1.0f, true));
+
         // o Ars Occulta: as roupas de bruxa, que valem pelo que dão e não pelo que protegem
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.WitchClothesRenderer.CABEÇA,
@@ -584,6 +596,27 @@ public class ThaumcraftClient implements ClientModInitializer {
                         return this.color(state);
                     }
                 }), net.thaumcraft.occulta.OccultaBlocks.SPIRIT_PORTAL);
+
+        // e o Portal do Tormento leva a mesma figura pintada de vermelho de carne
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(new net.minecraft.client.color.block.BlockTintSource() {
+                    @Override
+                    public int color(net.minecraft.world.level.block.state.BlockState state) {
+                        return net.thaumcraft.occulta.torment.TormentPortalBlock.TINT;
+                    }
+
+                    @Override
+                    public int colorInWorld(net.minecraft.world.level.block.state.BlockState state,
+                                            net.minecraft.client.renderer.block.BlockAndTintGetter level,
+                                            net.minecraft.core.BlockPos pos) {
+                        return this.color(state);
+                    }
+                }), net.thaumcraft.occulta.OccultaBlocks.TORMENT_PORTAL);
+
+        // o Baú de Reabastecimento é um baú do jogo em tudo, e desenha-se com o desenhista dos baús
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.REFILLING_CHEST_ENTITY,
+                net.minecraft.client.renderer.blockentity.ChestRenderer::new);
 
         // o frasco atirado é o próprio item voando, como a poção de arremesso do jogo
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
