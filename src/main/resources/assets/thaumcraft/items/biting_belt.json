@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/biting_belt",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -14149101
+      }
+    ]
+  }
+}

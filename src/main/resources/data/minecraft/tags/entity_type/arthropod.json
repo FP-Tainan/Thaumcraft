@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumcraft:eldritch_crab"
+    "thaumcraft:eldritch_crab",
+    "thaumcraft:louse"
   ]
 }

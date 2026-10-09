@@ -3684,5 +3684,13 @@
   "tc.rubyslippers.tip2": "Teleport using a waystone dropped on the ground (1 min cooldown)",
   "tc.rubyslippers.tip3": "Teleport to bed (30 min cooldown)",
   "tc.rite.noplacelikehome": "there's no place like home",
-  "tc.rite.slippersoncooldown": "Nothing happens (wait %s minute(s))."
+  "tc.rite.slippersoncooldown": "Nothing happens (wait %s minute(s)).",
+  "item.thaumcraft.louse": "Parasytic Louse",
+  "item.thaumcraft.biting_belt": "Biting Belt",
+  "item.thaumcraft.bark_belt": "Bark Belt",
+  "entity.thaumcraft.louse": "Parasytic Louse",
+  "tc.bitingbelt.tip": "Bites whoever bites.",
+  "tc.bitingbelt.tip2": "Holds two potions and spends one per blow taken",
+  "tc.barkbelt.tip": "Bark that gathers itself.",
+  "tc.barkbelt.tip2": "Gathers charge on grass or mycelium and parries blows with it"
 }

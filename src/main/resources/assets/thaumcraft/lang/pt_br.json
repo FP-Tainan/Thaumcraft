@@ -3682,5 +3682,13 @@
   "tc.rubyslippers.tip2": "Levam por uma Pedra de Caminho largada no chão (um minuto de espera)",
   "tc.rubyslippers.tip3": "Levam para a cama (meia hora de espera)",
   "tc.rite.noplacelikehome": "não há lugar como o nosso lar",
-  "tc.rite.slippersoncooldown": "Não acontece nada (espera %s minuto(s))."
+  "tc.rite.slippersoncooldown": "Não acontece nada (espera %s minuto(s)).",
+  "item.thaumcraft.louse": "Piolho Parasita",
+  "item.thaumcraft.biting_belt": "Cinto Mordedor",
+  "item.thaumcraft.bark_belt": "Cinto de Casca",
+  "entity.thaumcraft.louse": "Piolho Parasita",
+  "tc.bitingbelt.tip": "Morde quem morde.",
+  "tc.bitingbelt.tip2": "Guarda duas poções e dá uma por pancada levada",
+  "tc.barkbelt.tip": "Casca que se junta sozinha.",
+  "tc.barkbelt.tip2": "Junta carga em grama ou micélio e apara golpes com ela"
 }

@@ -442,7 +442,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaItems.NECROMANCERS_ROBES,
                 net.thaumcraft.occulta.OccultaItems.ICY_SLIPPERS,
                 net.thaumcraft.occulta.OccultaItems.SEEPING_SHOES,
-                net.thaumcraft.occulta.OccultaItems.RUBY_SLIPPERS);
+                net.thaumcraft.occulta.OccultaItems.RUBY_SLIPPERS,
+                net.thaumcraft.occulta.OccultaItems.BITING_BELT,
+                net.thaumcraft.occulta.OccultaItems.BARK_BELT);
+
+        // o Ars Occulta: o Piolho Parasita, que é a lacrainha do jogo com outra folha
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.LOUSE,
+                net.thaumcraft.occulta.client.LouseRenderer::new);
 
         // o Ars Occulta: os três fetiches, dois de boneco e um de folha cruzada
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(

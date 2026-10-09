@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "#lh",
+    "lsl",
+    "l l"
+  ],
+  "key": {
+    "l": "thaumcraft:impregnated_leather",
+    "s": "thaumcraft:golden_thread",
+    "h": "thaumcraft:mellifluous_hunger",
+    "#": "thaumcraft:louse"
+  },
+  "result": {
+    "id": "thaumcraft:biting_belt",
+    "count": 1
+  }
+}

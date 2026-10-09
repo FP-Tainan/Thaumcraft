@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/bark_belt",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -9808588
+      }
+    ]
+  }
+}

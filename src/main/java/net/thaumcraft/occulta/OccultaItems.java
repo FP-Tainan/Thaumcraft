@@ -1430,6 +1430,33 @@ public final class OccultaItems {
     public static final Item REFILLING_CHEST = register("refilling_chest", properties ->
             new BlockItem(OccultaBlocks.REFILLING_CHEST, properties.useBlockDescriptionPrefix()));
 
+    // ------------------------------------------------------------------ o piolho e os dois cintos
+
+    /**
+     * O <b>Piolho Parasita</b>: um bicho dobrado num item, que se enche de uma poção e se larga ao pé de
+     * quem se quer. Ele também serve na mochila, e serve de peça para o Cinto Mordedor.
+     */
+    public static final Item LOUSE = register("louse", properties ->
+            new net.thaumcraft.occulta.louse.LouseItem(properties.stacksTo(1)));
+
+    /** O <b>Cinto Mordedor</b>, que guarda duas poções e as dá a quem bater em quem o traz. */
+    public static final Item BITING_BELT = witchBelt("biting_belt", false,
+            net.thaumcraft.occulta.clothes.WitchClothesItem.DEFAULT_COLOR,
+            "tc.bitingbelt.tip;tc.bitingbelt.tip2");
+
+    /** E o <b>Cinto de Casca</b>, que junta madeira do chão e a gasta para aparar golpes. */
+    public static final Item BARK_BELT = witchBelt("bark_belt", true, 6968628,
+            "tc.barkbelt.tip;tc.barkbelt.tip2");
+
+    /** Um cinto de bruxa: couro, na casa das pernas, e o que ele diz na mão. */
+    private static Item witchBelt(String nome, boolean raro, int cor, String dica) {
+        return register(nome, properties -> new net.thaumcraft.occulta.clothes.WitchClothesItem(
+                properties.humanoidArmor(OccultaMaterials.WITCH, ArmorType.LEGGINGS)
+                        .rarity(raro ? net.minecraft.world.item.Rarity.RARE
+                                : net.minecraft.world.item.Rarity.UNCOMMON),
+                true, false, dica, cor));
+    }
+
     /**
      * O <b>calçado do ofício</b>: três pares de sapatos de bruxa, que são da mesma família das roupas e
      * têm cada um a sua cor de fábrica.

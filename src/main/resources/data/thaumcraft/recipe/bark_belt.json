@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "ses",
+    "gbg",
+    "shs"
+  ],
+  "key": {
+    "b": "thaumcraft:biting_belt",
+    "s": "thaumcraft:brew_of_flowing_spirit",
+    "g": "thaumcraft:ent_branch",
+    "h": "thaumcraft:creeper_heart",
+    "e": "minecraft:emerald"
+  },
+  "result": {
+    "id": "thaumcraft:bark_belt",
+    "count": 1
+  }
+}

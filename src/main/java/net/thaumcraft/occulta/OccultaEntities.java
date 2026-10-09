@@ -425,6 +425,14 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.torment.SoulfireEntity.LADO)
                     .clientTrackingRange(4).updateInterval(10));
 
+    /** O <b>Piolho Parasita</b>: meio bloco de bicho que morde uma vez e passa a poção que traz dentro. */
+    public static final EntityType<net.thaumcraft.occulta.louse.LouseEntity> LOUSE =
+            register("louse", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.louse.LouseEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.louse.LouseEntity::attributes))
+                    .sized(0.3f, 0.7f).eyeHeight(0.5f).clientTrackingRange(8));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));
@@ -512,6 +520,8 @@ public final class OccultaEntities {
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(LORD_OF_TORMENT,
                         net.thaumcraft.occulta.torment.LordOfTormentEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(LOUSE, net.thaumcraft.occulta.louse.LouseEntity.attributes());
         net.thaumcraft.occulta.coven.Coven.init();
         net.thaumcraft.occulta.familiar.FamiliarData.init();
     }

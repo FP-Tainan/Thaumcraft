@@ -87,5 +87,13 @@ public class WitchClothesItem extends Item {
         for (String parte : this.tip.split(";")) {
             linha.accept(Component.translatable(parte).withStyle(ChatFormatting.BLUE));
         }
+        /*
+         * E o <b>Cinto Mordedor</b> diz o que guarda, que é o que o original faz com as duas chaves
+         * dele: sem isto, um cinto cheio e um cinto vazio são o mesmo item na mão.
+         */
+        for (var cada : net.thaumcraft.occulta.louse.BitingBelt.poções(peça)) {
+            net.minecraft.world.item.alchemy.PotionContents.addPotionTooltip(
+                    cada.getAllEffects(), linha, 1.0f, contexto.tickRate());
+        }
     }
 }

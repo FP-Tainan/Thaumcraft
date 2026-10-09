@@ -124,6 +124,21 @@ public final class OccultaComponents {
                     .networkSynchronized(net.minecraft.core.GlobalPos.STREAM_CODEC
                             .apply(ByteBufCodecs.list())));
 
+    /**
+     * As poções que o <b>Cinto Mordedor</b> guarda: o {@code WITCPotion} e o {@code WITCPotion2} do
+     * original, que lá eram dois números no NBT e aqui são dois frascos.
+     */
+    public static final DataComponentType<List<net.minecraft.world.item.ItemStack>> BELT_POTIONS =
+            register("belt_potions", builder -> builder
+                    .persistent(net.minecraft.world.item.ItemStack.CODEC.listOf())
+                    .networkSynchronized(net.minecraft.world.item.ItemStack.STREAM_CODEC
+                            .apply(ByteBufCodecs.list())));
+
+    /** E quantas cargas o <b>Cinto de Casca</b> tem: o {@code WITCBarkPieces} do original. */
+    public static final DataComponentType<Integer> BARK_PIECES = register("bark_pieces",
+            builder -> builder.persistent(com.mojang.serialization.Codec.INT)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
+
     private OccultaComponents() {
     }
 

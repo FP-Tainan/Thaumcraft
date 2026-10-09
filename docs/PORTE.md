@@ -11456,11 +11456,88 @@ corrigido: a cor de fábrica vale sempre, e a tinta só nas que a aceitam.
    blocos; aqui corre o mesmo `teleportAway` que a Sarça do Vazio já corria, que é o salto do original com
    o alcance dele.
 
-3. **Fica de fora, por depender do que não existe:** os **três cintos**. O Cinto Mordedor pede o **Piolho
-   Parasita**, o Cinto de Casca pede o Cinto Mordedor, e o Cinturão de Gulg cai do Gulg mas é roupa de
-   goblin. Os três vêm quando o piolho vier.
+3. **Os cintos vieram logo a seguir.** O Cinto Mordedor pedia o **Piolho Parasita** e o Cinto de Casca
+   pedia o Mordedor; os dois estão na fatia de baixo, com o piolho. E o Cinturão de Gulg já estava feito
+   desde a fatia dos deuses goblins.
 
 **Guardas:** o `OccultaFootwearGameTest`, com cinco — o gelo e a obsidiana, e o desgaste que só a lava dá;
 o veneno que só sai com os pés no chão e só com os sapatos; a frase, que só pega quem as calça e aceita
 maiúsculas, apóstrofo e o resto da fala atrás; as três cores de fábrica e qual delas aceita tinta; e duas
 receitas. E o `OccultaFootwearClientTest`, com quatro fotos — os três na barra e cada par calçado.
+
+## O Piolho Parasita e os dois cintos (2026-10-09)
+
+### O piolho
+
+É um bicho dobrado num item. Enche-se de **uma poção** na bancada, larga-se no chão ou **na água**, e o
+que nasce dali **morde uma vez** e passa a poção adiante. Mordido alguém, ele fica vazio e passa a ser um
+bicho que anda à toa — e quem lhe clicar em cima o apanha de volta.
+
+Quatro de vida, meio bloco de altura e **zero de murro**: ele não magoa ninguém. É a coisa mais parecida
+com uma seringa que o mod tem.
+
+E ele tem um terceiro uso, que é o que faz dele equipamento: **levado na mochila**, gasta-se sozinho
+quando quem o traz apanha um golpe — e custa **um de dano** a quem o traz, que é o original lembrando de
+que um piolho na mochila é um piolho.
+
+### O Cinto Mordedor
+
+Guarda **duas** poções e gasta uma por pancada levada. E aqui está a ideia, que é boa: a poção vai para um
+dos dois lados conforme **o que ela é**. Sendo das **agressivas** — lentidão, fraqueza, veneno, definhar,
+dano e fome —, vai para **quem bateu**; sendo qualquer outra, fica em **quem a trazia**.
+
+Quer dizer que a mesma peça é armadura ou arma conforme o que se lhe puser dentro, e quem a enche escolhe
+qual. Repare no que **não** está na lista das agressivas: a cegueira e a náusea — de modo que um cinto
+cheio de cegueira cega **quem o traz**.
+
+A **Regeneração** é a exceção escrita à mão no original: ela fica sempre em quem traz o cinto.
+
+E a ordem entre o piolho e o cinto importa: **primeiro o piolho**, e só não havendo nenhum é que o cinto
+fala. Uma pancada gasta um dos dois, nunca os dois.
+
+### O Cinto de Casca
+
+O melhor cinto do ofício e o mais estranho de explicar: ele **junta madeira do chão** e a gasta para
+**aparar golpes**.
+
+De cem em cem batidas, estando quem o traz de pé em **grama ou micélio**, ele ganha uma carga. O teto é
+**duas por peça de roupa de bruxa vestida** — de modo que um cinto sozinho vale duas e um conjunto inteiro
+vale oito. É a única peça do mod que paga por se vestir o resto, e é por isso que ela é o fim da linha das
+roupas de bruxa.
+
+E levando uma pancada que **não seja de madeira**, ele gasta uma carga — ou **duas**, uma vez em quatro, se
+tiver mais de uma — e **cancela o golpe inteiro**, largando um **pau** por carga gasta, que fica três
+segundos no chão e some.
+
+A guarda é uma só e é boa: **madeira não se apara com madeira**. Uma espada de pau atravessa o cinto como
+se ele não estivesse lá — e **só espada**, que um machado de pau não conta.
+
+### Desvios declarados
+
+1. **A poção mora num componente e não num número.** O original guarda o número da poção de 2014 — o dano
+   do item — em três sítios: no piolho, e duas vezes no cinto. Aqui é o componente de poção do jogo de
+   hoje, que guarda a poção inteira com os efeitos dela; e no cinto é uma **lista de frascos**, que é como
+   se diz «duas» sem escrever duas chaves.
+
+2. **O boneco do piolho é o do jogo.** O `ModelLouse` do original é o boneco da lacrainha copiado **caixa
+   por caixa**, sem uma linha mudada — as mesmas sete peças de corpo, as mesmas três de casca, as mesmas
+   contas de balanço. Aqui não se copia: usa-se o do jogo com a folha do piolho por cima. É a decisão do
+   Ent e do lobisomem pelo avesso — lá a malha do mod é que vale, porque é dele; aqui vale a do jogo,
+   porque o original a tirou de lá.
+
+3. **O golpe de madeira pergunta pelo que conserta a arma.** O «material de madeira» de 2014 é hoje o
+   rótulo do que repara a ferramenta, e é por ele que se pergunta de que ela é feita. O murro do Caçador
+   Cornudo continua contando como madeira, que é a outra metade da conta do original.
+
+4. **O pau nasce velho.** O original dá ao pau largado um `lifespan` de sessenta batidas; hoje uma coisa
+   largada vive seis mil e não há como lhe encurtar a vida — então ela nasce com a idade já adiantada, e o
+   relógio do jogo a apaga nos três segundos certos.
+
+5. **O Cinturão de Gulg já estava feito**, e a conta anterior o dava por faltar: ele é roupa de goblin e
+   cai do Gulg desde a fatia dos deuses goblins.
+
+**Guardas:** o `OccultaLouseGameTest`, com cinco — a bancada que enche o piolho e o cinto, e recusa a
+terceira; a mordida, que passa a poção **uma vez**; **para onde cada poção vai**, que é a prova que
+carrega a fatia; o piolho da mochila, que fala primeiro e cala o cinto; e o Cinto de Casca inteiro — o
+teto que cresce com o conjunto, o golpe aparado, o golpe que não se apara sem carga e a espada de pau que
+passa na mesma. E o `OccultaLouseClientTest`, com quatro fotos.

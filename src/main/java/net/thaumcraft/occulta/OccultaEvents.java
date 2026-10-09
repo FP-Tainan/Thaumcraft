@@ -51,6 +51,8 @@ public final class OccultaEvents {
                     // e o calçado do ofício, que muda o chão por onde passa
                     net.thaumcraft.occulta.clothes.WitchFootwear.gelo(level, quem);
                     net.thaumcraft.occulta.clothes.WitchFootwear.escorre(level, quem);
+                    // e o Cinto de Casca, que junta madeira do chão de cem em cem batidas
+                    net.thaumcraft.occulta.louse.BarkBelt.junta(level, quem);
                 }
             }
         });
@@ -84,7 +86,18 @@ public final class OccultaEvents {
             if (!(quem.level() instanceof ServerLevel level)) return true;
             if (!(quem instanceof net.minecraft.server.level.ServerPlayer gente)) return true;
             var poder = net.thaumcraft.occulta.infusion.beast.CreaturePowers.dele(gente);
-            return poder == null || !poder.levouGolpe(level, gente, fonte);
+            if (poder != null && poder.levouGolpe(level, gente, fonte)) return false;
+            /*
+             * O <b>Cinto de Casca</b>, que apara o golpe inteiro gastando carga — e por isso ele é o
+             * último a falar: o que ele apara não chega a doer.
+             */
+            if (net.thaumcraft.occulta.louse.BarkBelt.apara(level, gente, fonte)) return false;
+            /*
+             * E o <b>piolho na mochila</b> e o <b>Cinto Mordedor</b>, que não aparam nada: eles mordem
+             * de volta, e o golpe segue o seu caminho.
+             */
+            net.thaumcraft.occulta.louse.Lice.levouGolpe(level, gente, fonte);
+            return true;
         });
 
         /*
