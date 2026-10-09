@@ -43,7 +43,8 @@ public class TaglockItem extends Item {
 
     /** Prende aquela pessoa a este frasco (ou a esta boneca). */
     public static void bind(ItemStack stack, LivingEntity quem) {
-        stack.set(OccultaComponents.TAGLOCK, new Taglock(quem.getUUID(), quem.getName().getString()));
+        stack.set(OccultaComponents.TAGLOCK, new Taglock(quem.getUUID(),
+                quem.getName().getString(), !(quem instanceof Player)));
     }
 
     /** Se aquele vínculo é daquela pessoa. */
@@ -165,11 +166,26 @@ public class TaglockItem extends Item {
      * @param owner a marca de quem foi preso
      * @param name  o nome dele, para se ler no frasco
      */
-    public record Taglock(UUID owner, String name) {
+    public record Taglock(UUID owner, String name, boolean creature) {
+        /**
+         * O frasco cheio de alguém que <b>não é gente</b>: o {@code BoundType.CREATURE} do original.
+         *
+         * <p>Até à fatia dos fetiches isto não fazia diferença nenhuma — todo o ofício prende gente. O
+         * <b>Espantalho</b> é a primeira coisa do mod que precisa de saber a diferença, porque ele
+         * guarda as vacas de alguém por <b>espécie</b> e a gente por <b>nome</b>.
+         *
+         * <p>Os frascos antigos leem-se como gente, que é o que quase todos são.
+         */
+        public Taglock(UUID owner, String name) {
+            this(owner, name, false);
+        }
+
         public static final com.mojang.serialization.Codec<Taglock> CODEC =
                 com.mojang.serialization.codecs.RecordCodecBuilder.create(i -> i.group(
                         net.minecraft.core.UUIDUtil.CODEC.fieldOf("owner").forGetter(Taglock::owner),
-                        com.mojang.serialization.Codec.STRING.fieldOf("name").forGetter(Taglock::name)
+                        com.mojang.serialization.Codec.STRING.fieldOf("name").forGetter(Taglock::name),
+                        com.mojang.serialization.Codec.BOOL.optionalFieldOf("creature", false)
+                                .forGetter(Taglock::creature)
                 ).apply(i, Taglock::new));
 
         public static final net.minecraft.network.codec.StreamCodec<
@@ -177,6 +193,7 @@ public class TaglockItem extends Item {
                 net.minecraft.network.codec.StreamCodec.composite(
                         net.minecraft.core.UUIDUtil.STREAM_CODEC, Taglock::owner,
                         net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8, Taglock::name,
+                        net.minecraft.network.codec.ByteBufCodecs.BOOL, Taglock::creature,
                         Taglock::new);
     }
 }

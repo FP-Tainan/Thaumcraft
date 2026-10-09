@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/treant_idol"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/treant_idol"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/treant_idol"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/treant_idol"
+    }
+  }
+}

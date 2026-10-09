@@ -24,6 +24,21 @@ public final class SpiritManifest {
     /** Abaixo disto o portal não deixa passar: é o {@code canPlayerManifest}. */
     public static final int FLOOR = 5;
 
+    /**
+     * A bandeira de <b>saltar a próxima descida</b>: o {@code WITCManifestSkipTick} do original.
+     *
+     * <p>Quem a tiver posta não perde os cinco segundos desta volta — e a bandeira cai ao ser usada, de
+     * modo que ela vale <b>uma volta e só uma</b>. É o <b>Caminhar Fantasma</b> de um fetiche que a põe,
+     * e é por isso que esse efeito tem de a repor de cinco em cinco segundos para o fantasma não se
+     * gastar: um fetiche sozinho não o segura para sempre, segura-o enquanto ele ficar por perto.
+     */
+    public static final net.fabricmc.fabric.api.attachment.v1.AttachmentType<Boolean> SKIP =
+            net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry.<Boolean>builder()
+                    .initializer(() -> false)
+                    .persistent(com.mojang.serialization.Codec.BOOL)
+                    .copyOnDeath()
+                    .buildAndRegister(net.thaumcraft.Thaumcraft.id("manifest_skip"));
+
     private SpiritManifest() {
     }
 
@@ -36,10 +51,35 @@ public final class SpiritManifest {
         });
     }
 
+    /** Se aquela pessoa anda em <b>fantasma</b> agora. */
+    public static boolean ghost(ServerPlayer quem) {
+        return SpiritWalk.of(quem).ghost();
+    }
+
+    /** <b>Salta a próxima descida</b> dela: o que o Caminhar Fantasma de um fetiche faz. */
+    public static void skipNext(ServerPlayer quem) {
+        quem.setAttached(SKIP, true);
+    }
+
+    /** Se ela tem a bandeira posta. */
+    public static boolean skipping(ServerPlayer quem) {
+        return Boolean.TRUE.equals(quem.getAttachedOrCreate(SKIP));
+    }
+
     /** Uma batida do relógio daquela pessoa. */
     public static void tick(ServerPlayer quem) {
         SpiritWalk era = SpiritWalk.of(quem);
         if (!era.ghost()) return;
+
+        /*
+         * A bandeira do Caminhar Fantasma: com ela posta, esta volta <b>não desce nada</b> e a bandeira
+         * cai. O original escreve o mesmo, e também cala o aviso da contagem enquanto ela está posta —
+         * não faz sentido avisar de um fim que não está chegando.
+         */
+        if (skipping(quem)) {
+            quem.setAttached(SKIP, false);
+            return;
+        }
 
         int resta = Math.max(0, era.manifest() - STEP);
         if (resta == 0) {

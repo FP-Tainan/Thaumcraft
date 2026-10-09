@@ -122,6 +122,22 @@ public final class Familiars {
         return achado instanceof LivingEntity vivo ? vivo : null;
     }
 
+    /**
+     * <b>Se este bicho é familiar de alguém.</b>
+     *
+     * <p>O vínculo mora em quem o tem, e não no bicho — por isso a pergunta se faz do avesso, correndo a
+     * lista de quem está no mundo. É o que o Espantalho precisa de saber para não se assustar com o gato
+     * da bruxa.
+     */
+    public static boolean éDeAlguém(ServerLevel level, Entity bicho) {
+        UUID qual = bicho.getUUID();
+        for (Player gente : level.getServer().getPlayerList().getPlayers()) {
+            var dado = FamiliarData.of(gente);
+            if (dado.quem().isPresent() && dado.quem().get().equals(qual)) return true;
+        }
+        return false;
+    }
+
     // ------------------------------------------------------------------ a pancada que ele leva
 
     /**

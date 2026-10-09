@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "w#w",
+    "sls",
+    "wsw"
+  ],
+  "key": {
+    "#": "minecraft:carved_pumpkin",
+    "w": "#minecraft:wool",
+    "s": "minecraft:stick",
+    "l": "thaumcraft:tormented_twine"
+  },
+  "result": {
+    "id": "thaumcraft:scarecrow",
+    "count": 1
+  }
+}

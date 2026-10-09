@@ -45,6 +45,22 @@ public final class OccultaComponents {
             builder -> builder.persistent(com.mojang.serialization.Codec.INT)
                     .networkSynchronized(ByteBufCodecs.VAR_INT));
 
+    /**
+     * Qual dos efeitos está preso a um <b>fetiche</b> guardado: o {@code WITCSpiritEffect} do original.
+     *
+     * <p>Sem ele o fetiche é um espantalho de palha, e é por isso que o número vive no item e não no
+     * bloco: o que se prende com um rito tem de sobreviver a quem o levar embora.
+     */
+    public static final DataComponentType<Integer> FETISH_EFFECT = register("fetish_effect",
+            builder -> builder.persistent(com.mojang.serialization.Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /** E o resto do que ele leva dentro: a tinta, o modo de alarme e as três listas de conhecidos. */
+    public static final DataComponentType<net.thaumcraft.occulta.fetish.Fetishes.Saved> FETISH_DATA =
+            register("fetish_data", builder -> builder
+                    .persistent(net.thaumcraft.occulta.fetish.Fetishes.Saved.CODEC)
+                    .networkSynchronized(net.thaumcraft.occulta.fetish.Fetishes.Saved.STREAM_CODEC));
+
     /** A quem uma boneca ou um frasco está preso: o vínculo do {@code ItemTaglockKit}. */
     public static final DataComponentType<TaglockItem.Taglock> TAGLOCK = register("taglock",
             builder -> builder.persistent(TaglockItem.Taglock.CODEC)

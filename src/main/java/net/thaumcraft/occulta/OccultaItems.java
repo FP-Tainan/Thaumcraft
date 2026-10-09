@@ -486,6 +486,24 @@ public final class OccultaItems {
     public static final Item SILVER_VAT = register("silver_vat", properties ->
             new BlockItem(OccultaBlocks.SILVER_VAT, properties.useBlockDescriptionPrefix()));
 
+    /**
+     * Os três <b>fetiches</b>, que no baú dizem o que levam preso.
+     *
+     * <p>É o {@code ClassItemBlock} do original: um espantalho vazio e um espantalho com a Sentinela
+     * presa são o mesmo item com a mesma folha, e sem o nome não havia como os distinguir.
+     */
+    public static final Item SCARECROW = register("scarecrow", properties ->
+            new net.thaumcraft.occulta.fetish.FetishItem(OccultaBlocks.SCARECROW,
+                    properties.useBlockDescriptionPrefix()));
+
+    public static final Item WITCHS_LADDER = register("witchs_ladder", properties ->
+            new net.thaumcraft.occulta.fetish.FetishItem(OccultaBlocks.WITCHS_LADDER,
+                    properties.useBlockDescriptionPrefix()));
+
+    public static final Item TREANT_IDOL = register("treant_idol", properties ->
+            new net.thaumcraft.occulta.fetish.FetishItem(OccultaBlocks.TREANT_IDOL,
+                    properties.useBlockDescriptionPrefix()));
+
     /** O <b>Candelabro</b>, que se põe em qualquer chão firme. */
     public static final Item CANDELABRA = register("candelabra", properties ->
             new BlockItem(OccultaBlocks.CANDELABRA, properties.useBlockDescriptionPrefix()));

@@ -10806,3 +10806,124 @@ miúdo de giz de Ritual, que fecha a lacuna da fatia da Pedra de Caminho; e a **
 uma parede no meio, que é a conta que as quatro metas de voo partilham. E o
 `OccultaSpiritEntityClientTest`, com quatro em fila — um dourado e três pintados —, porque a cor é do pó e o
 pó é o que de verdade se vê dele.
+
+## Os fetiches (2026-10-08)
+
+O **Espantalho**, a **Escada de Bruxa** e o **Ídolo de Treant** — três blocos com uma alma só, e a razão
+por que o Espírito e os três fantasmas vieram antes deles.
+
+### Um fetiche vazio é um espantalho de palha
+
+Nenhum dos três faz nada ao ser posto. O que os torna uma coisa é um **efeito** preso a eles por um rito,
+e o que o rito come são **espíritos** — de quatro espécies, em contas diferentes:
+
+| Efeito | Espíritos | Espectros | Banshees | Poltergeists |
+|---|---|---|---|---|
+| Proteção de Vodu | 3 | 1 | 1 | 1 |
+| Sentinela | 3 | 3 | 0 | 0 |
+| Grito | 3 | 0 | 2 | 0 |
+| Desorientação | 3 | 0 | 0 | 2 |
+| Caminhar Fantasma | 3 | 1 | 1 | 0 |
+| *(Morte)* | 0 | 5 | 5 | 5 |
+
+Repare na coluna dos espíritos: ela é **três em todas**. Não há efeito de fetiche que se consiga sem três
+idas ao outro lado, e é isso que faz do Espírito a moeda do ramo.
+
+### Quem cabe primeiro
+
+É a melhor regra da fatia, e vale dizê-la em voz alta: **o rito não escolhe o efeito**. Ele pega no
+**primeiro da lista cuja conta couber** no que estiver dentro do círculo, e gasta exatamente o que esse
+pede.
+
+Quem quiser a Sentinela e levar três espectros **e** duas banshees leva, em vez dela, a **Proteção de
+Vodu**, que é a primeira e pede menos de cada. Isso faz da ordem da lista uma regra do jogo: **para ter o
+que se quer, leva-se o que ele pede e não mais**.
+
+E os bichos **se gastam**: somem, um a um, com um pó de portal e um estalo. Não morrem — não largam nada,
+não dão experiência, não contam para nada.
+
+### Os cinco, um a um
+
+- **Proteção de Vodu** não faz nada por si. Quem o lê são as **bonecas**: o rito que come as bonecas de
+  proteção uma a uma passa a comer **uma só** se a vítima estiver a dezesseis blocos de um fetiche com
+  este efeito. É o único dos cinco que funciona sem o dono saber que está funcionando.
+- **Sentinela**: por cada um que o alarme ache, nasce um **Espectro** a um bloco dele, já marcado e com
+  trinta segundos de vida. E são **dois** se houver um só — o espantalho que acha um intruso manda dois
+  contra ele, e o que acha cinco manda um a cada.
+- **Grito**: o fetiche grita e **manda redstone** enquanto o alarme está levantado. O mais longe de todos:
+  dezesseis blocos, o dobro dos outros. Na Escada de Bruxa ele grita **calado** — uma escada de penas não
+  tem boca.
+- **Desorientação**: quem chegar **armado ou vestido** e **olhando para o fetiche**, dentro de um arco de
+  quarenta e cinco graus, é **virado ao contrário**. Quem passar de lado não é tocado; quem vier ver o que
+  é, perde-se. E os bichos de menos de cinquenta de vida largam o alvo e apanham outro.
+- **Caminhar Fantasma**: a quem andar em espírito por perto, o fetiche **salta a próxima perda de
+  manifestação**. O mais quieto dos cinco e o mais útil de todos.
+
+### O alarme, que dispara pela ausência
+
+De segundo em segundo, com um efeito que procure alguma coisa, a alma olha em volta. Há **seis modos**,
+que se rodam com a **Boline**:
+
+| Modo | Levanta quando |
+|---|---|
+| 0 | há **gente** que não está na lista |
+| 1 | há **gente** que está na lista |
+| 2 | há **o que for** que não está na lista |
+| 3 | **nem todos** os conhecidos estão presentes |
+| 4 | **nenhum** dos conhecidos está presente |
+| 5 | nunca — e é como ele nasce |
+
+Os modos três e quatro são o que fazem do Espantalho uma coisa diferente de um alarme. Eles disparam pela
+**ausência**: um espantalho que conhece as suas vacas e avisa quando falta uma é a melhor ideia do bloco,
+e está em duas linhas.
+
+As listas se escrevem com o **Kit de Taglock** e se apagam com um **balde**. As espécies **agrupáveis** —
+aldeão, goblin, ovelha, vaca, cogumelo, galinha, porco, cavalo, morcego, lula e bruxa de coven — entram
+por **nome de espécie**, e todo o resto por **nome próprio**: é o que separa «as minhas vacas» de «aquela
+vaca».
+
+E ele **nunca** vê cadáveres, ilusões, espíritos nem familiares. Um fetiche não se assusta com o que a
+bruxa pôs lá — e o espírito está na lista porque ele é a moeda com que o próprio fetiche foi pago.
+
+### A cópia do outro lado
+
+Posto **no mundo dos sonhos**, o fetiche se põe **também no mundo de cima**, nas mesmas coordenadas, se lá
+houver ar — e essa segunda peça é **espectral**: não tem caixa de choque, não se quebra, e desenha-se a
+seis décimos. Tudo o que se muda numa se copia para a outra.
+
+É a melhor ideia do bloco: o espantalho que vigia o mundo de cima **não está no mundo de cima**. Quem o
+quiser desligar tem de ir dormir.
+
+### Desvios declarados
+
+1. **O Taglock passou a dizer se prendeu gente ou bicho.** Até aqui não fazia diferença — todo o ofício
+   prende gente —, e o Espantalho é a primeira coisa do mod que precisa de saber a diferença. Os frascos
+   antigos se leem como gente, que é o que quase todos são.
+
+2. **A lista de fetiches de pé é uma lista.** O original percorre a lista de almas carregadas do mundo e
+   pergunta a cada uma se é um fetiche. Aqui eles se apontam ao nascer, que é o que este mod já faz com as
+   prateleiras de bonecas.
+
+3. **Se um bicho é familiar de alguém se pergunta do avesso.** O vínculo mora em quem o tem, e não no
+   bicho, de modo que a pergunta corre a lista de quem está no mundo. Com meia dúzia de jogadores é uma
+   conta de nada, uma vez por segundo.
+
+4. **A Proteção de Vodu está escrita do avesso.** O original tem um `strength > 1` e um laço que gasta
+   bonecas uma a uma; aqui a primeira boneca sempre se gasta e o laço das outras é que é saltado. Dá no
+   mesmo, e é mais fácil de ler.
+
+5. **A tabela de cores é a de 2014**, e passou a morar no `FleeceColours` porque agora são três coisas que
+   pintam com ela — a vassoura, o espantalho e o ídolo. Sem ela, um espantalho sem tinta sairia do ciano do
+   jogo de hoje em vez do verde-azulado baço do original.
+
+6. **A Morte está na lista e não chama nada.** O sexto efeito custa cinco de cada fantasma e nenhum
+   espírito, e a conta é um aviso: quem puser quinze fantasmas dentro de um círculo de giz não ia ficar com
+   um espantalho. O efeito está na lista para a conta ficar certa — ele é o último, e por isso só cabe
+   quando nenhum dos cinco cabe —, mas **o que ele chamava ainda não existe**. A Morte é outra fatia.
+
+**Guardas:** o `OccultaFetishGameTest`, com dez — o preço de cada efeito e a ordem deles; **quem cabe
+primeiro**, que é a prova que carrega a fatia; o que não cabe e por isso não gasta nada; a Sentinela que
+sai quando é ela que cabe; os seis modos; a Boline que os roda; o **alarme que dispara pela ausência**; a
+redstone do Grito; o que ele nunca vê; a Sentinela que manda **dois** contra quem está sozinho; o fetiche
+que se larga a si próprio com tudo dentro; o balde que apaga as listas; e as três receitas de montagem. E
+o `OccultaFetishClientTest`, com os três lado a lado, quatro espantalhos pintados e um espectral.

@@ -311,6 +311,34 @@ public final class OccultaBlocks {
                             java.util.Set.of(STATUE_OF_WORSHIP)));
 
     /**
+     * Os três <b>fetiches</b>: o {@code BlockFetish} do original, que é um só bloco para os três.
+     *
+     * <p>Os números do original: <b>três e meio de dureza</b> e <b>cem mil de resistência</b> — nenhuma
+     * explosão os leva, e é de propósito: um espantalho que guarda uma casa não se tira com pólvora.
+     */
+    public static final Block SCARECROW = register("scarecrow", properties ->
+            new net.thaumcraft.occulta.fetish.FetishBlock(properties.mapColor(MapColor.WOOD)
+                    .strength(3.5f, 100000.0f).sound(SoundType.WOOD).noOcclusion()
+                    .pushReaction(PushReaction.BLOCK)));
+
+    public static final Block WITCHS_LADDER = register("witchs_ladder", properties ->
+            new net.thaumcraft.occulta.fetish.FetishBlock(properties.mapColor(MapColor.WOOL)
+                    .strength(3.5f, 100000.0f).sound(SoundType.WOOD).noOcclusion()
+                    .pushReaction(PushReaction.BLOCK)));
+
+    public static final Block TREANT_IDOL = register("treant_idol", properties ->
+            new net.thaumcraft.occulta.fetish.FetishBlock(properties.mapColor(MapColor.WOOD)
+                    .strength(3.5f, 100000.0f).sound(SoundType.WOOD).noOcclusion()
+                    .pushReaction(PushReaction.BLOCK)));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.fetish.FetishBlockEntity> FETISH_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("fetish"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.fetish.FetishBlockEntity::new,
+                            java.util.Set.of(SCARECROW, WITCHS_LADDER, TREANT_IDOL)));
+
+    /**
      * A <b>Tina de Prata</b>: a bacia que se encosta a uma fornalha e apanha o que escorre.
      *
      * <p>Os números do original: <b>oito de dureza</b> e som de metal. Ela não é um bloco inteiro.

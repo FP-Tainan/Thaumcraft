@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "o#o",
+    "srs",
+    "o o"
+  ],
+  "key": {
+    "#": "minecraft:carved_pumpkin",
+    "o": "minecraft:oak_log",
+    "s": "thaumcraft:tormented_twine",
+    "r": "thaumcraft:rowan_log"
+  },
+  "result": {
+    "id": "thaumcraft:treant_idol",
+    "count": 1
+  }
+}

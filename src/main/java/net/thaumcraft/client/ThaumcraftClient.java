@@ -407,6 +407,21 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.GOBLIN,
                 net.thaumcraft.occulta.client.GoblinRenderer.Goblin::new);
 
+        // o Ars Occulta: os três fetiches, dois de boneco e um de folha cruzada
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.FetishRenderer.ESPANTALHO,
+                net.thaumcraft.occulta.client.FetishRenderer::espantalho);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.FetishRenderer.IDOLO,
+                net.thaumcraft.occulta.client.FetishRenderer::ídolo);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.FETISH_ENTITY,
+                net.thaumcraft.occulta.client.FetishRenderer::new);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("scarecrow"),
+                net.thaumcraft.occulta.client.FetishItemRenderer.Unbaked.ESPANTALHO);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("treant_idol"),
+                net.thaumcraft.occulta.client.FetishItemRenderer.Unbaked.IDOLO);
+
         // o Ars Occulta: o Espírito, uma lanterna que deriva
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.SpiritRenderer.LAYER,

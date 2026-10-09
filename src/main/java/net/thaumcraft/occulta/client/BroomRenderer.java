@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.thaumcraft.Thaumcraft;
 import net.thaumcraft.occulta.broom.BroomEntity;
@@ -34,24 +33,13 @@ public class BroomRenderer extends EntityRenderer<BroomEntity, BroomRenderer.Est
     private static final Identifier PELE = Thaumcraft.id("textures/entity/broom.png");
 
     /**
-     * As dezesseis cores do {@code ModelBroom.fleeceColorTable}, uma a uma.
-     *
-     * <p>Elas <b>não</b> são as do jogo: a lã de 2014 tinha a sua tabela, e é essa que a vassoura usa. Copiá-la
-     * é o que faz a vassoura pintada ficar da cor em que o original a pintava.
+     * As dezesseis cores do {@code ModelBroom.fleeceColorTable}, que moram no {@link FleeceColours} desde
+     * que o espantalho passou a pintar-se com as mesmas.
      */
-    private static final int[] CORES = {
-            cor(1.0f, 1.0f, 1.0f), cor(0.85f, 0.5f, 0.2f), cor(0.7f, 0.3f, 0.85f), cor(0.4f, 0.6f, 0.85f),
-            cor(0.9f, 0.9f, 0.2f), cor(0.5f, 0.8f, 0.1f), cor(0.95f, 0.5f, 0.65f), cor(0.3f, 0.3f, 0.3f),
-            cor(0.6f, 0.6f, 0.6f), cor(0.3f, 0.5f, 0.6f), cor(0.5f, 0.25f, 0.7f), cor(0.2f, 0.3f, 0.7f),
-            cor(0.4f, 0.3f, 0.2f), cor(0.4f, 0.5f, 0.2f), cor(0.6f, 0.2f, 0.2f), cor(0.1f, 0.1f, 0.1f),
-    };
+    private static final int[] CORES = FleeceColours.ALL;
 
     /** A cor que ela tem quando ninguém lhe passou tinta: a 12, que é o castanho da madeira. */
     public static final int SEM_TINTA = 12;
-
-    private static int cor(float r, float g, float b) {
-        return ARGB.colorFromFloat(1.0f, r, g, b);
-    }
 
     private final ModelPart cabo;
     private final ModelPart cerdas;

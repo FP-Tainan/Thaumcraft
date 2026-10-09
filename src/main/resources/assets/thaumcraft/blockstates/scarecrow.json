@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "thaumcraft:block/scarecrow"
+    },
+    "facing=east": {
+      "model": "thaumcraft:block/scarecrow"
+    },
+    "facing=south": {
+      "model": "thaumcraft:block/scarecrow"
+    },
+    "facing=west": {
+      "model": "thaumcraft:block/scarecrow"
+    }
+  }
+}

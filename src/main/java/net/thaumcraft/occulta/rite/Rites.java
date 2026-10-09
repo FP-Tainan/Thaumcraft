@@ -1095,6 +1095,61 @@ public final class Rites {
      * leva o <b>nome e o número</b> de quem o começou. É assim que a Estátua de Adoração ganha cara —
      * e é por isso que uma estátua de bancada não serve para nada.
      */
+    /**
+     * <b>Prender espíritos a um fetiche</b>: o {@code RiteBindSpiritsToFetish} do Witchery.
+     *
+     * <p>De segundo em segundo ele apanha o que há de <b>espíritos</b>, <b>espectros</b>,
+     * <b>banshees</b> e <b>poltergeists</b> num cubo de cinco em volta, acha entre o que se ofereceu
+     * um dos três fetiches, e tenta prender-lhe o <b>primeiro efeito cuja conta caiba</b>.
+     *
+     * <p>Não cabendo nenhum, o rito <b>desiste e devolve tudo</b> — e é a maneira certa de ele falhar:
+     * quem não trouxe bichos que chegassem não perde o espantalho.
+     *
+     * <p>Cabendo, os bichos <b>gastam-se</b>: somem, um a um, com um pó de portal e um estalo. Não
+     * morrem — não largam nada, não dão experiência, não contam para nada. São gastos.
+     *
+     * @param raio a que distância ele apanha bichos: os cinco blocos do original
+     */
+    public record BindSpiritsToFetish(int raio) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                ItemStack fetiche = null;
+                for (var oferecido : rito.offered()) {
+                    if (!(oferecido.stack().getItem()
+                            instanceof net.thaumcraft.occulta.fetish.FetishItem)) {
+                        continue;
+                    }
+                    fetiche = oferecido.stack();
+                    break;
+                }
+                if (fetiche == null) return RiteStep.Result.ABORTED_REFUND;
+
+                var roda = new net.minecraft.world.phys.AABB(onde).inflate(this.raio);
+                var espíritos = level.getEntitiesOfClass(
+                        net.thaumcraft.occulta.spirit.SpiritEntity.class, roda);
+                var espectros = level.getEntitiesOfClass(
+                        net.thaumcraft.occulta.ghost.SpectreEntity.class, roda);
+                var banshees = level.getEntitiesOfClass(
+                        net.thaumcraft.occulta.ghost.BansheeEntity.class, roda);
+                var poltergeists = level.getEntitiesOfClass(
+                        net.thaumcraft.occulta.ghost.PoltergeistEntity.class, roda);
+
+                var qual = net.thaumcraft.occulta.fetish.SpiritEffects.bind(level, fetiche,
+                        espíritos, espectros, banshees, poltergeists);
+                if (qual == null) return RiteStep.Result.ABORTED_REFUND;
+
+                level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
+                        onde.getZ() + 0.5, 48, 0.5, 1.0, 0.5, 0.1);
+                level.playSound(null, onde, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS,
+                        1.0f, 0.8f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
     public record SummonBoundItem(java.util.function.Supplier<ItemStack> what) implements Rite {
         @Override
         public List<RiteStep> steps(int coven) {
@@ -1112,6 +1167,9 @@ public final class Rites {
             });
         }
     }
+
+    /** A que distância o Rito de Prender Espíritos apanha bichos: os cinco blocos do original. */
+    public static final int FETICHE_A = 5;
 
     /** A lista da primeira leva, posta na tabela. */
     /**
@@ -1463,10 +1521,22 @@ public final class Rites {
                     return RiteStep.Result.COMPLETED;
                 }
 
-                for (int n = 0; n < QUANTAS; n++) {
-                    if (!net.thaumcraft.occulta.Poppets.spend(level, vítima,
-                            net.thaumcraft.occulta.PoppetItem.Kind.VOODOO_PROTECTION)) {
-                        break;
+                /*
+                 * <b>E aqui entra a Proteção de Vodu de um fetiche.</b> Sem ela, este rito come as
+                 * bonecas de proteção <b>uma a uma</b> até não haver mais. Com um fetiche ligado a
+                 * dezesseis blocos da vítima, a primeira boneca — a que já se gastou acima — guarda
+                 * sozinha, e as outras ficam.
+                 *
+                 * <p>O original escreve isto do avesso, com um {@code strength > 1} e um laço; dá no
+                 * mesmo, e é mais fácil de ler assim.
+                 */
+                if (!net.thaumcraft.occulta.fetish.Fetishes.nearTo(vítima,
+                        net.thaumcraft.occulta.fetish.SpiritEffects.ENHANCED_POPPETS)) {
+                    for (int n = 0; n < QUANTAS; n++) {
+                        if (!net.thaumcraft.occulta.Poppets.spend(level, vítima,
+                                net.thaumcraft.occulta.PoppetItem.Kind.VOODOO_PROTECTION)) {
+                            break;
+                        }
                     }
                 }
 
@@ -3011,6 +3081,30 @@ public final class Rites {
                         new Sacrifice.Power(4000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE,
                 RiteRegistry.Ring.NONE);
+
+        /*
+         * O <b>Rito de Prender Espíritos a um Fetiche</b>, três vezes — um por fetiche, e os três são
+         * o mesmo rito com outra peça no meio. Só o do Espantalho aparece no livro, porque os outros
+         * dois não são outra coisa: são o mesmo feitiço com outro boneco.
+         *
+         * <p>Seis mil de poder, a Pedra Sintonizada, a Pedra Necrótica e a Boline — e depois os
+         * <b>espíritos</b>, que não se oferecem: andam por ali, e o rito pega neles.
+         */
+        for (var qual : java.util.List.of(
+                net.thaumcraft.occulta.OccultaItems.SCARECROW,
+                net.thaumcraft.occulta.OccultaItems.TREANT_IDOL,
+                net.thaumcraft.occulta.OccultaItems.WITCHS_LADDER)) {
+            RiteRegistry.register("tc.rite.bindfetish",
+                    new BindSpiritsToFetish(FETICHE_A),
+                    new Sacrifice.Both(
+                            new Sacrifice.Items(qual,
+                                    net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE,
+                                    net.thaumcraft.occulta.OccultaItems.NECROTIC_STONE,
+                                    net.thaumcraft.occulta.OccultaItems.BOLINE),
+                            new Sacrifice.Power(6000.0f, 20)),
+                    new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
+                    RiteRegistry.Ring.NONE);
+        }
 
         /*
          * O <b>Rito da Infusão do Mundo</b>, que partilha com o da Luz o mesmo anel — dezesseis e

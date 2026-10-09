@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "fsf",
+    "ftf",
+    "fsf"
+  ],
+  "key": {
+    "f": "minecraft:feather",
+    "s": "minecraft:string",
+    "t": "thaumcraft:fanciful_thread"
+  },
+  "result": {
+    "id": "thaumcraft:witchs_ladder",
+    "count": 1
+  }
+}
