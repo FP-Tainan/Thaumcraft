@@ -483,6 +483,12 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.SPIRIT,
                 net.thaumcraft.occulta.client.SpiritRenderer.Espírito::new);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.LeonardRenderer.LAYER,
+                net.thaumcraft.occulta.client.LeonardRenderer::criaCamada);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.LEONARD,
+                net.thaumcraft.occulta.client.LeonardRenderer.Leonard::new);
         // a Alma Perdida usa o mesmo desenhista: é um Espírito tingido pelo feitio dela
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.LOST_SOUL,

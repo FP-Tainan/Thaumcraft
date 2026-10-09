@@ -56,6 +56,7 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
     private int ritual;
     private final List<Item> inside = new ArrayList<>();
     private ItemStack result = ItemStack.EMPTY;
+    private @org.jetbrains.annotations.Nullable net.minecraft.world.entity.EntityType<?> chamando;
     private boolean powered;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
@@ -163,6 +164,7 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         this.ritual = 0;
         this.inside.clear();
         this.result = ItemStack.EMPTY;
+        this.chamando = null;
         this.changed();
     }
 
@@ -174,8 +176,10 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         if (!this.isBoiling() || this.isRitualInProgress()) return false;
         Item item = caiu.getItem();
         ItemStack sai = OccultaRituals.result(item, this.inside);
-        if (!sai.isEmpty()) {
+        var bicho = OccultaRituals.summons(item, this.inside);
+        if (!sai.isEmpty() || bicho != null) {
             this.result = sai;
+            this.chamando = bicho;
             this.ritual = RITUAL_TICKS;
             this.inside.add(item);
             this.changed();
@@ -273,14 +277,39 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
 
         // acabou de mexer: sai o que a receita faz, e o caldeirão esvazia
         ItemStack sai = caldeirão.result.copy();
+        var bicho = caldeirão.chamando;
         caldeirão.empty();
-        if (sai.isEmpty() || !(level instanceof ServerLevel server)) return;
+        if (!(level instanceof ServerLevel server)) return;
+        if (bicho != null) {
+            chama(server, pos, bicho);
+            return;
+        }
+        if (sai.isEmpty()) return;
         ItemEntity saiu = new ItemEntity(server, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, sai);
         saiu.setDeltaMovement(0.0, 0.2, 0.0);
         server.addFreshEntity(saiu);
         server.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5,
                 12, 0.3, 0.3, 0.3, 0.0);
         server.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0f, 1.0f);
+    }
+
+    /**
+     * <b>O bicho que a receita chama</b>, no lugar da coisa que ela largaria.
+     *
+     * <p>Ele nasce <b>em cima</b> do caldeirão, com o estouro de pó e o grito do Wither que o original
+     * usa, e <b>fica</b>: um chefe chamado não some porque ninguém está olhando. Sendo o <b>Leonard</b>,
+     * começa a entrada dele — sete segundos e meio invulnerável, e um quarto da vida.
+     */
+    private static void chama(ServerLevel level, BlockPos pos, net.minecraft.world.entity.EntityType<?> qual) {
+        var nasceu = net.thaumcraft.occulta.Spawn.perto(level, qual, pos.above(), 0, 0);
+        if (nasceu == null) return;
+        if (nasceu instanceof net.minecraft.world.entity.Mob mob) mob.setPersistenceRequired();
+        if (nasceu instanceof net.thaumcraft.occulta.leonard.LeonardEntity leonard) {
+            leonard.começaAEntrada();
+        }
+        level.sendParticles(ParticleTypes.EXPLOSION, nasceu.getX(), nasceu.getY() + 1.0, nasceu.getZ(),
+                16, 1.0, 1.0, 1.0, 0.0);
+        level.playSound(null, pos, SoundEvents.WITHER_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 
     private void changed() {

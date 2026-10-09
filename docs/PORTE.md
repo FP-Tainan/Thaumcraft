@@ -12120,3 +12120,90 @@ isso. A recarga é de **vinte batidas**, fixa.
 três feitios**, que é o que a fatia é; o teto de quinze; o prazo que a manda embora calada e sem largar
 nada; o porco que não é presa dela; e o alcance de colisão da meta de murro. E o `OccultaLostSoulClientTest`,
 com as três lado a lado — que é a única maneira de ver o que a cor quer dizer.
+
+## O Leonard, que é o chefe do ramo (2026-10-09)
+
+Seiscentos de vida, e nada o mata depressa. A luta dele **não é de dano** — é de **regras**, e é a mais
+escrita do mod.
+
+### Como ele entra
+
+Chama-se com o **caldeirão cheio e a ferver**: cinco coisas dentro — verruga do Nether, Lágrima da Deusa,
+Vapor de Diamante, um diamante e uma Estrela do Nether — e o **Chapéu de Bruxa** por último. É a única
+receita do original em que o caldeirão não larga uma coisa: **larga um bicho**.
+
+Ele nasce com **um quarto** da vida e, nos sete segundos e meio seguintes, **enche-se dos três quartos que
+faltam** — quinze goles de dez em dez batidas. Aparece fraco e cresce à frente de quem o veio buscar.
+
+**E o nome mente.** O original chama a esse tempo `invulnerableStartTicks` e ao gatilho
+`setInvulnerableStart`, mas **nada no código o torna invulnerável**: o `attackEntityFrom` dele só pergunta
+pelas Almas. Quem o apanhar a nascer pode bater-lhe — e, pelos tetos, tirar doze de cada vez enquanto ele
+ganha trinta. É uma corrida que ninguém ganha, mas é a que está escrita. Os nomes são do original e ficam.
+
+### O que ele faz
+
+- **Cura-se um por segundo**, sempre.
+- De segundo em segundo, uma em cinco, lança o **Enrolamento Mortal** a toda a gente a **quarenta
+  blocos** — e quem já o tem não o leva outra vez. Enquanto houver quem não o tenha, é **só isso** que ele
+  faz: é a espinha da luta.
+- Não havendo mais ninguém por hexar, uma em cinco ele escolhe **uma** pessoa e faz-lhe uma de quatro
+  coisas: **limpa-lhe as poções boas** (três em dez), **afunda-a** (três), **enlouquece-a** (três) ou
+  **aquece-a** (uma). São as três poções que a fatia anterior trouxe, todas de grau quatro e um minuto.
+- Uma em cinco, por segundo, **põe fogo a todo o cozimento** a quatro blocos. É a resposta dele a quem o
+  tenta envenenar, e é o que torna a panela inútil ao pé dele.
+- Abaixo de **metade** da vida chama **Almas Perdidas**, quatro ou cinco de cada vez, cada uma com um
+  minuto e tal de prazo — e **enquanto houver uma viva a quinze blocos ele é imune**. É a regra que faz a
+  luta: não se bate nele, bate-se nelas. E chamando-as, ele **tira o Enrolamento** de quem está perto, que
+  é o respiro antes de recomeçar.
+- Abaixo de **um quarto**, uma em três, **cresce** — o Redimensionar de grau quatro.
+- E morrendo, **tira o Enrolamento Mortal** de toda a gente a quarenta blocos.
+
+### Como se lhe bate
+
+Só **golpe de gente**: flecha, feitiço, fogo, queda e estouro passam por ele sem lhe tirar nada. Acima de
+um quarto da vida o golpe vale **no máximo doze**; abaixo, **quatro** — ou **um**, se ele estiver crescido.
+É de propósito que a conta piore: quanto mais perto do fim, mais devagar.
+
+E há uma porta, o `attackEntityFromWeakness`: abaixo de **quatro décimos** da vida ela tira até **quinze**
+de uma vez (oito, crescido) sem olhar aos tetos nem à imunidade. Quem a abre, no original, é o **Cozimento
+de Ferir Demônios** — ver os desvios.
+
+O golpe de perto dele é **sete mais um sorteio de quinze**, e quem apanha vai **ao ar**. E uma em duas
+vezes, de longe, uma **bola de feitiço**: Ignianima quatorze em vinte e um, Expelliarmus, Flipendo e
+Impedimenta dois cada, Confundus um.
+
+### O que ele larga
+
+Um **livro encantado** ao acaso e um **Coração de Demônio**.
+
+### Desvios declarados
+
+1. **A Urna do Leonard não entra nos despojos**, ainda. Ela é o terceiro que ele larga no original, e é uma
+   bolsa de até quatro cozimentos atirados — mas quem **bebe** dela são os **quatro símbolos** dele, e sem
+   eles a urna é um saco que não faz nada. As duas andam juntas, e vêm na fatia seguinte.
+
+2. **O Cozimento de Ferir Demônios não está portado.** É o bloco de gelo na panela, e é o que abre a porta
+   da fraqueza. A porta está escrita — ela é do bicho —, e o cozimento vem buscá-la quando houver uma ação
+   de cozimento que **fira**: a panela deste porte sabe pôr poções e mexer no mundo, e ainda não sabe
+   bater.
+
+3. **O ritual não cobra poder de altar.** O original pede **dez mil** por ele. Nenhuma receita de caldeirão
+   deste porte cobra poder — já estava escrito no cabeçalho do `OccultaRituals` —, e esta não é exceção.
+
+4. **Só o cozimento em gás pega fogo.** O original queima dois blocos: o **gás** e o **líquido**. O líquido
+   de cozimento não está portado; o gás está, e é esse que arde.
+
+5. **A barra de chefe é a do jogo de hoje.** O original desenha a dele à mão, do lado de quem joga, com o
+   `BossStatus`. Aqui é um `ServerBossEvent` vermelho, que é a mesma coisa feita pelo caminho que o jogo
+   abriu depois — e que funciona para mais de uma pessoa ao mesmo tempo, coisa que a do original não fazia.
+
+6. **E o caldeirão não o conta.** No original, uma panela recusa qualquer ritual enquanto houver um Leonard
+   vivo a dezesseis blocos — é o que impede quem está perdendo de chamar outro. Isso mora no laço de
+   rituais do caldeirão original, que este porte não tem; fica para quando ele vier.
+
+**Guardas:** o `OccultaLeonardGameTest`, com sete — os números dele; a entrada, que o enche de um quarto ao
+cheio; **os tetos**, que é o que faz a luta, com o fogo que não lhe toca e o crescido que vale um; a porta
+da fraqueza, que só abre perto do fim; as quatro coisas que ele faz a quem escolhe, e o Enrolamento que
+sai; o cozimento que pega fogo ao pé dele; os cinco feitiços e os pesos deles; e **o caldeirão que o
+chama**. E o `OccultaLeonardClientTest`, com ele de frente, de lado e de costas — e a barra de chefe na
+primeira foto, que é como se sabe que ela existe.

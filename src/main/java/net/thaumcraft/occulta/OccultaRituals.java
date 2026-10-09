@@ -24,11 +24,17 @@ public final class OccultaRituals {
     /**
      * Uma receita do caldeirão: a chave que dispara, o que tem de estar dentro e o que sai.
      *
+     * <p>E o que sai pode ser <b>uma coisa</b> ou <b>um bicho</b>. O original chama a segunda de
+     * {@code BrewActionRitualSummonMob}, e só uma receita dele a usa: a que chama o <b>Leonard</b>.
+     *
      * @param key         a coisa que se joga por último
      * @param ingredients o que tem de estar dentro antes dela
-     * @param result      o que o caldeirão larga
+     * @param result      o que o caldeirão larga, ou vazio se ele chama um bicho
+     * @param chama       o bicho que ele chama, ou nada se ele larga uma coisa
      */
-    public record Ritual(Item key, List<Item> ingredients, ItemStack result) {
+    public record Ritual(Item key, List<Item> ingredients, ItemStack result,
+                         @org.jetbrains.annotations.Nullable
+                         net.minecraft.world.entity.EntityType<?> chama) {
     }
 
     private static final List<Ritual> RITUALS = new ArrayList<>();
@@ -62,6 +68,19 @@ public final class OccultaRituals {
         ritual(OccultaItems.RITUAL_CHALK, List.of(Items.NETHER_WART, Items.BLAZE_POWDER),
                 () -> new ItemStack(OccultaItems.INFERNAL_CHALK));
 
+        /*
+         * E a única receita do original que <b>chama um bicho</b>: o <b>Leonard</b>, com o Chapéu de Bruxa
+         * por chave e cinco coisas dentro — verruga do Nether, Lágrima da Deusa, Vapor de Diamante, um
+         * diamante e uma Estrela do Nether.
+         *
+         * <p><b>Fica de fora, declarado:</b> o original cobra <b>dez mil</b> de poder de altar por ela, e
+         * nenhuma receita de caldeirão deste porte cobra poder — é a mesma coisa que já estava escrita no
+         * cabeçalho desta classe. Sem isso, o preço dela é o que está na lista, que já não é pouco.
+         */
+        chamando(OccultaItems.WITCH_HAT, List.of(Items.NETHER_WART, OccultaItems.TEAR_OF_THE_GODDESS,
+                        OccultaItems.DIAMOND_VAPOUR, Items.DIAMOND, Items.NETHER_STAR),
+                OccultaEntities.LEONARD);
+
         // o caldeirão também cozinha carne, que é receita sem ingrediente nenhum
         ritual(Items.PORKCHOP, List.of(), () -> new ItemStack(Items.COOKED_PORKCHOP));
         ritual(Items.CHICKEN, List.of(), () -> new ItemStack(Items.COOKED_CHICKEN));
@@ -70,7 +89,36 @@ public final class OccultaRituals {
     }
 
     private static void ritual(Item key, List<Item> ingredients, java.util.function.Supplier<ItemStack> result) {
-        RITUALS.add(new Ritual(key, ingredients, result.get()));
+        RITUALS.add(new Ritual(key, ingredients, result.get(), null));
+    }
+
+    /** E a que chama um bicho em vez de largar uma coisa. */
+    private static void chamando(Item key, List<Item> ingredients,
+                                 net.minecraft.world.entity.EntityType<?> qual) {
+        RITUALS.add(new Ritual(key, ingredients, ItemStack.EMPTY, qual));
+    }
+
+    /**
+     * O bicho que a chave chama, se houver um.
+     *
+     * @param key    a coisa que acabou de cair na água
+     * @param inside o que já estava dentro
+     */
+    public static net.minecraft.world.entity.@org.jetbrains.annotations.Nullable EntityType<?> summons(
+            Item key, List<Item> inside) {
+        Ritual qual = bate(key, inside);
+        return qual == null ? null : qual.chama();
+    }
+
+    /** A receita que bate com isto, ou nada. */
+    private static @org.jetbrains.annotations.Nullable Ritual bate(Item key, List<Item> inside) {
+        for (Ritual ritual : RITUALS) {
+            if (ritual.key() != key) continue;
+            List<Item> faltando = new ArrayList<>(ritual.ingredients());
+            for (Item dentro : inside) faltando.remove(dentro);
+            if (faltando.isEmpty()) return ritual;
+        }
+        return null;
     }
 
     /**
@@ -81,13 +129,8 @@ public final class OccultaRituals {
      * @return o que o caldeirão larga, ou vazio se nada bate
      */
     public static ItemStack result(Item key, List<Item> inside) {
-        for (Ritual ritual : RITUALS) {
-            if (ritual.key() != key) continue;
-            List<Item> faltando = new ArrayList<>(ritual.ingredients());
-            for (Item dentro : inside) faltando.remove(dentro);
-            if (faltando.isEmpty()) return ritual.result().copy();
-        }
-        return ItemStack.EMPTY;
+        Ritual qual = bate(key, inside);
+        return qual == null ? ItemStack.EMPTY : qual.result().copy();
     }
 
     /** Se aquilo serve de ingrediente em alguma receita: o que não serve a nenhuma não entra na panela. */

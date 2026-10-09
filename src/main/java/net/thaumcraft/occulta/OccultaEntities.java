@@ -402,6 +402,19 @@ public final class OccultaEntities {
                     .sized(0.25f, 0.25f).eyeHeight(0.125f).clientTrackingRange(8));
 
     /**
+     * O <b>Leonard</b>: o {@code EntityLeonard} do original, e o chefe do ramo.
+     *
+     * <p>Do tamanho de uma pessoa — seis décimos por um e oito —, e com um alcance de rede largo, que é o
+     * que uma barra de chefe pede: quem a vê tem de o ver.
+     */
+    public static final EntityType<net.thaumcraft.occulta.leonard.LeonardEntity> LEONARD =
+            register("leonard", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.leonard.LeonardEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.leonard.LeonardEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(16));
+
+    /**
      * A <b>Alma Perdida</b>: o {@code EntityLostSoul} do original.
      *
      * <p>Do tamanho do Espírito de quem herda — um quarto de bloco —, e {@code MONSTER} porque ela caça
@@ -521,6 +534,8 @@ public final class OccultaEntities {
                 .register(SPIRIT, net.thaumcraft.occulta.spirit.SpiritEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(LOST_SOUL, net.thaumcraft.occulta.spirit.LostSoulEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(LEONARD, net.thaumcraft.occulta.leonard.LeonardEntity.attributes());
 
         /*
          * <b>Onde o Espírito nasce.</b> O original põe-no nos nove tipos de bioma de terra do mundo de

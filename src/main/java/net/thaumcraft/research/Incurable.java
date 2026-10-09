@@ -40,6 +40,16 @@ public final class Incurable {
         entity.setAttached(MARKED, marked);
     }
 
+    /** E tira a marca, para o efeito voltar a ser lavável. */
+    public static void remove(LivingEntity entity, Holder<MobEffect> effect) {
+        List<Identifier> marked = entity.getAttached(MARKED);
+        if (marked == null) return;
+        List<Identifier> ficam = new ArrayList<>(marked);
+        if (ficam.remove(BuiltInRegistries.MOB_EFFECT.getKey(effect.value()))) {
+            entity.setAttached(MARKED, ficam);
+        }
+    }
+
     public static boolean marked(LivingEntity entity, Holder<MobEffect> effect) {
         List<Identifier> marked = entity.getAttached(MARKED);
         return marked != null && marked.contains(BuiltInRegistries.MOB_EFFECT.getKey(effect.value()));
