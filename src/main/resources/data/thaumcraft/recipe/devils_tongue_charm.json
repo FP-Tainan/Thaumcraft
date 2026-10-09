@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "b#b",
+    "dse",
+    "btb"
+  ],
+  "key": {
+    "#": "thaumcraft:polynesia_charm",
+    "d": "thaumcraft:demon_heart",
+    "t": "thaumcraft:dog_tongue",
+    "e": "thaumcraft:refined_evil",
+    "s": "minecraft:skeleton_skull",
+    "b": "minecraft:blaze_powder"
+  },
+  "result": {
+    "id": "thaumcraft:devils_tongue_charm",
+    "count": 1
+  }
+}

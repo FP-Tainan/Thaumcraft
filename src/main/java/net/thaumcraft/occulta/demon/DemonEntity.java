@@ -100,6 +100,12 @@ public class DemonEntity extends AbstractGolem
     public static final int TROCAS_DE = 6;
     public static final int TROCAS_A_MAIS = 4;
 
+    /** O que cada troca tira da Língua do Diabo de quem negocia. */
+    public static final int CUSTA_DA_LÍNGUA = 5;
+
+    /** E o que a Língua do Diabo deixa passar de bola de fogo: uma em vinte. */
+    public static final double ESCAPA_DA_BOLA = 0.05;
+
     /**
      * O alcance com que ele procura alvo.
      *
@@ -117,6 +123,7 @@ public class DemonEntity extends AbstractGolem
 
     @org.jetbrains.annotations.Nullable
     private net.minecraft.world.item.trading.MerchantOffers trocas;
+    private @org.jetbrains.annotations.Nullable net.minecraft.world.item.trading.MerchantOffers barataria;
 
     public DemonEntity(EntityType<? extends DemonEntity> type, Level level) {
         super(type, level);
@@ -241,12 +248,16 @@ public class DemonEntity extends AbstractGolem
     /**
      * A <b>bola de fogo grande</b>, que é a mesma do ghast.
      *
-     * <p>No original, quem segura a <b>Língua do Diabo</b> só a leva uma vez em vinte. A língua é do ramo das
-     * infusões e não está portada; quando vier, é aqui que ela entra.
+     * <p>E quem segura a <b>Língua do Diabo</b> só a leva <b>uma vez em vinte</b>. É a defesa mais estranha
+     * do ramo: não é armadura nem é escudo, é ser engraçado.
      */
     @Override
     public void performRangedAttack(LivingEntity alvo, float força) {
         if (!(this.level() instanceof ServerLevel level)) return;
+        if (net.thaumcraft.occulta.charm.PolynesiaCharmItem.éLíngua(alvo.getMainHandItem())
+                && this.random.nextDouble() >= ESCAPA_DA_BOLA) {
+            return;
+        }
 
         double dx = alvo.getX() - this.getX();
         double dy = alvo.getBoundingBox().minY + alvo.getBbHeight() / 2.0 - (this.getY() + this.getBbHeight() / 2.0);
@@ -293,9 +304,18 @@ public class DemonEntity extends AbstractGolem
 
     // ------------------------------------------------------------------ o que o mercador do jogo pede
 
+    /**
+     * Quem negocia — e, com ele, a <b>lista mais barata</b>, se ele trouxer a Língua do Diabo.
+     *
+     * <p>Ela se faz <b>aqui</b>, uma vez, e não a cada pergunta: a tela de trocas guarda a lista que recebeu
+     * e conta os usos nela, de modo que uma lista nova a cada batida apagaria a conta.
+     */
     @Override
     public void setTradingPlayer(@org.jetbrains.annotations.Nullable Player quem) {
         this.quemNegocia = quem;
+        this.barataria = quem != null
+                && net.thaumcraft.occulta.charm.PolynesiaCharmItem.éLíngua(quem.getMainHandItem())
+                ? DemonTrades.maisBarato(this.lista()) : null;
     }
 
     @Override
@@ -303,8 +323,20 @@ public class DemonEntity extends AbstractGolem
         return this.quemNegocia;
     }
 
+    /**
+     * A lista dele — e, a quem traz a <b>Língua do Diabo</b> na mão, a lista <b>mais barata</b>.
+     *
+     * <p>O desconto é por moeda, e é o do original: <b>cinco</b> no ouro, <b>dois</b> na esmeralda,
+     * <b>nada</b> no diamante e <b>um</b> em tudo o mais, nunca abaixo de um. O diamante não desconta porque
+     * já é o que ele menos pede: o demônio não é bobo.
+     */
     @Override
     public net.minecraft.world.item.trading.MerchantOffers getOffers() {
+        return this.barataria != null ? this.barataria : this.lista();
+    }
+
+    /** A lista dele, montada na primeira pergunta. */
+    private net.minecraft.world.item.trading.MerchantOffers lista() {
         if (this.trocas == null) {
             this.trocas = this.level() instanceof ServerLevel mundo
                     ? DemonTrades.monta(mundo)
@@ -321,18 +353,27 @@ public class DemonEntity extends AbstractGolem
     /**
      * <b>Pago com o fogo dele, ele estoura.</b>
      *
-     * <p>E a cada troca ele gastaria cinco da <b>Língua do Diabo</b> de quem negocia — que é a única coisa que
-     * o impede de atirar bolas de fogo. Negociar com um demônio custa a defesa contra ele; a língua ainda não
-     * está portada.
+     * <p>E a cada troca ele gasta <b>cinco</b> da <b>Língua do Diabo</b> de quem negocia — que é a única coisa
+     * que o impede de atirar bolas de fogo. <b>Negociar com um demônio custa a defesa contra ele</b>, e é por
+     * isso que a língua de cinquenta usos dá só dez compras tranquilas.
      */
     @Override
     public void notifyTrade(net.minecraft.world.item.trading.MerchantOffer qual) {
         qual.increaseUses();
+        this.cobraDaLíngua();
         if (DemonTrades.éFogo(qual.getCostA().getItem())) {
             this.pagaramComFogo();
             return;
         }
         this.playSound(SoundEvents.PLAYER_BREATH, this.getSoundVolume(), this.getVoicePitch());
+    }
+
+    /** Os cinco usos que a troca tira da Língua do Diabo de quem negocia. */
+    private void cobraDaLíngua() {
+        if (!(this.quemNegocia instanceof net.minecraft.server.level.ServerPlayer gente)) return;
+        ItemStack naMão = gente.getMainHandItem();
+        if (!net.thaumcraft.occulta.charm.PolynesiaCharmItem.éLíngua(naMão)) return;
+        naMão.hurtAndBreak(CUSTA_DA_LÍNGUA, gente, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
     }
 
     @Override

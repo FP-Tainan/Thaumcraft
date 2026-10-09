@@ -441,8 +441,19 @@ public class OverworldInfusion extends Infusion {
      * olhos — ao contrário do traçado do jogo, que só vê blocos.
      */
     public static @Nullable HitResult olha(ServerLevel level, ServerPlayer quem) {
+        return olha(level, quem, OLHAR);
+    }
+
+    /**
+     * O mesmo olhar, ao alcance que se pedir.
+     *
+     * <p>No original este traçado é um método à parte que várias coisas chamam com alcances diferentes — a
+     * infusão com quatro blocos, o <b>Amuleto da Polinésia</b> com cinco. Fica aqui, onde já estava escrito,
+     * com o alcance por fora.
+     */
+    public static @Nullable HitResult olha(ServerLevel level, ServerPlayer quem, double alcance) {
         Vec3 olhos = quem.getEyePosition();
-        Vec3 rumo = olhos.add(quem.getLookAngle().scale(OLHAR));
+        Vec3 rumo = olhos.add(quem.getLookAngle().scale(alcance));
 
         BlockHitResult noBloco = level.clip(new ClipContext(olhos, rumo, ClipContext.Block.COLLIDER,
                 ClipContext.Fluid.NONE, quem));

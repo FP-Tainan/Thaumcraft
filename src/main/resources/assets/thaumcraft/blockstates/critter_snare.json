@@ -1,18 +1,33 @@
 {
   "variants": {
-    "caught=empty": {
+    "caught=empty,shopped=false": {
       "model": "thaumcraft:block/critter_snare_empty"
     },
-    "caught=bat": {
+    "caught=empty,shopped=true": {
+      "model": "thaumcraft:block/critter_snare_empty"
+    },
+    "caught=bat,shopped=false": {
       "model": "thaumcraft:block/critter_snare_bat"
     },
-    "caught=silverfish": {
+    "caught=bat,shopped=true": {
+      "model": "thaumcraft:block/critter_snare_bat"
+    },
+    "caught=silverfish,shopped=false": {
       "model": "thaumcraft:block/critter_snare_silverfish"
     },
-    "caught=slime": {
+    "caught=silverfish,shopped=true": {
+      "model": "thaumcraft:block/critter_snare_silverfish"
+    },
+    "caught=slime,shopped=false": {
       "model": "thaumcraft:block/critter_snare_slime"
     },
-    "caught=magmacube": {
+    "caught=slime,shopped=true": {
+      "model": "thaumcraft:block/critter_snare_slime"
+    },
+    "caught=magmacube,shopped=false": {
+      "model": "thaumcraft:block/critter_snare_magmacube"
+    },
+    "caught=magmacube,shopped=true": {
       "model": "thaumcraft:block/critter_snare_magmacube"
     }
   }

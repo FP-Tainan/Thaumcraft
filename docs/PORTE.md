@@ -11593,3 +11593,128 @@ olha para a mochila, é **o tamanho do círculo** que ele desenha.
 original; a figura, que é a do maior anel; **o carimbo, que risca os oitenta e quatro glifos e deixa o
 talismã branco**; e a receita. E o `OccultaCircleTalismanClientTest`, com uma foto das dez caras lado a
 lado.
+
+## Os amuletos: o bicho que vira vendedor (2026-10-09)
+
+O **Amuleto da Polinésia** e a **Língua do Diabo** são a mesma classe duas vezes, e são a ideia mais
+divertida que o ramo tem no equipamento: **clica-se num bicho e ele passa a ter o que vender**.
+
+Abre-se uma tela de trocas com uma vaca. Com o nome dela em cima. E o que ela tem dentro foi sorteado na
+hora em que se clicou nela pela primeira vez e **fica com ela para sempre** — cada vaca tem a sua loja, e
+a vaca do vizinho tem outra.
+
+### A conta do estoque
+
+Vale escrevê-la porque ela é o que torna a coisa um jogo em vez de uma máquina:
+
+1. uma **coisa ao acaso de dezoito**, que vai de raiz de mandrágora a bola de barro, e que toda loja tem;
+2. mais o que a **espécie** dá — o porco dá cogumelos, a galinha penas e ovos, a aranha fio, o morcego lã
+   de morcego —, e com ela as **moedas** que aquela espécie aceita;
+3. e, por cima, as raridades: **duas em cem** de esmeralda no porco e no lobo, **uma em cem** de diamante,
+   **uma em cem** de sela no cavalo, **cinco em cem** de pó espectral no creeper e **duas** de Coração de
+   Creeper;
+4. de tudo isso sorteiam-se **uma ou duas** ofertas, e o resto perde-se.
+
+E o preço sai de uma conta que não é redonda de propósito: a quantidade é `aleatório(quanto) + (quanto>4 ?
+3 : 1)`, o que é caro vale o **dobro**, e o custo é `aleatório(2) + quantidade × dobro × (aleatório(2) +
+fator)`. Ninguém a decora; o que se nota, jogando, é que **o mesmo bicho nunca cobra duas vezes o mesmo**.
+
+Cada oferta aguenta **uma ou duas trocas**: o original pega nas sete que o jogo dá a uma oferta de aldeão e
+desconta seis, ou cinco. Uma loja de bicho é um bolso, não uma venda.
+
+### Em quem pega
+
+Em **bicho de criação**, em **bicho do ar**, em **aranha** e em **bicho de água**, sempre. Em **creeper**,
+só trazendo o **Manto de Bruxa** — e é a única coisa no ramo que faz um creeper valer mais vivo do que
+morto. Em **morto-vivo**, só trazendo o **Manto de Necromante**.
+
+Não pega em familiar, em bruxa de coven nem em diabrete. Nem em filhote. Nem em bicho que já tenha alvo,
+porque um bicho com alvo tem o que fazer. Nem em morcego **que já tenha estado num Apanha-Bicho**.
+
+### A Língua do Diabo
+
+É o mesmo amuleto, feito com um Coração de Demônio dentro, e faz tudo o que o outro faz. O que ela tem a
+mais não está nela: está **no Demônio**.
+
+Quem a traz na mão compra dele **mais barato** — cinco de desconto no ouro, dois na esmeralda, nada no
+diamante e um em tudo o mais, nunca abaixo de um. O diamante não desconta porque já é o que ele menos
+pede: o demônio não é bobo.
+
+E **quase deixa de levar bolas de fogo**: uma em vinte passa, e as outras dezenove não saem. É a defesa
+mais estranha do ramo — não é armadura nem escudo, é **ser engraçado**.
+
+Mas cada troca com um demônio **custa cinco usos** da língua. Negociar com um demônio custa a defesa contra
+ele, e é por isso que uma língua de cinquenta usos dá só dez compras tranquilas. Quem a gasta toda num
+demônio fica na frente dele sem ela.
+
+Com isto fecha-se um buraco que estava declarado desde o Demônio: o `DemonEntity` dizia, em três lugares,
+«a língua ainda não está portada». Agora está.
+
+### O morcego que já foi vendido
+
+O Apanha-Bicho ganhou um bit: ele lembra se o morcego que engoliu **já tinha loja**, e o morcego que sai
+dele sai com a **loja vazia**. É o bit oito do meta do original, e existe por uma razão só — sem ele, um
+Apanha-Bicho e um amuleto seriam uma máquina de esmeraldas: apanha, solta, compra, repete.
+
+Não se vê: o desenho da planta é o mesmo com ou sem ele.
+
+### O Token do Lobo
+
+Não é um item de jogo. É a **chave de fenda de quem fez o mod**: segurando-o um segundo, sobe um grau de
+lobisomem; agachado, um de vampiro; e os dois, passando do décimo, voltam a zero. Não tem receita e não
+aparece em lugar nenhum do jogo.
+
+Fica portado porque é o que torna as duas maldições — que são as duas coisas mais longas do ramo —
+**possíveis de conferir** sem passar três noites de lua cheia a cada mudança. O original lhe dá o tom de
+**épico**, que é a piada: a coisa mais poderosa do mod é a que não conta.
+
+### O Amuleto do Pensamento Fantasioso
+
+Está portado, e **não faz nada**. No original ele não tem receita, não entra em receita nenhuma e nenhum
+ramo do código o lê — é conteúdo morto, um amuleto que ficou no registro depois de a ideia dele sair.
+Fica como está, porque tirá-lo seria decidir por quem o deixou lá.
+
+### Desvios declarados
+
+1. **A vaca-de-cogumelo aceita trigo, e o ramo dela não corre.** No jogo de 2014 a vaca-de-cogumelo **era**
+   uma vaca, e por isso caía no ramo da vaca — que vem antes — e aceitava trigo; o ramo que lhe foi escrito
+   logo abaixo nunca corria. Hoje as duas são irmãs em vez de mãe e filha, de modo que o ramo dela correria.
+   A pergunta aqui é pela **mãe das duas**, o que a faz continuar aceitando trigo como sempre aceitou, e o
+   ramo dela fica escrito e fica morto — que é o estado dele desde 2014.
+
+2. **O gato entra com o jaguatirica.** Na 1.7.10 o gato domado era um jaguatirica; hoje são duas espécies. A
+   pergunta é pelas duas, o que faz o gato continuar aceitando leite e peixe.
+
+3. **Faltam da loja duas coisas, que esperam as peças delas.** A **semente de Treefyd**, que qualquer bicho
+   dava três em cem e o creeper dez, espera o Treefyd; a **Teia Densa**, que a aranha dava quatro, espera o
+   frasco que se atira. Enquanto isso a aranha vende só fio e o sorteio da semente não se faz. Os dois
+   números ficam escritos no `AnimalShop`, com o lugar deles marcado, para quando as peças chegarem.
+
+4. **O ramo do Demônio no amuleto não veio, porque nunca corria.** O original escreve, no clique, que uma
+   loja aberta num Demônio é **de graça**. Mas o Demônio não é bicho de criação, nem do ar, nem aranha, nem
+   de água, nem morto-vivo: ele nunca entra na lista, e o ramo nunca corre. Quem negocia com um demônio
+   clica nele sem amuleto nenhum, como sempre.
+
+5. **O estoque mora num apego, e não no NBT solto do bicho.** É o mesmo lugar — dentro do bicho, e vai com
+   ele —, escrito pelo codec que o jogo de hoje tem para listas de troca. E por isso o **uso gasto** de cada
+   oferta se guarda também, que é o que o original fazia à mão reescrevendo a lista a cada troca.
+
+6. **O barulho do cumprimento sai por um mixin.** O `playLivingSound` do original é hoje um método protegido
+   do bicho; o `MobAmbientSoundInvoker` abre-o, e nada mais. É o mesmo barulho, três vezes, como no
+   original.
+
+7. **A lista barata não gasta o estoque da verdadeira.** No original, a lista com desconto é uma cópia, e
+   os usos contam-se nela: quem negocia com a Língua do Diabo na mão compra as duas peças de cada troca e
+   depois mais duas. É um buraco de 2014; fica, porque é dele, e porque fechá-lo mudaria o preço que a
+   língua já cobra — cinco usos por troca.
+
+8. **O vínculo exclui os três familiares, e não só o gato.** No original o gato ligado vira um bicho de
+   outra classe, e é essa classe que o amuleto recusa — a coruja e o sapo ligados continuam sendo coruja e
+   sapo, e passam por descuido. Aqui o vínculo mora em quem o tem e não no bicho, de modo que a pergunta é
+   pelo vínculo: os três ficam de fora. É o que o original quis dizer, escrito de um jeito que o diz.
+
+**Guardas:** o `OccultaCharmGameTest`, com sete — a loja que fica no bicho e dá o mesmo duas vezes; a
+espécie que decide a moeda, com a vaca-de-cogumelo incluída; a lista de em quem o amuleto pega, com os dois
+mantos; o morcego que volta vazio; **o desconto da Língua do Diabo, moeda por moeda**; o Token do Lobo, que
+passa pelos graus das duas maldições; e as duas receitas. E o `OccultaCharmClientTest`, com a foto dos
+quatro na barra e **a tela de trocas aberta com uma vaca**, que é a coisa toda numa imagem.

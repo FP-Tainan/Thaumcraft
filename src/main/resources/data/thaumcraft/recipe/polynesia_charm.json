@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "nin",
+    "p#p",
+    "nwn"
+  ],
+  "key": {
+    "#": "minecraft:cod",
+    "i": "minecraft:iron_ingot",
+    "p": "thaumcraft:odour_of_purity",
+    "w": "thaumcraft:whiff_of_magic",
+    "n": "minecraft:nether_wart"
+  },
+  "result": {
+    "id": "thaumcraft:polynesia_charm",
+    "count": 1
+  }
+}

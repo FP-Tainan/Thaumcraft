@@ -73,6 +73,11 @@ public final class DemonTrades {
     public static final int VALE_INFERNO = 4;
     public static final int VALE_DIAMANTE = 5;
 
+    /** O desconto que a Língua do Diabo faz em cada moeda. */
+    public static final int DESCONTO_DO_OURO = 5;
+    public static final int DESCONTO_DA_ESMERALDA = 2;
+    public static final int DESCONTO_DE_TUDO_O_MAIS = 1;
+
     /** E o que o Coração custa: trinta peças de ouro, ou três de qualquer outra coisa. */
     public static final int CORAÇÃO_EM_OURO = 30;
     public static final int CORAÇÃO = 3;
@@ -168,6 +173,41 @@ public final class DemonTrades {
         MerchantOffers quais = new MerchantOffers();
         for (int n = 0; n < quantas && n < lista.size(); n++) quais.add(lista.get(n));
         return quais;
+    }
+
+    /**
+     * A <b>mesma lista, mais barata</b>: o desconto da Língua do Diabo.
+     *
+     * <p><b>Cinco</b> de desconto no ouro, <b>dois</b> na esmeralda, <b>nada</b> no diamante e <b>um</b> em
+     * tudo o mais — nunca abaixo de um. O diamante não desconta porque já é o que ele menos pede.
+     *
+     * <p>A lista que sai é <b>outra</b>, e é de propósito: o desconto não se guarda no demônio, de modo que
+     * largar a língua põe os preços de volta no lugar na tela seguinte. O original faz o mesmo, copiando cada
+     * troca pelo NBT dela.
+     *
+     * <p><b>E com isso vem uma coisa do original que fica:</b> o que se compra na lista barata não gasta o
+     * estoque da lista verdadeira. Quem negocia com a Língua do Diabo na mão compra as duas peças de cada
+     * troca e depois mais duas, porque os usos se contam na cópia. É um buraco de 2014; fica, porque é dele,
+     * e porque fechá-lo mudaria o preço que a língua já cobra — cinco usos por troca.
+     */
+    public static MerchantOffers maisBarato(MerchantOffers quais) {
+        MerchantOffers baratas = new MerchantOffers();
+        for (MerchantOffer cada : quais) {
+            ItemStack custa = cada.getCostA();
+            int quanto = Math.max(custa.getCount() - desconto(custa.getItem()), 1);
+            MerchantOffer barata = new MerchantOffer(new ItemCost(custa.getItem(), quanto),
+                    cada.getResult(), cada.getMaxUses(), cada.getXp(), cada.getPriceMultiplier());
+            for (int n = 0; n < cada.getUses(); n++) barata.increaseUses();
+            baratas.add(barata);
+        }
+        return baratas;
+    }
+
+    /** O desconto de cada moeda. */
+    public static int desconto(Item moeda) {
+        if (moeda == Items.GOLD_INGOT) return DESCONTO_DO_OURO;
+        if (moeda == Items.EMERALD) return DESCONTO_DA_ESMERALDA;
+        return moeda == Items.DIAMOND ? 0 : DESCONTO_DE_TUDO_O_MAIS;
     }
 
     private static MerchantOffer troca(ItemStack custa, ItemStack dá) {

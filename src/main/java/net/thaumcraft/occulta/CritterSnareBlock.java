@@ -50,6 +50,18 @@ public class CritterSnareBlock extends VegetationBlock {
     /** O que ela tem dentro. */
     public static final EnumProperty<Caught> APANHADO = EnumProperty.create("caught", Caught.class);
 
+    /**
+     * Se o morcego lá dentro <b>já foi vendido</b>.
+     *
+     * <p>É o bit oito do meta do original, e existe por uma razão só: um morcego que já teve loja, apanhado e
+     * solto outra vez, sai com a <b>loja vazia</b>. Sem isto, um Apanha-Bicho e um Amuleto da Polinésia seriam
+     * uma máquina de esmeraldas — apanha, solta, compra, repete.
+     *
+     * <p>Não se vê: o desenho dela é o mesmo com ou sem ele.
+     */
+    public static final net.minecraft.world.level.block.state.properties.BooleanProperty LOJADO =
+            net.minecraft.world.level.block.state.properties.BooleanProperty.create("shopped");
+
     /** De quantas em quantas batidas de desenho o bicho lá dentro reclama. */
     public static final int RECLAMA_UMA_EM = 24;
 
@@ -64,7 +76,8 @@ public class CritterSnareBlock extends VegetationBlock {
 
     public CritterSnareBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(APANHADO, Caught.EMPTY));
+        this.registerDefaultState(this.stateDefinition.any().setValue(APANHADO, Caught.EMPTY)
+                .setValue(LOJADO, false));
     }
 
     @Override
@@ -74,7 +87,7 @@ public class CritterSnareBlock extends VegetationBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(APANHADO);
+        builder.add(APANHADO, LOJADO);
     }
 
     @Override
@@ -99,7 +112,10 @@ public class CritterSnareBlock extends VegetationBlock {
 
         Caught oquê = oQueÉ(quem);
         if (oquê == null) return;
-        level.setBlock(onde, feitio.setValue(APANHADO, oquê), Block.UPDATE_ALL);
+        boolean lojado = quem instanceof net.minecraft.world.entity.LivingEntity vivo
+                && net.thaumcraft.occulta.charm.AnimalShop.temLoja(vivo);
+        level.setBlock(onde, feitio.setValue(APANHADO, oquê).setValue(LOJADO, lojado),
+                Block.UPDATE_ALL);
         quem.discard();
     }
 
@@ -132,8 +148,10 @@ public class CritterSnareBlock extends VegetationBlock {
         }
         if (!(level instanceof net.minecraft.server.level.ServerLevel mundo)) return InteractionResult.PASS;
 
-        level.setBlock(onde, feitio.setValue(APANHADO, Caught.EMPTY), Block.UPDATE_ALL);
-        solta(mundo, onde, quem, tinha);
+        boolean lojado = feitio.getValue(LOJADO);
+        level.setBlock(onde, feitio.setValue(APANHADO, Caught.EMPTY).setValue(LOJADO, false),
+                Block.UPDATE_ALL);
+        solta(mundo, onde, quem, tinha, lojado);
         return InteractionResult.SUCCESS;
     }
 
@@ -151,7 +169,7 @@ public class CritterSnareBlock extends VegetationBlock {
      * <b>declarado</b>.
      */
     public static void solta(net.minecraft.server.level.ServerLevel level, BlockPos onde, Player quem,
-                             Caught oquê) {
+                             Caught oquê, boolean lojado) {
         double meioX = onde.getX() + 0.5;
         double meioZ = onde.getZ() + 0.5;
         double x = quem.getX() < onde.getX() ? onde.getX() - 0.5 : onde.getX() + 1.5;
@@ -160,7 +178,12 @@ public class CritterSnareBlock extends VegetationBlock {
         switch (oquê) {
             case EMPTY -> {
             }
-            case BAT -> põe(level, EntityTypes.BAT, meioX, onde.getY() + 1.5, meioZ);
+            case BAT -> {
+                Entity morcego = põe(level, EntityTypes.BAT, meioX, onde.getY() + 1.5, meioZ);
+                if (lojado && morcego instanceof net.minecraft.world.entity.LivingEntity vivo) {
+                    net.thaumcraft.occulta.charm.AnimalShop.lojaVazia(vivo);
+                }
+            }
             case SILVERFISH -> põe(level, EntityTypes.SILVERFISH, x, quem.getY() + 0.5, z);
             case SLIME -> bolha(level, EntityTypes.SLIME, x, quem.getY() + 0.5, z,
                     meioX, onde.getY() + 1.5, meioZ, Items.SLIME_BALL);
@@ -169,12 +192,13 @@ public class CritterSnareBlock extends VegetationBlock {
         }
     }
 
-    private static void põe(net.minecraft.server.level.ServerLevel level, EntityType<?> qual,
-                            double x, double y, double z) {
+    private static @Nullable Entity põe(net.minecraft.server.level.ServerLevel level, EntityType<?> qual,
+                                        double x, double y, double z) {
         Entity bicho = qual.create(level, EntitySpawnReason.TRIGGERED);
-        if (bicho == null) return;
+        if (bicho == null) return null;
         bicho.snapTo(x, y, z, 0.0f, 0.0f);
         level.addFreshEntity(bicho);
+        return bicho;
     }
 
     /** Uma bolha do menor tamanho — ou, não a havendo, o que ela deixaria cair. */

@@ -1458,6 +1458,48 @@ public final class OccultaItems {
     public static final Item BARK_BELT = witchBelt("bark_belt", true, 6968628,
             "tc.barkbelt.tip;tc.barkbelt.tip2");
 
+    // ------------------------------------------------------------------ os amuletos
+
+    /**
+     * O <b>Amuleto da Polinésia</b>: clica-se num bicho e ele <b>vira vendedor</b>.
+     *
+     * <p>Cinquenta lojas, uma por casa. Veja o {@link net.thaumcraft.occulta.charm.PolynesiaCharmItem} e o
+     * {@link net.thaumcraft.occulta.charm.AnimalShop}, que é a conta do estoque.
+     */
+    public static final Item POLYNESIA_CHARM = register("polynesia_charm", properties ->
+            new net.thaumcraft.occulta.charm.PolynesiaCharmItem(false, "tc.polynesiacharm.tip",
+                    net.thaumcraft.occulta.charm.PolynesiaCharmItem.feitio(properties)));
+
+    /**
+     * A <b>Língua do Diabo</b>: o mesmo amuleto, feito com um Coração de Demônio dentro.
+     *
+     * <p>Faz tudo o que o outro faz — e, por cima, <b>acalma um demônio</b>: quem a traz na mão compra dele
+     * mais barato e quase não leva bolas de fogo. Cada troca com um demônio custa-lhe <b>cinco</b> usos, que
+     * é o preço de ser simpático com uma coisa que não é.
+     */
+    public static final Item DEVILS_TONGUE_CHARM = register("devils_tongue_charm", properties ->
+            new net.thaumcraft.occulta.charm.PolynesiaCharmItem(true, "tc.devilstonguecharm.tip;tc.devilstonguecharm.tip2",
+                    net.thaumcraft.occulta.charm.PolynesiaCharmItem.feitio(properties)));
+
+    /**
+     * O <b>Amuleto dos Sonhos Perturbados</b>, que não faz nada.
+     *
+     * <p><b>Declarado:</b> no original ele não tem receita, não entra em receita nenhuma e nenhum ramo do
+     * código o lê. É conteúdo morto — um amuleto que ficou no registro depois de a ideia dele sair. Fica
+     * portado como está, porque tirá-lo seria decidir por quem o deixou lá.
+     */
+    public static final Item CHARM_OF_FANCIFUL_THINKING = register("charm_of_fanciful_thinking",
+            properties -> new Item(properties.rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
+    /**
+     * O <b>Token do Lobo</b>: a chave de fenda de quem fez o mod.
+     *
+     * <p>Segurando um segundo, sobe um grau de lobisomem; agachado, um de vampiro. Não tem receita.
+     */
+    public static final Item WOLF_TOKEN = register("wolf_token", properties ->
+            new net.thaumcraft.occulta.charm.WolfTokenItem(properties.stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.EPIC)));
+
     /** Um cinto de bruxa: couro, na casa das pernas, e o que ele diz na mão. */
     private static Item witchBelt(String nome, boolean raro, int cor, String dica) {
         return register(nome, properties -> new net.thaumcraft.occulta.clothes.WitchClothesItem(

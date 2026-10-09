@@ -282,6 +282,14 @@ public final class OccultaAspects {
             r.item("thaumcraft:tormented_twine", new AspectList().add(Aspects.CLOTH, 3).add(Aspects.DARKNESS, 2));
 
             // o espelho: o original não o anotava, e este é do porte. A superfície do Mundo do Espelho não entra
+            // os amuletos, com os números do original. O Token do Lobo não tem nenhum: ele não é do jogo
+            r.item("thaumcraft:polynesia_charm", new AspectList().add(Aspects.MIND, 2)
+                    .add(Aspects.SENSES, 2).add(Aspects.BEAST, 2));
+            r.item("thaumcraft:devils_tongue_charm", new AspectList().add(Aspects.MIND, 4)
+                    .add(Aspects.SENSES, 3).add(Aspects.FIRE, 6).add(Aspects.SOUL, 4)
+                    .add(Aspects.FLESH, 5));
+            r.item("thaumcraft:charm_of_fanciful_thinking", new AspectList().add(Aspects.CLOTH, 1)
+                    .add(Aspects.ENTROPY, 1));
             // aqui porque não há item dela — ela não se apanha, e o thaumômetro não tem o que ler
             r.item("thaumcraft:witch_mirror", new AspectList().add(Aspects.SENSES, 4).add(Aspects.ELDRITCH, 4)
                     .add(Aspects.TRAVEL, 4).add(Aspects.MAGIC, 2));
