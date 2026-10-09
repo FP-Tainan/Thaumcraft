@@ -190,6 +190,9 @@ public final class OccultaAspects {
             r.item("thaumcraft:arthana", new AspectList().add(Aspects.WEAPON, 4).add(Aspects.METAL, 4)
                     .add(Aspects.MAGIC, 3).add(Aspects.GREED, 2));
             r.item("thaumcraft:spectral_dust", new AspectList().add(Aspects.SOUL, 4).add(Aspects.UNDEAD, 2));
+            // o original só anota o Espírito Dominado, e com duas de alma; o da aldeia vai igual
+            r.item("thaumcraft:subdued_spirit", new AspectList().add(Aspects.SOUL, 2));
+            r.item("thaumcraft:subdued_spirit_village", new AspectList().add(Aspects.SOUL, 2));
             r.item("thaumcraft:graveyard_dust", new AspectList().add(Aspects.DEATH, 4).add(Aspects.SOUL, 2)
                     .add(Aspects.EARTH, 2));
             r.item("thaumcraft:attuned_stone_charged", new AspectList().add(Aspects.ENERGY, 5)

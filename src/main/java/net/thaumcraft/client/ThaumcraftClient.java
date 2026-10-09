@@ -407,6 +407,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.GOBLIN,
                 net.thaumcraft.occulta.client.GoblinRenderer.Goblin::new);
 
+        // o Ars Occulta: o Espírito, uma lanterna que deriva
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.SpiritRenderer.LAYER,
+                net.thaumcraft.occulta.client.SpiritRenderer::criaCamada);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.SPIRIT,
+                net.thaumcraft.occulta.client.SpiritRenderer.Espírito::new);
+
         // o Ars Occulta: os três fantasmas do Braseiro, os três translúcidos
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.GhostRenderers.ESPECTRO,

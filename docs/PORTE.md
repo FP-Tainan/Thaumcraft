@@ -10709,3 +10709,100 @@ quinze; o grito a seis blocos e não a dez; os **abafadores**; a Banshee que nã
 nasce invisível, que esvazia baús **só com o dono por perto** e que chuta o que está no chão; as oito
 receitas do braseiro; a fogueira que deixa um fantasma atrás; e o Drenar, que seca uma planta e cura um
 zumbi com o que lhe tirou. E o `OccultaGhostClientTest`, com os cinco jeitos que os três têm, em fila.
+
+## O Espírito (2026-10-08)
+
+Uma lanterna de papel do tamanho de um punho que **deriva** pelo mundo dos sonhos. Quatro de vida, e nada
+nela magoa ninguém — o ataque de quatro que ela tem no papel nunca sai, porque não há meta que lhe mande
+bater.
+
+**É moeda.** Os cinco efeitos de fetiche custam **três espíritos cada**, e não há outra maneira de os
+conseguir. Quem quiser um Espantalho que grite tem de atravessar e trazer três destes de lá. É por isso que
+ele vem antes dos fetiches, e não depois.
+
+### Ele deriva, e isso não é um detalhe
+
+As quatro metas de voo do Witchery — vaguear, pousar, ir para casa e a tentação — são a mesma ideia escrita
+quatro vezes, e vale dizer qual é, porque ela não é a do jogo de hoje: **nenhuma delas acha caminho**. Elas
+não pedem à navegação que leve o bicho a um lugar. Elas **empurram a velocidade dele** um bocadinho por vez
+na direção que querem, e antes de empurrar perguntam se a **linha reta** até lá está livre, passando a caixa
+de choque pelo caminho de metro em metro.
+
+Por isso um espírito se mexe como se mexe: ele não contorna paredes, não sobe escadas, não desiste — bate,
+perde o rumo, escolhe outro ponto ao acaso e volta a derivar. Trocar isso pela navegação voadora do jogo de
+hoje daria um bicho que anda bem e **não se parece nada com ele**.
+
+As quatro estão no `FlyerGoals`, velocidade a velocidade, e ficam para os voadores que vierem.
+
+### Não se doma, e vem ver
+
+Clicar nele não faz nada — o original devolve «não» ao toque, e é de propósito. O que o traz perto é a
+**Vontade Concentrada** na mão: ele deriva até ela e sobe um bocadinho para a cheirar. E se quem a segura
+**se mexer**, ele perde o interesse por cem batidas.
+
+Não é um bicho que se segue. É um bicho que se espera.
+
+### Os dois itens, e a bússola que não se gasta
+
+O **Espírito Dominado**, usado num bloco, solta um espírito que **fica**. O **Espírito Dominado da Aldeia**
+solta um que tem **dez segundos de vida** e o rumo da **aldeia mais perto** — e, quando o prazo acaba, some
+num estouro e **devolve o item**.
+
+É a melhor ideia pequena do Witchery: uma bússola de aldeia feita de fantasma, que aponta o caminho e se
+devolve a quem for atrás dela. Quem a largar e não a seguir, perde-a; quem a seguir, fica com ela outra vez.
+
+E há um terceiro feitio, que não larga nada: é o que a **Pedra de Caminho** usa.
+
+### E com isso cai a lacuna declarada da Pedra de Caminho
+
+A fatia da Pedra de Caminho deixou um ramo de fora, escrito lá: a **Pedra Sintonizada** ou o **Espírito
+Dominado** largados num **anel miúdo de giz de Ritual** chamam um espírito. Ficava de fora porque pedia este
+bicho. Agora está.
+
+Repare no giz, porque é o que separa as duas coisas: os três ramos da Pedra de Caminho pedem o giz **do
+Alhures**, e este pede o **de Ritual**. Não é descuido do original — é a geometria que move coisas contra a
+geometria que chama coisas.
+
+### Onde ele nasce
+
+O original põe-no na lista de nascimentos dos **nove tipos de bioma de terra** do mundo de cima, com peso
+um e de dois a cinco de cada vez, e depois **o recusa em todo lugar que não seja o mundo dos sonhos**, numa
+linha do próprio bicho. São os dois lados da mesma conta, e é por isso que a lista é larga: a tranca não
+está nela.
+
+Depois disso: acima de sessenta, em grama ou areia, com mais de oito de luz, e uma chance em dez. É um bicho
+de campo aberto e de dia — do outro lado.
+
+### Desvios declarados
+
+1. **A lista de biomas é «o mundo de cima» inteiro**, em vez dos nove tipos nomeados. Inclui o mar, e o mar
+   não o dá nunca: ele pede grama ou areia por baixo.
+
+2. **O pó dele é o pó colorido do jogo.** O original tem um seu, o `NaturePowerFX`: um ponto parado de um
+   décimo de bloco que corre oito quadros de uma folha e some em dez batidas — e que não se mexe, porque
+   nasce com o andar desligado e a gravidade que lhe passam fica guardada sem nunca ser usada. Aqui é o pó
+   colorido do jogo, que é o que este mod já usa em todo lugar onde o original pedia aquele.
+
+3. **A aldeia se procura com a procura de estruturas.** O original vai buscar o gerador de aldeias do mundo
+   **por reflexão**, com três nomes alternativos para o campo, e lhe pergunta onde está a mais perto. O jogo
+   de hoje responde à mesma pergunta sem reflexão nenhuma.
+
+4. **A meta de seguir o dono é a do jogo**, e não a voadora do original. Ela **não corre nunca**, porque o
+   Espírito não se doma — está lá porque está lá, e é a marca de um bicho que o Witchery pensou em domar e
+   depois não domou.
+
+5. **A meta de ir para casa é só a forma dela que não carrega nada.** O original tem três — sem carga, com
+   item na mão e com bicho às costas — e as outras duas são da vassoura e da coruja, que entregam coisas. O
+   Espírito usa a primeira.
+
+6. **Sem gravidade, em vez de um andar reescrito.** O original reescreve o método de andar inteiro, e o que
+   sobra, no ar, é o atrito de nove décimos e **nenhuma queda**. Dizer isso ao jogo de hoje é uma linha.
+
+**Guardas:** o `OccultaSpiritEntityGameTest`, com nove — os números dele; a Vontade Concentrada e só ela; o
+toque que não o doma; o **nascimento que não acontece fora do outro lado**, conferido quarenta vezes; o
+Espírito Dominado que solta um que fica; o **da Aldeia que devolve o item**, que é a prova que carrega a
+fatia; o feitio da Pedra de Caminho, que não devolve nada; os dois itens que sabem qual deles é qual; o anel
+miúdo de giz de Ritual, que fecha a lacuna da fatia da Pedra de Caminho; e a **linha reta**, conferida com
+uma parede no meio, que é a conta que as quatro metas de voo partilham. E o
+`OccultaSpiritEntityClientTest`, com quatro em fila — um dourado e três pintados —, porque a cor é do pó e o
+pó é o que de verdade se vê dele.

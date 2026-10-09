@@ -27,6 +27,7 @@ public abstract class ItemEntityWaystoneMixin {
         if (self.getAge() <= Waystones.ESPERA || self.getAge() % Waystones.OLHA_DE != 0) return;
 
         if (Waystones.tentaPrender(level, self)) return;
+        if (Waystones.tentaChamarOEspírito(level, self)) return;
         Waystones.tentaLevar(level, self);
     }
 }

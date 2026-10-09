@@ -52,11 +52,12 @@ import java.util.Set;
  *
  * <p>A pedra presa é o que os <b>ritos de teleporte</b> comem, e é por isso que ela veio antes deles.
  *
+ * <p>E há um quarto risco, que não é de Alhures: a <b>Pedra Sintonizada</b> ou o <b>Espírito Dominado</b>
+ * largados num <b>anel miúdo de giz de Ritual</b> gastam uma peça e soltam um <b>Espírito</b> que aponta a
+ * aldeia mais perto e some em dez segundos — e não devolve nada. É a bússola mais cara do mod.
+ *
  * <p><b>Fica de fora, declarado:</b>
  * <ul>
- *   <li>A <b>Pedra Afinada</b> e o <b>Espírito Dominado</b> largados num anel miúdo de giz de Ritual fazem
- *       nascer um Espírito. É o mesmo método do original, mas pede o {@code EntitySpirit}, que este porte ainda
- *       não tem.</li>
  *   <li>A pedra presa, segurada na mão, mostra o lugar dela por uma <b>câmara remota</b> — um pacote de rede e
  *       uma tela próprios.</li>
  *   <li>O original escolhe o alvo do anel por {@code EntityPlayer} primeiro e {@code EntityLiving} depois, em
@@ -311,6 +312,58 @@ public final class Waystones {
         level.playSound(null, onde, SoundEvents.NOTE_BLOCK_SNARE.value(), SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 
+    // ------------------------------------------------------------------ chamar o espírito
+
+    /**
+     * A <b>Pedra Sintonizada</b> ou o <b>Espírito Dominado</b> largados num anel miúdo de <b>giz de
+     * Ritual</b>: o terceiro ramo do {@code onUpdate} do {@code EntityItemWaystone}.
+     *
+     * <p>Uma peça do monte se gasta, o resto cai de volta no chão, o anel estoura e nasce um
+     * <b>Espírito com dez segundos de vida e o rumo da aldeia mais perto</b> — do feitio que não
+     * devolve nada. É uma bússola que se queima ao apontar, e é cara: uma Pedra Sintonizada.
+     *
+     * <p>Repare no giz: os outros três ramos pedem o <b>do Alhures</b>, e este pede o <b>de Ritual</b>.
+     * Não é um descuido do original — é o que separa a geometria que move coisas da geometria que
+     * chama coisas.
+     *
+     * @return se o anel se gastou
+     */
+    public static boolean tentaChamarOEspírito(ServerLevel level, ItemEntity largada) {
+        ItemStack oquê = largada.getItem();
+        if (!oquê.is(OccultaItems.ATTUNED_STONE) && !oquê.is(OccultaItems.SUBDUED_SPIRIT)) return false;
+
+        BlockPos meio = largada.blockPosition();
+        if (!anelMiúdoDeRitual(level, meio)) return false;
+
+        oquê.shrink(1);
+        if (!oquê.isEmpty()) {
+            level.addFreshEntity(new ItemEntity(level, largada.getX(), largada.getY(), largada.getZ(),
+                    oquê.copy()));
+        }
+        largada.discard();
+
+        var bicho = net.thaumcraft.occulta.OccultaEntities.SPIRIT.create(level,
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        if (bicho != null) {
+            bicho.snapTo(largada.getX(), largada.getY(), largada.getZ(), 0.0f, 0.0f);
+            bicho.setPersistenceRequired();
+            level.addFreshEntity(bicho);
+            bicho.vaiParaAAldeia(level,
+                    net.thaumcraft.occulta.spirit.SpiritEntity.SEM_DESPOJO);
+            level.sendParticles(net.minecraft.core.particles.SpellParticleOption.create(
+                            ParticleTypes.INSTANT_EFFECT, 1.0f, 1.0f, 1.0f, 1.0f),
+                    bicho.getX(), bicho.getY() + bicho.getBbHeight() / 2.0, bicho.getZ(),
+                    16, 1.0, bicho.getBbHeight(), 1.0, 0.0);
+        }
+
+        level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, largada.getX(), largada.getY(),
+                largada.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
+        level.playSound(null, meio, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0f,
+                level.getRandom().nextFloat() * 0.4f + 0.8f);
+        gastaOAnelDeRitual(level, meio);
+        return true;
+    }
+
     // ------------------------------------------------------------------ o giz
 
     /** Se as oito casas em volta são glifos do Alhures: o {@code isInnerTinyBlockCircle}. */
@@ -341,6 +394,21 @@ public final class Waystones {
             if (anelPequeno(level, tenta)) return tenta;
         }
         return null;
+    }
+
+    /** O mesmo anel miúdo, mas riscado a <b>giz de Ritual</b>. */
+    public static boolean anelMiúdoDeRitual(Level level, BlockPos meio) {
+        for (int[] casa : MIÚDO) {
+            if (!level.getBlockState(meio.offset(casa[0], 0, casa[1])).is(OccultaBlocks.RITUAL_GLYPH)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /** E esse também se gasta, do mesmo jeito. */
+    private static void gastaOAnelDeRitual(ServerLevel level, BlockPos meio) {
+        gastaOAnel(level, meio);
     }
 
     /** O anel miúdo se gasta: os oito glifos somem, cada um com o seu estouro. */

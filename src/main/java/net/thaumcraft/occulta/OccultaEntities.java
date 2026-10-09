@@ -376,6 +376,19 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.ghost.PoltergeistEntity::attributes))
                     .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(8));
 
+    /**
+     * O <b>Espírito</b>: o {@code EntitySpirit} do original.
+     *
+     * <p>Um quarto de bloco de cada lado, e {@code AMBIENT} como lá — ele conta com os morcegos, não
+     * com os bichos do campo, e some sozinho como eles.
+     */
+    public static final EntityType<net.thaumcraft.occulta.spirit.SpiritEntity> SPIRIT =
+            register("spirit", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.spirit.SpiritEntity::new, MobCategory.AMBIENT,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.spirit.SpiritEntity::attributes))
+                    .sized(0.25f, 0.25f).eyeHeight(0.125f).clientTrackingRange(8));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));
@@ -435,6 +448,29 @@ public final class OccultaEntities {
                 .register(BANSHEE, net.thaumcraft.occulta.ghost.BansheeEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(POLTERGEIST, net.thaumcraft.occulta.ghost.PoltergeistEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(SPIRIT, net.thaumcraft.occulta.spirit.SpiritEntity.attributes());
+
+        /*
+         * <b>Onde o Espírito nasce.</b> O original põe-no nos nove tipos de bioma de terra do mundo de
+         * cima, com peso um e de dois a cinco de cada vez — e depois <b>o recusa em todo lugar que não
+         * seja o mundo dos sonhos</b>, numa linha do próprio bicho. São os dois lados da mesma conta, e
+         * é por isso que a lista é larga: a tranca não está nela.
+         *
+         * <p>Aqui a lista é «o mundo de cima» inteiro, que inclui o mar — e o mar não o dá nunca, porque
+         * ele pede grama ou areia por baixo.
+         */
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addSpawn(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                MobCategory.AMBIENT, SPIRIT,
+                net.thaumcraft.occulta.spirit.SpiritEntity.PESO,
+                net.thaumcraft.occulta.spirit.SpiritEntity.DE_DOIS,
+                net.thaumcraft.occulta.spirit.SpiritEntity.A_CINCO);
+        net.minecraft.world.entity.SpawnPlacements.register(SPIRIT,
+                net.minecraft.world.entity.SpawnPlacementTypes.NO_RESTRICTIONS,
+                net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                net.thaumcraft.occulta.spirit.SpiritEntity::podeNascer);
+
         net.thaumcraft.occulta.coven.Coven.init();
         net.thaumcraft.occulta.familiar.FamiliarData.init();
     }

@@ -826,6 +826,23 @@ public final class OccultaItems {
     public static final Item CONDENSED_FEAR = register("condensed_fear", Item::new);
 
     /**
+     * Os dois <b>Espíritos Dominados</b>: um espírito guardado num punhado de pó.
+     *
+     * <p>Usado num bloco, <b>solta o espírito</b>. O comum solta um que <b>fica</b>; o <b>da Aldeia</b>
+     * solta um que vive <b>dez segundos</b>, vai na direção da aldeia mais perto e devolve o item ao
+     * acabar. É uma bússola que se gasta ao apontar.
+     *
+     * <p>E são a moeda dos <b>fetiches</b>: cada efeito custa três espíritos.
+     */
+    public static final Item SUBDUED_SPIRIT = register("subdued_spirit",
+            properties -> new net.thaumcraft.occulta.spirit.SubduedSpiritItem(properties,
+                    net.thaumcraft.occulta.spirit.SpiritEntity.FICA));
+
+    public static final Item SUBDUED_SPIRIT_VILLAGE = register("subdued_spirit_village",
+            properties -> new net.thaumcraft.occulta.spirit.SubduedSpiritItem(properties,
+                    net.thaumcraft.occulta.spirit.SpiritEntity.DA_ALDEIA));
+
+    /**
      * Os cinco Cozimentos Sólidos: o {@code BrewSolidifySpirit} do original.
      *
      * <p>Cada um endurece uma poça inteira de <b>Lágrimas Ocas</b> no que o nome dele diz — e o da Erosão, em
