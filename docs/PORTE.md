@@ -12053,3 +12053,70 @@ quadriculado, e mostra de propósito: é o que há hoje.
 fatia é; o Afundar que puxa o peixe para baixo e o segura na subida; o Afundar que tira a altura de quem voa e
 não ousa no criativo; a Insanidade que chama uma das três visões e lhe dá a vítima certa; o Superaquecimento
 que não ferve onde o bioma é temperado; e as quatro que se cozem, uma delas pelo lado invertido.
+
+## A Alma Perdida, que diz pela cor como se mata (2026-10-09)
+
+É a segunda peça do **Leonard**, e é um **Espírito que briga**. O corpo é o mesmo — a lanterna de papel
+translúcida de um quarto de bloco, com o pó que ela larga — e o que muda é tudo o resto: vinte de vida em
+vez de quatro, caça gente, e **investe** em quem achar até encostar.
+
+### Os três feitios
+
+Ela nasce com um de três feitios, sorteado, e o feitio manda em três coisas ao mesmo tempo:
+
+| feitio | cor | o golpe dela | o que a machuca |
+|---|---|---|---|
+| **Fogo** | vermelha | queima | **só** fogo e estouro |
+| **Golpe** | verde | golpe comum | tudo **menos** flecha, magia, fogo, estouro, parede, cacto, afogamento e murcha |
+| **Magia** | azul | enfeitiça | **só** magia |
+
+Repare no primeiro: **o que ela atira é o que a mata**. É assim no original, e é a melhor ideia que ele tem
+para um bicho pequeno — a cor diz, à distância, **qual arma serve**, e enganar-se é bater nela a tarde toda
+sem lhe tirar nada.
+
+O golpe do feitio só sai **uma vez em quatro**; nas outras três ela bate como qualquer bicho. E nenhum
+golpe lhe tira mais de **quinze**, venha de onde vier.
+
+### E ela tem hora para acabar
+
+O `setTimeToLive` do original, que é como o Leonard manda embora as almas que chamou — e que é
+**necessário**, porque nos feitios do fogo e da magia nem a queda no vazio lhe toca. Acabando o prazo ela
+**some calada**: sem o estouro de pó e sem largar o Espírito Dominado com que o Espírito de quem herda se
+despede. Morrendo de pancada, larga — isso vem do pai e fica.
+
+**Teia não a segura**, e é a única coisa que ela acrescenta ao andar do Espírito: o original escreve um
+`setInWeb` vazio.
+
+### A meta que faltava
+
+O **`EntityAIFlyerAttackOnCollide`**, agora `FlyerGoals.Investe`: a irmã de murro da `FlyerGoals.Atira` que
+já existia. A conta de voo é a mesma das quatro metas de voo do mod — empurrão de **quinze centésimos** por
+batida no rumo do alvo quando a linha reta está livre, **castigo de dez** quando não está, nova tentativa
+de **quatro mais um sorteio de sete** —, e a diferença está no fim: em vez de atirar, ela **encosta**.
+
+E encostar é perto: o alcance é `(largura × 2)² + largura do alvo`, que para um bicho de um quarto de bloco
+contra gente dá menos de um bloco ao quadrado. É uma meta de **colisão**, e o nome dela no original diz
+isso. A recarga é de **vinte batidas**, fixa.
+
+### Desvios declarados
+
+1. **O relógio é um só.** No original a Alma guarda um **segundo** relógio, seu, com o **mesmo nome de
+   etiqueta** (`SuicideIn`) do relógio que já herda do Espírito — de modo que gravar um apaga o outro.
+   Aqui o relógio é o do Espírito e o que a Alma muda é **o que acontece quando ele acaba**. Em jogo dá na
+   mesma, porque ela nunca põe o relógio do Espírito a andar.
+
+2. **A lista de atributos monta-se do zero.** O molde do jogo de hoje recusa a mesma chave duas vezes, de
+   modo que não há como escrever «como o Espírito, mas com vinte de vida»: escrevem-se os três números.
+
+3. **A meta de murro não pede velocidade.** O construtor do original pede-a e passa-a a um
+   `setPathToEntity` com caminho **sempre nulo**, de modo que ela nunca é usada. Aqui não se pede o que não
+   serve.
+
+4. **O «dentro de casa» da memória longa.** O original, com memória longa, pergunta se o alvo está dentro
+   da **casa** do bicho — e um bicho sem casa responde sempre que sim. Nenhum dos que usam esta meta tem
+   casa, de modo que a resposta está escrita como constante.
+
+**Guardas:** o `OccultaLostSoulGameTest`, com sete — os números dela; a cor de cada feitio; **a tabela dos
+três feitios**, que é o que a fatia é; o teto de quinze; o prazo que a manda embora calada e sem largar
+nada; o porco que não é presa dela; e o alcance de colisão da meta de murro. E o `OccultaLostSoulClientTest`,
+com as três lado a lado — que é a única maneira de ver o que a cor quer dizer.

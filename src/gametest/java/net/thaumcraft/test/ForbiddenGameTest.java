@@ -734,10 +734,28 @@ public class ForbiddenGameTest {
         helper.succeed();
     }
 
-    /** E, com essência dentro, ela faz o bicho. */
+    /**
+     * E, com essência dentro, ela faz o bicho.
+     *
+     * <p>A prova <b>abre espaço</b> antes de ligar a jaula, e tem de abrir: o bicho só nasce onde
+     * <b>couber</b>, e a suíte corre num mundo só, em que a arena de cada prova muda de lugar sempre que
+     * se acrescenta uma classe. Sem o espaço aberto, a jaula funciona na mesma e a prova falha de vez em
+     * quando, conforme o que o vizinho deixou à volta.
+     */
     @GameTest(maxTicks = 400)
     public void theWrathCageSpawns(GameTestHelper helper) {
         BlockPos onde = new BlockPos(2, 2, 2);
+        for (int x = 0; x < 7; x++) {
+            for (int z = 0; z < 7; z++) {
+                for (int y = 1; y < 5; y++) {
+                    helper.setBlock(new BlockPos(x, y, z), net.minecraft.world.level.block.Blocks.AIR);
+                }
+            }
+        }
+        for (var bicho : helper.getLevel().getEntitiesOfClass(
+                net.minecraft.world.entity.Mob.class, helper.getBounds())) {
+            bicho.discard();
+        }
         helper.setBlock(onde, net.thaumcraft.forbidden.ForbiddenBlocks.WRATH_CAGE);
         var cage = helper.getBlockEntity(onde, net.thaumcraft.forbidden.WrathCageBlockEntity.class);
         cage.attune(net.minecraft.resources.Identifier.parse("minecraft:pig"));

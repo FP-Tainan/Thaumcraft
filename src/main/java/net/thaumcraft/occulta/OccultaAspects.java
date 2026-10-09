@@ -333,6 +333,8 @@ public final class OccultaAspects {
                     .add(Aspects.MIND, 2).add(Aspects.ELDRITCH, 2));
             r.entity("thaumcraft:nightmare", null, null, new AspectList().add(Aspects.MIND, 6)
                     .add(Aspects.DARKNESS, 4).add(Aspects.MAN, 2).add(Aspects.ELDRITCH, 2));
+            r.entity("thaumcraft:lost_soul", null, null, new AspectList().add(Aspects.SOUL, 6)
+                    .add(Aspects.DEATH, 4).add(Aspects.MAN, 2).add(Aspects.MAGIC, 2));
             r.entity("thaumcraft:corpse", null, null, new AspectList().add(Aspects.FLESH, 6)
                     .add(Aspects.MAN, 4).add(Aspects.SOUL, 2));
             r.entity("thaumcraft:reflection", null, null, new AspectList().add(Aspects.MAN, 6)

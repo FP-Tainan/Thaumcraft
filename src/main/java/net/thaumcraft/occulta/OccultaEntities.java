@@ -402,6 +402,19 @@ public final class OccultaEntities {
                     .sized(0.25f, 0.25f).eyeHeight(0.125f).clientTrackingRange(8));
 
     /**
+     * A <b>Alma Perdida</b>: o {@code EntityLostSoul} do original.
+     *
+     * <p>Do tamanho do Espírito de quem herda — um quarto de bloco —, e {@code MONSTER} porque ela caça
+     * gente e porque o original nunca a põe a nascer sozinha: quem a traz é o <b>Leonard</b>.
+     */
+    public static final EntityType<net.thaumcraft.occulta.spirit.LostSoulEntity> LOST_SOUL =
+            register("lost_soul", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.spirit.LostSoulEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.spirit.LostSoulEntity::attributes))
+                    .sized(0.25f, 0.25f).eyeHeight(0.125f).clientTrackingRange(8));
+
+    /**
      * O <b>Diabrete</b>: o {@code EntityImp} do original.
      *
      * <p>Pequeno e largo — quatro décimos por um e três —, e {@code MONSTER} porque é o que ele é
@@ -506,6 +519,8 @@ public final class OccultaEntities {
                 .register(POLTERGEIST, net.thaumcraft.occulta.ghost.PoltergeistEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(SPIRIT, net.thaumcraft.occulta.spirit.SpiritEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(LOST_SOUL, net.thaumcraft.occulta.spirit.LostSoulEntity.attributes());
 
         /*
          * <b>Onde o Espírito nasce.</b> O original põe-no nos nove tipos de bioma de terra do mundo de

@@ -276,19 +276,35 @@ public class SpiritEntity extends TamableAnimal {
     public boolean oPrazo(ServerLevel level) {
         if (this.prazo == -1 || this.isRemoved()) return false;
         if (--this.prazo != 0) return false;
+        this.acabou(level);
+        return true;
+    }
 
+    /**
+     * <b>Dá-lhe um prazo</b>, sem rumo nem aldeia: é o {@code setTimeToLive} do original, que é como o
+     * Leonard manda embora as almas que chamou.
+     */
+    public void prazo(int quantas) {
+        this.prazo = quantas;
+    }
+
+    /**
+     * E <b>o que acontece quando ele acaba</b>: um estouro de pó, o bicho some, e o que ele larga fica.
+     *
+     * <p>Quem herda daqui pode acabar de outro jeito — e a <b>Alma Perdida</b> acaba, que some calada.
+     */
+    protected void acabou(ServerLevel level) {
         level.sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY() + 1.0, this.getZ(),
                 16, 1.0, 1.0, 1.0, 0.0);
         this.discard();
         this.dropFromDeath(level);
-        return true;
     }
 
     /**
      * E o que ele larga: o <b>Espírito Dominado</b> de volta, ou o <b>da Aldeia</b> se foi esse que o pôs
      * ali. O feitio dois não larga nada — é o que a Pedra de Caminho usa, e aquele espírito é só um aviso.
      */
-    private void dropFromDeath(ServerLevel level) {
+    protected void dropFromDeath(ServerLevel level) {
         if (this.feitio == SEM_DESPOJO) return;
         this.spawnAtLocation(level, new ItemStack(this.feitio == DA_ALDEIA
                 ? OccultaItems.SUBDUED_SPIRIT_VILLAGE : OccultaItems.SUBDUED_SPIRIT), 0.0f);

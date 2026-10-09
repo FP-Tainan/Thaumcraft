@@ -658,4 +658,127 @@ public final class FlyerGoals {
             return net.minecraft.util.Mth.floor(quão * (this.recargaAté - this.recargaDe) + this.recargaDe);
         }
     }
+
+    /**
+     * <b>Investir voando.</b> O {@code EntityAIFlyerAttackOnCollide}.
+     *
+     * <p>É a irmã de murro da {@link Atira}, e a conta de voo das duas é a mesma: enquanto o alvo estiver
+     * longe, ela <b>empurra</b> o bicho na direção dele em quinze centésimos por batida — se a linha reta
+     * estiver livre —, e o rumo do corpo segue a velocidade. A diferença está no fim: em vez de atirar, ela
+     * <b>encosta</b>, e bate.
+     *
+     * <p>E encostar é perto: o alcance é {@code (largura × 2)² + largura do alvo}, que para um bicho de um
+     * quarto de bloco dá menos de um bloco ao quadrado. Esta é uma meta de <b>colisão</b>, e o nome dela
+     * no original diz isso.
+     *
+     * <p>A recarga é de <b>vinte batidas</b>, fixa, e não depende da distância como a da irmã.
+     *
+     * <p><b>Uma coisa do original fica de fora porque lá também não faz nada:</b> o {@code startExecuting}
+     * dela manda o bicho seguir um caminho que é sempre {@code null}, com uma velocidade que, por isso,
+     * nunca é usada. O construtor pede essa velocidade a quem o chama; aqui não se pede o que não serve.
+     */
+    public static class Investe extends Goal {
+        /** O empurrão por batida, o castigo do caminho fechado e o compasso das tentativas: os da irmã. */
+        public static final double EMPURRA = Atira.EMPURRA;
+        public static final int CASTIGO = Atira.CASTIGO;
+        public static final int TENTA_DE = Atira.TENTA_DE;
+        public static final int TENTA_ATÉ = Atira.TENTA_ATÉ;
+
+        /** E a recarga do murro: um segundo. */
+        public static final int RECARGA = 20;
+
+        private final Mob quem;
+        private final boolean longaMemória;
+
+        private @Nullable LivingEntity alvo;
+        private int esperaParaAndar;
+        private int castigo;
+        private int recarga;
+
+        public Investe(Mob quem, boolean longaMemória) {
+            this.quem = quem;
+            this.longaMemória = longaMemória;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            LivingEntity quer = this.quem.getTarget();
+            if (quer == null || !quer.isAlive()) return false;
+            this.alvo = quer;
+            return true;
+        }
+
+        /**
+         * <b>Com memória longa, enquanto o alvo viver</b>; sem ela, enquanto houver caminho.
+         *
+         * <p>O original pergunta, na memória longa, se o alvo está <b>dentro da casa</b> do bicho — e um
+         * bicho sem casa responde sempre que sim. Nenhum dos que usam esta meta tem casa, de modo que a
+         * resposta é a que está escrita aqui.
+         */
+        @Override
+        public boolean canContinueToUse() {
+            if (!this.canUse()) return false;
+            return this.longaMemória || !this.quem.getNavigation().isDone();
+        }
+
+        @Override
+        public void start() {
+            this.quem.getNavigation().stop();
+            this.esperaParaAndar = 0;
+        }
+
+        @Override
+        public void stop() {
+            this.alvo = null;
+            this.quem.getNavigation().stop();
+            this.esperaParaAndar = 0;
+        }
+
+        @Override
+        public void tick() {
+            if (this.alvo == null) return;
+            this.quem.getLookControl().setLookAt(this.alvo, 30.0f, 30.0f);
+
+            boolean àVista = this.longaMemória || this.quem.getSensing().hasLineOfSight(this.alvo);
+            if (àVista && --this.esperaParaAndar <= 0) {
+                this.esperaParaAndar = this.castigo + TENTA_DE + this.quem.getRandom().nextInt(TENTA_ATÉ);
+                double dx = this.alvo.getX() - this.quem.getX();
+                double dy = this.alvo.getY() - this.quem.getY();
+                double dz = this.alvo.getZ() - this.quem.getZ();
+                double quanto = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                if (quanto > 0.0 && rumoLivre(this.quem, this.alvo.getX(), this.alvo.getY(),
+                        this.alvo.getZ(), quanto)) {
+                    this.quem.setDeltaMovement(this.quem.getDeltaMovement().add(
+                            dx / quanto * EMPURRA, dy / quanto * EMPURRA, dz / quanto * EMPURRA));
+                    this.castigo = 0;
+                } else {
+                    this.castigo += CASTIGO;
+                }
+                viraParaOnde(this.quem);
+            }
+
+            this.recarga = Math.max(this.recarga - 1, 0);
+            if (this.recarga > 0) return;
+            if (this.quem.distanceToSqr(this.alvo.getX(), this.alvo.getBoundingBox().minY,
+                    this.alvo.getZ()) > encosta(this.quem, this.alvo)) {
+                return;
+            }
+
+            this.recarga = RECARGA;
+            if (!this.quem.getMainHandItem().isEmpty()) {
+                this.quem.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
+            }
+            if (this.quem.level() instanceof net.minecraft.server.level.ServerLevel level) {
+                this.quem.doHurtTarget(level, this.alvo);
+            }
+        }
+
+        /** A distância, ao quadrado, a que a meta considera que o bicho <b>encostou</b> no alvo. */
+        public static double encosta(Mob quem, LivingEntity alvo) {
+            double dobro = quem.getBbWidth() * 2.0;
+            return dobro * dobro + alvo.getBbWidth();
+        }
+    }
+
 }
