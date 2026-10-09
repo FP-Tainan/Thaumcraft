@@ -124,6 +124,14 @@ public class MysticBranchItem extends Item {
             recusa(level, gente, "infernalrequired");
             return false;
         }
+        /*
+         * E a <b>chave de saber</b>, que quatro dos trinta e um pedem. Ela não vem de livro nenhum:
+         * vem de beber um <b>Cozimento de Alma</b>, e esses saem do Diabrete e do Senhor do Tormento.
+         */
+        if (!qual.oSabe(gente)) {
+            recusa(level, gente, "unknownsymbol");
+            return false;
+        }
 
         long falta = Spells.travaQueFalta(gente, qual, level);
         if (falta > 0L && !gente.getAbilities().instabuild) {

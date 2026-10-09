@@ -37,6 +37,11 @@ public abstract class ProjectileSymbol extends Symbol {
         super(id, nome, custo, maldição, imperdoável, trava);
     }
 
+    protected ProjectileSymbol(int id, String nome, int custo, boolean maldição, boolean imperdoável,
+                               int trava, @org.jetbrains.annotations.Nullable String chave) {
+        super(id, nome, custo, maldição, imperdoável, trava, chave);
+    }
+
     public ProjectileSymbol cor(int cor) {
         this.cor = cor;
         return this;

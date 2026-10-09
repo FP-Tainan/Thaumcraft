@@ -43,13 +43,27 @@ public abstract class Symbol {
     /** E quanto tempo até se poder repetir. */
     public final int trava;
 
+    /**
+     * A <b>chave de saber</b> deste símbolo, ou nada se ele não pede nenhuma.
+     *
+     * <p>Quatro dos trinta e um pedem uma, e ela não vem de livro: vem de um <b>gole</b>. Veja o
+     * {@link SymbolKnowledge}.
+     */
+    public final @org.jetbrains.annotations.Nullable String chave;
+
     protected Symbol(int id, String nome, int custo, boolean maldição, boolean imperdoável, int trava) {
+        this(id, nome, custo, maldição, imperdoável, trava, null);
+    }
+
+    protected Symbol(int id, String nome, int custo, boolean maldição, boolean imperdoável, int trava,
+                     @org.jetbrains.annotations.Nullable String chave) {
         this.id = id;
         this.nome = nome;
         this.custo = custo;
         this.maldição = maldição;
         this.imperdoável = imperdoável;
         this.trava = trava;
+        this.chave = chave;
     }
 
     protected Symbol(int id, String nome) {
@@ -76,5 +90,15 @@ public abstract class Symbol {
         if (quem.getAbilities().instabuild) return true;
         if (infusão <= 0) return false;
         return !this.imperdoável || infusão == Symbols.A_INFERNAL;
+    }
+
+    /**
+     * E se aquela pessoa <b>sabe</b> este símbolo.
+     *
+     * <p>Quem não pede chave é sabido por todos. Quem pede, só por quem bebeu o Cozimento de Alma que
+     * a dá.
+     */
+    public boolean oSabe(ServerPlayer quem) {
+        return this.chave == null || SymbolKnowledge.knows(quem, this.chave);
     }
 }

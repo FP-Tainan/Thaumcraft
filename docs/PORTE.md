@@ -6827,7 +6827,7 @@ dezesseis cozimentos, um por tinta, todos do mesmo efeito em graus diferentes. P
 uma **força de partida**, que é o que diz qual tinta; sem ela as dezesseis dariam a mesma cor.
 
 **Fica de fora, declarado:** a **Mal Ajustada** e o **Repelir Agressor** pedem a <b>Sarça</b>, e a
-**Paralisia** pede o **Coração de Demónio** — nenhum dos dois está portado. As poções existem e funcionam; o
+**Paralisia** pede o **Coração de Demônio** — nenhum dos dois está portado. As poções existem e funcionam; o
 que falta é o ingrediente. E quatro delas não se cozem de todo, porque no original também não: a **Corda
 Mortal** vem do Cozimento da Ressurreição ritualizado, a **Paralisia** do vampiro, o **Enjoado** do estômago
 cheio, e a **Adoração** dos goblins.
@@ -11008,3 +11008,108 @@ a prova que carrega a fatia, com os dois mantos trocando de lugar conforme o coz
 que só a Baba dá; a contagem do Caldeirão; as cinco receitas; e o couro que as conserta. E o
 `OccultaWitchClothesClientTest`, com quatro bonecos — o conjunto sem tinta, o de Necromante com as
 ombreiras, o da Baba e um pintado de verde.
+
+## O Diabrete (2026-10-09)
+
+O único bicho do mod que **negocia**. Não se doma com comida, não se mata por despojo e não obedece a
+quem não lhe pagou — e tudo nele é uma conta de paciência.
+
+### Primeiro é preciso comprá-lo
+
+Ele vem de um rito que pede mal refinado, sangue infernal, uma pérola do Alhures, uma Pedra Sintonizada
+e cinco mil de poder — e é o **único rito de chamar que pede um coven**. Uma bruxa sozinha não o traz: um
+Diabrete não vem obedecer, vem negociar, e uma negociação precisa de testemunhas.
+
+Chegado, ele é hostil. O que o compra é um **Contrato de Posse assinado com o sangue de quem o leva** —
+um taglock de si próprio preso ao papel — e ele cobra, além disso, **vinte e cinco níveis de
+experiência**, que come na hora. É a única coisa do mod que se paga com níveis.
+
+Fechado o negócio, ele ganha um **nome de demônio** e o lugar onde está vira a **casa** dele: daí em
+diante não se afasta mais de dezesseis blocos. Os nomes são cem, e em quatro de cada cinco vezes saem
+**dois juntos** — «Krakus Ehnnat» —, de modo que quase nunca se repetem. Alguns aparecem três vezes na
+lista do original, e isso fica: uma lista com repetições é uma lista com peso.
+
+### E depois é preciso agradar-lhe
+
+Ele tem uma conta de **afeição** que sobe com **coisas brilhantes** na mão de quem o tem. Vinte e uma
+coisas lhe agradam, e a tabela diz o que ele é:
+
+| Coisa | Vale | Coisa | Vale |
+|---|---|---|---|
+| Bloco de Diamante | **72** | Bloco de Lápis | 7 |
+| Bloco de Esmeralda | 27 | Bloco de Redstone | 5 |
+| Machado e Picareta de Diamante | 24 | Lágrima de Ghast | 4 |
+| Espada e Enxada de Diamante | 16 | Esmeralda, Machado e Picareta de Ouro | 3 |
+| Estrela do Nether | 16 | Espada e Enxada de Ouro | 2 |
+| Bloco de Ouro | 9 | Lingote de Ouro, Vara de Blaze, Pá de Ouro | 1 |
+| Diamante e Pá de Diamante | 8 | | |
+
+Repare na conta: um bloco de diamante vale setenta e dois, que são **nove diamantes a oito**. Ele não
+conta valor — conta **brilho**, e um bloco brilha tanto quanto o que o faz. E uma picareta de diamante
+vale vinte e quatro, que são três diamantes: ele paga o feitio.
+
+A afeição **desce um de cinco em cinco minutos**. Com ela em zero e mais de uma hora de vida, há uma
+chance em cem por volta de ele simplesmente **ir embora**: «o contrato está cumprido». Quem o quer tem de
+continuar a dar-lhe coisas.
+
+### Os segredos
+
+Com afeição de **vinte** para cima, três minutos desde o último presente e um sorteio de
+`1 / max(1, 10 − (afeição − 20))` — ou seja, **tanto mais provável quanto mais ele gosta** —, ele
+retribui, e a afeição volta a zero. Pela ordem:
+
+1. o **Cozimento de Alma da Fome**, que ensina o **Carnosa Diem**;
+2. o do **Medo**, que ensina o **Morsmordre**;
+3. o da **Angústia**, que ensina o **Ignianima**;
+4. um **Contrato do Tormento**;
+5. e daí em diante um ingrediente ao acaso de sete.
+
+**Os três primeiros são a única porta para três dos trinta e um feitiços.** Não há receita, não há rito e
+não há livro: há um bicho que só dá o que quer, quando quer — e, se ninguém lhe der atenção, vai embora
+levando os segredos consigo.
+
+### O gole, e o que ele corrige
+
+Os Cozimentos de Alma são a única coisa do mod que se aprende **bebendo**. Bebe-se, e o feitiço fica
+sabido para sempre — morrer não o tira.
+
+E isto corrige o desvio declarado da fatia dos símbolos, que dizia que o Ignianima, o Carnosa Diem e o
+Morsmordre eram trancados por «uma entrada no livro de bruxaria». Não são: são trancados por um gole. O
+que **não** tem chave nenhuma é que é *imperdoável* — o Avada Kedavra, o Crucio e o Imperio não se
+aprendem de maneira nenhuma, e é por isso que só se lançam com a Infusão Infernal.
+
+### Ligar e desligar
+
+Um **Coração de Demônio** o liga por uma hora: ele **engorda** uma vez e meia de lado — não cresce para
+cima, engorda —, bate pelo dobro, nenhum golpe lhe tira mais de cinco e ele solta chama. Uma **Agulha de
+Gelo** o apaga na hora, e ele pergunta porquê.
+
+E, ligado, ele **não lança contratos**: «há poder demais para pensar».
+
+### Desvios declarados
+
+1. **As asas vão onde o desenho está.** O original declara, só para elas, uma folha de cento e vinte e
+   oito por trinta e dois enquanto o resto do boneco usa sessenta e quatro por sessenta e quatro — e em
+   2014 isso valia peça a peça. Mas a conta não fecha: com trinta e dois de altura, uma asa de vinte e um
+   a partir de vinte e um **passa de baixo da folha**. O desenho está feito para o sessenta e quatro, e é
+   a linha do tamanho que está errada; aqui elas ficam em (23, 21) na folha de verdade.
+
+2. **O que ele lança fica de fora.** Com um contrato preso a outra pessoa na mão, o original manda que ele o lance
+   contra ela. Essa família de contratos — o do Blaze, o de Evaporar, o do Toque de Fogo, o de
+   Resistir ao Fogo e o de Fundir — é a fatia dos **demônios**, e nenhum deles existe ainda. Fica o
+   Contrato de Posse, que é o que o compra, e o do Tormento, que ele dá.
+
+3. **O Cozimento de Alma do Tormento não tem de onde vir.** Ele existe, ensina o Tormentum e bebe-se —
+   mas quem o larga é o **Senhor do Tormento**, que pede a dimensão do Tormento. E o Tormentum também
+   ainda não está portado, de modo que os dois se esperam.
+
+4. **O que ele caça, caça por uma conta e não por uma lista.** O original se passa a si próprio como
+   filtro de alvos e responde «gente, se eu for selvagem; o meu alvo, se eu for de alguém». Aqui a meta
+   de caçar gente só vale enquanto ele for selvagem, que dá no mesmo com uma linha a menos.
+
+**Guardas:** o `OccultaImpGameTest`, com oito — os números dele; a tabela das coisas brilhantes, com a
+conta do bloco que vale nove; as quantidades dos presentes; o contrato, que não serve em branco nem
+assinado por outro e cobra vinte e cinco níveis; os **quatro segredos pela ordem**, que é a prova que
+carrega a fatia; o que ele recusa; o coração que o liga e a agulha que o apaga; **o gole que ensina o
+feitiço**; e as três receitas. E o `OccultaImpClientTest`, com quatro — dois de frente e dois de costas,
+um de cada ligado —, porque o que ele faz com poder é engordar.

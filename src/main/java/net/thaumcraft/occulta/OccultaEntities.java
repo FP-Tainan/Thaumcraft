@@ -389,6 +389,19 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.spirit.SpiritEntity::attributes))
                     .sized(0.25f, 0.25f).eyeHeight(0.125f).clientTrackingRange(8));
 
+    /**
+     * O <b>Diabrete</b>: o {@code EntityImp} do original.
+     *
+     * <p>Pequeno e largo — quatro décimos por um e três —, e {@code MONSTER} porque é o que ele é
+     * antes de alguém lhe comprar o contrato.
+     */
+    public static final EntityType<net.thaumcraft.occulta.imp.ImpEntity> IMP =
+            register("imp", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.imp.ImpEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.imp.ImpEntity::attributes))
+                    .sized(0.4f, 1.3f).eyeHeight(1.1f).clientTrackingRange(8));
+
     private static <T extends net.minecraft.world.entity.Entity> EntityType<T> register(
             String name, EntityType.Builder<T> builder) {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Thaumcraft.id(name));
@@ -471,6 +484,8 @@ public final class OccultaEntities {
                 net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 net.thaumcraft.occulta.spirit.SpiritEntity::podeNascer);
 
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(IMP, net.thaumcraft.occulta.imp.ImpEntity.attributes());
         net.thaumcraft.occulta.coven.Coven.init();
         net.thaumcraft.occulta.familiar.FamiliarData.init();
     }

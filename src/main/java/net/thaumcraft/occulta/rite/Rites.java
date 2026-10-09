@@ -2970,6 +2970,26 @@ public final class Rites {
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
+         * <b>Chamar um Diabrete.</b> Mal refinado, sangue infernal, uma pérola do Alhures e uma Pedra
+         * Sintonizada, cinco mil de poder e um anel de vinte e oito no anel de <b>fora</b>.
+         *
+         * <p>E é o <b>único rito de chamar que pede um coven</b>: uma bruxa sozinha não o traz. O
+         * original escreve a exceção com o nome da classe dele, no meio do rito de chamar seja o que
+         * for — e faz sentido, porque um Diabrete não vem obedecer: vem negociar, e uma negociação
+         * precisa de testemunhas.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.summonimp",
+                new SummonCreature(() -> net.thaumcraft.occulta.OccultaEntities.IMP, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.REFINED_EVIL,
+                                net.thaumcraft.occulta.OccultaItems.INFERNAL_BLOOD,
+                                Items.ENDER_PEARL,
+                                net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE),
+                        new Sacrifice.Power(5000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
          * Chamar o Wither. Pede uma caveira de wither, Vapor de Diamante, uma pérola — e um aldeão vivo
          * dentro do círculo. Quatro mil de poder, e dois anéis: vinte e oito e quarenta.
          */

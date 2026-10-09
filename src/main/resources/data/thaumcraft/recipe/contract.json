@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ppp",
+    "pfp",
+    "pps"
+  ],
+  "key": {
+    "p": "minecraft:paper",
+    "f": "thaumcraft:odd_pork",
+    "s": "minecraft:string"
+  },
+  "result": {
+    "id": "thaumcraft:contract",
+    "count": 1
+  }
+}

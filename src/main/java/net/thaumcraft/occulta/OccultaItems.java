@@ -885,6 +885,60 @@ public final class OccultaItems {
                     .sword(net.thaumcraft.occulta.ArthanaItem.MATERIAL, 3.0f, -2.4f)
                     .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
 
+    /** A <b>Asa de Mocho</b>, que o Diabrete dá a quem lhe agrada. */
+    public static final Item OWLETS_WING = register("owlets_wing", Item::new);
+
+    /**
+     * A <b>Carne de Porco Estranha</b>: o {@code itemOddPorkRaw} do original.
+     *
+     * <p>É a piada mais pequena do mod inteiro, e é de duas receitas: <b>Mutandis mais carne podre</b>
+     * dá esta, e <b>Mutandis mais esta</b> dá carne de porco de verdade. A mesma erva que faz de um
+     * resto uma coisa estranha faz da coisa estranha uma coisa boa — em dois passos, e não num.
+     *
+     * <p>Come-se, e é má: três de fome e três décimos de saturação, como a carne crua.
+     */
+    public static final Item ODD_PORK = register("odd_pork", properties ->
+            new Item(properties.food(new net.minecraft.world.food.FoodProperties.Builder()
+                    .nutrition(3).saturationModifier(0.3f).build())));
+
+    /**
+     * Os dois <b>contratos</b>: o de <b>Posse</b> e o do <b>Tormento</b>.
+     *
+     * <p>O de Posse, assinado com o sangue de quem o leva, é o que <b>compra um Diabrete</b> — e custa
+     * mais vinte e cinco níveis de experiência, que ele come na hora. O do Tormento é o que ele dá de
+     * presente a quem lhe agrada muito, e abre outra porta.
+     *
+     * <p>Assinam-se do mesmo jeito que uma boneca: juntando-lhes um <b>Kit de Taglock</b> cheio.
+     */
+    public static final Item CONTRACT = register("contract", properties ->
+            new Item(properties.stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
+    public static final Item CONTRACT_TORMENT = register("contract_torment", properties ->
+            new Item(properties.stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)));
+
+    /**
+     * Os quatro <b>Cozimentos de Alma</b>, que são a única coisa do mod que se aprende <b>bebendo</b>.
+     *
+     * <p>Cada um ensina um feitiço, e os quatro feitiços que eles ensinam são os únicos dos trinta e
+     * um que não se desenham sem mais nada.
+     */
+    public static final Item BREW_SOUL_HUNGER = soulBrew("brew_soul_hunger", "carnosadiem");
+    public static final Item BREW_SOUL_FEAR = soulBrew("brew_soul_fear", "morsmordre");
+    public static final Item BREW_SOUL_ANGUISH = soulBrew("brew_soul_anguish", "ignianima");
+    public static final Item BREW_SOUL_TORMENT = soulBrew("brew_soul_torment", "tormentum");
+
+    /** Um frasco com a alma de um demônio dentro: bebe-se, e o feitiço fica sabido. */
+    private static Item soulBrew(String nome, String chave) {
+        return register(nome, properties -> new net.thaumcraft.occulta.imp.SoulBrewItem(
+                properties.stacksTo(1).rarity(net.minecraft.world.item.Rarity.RARE)
+                        .component(net.minecraft.core.component.DataComponents.CONSUMABLE,
+                                net.minecraft.world.item.component.Consumables.DEFAULT_DRINK)
+                        .usingConvertsTo(net.minecraft.world.item.Items.GLASS_BOTTLE),
+                chave));
+    }
+
     /** O Pó Espectral, que só sai de morto-vivo aberto pela Arthana. */
     public static final Item SPECTRAL_DUST = register("spectral_dust", Item::new);
 

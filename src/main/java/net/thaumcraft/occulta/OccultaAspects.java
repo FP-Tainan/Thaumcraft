@@ -192,6 +192,23 @@ public final class OccultaAspects {
             r.item("thaumcraft:spectral_dust", new AspectList().add(Aspects.SOUL, 4).add(Aspects.UNDEAD, 2));
             // o original só anota o Espírito Dominado, e com duas de alma; o da aldeia vai igual
             r.item("thaumcraft:subdued_spirit", new AspectList().add(Aspects.SOUL, 2));
+            // o Diabrete: o que ele dá e o que o compra, com os números do original
+            r.item("thaumcraft:owlets_wing", new AspectList().add(Aspects.BEAST, 1)
+                    .add(Aspects.AIR, 1));
+            r.item("thaumcraft:odd_pork", new AspectList().add(Aspects.MAN, 1)
+                    .add(Aspects.HUNGER, 2));
+            r.item("thaumcraft:contract", new AspectList().add(Aspects.EXCHANGE, 2)
+                    .add(Aspects.SOUL, 2));
+            r.item("thaumcraft:contract_torment", new AspectList().add(Aspects.EXCHANGE, 2)
+                    .add(Aspects.TRAP, 3));
+            r.item("thaumcraft:brew_soul_hunger", new AspectList().add(Aspects.SOUL, 2)
+                    .add(Aspects.HUNGER, 2));
+            r.item("thaumcraft:brew_soul_fear", new AspectList().add(Aspects.SOUL, 2)
+                    .add(Aspects.SENSES, 2));
+            r.item("thaumcraft:brew_soul_anguish", new AspectList().add(Aspects.SOUL, 2)
+                    .add(Aspects.MIND, 2));
+            r.item("thaumcraft:brew_soul_torment", new AspectList().add(Aspects.SOUL, 2)
+                    .add(Aspects.TRAP, 2));
             // o Couro Impregnado e as quatro roupas de bruxa, com os números do original
             r.item("thaumcraft:impregnated_leather", new AspectList().add(Aspects.CLOTH, 2)
                     .add(Aspects.BEAST, 1).add(Aspects.ARMOR, 1).add(Aspects.MAGIC, 1));

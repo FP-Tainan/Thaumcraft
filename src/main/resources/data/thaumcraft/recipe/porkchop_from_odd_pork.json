@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:mutandis",
+    "thaumcraft:odd_pork"
+  ],
+  "result": {
+    "id": "minecraft:porkchop",
+    "count": 1
+  }
+}

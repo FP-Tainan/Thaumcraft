@@ -407,6 +407,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.GOBLIN,
                 net.thaumcraft.occulta.client.GoblinRenderer.Goblin::new);
 
+        // o Ars Occulta: o Diabrete, que engorda quando tem poder
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.ImpRenderer.LAYER,
+                net.thaumcraft.occulta.client.ImpRenderer::criaCamada);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.IMP,
+                net.thaumcraft.occulta.client.ImpRenderer.Diabrete::new);
+
         // o Ars Occulta: as roupas de bruxa, que valem pelo que dão e não pelo que protegem
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.WitchClothesRenderer.CABEÇA,

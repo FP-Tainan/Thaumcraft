@@ -270,6 +270,11 @@ public final class Symbols {
         return TODOS.size();
     }
 
+    /** E todos eles, para quem precisar de os percorrer. */
+    public static List<Symbol> todos() {
+        return List.copyOf(TODOS);
+    }
+
     private static String chave(byte[] traços) {
         StringBuilder feito = new StringBuilder();
         for (int volta = 0; volta < traços.length; volta++) {
@@ -811,7 +816,7 @@ public final class Symbols {
         public static final int DÁ = 10;
 
         CarnosaDiem(int id) {
-            super(id, "carnosadiem", 1, true, false, 0);
+            super(id, "carnosadiem", 1, true, false, 0, "carnosadiem");
         }
 
         @Override
@@ -964,7 +969,7 @@ public final class Symbols {
         public static final double RAIO = 1.5;
 
         Ignianima(int id) {
-            super(id, "ignianima", 2, true, false, 0);
+            super(id, "ignianima", 2, true, false, 0, "ignianima");
             this.cor(0xFFE060).tamanho(3.0f);
         }
 
