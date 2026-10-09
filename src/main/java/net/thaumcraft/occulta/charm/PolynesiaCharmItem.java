@@ -58,6 +58,10 @@ import java.util.function.Consumer;
  *
  * <h2>Desvios declarados</h2>
  *
+ * <p><b>A lula entra pelos dois lados.</b> Na 1.7.10 lulas e peixes eram da mesma classe, e o original pede
+ * essa; hoje a lula vai por um lado e o peixe por outro, de modo que a pergunta se faz às duas. Sem isto a
+ * lula não teria loja — e ela tem uma, que vende <b>sacos de tinta</b>.
+ *
  * <p><b>O vínculo exclui os três familiares, e não só o gato.</b> No original o gato ligado vira um bicho
  * de outra classe, e é essa classe que o amuleto recusa — a coruja e o sapo ligados continuam a ser coruja
  * e sapo, e passam por descuido. Aqui o vínculo mora em quem o tem e não no bicho, de modo que a pergunta é
@@ -137,6 +141,7 @@ public class PolynesiaCharmItem extends Item {
                 || bicho instanceof AmbientCreature
                 || bicho instanceof Spider
                 || bicho instanceof WaterAnimal
+                || bicho instanceof net.minecraft.world.entity.animal.AgeableWaterCreature
                 || (bicho instanceof Creeper && WitchClothes.wearingRobes(quem))
                 || (AnimalShop.mortoVivo(bicho) && WitchClothes.wearingNecroRobes(quem));
         if (!dalista) return false;

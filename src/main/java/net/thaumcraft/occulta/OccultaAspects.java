@@ -282,6 +282,9 @@ public final class OccultaAspects {
             r.item("thaumcraft:tormented_twine", new AspectList().add(Aspects.CLOTH, 3).add(Aspects.DARKNESS, 2));
 
             // o espelho: o original não o anotava, e este é do porte. A superfície do Mundo do Espelho não entra
+            // e a semente de Treefyd, com os números do original
+            r.item("thaumcraft:treefyd_seeds", new AspectList().add(Aspects.PLANT, 4)
+                    .add(Aspects.MAGIC, 1));
             // a Pedra Espectral e o Espírito Coalhado, com os números do original
             r.item("thaumcraft:spectral_stone", new AspectList().add(Aspects.CRYSTAL, 3)
                     .add(Aspects.TRAP, 4));
@@ -324,6 +327,8 @@ public final class OccultaAspects {
                     .add(Aspects.FIRE, 2).add(Aspects.ENTROPY, 2));
             r.entity("thaumcraft:ent", null, null, new AspectList().add(Aspects.TREE, 8).add(Aspects.PLANT, 4)
                     .add(Aspects.MAGIC, 2).add(Aspects.BEAST, 2));
+            r.entity("thaumcraft:treefyd", null, null, new AspectList().add(Aspects.PLANT, 6)
+                    .add(Aspects.BEAST, 4).add(Aspects.TRAP, 2).add(Aspects.MAGIC, 2));
             r.entity("thaumcraft:mirror_face", null, null, new AspectList().add(Aspects.SENSES, 4)
                     .add(Aspects.MIND, 2).add(Aspects.ELDRITCH, 2));
             r.entity("thaumcraft:nightmare", null, null, new AspectList().add(Aspects.MIND, 6)

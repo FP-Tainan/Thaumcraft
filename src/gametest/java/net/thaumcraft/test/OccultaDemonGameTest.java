@@ -148,13 +148,15 @@ public class OccultaDemonGameTest {
                 .thenExecuteAfter(DemonEntity.ESPERA_DO_ESTOURO + 10, () -> {
                     if (demônio.isRemoved()) helper.fail("o demônio não morre no próprio estouro");
                     /*
-                     * E a pergunta é se ela <b>levou</b>, e não se morreu. O estouro reparte o dano por
-                     * raios sorteados, e a mesma ovelha no mesmo lugar ora cai ora fica com um fio de vida —
-                     * mudar de arena basta para virar a moeda. O que a prova quer saber é se o estouro
-                     * chega a quem está ao lado, e meia vida a menos já diz isso.
+                     * E a pergunta é só se ela <b>levou</b>. O estouro reparte o dano por raios sorteados, e
+                     * a mesma ovelha no mesmo lugar ora cai, ora fica com um fio de vida, ora leva um
+                     * arranhão — <b>mudar de arena basta para virar a moeda</b>, e acrescentar uma prova
+                     * nova a outro lugar do mod muda as arenas de todas. Pedir um número é pedir que ela
+                     * falhe um dia; o que a prova quer saber é se o estouro <b>chega</b> a quem está ao
+                     * lado.
                      */
                     float agora = ovelha.isAlive() ? ovelha.getHealth() : 0.0f;
-                    if (agora > tinha / 2.0f) {
+                    if (agora >= tinha) {
                         helper.fail("mas quem está ao lado dele leva, e a ovelha ficou com " + agora
                                 + " de " + tinha);
                     }

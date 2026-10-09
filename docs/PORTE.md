@@ -11892,3 +11892,68 @@ rito, que **pega em três do mesmo feitio e deixa os outros em paz**; o rito que
 nenhum; o largar, que solta os fantasmas já escravizados e deixa a pedra em branco; e os dois ritos na
 lista, com os anéis e a hora. E o `OccultaSpectralStoneClientTest`, com as quatro caras e a dica que diz
 qual bicho e quantos.
+
+## O Treefyd, que aprende quem é de casa (2026-10-09)
+
+É o **espantalho vivo** do mod, e a ideia dele é melhor do que parece: ele **ataca tudo o que não
+conhece**, e quem o planta **ensina-lhe quem é de casa**, um frasco de vínculo de cada vez.
+
+Planta-se uma semente num chão onde cresça erva, e nasce um Treefyd com **quem o plantou** por dono. Dali
+em diante é uma cerca que anda: cinquenta de vida, três de dano, e **cega** quem morde, por cinco
+segundos. A erva alta fica no lugar, por cima do chão, e é o que o faz parecer que **brotou**.
+
+### Em quem ele não toca
+
+Nem noutro Treefyd, nem no Caçador de Bruxas, nem num Ent, nem no que voa, nem num bicho do ar ou de
+água, nem num **familiar** de alguém, nem numa bruxa de coven. Nem no **dono**, nem em quem lhe
+apresentaram.
+
+### As duas listas
+
+E é aqui que ele deixa de ser um espantalho e passa a ser uma ideia: ele tem **duas** listas, não uma.
+
+Os bichos de **criação** conhecem-se **por espécie** — apresentada uma ovelha, ele poupa **todas**. Os
+outros conhecem-se **um a um** — apresentado um creeper, poupa **aquele**. É o que faz dele um guarda de
+quinta e não um guarda de cada vaca.
+
+Apresenta-se com um **frasco de vínculo cheio**: de pé ensina, **agachado** esquece. Cada clique gasta o
+frasco, e ele responde no chat com a lista inteira do que conhece — que é o original dizendo «entendi».
+
+### O que o faz crescer
+
+Um **Coração de Creeper** leva-o a cem de vida e quatro de dano; um **Coração de Demônio**, a cento e
+cinquenta de vida e cinco de dano. E a **Boline** liga e desliga o modo **sentinela**: um Treefyd
+sentinela **não anda**, e é assim que se faz dele um poste em vez de um cão.
+
+E ele **faz filhos**: clicando nele com outra semente nasce outro ao lado, com **a mesma lista** de quem
+conhece. É assim que se faz uma cerca viva de um só gesto.
+
+### E com ele fecha-se a loja do amuleto
+
+A **semente de Treefyd** era uma das duas coisas que faltavam à loja do Amuleto da Polinésia. Agora ela
+entra: **três em cem** em qualquer bicho e **dez** num creeper, e conta como coisa cara — o que dobra o
+preço dela. Falta só a **Teia Densa**, que espera o frasco que se atira.
+
+### Desvios declarados
+
+1. **As espécies conhecem-se pelo nome de registro, e não pelo de tela.** O original compara o **nome
+   traduzido** do bicho, o que quebra em qualquer língua que não a dele e quebra outra vez se o bicho for
+   batizado na plaquinha. Aqui o que se guarda é o nome de registro, que é o mesmo em toda parte.
+
+2. **As oito espécies «de criação» são um rótulo.** O original tem uma lista escrita no código — aldeão,
+   goblin, ovelha, vaca, vaca-de-cogumelo, galinha, porco, cavalo. Aqui é o rótulo
+   `thaumcraft:o_treefyd_conhece_por_especie`, com os mesmos oito, de modo que um pacote de dados pode
+   acrescentar os seus.
+
+3. **«O que voa» são dois nomes.** No jogo de 2014 era uma **classe** que só o ghast tinha, mais a classe
+   de que a coruja do mod descendia. O jogo de hoje não tem essa classe, de modo que a pergunta se faz aos
+   dois por nome: o **ghast** e a **coruja**.
+
+4. **E «o bicho de água» são duas.** Na 1.7.10 lulas e peixes eram da mesma classe; hoje a lula vai por um
+   lado e o peixe por outro. A pergunta faz-se às duas — aqui e no **Amuleto da Polinésia**, que sem isso
+   nunca abriria a loja de uma lula, e a lula tem uma: vende sacos de tinta.
+
+**Guardas:** o `OccultaTreefydGameTest`, com seis — quem ele ataca e quem poupa; **as duas listas, com a
+ovelha que vale por todas e o creeper que vale por um**; o dono que o faz crescer e o filho que herda a
+lista; o estranho que não lhe toca; a semente, que o planta com dono e deixa a erva alta no lugar; e a
+receita, que dá duas. E o `OccultaTreefydClientTest`, com ele de frente, de lado e de cima.

@@ -63,12 +63,10 @@ import java.util.List;
  * é o que faz a vaca-de-cogumelo continuar aceitando trigo, como sempre aceitou. O ramo dela fica escrito e
  * fica morto, que é o estado dele desde 2014. Veja o desvio declarado no PORTE.
  *
- * <h2>Duas coisas que esperam</h2>
+ * <h2>Uma coisa que espera</h2>
  *
- * <p>Faltam da loja a <b>semente de Treefyd</b>, que qualquer bicho dava três em cem e o creeper dez, e a
- * <b>Teia Densa</b>, que a aranha dava quatro. Nenhuma das duas está portada ainda — a semente espera o
- * Treefyd, e a teia espera o frasco que se atira —, de modo que a aranha vende só fio e o sorteio da semente
- * não se faz. Veja o desvio declarado no PORTE.
+ * <p>Falta da loja a <b>Teia Densa</b>, que a aranha dava quatro: ela espera o frasco que se atira, e até lá
+ * a aranha vende só fio. Veja o desvio declarado no PORTE.
  */
 public final class AnimalShop {
     /** A loja daquele bicho, guardada nele: o {@code WitcheryShopStock} do original. */
@@ -91,11 +89,7 @@ public final class AnimalShop {
     public static final double PÓ_ESPECTRAL = 0.05;
     public static final double CORAÇÃO = 0.02;
 
-    /**
-     * A chance da semente de Treefyd em qualquer bicho, e a do creeper.
-     *
-     * <p>Ficam escritas porque são do original; o sorteio não se faz enquanto o Treefyd não estiver portado.
-     */
+    /** A chance da semente de Treefyd em qualquer bicho, e a do creeper. */
     public static final double TREEFYD = 0.03;
     public static final double TREEFYD_DO_CREEPER = 0.1;
 
@@ -183,7 +177,7 @@ public final class AnimalShop {
 
         List<ItemStack> dezoito = asDezoito();
         coisas.add(dezoito.get(sorte.nextInt(dezoito.size())));
-        // e aqui a semente de Treefyd, três em cem, quando o Treefyd estiver portado
+        if (sorte.nextDouble() < TREEFYD) coisas.add(new ItemStack(OccultaItems.TREEFYD_SEEDS));
 
         boolean morto = mortoVivo(bicho);
 
@@ -245,7 +239,9 @@ public final class AnimalShop {
             if (sorte.nextDouble() < PÓ_ESPECTRAL) {
                 coisas.add(new ItemStack(OccultaItems.SPECTRAL_DUST, 2));
             }
-            // e aqui a semente de Treefyd, dez em cem, que é o jeito de o creeper dar a semente
+            if (sorte.nextDouble() < TREEFYD_DO_CREEPER) {
+                coisas.add(new ItemStack(OccultaItems.TREEFYD_SEEDS));
+            }
             if (sorte.nextDouble() < CORAÇÃO) coisas.add(new ItemStack(OccultaItems.CREEPER_HEART));
         } else if (morto) {
             moedas.add(new ItemStack(Items.BONE));
@@ -286,8 +282,9 @@ public final class AnimalShop {
         return feitas;
     }
 
-    /** O que custa o dobro: diamante, esmeralda e sela — e, no original, a semente de Treefyd. */
+    /** O que custa o dobro: diamante, esmeralda, sela e a semente de Treefyd. */
     private static boolean caro(ItemStack oquê) {
-        return oquê.is(Items.DIAMOND) || oquê.is(Items.EMERALD) || oquê.is(Items.SADDLE);
+        return oquê.is(Items.DIAMOND) || oquê.is(Items.EMERALD) || oquê.is(Items.SADDLE)
+                || oquê.is(OccultaItems.TREEFYD_SEEDS);
     }
 }

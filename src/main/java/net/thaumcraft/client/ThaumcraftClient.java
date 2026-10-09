@@ -69,7 +69,7 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("summoning_altar"),
                 net.thaumcraft.mortuorum.client.SummoningAltarItemRenderer.Unbaked.CODEC);
-        // o Ars Occulta: os três bichos do ofício
+        // o Ars Occulta: os quatro bichos do ofício
         for (var bicho : java.util.List.of(
                 java.util.Map.entry(net.thaumcraft.occulta.client.CreatureRenderers.MANDRAKE,
                         (java.util.function.Supplier<net.minecraft.client.model.geom.builders.LayerDefinition>)
@@ -79,7 +79,10 @@ public class ThaumcraftClient implements ClientModInitializer {
                                 net.thaumcraft.occulta.client.CreatureModels::minedrake),
                 java.util.Map.entry(net.thaumcraft.occulta.client.CreatureRenderers.ENT,
                         (java.util.function.Supplier<net.minecraft.client.model.geom.builders.LayerDefinition>)
-                                net.thaumcraft.occulta.client.EntModel::ent))) {
+                                net.thaumcraft.occulta.client.EntModel::ent),
+                java.util.Map.entry(net.thaumcraft.occulta.client.CreatureRenderers.TREEFYD,
+                        (java.util.function.Supplier<net.minecraft.client.model.geom.builders.LayerDefinition>)
+                                net.thaumcraft.occulta.client.TreefydModel::treefyd))) {
             net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                     bicho.getKey(), bicho.getValue()::get);
         }
@@ -92,6 +95,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.ENT,
                 net.thaumcraft.occulta.client.CreatureRenderers.Ent::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.TREEFYD,
+                net.thaumcraft.occulta.client.CreatureRenderers.Treefyd::new);
         // a nuvem de cozimento é pintada da cor do que se cozeu: o colorMultiplier do original
         net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
                 java.util.List.of(new net.minecraft.client.color.block.BlockTintSource() {

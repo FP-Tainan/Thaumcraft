@@ -1458,6 +1458,18 @@ public final class OccultaItems {
     public static final Item BARK_BELT = witchBelt("bark_belt", true, 6968628,
             "tc.barkbelt.tip;tc.barkbelt.tip2");
 
+    // ------------------------------------------------------------------ o Treefyd
+
+    /**
+     * A <b>semente de Treefyd</b>: planta-se, e o que nasce não é uma planta.
+     *
+     * <p>Veja o {@link net.thaumcraft.occulta.treefyd.TreefydSeedsItem} e o
+     * {@link net.thaumcraft.occulta.treefyd.TreefydEntity}.
+     */
+    public static final Item TREEFYD_SEEDS = register("treefyd_seeds", properties ->
+            new net.thaumcraft.occulta.treefyd.TreefydSeedsItem(
+                    properties.useItemDescriptionPrefix()));
+
     // ------------------------------------------------------------------ a Pedra Espectral
 
     /**

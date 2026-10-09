@@ -360,6 +360,18 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.ghost.SpectreEntity::attributes))
                     .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(8));
 
+    /**
+     * O <b>Treefyd</b>: a flor carnívora com pernas que aprende quem é de casa.
+     *
+     * <p>Dois terços de largura e um metro e oitenta de alto, como no original — um talo fino e alto.
+     */
+    public static final EntityType<net.thaumcraft.occulta.treefyd.TreefydEntity> TREEFYD =
+            register("treefyd", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.treefyd.TreefydEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.treefyd.TreefydEntity::attributes))
+                    .sized(0.4f, 1.8f).eyeHeight(1.6f).clientTrackingRange(8));
+
     /** A <b>Banshee</b>, que grita a seis blocos. */
     public static final EntityType<net.thaumcraft.occulta.ghost.BansheeEntity> BANSHEE =
             register("banshee", FabricEntityType.Builder.createMob(

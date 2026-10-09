@@ -143,6 +143,16 @@ public class OccultaSummonRitesGameTest {
         ServerLevel level = helper.getLevel();
         BlockPos meio = helper.absolutePos(new BlockPos(3, 2, 3));
 
+        /*
+         * E antes de tudo, <b>varrer os camelos do mundo</b> à volta: o chamado alcança cento e vinte e oito
+         * blocos e traz <b>dois</b> por volta, de modo que um deserto com uma caravana lá dentro enche a cota
+         * antes de chegar ao nosso. Nenhuma outra prova usa camelos, e por isso os que houver são do mundo.
+         */
+        for (var qualquer : level.getEntitiesOfClass(net.minecraft.world.entity.animal.camel.Camel.class,
+                new net.minecraft.world.phys.AABB(meio).inflate(Rites.CallCreatures.ALCANCE))) {
+            qualquer.discard();
+        }
+
         var bicho = EntityTypes.CAMEL.create(level, EntitySpawnReason.TRIGGERED);
         if (bicho == null) {
             helper.fail("devia haver camelo");

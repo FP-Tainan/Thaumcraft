@@ -29,10 +29,12 @@ public final class CreatureRenderers {
     public static final ModelLayerLocation MANDRAKE = layer("mandrake");
     public static final ModelLayerLocation MINEDRAKE = layer("minedrake");
     public static final ModelLayerLocation ENT = layer("ent");
+    public static final ModelLayerLocation TREEFYD = layer("treefyd");
 
     private static final Identifier MANDRAKE_SKIN = Thaumcraft.id("textures/entity/mandrake.png");
     private static final Identifier MINEDRAKE_SKIN = Thaumcraft.id("textures/entity/minedrake.png");
     private static final Identifier ENT_SKIN = Thaumcraft.id("textures/entity/ent.png");
+    private static final Identifier TREEFYD_SKIN = Thaumcraft.id("textures/entity/treefyd.png");
 
     /** O quanto o corpo do Mo'Creatures encolhe para caber onde o do Witchery estava. */
     public static final float ENT_SIZE = 0.6f;
@@ -116,6 +118,35 @@ public final class CreatureRenderers {
         @Override
         public Identifier getTextureLocation(LivingEntityRenderState state) {
             return MINEDRAKE_SKIN;
+        }
+    }
+
+    /**
+     * O <b>Treefyd</b>, que é uma flor carnívora com pernas.
+     *
+     * <p>Ele <b>pende</b> como as outras plantas que andam — o mesmo {@code rotateCorpse} da mandrágora e
+     * do Ent, que o original lhe dá também. Metade da sombra, porque o talo dele é fino.
+     */
+    public static class Treefyd extends MobRenderer<net.thaumcraft.occulta.treefyd.TreefydEntity,
+            LivingEntityRenderState, TreefydModel> {
+        public Treefyd(EntityRendererProvider.Context context) {
+            super(context, new TreefydModel(context.bakeLayer(TREEFYD)), 0.5f);
+        }
+
+        @Override
+        public LivingEntityRenderState createRenderState() {
+            return new LivingEntityRenderState();
+        }
+
+        @Override
+        protected void setupRotations(LivingEntityRenderState state, PoseStack pose, float corpo, float escala) {
+            super.setupRotations(state, pose, corpo, escala);
+            sway(state, pose);
+        }
+
+        @Override
+        public Identifier getTextureLocation(LivingEntityRenderState state) {
+            return TREEFYD_SKIN;
         }
     }
 

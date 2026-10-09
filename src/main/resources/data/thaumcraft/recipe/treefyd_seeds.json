@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "xax",
+    "cyd",
+    "xbx"
+  ],
+  "key": {
+    "x": "thaumcraft:mutandis_extremis",
+    "y": "thaumcraft:water_artichoke_globe",
+    "c": "thaumcraft:ember_moss",
+    "d": "thaumcraft:mandrake_root",
+    "a": "thaumcraft:reek_of_misfortune",
+    "b": "thaumcraft:tear_of_the_goddess"
+  },
+  "result": {
+    "id": "thaumcraft:treefyd_seeds",
+    "count": 2
+  }
+}
