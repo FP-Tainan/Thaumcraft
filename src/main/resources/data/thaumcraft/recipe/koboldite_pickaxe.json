@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "bab",
+    "iii",
+    " s "
+  ],
+  "key": {
+    "i": "thaumcraft:koboldite_ingot",
+    "a": "thaumcraft:attuned_stone_charged",
+    "b": "minecraft:lava_bucket",
+    "s": "minecraft:stick"
+  },
+  "result": {
+    "id": "thaumcraft:koboldite_pickaxe",
+    "count": 1
+  }
+}

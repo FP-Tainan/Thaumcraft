@@ -1,0 +1,237 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "cases": [
+      {
+        "when": "1",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_1"
+        }
+      },
+      {
+        "when": "2",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_2"
+        }
+      },
+      {
+        "when": "3",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_3"
+        }
+      },
+      {
+        "when": "4",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_4"
+        }
+      },
+      {
+        "when": "5",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_5"
+        }
+      },
+      {
+        "when": "6",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_6"
+        }
+      },
+      {
+        "when": "7",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_7"
+        }
+      },
+      {
+        "when": "8",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_8"
+        }
+      },
+      {
+        "when": "9",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_9"
+        }
+      },
+      {
+        "when": "10",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_10"
+        }
+      },
+      {
+        "when": "11",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_11"
+        }
+      },
+      {
+        "when": "12",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_12"
+        }
+      },
+      {
+        "when": "13",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_13"
+        }
+      },
+      {
+        "when": "14",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_14"
+        }
+      },
+      {
+        "when": "15",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_15"
+        }
+      },
+      {
+        "when": "16",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_16"
+        }
+      },
+      {
+        "when": "17",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_17"
+        }
+      },
+      {
+        "when": "18",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_18"
+        }
+      },
+      {
+        "when": "19",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_19"
+        }
+      },
+      {
+        "when": "20",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_20"
+        }
+      },
+      {
+        "when": "21",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_21"
+        }
+      },
+      {
+        "when": "22",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_22"
+        }
+      },
+      {
+        "when": "23",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_23"
+        }
+      },
+      {
+        "when": "24",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_24"
+        }
+      },
+      {
+        "when": "25",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_25"
+        }
+      },
+      {
+        "when": "26",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_26"
+        }
+      },
+      {
+        "when": "27",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_27"
+        }
+      },
+      {
+        "when": "28",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_28"
+        }
+      },
+      {
+        "when": "29",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_29"
+        }
+      },
+      {
+        "when": "30",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_30"
+        }
+      },
+      {
+        "when": "31",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_31"
+        }
+      },
+      {
+        "when": "32",
+        "model": {
+          "type": "minecraft:model",
+          "model": "thaumcraft:item/player_compass_32"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "thaumcraft:item/player_compass"
+    }
+  }
+}

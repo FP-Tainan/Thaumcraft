@@ -11785,3 +11785,55 @@ quem morre e tem teto; o vampiro, que é o único que o vê e o bebe, e só com 
 bloco por batida e para na sétima, onde está a água**; a vara que desiste olhando para o céu; e as três
 receitas. E o `OccultaCaneSwordClientTest`, com as quatro na barra e **a dica da bengala com o número do
 cantil dentro**.
+
+## As duas bússolas e a Picareta de Koboldite (2026-10-09)
+
+### A Bússola de Gente
+
+É a **única coisa do ofício que segue uma pessoa em vez de lhe fazer mal**. Prende-se-lhe um vínculo e ela
+aponta para quem o vínculo pega, com **trinta e três caras**: uma de «nada» e trinta e duas de rumo.
+
+E estando quem se procura **noutra dimensão**, ela **gira ao acaso**. É o jeito honesto de o original
+dizer «não sei»: a agulha não para, e quem olha percebe.
+
+Ela **refaz-se**: uma bússola destas mais outro vínculo dá outra, apontada para outra pessoa. É a única
+coisa presa a alguém que o mod deixa reprender — uma boneca presa não se reprende, e é assim que o ofício
+mantém o preço.
+
+### A Bússola da Prateleira
+
+Ela não aponta: **esquenta**. Seis caras, e a cara muda com a distância à **Prateleira de Bonecas** mais
+perto — oito blocos, dezesseis, trinta e dois, sessenta e quatro, cento e vinte e oito, e longe demais.
+
+É barata e serve para uma coisa só: quem guarda as suas bonecas numa prateleira escondida precisa de as
+voltar a achar. É o **mapa do tesouro da própria casa**.
+
+### A Picareta de Koboldite
+
+Uma picareta de diamante feita de koboldite, e nada mais — dezenove linhas no original, e nenhuma delas
+faz coisa nenhuma de especial. Fica pelo que é: a única ferramenta que o metal dos goblins dá.
+
+### Desvios declarados
+
+1. **As duas contas correm no servidor.** No original correm no cliente, que escreve o dano do item
+   sozinho; hoje o desenho de um item vem de um **componente**, e um componente escrito só no cliente
+   volta a ser o que o servidor diz na batida seguinte. A conta é a mesma, e vale por sincronizar: uma
+   bússola na mão de outra pessoa aponta certo.
+
+2. **As caras saem pelo `custom_model_data`**, como as dez do Talismã de Círculo — trinta e três num caso,
+   seis no outro.
+
+3. **A Bússola da Prateleira procura num quadrado, e não no mundo inteiro.** O original percorre a lista
+   de todos os blocos com vida do mundo, que em 2014 era curta. Hoje isso seria percorrer o mundo todo a
+   cada vinte batidas, de modo que a procura se faz num quadrado de **cento e vinte e oito** blocos à
+   volta de quem a traz — que é exatamente o alcance da cara mais fraca. Além disso o original já dizia
+   «longe demais».
+
+4. **O reprender tem rótulo próprio.** A receita que prende um vínculo a uma boneca pede a boneca
+   **em branco**; a do original para a bússola aceita uma bússola de qualquer cara, presa ou não. Em vez
+   de abrir a regra para tudo, há agora um rótulo `refaz_o_vinculo` com a bússola dentro — e só ela.
+
+**Guardas:** o `OccultaCompassGameTest`, com quatro — a agulha, que aponta para quem o vínculo pega e
+**vira quando quem a traz vira**; as seis faixas da outra; a prateleira, que ela acha de verdade; e as
+receitas, com o reprender incluído. E o `OccultaCompassClientTest`, com uma foto das trinta e três caras
+e outra das seis, com a picareta ao lado.

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:nether_wart",
+    "thaumcraft:tear_of_the_goddess",
+    "minecraft:vine",
+    "minecraft:spider_eye",
+    "minecraft:compass"
+  ],
+  "result": {
+    "id": "thaumcraft:player_compass",
+    "count": 1
+  }
+}

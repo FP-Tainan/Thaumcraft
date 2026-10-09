@@ -6,6 +6,7 @@
     "thaumcraft:contract_resist_fire",
     "thaumcraft:contract_evaporate",
     "thaumcraft:contract_fiery_touch",
-    "thaumcraft:contract_smelting"
+    "thaumcraft:contract_smelting",
+    "thaumcraft:player_compass"
   ]
 }

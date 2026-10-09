@@ -1458,6 +1458,32 @@ public final class OccultaItems {
     public static final Item BARK_BELT = witchBelt("bark_belt", true, 6968628,
             "tc.barkbelt.tip;tc.barkbelt.tip2");
 
+    // ------------------------------------------------------------------ as duas bússolas e a picareta
+
+    /**
+     * A <b>Bússola de Gente</b>: a única coisa do ofício que <b>segue uma pessoa</b> em vez de lhe fazer
+     * mal.
+     *
+     * <p>Trinta e três caras, e a agulha gira quando quem se procura está noutra dimensão. Veja o
+     * {@link net.thaumcraft.occulta.EntityLocatorItem}.
+     */
+    public static final Item PLAYER_COMPASS = register("player_compass", properties ->
+            new net.thaumcraft.occulta.EntityLocatorItem(properties.stacksTo(1)));
+
+    /**
+     * A <b>Bússola da Prateleira</b>, que não aponta: <b>esquenta</b>.
+     *
+     * <p>Seis caras, uma por faixa de distância à Prateleira de Bonecas mais perto. Veja o
+     * {@link net.thaumcraft.occulta.PoppetShelfCompassItem}.
+     */
+    public static final Item SHELF_COMPASS = register("shelf_compass", properties ->
+            new net.thaumcraft.occulta.PoppetShelfCompassItem(properties));
+
+    /** A <b>Picareta de Koboldite</b>: uma picareta de diamante, e nada mais. */
+    public static final Item KOBOLDITE_PICKAXE = register("koboldite_pickaxe", properties ->
+            new Item(properties.pickaxe(net.minecraft.world.item.ToolMaterial.DIAMOND, 1.0f, -2.8f)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)));
+
     // ------------------------------------------------------------------ a bengala e as varas
 
     /**

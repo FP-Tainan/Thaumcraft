@@ -43,7 +43,7 @@ public class PoppetBindingRecipe extends CustomRecipe {
         for (int i = 0; i < input.size(); i++) {
             ItemStack stack = input.getItem(i);
             if (stack.isEmpty()) continue;
-            if (prendível(stack) && !TaglockItem.isBound(stack)) bonecas++;
+            if (prendível(stack) && (!TaglockItem.isBound(stack) || refaz(stack))) bonecas++;
             else if (stack.is(OccultaItems.TAGLOCK) && TaglockItem.isBound(stack)) frascos++;
             else outros++;
         }
@@ -69,6 +69,21 @@ public class PoppetBindingRecipe extends CustomRecipe {
      * O que se pode prender a alguém: as <b>bonecas</b>, que se conhecem pela classe, e o que estiver no
      * rótulo — os <b>contratos</b>, que é o que o Diabrete lê.
      */
+    public static boolean refaz(ItemStack coisa) {
+        return coisa.is(REFAZ_O_VÍNCULO);
+    }
+
+    /**
+     * O que se <b>reprende</b>: o que já está preso a alguém e aceita ser preso a outro.
+     *
+     * <p>Só a <b>Bússola de Gente</b>, e porque o original o diz — a receita dela aceita uma bússola de
+     * qualquer cara. Uma boneca presa não se reprende: quem a quiser noutra pessoa faz outra boneca, e é
+     * assim que o ofício mantém o preço.
+     */
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> REFAZ_O_VÍNCULO =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                    net.thaumcraft.Thaumcraft.id("refaz_o_vinculo"));
+
     public static boolean prendível(ItemStack coisa) {
         return coisa.getItem() instanceof PoppetItem || coisa.is(PRENDE_UM_VÍNCULO);
     }

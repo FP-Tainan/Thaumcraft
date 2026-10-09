@@ -282,6 +282,13 @@ public final class OccultaAspects {
             r.item("thaumcraft:tormented_twine", new AspectList().add(Aspects.CLOTH, 3).add(Aspects.DARKNESS, 2));
 
             // o espelho: o original não o anotava, e este é do porte. A superfície do Mundo do Espelho não entra
+            // as duas bússolas e a picareta, com os números do original
+            r.item("thaumcraft:player_compass", new AspectList().add(Aspects.SENSES, 2)
+                    .add(Aspects.MAN, 1).add(Aspects.MAGIC, 2));
+            r.item("thaumcraft:shelf_compass", new AspectList().add(Aspects.SENSES, 2)
+                    .add(Aspects.CRYSTAL, 3).add(Aspects.MAGIC, 2));
+            r.item("thaumcraft:koboldite_pickaxe", new AspectList().add(Aspects.METAL, 3)
+                    .add(Aspects.MAGIC, 1).add(Aspects.MINE, 1));
             // as varas, com os números do original; a bengala não os tinha, e os dela são do porte
             r.item("thaumcraft:cane_sword", new AspectList().add(Aspects.WEAPON, 4)
                     .add(Aspects.METAL, 3).add(Aspects.CLOTH, 2).add(Aspects.GREED, 2)
