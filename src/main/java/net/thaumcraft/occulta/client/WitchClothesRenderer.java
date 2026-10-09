@@ -88,14 +88,21 @@ public class WitchClothesRenderer implements ArmorRenderer {
         boneco.baba = peça.is(OccultaItems.BABAS_HAT);
         boneco.ombreiras = roupa.necro();
 
-        int cor = roupa.dyeable() ? cor(peça, roupa) : 0xFFFFFFFF;
+        int cor = cor(peça, roupa);
         coletor.submitModel(boneco, estado, pose, RenderTypes.armorCutoutNoCull(FOLHA), luz,
                 OverlayTexture.NO_OVERLAY, cor, null, 0, null);
     }
 
-    /** A cor desta peça: a que lhe deram, ou a de fábrica. */
+    /**
+     * A cor desta peça: a que lhe deram, ou a de fábrica.
+     *
+     * <p>E a de fábrica vale <b>sempre</b> nas que não se tingem, que é a conta do {@code getColor} do
+     * original: as Chinelas de Rubi devolvem o vermelho delas mesmo que alguém lhes ponha tinta, e o
+     * Chapéu da Baba fica no couro cru do jogo.
+     */
     private static int cor(ItemStack peça, WitchClothesItem roupa) {
-        var tinta = peça.get(net.minecraft.core.component.DataComponents.DYED_COLOR);
+        var tinta = roupa.dyeable()
+                ? peça.get(net.minecraft.core.component.DataComponents.DYED_COLOR) : null;
         int rgb = tinta == null ? roupa.corDeFábrica() : tinta.rgb();
         return 0xFF000000 | (rgb & 0xFFFFFF);
     }
@@ -116,20 +123,26 @@ public class WitchClothesRenderer implements ArmorRenderer {
             if (onde.hasChild(qual)) onde.getChild(qual).visible = sim;
         }
 
+        /**
+         * O que cada casa mostra, pela conta do original — que é a de três casas e não de quatro:
+         * a <b>cabeça</b> mostra a cabeça e o chapéu; o <b>peito</b> mostra o corpo e os braços; e os
+         * <b>pés</b> mostram as <b>pernas</b>, no mesmo boneco inchado do peito.
+         */
         @Override
         public void setupAnim(HumanoidRenderState estado) {
             super.setupAnim(estado);
             boolean naCabeça = this.casa == EquipmentSlot.HEAD;
+            boolean nosPés = this.casa == EquipmentSlot.FEET;
             this.head.visible = naCabeça;
             this.hat.visible = false;
-            this.body.visible = !naCabeça;
-            this.rightArm.visible = this.leftArm.visible = !naCabeça;
-            this.rightLeg.visible = this.leftLeg.visible = false;
+            this.body.visible = !naCabeça && !nosPés;
+            this.rightArm.visible = this.leftArm.visible = !naCabeça && !nosPés;
+            this.rightLeg.visible = this.leftLeg.visible = nosPés;
 
             this.mostra(this.head, "hat", naCabeça && !this.baba);
             this.mostra(this.head, "baba", naCabeça && this.baba);
-            this.mostra(this.rightArm, "shoulder", !naCabeça && this.ombreiras);
-            this.mostra(this.leftArm, "shoulder", !naCabeça && this.ombreiras);
+            this.mostra(this.rightArm, "shoulder", !naCabeça && !nosPés && this.ombreiras);
+            this.mostra(this.leftArm, "shoulder", !naCabeça && !nosPés && this.ombreiras);
         }
     }
 

@@ -11396,3 +11396,71 @@ estados, e quais deles recusam um bicho; o Evaporar, que seca a água aberta e d
 que funde o que tem receita e deixa o que não tem; **as quatro recusas do Diabrete e o papel que não se
 gasta**; o Frasco que prende os sete papéis; e as cinco receitas. E o `OccultaDemonContractClientTest`,
 com duas fotos — os sete na barra e um deles na mão.
+
+## O calçado do ofício (2026-10-09)
+
+Três pares de sapatos, e os três são a mesma ideia levada a lugares diferentes: um calçado que **muda o
+chão por onde se passa**.
+
+### Chinelas de Gelo
+
+As quatro casas de chão em volta dos pés: a **água vira gelo** e a **lava vira obsidiana**. E é a lava que
+lhes custa — uma vez em dez, o par apanha um ponto de desgaste.
+
+Repare na diferença para o Caminhar no Gelo do jogo: este não põe gelo frágil que derrete, põe **gelo**, e a
+obsidiana que faz da lava **fica**. Quem anda com elas deixa um rasto que não se desfaz — um caminho de
+pedra sobre o lago e uma ponte sobre o rio de lava, e as duas coisas continuam lá quando ele voltar.
+
+### Sapatos Escorridos
+
+Com os pés no chão, tiram o **veneno** e o **definhar** de quem os traz — e o que tiraram não se perde:
+**escorre** para o chão à volta, três de raio, e aduba tudo o que lá estiver como se fosse farinha de osso.
+
+É a melhor ideia do calçado do mod. O veneno não se cura: **muda de dono**. Quem os traz anda fazendo um
+jardim do que o envenenou.
+
+### Chinelas de Rubi
+
+São a única peça de equipamento do mod inteiro que se usa **falando**. Calça-se o par, diz-se **«não há
+lugar como o nosso lar»** no chat, e quem as traz vai para casa — a cama de quem é, por **oitenta** de
+infusão e **meia hora** de espera.
+
+Mas há um atalho, e é ele que faz delas o que são: havendo uma **Pedra de Caminho presa largada no chão** a
+três blocos, elas vão **para onde ela aponta** em vez de para casa — por quarenta, com **um minuto** de
+espera, e **gastando a pedra**. Quem traz um punhado de pedras presas no bolso anda pelo mundo a uma frase
+por minuto.
+
+E **uma vez em cem** a coisa sai torta: em vez de ir para onde queria, a pessoa é atirada ao acaso, como se
+tivesse pisado uma Sarça do Vazio. É o original lembrando de quem são os sapatos.
+
+### A cor de cada um, e um engano corrigido
+
+O `getColor` do original dá um número por peça: azul-claro para as de Gelo, azul-escuro para os Escorridos,
+**vermelho sempre** para as de Rubi — que aceitam tinta e a ignoram — e, para as que se tingem e não foram
+tingidas, o castanho quase preto das roupas.
+
+E há uma peça que ele trata de outro modo, e que este porte estava desenhando mal: o **Chapéu da Baba**.
+Ele **não se tinge**, e por isso o original lhe devolve o `super.getColor`, que é o **couro cru do jogo** —
+não o castanho quase preto. A troca do castanho só vale para as peças que **se tingem**. Aqui ele estava
+saindo **sem cor nenhuma**, por causa de uma linha que dizia «não se tinge, então não pinta». Está
+corrigido: a cor de fábrica vale sempre, e a tinta só nas que a aceitam.
+
+### Desvios declarados
+
+1. **O desenho dos pés usa o boneco do peito.** O `getArmorModel` do original escolhe o boneco inchado por
+   sessenta e um centésimos para o **peito** e para os **pés**, e o de quarenta e cinco para a **cabeça** e
+   as **pernas** — e depois mostra, na casa dos pés, as **pernas** desse boneco. É uma conta estranha e é
+   dele; fica como está.
+
+2. **O salto torto é o da Sarça do Vazio.** O original manda, na vez em cem, um salto de quinhentos
+   blocos; aqui corre o mesmo `teleportAway` que a Sarça do Vazio já corria, que é o salto do original com
+   o alcance dele.
+
+3. **Fica de fora, por depender do que não existe:** os **três cintos**. O Cinto Mordedor pede o **Piolho
+   Parasita**, o Cinto de Casca pede o Cinto Mordedor, e o Cinturão de Gulg cai do Gulg mas é roupa de
+   goblin. Os três vêm quando o piolho vier.
+
+**Guardas:** o `OccultaFootwearGameTest`, com cinco — o gelo e a obsidiana, e o desgaste que só a lava dá;
+o veneno que só sai com os pés no chão e só com os sapatos; a frase, que só pega quem as calça e aceita
+maiúsculas, apóstrofo e o resto da fala atrás; as três cores de fábrica e qual delas aceita tinta; e duas
+receitas. E o `OccultaFootwearClientTest`, com quatro fotos — os três na barra e cada par calçado.

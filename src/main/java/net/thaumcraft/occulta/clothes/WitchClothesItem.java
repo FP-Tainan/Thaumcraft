@@ -34,15 +34,36 @@ public class WitchClothesItem extends Item {
      */
     public static final int DEFAULT_COLOR = 2628115;
 
+    /**
+     * E o <b>couro cru do jogo</b>, que é o {@code 10511680} do {@code ItemArmor.getColor}.
+     *
+     * <p>Ele importa a uma peça só: o <b>Chapéu da Baba</b>, que não se tinge. A conta do original é esta —
+     * a peça que <b>se tinge</b> e não foi tingida troca o couro cru pelo castanho quase preto; a que
+     * <b>não se tinge</b> fica com o couro cru.
+     */
+    public static final int LEATHER_COLOR = 10511680;
+
     private final boolean dyeable;
     private final boolean necro;
     private final String tip;
+    private final int corDeFábrica;
 
     public WitchClothesItem(Properties propriedades, boolean dyeable, boolean necro, String tip) {
+        this(propriedades, dyeable, necro, tip, DEFAULT_COLOR);
+    }
+
+    /**
+     * E com cor própria, que é o que o <b>calçado</b> precisa: o {@code getColor} do original devolve um
+     * número por peça — azul-claro para as Chinelas de Gelo, azul-escuro para os Sapatos Escorridos e
+     * vermelho para as de Rubi.
+     */
+    public WitchClothesItem(Properties propriedades, boolean dyeable, boolean necro, String tip,
+                            int corDeFábrica) {
         super(propriedades);
         this.dyeable = dyeable;
         this.necro = necro;
         this.tip = tip;
+        this.corDeFábrica = corDeFábrica;
     }
 
     /** Se esta peça aceita tinta: todas menos o Chapéu da Baba. */
@@ -57,7 +78,7 @@ public class WitchClothesItem extends Item {
 
     /** A cor desta peça quando ninguém a pintou. */
     public int corDeFábrica() {
-        return DEFAULT_COLOR;
+        return this.corDeFábrica;
     }
 
     @Override

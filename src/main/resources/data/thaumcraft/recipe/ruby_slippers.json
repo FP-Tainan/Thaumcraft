@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "aba",
+    "tst",
+    "aba"
+  ],
+  "key": {
+    "s": "thaumcraft:seeping_shoes",
+    "t": "thaumcraft:golden_thread",
+    "a": "thaumcraft:attuned_stone",
+    "b": "thaumcraft:infernal_blood"
+  },
+  "result": {
+    "id": "thaumcraft:ruby_slippers",
+    "count": 1
+  }
+}

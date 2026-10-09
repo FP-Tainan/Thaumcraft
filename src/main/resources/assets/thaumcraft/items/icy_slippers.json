@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/icy_slippers",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -8934913
+      }
+    ]
+  }
+}

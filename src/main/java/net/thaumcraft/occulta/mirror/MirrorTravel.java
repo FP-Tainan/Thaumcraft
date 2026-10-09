@@ -372,6 +372,11 @@ public final class MirrorTravel {
     /** Onde a cantiga se ouve. */
     public static void init() {
         net.fabricmc.fabric.api.message.v1.ServerMessageEvents.ALLOW_CHAT_MESSAGE.register(
-                (mensagem, quem, tipo) -> !chant(quem, mensagem.signedContent()));
+                (mensagem, quem, tipo) -> {
+                    // duas falas pegam no chat: a cantiga do espelho e a frase das Chinelas de Rubi
+                    if (chant(quem, mensagem.signedContent())) return false;
+                    return !net.thaumcraft.occulta.clothes.RubySlippers.falou(
+                            quem, mensagem.signedContent());
+                });
     }
 }

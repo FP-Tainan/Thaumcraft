@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/seeping_shoes",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -14522829
+      }
+    ]
+  }
+}

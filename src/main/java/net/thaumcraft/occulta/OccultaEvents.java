@@ -48,6 +48,9 @@ public final class OccultaEvents {
                     net.thaumcraft.occulta.torment.Torment.tick(level, quem);
                     // e o Evaporar do contrato, que o original corre de vinte em vinte também
                     net.thaumcraft.occulta.demon.ImpBlessings.evapora(level, quem);
+                    // e o calçado do ofício, que muda o chão por onde passa
+                    net.thaumcraft.occulta.clothes.WitchFootwear.gelo(level, quem);
+                    net.thaumcraft.occulta.clothes.WitchFootwear.escorre(level, quem);
                 }
             }
         });

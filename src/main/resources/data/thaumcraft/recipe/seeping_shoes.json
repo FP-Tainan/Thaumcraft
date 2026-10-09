@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "lsl",
+    "hrh",
+    "mmm"
+  ],
+  "key": {
+    "l": "thaumcraft:impregnated_leather",
+    "s": "thaumcraft:golden_thread",
+    "h": "thaumcraft:witch_hand",
+    "r": "thaumcraft:redstone_soup",
+    "m": "minecraft:milk_bucket"
+  },
+  "result": {
+    "id": "thaumcraft:seeping_shoes",
+    "count": 1
+  }
+}

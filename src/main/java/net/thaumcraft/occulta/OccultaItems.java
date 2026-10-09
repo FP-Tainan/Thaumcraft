@@ -1430,14 +1430,46 @@ public final class OccultaItems {
     public static final Item REFILLING_CHEST = register("refilling_chest", properties ->
             new BlockItem(OccultaBlocks.REFILLING_CHEST, properties.useBlockDescriptionPrefix()));
 
-    /** Uma peça de roupa de bruxa: couro, tingível (menos a da Baba), e o que ela diz na mão. */
+    /**
+     * O <b>calçado do ofício</b>: três pares de sapatos de bruxa, que são da mesma família das roupas e
+     * têm cada um a sua cor de fábrica.
+     *
+     * <p>As <b>Chinelas de Rubi</b> são as únicas que <b>não se tingem</b> de verdade: o original aceita a
+     * tinta e depois devolve sempre o mesmo vermelho. Aqui elas simplesmente não a aceitam, que dá no
+     * mesmo e não engana ninguém na bancada.
+     */
+    public static final Item ICY_SLIPPERS = witchFootwear("icy_slippers", true, 7842303,
+            "tc.icyslippers.tip;tc.icyslippers.tip2");
+
+    public static final Item SEEPING_SHOES = witchFootwear("seeping_shoes", true, 2254387,
+            "tc.seepingshoes.tip;tc.seepingshoes.tip2");
+
+    public static final Item RUBY_SLIPPERS = witchFootwear("ruby_slippers", false, 14483456,
+            "tc.rubyslippers.tip;tc.rubyslippers.tip2;tc.rubyslippers.tip3");
+
+    /** Um par de sapatos de bruxa: couro, da cor que o original lhe dá, e o que ele diz na mão. */
+    private static Item witchFootwear(String nome, boolean tingível, int cor, String dica) {
+        return register(nome, properties -> new net.thaumcraft.occulta.clothes.WitchClothesItem(
+                properties.humanoidArmor(OccultaMaterials.WITCH, ArmorType.BOOTS)
+                        .rarity(net.minecraft.world.item.Rarity.UNCOMMON),
+                tingível, false, dica, cor));
+    }
+
+    /**
+     * Uma peça de roupa de bruxa: couro, tingível (menos a da Baba), e o que ela diz na mão.
+     *
+     * <p>A <b>cor de fábrica</b> é a do original: a peça que se tinge e não foi tingida fica no castanho
+     * quase preto, e a que <b>não se tinge</b> — o Chapéu da Baba — fica no <b>couro cru do jogo</b>.
+     */
     private static Item witchClothes(String nome, ArmorType casa, boolean tingível, boolean necro,
                                      String dica) {
         return register(nome, properties -> new net.thaumcraft.occulta.clothes.WitchClothesItem(
                 properties.humanoidArmor(OccultaMaterials.WITCH, casa)
                         .rarity(tingível ? net.minecraft.world.item.Rarity.UNCOMMON
                                 : net.minecraft.world.item.Rarity.EPIC),
-                tingível, necro, dica));
+                tingível, necro, dica,
+                tingível ? net.thaumcraft.occulta.clothes.WitchClothesItem.DEFAULT_COLOR
+                        : net.thaumcraft.occulta.clothes.WitchClothesItem.LEATHER_COLOR));
     }
 
     /** Uma peça de roupa de caçador: couro para proteger, ferro para durar, e tingível. */

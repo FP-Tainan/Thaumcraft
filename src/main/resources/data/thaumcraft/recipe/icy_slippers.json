@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "lsl",
+    "l#l",
+    "dod"
+  ],
+  "key": {
+    "l": "thaumcraft:impregnated_leather",
+    "s": "thaumcraft:golden_thread",
+    "#": "thaumcraft:frozen_heart",
+    "d": "thaumcraft:diamond_vapour",
+    "o": "thaumcraft:odour_of_purity"
+  },
+  "result": {
+    "id": "thaumcraft:icy_slippers",
+    "count": 1
+  }
+}

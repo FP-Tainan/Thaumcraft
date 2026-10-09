@@ -224,6 +224,15 @@ public final class OccultaAspects {
                     .add(Aspects.BEAST, 1).add(Aspects.ARMOR, 1).add(Aspects.MAGIC, 1));
             r.item("thaumcraft:witch_hat", new AspectList().add(Aspects.CLOTH, 6)
                     .add(Aspects.BEAST, 5).add(Aspects.ARMOR, 5).add(Aspects.MAGIC, 5));
+            r.item("thaumcraft:icy_slippers", new AspectList().add(Aspects.CLOTH, 2)
+                    .add(Aspects.BEAST, 2).add(Aspects.ARMOR, 3).add(Aspects.MAGIC, 2)
+                    .add(Aspects.COLD, 4));
+            r.item("thaumcraft:ruby_slippers", new AspectList().add(Aspects.CLOTH, 2)
+                    .add(Aspects.BEAST, 2).add(Aspects.ARMOR, 3).add(Aspects.MAGIC, 2)
+                    .add(Aspects.ELDRITCH, 3));
+            r.item("thaumcraft:seeping_shoes", new AspectList().add(Aspects.CLOTH, 2)
+                    .add(Aspects.BEAST, 2).add(Aspects.ARMOR, 3).add(Aspects.MAGIC, 2)
+                    .add(Aspects.POISON, 2));
             r.item("thaumcraft:babas_hat", new AspectList().add(Aspects.CLOTH, 4)
                     .add(Aspects.BEAST, 2).add(Aspects.ARMOR, 5).add(Aspects.MAGIC, 5)
                     .add(Aspects.ELDRITCH, 3));

@@ -3672,5 +3672,17 @@
   "tc.occulta.imp.spell.toomuchpower": "<%s> Too much POWER to think!",
   "effect.thaumcraft.imp_fire_touch": "Fiery Touch",
   "effect.thaumcraft.imp_evaporation": "Evaporation",
-  "effect.thaumcraft.imp_melting_touch": "Melting Touch"
+  "effect.thaumcraft.imp_melting_touch": "Melting Touch",
+  "item.thaumcraft.icy_slippers": "Icy Slippers",
+  "item.thaumcraft.seeping_shoes": "Seeping Shoes",
+  "item.thaumcraft.ruby_slippers": "Ruby Slippers",
+  "tc.icyslippers.tip": "Cool to the touch.",
+  "tc.icyslippers.tip2": "Freezes nearby water and turns lava to obsidian (damages shoes)",
+  "tc.seepingshoes.tip": "Cave spider's bane.",
+  "tc.seepingshoes.tip2": "Removes poison effects while standing on the ground",
+  "tc.rubyslippers.tip": "There's no place like home.",
+  "tc.rubyslippers.tip2": "Teleport using a waystone dropped on the ground (1 min cooldown)",
+  "tc.rubyslippers.tip3": "Teleport to bed (30 min cooldown)",
+  "tc.rite.noplacelikehome": "there's no place like home",
+  "tc.rite.slippersoncooldown": "Nothing happens (wait %s minute(s))."
 }

@@ -3670,5 +3670,17 @@
   "tc.occulta.imp.spell.toomuchpower": "<%s> PODER demais para pensar!",
   "effect.thaumcraft.imp_fire_touch": "Toque de Fogo",
   "effect.thaumcraft.imp_evaporation": "Evaporação",
-  "effect.thaumcraft.imp_melting_touch": "Toque de Fundir"
+  "effect.thaumcraft.imp_melting_touch": "Toque de Fundir",
+  "item.thaumcraft.icy_slippers": "Chinelas de Gelo",
+  "item.thaumcraft.seeping_shoes": "Sapatos Escorridos",
+  "item.thaumcraft.ruby_slippers": "Chinelas de Rubi",
+  "tc.icyslippers.tip": "Frias ao toque.",
+  "tc.icyslippers.tip2": "Congelam a água perto e viram a lava em obsidiana (gasta os sapatos)",
+  "tc.seepingshoes.tip": "A ruína da aranha das cavernas.",
+  "tc.seepingshoes.tip2": "Tiram o veneno de quem os traz, com os pés no chão",
+  "tc.rubyslippers.tip": "Não há lugar como o nosso lar.",
+  "tc.rubyslippers.tip2": "Levam por uma Pedra de Caminho largada no chão (um minuto de espera)",
+  "tc.rubyslippers.tip3": "Levam para a cama (meia hora de espera)",
+  "tc.rite.noplacelikehome": "não há lugar como o nosso lar",
+  "tc.rite.slippersoncooldown": "Não acontece nada (espera %s minuto(s))."
 }

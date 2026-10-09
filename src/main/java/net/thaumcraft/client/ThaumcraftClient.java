@@ -439,7 +439,10 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaItems.WITCH_HAT,
                 net.thaumcraft.occulta.OccultaItems.BABAS_HAT,
                 net.thaumcraft.occulta.OccultaItems.WITCH_ROBES,
-                net.thaumcraft.occulta.OccultaItems.NECROMANCERS_ROBES);
+                net.thaumcraft.occulta.OccultaItems.NECROMANCERS_ROBES,
+                net.thaumcraft.occulta.OccultaItems.ICY_SLIPPERS,
+                net.thaumcraft.occulta.OccultaItems.SEEPING_SHOES,
+                net.thaumcraft.occulta.OccultaItems.RUBY_SLIPPERS);
 
         // o Ars Occulta: os três fetiches, dois de boneco e um de folha cruzada
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
