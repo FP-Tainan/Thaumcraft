@@ -379,6 +379,7 @@
       "net.thaumcraft.test.client.OccultaSpectralStoneClientTest",
       "net.thaumcraft.test.client.OccultaTreefydClientTest",
       "net.thaumcraft.test.client.OccultaInfusionClientTest",
+      "net.thaumcraft.test.client.OccultaInsanityClientTest",
       "net.thaumcraft.test.client.OccultaWickerManClientTest",
       "net.thaumcraft.test.client.OccultaStockadeClientTest",
       "net.thaumcraft.test.client.OccultaLeechChestClientTest",

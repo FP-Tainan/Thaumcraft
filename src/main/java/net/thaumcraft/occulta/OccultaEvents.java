@@ -188,19 +188,37 @@ public final class OccultaEvents {
     }
 
     /**
-     * <b>Guardar o Que Se Bebeu</b>: o {@code PotionKeepEffectsOnDeath}.
+     * O que atravessa a morte: o trecho do {@code WitcheryPotions.EventHooks} que corre em quem morreu.
      *
-     * <p>Ela se guarda a si mesma junto com as outras, e é a única coisa boa de morrer com o caldeirão cheio.
+     * <p>São <b>duas regras</b>, e não uma. A primeira não depende de nada: as poções
+     * {@linkplain OccultaEffects#permanente permanentes} do ofício atravessam sempre, e <b>por isso</b> elas
+     * existem — afundar, enlouquecer, ferver e sonhar acordado não se resolvem morrendo.
      *
-     * <p>Quem a tem é marcado com o apego {@link #GUARDADAS}; quem o lê é o {@code COPY_FROM}, que corre
+     * <p>A segunda é o <b>Guardar o Que Se Bebeu</b>: quem o tem leva também as poções <b>boas</b>, e só as
+     * que estiverem <b>no grau dele ou abaixo</b>. Ela se guarda a si mesma junto com as outras, e é a única
+     * coisa boa de morrer com o caldeirão cheio.
+     *
+     * <p>O que vai é marcado com o apego {@link #GUARDADAS}; quem o lê é o {@code COPY_FROM}, que corre
      * quando o jogador novo toma o lugar do velho.
      */
     private static void keepEffects(LivingEntity quemMorreu) {
         if (!(quemMorreu instanceof net.minecraft.world.entity.player.Player gente)) return;
-        if (!gente.hasEffect(OccultaEffects.KEEP_EFFECTS_ON_DEATH)) return;
+        var tudo = gente.getActiveEffects();
+        if (tudo.isEmpty()) return;
+
+        // sem o Guardar, o teto é -1: nem o grau zero cabe nele
+        var guardar = gente.getEffect(OccultaEffects.KEEP_EFFECTS_ON_DEATH);
+        int até = guardar != null ? guardar.getAmplifier() : -1;
 
         java.util.List<net.minecraft.world.effect.MobEffectInstance> levou = new java.util.ArrayList<>();
-        for (var tem : gente.getActiveEffects()) levou.add(new net.minecraft.world.effect.MobEffectInstance(tem));
+        for (var tem : tudo) {
+            boolean vai = OccultaEffects.permanente(tem.getEffect())
+                    || (tem.getEffect().value().getCategory()
+                            != net.minecraft.world.effect.MobEffectCategory.HARMFUL
+                        && até >= tem.getAmplifier());
+            if (vai) levou.add(new net.minecraft.world.effect.MobEffectInstance(tem));
+        }
+        if (levou.isEmpty()) return;
         gente.setAttached(GUARDADAS, levou);
     }
 

@@ -878,6 +878,165 @@ public final class OccultaEffects {
         if (tinha == null || tinha != grau) quem.setAttached(COR, grau);
     }
 
+    // ------------------------------------------------------------------ as quatro que atravessam a morte
+
+    /*
+     * As quatro poções que o original marca com setPermenant(), e são as únicas: quem morre com uma delas no
+     * corpo acorda com ela. São também as quatro que o caldeirão ainda não cozia neste porte, e as três
+     * primeiras são o que o Leonard precisa de ter à mão para lançar.
+     *
+     * O corpo de três delas é o mesmo da maldição do mesmo nome — o original escreve esse mesmo corpo duas
+     * vezes, palavra por palavra, uma no PotionX e outra no handleCurseEffects. Aqui é um só, no Curse, e o que
+     * muda de um lado para o outro é apenas quando ele é chamado.
+     */
+
+    /**
+     * <b>Afundar</b>: o {@code PotionSinking}.
+     *
+     * <p>Dentro da água, descer é mais rápido e subir é mais devagar — e com armadura isso é afogar. Em
+     * <b>gente</b> ela aperta a cada batida: a queda na água ganha <b>metade a mais</b>, e mais cinco
+     * centésimos por grau até dois décimos. Em <b>bicho</b> ela só morde de segundo em segundo, e aí a conta é
+     * um décimo por grau mais dois, até quatro décimos, para baixo e para cima.
+     *
+     * <p>E há o outro lado dela, que é o que faz dela uma arma e não um incômodo: quem <b>voa</b> e não está
+     * no criativo é puxado para baixo a dois décimos por batida. Não lhe tira o voo — tira-lhe a altura.
+     *
+     * <p><b>Um desvio declarado:</b> no original isto corre do lado de <b>quem joga</b>, porque em 2014 era de
+     * lá que se mexia na queda de alguém. Aqui corre do lado do servidor, e o empurrão viaja com a marca de
+     * pancada — que é o jeito de hoje de dizer ao cliente que o movimento dele mudou. É o mesmo desvio do
+     * Nado, e pela mesma razão.
+     */
+    public static final Holder<MobEffect> SINKING = register("sinking",
+            new MobEffect(MobEffectCategory.HARMFUL, 0x1F3A68) {
+                @Override
+                public boolean applyEffectTick(ServerLevel level, LivingEntity quem, int grau) {
+                    if (quem instanceof Player gente) {
+                        afundaGente(gente, grau);
+                        return true;
+                    }
+                    if (level.getGameTime() % 20L == 3L) afundaBicho(quem, grau);
+                    return true;
+                }
+
+                @Override
+                public boolean shouldApplyEffectTickThisTick(int restante, int grau) {
+                    return true;
+                }
+            });
+
+    /** O lado dela que pega em gente, e que morde a cada batida. */
+    public static void afundaGente(Player gente, int grau) {
+        Vec3 anda = gente.getDeltaMovement();
+        if (gente.isInWater()) {
+            if (anda.y < -0.03 && !gente.onGround()) {
+                afunda(gente, anda.y * (1.5 + Math.min(0.05 * grau, 0.2)));
+            }
+        } else if (!gente.getAbilities().instabuild && gente.getAbilities().mayfly
+                && gente.getAbilities().flying) {
+            afunda(gente, -0.2);
+        }
+    }
+
+    /** E o que pega em bicho, que só morde de segundo em segundo. */
+    public static void afundaBicho(LivingEntity quem, int grau) {
+        if (!quem.isInWater()) return;
+        Vec3 anda = quem.getDeltaMovement();
+        double quanto = Math.min(0.1 * (grau + 2), 0.4);
+        if (anda.y < 0.0) afunda(quem, anda.y * (1.0 + quanto));
+        else if (anda.y > 0.0) afunda(quem, anda.y * (1.0 - quanto));
+    }
+
+    /** Põe a subida ou a descida naquele valor, e manda isso a quem estiver olhando de fora. */
+    private static void afunda(LivingEntity quem, double quanto) {
+        Vec3 anda = quem.getDeltaMovement();
+        quem.setDeltaMovement(anda.x, quanto, anda.z);
+        quem.hurtMarked = true;
+    }
+
+    /**
+     * <b>Insanidade</b>: o {@code PotionInsanity}.
+     *
+     * <p>De segundo em segundo, um sorteio: uma em trinta e cinco no primeiro grau, uma em vinte e cinco a
+     * partir do terceiro, e nasce perto de quem a tem uma <b>visão</b> — um creeper, uma aranha ou um zumbi
+     * que <b>não existem</b>, entre quatro e nove blocos de distância. Eles batem, assustam e não deixam nada;
+     * quem os vê não tem como saber disso.
+     *
+     * <p>E <b>do quarto grau em diante</b> há o outro lado: uma em vinte, um <b>barulho</b> — um estouro ou um
+     * enderman — que só quem a tem ouve, e no lugar onde ele está. Não há nada lá.
+     *
+     * <p><b>Ela não diz o nome.</b> Na lista de efeitos do inventário ela aparece com um nome <b>falso</b>, que
+     * troca a cada três segundos entre sete piadas do original. Quem faz isso é o
+     * {@code EffectsInInventoryInsanityMixin}; o nome de verdade dela existe e é usado em todo lugar onde não é
+     * essa lista.
+     */
+    public static final Holder<MobEffect> INSANITY = register("insanity",
+            new MobEffect(MobEffectCategory.HARMFUL, 0x6E3B8C) {
+                @Override
+                public boolean applyEffectTick(ServerLevel level, LivingEntity quem, int grau) {
+                    if (quem instanceof Player gente) {
+                        net.thaumcraft.occulta.curse.Curse.loucura(level, gente, grau + 1);
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean shouldApplyEffectTickThisTick(int restante, int grau) {
+                    return restante % 20 == 13;
+                }
+            });
+
+    /**
+     * <b>Superaquecimento</b>: o {@code PotionOverheating}.
+     *
+     * <p>Pega fogo sozinho — mas <b>só onde é quente</b>. O original pede três coisas ao mesmo tempo: o bioma
+     * com temperatura de <b>um e meio</b> ou mais (que é deserto, savana, terras áridas e o Nether), não estar
+     * chovendo ali, e não estar na água. É o que faz desta poção uma coisa que se resolve <b>andando para o
+     * norte</b>, e isso é de propósito.
+     *
+     * <p>O sorteio é de cinco em cinco batidas, e aí uma em trinta no primeiro grau, uma em vinte a partir do
+     * terceiro. Dá de um a quatro segundos de fogo, mais quanto maior o grau.
+     */
+    public static final Holder<MobEffect> OVERHEATING = register("overheating",
+            new MobEffect(MobEffectCategory.HARMFUL, 0xD35400) {
+                @Override
+                public boolean applyEffectTick(ServerLevel level, LivingEntity quem, int grau) {
+                    if (level.getGameTime() % 5L == 3L) {
+                        net.thaumcraft.occulta.curse.Curse.fervura(level, quem, grau + 1);
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean shouldApplyEffectTickThisTick(int restante, int grau) {
+                    return true;
+                }
+            });
+
+    /**
+     * <b>Pesadelo Acordado</b>: o {@code PotionWakingNightmare}.
+     *
+     * <p>Ele vem, e não espera o sono. De segundo em segundo, uma em cento e oitenta no primeiro grau e uma em
+     * trinta a partir do quinto, nasce um <b>Pesadelo</b> entre dois e seis blocos de quem a tem — e um de cada
+     * vez, que é o que o original garante olhando dezesseis blocos em volta antes de chamar outro.
+     *
+     * <p>E <b>não acontece no Mundo dos Sonhos</b>: lá o pesadelo já é a casa.
+     */
+    public static final Holder<MobEffect> WAKING_NIGHTMARE = register("waking_nightmare",
+            new MobEffect(MobEffectCategory.HARMFUL, 0x2C1A3E) {
+                @Override
+                public boolean applyEffectTick(ServerLevel level, LivingEntity quem, int grau) {
+                    if (quem instanceof Player gente) {
+                        net.thaumcraft.occulta.curse.Curse.pesadelo(level, gente, grau + 1);
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean shouldApplyEffectTickThisTick(int restante, int grau) {
+                    return restante % 20 == 3;
+                }
+            });
+
     // ------------------------------------------------------------------ o que os contratos dão
 
     /**
@@ -927,8 +1086,26 @@ public final class OccultaEffects {
                 || qual == COLORFUL || qual == DISEASED || qual == FEEL_NO_PAIN || qual == ILL_FITTING
                 || qual == MORTAL_COIL || qual == PARALYSIS || qual == QUEASY || qual == WRAPPED_IN_VINE
                 || qual == ENSLAVED
+                // e as quatro que atravessam a morte, que são todas incuráveis no original
+                || qual == SINKING || qual == INSANITY || qual == OVERHEATING || qual == WAKING_NIGHTMARE
                 // e os três do Diabrete, que no original nem poções são
                 || qual == IMP_FIRE_TOUCH || qual == IMP_EVAPORATION || qual == IMP_MELTING_TOUCH;
+    }
+
+    /**
+     * As que <b>atravessam a morte</b>: o {@code setPermenant} do original, e são exatamente seis.
+     *
+     * <p>Quem morre com uma delas no corpo <b>acorda com ela</b>, sem precisar de nada. As outras só
+     * atravessam se quem morreu tiver o <b>Guardar o Que Se Bebeu</b> — e, mesmo então, só as <b>boas</b> e só
+     * até o grau dele. O Guardar está nesta lista porque <b>se guarda a si mesmo</b>: sem isso, morrer uma vez
+     * o gastaria.
+     *
+     * <p>Repare que quatro das seis são ruins, e é o feitio da coisa: o que o ofício põe em alguém de
+     * propósito não se resolve morrendo.
+     */
+    public static boolean permanente(Holder<MobEffect> qual) {
+        return qual == SINKING || qual == INSANITY || qual == OVERHEATING || qual == WAKING_NIGHTMARE
+                || qual == ILL_FITTING || qual == KEEP_EFFECTS_ON_DEATH;
     }
 
     public static void init() {

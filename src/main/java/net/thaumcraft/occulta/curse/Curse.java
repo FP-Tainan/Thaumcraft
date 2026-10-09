@@ -25,17 +25,17 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * As <b>maldições</b> do ofício: as quatro etiquetas que o {@code Infusion.EventHooks} do Witchery põe em quem
- * foi amaldiçoado, e o que elas fazem a cada batida.
+ * As <b>maldições</b> do ofício: as cinco etiquetas que o {@code Infusion.EventHooks} do Witchery põe em quem
+ * foi amaldiçoado, e o que elas fazem de segundo em segundo.
  *
  * <p>Uma maldição não é um efeito de poção. Ela é um <b>número guardado em quem a tem</b>, que não acaba
  * sozinho, não sai com leite, e não aparece no canto da tela. Só outro rito a tira — e tirar é uma
  * <b>aposta</b>, que pode deixá-la pior.
  *
- * <p>São quatro, e cada uma morde de um jeito:
+ * <p>São cinco, e cada uma morde de um jeito:
  *
  * <table border="1">
- *   <caption>As quatro</caption>
+ *   <caption>As cinco</caption>
  *   <tr><th>maldição</th><th>o que faz</th></tr>
  *   <tr><td><b>Maldição</b></td><td>azar: pancada, lentidão, fraqueza, cegueira — e <b>largar o que se tem
  *       na mão</b></td></tr>
@@ -43,10 +43,16 @@ import java.util.Map;
  *   <tr><td><b>Pesadelo Acordado</b></td><td>o <b>Pesadelo</b> aparece, acordado, à procura de quem o
  *       tem</td></tr>
  *   <tr><td><b>Loucura</b></td><td>vê bichos que <b>não existem</b>, e ouve coisas que não estão lá</td></tr>
+ *   <tr><td><b>Afundar</b></td><td>na água, desce mais rápido e sobe mais devagar</td></tr>
  * </table>
  *
- * <p>O grau importa em tudo: quanto mais fundo, mais vezes, mais forte e mais variado. E <b>só o Pesadelo
- * Acordado e a Loucura pegam em gente</b> — as outras duas pegam em qualquer vivo.
+ * <p>O grau importa em tudo: quanto mais fundo, mais vezes, mais forte e mais variado. E <b>cada uma pega
+ * no seu</b>: o Pesadelo Acordado e a Loucura só em gente, o azar e a Fervura em qualquer vivo, e o
+ * <b>Afundar em tudo menos gente</b> — que é um engano do original, contado onde ele está.
+ *
+ * <p><b>E elas mordem de segundo em segundo</b>, não a cada batida: o {@code handleCurseEffects} está,
+ * nos dois lugares de onde é chamado, dentro de um {@code counter % 20 == 0}. Quem o chama aqui é o
+ * {@code LivingEntityCurseMixin}, com o mesmo compasso.
  */
 public enum Curse implements StringRepresentable {
     /** O {@code witcheryCursed}: o azar que se cola. */
@@ -217,8 +223,11 @@ public enum Curse implements StringRepresentable {
      * <p>O original pede três coisas ao mesmo tempo: o bioma com temperatura <b>1,5 ou mais</b> (que é
      * deserto, savana, terras áridas e Nether), <b>não estar chovendo</b> ali, e não estar na água. É o que
      * faz desta maldição uma coisa que se resolve <b>andando para o norte</b> — e isso é de propósito.
+     *
+     * <p>E este corpo serve a dois: a maldição e a poção do <b>Superaquecimento</b>, que o original escreve
+     * duas vezes, palavra por palavra. O que muda de um lado para o outro é só <b>quando</b> ele é chamado.
      */
-    private static void fervura(ServerLevel level, LivingEntity quem, int grau) {
+    public static void fervura(ServerLevel level, LivingEntity quem, int grau) {
         if (grau <= 0 || quem.isOnFire()) return;
         int cada = grau > 2 ? 20 : (grau > 1 ? 25 : 30);
         if (level.getRandom().nextInt(cada) != 0) return;
@@ -237,8 +246,10 @@ public enum Curse implements StringRepresentable {
      *
      * <p>Um Pesadelo de cada vez por pessoa — o original olha dezesseis blocos em volta antes de chamar outro.
      * E <b>não acontece no Mundo dos Sonhos</b>: lá o pesadelo já é a casa.
+     *
+     * <p>Serve a dois: a maldição e a poção do <b>Pesadelo Acordado</b>.
      */
-    private static void pesadelo(ServerLevel level, Player quem, int grau) {
+    public static void pesadelo(ServerLevel level, Player quem, int grau) {
         if (grau <= 0) return;
         if (level.dimension() == net.thaumcraft.occulta.spirit.SpiritWorld.LEVEL) return;
         int cada = grau > 4 ? 30 : (grau > 2 ? 60 : 180);
@@ -257,8 +268,10 @@ public enum Curse implements StringRepresentable {
      * <p>Um em cada trinta e cinco batidas no grau um, vinte e cinco a partir do três. E <b>a partir do grau
      * quatro</b> há o outro lado dela: um em cada vinte, um <b>barulho</b> — um estouro, ou um enderman — que
      * só quem a tem ouve. Não há nada lá.
+     *
+     * <p>Serve a dois: a maldição e a poção da <b>Insanidade</b>.
      */
-    private static void loucura(ServerLevel level, Player quem, int grau) {
+    public static void loucura(ServerLevel level, Player quem, int grau) {
         if (grau <= 0) return;
         int cada = grau > 2 ? 25 : (grau > 1 ? 30 : 35);
         if (level.getRandom().nextInt(cada) == 0) {

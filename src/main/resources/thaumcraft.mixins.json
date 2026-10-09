@@ -70,7 +70,8 @@
     "LivingEntityRendererWerewolfMixin",
     "MinecraftHowlMixin",
     "LivingEntityRendererVampireMixin",
-    "MinecraftVampirePowerMixin"
+    "MinecraftVampirePowerMixin",
+    "EffectsInInventoryInsanityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

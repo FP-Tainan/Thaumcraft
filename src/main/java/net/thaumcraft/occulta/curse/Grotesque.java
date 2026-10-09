@@ -17,8 +17,8 @@ import net.thaumcraft.Thaumcraft;
 /**
  * O <b>Cozimento do Grotesco</b>: o {@code witcheryGrotesque} do Witchery.
  *
- * <p>Bebe-se, e por <b>um minuto</b> quem o bebeu fica insuportável de se chegar perto: tudo o que for vivo e
- * estiver a menos de <b>quatro blocos</b> é <b>empurrado para longe</b>, sem parar, enquanto durar.
+ * <p>Bebe-se, e por <b>quatro minutos</b> quem o bebeu fica insuportável de se chegar perto: tudo o que for
+ * vivo e estiver a menos de <b>quatro blocos</b> é <b>empurrado para longe</b>, sem parar, enquanto durar.
  *
  * <p>Não é dano e não é medo — é só distância. E é por isso que ele é o ingrediente das maldições: para
  * amaldiçoar alguém não se precisa de força, precisa-se de que ninguém chegue perto do círculo.
@@ -27,7 +27,14 @@ import net.thaumcraft.Thaumcraft;
  * <b>bruxas</b>. O quarto é o <b>demônio</b>, que não está portado.
  */
 public final class Grotesque {
-    /** Quanto tempo dura: o minuto do original. */
+    /**
+     * Quantas <b>contagens</b> dura: as mil e duzentas do original.
+     *
+     * <p>E não são batidas: a contagem do original corre <b>de quatro em quatro</b>, porque o
+     * {@code handleBrewGrotesqueEffect} vive dentro de um {@code counter % 4 == 0}. Mil e duzentas contagens
+     * são, então, <b>quatro mil e oitocentas batidas</b> — quatro minutos, e não um. O autor escreveu 1200
+     * querendo um minuto e ficou com quatro; o número é dele, e fica.
+     */
     public static final int DURA = 1200;
 
     /** E até onde ele empurra. */
@@ -36,7 +43,7 @@ public final class Grotesque {
     /** A força do empurrão. */
     public static final double EMPURRÃO = 0.3;
 
-    /** Quantas batidas restam a quem o bebeu. */
+    /** Quantas contagens restam a quem o bebeu. */
     public static final AttachmentType<Integer> DATA = AttachmentRegistry.<Integer>builder()
             .initializer(() -> 0)
             .persistent(Codec.INT)
@@ -54,13 +61,14 @@ public final class Grotesque {
         quem.setAttached(DATA, DURA);
     }
 
-    /** Quantas batidas ainda faltam. */
+    /** Quantas contagens ainda faltam. */
     public static int resta(Player quem) {
         return quem.getAttachedOrCreate(DATA);
     }
 
     /**
-     * A batida: empurra o que estiver perto, e conta o tempo.
+     * A contagem: empurra o que estiver perto, e conta o tempo. Quem a chama é o
+     * {@code LivingEntityCurseMixin}, de quatro em quatro batidas.
      *
      * <p>O empurrão é <b>na linha que sai de quem bebeu</b>, e não para um lado qualquer: é o
      * {@code RiteProtectionCircleRepulsive.push} do original, que o Grotesco reaproveita.

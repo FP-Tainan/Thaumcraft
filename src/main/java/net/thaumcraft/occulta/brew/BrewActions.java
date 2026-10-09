@@ -143,6 +143,11 @@ public final class BrewActions {
             return this.effect;
         }
 
+        /** E qual ele põe <b>invertido</b>, que nos mais deles é a mesma. */
+        public Holder<MobEffect> invertedEffect() {
+            return this.invertedEffect;
+        }
+
         @Override
         public boolean augmentCapacity(BrewCapacity espaço) {
             return espaço.consume(this.weight);

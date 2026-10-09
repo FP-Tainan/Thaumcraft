@@ -144,12 +144,18 @@ public class OccultaSummonRitesGameTest {
         BlockPos meio = helper.absolutePos(new BlockPos(3, 2, 3));
 
         /*
-         * E antes de tudo, <b>varrer os camelos do mundo</b> à volta: o chamado alcança cento e vinte e oito
-         * blocos e traz <b>dois</b> por volta, de modo que um deserto com uma caravana lá dentro enche a cota
-         * antes de chegar ao nosso. Nenhuma outra prova usa camelos, e por isso os que houver são do mundo.
+         * E antes de tudo, <b>mandar os camelos do mundo para longe</b>: o chamado alcança cento e vinte e
+         * oito blocos e traz <b>dois</b> por volta, de modo que um deserto com uma caravana lá dentro enche a
+         * cota antes de chegar ao nosso. Nenhuma outra prova usa camelos, e por isso os que houver são do
+         * mundo.
+         *
+         * <p>E não basta descartá-los: um bicho descartado <b>continua na lista</b> até o fim da batida, e o
+         * rito, que corre dentro desta mesma batida, ainda o vê e gasta a cota com ele. Mudá-los de lugar
+         * tira-os da caixa na hora, porque a caixa se pergunta ao corpo do bicho e não ao índice.
          */
         for (var qualquer : level.getEntitiesOfClass(net.minecraft.world.entity.animal.camel.Camel.class,
                 new net.minecraft.world.phys.AABB(meio).inflate(Rites.CallCreatures.ALCANCE))) {
+            qualquer.snapTo(meio.getX() + 10000.0, meio.getY(), meio.getZ() + 10000.0, 0.0f, 0.0f);
             qualquer.discard();
         }
 
@@ -159,12 +165,14 @@ public class OccultaSummonRitesGameTest {
             return;
         }
         /*
-         * Longe do círculo, mas <b>dentro da arena desta prova</b>: a suíte corre num mundo só, e o que se
-         * largue a quarenta blocos cai dentro da arena de outra prova, que o varre quando se arruma. O que
-         * este rito pede é que o bicho esteja mais longe do que o {@link Rites.CallCreatures#PERTO_DEMAIS},
-         * que são pouco mais de cinco blocos — e o alcance de cento e vinte e oito está provado logo abaixo.
+         * Longe do círculo, mas <b>dentro da arena desta prova</b>, e é por isso que ele vai ao alto: a
+         * arena tem oito por oito de chão, e a quina dela está a <b>trinta e dois</b> do meio ao quadrado —
+         * que é exatamente o {@link Rites.CallCreatures#PERTO_DEMAIS}, e perto demais não se chama. Três
+         * blocos acima, a conta dá quarenta e um, com folga, e o bicho cai num dos quatro cantos <b>de
+         * cima</b> do rito. Posto fora da arena, ele cairia na de outra prova — ou num pedaço de mundo que
+         * ninguém carregou.
          */
-        bicho.snapTo(meio.getX() + 10.0, meio.getY() - 1.0, meio.getZ() + 10.0, 0.0f, 0.0f);
+        bicho.snapTo(meio.getX() + 4.0, meio.getY() + 3.0, meio.getZ() + 4.0, 0.0f, 0.0f);
         bicho.setPersistenceRequired();
         level.addFreshEntity(bicho);
 

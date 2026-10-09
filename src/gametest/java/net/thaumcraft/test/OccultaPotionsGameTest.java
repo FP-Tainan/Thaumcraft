@@ -392,4 +392,238 @@ public class OccultaPotionsGameTest {
         quemBate.discard();
         helper.succeed();
     }
+
+    // ------------------------------------------------------------ as quatro que atravessam a morte
+
+    /** Põe aquele punhado de poções à prova de uma pergunta só, sem o barulho do molde. */
+    @SuppressWarnings("unchecked")
+    private static net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> poção(
+            net.minecraft.core.Holder<?> qual) {
+        return (net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>) qual;
+    }
+
+    /**
+     * <b>Seis atravessam a morte, e são estas seis.</b>
+     *
+     * <p>É a prova que carrega a fatia, porque a lista é o que a fatia é: o {@code setPermenant} do original
+     * está em exatamente seis poções, e quem morre com uma delas acorda com ela sem precisar de nada. Se
+     * alguma entrar ou sair desta lista por descuido, a morte passa a devolver o que não devia — ou a comer o
+     * que não podia.
+     */
+    @GameTest(maxTicks = 20)
+    public void sixCrossDeathAndTheyAreTheseSix(GameTestHelper helper) {
+        for (var qual : new net.minecraft.core.Holder[]{
+                OccultaEffects.SINKING, OccultaEffects.INSANITY, OccultaEffects.OVERHEATING,
+                OccultaEffects.WAKING_NIGHTMARE, OccultaEffects.ILL_FITTING,
+                OccultaEffects.KEEP_EFFECTS_ON_DEATH}) {
+            if (!OccultaEffects.permanente(poção(qual))) {
+                helper.fail(poção(qual).getRegisteredName() + " atravessa a morte no original");
+                return;
+            }
+        }
+
+        // e nada mais atravessa: nem o Guardar o Que Se Levou, que é o irmão do que atravessa
+        for (var qual : new net.minecraft.core.Holder[]{
+                OccultaEffects.FORTUNE, OccultaEffects.KEEP_INVENTORY, OccultaEffects.CHILLED,
+                OccultaEffects.MORTAL_COIL}) {
+            if (OccultaEffects.permanente(poção(qual))) {
+                helper.fail("mas " + poção(qual).getRegisteredName() + " não");
+                return;
+            }
+        }
+
+        // e as quatro novas são também quatro que o leite não tira
+        for (var qual : new net.minecraft.core.Holder[]{
+                OccultaEffects.SINKING, OccultaEffects.INSANITY, OccultaEffects.OVERHEATING,
+                OccultaEffects.WAKING_NIGHTMARE}) {
+            if (!OccultaEffects.incurable(poção(qual))) {
+                helper.fail("e o leite não tira " + poção(qual).getRegisteredName());
+                return;
+            }
+        }
+        helper.succeed();
+    }
+
+    /**
+     * <b>O Afundar puxa o bicho para baixo e o segura na subida.</b>
+     *
+     * <p>Um décimo por grau mais dois, até quatro décimos — e a prova mede os dois sentidos no mesmo bicho,
+     * porque é a diferença entre eles que afoga.
+     *
+     * <p>Ela espera umas batidas antes de medir: um bicho que acabou de nascer <b>ainda não sabe</b> que está
+     * na água, porque a marca de molhado se põe na batida dele.
+     */
+    @GameTest(maxTicks = 60)
+    public void sinkingPullsAMobDownAndHoldsItUp(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        for (int x = 1; x < 6; x++) {
+            for (int z = 1; z < 6; z++) {
+                level.setBlockAndUpdate(helper.absolutePos(new BlockPos(x, 1, z)),
+                        Blocks.STONE.defaultBlockState());
+                level.setBlockAndUpdate(helper.absolutePos(new BlockPos(x, 2, z)),
+                        Blocks.WATER.defaultBlockState());
+                level.setBlockAndUpdate(helper.absolutePos(new BlockPos(x, 3, z)),
+                        Blocks.WATER.defaultBlockState());
+            }
+        }
+        var peixe = helper.spawn(EntityTypes.COD, new BlockPos(3, 3, 3));
+
+        helper.runAfterDelay(10, () -> {
+            if (!peixe.isInWater()) {
+                peixe.discard();
+                helper.fail("o peixe tinha de estar na água");
+                return;
+            }
+
+            peixe.setDeltaMovement(0.0, -0.5, 0.0);
+            OccultaEffects.afundaBicho(peixe, 0);
+            double desce = peixe.getDeltaMovement().y;
+            if (Math.abs(desce - -0.5 * 1.2) > 1.0e-9) {
+                peixe.discard();
+                helper.fail("o grau zero desce vinte por cento mais depressa: deu " + desce);
+                return;
+            }
+
+            peixe.setDeltaMovement(0.0, 0.5, 0.0);
+            OccultaEffects.afundaBicho(peixe, 9);
+            double sobe = peixe.getDeltaMovement().y;
+            if (Math.abs(sobe - 0.5 * 0.6) > 1.0e-9) {
+                peixe.discard();
+                helper.fail("e o teto segura quatro décimos da subida: deu " + sobe);
+                return;
+            }
+
+            peixe.discard();
+            helper.succeed();
+        });
+    }
+
+    /**
+     * <b>E tira a altura de quem voa.</b>
+     *
+     * <p>É o que faz dela uma arma: não desliga o voo — desce com ele a dois décimos por batida, e só em quem
+     * não está no criativo.
+     */
+    @GameTest(maxTicks = 40)
+    public void sinkingTakesTheHeightOfWhoeverFlies(GameTestHelper helper) {
+        piso(helper);
+        var quem = helper.makeMockServerPlayerInLevel();
+        quem.setGameMode(GameType.SURVIVAL);
+        quem.snapTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(3.5, 6, 3.5)));
+        quem.getAbilities().instabuild = false;
+        quem.getAbilities().mayfly = true;
+        quem.getAbilities().flying = true;
+
+        quem.setDeltaMovement(0.0, 0.0, 0.0);
+        OccultaEffects.afundaGente(quem, 0);
+        if (quem.getDeltaMovement().y != -0.2) {
+            helper.fail("quem voa desce a dois décimos: deu " + quem.getDeltaMovement().y);
+            return;
+        }
+
+        // e no criativo ela não ousa
+        quem.getAbilities().instabuild = true;
+        quem.setDeltaMovement(0.0, 0.0, 0.0);
+        OccultaEffects.afundaGente(quem, 0);
+        if (quem.getDeltaMovement().y != 0.0) helper.fail("mas no criativo, não");
+        helper.succeed();
+    }
+
+    /**
+     * <b>A Insanidade chama visões, e as visões não existem.</b>
+     *
+     * <p>A prova chama o corpo dela umas quantas vezes porque o sorteio é de <b>uma em vinte e cinco</b> no
+     * terceiro grau; o que ela mede é que o que nasce é uma das <b>três</b> ilusões e que ela tem quem a vê
+     * por vítima.
+     */
+    @GameTest(maxTicks = 60)
+    public void insanityCallsVisionsThatDoNotExist(GameTestHelper helper) {
+        piso(helper);
+        ServerLevel level = helper.getLevel();
+        var quem = helper.makeMockServerPlayerInLevel();
+        quem.setGameMode(GameType.SURVIVAL);
+        quem.snapTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(3.5, 2, 3.5)));
+
+        net.thaumcraft.occulta.curse.IllusionEntity visão = null;
+        for (int volta = 0; volta < 400 && visão == null; volta++) {
+            net.thaumcraft.occulta.curse.Curse.loucura(level, quem, 3);
+            for (var achada : level.getEntitiesOfClass(net.thaumcraft.occulta.curse.IllusionEntity.class,
+                    quem.getBoundingBox().inflate(12.0, 8.0, 12.0),
+                    net.minecraft.world.entity.Entity::isAlive)) {
+                if (achada.vitima() == quem) {
+                    visão = achada;
+                    break;
+                }
+            }
+        }
+        if (visão == null) {
+            helper.fail("quatrocentas voltas no terceiro grau e nenhuma visão: o sorteio é uma em vinte e cinco");
+            return;
+        }
+        boolean dasTrês = visão.getType() == net.thaumcraft.occulta.OccultaEntities.ILLUSION_CREEPER
+                || visão.getType() == net.thaumcraft.occulta.OccultaEntities.ILLUSION_SPIDER
+                || visão.getType() == net.thaumcraft.occulta.OccultaEntities.ILLUSION_ZOMBIE;
+
+        // varre tudo o que nasceu, que de outro jeito vai passear na arena do lado
+        for (var achada : level.getEntitiesOfClass(net.thaumcraft.occulta.curse.IllusionEntity.class,
+                quem.getBoundingBox().inflate(16.0, 10.0, 16.0))) {
+            achada.discard();
+        }
+        if (!dasTrês) {
+            helper.fail("e é uma das três");
+            return;
+        }
+        helper.succeed();
+    }
+
+    /**
+     * <b>O Superaquecimento não ferve onde chove.</b>
+     *
+     * <p>A arena não é um deserto, e por isso o que esta prova mede é o lado que dá para medir: que ele
+     * <b>não</b> pega fogo onde o bioma é temperado, por muitas voltas que se dê. O outro lado — o fogo no
+     * deserto — é a conta de temperatura do bioma, e essa não se finge numa arena.
+     */
+    @GameTest(maxTicks = 60)
+    public void overheatingDoesNotBoilWhereItIsMild(GameTestHelper helper) {
+        piso(helper);
+        ServerLevel level = helper.getLevel();
+        var porco = helper.spawn(EntityTypes.PIG, new BlockPos(3, 2, 3));
+        float quente = level.getBiome(porco.blockPosition()).value().getBaseTemperature();
+        if (quente < 1.5f) {
+            for (int volta = 0; volta < 400; volta++) {
+                net.thaumcraft.occulta.curse.Curse.fervura(level, porco, 5);
+            }
+            if (porco.isOnFire()) {
+                porco.discard();
+                helper.fail("num bioma de " + quente + " ele não ferve, e pegou fogo");
+                return;
+            }
+        }
+        // caindo num bioma quente, a prova não tem o que dizer — e não finge que tem
+        porco.discard();
+        helper.succeed();
+    }
+
+    /** <b>E as quatro se cozem</b>: cada uma tem o seu ingrediente na panela. */
+    @GameTest(maxTicks = 20)
+    public void theFourThatCrossDeathAreAlsoBrews(GameTestHelper helper) {
+        for (var qual : new net.minecraft.core.Holder[]{
+                OccultaEffects.SINKING, OccultaEffects.OVERHEATING, OccultaEffects.WAKING_NIGHTMARE,
+                OccultaEffects.INSANITY}) {
+            boolean achou = false;
+            for (var ação : BrewRegistry.all().values()) {
+                if (!(ação instanceof net.thaumcraft.occulta.brew.BrewActions.Potion cozimento)) continue;
+                // a Insanidade é o lado invertido da Gota de Sorte, e não o direito
+                if (cozimento.effect() == qual || cozimento.invertedEffect() == qual) {
+                    achou = true;
+                    break;
+                }
+            }
+            if (!achou) {
+                helper.fail("falta o cozimento de " + poção(qual).getRegisteredName());
+                return;
+            }
+        }
+        helper.succeed();
+    }
 }

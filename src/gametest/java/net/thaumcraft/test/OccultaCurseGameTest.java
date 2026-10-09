@@ -156,7 +156,7 @@ public class OccultaCurseGameTest {
         helper.succeed();
     }
 
-    /** O Grotesco dura um minuto e empurra o que chega perto. */
+    /** O Grotesco dura quatro minutos (mil e duzentas contagens de quatro batidas) e empurra o que chega perto. */
     @GameTest(maxTicks = 40)
     public void theGrotesqueBrewPushesWhatComesClose(GameTestHelper helper) {
         piso(helper);
@@ -177,7 +177,7 @@ public class OccultaCurseGameTest {
         if (porco.getDeltaMovement().horizontalDistanceSqr() <= 0.0) {
             helper.fail("o que chega a quatro blocos é empurrado");
         }
-        if (Grotesque.resta(quem) != Grotesque.DURA - 1) helper.fail("e o minuto corre");
+        if (Grotesque.resta(quem) != Grotesque.DURA - 1) helper.fail("e a contagem corre");
 
         porco.discard();
         helper.succeed();

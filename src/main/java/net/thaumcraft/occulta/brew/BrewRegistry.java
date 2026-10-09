@@ -251,15 +251,39 @@ public final class BrewRegistry {
                 net.thaumcraft.occulta.OccultaEffects.REINCARNATE, mins(3), 6));
         register(new BrewActions.Potion(Items.EMERALD, new BrewName.Text("tc.brew.resizing"), 2500,
                 net.thaumcraft.occulta.OccultaEffects.RESIZING, secs(20), 6));
+        /*
+         * A Gota de Sorte dá duas coisas opostas, e é por isso que ela é a mais caprichosa da panela: direita,
+         * a Perícia de Cozimento, que faz coser melhor; invertida, a Insanidade — e quem a inverteu por
+         * descuido passa os três minutos seguintes vendo bichos que não existem.
+         */
         register(new BrewActions.Potion(OccultaItems.DROP_OF_LUCK,
-                new BrewName.Text("tc.brew.potionmaster"), 5000,
-                net.thaumcraft.occulta.OccultaEffects.BREWING_EXPERTISE, mins(6), GRAVE));
+                new BrewName.Text("tc.brew.potionmaster", "tc.brew.insanity"), 5000,
+                net.thaumcraft.occulta.OccultaEffects.BREWING_EXPERTISE, mins(6),
+                net.thaumcraft.occulta.OccultaEffects.INSANITY, mins(3), GRAVE));
         register(new BrewActions.Potion(OccultaItems.FOCUSED_WILL,
                 new BrewName.Text("tc.brew.keepinventory"), 10000,
                 net.thaumcraft.occulta.OccultaEffects.KEEP_INVENTORY, mins(6), 8));
         register(new BrewActions.Potion(OccultaItems.REDSTONE_SOUP,
                 new BrewName.Text("tc.brew.keepeffects"), 10000,
                 net.thaumcraft.occulta.OccultaEffects.KEEP_EFFECTS_ON_DEATH, mins(6), 8));
+
+        // -------------------------------------------- e as que atravessam a morte, com ingrediente próprio
+        /*
+         * Das quatro que atravessam a morte, estas três têm ingrediente só delas: a que afunda, a que ferve
+         * e a que traz o pesadelo. A quarta, a Insanidade, entra pelo lado invertido da Gota de Sorte, acima.
+         *
+         * Nenhuma delas se tira com leite, e nenhuma delas se resolve morrendo — é o que o setPermenant do
+         * original quer dizer.
+         */
+        register(new BrewActions.Potion(OccultaItems.DISTURBED_COTTON,
+                new BrewName.Text("tc.brew.sinking"), 3000,
+                net.thaumcraft.occulta.OccultaEffects.SINKING, mins(3), GRAVE));
+        register(new BrewActions.Potion(OccultaItems.EMBER_MOSS,
+                new BrewName.Text("tc.brew.overheating"), 3000,
+                net.thaumcraft.occulta.OccultaEffects.OVERHEATING, mins(3), GRAVE));
+        register(new BrewActions.Potion(OccultaItems.MELLIFLUOUS_HUNGER,
+                new BrewName.Text("tc.brew.wakingnightmare"), 10000,
+                net.thaumcraft.occulta.OccultaEffects.WAKING_NIGHTMARE, mins(3), GRAVE));
 
         // ------------------------------------------------------------ os efeitos que mexem no lugar
         // só acontecem no cozimento atirado, porque é aí que há um lugar onde ele bateu

@@ -11957,3 +11957,99 @@ preço dela. Falta só a **Teia Densa**, que espera o frasco que se atira.
 ovelha que vale por todas e o creeper que vale por um**; o dono que o faz crescer e o filho que herda a
 lista; o estranho que não lhe toca; a semente, que o planta com dono e deixa a erva alta no lugar; e a
 receita, que dá duas. E o `OccultaTreefydClientTest`, com ele de frente, de lado e de cima.
+
+## As quatro poções que atravessam a morte (2026-10-09)
+
+O Witchery marca seis poções com `setPermenant()`, e o que isso quer dizer é simples e grande: **quem morre
+com uma delas no corpo acorda com ela**, sem precisar de nada. Duas estavam portadas — a Mal Ajustada e o
+Guardar o Que Se Bebeu, que se guarda a si mesmo. As outras quatro não, e três delas são o que o **Leonard**
+precisa de ter à mão para lançar.
+
+- **Afundar** (algodão perturbado): na água, descer é mais rápido e subir é mais devagar. Em gente aperta a
+  cada batida; em bicho, de segundo em segundo. E **tira a altura de quem voa** — dois décimos por batida, em
+  quem não está no criativo. Não desliga o voo; só não deixa que ele sirva.
+- **Insanidade** (a Gota de Sorte **invertida**): de segundo em segundo nasce perto de quem a tem uma
+  **visão** — um creeper, uma aranha ou um zumbi que não existem — e, do quarto grau em diante, um **barulho**
+  que só ele ouve.
+- **Superaquecimento** (musgo de brasa): pega fogo sozinho, mas **só onde é quente**, a céu aberto e fora da
+  água. É a poção que se resolve **andando para o norte**, e isso é de propósito.
+- **Pesadelo Acordado** (Fome Melíflua): o Pesadelo vem, e não espera o sono. Um de cada vez por pessoa, e
+  nunca no Mundo dos Sonhos — lá ele já é a casa.
+
+### O corpo é um, e não dois
+
+Três destas quatro já existiam neste porte **como maldição**, porque o original escreve o mesmo corpo duas
+vezes, palavra por palavra: uma no `PotionX` e outra no `handleCurseEffects`. Aqui é **um só**, no `Curse`, e o
+que muda de um lado para o outro é apenas **quando** ele é chamado — a maldição tem o compasso do gancho, e a
+poção tem o seu.
+
+E os compassos são os do original, que não são o mesmo: a Insanidade sorteia quando `duração % 20 == 13`, o
+Superaquecimento de cinco em cinco batidas, o Pesadelo Acordado quando `tempo % 20 == 3`, e o Afundar a cada
+batida em gente mas de segundo em segundo em bicho.
+
+### E a Insanidade mente sobre o que é
+
+Na lista de efeitos do inventário ela **não diz o próprio nome**. Mostra uma de **sete piadas** do original, e
+troca de piada a cada três segundos — «Com Sabor de Queijo», «Tonsurada de Nabo», «Piu-Piu». Quem olha a lista
+enquanto a tem vê o nome mudar à frente dos olhos, e é essa a melhor parte da poção.
+
+Hoje isso é um remendo de tela, o `EffectsInInventoryInsanityMixin`, no `getEffectName` do
+`EffectsInInventory`. O grau não vai no nome, como no original, que desenha a linha inteira à mão. O nome de
+verdade dela existe e aparece em todo lugar onde não é esta lista.
+
+### Três consertos que vieram com elas
+
+**1. As maldições mordiam vinte vezes por segundo.** O `handleCurseEffects` do original está, nos **dois**
+lugares de onde é chamado, dentro de um `counter % 20 == 0` — ele corre **de segundo em segundo**. Este porte
+chamava o `Curse.tick` a **cada batida**, e por isso todas as cinco maldições eram vinte vezes mais frequentes
+do que deviam: o azar (que é um em vinte) caía uma vez por segundo em vez de uma vez a cada vinte, e a Fervura
+e a Loucura na mesma proporção. Agora o `LivingEntityCurseMixin` tem o compasso do original.
+
+**2. O Grotesco durava um quarto do que devia.** O `handleBrewGrotesqueEffect` vive dentro de um
+`counter % 4 == 0`, e é lá que a contagem de mil e duzentas é **descontada**. Mil e duzentas contagens de
+quatro batidas são **quatro mil e oitocentas batidas** — quatro minutos, e não um. O autor escreveu 1200
+querendo um minuto e ficou com quatro; o número é dele, e fica. Aqui o empurrão passou a ser de quatro em
+quatro batidas, e com ele o minuto virou os quatro que o original dá.
+
+**E um terceiro, menor:** o **Guardar o Que Se Bebeu** guardava tudo. No original são duas regras: as
+permanentes atravessam **sempre**, e as outras só atravessam se forem **boas** e estiverem **no grau** de quem
+tem o Guardar. Agora são duas regras aqui também — o que significa que um Enregelado de grau cinco não
+atravessa a morte de quem tem o Guardar de grau um, e que um veneno nunca atravessa.
+
+### Uma falha antiga que a tela desta fatia mostrou
+
+Nenhuma poção do ofício tem **ícone**. Na 1.7.10 isso era o certo: o `PotionBase` do Witchery não escreve
+`getStatusIconIndex`, de modo que as quase sessenta poções dele apareciam na lista **sem desenho nenhum**,
+só com o nome. No jogo de hoje não há «sem desenho»: faltando o `textures/mob_effect/<nome>.png`, o jogo
+desenha o quadriculado roxo de textura perdida — que é pior do que o nada do original.
+
+Isso vale para as **quarenta e tal** poções do ofício já portadas, e não só para estas quatro; é anterior a
+esta fatia e fica para uma sua, porque são quarenta e tal desenhos. A tela da Insanidade mostra o
+quadriculado, e mostra de propósito: é o que há hoje.
+
+### Desvios declarados
+
+1. **O Afundar corre do lado do servidor.** No original ele corre do lado de **quem joga**, porque em 2014 era
+   de lá que se mexia na queda de alguém. Aqui o empurrão sai do servidor e viaja com a **marca de pancada**,
+   que é o jeito de hoje de dizer ao cliente que o movimento dele mudou. É o mesmo desvio do **Nado**, e pela
+   mesma razão.
+
+2. **O Pesadelo Acordado conta pesadelos e não nomes.** O original pergunta pelo **nome da vítima** gravado em
+   cada Pesadelo a dezesseis blocos; aqui basta **haver um** Pesadelo a dezesseis blocos para não chamar
+   outro, porque o Pesadelo portado não guarda vítima. O efeito em jogo é o mesmo em tudo menos num caso: dois
+   amaldiçoados lado a lado, que aqui dividem um pesadelo em vez de terem um cada.
+
+3. **A cor delas é escolhida, e não calculada.** No original a cor de uma poção é o `hashCode` do nome dela em
+   inglês, o que dá uma cor arbitrária que ninguém escolheu. Aqui as quatro têm cor escolhida — o azul fundo
+   do afundar, o roxo da insanidade, o laranja da fervura e o quase-preto do pesadelo. Vale para todas as
+   poções deste porte, e é a primeira vez que fica escrito.
+
+4. **O cozimento ritualizado não existe aqui.** No original estes quatro são `BrewCurseEffect`, e o que isso
+   acrescenta é um caso só: feito em **ritual com frasco de vínculo**, o cozimento dura dez mil tiques e não
+   solta pó. Este porte não tem o caminho do cozimento ritualizado — nenhum dos seus cozimentos o tem — e por
+   isso os quatro entram como cozimento comum, como a Doença e o Grotesco já entravam.
+
+**Guardas:** no `OccultaPotionsGameTest`, seis — a **lista das seis que atravessam a morte**, que é o que a
+fatia é; o Afundar que puxa o peixe para baixo e o segura na subida; o Afundar que tira a altura de quem voa e
+não ousa no criativo; a Insanidade que chama uma das três visões e lhe dá a vítima certa; o Superaquecimento
+que não ferve onde o bioma é temperado; e as quatro que se cozem, uma delas pelo lado invertido.
