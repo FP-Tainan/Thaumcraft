@@ -139,6 +139,14 @@ public final class OccultaComponents {
             builder -> builder.persistent(com.mojang.serialization.Codec.INT)
                     .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
 
+    /**
+     * O desenho que um <b>Talismã de Círculo</b> guarda: três números de três bits, um por anel, como
+     * o dano do item do original.
+     */
+    public static final DataComponentType<Integer> CIRCLE_RINGS = register("circle_rings",
+            builder -> builder.persistent(com.mojang.serialization.Codec.INT)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
+
     private OccultaComponents() {
     }
 

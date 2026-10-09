@@ -3690,5 +3690,18 @@
   "tc.bitingbelt.tip": "Morde quem morde.",
   "tc.bitingbelt.tip2": "Guarda duas poções e dá uma por pancada levada",
   "tc.barkbelt.tip": "Casca que se junta sozinha.",
-  "tc.barkbelt.tip2": "Junta carga em grama ou micélio e apara golpes com ela"
+  "tc.barkbelt.tip2": "Junta carga em grama ou micélio e apara golpes com ela",
+  "item.thaumcraft.circle_talisman": "Talismã de Círculo",
+  "item.thaumcraft.circle_talisman.written": "%s (%s)",
+  "tc.circletalisman.tip": "Um rito o enche com o círculo em que se está; um clique o desenha noutro lugar.",
+  "tc.circletalisman.small.1": "Ritual Pequeno",
+  "tc.circletalisman.small.2": "Alhures Pequeno",
+  "tc.circletalisman.small.3": "Infernal Pequeno",
+  "tc.circletalisman.medium.1": "Ritual Médio",
+  "tc.circletalisman.medium.2": "Alhures Médio",
+  "tc.circletalisman.medium.3": "Infernal Médio",
+  "tc.circletalisman.large.1": "Ritual Grande",
+  "tc.circletalisman.large.2": "Alhures Grande",
+  "tc.circletalisman.large.3": "Infernal Grande",
+  "tc.rite.bindcircle": "Rito de Prender o Círculo"
 }

@@ -1066,6 +1066,52 @@ public final class Rites {
      * <p>É o rito mais simples que há: o que se ofereceu some, e no meio do círculo fica <b>aquilo</b>. É assim
      * que se faz um Espelho, que não sai de bancada nenhuma.
      */
+    /**
+     * <b>Prender o círculo a um talismã</b>: o {@code RiteBindCircleToTalisman} do Witchery.
+     *
+     * <p>É o único rito do mod que <b>não pede círculo nenhum</b>, e por uma razão que é a sua: ele
+     * <b>lê</b> o círculo em que está. Qualquer desenho serve, porque o desenho é a pergunta.
+     *
+     * <p>Ele olha os três anéis, vê qual giz riscou cada um <b>inteiro</b> — um anel de gizes misturados
+     * não conta — e escreve os três no talismã, que fica a saber desenhar aquele círculo noutro lugar.
+     *
+     * <p>E então <b>apaga o coração do círculo</b>, que é o que fecha o ritual: o círculo que se guardou
+     * no talismã deixa de estar no chão.
+     */
+    public record BindCircle() implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                var anéis = net.thaumcraft.occulta.RitualCircles.read(level, onde);
+                int guardado = net.thaumcraft.occulta.CircleTalismanItem.empacota(
+                        puro(anéis.inner()), puro(anéis.middle()), puro(anéis.outer()));
+
+                Block.popResource(level, onde.above(),
+                        net.thaumcraft.occulta.CircleTalismanItem.escrito(guardado));
+                level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
+                        onde.getZ() + 0.5, 48, 0.5, 1.0, 0.5, 0.1);
+                level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
+                if (guardado > 0) level.removeBlock(onde, false);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+
+        /**
+         * Qual giz riscou este anel <b>inteiro</b>: o {@code getExclusiveMetadataValue} do original.
+         *
+         * <p>Um anel de gizes misturados devolve <b>zero</b> — e é por isso que o talismã só guarda
+         * círculos puros.
+         */
+        private static int puro(net.thaumcraft.occulta.RitualCircles.Ring anel) {
+            if (anel.ritual() == anel.total()) return net.thaumcraft.occulta.CircleTalismanItem.RITUAL;
+            if (anel.otherwhere() == anel.total()) return net.thaumcraft.occulta.CircleTalismanItem.ALHURES;
+            if (anel.infernal() == anel.total()) return net.thaumcraft.occulta.CircleTalismanItem.INFERNAL;
+            return net.thaumcraft.occulta.CircleTalismanItem.NENHUM;
+        }
+    }
+
     public record SummonItem(java.util.function.Supplier<ItemStack> what) implements Rite {
         @Override
         public List<RiteStep> steps(int coven) {
@@ -2663,6 +2709,19 @@ public final class Rites {
                 new Sacrifice.Items(Items.OBSIDIAN,
                         net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * O <b>Rito de Prender o Círculo</b>, que é o único que não pede círculo: ele lê o que houver.
+         * Um talismã em branco, pó de redstone e mil de poder, e sai o carimbo daquele desenho.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.bindcircle",
+                new BindCircle(),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.CIRCLE_TALISMAN,
+                                Items.REDSTONE),
+                        new Sacrifice.Power(1000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // a Pedra Sintonizada Carregada, que é o que os ritos grandes pedem

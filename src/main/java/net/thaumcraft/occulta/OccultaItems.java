@@ -1430,6 +1430,16 @@ public final class OccultaItems {
     public static final Item REFILLING_CHEST = register("refilling_chest", properties ->
             new BlockItem(OccultaBlocks.REFILLING_CHEST, properties.useBlockDescriptionPrefix()));
 
+    /**
+     * O <b>Talismã de Círculo</b>: o carimbo que desenha um círculo inteiro de uma vez.
+     *
+     * <p>Em branco ele não faz nada; cheio por um rito, risca os três anéis que o rito leu. Empilha-se
+     * em dezesseis, como no original.
+     */
+    public static final Item CIRCLE_TALISMAN = register("circle_talisman", properties ->
+            new CircleTalismanItem(properties.stacksTo(16)
+                    .rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
+
     // ------------------------------------------------------------------ o piolho e os dois cintos
 
     /**

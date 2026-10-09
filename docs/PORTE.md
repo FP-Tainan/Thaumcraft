@@ -11541,3 +11541,55 @@ terceira; a mordida, que passa a poção **uma vez**; **para onde cada poção v
 carrega a fatia; o piolho da mochila, que fala primeiro e cala o cinto; e o Cinto de Casca inteiro — o
 teto que cresce com o conjunto, o golpe aparado, o golpe que não se apara sem carga e a espada de pau que
 passa na mesma. E o `OccultaLouseClientTest`, com quatro fotos.
+
+## O Talismã de Círculo (2026-10-09)
+
+Um **carimbo de círculo**. Um rito o enche com o desenho do círculo em que se está — qual giz riscou cada
+um dos três anéis — e depois ele desenha esse círculo inteiro noutro lugar, com um clique.
+
+Quem faz rituais sabe por que isto existe: um círculo de três anéis são **oitenta e quatro** glifos
+riscados um a um, de joelhos, e o giz gasta-se. O talismã é o que torna um ritual uma coisa que **se
+repete** em vez de uma coisa que se constrói.
+
+### O rito que o enche
+
+É o **único rito do mod que não pede círculo nenhum**, e por uma razão que é a sua: ele **lê** o círculo em
+que está. Qualquer desenho serve, porque o desenho é a pergunta.
+
+Ele olha os três anéis, vê qual giz riscou cada um **inteiro** — um anel de gizes misturados não conta — e
+escreve os três no talismã. E então **apaga o coração do círculo**, que é o que fecha o ritual: o círculo
+que se guardou no talismã deixa de estar no chão.
+
+Custa um talismã em branco, pó de redstone e mil de poder.
+
+### O carimbo
+
+Clicando no chão, ele percorre o desenho **duas vezes**: a primeira pergunta se cabe tudo, a segunda
+risca. Faltando uma casa, nada se risca e o talismã não se gasta — que é o que torna o carimbo seguro de
+usar num terreno acidentado.
+
+Gasto, ele volta a ser branco: numa pilha, gasta um e devolve um branco à mochila; sozinho, apaga-se o
+desenho dele.
+
+### As dez caras
+
+A figura é a do **maior anel riscado**: havendo o de fora, é a dele; senão a do meio; senão a de dentro. É
+por isso que um talismã de três anéis e um de um anel de fora têm a mesma cara — o que importa, a quem
+olha para a mochila, é **o tamanho do círculo** que ele desenha.
+
+### Desvios declarados
+
+1. **Os três anéis moram num componente.** O original os empacota em três bits cada do dano do item —
+   `c<<6 | b<<3 | a` —, e aqui é o mesmo número num componente de número inteiro. A conta é a dele,
+   bit por bit, para que as dez figuras continuem saindo da mesma aritmética.
+
+2. **A figura sai pelo `custom_model_data`.** Um modelo de item de hoje escolhe a figura por uma
+   **propriedade**, e a que lê um componente qualquer pede o valor inteiro escrito no `when` — o que, com
+   sessenta e quatro desenhos possíveis, daria sessenta e quatro casos para nove figuras. Então o talismã
+   escreve também a **figura** no `custom_model_data`, que é a propriedade que o jogo já tem para isto, e
+   o modelo escolhe por ela: nove casos e um padrão.
+
+**Guardas:** o `OccultaCircleTalismanGameTest`, com quatro — os três anéis que se empacotam no número do
+original; a figura, que é a do maior anel; **o carimbo, que risca os oitenta e quatro glifos e deixa o
+talismã branco**; e a receita. E o `OccultaCircleTalismanClientTest`, com uma foto das dez caras lado a
+lado.

@@ -3692,5 +3692,18 @@
   "tc.bitingbelt.tip": "Bites whoever bites.",
   "tc.bitingbelt.tip2": "Holds two potions and spends one per blow taken",
   "tc.barkbelt.tip": "Bark that gathers itself.",
-  "tc.barkbelt.tip2": "Gathers charge on grass or mycelium and parries blows with it"
+  "tc.barkbelt.tip2": "Gathers charge on grass or mycelium and parries blows with it",
+  "item.thaumcraft.circle_talisman": "Circle Talisman",
+  "item.thaumcraft.circle_talisman.written": "%s (%s)",
+  "tc.circletalisman.tip": "A rite fills it with the circle you stand in; one click draws it elsewhere.",
+  "tc.circletalisman.small.1": "Small Ritual",
+  "tc.circletalisman.small.2": "Small Otherwhere",
+  "tc.circletalisman.small.3": "Small Infernal",
+  "tc.circletalisman.medium.1": "Medium Ritual",
+  "tc.circletalisman.medium.2": "Medium Otherwhere",
+  "tc.circletalisman.medium.3": "Medium Infernal",
+  "tc.circletalisman.large.1": "Large Ritual",
+  "tc.circletalisman.large.2": "Large Otherwhere",
+  "tc.circletalisman.large.3": "Large Infernal",
+  "tc.rite.bindcircle": "Rite of Binding"
 }

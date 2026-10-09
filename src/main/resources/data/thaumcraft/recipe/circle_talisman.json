@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "yxy",
+    "xax",
+    "yxy"
+  ],
+  "key": {
+    "a": "minecraft:diamond",
+    "x": "minecraft:gold_ingot",
+    "y": "minecraft:gold_nugget"
+  },
+  "result": {
+    "id": "thaumcraft:circle_talisman",
+    "count": 1
+  }
+}

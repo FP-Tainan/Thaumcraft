@@ -66,6 +66,21 @@ public final class RitualCircles {
     public record Circles(Ring inner, Ring middle, Ring outer) {
     }
 
+    /** O lado do desenho, em blocos. */
+    public static int side() {
+        return PATTERN.length;
+    }
+
+    /**
+     * Uma linha do desenho, contada <b>do sul para o norte</b> — que é a ordem em que o original o lê.
+     *
+     * <p>Serve a quem precisa de andar o desenho sem ser para o contar: o <b>Talismã de Círculo</b>, que
+     * o risca em vez de o ler.
+     */
+    public static String linha(int z) {
+        return PATTERN[PATTERN.length - 1 - z];
+    }
+
     private RitualCircles() {
     }
 
