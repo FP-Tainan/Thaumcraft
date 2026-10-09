@@ -192,6 +192,19 @@ public final class OccultaAspects {
             r.item("thaumcraft:spectral_dust", new AspectList().add(Aspects.SOUL, 4).add(Aspects.UNDEAD, 2));
             // o original só anota o Espírito Dominado, e com duas de alma; o da aldeia vai igual
             r.item("thaumcraft:subdued_spirit", new AspectList().add(Aspects.SOUL, 2));
+            // o Couro Impregnado e as quatro roupas de bruxa, com os números do original
+            r.item("thaumcraft:impregnated_leather", new AspectList().add(Aspects.CLOTH, 2)
+                    .add(Aspects.BEAST, 1).add(Aspects.ARMOR, 1).add(Aspects.MAGIC, 1));
+            r.item("thaumcraft:witch_hat", new AspectList().add(Aspects.CLOTH, 6)
+                    .add(Aspects.BEAST, 5).add(Aspects.ARMOR, 5).add(Aspects.MAGIC, 5));
+            r.item("thaumcraft:babas_hat", new AspectList().add(Aspects.CLOTH, 4)
+                    .add(Aspects.BEAST, 2).add(Aspects.ARMOR, 5).add(Aspects.MAGIC, 5)
+                    .add(Aspects.ELDRITCH, 3));
+            r.item("thaumcraft:witch_robes", new AspectList().add(Aspects.CLOTH, 6)
+                    .add(Aspects.BEAST, 4).add(Aspects.ARMOR, 5).add(Aspects.MAGIC, 4));
+            r.item("thaumcraft:necromancers_robes", new AspectList().add(Aspects.CLOTH, 6)
+                    .add(Aspects.BEAST, 4).add(Aspects.ARMOR, 5).add(Aspects.MAGIC, 3)
+                    .add(Aspects.UNDEAD, 2));
             // os três fetiches, com os números do original
             r.item("thaumcraft:scarecrow", new AspectList().add(Aspects.TRAP, 1)
                     .add(Aspects.CLOTH, 2).add(Aspects.MECHANISM, 2));

@@ -407,6 +407,20 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.GOBLIN,
                 net.thaumcraft.occulta.client.GoblinRenderer.Goblin::new);
 
+        // o Ars Occulta: as roupas de bruxa, que valem pelo que dão e não pelo que protegem
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.WitchClothesRenderer.CABEÇA,
+                net.thaumcraft.occulta.client.WitchClothesRenderer::cabeça);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.WitchClothesRenderer.PEITO,
+                net.thaumcraft.occulta.client.WitchClothesRenderer::peito);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(
+                net.thaumcraft.occulta.client.WitchClothesRenderer::new,
+                net.thaumcraft.occulta.OccultaItems.WITCH_HAT,
+                net.thaumcraft.occulta.OccultaItems.BABAS_HAT,
+                net.thaumcraft.occulta.OccultaItems.WITCH_ROBES,
+                net.thaumcraft.occulta.OccultaItems.NECROMANCERS_ROBES);
+
         // o Ars Occulta: os três fetiches, dois de boneco e um de folha cruzada
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.FetishRenderer.ESPANTALHO,

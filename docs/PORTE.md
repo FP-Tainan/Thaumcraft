@@ -10495,10 +10495,16 @@ nenhum: ele só muda o tempo. É o original dizendo o que vale um dia de sol.
 
 ### Desvios declarados
 
-1. **O apontamento no livro não entra.** O original tranca o Ignianima, o Carnosa Diem e o Morsmordre atrás
-   de uma entrada no livro de bruxaria — e é essa falta de apontamento que torna as outras três
-   *imperdoáveis*. O livro de bruxaria ainda não está portado; a classificação ficou (quem é maldição, quem
-   é imperdoável) e a tranca do apontamento fica para quando o livro vier.
+1. **O que destranca quatro deles não entra.** ~~O original tranca o Ignianima, o Carnosa Diem e o
+   Morsmordre atrás de uma entrada no livro de bruxaria.~~ **Corrigido na fatia das roupas de bruxa,
+   depois de se ler o original outra vez:** não é um livro, é um **gole**. O Carnosa Diem, o Ignianima, o
+   Morsmordre e o Tormentum têm cada um a sua <b>chave de saber</b>, e quem a dá é um **Cozimento de
+   Alma** — da Fome, da Angústia, do Medo e do Tormento. Bebe-se, e o feitiço fica sabido para sempre.
+
+   Os três primeiros caem do **Diabrete** e o quarto do **Senhor do Tormento**, e nenhum dos dois está
+   portado — de modo que a tranca fica de fora na mesma, mas pelo motivo certo. O que **não** tem chave
+   nenhuma é que é *imperdoável*: o Avada Kedavra, o Crucio e o Imperio não se aprendem, e é isso que os
+   separa das outras maldições.
 
 2. **A briga entre jogadores é a de hoje.** O original pergunta ao servidor se o PvP está ligado; aqui
    pergunta-se ao próprio jogador, com o `canHarmPlayer` do jogo, que responde a mesma coisa e ainda conta
@@ -10927,3 +10933,78 @@ sai quando é ela que cabe; os seis modos; a Boline que os roda; o **alarme que 
 redstone do Grito; o que ele nunca vê; a Sentinela que manda **dois** contra quem está sozinho; o fetiche
 que se larga a si próprio com tudo dentro; o balde que apaga as listas; e as três receitas de montagem. E
 o `OccultaFetishClientTest`, com os três lado a lado, quatro espantalhos pintados e um espectral.
+
+## As roupas de bruxa (2026-10-09)
+
+O **Chapéu de Bruxa**, o **Manto de Bruxa**, o **Manto de Necromante** e o **Chapéu da Baba Yaga** — e,
+com eles, o **Couro Impregnado** de que os quatro se fazem.
+
+### Elas protegem como couro, e isso é o que têm de menos interessante
+
+Um de proteção no chapéu, três no manto, e a durabilidade do couro. O original escreve
+`ArmorMaterial.CLOTH` e pronto — **sem** a piada da durabilidade de ferro que ele prega às roupas de
+caçador. Um chapéu de bruxa se gasta como um chapéu de couro, e é de propósito: ele não é para levar
+pancada, é para cozinhar com ele na cabeça.
+
+### O que elas valem: o frasco a mais
+
+Nenhuma linha do item diz isto. A conta mora na **Chaleira** e no **Caldeirão**, e é ela que faz das
+roupas a peça mais importante do ramo do caldeirão.
+
+**Na Chaleira**, ao tirar um frasco:
+
+| Quem | Um **segundo** frasco | E um **terceiro** |
+|---|---|---|
+| Chapéu de Bruxa | +35% | — |
+| Chapéu da Baba Yaga | +25% | **+25%** |
+| Manto de Bruxa, num cozimento que **não** é de Erguer | +35% | — |
+| Manto de Necromante, num cozimento **de Erguer** | +35% | — |
+| Familiar com maestria de cozimento | +5% | +5% (só com o chapéu da Baba) |
+
+O chapéu e o manto **não se excluem**: com os dois, a chance de um segundo frasco é de **setenta por
+cento**. E os dois mantos se excluem entre si **por tipo de cozimento** — o de Necromante só ajuda no de
+Erguer, e o de Bruxa em todos os outros. É a parte que ninguém adivinha, e é a mais bonita da conta.
+
+**No Caldeirão** não é chance, é contagem: o chapéu vale um, cada manto vale um, e o **chapéu da Baba
+vale dois sozinho**. Cada nível é um frasco a mais, até três.
+
+Duas peças **quase dobram o que uma bruxa produz**. E com isso cai a lacuna declarada da fatia do
+Caldeirão, que dizia que o rendimento maior de chapéu e túnica ficava de fora porque «nenhuma dessas
+coisas existe ainda».
+
+### O chapéu da Baba Yaga
+
+Ele não é o chapéu de bruxa pintado de outra cor. São **quatro caixas encaixadas umas nas outras**, cada
+uma menor e mais torta que a anterior — um cone **amassado**, que se dobra sobre si próprio. E é o
+único dos quatro que **não se tinge**: um chapéu assim é de alguém.
+
+E é o único do mod inteiro que dá chance de um **terceiro** frasco.
+
+### Duas escalas, e não uma
+
+O original monta **dois bonecos**: um inchado a 0,61 e outro a 0,45, e escolhe entre eles pela **casa** da
+peça — a cabeça e as pernas levam o magro, o peito e os pés o gordo. É de 2014 e não faz sentido nenhum,
+mas é o que dá o volume que ele dá, e por isso fica.
+
+### Desvios declarados
+
+1. **Uma folha, e não duas.** O original tem duas, como o couro do jogo: uma que leva tinta e uma por cima
+   que não leva. A segunda, a `witchclothes_overlay.png`, está **vazia** — sessenta e quatro por sessenta
+   e quatro de nada. Aqui desenha-se uma vez só, com a folha tingida.
+
+2. **O conserto é um rótulo.** O original escreve quatro receitas sem forma, uma por peça, que juntam
+   couro impregnado à peça gasta. O jogo de hoje faz isso sozinho com o rótulo do material.
+
+3. **O rendimento de quem tem prática continua de fora.** No Caldeirão, o original multiplica o que as
+   roupas dão pela **perícia de engarrafar** do jogador, que é um sistema que este porte ainda não tem.
+   Aqui as roupas somam sozinhas.
+
+4. **A cor de fábrica é um número, e não um componente.** Como nas roupas de caçador: posta como
+   componente, toda peça dizia «Tingida» sem ninguém lhe ter tocado.
+
+**Guardas:** o `OccultaWitchClothesGameTest`, com sete — os números das quatro; que elas são couro; o
+chapéu da Baba, que é o único que recusa tinta; o **chapéu e o manto que somam setenta por cento**, que é
+a prova que carrega a fatia, com os dois mantos trocando de lugar conforme o cozimento; o terceiro frasco
+que só a Baba dá; a contagem do Caldeirão; as cinco receitas; e o couro que as conserta. E o
+`OccultaWitchClothesClientTest`, com quatro bonecos — o conjunto sem tinta, o de Necromante com as
+ombreiras, o da Baba e um pintado de verde.

@@ -201,6 +201,11 @@ public class KettleBlockEntity extends BlockEntity implements WorldlyContainer {
     /**
      * Tira o que saiu, gastando um frasco de vidro: o clique do original com o frasco na mão.
      *
+     * <p><b>E as roupas de bruxa dão um frasco a mais</b>, de graça: o chapéu e o manto somam trinta e
+     * cinco por cento cada à chance de um <b>segundo</b>, e o chapéu da Baba Yaga é o único que dá
+     * chance de um <b>terceiro</b>. O frasco a mais sai <b>sem gastar vidro</b>, que é como o original
+     * o escreve: ele cresce a pilha depois de ter cobrado.
+     *
      * @return o que foi tirado, ou nada
      */
     public ItemStack takeWithBottle(Player quem) {
@@ -214,7 +219,25 @@ public class KettleBlockEntity extends BlockEntity implements WorldlyContainer {
         if (frascos.isEmpty()) this.items.set(BOTTLES, ItemStack.EMPTY);
         saída.setCount(quantos);
         this.reset(true);
+        esticaComAsRoupas(this.level, quem, saída);
         return saída;
+    }
+
+    /** As duas chances que as roupas de bruxa dão, e o que elas somam à pilha. */
+    public static void esticaComAsRoupas(@org.jetbrains.annotations.Nullable
+                                         net.minecraft.world.level.Level level,
+                                         @org.jetbrains.annotations.Nullable Player quem,
+                                         ItemStack saída) {
+        if (level == null || quem == null || saída.isEmpty()) return;
+        boolean erguer = saída.is(net.thaumcraft.occulta.OccultaItems.BREW_OF_RAISING);
+        var sorte = level.getRandom();
+        if (sorte.nextDouble() <= net.thaumcraft.occulta.clothes.WitchClothes
+                .secondBottle(quem, erguer)) {
+            saída.grow(1);
+        }
+        if (sorte.nextDouble() <= net.thaumcraft.occulta.clothes.WitchClothes.thirdBottle(quem)) {
+            saída.grow(1);
+        }
     }
 
     /** O que se atira para dentro do pote: frascos para a casa deles, o resto para as seis. */

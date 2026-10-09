@@ -70,6 +70,32 @@ public final class OccultaMaterials {
             TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_hunter_clothes")), HUNTER_ASSET);
 
     /**
+     * A cara das <b>roupas de bruxa</b>.
+     *
+     * <p>Como as outras do ramo: existe porque o jogo pede uma a toda armadura, e não tem arquivo
+     * nenhum — quem as desenha é o {@link net.thaumcraft.occulta.client.WitchClothesRenderer}, com o
+     * modelo do original.
+     */
+    public static final ResourceKey<EquipmentAsset> WITCH_ASSET =
+            ResourceKey.create(EquipmentAssets.ROOT_ID, Thaumcraft.id("witch_clothes"));
+
+    /** A conta de durabilidade do couro. */
+    public static final int LEATHER_WEAR = 5;
+
+    /**
+     * De que são feitas as <b>roupas de bruxa</b>: <b>couro</b>, e nada mais.
+     *
+     * <p>O original escreve {@code ArmorMaterial.CLOTH} e pronto — sem a piada da durabilidade de
+     * ferro que ele prega às roupas de caçador. Um chapéu de bruxa gasta-se como um chapéu de couro,
+     * e é de propósito: ele não é para levar pancada, é para cozinhar com ele na cabeça.
+     */
+    public static final ArmorMaterial WITCH = new ArmorMaterial(LEATHER_WEAR,
+            Map.of(ArmorType.HELMET, 1, ArmorType.CHESTPLATE, 3,
+                    ArmorType.LEGGINGS, 2, ArmorType.BOOTS, 1),
+            15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f,
+            TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_witch_clothes")), WITCH_ASSET);
+
+    /**
      * A cara da <b>roupa de goblin</b>.
      *
      * <p>Como a das roupas de caçador: existe porque o jogo pede uma, e não tem arquivo nenhum — quem a

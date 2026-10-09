@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "lsl",
+    "l#l",
+    "lll"
+  ],
+  "key": {
+    "s": "thaumcraft:golden_thread",
+    "l": "thaumcraft:impregnated_leather",
+    "#": "thaumcraft:creeper_heart"
+  },
+  "result": {
+    "id": "thaumcraft:witch_robes",
+    "count": 1
+  }
+}

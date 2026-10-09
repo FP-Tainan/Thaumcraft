@@ -205,8 +205,13 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
      * <p><b>E quem tem sapo tira um frasco a mais.</b> É o {@code hasActiveBrewMasteryFamiliar} do original, e é
      * a maestria que o sapo dá. Esteve escrito aqui como buraco enquanto os familiares não existiam.
      *
-     * <p><b>Do original ficam de fora, declarados:</b> o rendimento maior de quem tem prática, chapéu de bruxa
-     * e túnica — nenhuma dessas três coisas existe ainda.
+     * <p><b>E as roupas de bruxa dão frascos a mais.</b> Ali não é chance, é contagem: o chapéu vale um,
+     * o manto vale um, e o <b>chapéu da Baba vale dois</b> — e cada nível de equipamento é um frasco a
+     * mais, até três.
+     *
+     * <p><b>Do original fica de fora, declarado:</b> o rendimento maior de quem tem <b>prática de
+     * engarrafar</b>, que é uma perícia que este porte ainda não tem. No original ela multiplica o que
+     * as roupas dão; aqui elas somam sozinhas.
      *
      * @param quem quem está engarrafando, ou nulo quando não é ninguém (uma prova, um funil)
      */
@@ -220,6 +225,7 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         }
         ItemStack frasco = net.thaumcraft.occulta.brew.BrewItem.of(OccultaItems.BREW, this.inside);
         if (net.thaumcraft.occulta.familiar.Familiars.temMaestriaDeCozimento(quem)) frasco.grow(1);
+        frasco.grow(net.thaumcraft.occulta.clothes.WitchClothes.gearLevel(quem));
         this.empty();
         return frasco;
     }

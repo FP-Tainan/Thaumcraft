@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "mlm",
+    "ldl",
+    "mlm"
+  ],
+  "key": {
+    "l": "minecraft:leather",
+    "d": "thaumcraft:diamond_vapour",
+    "m": "thaumcraft:whiff_of_magic"
+  },
+  "result": {
+    "id": "thaumcraft:impregnated_leather",
+    "count": 4
+  }
+}

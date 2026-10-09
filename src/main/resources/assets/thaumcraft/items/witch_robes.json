@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/witch_robes",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -14149101
+      }
+    ]
+  }
+}

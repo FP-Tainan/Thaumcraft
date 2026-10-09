@@ -159,7 +159,7 @@ public final class Symbols {
         põe(new MeteolojinxRecanto(23), "0,0,0,2,2,1,0,2,2,1,1");
 
         /*
-         * <b>Alohomora</b>: abre ou fecha a porta em que a bola bate. É o feitiço mais pequeno do mod —
+         * <b>Alohomora</b>: abre ou fecha a porta em que a bola bate. É o menor feitiço do mod —
          * dois traços e meio — e o único que não tem grau nenhum acima do primeiro.
          */
         põe(new Alohomora(3), "2,0,2,2,1", "2,0,2,2,2,1", "2,0,0,2,2,1,1", "2,0,0,2,2,2,1,1");

@@ -1295,6 +1295,46 @@ public final class OccultaItems {
     public static final Item GARLICKED_HUNTER_BOOTS =
             hunter("garlicked_hunter_boots", ArmorType.BOOTS, true, true);
 
+    /**
+     * O <b>Couro Impregnado</b>: o {@code itemImpregnatedLeather} do original.
+     *
+     * <p>É o contrário do Couro Anulado. Aquele não deixa a magia passar, e é de que se fazem as
+     * roupas de caçador; este deixa-a passar e <b>guarda-a</b>, e é de que se fazem as de bruxa.
+     * Quatro couros, um Vapor de Diamante e quatro Sopros de Magia dão quatro.
+     */
+    public static final Item IMPREGNATED_LEATHER = register("impregnated_leather", Item::new);
+
+    /**
+     * As quatro peças de <b>roupa de bruxa</b>: o {@code ItemWitchesClothes} do original.
+     *
+     * <p>Elas protegem como couro e isso é o que têm de menos importante. O que fazem é dar
+     * <b>frascos a mais</b> na Chaleira e no Caldeirão — veja o
+     * {@link net.thaumcraft.occulta.clothes.WitchClothes}.
+     */
+    public static final Item WITCH_HAT = witchClothes("witch_hat", ArmorType.HELMET,
+            true, false, "tc.witchclothes.hat");
+
+    /** O <b>Chapéu da Baba Yaga</b>, o único que não se tinge — e o único que dá um terceiro frasco. */
+    public static final Item BABAS_HAT = witchClothes("babas_hat", ArmorType.HELMET,
+            false, false, "tc.witchclothes.baba;tc.witchclothes.baba2");
+
+    public static final Item WITCH_ROBES = witchClothes("witch_robes", ArmorType.CHESTPLATE,
+            true, false, "tc.witchclothes.robes");
+
+    /** E o <b>Manto de Necromante</b>, que leva ombreiras e serve ao Cozimento de Erguer. */
+    public static final Item NECROMANCERS_ROBES = witchClothes("necromancers_robes",
+            ArmorType.CHESTPLATE, true, true, "tc.witchclothes.necro;tc.witchclothes.necro2");
+
+    /** Uma peça de roupa de bruxa: couro, tingível (menos a da Baba), e o que ela diz na mão. */
+    private static Item witchClothes(String nome, ArmorType casa, boolean tingível, boolean necro,
+                                     String dica) {
+        return register(nome, properties -> new net.thaumcraft.occulta.clothes.WitchClothesItem(
+                properties.humanoidArmor(OccultaMaterials.WITCH, casa)
+                        .rarity(tingível ? net.minecraft.world.item.Rarity.UNCOMMON
+                                : net.minecraft.world.item.Rarity.EPIC),
+                tingível, necro, dica));
+    }
+
     /** Uma peça de roupa de caçador: couro para proteger, ferro para durar, e tingível. */
     private static Item hunter(String nome, ArmorType casa, boolean prateada, boolean comAlho) {
         return register(nome, properties -> new net.thaumcraft.occulta.hunter.HunterClothesItem(properties
