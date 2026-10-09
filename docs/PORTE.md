@@ -11837,3 +11837,58 @@ faz coisa nenhuma de especial. Fica pelo que é: a única ferramenta que o metal
 **vira quando quem a traz vira**; as seis faixas da outra; a prateleira, que ela acha de verdade; e as
 receitas, com o reprender incluído. E o `OccultaCompassClientTest`, com uma foto das trinta e três caras
 e outra das seis, com a picareta ao lado.
+
+## A Pedra Espectral, e os dois ritos que a fazem (2026-10-09)
+
+É a **última peça de equipamento do Ars Occulta**, e é a maior das que sobravam — porque ela não é só
+um item: são **dois ritos**, e um deles é o mais bonito que o mod tem.
+
+### O que ela é
+
+Um **frasco de fantasmas**. Guarda um dos três — Espectro, Banshee ou Poltergeist — e até **três** de cada
+vez, e solta-os onde se apontar, a dezesseis blocos.
+
+É o fim de uma linha longa: os três fantasmas chamam-se um a um, por rito, e morrem depressa. A pedra é o
+que os torna **guardáveis** — chamam-se três numa noite tranquila, prendem-se, e soltam-se quando fizerem
+falta. E saem **escravizados** por quem os largou.
+
+Segura-se **vinte segundos**, e ao fim de **dois** ela faz um *pling* — que é o aviso de que já se pode
+largar. Antes disso, nada sai.
+
+Gasta uma por vez: numa pilha, tira uma e devolve uma branca; sozinha, apaga-se o que ela guardava.
+
+### O primeiro rito: o da Necromancia
+
+Só de noite, num anel de dezesseis glifos de ritual. Custa a **Pedra Necrótica**, o **Espírito Coalhado**,
+o **Medo Condensado**, o **Pó Espectral** e a **Boline**, mais seis mil de poder — e dá a pedra **em
+branco**.
+
+Com ele vem o **Espírito Coalhado**, que faltava: cinco Espíritos Subjugados cozidos num Cozimento de
+Lágrimas Ocas. Não faz nada sozinho; é peça, e de uma coisa só.
+
+### O segundo rito: o de Prender Espectros
+
+E aqui está o que o faz bonito: o objeto **não aparece do nada**. Ele aparece **feito do que estava ali**.
+
+O rito olha à volta, cinco blocos, à procura de mortos-vivos chamados. Pega no **primeiro** que acha, fixa
+o feitio dele, e dali em diante só conta os do mesmo — até três. Cada um que conta **some** num estouro de
+portal. No fim, do chão levanta-se a pedra com eles dentro.
+
+Não havendo nenhum, o rito **aborta e devolve**: um círculo preparado e vazio não custa nada a quem o
+preparou. É o único dos ritos que dão um objeto em que o resultado **não está escrito na receita**.
+
+### Desvios declarados
+
+1. **O que ela guarda mora num componente.** O original mete o bicho e a quantidade no mesmo número do
+   dano do item — `tipo | quantidade << 4` —, e aqui é o mesmo número num componente de número inteiro, com
+   a mesma aritmética bit a bit. A **cara** sai dele pelo `custom_model_data`, como as das bússolas.
+
+2. **Ela não entra na aba do criativo nas quatro caras.** O original põe lá as quatro — a branca e uma por
+   bicho. Aqui entra só a branca, que é a que se ganha: as outras três fazem-se com o rito, e uma pedra
+   cheia de criativo não existe no caminho de ninguém. Quem as quiser, faz uma e enche-a.
+
+**Guardas:** o `OccultaSpectralStoneGameTest`, com cinco — o número que empacota o bicho e a quantidade; o
+rito, que **pega em três do mesmo feitio e deixa os outros em paz**; o rito que devolve quando não há
+nenhum; o largar, que solta os fantasmas já escravizados e deixa a pedra em branco; e os dois ritos na
+lista, com os anéis e a hora. E o `OccultaSpectralStoneClientTest`, com as quatro caras e a dica que diz
+qual bicho e quantos.

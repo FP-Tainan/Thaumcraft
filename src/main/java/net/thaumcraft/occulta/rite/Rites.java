@@ -1112,6 +1112,79 @@ public final class Rites {
         }
     }
 
+    /**
+     * <b>Prender espectros numa pedra</b>: o {@code RiteSummonSpectralStone} do Witchery.
+     *
+     * <p>É o mais bonito dos ritos que dão um objeto, porque o objeto <b>não aparece do nada</b>: ele
+     * aparece <b>feito do que estava ali</b>.
+     *
+     * <p>O rito olha à volta, <b>cinco blocos</b>, à procura de mortos-vivos chamados. Pega no primeiro
+     * que achar, fixa o <b>feitio dele</b>, e dali em diante só conta os do mesmo — até <b>três</b>. Cada
+     * um que conta <b>some</b> num estouro de portal. No fim, do chão levanta-se uma Pedra Espectral com
+     * eles dentro.
+     *
+     * <p>Não havendo nenhum, o rito <b>aborta e devolve</b> o que se pôs: um círculo preparado e vazio não
+     * custa nada a quem o preparou.
+     */
+    /** A que distância o rito procura os espectros: cinco blocos, como no original. */
+    public static final int ESPECTROS_A = 5;
+
+    public record BindSpectral(int raio) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                var caixa = new net.minecraft.world.phys.AABB(onde).inflate(this.raio);
+                int quantos = 0;
+                int oQuê = net.thaumcraft.occulta.ghost.SpectralStoneItem.NADA;
+                for (var bicho : level.getEntitiesOfClass(
+                        net.thaumcraft.occulta.ghost.SummonedUndeadEntity.class, caixa)) {
+                    if (bicho.distanceToSqr(onde.getX() + 0.5, onde.getY(), onde.getZ() + 0.5)
+                            > (double) this.raio * this.raio) {
+                        continue;
+                    }
+                    int qual = oQueÉ(bicho);
+                    if (qual == net.thaumcraft.occulta.ghost.SpectralStoneItem.NADA) continue;
+                    if (oQuê == net.thaumcraft.occulta.ghost.SpectralStoneItem.NADA) oQuê = qual;
+                    if (oQuê != qual) continue;
+
+                    quantos++;
+                    level.sendParticles(ParticleTypes.PORTAL, bicho.getX(), bicho.getY() + 1.0,
+                            bicho.getZ(), 32, 0.5, 1.0, 0.5, 0.2);
+                    level.playSound(null, bicho.blockPosition(), SoundEvents.CHICKEN_EGG,
+                            SoundSource.BLOCKS, 1.0f, 1.0f);
+                    bicho.discard();
+                    if (quantos >= net.thaumcraft.occulta.ghost.SpectralStoneItem.CABEM) break;
+                }
+
+                if (quantos <= 0) return RiteStep.Result.ABORTED_REFUND;
+
+                Block.popResource(level, onde.above(),
+                        net.thaumcraft.occulta.ghost.SpectralStoneItem.cheia(oQuê, quantos));
+                level.sendParticles(net.minecraft.core.particles.SpellParticleOption.create(
+                        ParticleTypes.INSTANT_EFFECT, 1.0f, 1.0f, 1.0f, 1.0f), onde.getX() + 0.5, onde.getY() + 1.0,
+                        onde.getZ() + 0.5, 32, 0.5, 0.5, 0.5, 0.0);
+                level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+
+        /** Qual dos três este é, ou nada. */
+        private static int oQueÉ(net.thaumcraft.occulta.ghost.SummonedUndeadEntity bicho) {
+            if (bicho instanceof net.thaumcraft.occulta.ghost.SpectreEntity) {
+                return net.thaumcraft.occulta.ghost.SpectralStoneItem.ESPECTRO;
+            }
+            if (bicho instanceof net.thaumcraft.occulta.ghost.BansheeEntity) {
+                return net.thaumcraft.occulta.ghost.SpectralStoneItem.BANSHEE;
+            }
+            if (bicho instanceof net.thaumcraft.occulta.ghost.PoltergeistEntity) {
+                return net.thaumcraft.occulta.ghost.SpectralStoneItem.POLTERGEIST;
+            }
+            return net.thaumcraft.occulta.ghost.SpectralStoneItem.NADA;
+        }
+    }
+
     public record SummonItem(java.util.function.Supplier<ItemStack> what) implements Rite {
         @Override
         public List<RiteStep> steps(int coven) {
@@ -3184,6 +3257,42 @@ public final class Rites {
                     new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
                     RiteRegistry.Ring.NONE);
         }
+
+        /*
+         * O <b>Rito da Necromancia</b>, que dá a Pedra Espectral <b>em branco</b>.
+         *
+         * <p>Só de noite, num anel de dezesseis glifos de ritual, e caro: a Pedra Necrótica, o Espírito
+         * Coalhado, o Medo Condensado, o Pó Espectral e a Boline, mais seis mil de poder.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.spectralstone",
+                new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.SPECTRAL_STONE)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(
+                                net.thaumcraft.occulta.OccultaItems.NECROTIC_STONE,
+                                net.thaumcraft.occulta.OccultaItems.CONGEALED_SPIRIT,
+                                net.thaumcraft.occulta.OccultaItems.CONDENSED_FEAR,
+                                net.thaumcraft.occulta.OccultaItems.SPECTRAL_DUST,
+                                net.thaumcraft.occulta.OccultaItems.BOLINE),
+                        new Sacrifice.Power(6000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
+
+        /*
+         * E o <b>Rito de Prender Espectros</b>, que enche a pedra com o que estiver à volta.
+         *
+         * <p>Num anel de vinte e oito, com a pedra em branco, pó espectral e a Boline no chão, e cinco mil
+         * de poder. O que ele dá depende do que ali andava — e é o único rito do mod em que o resultado
+         * não está escrito na receita.
+         */
+        RiteRegistry.register("tc.rite.bindspectral",
+                new BindSpectral(ESPECTROS_A),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(
+                                net.thaumcraft.occulta.OccultaItems.SPECTRAL_STONE,
+                                net.thaumcraft.occulta.OccultaItems.SPECTRAL_DUST,
+                                net.thaumcraft.occulta.OccultaItems.BOLINE),
+                        new Sacrifice.Power(5000.0f, 20)),
+                new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE);
 
         /*
          * O <b>Rito da Infusão do Mundo</b>, que partilha com o da Luz o mesmo anel — dezesseis e

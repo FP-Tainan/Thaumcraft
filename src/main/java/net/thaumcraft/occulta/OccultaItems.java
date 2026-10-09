@@ -1458,6 +1458,27 @@ public final class OccultaItems {
     public static final Item BARK_BELT = witchBelt("bark_belt", true, 6968628,
             "tc.barkbelt.tip;tc.barkbelt.tip2");
 
+    // ------------------------------------------------------------------ a Pedra Espectral
+
+    /**
+     * O <b>Espírito Coalhado</b>: cinco Espíritos Subjugados cozidos num Cozimento de Lágrimas Ocas.
+     *
+     * <p>Não faz nada sozinho. É <b>peça</b>, e de uma coisa só: o rito que faz a Pedra Espectral.
+     */
+    public static final Item CONGEALED_SPIRIT = register("congealed_spirit", Item::new);
+
+    /**
+     * A <b>Pedra Espectral</b>: um frasco de fantasmas.
+     *
+     * <p>Guarda um dos três — Espectro, Banshee ou Poltergeist — e até três de cada vez. Veja a
+     * {@link net.thaumcraft.occulta.ghost.SpectralStoneItem}.
+     */
+    public static final Item SPECTRAL_STONE = register("spectral_stone", properties ->
+            new net.thaumcraft.occulta.ghost.SpectralStoneItem(properties.stacksTo(16)
+                    .rarity(net.minecraft.world.item.Rarity.RARE)
+                    .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE,
+                            true)));
+
     // ------------------------------------------------------------------ as duas bússolas e a picareta
 
     /**

@@ -282,6 +282,10 @@ public final class OccultaAspects {
             r.item("thaumcraft:tormented_twine", new AspectList().add(Aspects.CLOTH, 3).add(Aspects.DARKNESS, 2));
 
             // o espelho: o original não o anotava, e este é do porte. A superfície do Mundo do Espelho não entra
+            // a Pedra Espectral e o Espírito Coalhado, com os números do original
+            r.item("thaumcraft:spectral_stone", new AspectList().add(Aspects.CRYSTAL, 3)
+                    .add(Aspects.TRAP, 4));
+            r.item("thaumcraft:congealed_spirit", new AspectList().add(Aspects.SOUL, 6));
             // as duas bússolas e a picareta, com os números do original
             r.item("thaumcraft:player_compass", new AspectList().add(Aspects.SENSES, 2)
                     .add(Aspects.MAN, 1).add(Aspects.MAGIC, 2));

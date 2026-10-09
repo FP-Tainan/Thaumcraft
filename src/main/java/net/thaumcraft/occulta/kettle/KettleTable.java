@@ -30,6 +30,14 @@ public final class KettleTable {
                 OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.DOG_TONGUE,
                 Items.GOLDEN_APPLE, Items.POISONOUS_POTATO);
 
+        // ---------------------------------------------------------- o Espírito Coalhado
+        // Cinco Espíritos Subjugados cozidos num Cozimento de Lágrimas Ocas, e a cor é o -3096310 do
+        // original lido como cor de 32 bits. Dois mil de poder.
+        KettleRecipes.add(OccultaItems.CONGEALED_SPIRIT, 1, 0xFFD0C10A, 2000.0f,
+                OccultaItems.BREW_OF_HOLLOW_TEARS, OccultaItems.SUBDUED_SPIRIT,
+                OccultaItems.SUBDUED_SPIRIT, OccultaItems.SUBDUED_SPIRIT,
+                OccultaItems.SUBDUED_SPIRIT, OccultaItems.SUBDUED_SPIRIT);
+
         // ---------------------------------------------------------- o Unguento do Voo
         // A cor é o -17620 do original, lido como cor de 32 bits: 0xFFFFBB6C.
         // <b>Um desvio declarado:</b> o original pede uma Poção de Rapidez longa e de arremesso, com o número

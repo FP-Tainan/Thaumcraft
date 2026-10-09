@@ -156,6 +156,14 @@ public final class OccultaComponents {
             builder -> builder.persistent(com.mojang.serialization.Codec.BOOL)
                     .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.BOOL));
 
+    /**
+     * O que uma <b>Pedra Espectral</b> guarda: o bicho nos quatro bits de baixo e quantos nos três de
+     * cima, que é o número do dano do item do original.
+     */
+    public static final DataComponentType<Integer> SPECTRAL_STONE = register("spectral_stone",
+            builder -> builder.persistent(com.mojang.serialization.Codec.INT)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
+
     private OccultaComponents() {
     }
 
