@@ -238,6 +238,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.client.WerewolfStatueModel.STATUE,
                 net.thaumcraft.occulta.client.WerewolfStatueModel::statue);
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.GoddessStatueModel.STATUE,
+                net.thaumcraft.occulta.client.GoddessStatueModel::statue);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.HuntsmansSpearRenderer.SPEAR,
                 net.thaumcraft.occulta.client.HuntsmansSpearRenderer::spear);
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
@@ -574,6 +577,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.WEREWOLF_STATUE_ENTITY,
                 net.thaumcraft.occulta.client.WerewolfStatueRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.GODDESS_STATUE_ENTITY,
+                net.thaumcraft.occulta.client.GoddessStatueRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.WOLF_HEAD_ENTITY,
                 net.thaumcraft.occulta.client.WolfHeadRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
@@ -588,6 +594,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("werewolf_statue"),
                 net.thaumcraft.occulta.client.WerewolfStatueItemRenderer.Unbaked.CODEC);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("goddess_statue"),
+                net.thaumcraft.occulta.client.GoddessStatueItemRenderer.Unbaked.CODEC);
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("huntsmans_spear"),
                 net.thaumcraft.occulta.client.HuntsmansSpearRenderer.Unbaked.CODEC);

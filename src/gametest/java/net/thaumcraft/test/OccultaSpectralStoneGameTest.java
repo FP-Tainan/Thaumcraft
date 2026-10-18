@@ -67,13 +67,24 @@ public class OccultaSpectralStoneGameTest {
      * <p>Postos quatro espectros e uma banshee à volta, ele leva <b>três espectros</b> — o feitio fixa-se
      * no primeiro que ele acha — e deixa os outros em paz.
      */
-    @GameTest
+    /*
+     * E ela pede <b>folga à volta da arena</b>: o rito varre cinco blocos em cada rumo, e sem folga
+     * esses cinco chegam à arena do lado e ele leva fantasmas da prova de outro.
+     */
+    @GameTest(padding = 8)
     public void theRiteTakesThreeOfOneKind(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos meio = helper.absolutePos(new BlockPos(3, 2, 3));
 
-        for (int n = 0; n < 4; n++) põe(level, OccultaEntities.SPECTRE, meio.offset(n - 1, 0, 1));
-        põe(level, OccultaEntities.BANSHEE, meio.offset(1, 0, -1));
+        /*
+         * O mundo das provas é um só, e a arena do lado tem fantasmas dela. Por isso esta prova só conta
+         * os <b>cinco que ela mesma pôs</b>, e no fim varre só esses.
+         */
+        var nossos = new java.util.ArrayList<SummonedUndeadEntity>();
+        for (int n = 0; n < 4; n++) {
+            nossos.add(põe(level, OccultaEntities.SPECTRE, meio.offset(n - 1, 0, 1)));
+        }
+        nossos.add(põe(level, OccultaEntities.BANSHEE, meio.offset(1, 0, -1)));
 
         var rito = new Rites.BindSpectral(Rites.ESPECTROS_A);
         var passo = rito.steps(0).getFirst();
@@ -83,15 +94,13 @@ public class OccultaSpectralStoneGameTest {
             return;
         }
 
-        var sobraram = level.getEntitiesOfClass(SummonedUndeadEntity.class,
-                new net.minecraft.world.phys.AABB(meio).inflate(Rites.ESPECTROS_A),
-                net.minecraft.world.entity.Entity::isAlive);
         int espectros = 0, banshees = 0;
-        for (var cada : sobraram) {
+        for (var cada : nossos) {
+            if (cada == null || !cada.isAlive() || cada.isRemoved()) continue;
             if (cada instanceof net.thaumcraft.occulta.ghost.SpectreEntity) espectros++;
             if (cada instanceof net.thaumcraft.occulta.ghost.BansheeEntity) banshees++;
         }
-        varre(level, meio);
+        for (var cada : nossos) if (cada != null) cada.discard();
         if (espectros != 1) helper.fail("ele leva três dos quatro espectros, e sobrou " + espectros);
         if (banshees != 1) helper.fail("e deixa a banshee em paz, e sobraram " + banshees);
         helper.succeed();
@@ -197,12 +206,13 @@ public class OccultaSpectralStoneGameTest {
     }
 
     /** Põe um daqueles ali. */
-    private static void põe(ServerLevel level,
+    private static SummonedUndeadEntity põe(ServerLevel level,
                             net.minecraft.world.entity.EntityType<? extends SummonedUndeadEntity> qual,
                             BlockPos onde) {
         var bicho = qual.create(level, EntitySpawnReason.TRIGGERED);
-        if (bicho == null) return;
+        if (bicho == null) return null;
         bicho.snapTo(onde.getX() + 0.5, onde.getY(), onde.getZ() + 0.5, 0.0f, 0.0f);
         level.addFreshEntity(bicho);
+        return bicho;
     }
 }

@@ -12502,3 +12502,44 @@ carne crua com a pele de três; a tinta, que só obedece ao dono; a pedra presa,
 volta; o frasco, cujo rumo **anda com a pessoa**; o prazo do de empréstimo pelos dois lados da condição;
 e a mutação com as duas vidas. E o `OccultaMonkeyClientTest`, com três fotos: as asas abertas, as asas
 fechadas e a tinta misturada no castanho.
+
+## A Estátua da Deusa (2026-10-18)
+
+Uma senhora de vestido, de braços abertos, com **dois blocos de altura** — e a **única coisa do mod
+inteiro que desfaz uma maldição sem pedir nada em troca**.
+
+### Ou tudo, ou nada
+
+O original lê as cinco maldições do ofício numa condição só. **Havendo uma**, ele limpa as **cinco** — as
+quatro que a pessoa não tinha incluídas — e ainda tira o **veneno**, a **fraqueza**, a **cegueira**, o
+**cansaço de minerar** e a **lentidão**. **Não havendo nenhuma**, as poções ficam onde estão e a estátua
+responde com uma **nota de caixa**, que é o jeito dela de dizer que não.
+
+Vale ler isso com atenção, porque é o avesso do que parece: **quem estiver só envenenado não se cura
+aqui**. A estátua trata de maldições, e as poções vão de carona.
+
+### O desenho
+
+É o boneco de sempre com **três peças a mais**: o **decote**, que é uma caixa deitada um oitavo de volta
+por cima do peito, e as **duas saias**, uma por cima da outra, a de baixo mais larga. As pernas estão lá
+por baixo, inteiras, e não se veem — é assim no original.
+
+E os **braços abertos** são a pose, e não a animação: o `setRotationAngles` dela escreve os mesmos seis
+números a cada quadro e nunca os muda. Aqui eles vão na malha, que é onde as coisas que não mudam devem
+ir.
+
+### Desvios declarados
+
+1. **A receita vem ligada.** No original ela mora atrás de um ajuste que vem **desligado**
+   (`AllowGoddessStatueRecipe`), e sem ele a estátua só existe no criativo. Este porte não tem arquivo de
+   ajustes, e uma estátua que ninguém pode fazer é uma estátua que não existe. A receita é a do original,
+   letra por letra: **três estrelas do Nether**, um **Coração de Demônio** e cinco pedras.
+
+2. **Ela não guarda quem a assentou.** No original a alma dela guarda o nome de quem a pôs, e esse nome é
+   lido num lugar só: o soco que tira a **coluna inteira** de uma vez, porque lá a estátua são dois blocos
+   empilhados. Aqui ela é **um bloco** com a caixa de dois, como as outras estátuas deste porte, e
+   quebrá-la já a tira inteira — de modo que não sobrou nada para o nome fazer.
+
+**Guardas:** o `OccultaGoddessGameTest`, com três — o tudo-ou-nada pelos dois lados (com maldição caem as
+cinco e as cinco poções; sem maldição não cai nada, nem o veneno), e os dois blocos de altura. E o
+`OccultaGoddessClientTest`, com três fotos: ela de frente, de lado e na mão.

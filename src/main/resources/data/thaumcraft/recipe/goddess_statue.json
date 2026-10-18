@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "s#s",
+    "shs",
+    "###"
+  ],
+  "key": {
+    "s": "minecraft:nether_star",
+    "#": "minecraft:stone",
+    "h": "thaumcraft:demon_heart"
+  },
+  "result": {
+    "id": "thaumcraft:goddess_statue",
+    "count": 1
+  }
+}

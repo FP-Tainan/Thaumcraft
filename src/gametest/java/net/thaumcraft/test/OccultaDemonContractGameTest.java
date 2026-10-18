@@ -36,13 +36,24 @@ public class OccultaDemonContractGameTest {
         ServerLevel level = helper.getLevel();
         var alvo = helper.spawn(EntityTypes.ZOMBIE, new BlockPos(2, 2, 2));
 
+        /*
+         * O mundo das provas é um só, e a arena do lado tem blazes dela. Por isso a conta é feita pela
+         * <b>diferença</b>: o que havia antes não conta, e o que aparecer depois é o nosso.
+         */
+        var antes = new java.util.HashSet<java.util.UUID>();
+        for (var cada : level.getEntitiesOfClass(net.minecraft.world.entity.monster.Blaze.class,
+                alvo.getBoundingBox().inflate(8.0))) {
+            antes.add(cada.getUUID());
+        }
+
         if (!Contracts.blaze(level, alvo)) {
             helper.fail("a chama viva devia nascer");
             return;
         }
         helper.runAfterDelay(3, () -> {
             var quais = level.getEntitiesOfClass(net.minecraft.world.entity.monster.Blaze.class,
-                    alvo.getBoundingBox().inflate(8.0));
+                    alvo.getBoundingBox().inflate(8.0)).stream()
+                    .filter(cada -> !antes.contains(cada.getUUID())).toList();
             if (quais.isEmpty()) {
                 helper.fail("e estar lá");
                 return;

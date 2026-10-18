@@ -749,6 +749,23 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.wolf.WerewolfStatueBlockEntity::new,
                             java.util.Set.of(WEREWOLF_STATUE)));
 
+    /**
+     * A <b>Estátua da Deusa</b>, que desfaz maldições ao toque.
+     *
+     * <p>Pedra que aguenta <b>mil de estouro</b>, como as outras estátuas: o lugar onde alguém se cura não
+     * se perde por um creeper que passou.
+     */
+    public static final Block GODDESS_STATUE = register("goddess_statue", properties ->
+            new net.thaumcraft.occulta.GoddessStatueBlock(properties.mapColor(MapColor.STONE)
+                    .strength(2.5f, 1000.0f).sound(SoundType.STONE).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.GoddessStatueBlockEntity> GODDESS_STATUE_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("goddess_statue"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.GoddessStatueBlockEntity::new,
+                            java.util.Set.of(GODDESS_STATUE)));
+
     /** O Braseiro, em que o que arde vale para quem está em volta. */
     public static final Block BRAZIER = register("brazier", properties ->
             new net.thaumcraft.occulta.brazier.BrazierBlock(properties.mapColor(MapColor.METAL)

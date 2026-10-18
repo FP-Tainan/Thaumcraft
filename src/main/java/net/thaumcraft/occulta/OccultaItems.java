@@ -781,6 +781,10 @@ public final class OccultaItems {
     public static final Item WEREWOLF_STATUE = register("werewolf_statue", properties ->
             new BlockItem(OccultaBlocks.WEREWOLF_STATUE, properties.useBlockDescriptionPrefix()));
 
+    /** A <b>Estátua da Deusa</b>, que desfaz maldições ao toque. */
+    public static final Item GODDESS_STATUE = register("goddess_statue", properties ->
+            new BlockItem(OccultaBlocks.GODDESS_STATUE, properties.useBlockDescriptionPrefix()));
+
     /** O Braseiro, em item. */
     public static final Item BRAZIER = register("brazier", properties ->
             new BlockItem(OccultaBlocks.BRAZIER, properties.useBlockDescriptionPrefix()));
