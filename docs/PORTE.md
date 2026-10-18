@@ -12309,3 +12309,32 @@ próprio.
 
 Pela mesma razão a **aba do Thaumcraft** continua a chamar-se Thaumcraft: as oito abas são os **ramos**, e
 o ramo do Thaumcraft é o Thaumcraft. O nome do volume é que é Codex Arcanum.
+
+## O Cozimento de Ferir Demônios, e o Leonard que entra no rótulo (2026-10-18)
+
+É o **único cozimento do mod que bate**. Todos os outros põem poção, mexem no lugar ou pintam o caldo;
+este tira vida, e só isso. Um **bloco de gelo** na panela, quinhentos de altar, peso cinco.
+
+E tem **três casos**, que é o que o torna interessante:
+
+- no que é **do inferno**, tira `10 << força`;
+- no **resto**, tira `3 << força` — menos de um terço;
+- e no **Leonard**, não bate: abre a **porta da fraqueza** dele, que salta os tetos de doze, quatro e um
+  que o chefe tem.
+
+A força dele tem um teto baixíssimo — **um**, ou três com o tempero que desliga o teto —, e como é um
+deslocamento de bits a diferença entre um e três é de vinte para oitenta.
+
+**É isto que torna o Leonard matável antes do anoitecer.** Sem este frasco, matar um chefe de seiscentos
+de vida a doze por golpe — e quatro depois do primeiro quarto — leva o que leva. Com ele, há um caminho.
+
+### E o Leonard entrou no rótulo do inferno
+
+O `thaumcraft:demonic` tinha oito dos nove bichos que o `CreatureUtil.isDemonic` do original conta, e o
+que faltava era o Leonard, porque ele não existia. Agora existe. Os três lugares que diziam «falta o
+Leonard» passaram a dizer que estão os nove: o **Virote Sagrado**, que bate mais nele; o **Espírito
+Fluente**, que o castiga; e este cozimento.
+
+**Guardas:** o `OccultaHarmBrewGameTest`, com três — os números do gelo na panela; **os três casos**, com
+o blaze que apanha mais do que o porco e o Leonard que só apanha pela porta da fraqueza (pela porta da
+frente, a mesma magia não lhe toca); e o Leonard no rótulo do inferno.

@@ -23,9 +23,9 @@ import org.jetbrains.annotations.Nullable;
  * <h2>Quem é</h2>
  *
  * <p>A lista do original é o Demônio, o Ghast, o Blaze, o Cubo de Magma, o Leonard, o Senhor do Tormento, o
- * Diabrete, a Lilith e o Wither. <b>Oito dos nove estão portados</b> — falta o Leonard — e passam a estar
- * todos num <b>rótulo</b>, que é onde uma lista de bichos mora hoje. Isso fecha os dois desvios declarados
- * que diziam que o Demônio, o Diabrete e a Lilith não contavam porque não estavam portados: já estão.
+ * Diabrete, a Lilith e o Wither. <b>Os nove estão portados</b>, e moram todos num <b>rótulo</b>, que é onde
+ * uma lista de bichos mora hoje. Isso fecha os desvios declarados que diziam que o Demônio, o Diabrete, a
+ * Lilith e o Leonard não contavam porque não estavam portados: já estão.
  *
  * <h2>E o golpe</h2>
  *

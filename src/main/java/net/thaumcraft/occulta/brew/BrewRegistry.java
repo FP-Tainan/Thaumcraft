@@ -267,6 +267,13 @@ public final class BrewRegistry {
                 new BrewName.Text("tc.brew.keepeffects"), 10000,
                 net.thaumcraft.occulta.OccultaEffects.KEEP_EFFECTS_ON_DEATH, mins(6), 8));
 
+        /*
+         * <b>Ferir Demônios</b>: o único cozimento do original que faz <b>dano</b> e não põe poção nenhuma.
+         * Um bloco de gelo na panela, e o frasco tira <b>vinte</b> do que for do inferno e <b>seis</b> do
+         * resto — e, contra o <b>Leonard</b>, abre a porta da fraqueza dele, que salta os tetos do chefe.
+         */
+        register(new BrewActions.Harm(Items.ICE, new BrewName.Text("tc.brew.harmdemons"), 500, 5));
+
         // -------------------------------------------- e as que atravessam a morte, com ingrediente próprio
         /*
          * Das quatro que atravessam a morte, estas três têm ingrediente só delas: a que afunda, a que ferve

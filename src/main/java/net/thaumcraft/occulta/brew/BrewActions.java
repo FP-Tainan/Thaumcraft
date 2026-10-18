@@ -196,6 +196,72 @@ public final class BrewActions {
         }
     }
 
+
+    /**
+     * O ingrediente que <b>fere</b>: o {@code BrewActionEffect} anônimo do <b>Ferir Demônios</b>.
+     *
+     * <p>É o único cozimento do original que faz <b>dano</b> e não põe poção nenhuma, e é por isso que ele
+     * precisa de uma classe só dele. Bate em tudo — mas bate <b>muito mais</b> no que é do inferno.
+     *
+     * <p>A força dele tem um teto baixíssimo: <b>um</b>, ou três se o tempero que desliga o teto estiver no
+     * caldeirão. É um deslocamento de bits, de modo que a diferença entre um e três é de vinte para oitenta.
+     *
+     * <p>E tem um terceiro caso, que é a razão de ele existir: contra o <b>Leonard</b>, ele não bate — ele
+     * abre a <b>porta da fraqueza</b> dele, que salta os tetos de doze, quatro e um que o chefe tem. É a
+     * maneira de o matar antes do anoitecer.
+     */
+    public static class Harm extends BrewAction {
+        /** O que ele tira do que é do inferno, e do que não é. */
+        public static final int NO_INFERNO = 10;
+        public static final int NO_RESTO = 3;
+
+        /** E o teto da força dele: um, ou três sem o teto. */
+        public static final int TETO = 1;
+        public static final int TETO_SEM_TETO = 3;
+
+        private final int weight;
+
+        public Harm(Item key, BrewName.Text namePart, int power, int weight) {
+            super(key, namePart, power);
+            this.weight = weight;
+        }
+
+        @Override
+        public boolean isEffect() {
+            return true;
+        }
+
+        @Override
+        public boolean augmentCapacity(BrewCapacity espaço) {
+            return espaço.consume(this.weight);
+        }
+
+        @Override
+        public void applyToEntity(Level level, LivingEntity quem, BrewModifiers temperos) {
+            if (temperos.disableEntityTarget) return;
+            if (!(level instanceof net.minecraft.server.level.ServerLevel server)) return;
+
+            int força = Math.min(temperos.getStrength(),
+                    temperos.strengthCeilingDisabled ? TETO_SEM_TETO : TETO);
+            if (quem instanceof net.thaumcraft.occulta.leonard.LeonardEntity leonard) {
+                leonard.feriDeFraqueza(server, quanto(NO_INFERNO, força, temperos));
+                temperos.reset();
+                return;
+            }
+
+            boolean doInferno = net.thaumcraft.occulta.torment.Demonic.é(quem);
+            quem.hurtServer(server,
+                    server.damageSources().indirectMagic(temperos.quemFez, temperos.quemFez),
+                    quanto(doInferno ? NO_INFERNO : NO_RESTO, força, temperos));
+            temperos.reset();
+        }
+
+        /** O {@code (base << força) * escala}, arredondado para cima como no original. */
+        public static int quanto(int base, int força, BrewModifiers temperos) {
+            return net.minecraft.util.Mth.ceil((base << força) * temperos.powerScale);
+        }
+    }
+
     /**
      * O ingrediente que diz <b>como</b> o cozimento se espalha: o {@code BrewActionDispersal}.
      *

@@ -1,12 +1,13 @@
 {
   "replace": false,
   "values": [
-    "minecraft:ghast",
     "minecraft:blaze",
+    "minecraft:ghast",
     "minecraft:magma_cube",
     "minecraft:wither",
     "thaumcraft:demon",
     "thaumcraft:imp",
+    "thaumcraft:leonard",
     "thaumcraft:lilith",
     "thaumcraft:lord_of_torment"
   ]
