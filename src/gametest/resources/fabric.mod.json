@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "thaumcraft-test",
   "version": "1.0.0",
-  "name": "Thaumcraft Tests",
+  "name": "Codex Arcanum Tests",
   "environment": "*",
   "entrypoints": {
     "fabric-gametest": [

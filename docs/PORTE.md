@@ -12276,3 +12276,36 @@ beber, que não cabe); a receita de juntar, com as quatro respostas certas e as 
 símbolos com os nomes e o desenho de grau dois; **o custo**, que é o que a fatia é, nas três contas dele;
 e o frasco que sai da urna ao lançar. E o `OccultaUrnClientTest`, com os quatro desenhos do item lado a
 lado e as telas de uma casa e de quatro — que é a única maneira de ver o losango.
+
+## O mod passa a chamar-se Codex Arcanum (2026-10-18)
+
+O porte começou como «o Thaumcraft 4.2.3.5 no Minecraft de hoje», e o nome dizia isso. Mas ele cresceu:
+hoje são **oito ramos** num mod só, e sete deles não são Thaumcraft.
+
+| aba | o que é, lá atrás |
+|---|---|
+| **Thaumcraft** | o Thaumcraft 4.2.3.5, de Azanor |
+| **Forbidden Magic** | o Forbidden Magic, de SpitefulFox |
+| **Magia Naturalis** | o Magia Naturalis, de elenterius |
+| **Maleficium** | o Maleficium |
+| **Ars Mortuorum** | o Ars Mortuorum |
+| **Reinos Fragmentados** | o Dimensional Doors, de StevenRS11 |
+| **Ars Occulta** | o Witchery, de Emoniph |
+| **Ars Arcana** | o Ars Magica 2, de Mithion |
+
+Oito livros de magia encadernados num só volume: é isso que o mod é, e é isso que o nome passa a dizer.
+**Codex Arcanum**, com o ícone de um grimório aberto.
+
+### O que mudou, e o que não mudou
+
+Mudou o **nome de tela** — o que aparece na lista de mods —, a **descrição**, a lista de **créditos** (cada
+autor original ao lado do que ele escreveu) e o **ícone**.
+
+**Não mudou o identificador.** O mod continua a ser o `thaumcraft` por dentro, e tem de continuar: o
+identificador é o **nome das coisas**. Trocá-lo renomearia os mil e tal registros do mod — cada bloco,
+cada item, cada bicho, cada som, cada rótulo e cada receita —, apagaria tudo o que estiver num mundo
+salvo e quebraria qualquer pacote de dados que fale com ele. Um mod muda de nome; não muda de nome
+próprio.
+
+Pela mesma razão a **aba do Thaumcraft** continua a chamar-se Thaumcraft: as oito abas são os **ramos**, e
+o ramo do Thaumcraft é o Thaumcraft. O nome do volume é que é Codex Arcanum.
