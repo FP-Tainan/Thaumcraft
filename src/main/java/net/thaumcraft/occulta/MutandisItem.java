@@ -72,7 +72,7 @@ public class MutandisItem extends Item {
      * E um <b>cato</b> do mesmo jeito vira <b>Sarça Selvagem</b>, até quatro de altura.
      *
      * <p>E ela pede <b>dois Apanha-Ervas com farinha de osso</b> e <b>dois com pó de blaze</b> nas
-     * diagonais, que é a conta do original. A <b>Vara Mutante</b> continua a ser o buraco, como na cana.
+     * diagonais, que é a conta do original. A <b>Vara Mutante</b> continua sendo o buraco, como na cana.
      */
     public static boolean éCatoDeSarça(Level level, BlockPos onde) {
         return level.getBlockState(onde).is(Blocks.CACTUS)
@@ -191,6 +191,43 @@ public class MutandisItem extends Item {
     /** Quantos lados e quantas diagonais as duas receitas de bicho pedem. */
     public static final int APANHA_BICHOS = 2;
     public static final int APANHA_ERVAS = 3;
+
+    /** E os quatro cacaus maduros e os dois Extremis que o Macaco de Asas pede. */
+    public static final int CACAUS = 4;
+    public static final int EXTREMIS_DO_MACACO = 2;
+
+    /**
+     * <b>De onde vem o Macaco de Asas</b>, que é a receita mais cara do ramo.
+     *
+     * <p>A mesma teia com água por baixo, mas com <b>quatro vagens de cacau maduras</b> à volta em vez de
+     * plantas, e com os quatro Apanha-Ervas das quinas repartidos: <b>dois com Mutandis Extremis</b>, um
+     * com a <b>Pedra Sintonizada carregada</b> e um com um <b>dente-de-leão</b>. Quatro Apanha-Ervas,
+     * dois mais um mais um — a conta fecha certa, e é de propósito.
+     *
+     * <p>E pede <b>duas vidas</b>: uma <b>coruja</b> e um <b>lobo</b>, que somem os dois. É a única
+     * mutação do mod que gasta dois bichos.
+     */
+    public static boolean éTeiaDeMacaco(Level level, BlockPos onde) {
+        if (!level.getBlockState(onde).is(Blocks.COBWEB)) return false;
+        if (!level.getBlockState(onde.below()).is(Blocks.WATER)) return false;
+        if (quantosCacaus(level, onde) < CACAUS) return false;
+        if (quantosSeguram(level, onde, OccultaItems.MUTANDIS_EXTREMIS) < EXTREMIS_DO_MACACO) return false;
+        if (quantosSeguram(level, onde, OccultaItems.ATTUNED_STONE_CHARGED) < 1) return false;
+        if (quantosSeguram(level, onde, net.minecraft.world.item.Items.DANDELION) < 1) return false;
+        if (bichoPerto(level, onde, net.thaumcraft.occulta.familiar.OwlEntity.class) == null) return false;
+        return bichoPerto(level, onde, net.minecraft.world.entity.animal.wolf.Wolf.class) != null;
+    }
+
+    /** Quantas das quatro vagens de cacau à volta estão <b>maduras</b>. */
+    public static int quantosCacaus(Level level, BlockPos onde) {
+        int quantos = 0;
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            BlockState feitio = level.getBlockState(onde.relative(lado));
+            if (!feitio.is(Blocks.COCOA)) continue;
+            if (feitio.getValue(net.minecraft.world.level.block.CocoaBlock.AGE) == 2) quantos++;
+        }
+        return quantos;
+    }
 
     /** As quatro diagonais, que é onde os Apanha-Ervas moram. */
     private static BlockPos[] quinas(BlockPos onde) {
@@ -418,6 +455,21 @@ public class MutandisItem extends Item {
         }
 
         /*
+         * E o <b>Macaco de Asas</b>, que gasta uma coruja e um lobo e deixa um macaco só — a teia e as
+         * quatro vagens somem com ele, e os quatro Apanha-Ervas ficam de boca vazia.
+         */
+        if (this.extremis && éTeiaDeMacaco(level, onde)) {
+            if (level.isClientSide()) return InteractionResult.SUCCESS;
+            gasta(level, onde, net.thaumcraft.occulta.familiar.OwlEntity.class,
+                    SoundEvents.CREEPER_DEATH);
+            gasta(level, onde, net.minecraft.world.entity.animal.wolf.Wolf.class,
+                    SoundEvents.GHAST_DEATH);
+            nasceOMacaco(level, onde);
+            this.spend(context, level, onde);
+            return InteractionResult.SUCCESS;
+        }
+
+        /*
          * E as duas sarças: uma <b>cana</b> ou um <b>cato</b> cercados de musgo-espanhol, com água nas
          * quatro quinas de baixo, viram a coluna inteira em sarça — a cana em <b>Sarça do Fim</b>, o cato em
          * <b>Sarça Selvagem</b>.
@@ -505,6 +557,28 @@ public class MutandisItem extends Item {
             mundo.addFreshEntity(bicho);
         }
         for (BlockPos quina : quinas(onde)) esvazia(mundo, quina);
+    }
+
+    /** A teia e as quatro vagens somem, e no lugar da teia nasce o macaco. */
+    private static void nasceOMacaco(Level level, BlockPos onde) {
+        if (!(level instanceof ServerLevel mundo)) return;
+        level.removeBlock(onde, false);
+        for (net.minecraft.core.Direction lado : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+            level.removeBlock(onde.relative(lado), false);
+        }
+        for (BlockPos quina : quinas(onde)) esvazia(mundo, quina);
+
+        var macaco = OccultaEntities.WINGED_MONKEY.create(mundo,
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        if (macaco == null) return;
+        macaco.snapTo(onde.getX() + 0.5, onde.getY(), onde.getZ() + 0.5, 0.0f, 0.0f);
+        macaco.setPersistenceRequired();
+        macaco.finalizeSpawn(mundo, mundo.getCurrentDifficultyAt(onde),
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED, null);
+        mundo.addFreshEntity(macaco);
+        mundo.sendParticles(ParticleTypes.ITEM_SLIME, onde.getX() + 0.5, onde.getY() + 0.5,
+                onde.getZ() + 0.5, 8, 3.0, 2.0, 3.0, 0.0);
+        mundo.playSound(null, onde, SoundEvents.SLIME_DEATH, SoundSource.NEUTRAL, 1.0f, 1.0f);
     }
 
     /** Tira o que um Apanha-Erva tem na boca, com os pós de gosma do original. */

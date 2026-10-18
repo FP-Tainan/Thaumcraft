@@ -158,6 +158,19 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.familiar.OwlEntity::attributes))
                     .sized(0.6f, 0.8f).eyeHeight(0.6f).clientTrackingRange(8));
 
+    /**
+     * O <b>Macaco de Asas</b>: o táxi do ramo.
+     *
+     * <p>Sessenta por oitenta, que são os números do original — e são os de um bicho que cabe no colo de
+     * quem o doma.
+     */
+    public static final EntityType<net.thaumcraft.occulta.familiar.WingedMonkeyEntity> WINGED_MONKEY =
+            register("winged_monkey", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.familiar.WingedMonkeyEntity::new, MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.familiar.WingedMonkeyEntity::attributes))
+                    .sized(0.6f, 0.8f).eyeHeight(0.6f).clientTrackingRange(8));
+
     private OccultaEntities() {
     }
 

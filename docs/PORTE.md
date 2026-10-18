@@ -12301,13 +12301,13 @@ Oito livros de magia encadernados num só volume: é isso que o mod é, e é iss
 Mudou o **nome de tela** — o que aparece na lista de mods —, a **descrição**, a lista de **créditos** (cada
 autor original ao lado do que ele escreveu) e o **ícone**.
 
-**Não mudou o identificador.** O mod continua a ser o `thaumcraft` por dentro, e tem de continuar: o
+**Não mudou o identificador.** O mod continua sendo o `thaumcraft` por dentro, e tem de continuar: o
 identificador é o **nome das coisas**. Trocá-lo renomearia os mil e tal registros do mod — cada bloco,
 cada item, cada bicho, cada som, cada rótulo e cada receita —, apagaria tudo o que estiver num mundo
 salvo e quebraria qualquer pacote de dados que fale com ele. Um mod muda de nome; não muda de nome
 próprio.
 
-Pela mesma razão a **aba do Thaumcraft** continua a chamar-se Thaumcraft: as oito abas são os **ramos**, e
+Pela mesma razão a **aba do Thaumcraft** continua se chamando Thaumcraft: as oito abas são os **ramos**, e
 o ramo do Thaumcraft é o Thaumcraft. O nome do volume é que é Codex Arcanum.
 
 ## O Cozimento de Ferir Demônios, e o Leonard que entra no rótulo (2026-10-18)
@@ -12423,3 +12423,82 @@ sabia disso — por isso não lhe escreveu mais nada.
 passa pela armadura de diamante; o teto de quinze; **o conjunto de três peças**, que é o que a fatia é; a
 foice, que só abre com ele e cujos degraus de fome são os do original; e o sexto efeito de fetiche com os
 quinze fantasmas que ele pede.
+
+## O Macaco de Asas (2026-10-18)
+
+O **táxi** do ramo, e o bicho mais simpático que o Witchery tem. Vinte de vida, três décimos de passo,
+cinco de armadura por cima do que vestir, e asas chatas de **doze blocos** de envergadura que não cabem
+no corpo dele.
+
+### O murro dele é dois, e a folha diz quatro
+
+O original põe **quatro** na folha de números e depois escreve o murro à mão, com um **dois a seco** —
+sem olhar para a folha, sem encantamento, sem nada. Os quatro nunca chegam a ninguém. Está assim aqui,
+nos dois lados, e a prova mede os dois: é o engano que mais se nota dele.
+
+### Como se doma, e a pele que ninguém vê
+
+**Carne crua**, de porco ou de boi, oferecida a menos de três blocos: pega **uma vez em três**. Pegando,
+ele sorteia uma **pele de domado** entre três — e o desenhista do original, que tem uma folha só,
+**nunca a lê**. Ela não se vê em lugar nenhum. Fica porque está lá.
+
+### A tinta não o pinta: mistura-se no castanho
+
+A cor das asas nasce sorteada entre as dezesseis da lã de 2014, com **uma em cem** de sair a **branca**.
+Tinta na mão do dono troca-a — mas o original **não pinta o macaco da cor da tinta**: ele pega na cor da
+lã, tira-lhe **quinze e meio por cento** e soma-lhe um castanho fixo. Um macaco pintado de azul é um
+macaco castanho com um sopro de azul, e a branca não leva tinta nenhuma.
+
+### Para onde ele leva
+
+Uma **Pedra de Caminho presa** na mão do dono dá-lhe o rumo, põe quem a deu **às costas dele** e
+**prende-se de volta onde ele está** — que é o que faz haver viagem de volta. Um **frasco de alguém** dá
+rumo a **onde essa pessoa está agora**, e não a onde estava quando o frasco se encheu.
+
+É por isso que o rumo dele é uma **pilha guardada** e não três números, e é por isso que o `ComCasa`
+existe: no original, o rumo mora no `EntityFlyingTameable`, a classe de que descendem o Espírito e o
+Macaco. Aqui os dois bichos não descendem um do outro, e **respondem à pergunta de maneiras diferentes**
+— um guarda coordenadas, o outro pergunta à pilha de cada vez.
+
+Chegando, a meta **esquece o rumo, larga quem traz e senta-se**. As três coisas são as do original, e a
+do meio só se vê neste bicho.
+
+### E a mutação que o faz pede duas vidas
+
+A mesma teia das outras, com água por baixo, mas com **quatro vagens de cacau maduras** à volta em vez de
+plantas, e com os quatro Apanha-Ervas das quinas repartidos: **dois com Mutandis Extremis**, um com a
+**Pedra Sintonizada carregada** e um com um **dente-de-leão**. Dois mais um mais um — a conta fecha
+certa, e é de propósito.
+
+E pede uma **coruja** e um **lobo**, que somem os dois. É a única receita do mod que gasta duas vidas.
+
+E vale a mesma declaração das outras mutações: quem as faz, no original, é a **Vara Mutante**, que não
+está portada — aqui é o Mutandis Extremis que faz o que ela fazia lá.
+
+### O acasalar no ar
+
+O `EntityAIFlyerMate` é o acasalar do jogo com o andar trocado: procura par a oito blocos, **deriva** para
+ele a um quarto por empurrão em vez de ir por caminho, e ao fim de três segundos encostado faz o filho. O
+resto — as festas, a experiência, as idades — é o do jogo, que é o mesmo do original letra por letra.
+E ele só acasala **domado com domado**.
+
+### Desvios declarados
+
+1. **Quem monta vai sentado.** O original diz `shouldRiderSit() { return false; }` — quem monta um macaco
+   vai **de pé**. O jogo de hoje não tem essa pergunta: a pose de quem vai às costas de alguma coisa já
+   não é do veículo. A altura é a do original, de pé é que não fica.
+
+2. **Sentar volta a ser uma coisa só.** Em 2014 o `setSitting` escrevia direto no campo
+   sincronizado: mandar sentar e parecer sentado eram a mesma chamada. O jogo de hoje partiu-as em duas e
+   deixa a meta de sentar ligar uma à outra. Aqui elas voltam a andar juntas, porque é o que faz a pose
+   chegar a quem olha — e este bicho pode estar sentado sem a meta correr.
+
+3. **Pousado lê o rótulo da folhagem.** O `ModelOwl.isLanded` pergunta pelo *material* do bloco um
+   centésimo abaixo dos pés — folhagem ou maciço. Os materiais de 2014 não existem; aqui é o rótulo
+   `minecraft:leaves` ou um bloco de desenho maciço, que é o mesmo conjunto.
+
+**Guardas:** o `OccultaMonkeyGameTest`, com sete — os números dele e o murro que os ignora; a doma pela
+carne crua com a pele de três; a tinta, que só obedece ao dono; a pedra presa, que o manda e o prende de
+volta; o frasco, cujo rumo **anda com a pessoa**; o prazo do de empréstimo pelos dois lados da condição;
+e a mutação com as duas vidas. E o `OccultaMonkeyClientTest`, com três fotos: as asas abertas, as asas
+fechadas e a tinta misturada no castanho.

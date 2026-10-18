@@ -4,6 +4,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -65,6 +66,29 @@ public final class FlyerGoals {
         float rumo = -((float) Math.atan2(v.x, v.z)) * 180.0f / (float) Math.PI;
         quem.setYRot(rumo);
         quem.yBodyRot = rumo;
+    }
+
+    /**
+     * <b>Quem tem para onde ir.</b>
+     *
+     * <p>No original, o rumo mora no {@code EntityFlyingTameable} — a classe de que descendem o Espírito
+     * e o Macaco de Asas. Aqui ele é um contrato, porque os dois bichos não descendem um do outro e
+     * <b>respondem à pergunta de maneiras diferentes</b>: o Espírito guarda três números, e o Macaco
+     * guarda a <b>pilha</b> que lhe deram e pergunta a ela de cada vez — que é como um frasco de alguém o
+     * leva a <b>onde essa pessoa está agora</b>.
+     */
+    public interface ComCasa {
+        /** Se ele tem rumo. */
+        boolean temCasa();
+
+        double casaX();
+
+        double casaY();
+
+        double casaZ();
+
+        /** Esquece-o, que é o que a meta faz quando chega. */
+        void esqueceACasa();
     }
 
     // ------------------------------------------------------------------ sentar e ficar
@@ -355,7 +379,7 @@ public final class FlyerGoals {
      *
      * <p>Quando para, <b>esquece o lugar e senta-se</b>.
      */
-    public static class VaiParaCasa extends Goal {
+    public static class VaiParaCasa<T extends TamableAnimal & ComCasa> extends Goal {
         private static final double CHEGOU = 1.0;
         private static final double SOBE_ATÉ = 32.0;
         private static final double SOBE = 0.1;
@@ -363,10 +387,10 @@ public final class FlyerGoals {
         private static final double ESPALHA_LADO = 6.0;
         private static final double ESPALHA_ALTO = 4.0;
 
-        private final SpiritEntity quem;
+        private final T quem;
         private int espera;
 
-        public VaiParaCasa(SpiritEntity quem) {
+        public VaiParaCasa(T quem) {
             this.quem = quem;
             this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
         }
@@ -383,9 +407,14 @@ public final class FlyerGoals {
                     || Math.abs(this.quem.getY() - this.quem.casaY()) > 1.0;
         }
 
+        /**
+         * <b>Chegou: esquece o rumo, larga quem traz e senta-se.</b> As três coisas são as do original —
+         * e a do meio só se vê no Macaco de Asas, que é o único deste ramo que leva alguém.
+         */
         @Override
         public void stop() {
             this.quem.esqueceACasa();
+            this.quem.ejectPassengers();
             this.quem.setOrderedToSit(true);
             this.espera = 0;
         }
@@ -778,6 +807,93 @@ public final class FlyerGoals {
         public static double encosta(Mob quem, LivingEntity alvo) {
             double dobro = quem.getBbWidth() * 2.0;
             return dobro * dobro + alvo.getBbWidth();
+        }
+    }
+
+    // ------------------------------------------------------------------ acasalar
+
+    /**
+     * <b>Acasalar no ar.</b> O {@code EntityAIFlyerMate}.
+     *
+     * <p>É o acasalar do jogo com o andar trocado: procura par da mesma espécie a <b>oito blocos</b>,
+     * deriva para ele a um quarto por empurrão — e não por caminho —, e ao fim de <b>três segundos</b>
+     * encostado faz o filho. O resto, as festas e a experiência, é o do jogo, que é o mesmo do original
+     * letra por letra.
+     */
+    public static class Acasala extends Goal {
+        /** Até onde procura par, quanto empurra, de quantas em quantas, e quanto tempo até ao filho. */
+        public static final double PROCURA = 8.0;
+        public static final double EMPURRA = 0.25;
+        public static final int RUMO_DE = 10;
+        public static final int DEMORA = 60;
+        public static final double ENCOSTA = 9.0;
+
+        private final Animal quem;
+        private @Nullable Animal par;
+        private int espera;
+        private int conta;
+
+        public Acasala(Animal quem) {
+            this.quem = quem;
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (!this.quem.isInLove()) return false;
+            this.par = oParMaisPerto();
+            return this.par != null;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return this.par != null && this.par.isAlive() && this.par.isInLove() && this.conta < DEMORA;
+        }
+
+        @Override
+        public void stop() {
+            this.par = null;
+            this.conta = 0;
+            this.espera = 0;
+        }
+
+        @Override
+        public void tick() {
+            if (this.par == null) return;
+            if (--this.espera <= 0) {
+                double dx = this.par.getX() - this.quem.getX();
+                double dy = this.par.getY() - this.quem.getY();
+                double dz = this.par.getZ() - this.quem.getZ();
+                double longe = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                if (longe > 0.0 && rumoLivre(this.quem, this.par.getX(), this.par.getY(),
+                        this.par.getZ(), longe)) {
+                    this.quem.setDeltaMovement(this.quem.getDeltaMovement().add(
+                            dx / longe * EMPURRA, dy / longe * EMPURRA, dz / longe * EMPURRA));
+                }
+                this.espera = RUMO_DE;
+            }
+            viraParaOnde(this.quem);
+
+            this.conta++;
+            if (this.conta >= DEMORA && this.quem.distanceToSqr(this.par) < ENCOSTA
+                    && this.quem.level() instanceof net.minecraft.server.level.ServerLevel level) {
+                this.quem.spawnChildFromBreeding(level, this.par);
+            }
+        }
+
+        /** O da mesma espécie mais perto que queira: o {@code getNearbyMate} do original. */
+        private @Nullable Animal oParMaisPerto() {
+            Animal perto = null;
+            double menos = Double.MAX_VALUE;
+            for (Animal outro : this.quem.level().getEntitiesOfClass(Animal.class,
+                    this.quem.getBoundingBox().inflate(PROCURA))) {
+                if (outro.getClass() != this.quem.getClass() || !this.quem.canMate(outro)) continue;
+                double longe = this.quem.distanceToSqr(outro);
+                if (longe >= menos) continue;
+                perto = outro;
+                menos = longe;
+            }
+            return perto;
         }
     }
 

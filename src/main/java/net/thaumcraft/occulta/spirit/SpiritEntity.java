@@ -53,7 +53,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @see FlyerGoals as quatro metas que o fazem derivar em vez de andar
  */
-public class SpiritEntity extends TamableAnimal {
+public class SpiritEntity extends TamableAnimal implements FlyerGoals.ComCasa {
     /** Quanto ele vale: quatro de vida, e o resto é enfeite. */
     public static final double VIDA = 4.0;
     public static final double VELOCIDADE = 0.4;
@@ -141,7 +141,7 @@ public class SpiritEntity extends TamableAnimal {
         this.goalSelector.addGoal(1, new FlyerGoals.SentaEFica(this));
         this.goalSelector.addGoal(3, new FlyerGoals.Tentação(this, SpiritEntity::tenta, true));
         this.goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.0, 14.0f, 5.0f));
-        this.goalSelector.addGoal(8, new FlyerGoals.VaiParaCasa(this));
+        this.goalSelector.addGoal(8, new FlyerGoals.VaiParaCasa<>(this));
         this.goalSelector.addGoal(9, new FlyerGoals.Pousa(this, true));
         this.goalSelector.addGoal(10, new FlyerGoals.Vagueia(this, FOGE_A));
         this.goalSelector.addGoal(11, new LookAtPlayerGoal(this, Player.class, (float) FOGE_A, 0.2f));
@@ -194,22 +194,27 @@ public class SpiritEntity extends TamableAnimal {
         this.casaZ = onde.getZ();
     }
 
+    @Override
     public boolean temCasa() {
         return this.temCasa;
     }
 
+    @Override
     public void esqueceACasa() {
         this.temCasa = false;
     }
 
+    @Override
     public double casaX() {
         return this.casaX;
     }
 
+    @Override
     public double casaY() {
         return this.casaY;
     }
 
+    @Override
     public double casaZ() {
         return this.casaZ;
     }

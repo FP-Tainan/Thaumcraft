@@ -197,6 +197,12 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.OWL,
                 net.thaumcraft.occulta.client.FamiliarRenderers.Coruja::new);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.WingedMonkeyRenderer.LAYER,
+                net.thaumcraft.occulta.client.WingedMonkeyRenderer::criaCamada);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.WINGED_MONKEY,
+                net.thaumcraft.occulta.client.WingedMonkeyRenderer.Macaco::new);
 
         // o Ars Occulta: a Baba Yaga
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
