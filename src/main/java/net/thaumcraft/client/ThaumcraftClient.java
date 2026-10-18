@@ -484,6 +484,25 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.SPIRIT,
                 net.thaumcraft.occulta.client.SpiritRenderer.Espírito::new);
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.DeathRenderer.LAYER,
+                net.thaumcraft.occulta.client.DeathRenderer::criaCamada);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.DEATH,
+                net.thaumcraft.occulta.client.DeathRenderer.Morte::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.DEATHS_HORSE,
+                net.minecraft.client.renderer.entity.HorseRenderer::new);
+        // e as roupas dela, com o modelo do ModelClothesDeath
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.DeathClothesRenderer.CAMADA,
+                net.thaumcraft.occulta.client.DeathClothesRenderer::criaCamada);
+        net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer.register(
+                net.thaumcraft.occulta.client.DeathClothesRenderer::new,
+                net.thaumcraft.occulta.OccultaItems.DEATHS_HOOD,
+                net.thaumcraft.occulta.OccultaItems.DEATHS_ROBE,
+                net.thaumcraft.occulta.OccultaItems.DEATHS_BOOTS);
+
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.LeonardRenderer.LAYER,
                 net.thaumcraft.occulta.client.LeonardRenderer::criaCamada);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(

@@ -389,9 +389,9 @@ public abstract class SpiritEffects {
      * <p>Ele custa <b>cinco de cada</b> dos três fantasmas e <b>nenhum espírito</b>, e a conta é um aviso:
      * quem puser quinze fantasmas dentro de um círculo de giz não vai ficar com um espantalho.
      *
-     * <p><b>Fica declarado:</b> este porte põe o efeito na lista para a conta ficar certa — ele é o último,
-     * e por isso só cabe quando nenhum dos cinco cabe —, mas <b>o que ele chama ainda não existe</b>. A
-     * Morte é outra fatia. Até lá, prendê-lo é prender um fetiche que não faz nada.
+     * <p><b>E ele não faz nada</b> — nem aqui nem no original, onde o corpo dele é um {@code return true}
+     * e mais nada. O que ele é, é uma <b>senha</b>: cabendo ele, o rito que prende espíritos deixa de
+     * devolver um fetiche e passa a <b>chamar a Morte</b>. O fetiche é gasto e não volta.
      */
     public static final SpiritEffects DEATH =
             new SpiritEffects(6, "death", 0, 5, 5, 5, false) {

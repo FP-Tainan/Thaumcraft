@@ -402,6 +402,26 @@ public final class OccultaEntities {
                     .sized(0.25f, 0.25f).eyeHeight(0.125f).clientTrackingRange(8));
 
     /**
+     * A <b>Morte</b>: o {@code EntityDeath} do original.
+     *
+     * <p>Do tamanho de uma pessoa, e com o alcance de rede largo que uma barra de chefe pede.
+     */
+    public static final EntityType<net.thaumcraft.occulta.death.DeathEntity> DEATH =
+            register("death", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.death.DeathEntity::new, MobCategory.MONSTER,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.death.DeathEntity::attributes))
+                    .sized(0.6f, 1.8f).eyeHeight(1.62f).clientTrackingRange(16));
+
+    /** E o <b>Cavalo da Morte</b>, o Binky: um cavalo que não dá experiência. */
+    public static final EntityType<net.thaumcraft.occulta.death.DeathsHorseEntity> DEATHS_HORSE =
+            register("deaths_horse", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.death.DeathsHorseEntity::new, MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(
+                                    net.minecraft.world.entity.animal.equine.AbstractHorse::createBaseHorseAttributes))
+                    .sized(1.3964844f, 1.6f).clientTrackingRange(10));
+
+    /**
      * O <b>Leonard</b>: o {@code EntityLeonard} do original, e o chefe do ramo.
      *
      * <p>Do tamanho de uma pessoa — seis décimos por um e oito —, e com um alcance de rede largo, que é o
@@ -536,6 +556,11 @@ public final class OccultaEntities {
                 .register(LOST_SOUL, net.thaumcraft.occulta.spirit.LostSoulEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(LEONARD, net.thaumcraft.occulta.leonard.LeonardEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(DEATH, net.thaumcraft.occulta.death.DeathEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(DEATHS_HORSE,
+                        net.minecraft.world.entity.animal.equine.AbstractHorse.createBaseHorseAttributes());
 
         /*
          * <b>Onde o Espírito nasce.</b> O original põe-no nos nove tipos de bioma de terra do mundo de

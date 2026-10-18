@@ -118,6 +118,24 @@ public final class OccultaMaterials {
             Map.of(ArmorType.HELMET, 2), 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f,
             TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_goblin_clothes")), GOBLIN_ASSET);
 
+    /** A cara das <b>roupas da Morte</b>, desenhada pelo {@code DeathClothesRenderer}. */
+    public static final ResourceKey<EquipmentAsset> DEATH_ASSET =
+            ResourceKey.create(EquipmentAssets.ROOT_ID, Thaumcraft.id("deaths_clothes"));
+
+    /**
+     * De que são feitas as <b>roupas da Morte</b>: a proteção do <b>ferro</b> com a durabilidade do
+     * <b>diamante</b>.
+     *
+     * <p>É o que o original escreve — {@code ArmorMaterial.IRON} com {@code DIAMOND.getDurability} — e é a
+     * mesma piada da Fita Torcida: elas protegem como ferro e <b>não se gastam</b>.
+     */
+    public static final ArmorMaterial DEATH = new ArmorMaterial(DIAMOND_WEAR,
+            Map.of(ArmorType.HELMET, 2, ArmorType.CHESTPLATE, 6,
+                    ArmorType.LEGGINGS, 5, ArmorType.BOOTS, 2),
+            9, SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f,
+            TagKey.create(Registries.ITEM, Thaumcraft.id("repairs_deaths_clothes")), DEATH_ASSET);
+
+
     /**
      * E de que são feitas a <b>Aljava do Mog</b> e a <b>Cinta do Gulg</b>: a proteção do <b>couro</b>
      * com a durabilidade do <b>ferro</b>.

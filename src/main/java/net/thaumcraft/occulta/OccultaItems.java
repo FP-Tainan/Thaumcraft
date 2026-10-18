@@ -617,6 +617,28 @@ public final class OccultaItems {
      * segundos a mais do que a proteção contra fogo dura.
      */
     /**
+     * As <b>três roupas da Morte</b> e a <b>Mão</b> dela, mais o <b>crânio do Binky</b>.
+     *
+     * <p>Vestidas as três com a Mão na mão, <b>quem as veste é a Morte</b>: o rito que a chama teleporta
+     * essa pessoa em vez de criar o bicho.
+     */
+    public static final Item DEATHS_HOOD = roupaDaMorte("deaths_hood", ArmorType.HELMET,
+            "tc.deathsclothes.hood");
+
+    public static final Item DEATHS_ROBE = roupaDaMorte("deaths_robe", ArmorType.CHESTPLATE,
+            "tc.deathsclothes.robe");
+
+    public static final Item DEATHS_BOOTS = roupaDaMorte("deaths_boots", ArmorType.BOOTS,
+            "tc.deathsclothes.boots");
+
+    public static final Item DEATHS_HAND = register("deaths_hand", properties ->
+            new net.thaumcraft.occulta.death.DeathsHandItem(properties.stacksTo(1)
+                    .rarity(net.minecraft.world.item.Rarity.EPIC)));
+
+    /** E o <b>crânio do Binky</b>, que com uma sela faz o cavalo branco. */
+    public static final Item BINKYS_HEAD = register("binkys_head", Item::new);
+
+    /**
      * A <b>Urna do Leonard</b>: a bolsa de cozimentos atirados que o chefe larga, e de onde os quatro
      * símbolos dele bebem.
      */
@@ -1647,6 +1669,13 @@ public final class OccultaItems {
                 tingível, necro, dica,
                 tingível ? net.thaumcraft.occulta.clothes.WitchClothesItem.DEFAULT_COLOR
                         : net.thaumcraft.occulta.clothes.WitchClothesItem.LEATHER_COLOR));
+    }
+
+    /** Uma peça de roupa da Morte: ferro para proteger, diamante para durar, e nunca tingível. */
+    private static Item roupaDaMorte(String nome, ArmorType casa, String dica) {
+        return register(nome, properties -> new net.thaumcraft.occulta.death.DeathsClothesItem(
+                properties.humanoidArmor(OccultaMaterials.DEATH, casa)
+                        .rarity(net.minecraft.world.item.Rarity.EPIC), dica));
     }
 
     /** Uma peça de roupa de caçador: couro para proteger, ferro para durar, e tingível. */

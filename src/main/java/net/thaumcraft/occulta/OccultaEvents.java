@@ -108,6 +108,13 @@ public final class OccultaEvents {
                 net.thaumcraft.occulta.WitchHandItem::soco);
 
         /*
+         * E o golpe da <b>Mão da Morte</b>, que também engole o clique: ela não bate como arma, ela
+         * <b>toca</b>.
+         */
+        net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.register(
+                net.thaumcraft.occulta.death.DeathsHandItem::soco);
+
+        /*
          * O <b>Toque de Fogo</b> do contrato: clicando num bloco, uma vez em cinco, acende a face
          * clicada. Ele não toma conta do clique — devolve sempre «passa» —, de modo que o que a mão
          * ia fazer continua acontecendo.

@@ -135,6 +135,15 @@ public final class OccultaComponents {
                             .apply(ByteBufCodecs.list())));
 
     /**
+     * Se a <b>Mão da Morte</b> está <b>aberta</b>: o {@code WITCScytheDeployed} do original.
+     *
+     * <p>O nome em código dela é uma foice, e é por este campo que se vê porquê.
+     */
+    public static final DataComponentType<Boolean> SCYTHE_DEPLOYED = register("scythe_deployed",
+            builder -> builder.persistent(com.mojang.serialization.Codec.BOOL)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.BOOL));
+
+    /**
      * O <b>tamanho da Urna do Leonard</b>, de zero a três: o metadata do item no original.
      *
      * <p>É ele que diz quantas casas ela tem — uma, duas, três ou quatro —, e é por ele que o desenho dela

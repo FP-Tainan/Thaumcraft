@@ -308,6 +308,18 @@ public final class OccultaAspects {
             // os amuletos, com os números do original. O Token do Lobo não tem nenhum: ele não é do jogo
             r.item("thaumcraft:polynesia_charm", new AspectList().add(Aspects.MIND, 2)
                     .add(Aspects.SENSES, 2).add(Aspects.BEAST, 2));
+            // as roupas da Morte e a Mão dela
+            r.item("thaumcraft:deaths_hood", new AspectList().add(Aspects.CLOTH, 5)
+                    .add(Aspects.DEATH, 5).add(Aspects.DARKNESS, 3));
+            r.item("thaumcraft:deaths_robe", new AspectList().add(Aspects.CLOTH, 8)
+                    .add(Aspects.DEATH, 5).add(Aspects.FIRE, 3));
+            r.item("thaumcraft:deaths_boots", new AspectList().add(Aspects.CLOTH, 4)
+                    .add(Aspects.DEATH, 5).add(Aspects.WATER, 3));
+            r.item("thaumcraft:deaths_hand", new AspectList().add(Aspects.DEATH, 10)
+                    .add(Aspects.SOUL, 6).add(Aspects.WEAPON, 4).add(Aspects.HUNGER, 4));
+            r.item("thaumcraft:binkys_head", new AspectList().add(Aspects.DEATH, 4)
+                    .add(Aspects.BEAST, 4).add(Aspects.UNDEAD, 4));
+
             // a Urna: um pote de barro cheio de magia guardada, que é o que ela é
             r.item("thaumcraft:leonards_urn", new AspectList().add(Aspects.VOID, 6)
                     .add(Aspects.MAGIC, 6).add(Aspects.EARTH, 4).add(Aspects.ELDRITCH, 4));
@@ -336,6 +348,11 @@ public final class OccultaAspects {
                     .add(Aspects.MIND, 2).add(Aspects.ELDRITCH, 2));
             r.entity("thaumcraft:nightmare", null, null, new AspectList().add(Aspects.MIND, 6)
                     .add(Aspects.DARKNESS, 4).add(Aspects.MAN, 2).add(Aspects.ELDRITCH, 2));
+            r.entity("thaumcraft:death", null, null, new AspectList().add(Aspects.DEATH, 10)
+                    .add(Aspects.SOUL, 8).add(Aspects.DARKNESS, 6).add(Aspects.TRAVEL, 4)
+                    .add(Aspects.MAN, 2));
+            r.entity("thaumcraft:deaths_horse", null, null, new AspectList().add(Aspects.BEAST, 6)
+                    .add(Aspects.DEATH, 4).add(Aspects.TRAVEL, 4));
             r.entity("thaumcraft:leonard", null, null, new AspectList().add(Aspects.ELDRITCH, 10)
                     .add(Aspects.FIRE, 8).add(Aspects.MAGIC, 6).add(Aspects.BEAST, 4)
                     .add(Aspects.MAN, 2));

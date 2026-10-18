@@ -12338,3 +12338,88 @@ Fluente**, que o castiga; e este cozimento.
 **Guardas:** o `OccultaHarmBrewGameTest`, com três — os números do gelo na panela; **os três casos**, com
 o blaze que apanha mais do que o porco e o Leonard que só apanha pela porta da fraqueza (pela porta da
 frente, a mesma magia não lhe toca); e o Leonard no rótulo do inferno.
+
+## A Morte, as roupas dela e quem as veste (2026-10-18)
+
+Mil de vida, e não é por aí que ela se mede. O que ela é, é um **enderman com uma foice**: encara, some,
+aparece atrás, e o toque dela leva **quinze por cento da vida máxima** de quem apanhar — pela armadura,
+pelos efeitos, pelos encantamentos, por tudo. Contra ela, ferro não é resposta.
+
+### Como ela olha
+
+É a conta do enderman, letra por letra: procura gente a **sessenta e quatro blocos** e vê se alguém está a
+**olhar para ela**. Estando, grita — o grito do Wither — e espera **cinco batidas encarando** antes de
+atacar. Deixando de olhar, o relógio zera.
+
+**E há um engano do original que fica:** o `shouldAttackPlayer` dele lê o **capacete** de quem o olha — a
+abóbora do enderman — e **não faz nada com ele**. A variável é lida e largada. De modo que, ao contrário do
+enderman, **não há chapéu que a engane**.
+
+### Como ela some
+
+Olhando-a, ela **foge**: quem a encara e chega a menos de quatro blocos faz com que ela pule para outro
+lugar. Não a olhando, ela **persegue**: passando de dezesseis blocos, salta para o pé de quem caça. E uma
+vez em cem ela troca as duas coisas, só para não ser lida.
+
+**Flecha nenhuma a acha**: levando um golpe de longe, ela salta — até sessenta e quatro tentativas — e o
+golpe não conta. Quem a quiser matar tem de chegar perto, e chegar perto é o que ela faz melhor.
+
+E **nada lhe tira mais de quinze** de uma vez, venha de onde vier.
+
+### E o que ela faz a quem foge pelo ar
+
+Uma vez em vinte, por batida, quem estiver **caindo ou voando** e não estiver lento fica **lento no sexto
+grau** por dez segundos. Fugir dela pelo ar é a pior ideia que há.
+
+### O que ela larga, e quem a veste
+
+Um **crânio**, cinco ossos, um livro encantado, uma em quatro uma **Espada da Morte** — um diamante
+encantado a quarenta —, e **uma** das cinco coisas dela: a sela com o **crânio do Binky**, o **capuz**, o
+**manto**, o **calçado** ou a **Mão**.
+
+As três roupas protegem como ferro e duram como diamante, e cada uma faz o seu: o **capuz congela quem
+ele olha** (e vê no escuro), o **manto não pega fogo**, o **calçado anda sobre a água**.
+
+**E aqui está a melhor ideia do ramo.** Vestidas as três com a **Mão na mão**, o rito que chama a Morte
+**não cria o bicho**: teleporta essa pessoa para o círculo. Quem veste as roupas da Morte **é** a Morte, e
+o rito não faz diferença entre as duas. São cinco linhas no original, e é o que a fatia inteira existe
+para dizer.
+
+### A Mão, que é uma foice
+
+Bater com ela é dar o **toque da morte**: um décimo da vida máxima, nunca menos de dois e nunca mais de
+quinze. Com o conjunto vestido, clicar **abre a foice** — e aberta ela bate em **tudo o que estiver a um
+bloco e meio** de quem apanhou, tira **mais quanto mais faminto** estiver quem a segura (metade da vida
+com a barriga vazia) e **devolve** fome e vida pelo mesmo degrau.
+
+É uma troca honesta: aberta, ela **come** dois de fome por segundo. E fecha-se sozinha se as roupas saírem.
+
+### O sexto efeito de fetiche, que era uma senha
+
+Ele não faz nada — **nem aqui nem no original**, onde o corpo dele é um `return true` e mais nada. O que
+ele é, é uma **senha**: cinco espectros, cinco banshees e cinco poltergeists, e nenhum espírito. Cabendo
+ele, o rito de prender espíritos deixa de devolver um fetiche e passa a **chamar a Morte**. O fetiche é
+gasto e não volta.
+
+A declaração antiga — «o que ele chama ainda não existe» — deixa de ser verdade, e o que estava escrito
+sobre ela era enganoso de outra maneira: o efeito **nunca** chamou nada por si.
+
+### E o cavalo
+
+O **Binky** são **onze linhas** no original, e dez delas são o construtor: um cavalo comum que **não dá
+experiência**. Mais nada. O valor dele está inteiro no nome e no crânio que a Morte larga, e o original
+sabia disso — por isso não lhe escreveu mais nada.
+
+### Desvios declarados
+
+1. **O calçado segura a queda do lado do servidor.** No original o truque de andar sobre a água mora no
+   desenho do jogador, do lado de quem joga. Aqui corre no servidor, como o Afundar e o Nado, e pela mesma
+   razão.
+
+2. **O manto cancela o fogo no lugar onde este porte cancela coisas.** O original o faz num gancho de dano
+   próprio; aqui entra no `OccultaHurt`, que é onde as poções do ofício já mexem no golpe.
+
+**Guardas:** o `OccultaDeathGameTest`, com seis — os números dela; o toque que leva quinze por cento e
+passa pela armadura de diamante; o teto de quinze; **o conjunto de três peças**, que é o que a fatia é; a
+foice, que só abre com ele e cujos degraus de fome são os do original; e o sexto efeito de fetiche com os
+quinze fantasmas que ele pede.

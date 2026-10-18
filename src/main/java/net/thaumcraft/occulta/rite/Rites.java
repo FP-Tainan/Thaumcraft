@@ -1260,6 +1260,19 @@ public final class Rites {
                         espíritos, espectros, banshees, poltergeists);
                 if (qual == null) return RiteStep.Result.ABORTED_REFUND;
 
+                /*
+                 * E se o que coube foi o <b>sexto</b> — cinco de cada fantasma, que é o mais caro de
+                 * todos —, o que sai do círculo não é um fetiche: é a <b>Morte</b>.
+                 *
+                 * <p>Ou, se houver alguém por perto com as <b>roupas dela vestidas e a Mão na mão</b>, é
+                 * <b>essa pessoa</b>, puxada para o círculo. Quem veste as roupas da Morte é a Morte, e o
+                 * rito não faz diferença entre as duas.
+                 */
+                if (qual == net.thaumcraft.occulta.fetish.SpiritEffects.DEATH) {
+                    chamaAMorte(level, onde);
+                    return RiteStep.Result.COMPLETED;
+                }
+
                 level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
                         onde.getZ() + 0.5, 48, 0.5, 1.0, 0.5, 0.1);
                 level.playSound(null, onde, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS,
@@ -1267,6 +1280,42 @@ public final class Rites {
                 return RiteStep.Result.COMPLETED;
             });
         }
+    }
+
+    /**
+     * <b>Chama a Morte</b> ao círculo: o {@code findDeathPlayer} do {@code RiteBindSpiritsToFetish}.
+     *
+     * <p>Primeiro procura <b>gente vestida de Morte</b> — as três roupas e a Mão na mão. Achando, puxa
+     * essa pessoa para cá. Não achando, cria o bicho.
+     */
+    public static void chamaAMorte(ServerLevel level, BlockPos onde) {
+        for (var quem : level.players()) {
+            if (!net.thaumcraft.occulta.death.DeathsClothesItem.conjuntoVestido(quem)) continue;
+            if (!(quem.getMainHandItem().getItem()
+                    instanceof net.thaumcraft.occulta.death.DeathsHandItem)) {
+                continue;
+            }
+            quem.teleportTo(level, onde.getX() + 0.5, onde.getY() + 0.1, onde.getZ() + 0.5,
+                    java.util.Set.of(), quem.getYRot(), quem.getXRot(), false);
+            oEstouro(level, onde);
+            return;
+        }
+
+        var ela = net.thaumcraft.occulta.OccultaEntities.DEATH.create(level,
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        if (ela == null) return;
+        ela.snapTo(onde.getX() + 0.5, onde.getY() + 0.1, onde.getZ() + 0.5, 0.0f, 0.0f);
+        ela.setPersistenceRequired();
+        level.addFreshEntity(ela);
+        oEstouro(level, onde);
+    }
+
+    /** O pó e o grito com que ela chega: o do Wither, que é o que o original usa. */
+    private static void oEstouro(ServerLevel level, BlockPos onde) {
+        level.sendParticles(net.minecraft.core.particles.SpellParticleOption.create(
+                ParticleTypes.INSTANT_EFFECT, 1.0f, 1.0f, 1.0f, 1.0f), onde.getX() + 0.5, onde.getY() + 1.0,
+                onde.getZ() + 0.5, 48, 0.5, 1.5, 0.5, 0.0);
+        level.playSound(null, onde, SoundEvents.WITHER_SPAWN, SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 
     public record SummonBoundItem(java.util.function.Supplier<ItemStack> what) implements Rite {
