@@ -766,6 +766,27 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.GoddessStatueBlockEntity::new,
                             java.util.Set.of(GODDESS_STATUE)));
 
+    /**
+     * O <b>marcador do lobo</b>, que abafa o rito da maldição dirigida a trinta e dois blocos à volta.
+     */
+    public static final Block WOLF_MARKER = register("wolf_marker", properties ->
+            new net.thaumcraft.occulta.rite.AreaMarkerBlock(net.thaumcraft.occulta.rite.AreaMarkerBlock.Feitio.WOLF,
+                    properties.mapColor(MapColor.STONE)
+                            .strength(2.5f, 9999.0f).sound(SoundType.STONE).noOcclusion()));
+
+    /** E o <b>da mandrágora</b>, que abafa o puxão por teleporte. */
+    public static final Block MANDRAKE_MARKER = register("mandrake_marker", properties ->
+            new net.thaumcraft.occulta.rite.AreaMarkerBlock(net.thaumcraft.occulta.rite.AreaMarkerBlock.Feitio.MANDRAKE,
+                    properties.mapColor(MapColor.STONE)
+                            .strength(2.5f, 9999.0f).sound(SoundType.STONE).noOcclusion()));
+
+    public static final net.minecraft.world.level.block.entity.BlockEntityType<
+            net.thaumcraft.occulta.rite.AreaMarkerBlockEntity> AREA_MARKER_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("area_marker"),
+                    new net.minecraft.world.level.block.entity.BlockEntityType<>(
+                            net.thaumcraft.occulta.rite.AreaMarkerBlockEntity::new,
+                            java.util.Set.of(WOLF_MARKER, MANDRAKE_MARKER)));
+
     /** O Braseiro, em que o que arde vale para quem está em volta. */
     public static final Block BRAZIER = register("brazier", properties ->
             new net.thaumcraft.occulta.brazier.BrazierBlock(properties.mapColor(MapColor.METAL)

@@ -785,6 +785,14 @@ public final class OccultaItems {
     public static final Item GODDESS_STATUE = register("goddess_statue", properties ->
             new BlockItem(OccultaBlocks.GODDESS_STATUE, properties.useBlockDescriptionPrefix()));
 
+    /** O <b>marcador do lobo</b>, que abafa a maldição dirigida. */
+    public static final Item WOLF_MARKER = register("wolf_marker", properties ->
+            new BlockItem(OccultaBlocks.WOLF_MARKER, properties.useBlockDescriptionPrefix()));
+
+    /** E o <b>da mandrágora</b>, que abafa o puxão por teleporte. */
+    public static final Item MANDRAKE_MARKER = register("mandrake_marker", properties ->
+            new BlockItem(OccultaBlocks.MANDRAKE_MARKER, properties.useBlockDescriptionPrefix()));
+
     /** O Braseiro, em item. */
     public static final Item BRAZIER = register("brazier", properties ->
             new BlockItem(OccultaBlocks.BRAZIER, properties.useBlockDescriptionPrefix()));

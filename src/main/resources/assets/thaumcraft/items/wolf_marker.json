@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/wolf_marker",
+    "model": {
+      "type": "thaumcraft:area_marker",
+      "wolf": true
+    }
+  }
+}

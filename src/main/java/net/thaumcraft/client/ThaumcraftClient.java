@@ -238,6 +238,12 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.client.WerewolfStatueModel.STATUE,
                 net.thaumcraft.occulta.client.WerewolfStatueModel::statue);
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.AreaMarkerModels.WOLF,
+                net.thaumcraft.occulta.client.AreaMarkerModels::wolf);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.AreaMarkerModels.MANDRAKE,
+                net.thaumcraft.occulta.client.AreaMarkerModels::mandrake);
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
                 net.thaumcraft.occulta.client.GoddessStatueModel.STATUE,
                 net.thaumcraft.occulta.client.GoddessStatueModel::statue);
         net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
@@ -577,6 +583,9 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaBlocks.WEREWOLF_STATUE_ENTITY,
                 net.thaumcraft.occulta.client.WerewolfStatueRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaBlocks.AREA_MARKER_ENTITY,
+                net.thaumcraft.occulta.client.AreaMarkerRenderer.Marcador::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaBlocks.GODDESS_STATUE_ENTITY,
                 net.thaumcraft.occulta.client.GoddessStatueRenderer::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
@@ -594,6 +603,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("werewolf_statue"),
                 net.thaumcraft.occulta.client.WerewolfStatueItemRenderer.Unbaked.CODEC);
+        net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
+                net.thaumcraft.Thaumcraft.id("area_marker"),
+                net.thaumcraft.occulta.client.AreaMarkerItemRenderer.Unbaked.CODEC);
         net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.Thaumcraft.id("goddess_statue"),
                 net.thaumcraft.occulta.client.GoddessStatueItemRenderer.Unbaked.CODEC);

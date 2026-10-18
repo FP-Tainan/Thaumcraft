@@ -46,6 +46,7 @@ public final class Occulta {
         net.thaumcraft.occulta.symbol.SpellNetwork.init();
         net.thaumcraft.occulta.door.KeyringRecipe.init();
         net.thaumcraft.occulta.waystone.Waystones.init();
+        net.thaumcraft.occulta.rite.AreaMarkers.init();
         net.thaumcraft.occulta.hunter.WitchHunters.init();
         net.thaumcraft.occulta.wolf.Werewolf.init();
         net.thaumcraft.occulta.wolf.WerewolfQuest.init();

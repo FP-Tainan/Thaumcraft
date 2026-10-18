@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/mandrake_marker",
+    "model": {
+      "type": "thaumcraft:area_marker",
+      "wolf": false
+    }
+  }
+}

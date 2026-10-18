@@ -12624,3 +12624,48 @@ uma vez, e repetida quarenta e seis vezes.
 
 **Declarado:** o original não tem estes desenhos, e não tem nenhum outro. Eles existem porque, sem eles,
 o lugar deles fica roxo.
+
+## Os dois marcadores de área (2026-10-18)
+
+Duas estatuetas de meio tamanho — um **lobo** sentado num degrau e uma **mandrágora** de braços abertos —
+que **não fazem nada quando se toca nelas** e fazem muita coisa quando ninguém está olhando: cada uma
+**abafa um rito** num raio de **trinta e dois blocos** à volta. O lobo abafa a **maldição dirigida**; a
+mandrágora abafa o **puxão por teleporte**.
+
+### A lista dos que mataram
+
+Esta é a melhor ideia do bloco, e é fácil não a ver: um marcador **deixa de proteger quem matou alguém
+perto dele**. Quem usa a proteção para caçar em paz perde-a no primeiro assassinato — e **não a
+recupera**, porque o nome fica guardado no marcador para sempre.
+
+E conta só a morte de **gente às mãos de gente**: matar um porco ao lado da estátua não tira a proteção
+de ninguém.
+
+### O registo, e por que ele existe
+
+Um rito acontece **num lugar** e quer atingir alguém que está **noutro**. Procurar o bloco seria procurar
+o mundo inteiro; por isso os marcadores se apresentam a um registo ao carregar e se despedem ao sumir, e
+o rito pergunta à lista. **Um marcador que ninguém carregou não protege nada** — e isso também é do
+original.
+
+### A conta da distância, que é chata de propósito
+
+Ela mede em X e Z e **finge que o Y é um** nos dois lados. Quer dizer: a proteção é um **cilindro
+infinito**, e um marcador no fundo de uma mina protege quem está no céu por cima dele. Está assim porque
+está assim lá.
+
+### Desvios declarados
+
+1. **Vêm ligados.** No original os dois moram atrás de ajustes que vêm **desligados**
+   (`DecurseDirectedEnabled` e `DecurseTeleportPullEnabled`), e sem eles os blocos existem e não abafam
+   nada. Este porte não tem arquivo de ajustes, e um bloco que não faz nada não é um bloco.
+
+2. **Nenhuma peça é espelhada.** O original liga o espelho das doze peças do lobo e das seis da
+   mandrágora **depois** de declarar a caixa de cada uma, e em 2014 isso não faz nada. São dezoito linhas
+   mortas, e ficam de fora.
+
+E **continuam sem receita**, como no original: são blocos de criativo.
+
+**Guardas:** o `OccultaAreaMarkerGameTest`, com três — cada um abafa o seu e só o seu; o matador perde a
+proteção e a vítima não; e o cilindro de trinta e dois com altura infinita. E o
+`OccultaAreaMarkerClientTest`, com três fotos.
