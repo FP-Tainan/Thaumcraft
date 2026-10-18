@@ -81,6 +81,17 @@ public abstract class Symbol {
     }
 
     /**
+     * E o que ele custa <b>àquela pessoa</b>, naquele grau.
+     *
+     * <p>Quase todos cobram o mesmo a toda a gente, e para esses isto é o custo de cima. Os <b>quatro do
+     * Leonard</b> são a exceção do original, e a única: o que eles cobram sai do <b>cozimento que está na
+     * urna</b> de quem os lança, e por isso muda de pessoa para pessoa e de frasco para frasco.
+     */
+    public int custo(ServerPlayer quem, int grau) {
+        return this.custo(grau);
+    }
+
+    /**
      * Se a infusão que ele tem serve para este símbolo.
      *
      * <p>Os <b>imperdoáveis</b> — e o original lhes chama isso — só se lançam com a <b>Infusão

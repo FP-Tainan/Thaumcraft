@@ -616,6 +616,14 @@ public final class OccultaItems {
      * <p>Comê-lo dá mais poder do que qualquer outra coisa deste mod — e põe fogo em quem o comeu por doze
      * segundos a mais do que a proteção contra fogo dura.
      */
+    /**
+     * A <b>Urna do Leonard</b>: a bolsa de cozimentos atirados que o chefe larga, e de onde os quatro
+     * símbolos dele bebem.
+     */
+    public static final Item LEONARDS_URN = register("leonards_urn", properties ->
+            new net.thaumcraft.occulta.leonard.LeonardsUrnItem(
+                    net.thaumcraft.occulta.leonard.LeonardsUrnItem.feitio(properties)));
+
     public static final Item DEMON_HEART = register("demon_heart", properties ->
             new net.thaumcraft.occulta.demon.DemonHeartItem(
                     properties.rarity(net.minecraft.world.item.Rarity.RARE)));

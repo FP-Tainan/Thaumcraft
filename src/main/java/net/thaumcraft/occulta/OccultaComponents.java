@@ -134,6 +134,16 @@ public final class OccultaComponents {
                     .networkSynchronized(net.minecraft.world.item.ItemStack.STREAM_CODEC
                             .apply(ByteBufCodecs.list())));
 
+    /**
+     * O <b>tamanho da Urna do Leonard</b>, de zero a três: o metadata do item no original.
+     *
+     * <p>É ele que diz quantas casas ela tem — uma, duas, três ou quatro —, e é por ele que o desenho dela
+     * muda, com um {@code minecraft:select} por componente. Um só lugar para a verdade.
+     */
+    public static final DataComponentType<Integer> URN_SIZE = register("urn_size",
+            builder -> builder.persistent(com.mojang.serialization.Codec.INT)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
+
     /** E quantas cargas o <b>Cinto de Casca</b> tem: o {@code WITCBarkPieces} do original. */
     public static final DataComponentType<Integer> BARK_PIECES = register("bark_pieces",
             builder -> builder.persistent(com.mojang.serialization.Codec.INT)

@@ -532,10 +532,8 @@ public class LeonardEntity extends Monster implements RangedAttackMob {
     }
 
     /**
-     * <b>O que ele larga</b>: um livro encantado ao acaso e um <b>Coração de Demônio</b>.
-     *
-     * <p><b>Falta a Urna do Leonard</b>, que é o terceiro, e que vem na fatia dela — a urna sem os quatro
-     * símbolos que bebem dela não faz nada, e por isso as duas andam juntas.
+     * <b>O que ele larga</b>: um livro encantado ao acaso, um <b>Coração de Demônio</b> e a <b>Urna</b>
+     * dele — a pequena, de uma casa, que é a única que não se faz na bancada.
      */
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource fonte, boolean matouGente) {
@@ -543,6 +541,7 @@ public class LeonardEntity extends Monster implements RangedAttackMob {
         this.spawnAtLocation(level, livroAoAcaso(level), 0.0f);
         this.spawnAtLocation(level,
                 new net.minecraft.world.item.ItemStack(net.thaumcraft.occulta.OccultaItems.DEMON_HEART), 0.0f);
+        this.spawnAtLocation(level, net.thaumcraft.occulta.leonard.LeonardsUrnItem.daquele(0), 0.0f);
     }
 
     /**

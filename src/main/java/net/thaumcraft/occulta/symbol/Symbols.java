@@ -165,6 +165,22 @@ public final class Symbols {
                 "3,0,0,0,0,3,3,3,1,1,1,2,2");
 
         /*
+         * <b>Os quatro do Leonard</b>, que são os mais curtos do mod — <b>quatro traços</b> cada — e os
+         * únicos que não fazem nada por si: cada um <b>atira o frasco</b> que estiver na casa dele da
+         * <b>Urna</b>.
+         *
+         * <p>E são também os únicos sem desenho de <b>grau um</b>: o conjunto de traços que o original dá
+         * a cada um é de <b>grau dois</b>, e não há outro. Quem os quiser lançar lança-os sempre no dois.
+         *
+         * <p>Os nomes são quatro pontos, e dizem qual casa é qual: <b>Caelum</b> é o céu, a casa de cima;
+         * <b>Baratrum</b> é o abismo, a de baixo; <b>Ortus</b> é o nascente, a da direita; e <b>Occasus</b>
+         * é o poente, a da esquerda. A urna, aberta, é esse losango.
+         */
+        for (int casa = 0; casa < net.thaumcraft.occulta.leonard.LeonardsUrnItem.TAMANHOS; casa++) {
+            põe(new DoLeonard(DoLeonard.PRIMEIRO + casa, casa), DoLeonard.DESENHOS[casa]);
+        }
+
+        /*
          * E os dois que não atiram nada: o <b>Flagrate</b>, que risca um glifo infernal na parede, e o
          * <b>Meteolojinx Recanto</b>, que <b>para a chuva</b> por cem cargas.
          */
@@ -501,6 +517,73 @@ public final class Symbols {
                 bicho.push(rumo.x * quanto, ACIMA, rumo.z * quanto);
                 bicho.hurtMarked = true;
             });
+        }
+    }
+
+    /**
+     * <b>Um dos quatro do Leonard</b>: atira o frasco que estiver na casa dele da Urna.
+     *
+     * <p>Não havendo urna, ou estando a casa vazia — ou sendo a urna pequena demais para a ter —, sai um
+     * <b>tambor</b> e mais nada. O frasco <b>sai da urna</b>: ela esvazia-se ao atirar.
+     *
+     * <p>E o custo dele é o do <b>cozimento</b>: o espaço que ele gasta no caldeirão, <b>dobrado</b> — ou
+     * só <b>metade a mais</b>, se quem o lança tiver a <b>Adoração</b>. Nunca menos de quatro, e cinco
+     * quando não há urna nenhuma.
+     *
+     * <p><b>Uma coisa do original fica como está, e é um engano dele:</b> o desconto da Adoração só conta
+     * no <b>grau zero</b> dela. Quem tiver Adoração de grau um ou mais não paga <b>nada a mais</b> — nem o
+     * dobro nem a metade —, e sai mais barato do que quem a tem fraca. O {@code if} está escrito assim, e
+     * fica.
+     */
+    private static final class DoLeonard extends Symbol {
+        /** O número do primeiro deles, e os desenhos dos quatro pela ordem das casas. */
+        static final int PRIMEIRO = 43;
+        static final String[] DESENHOS = {"2,0,3,3,1", "3,1,2,2,0", "1,2,0,0,3", "0,3,1,1,2"};
+
+        /** O que ele custa sem urna nenhuma, e o mínimo que ele custa com uma. */
+        static final int SEM_URNA = 5;
+        static final int NO_MÍNIMO = 4;
+
+        private final int casa;
+
+        DoLeonard(int id, int casa) {
+            super(id, "leonard" + (casa + 1), SEM_URNA, false, false, 0);
+            this.casa = casa;
+        }
+
+        @Override
+        public void lança(ServerLevel level, ServerPlayer quem, int grau) {
+            int onde = net.thaumcraft.occulta.leonard.UrnPouch.naMochila(quem);
+            net.minecraft.world.item.ItemStack frasco =
+                    net.thaumcraft.occulta.leonard.UrnPouch.tira(quem, onde, this.casa);
+            if (frasco.isEmpty()) {
+                level.playSound(null, quem.blockPosition(),
+                        net.minecraft.sounds.SoundEvents.NOTE_BLOCK_SNARE.value(),
+                        net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 1.0f);
+                return;
+            }
+            var atirado = new net.thaumcraft.occulta.brew.BrewProjectile(level, quem, frasco);
+            atirado.shootFromRotation(quem, quem.getXRot(), quem.getYRot(), -20.0f, 0.5f, 1.0f);
+            level.addFreshEntity(atirado);
+            level.levelEvent(1009, quem.blockPosition(), 0);
+        }
+
+        @Override
+        public int custo(ServerPlayer quem, int grau) {
+            int onde = net.thaumcraft.occulta.leonard.UrnPouch.naMochila(quem);
+            net.minecraft.world.item.ItemStack frasco =
+                    net.thaumcraft.occulta.leonard.UrnPouch.espreita(quem, onde, this.casa);
+            if (frasco.isEmpty()) return SEM_URNA;
+
+            int quanto = net.thaumcraft.occulta.brew.Brew.capacity(
+                    net.thaumcraft.occulta.brew.BrewItem.contents(frasco)).used();
+            var adora = quem.getEffect(net.thaumcraft.occulta.OccultaEffects.WORSHIP);
+            if (adora != null) {
+                if (adora.getAmplifier() < 1) quanto += (int) Math.ceil(quanto * 0.5);
+            } else {
+                quanto *= 2;
+            }
+            return Math.max(quanto, NO_MÍNIMO);
         }
     }
 

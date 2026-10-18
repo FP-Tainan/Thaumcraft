@@ -308,6 +308,9 @@ public final class OccultaAspects {
             // os amuletos, com os números do original. O Token do Lobo não tem nenhum: ele não é do jogo
             r.item("thaumcraft:polynesia_charm", new AspectList().add(Aspects.MIND, 2)
                     .add(Aspects.SENSES, 2).add(Aspects.BEAST, 2));
+            // a Urna: um pote de barro cheio de magia guardada, que é o que ela é
+            r.item("thaumcraft:leonards_urn", new AspectList().add(Aspects.VOID, 6)
+                    .add(Aspects.MAGIC, 6).add(Aspects.EARTH, 4).add(Aspects.ELDRITCH, 4));
             r.item("thaumcraft:devils_tongue_charm", new AspectList().add(Aspects.MIND, 4)
                     .add(Aspects.SENSES, 3).add(Aspects.FIRE, 6).add(Aspects.SOUL, 4)
                     .add(Aspects.FLESH, 5));

@@ -142,7 +142,7 @@ public class MysticBranchItem extends Item {
         }
 
         int grau = Spells.grauQueVale(gente, preparado.grau());
-        int custa = qual.custo(grau);
+        int custa = qual.custo(gente, grau);
         if (!gente.getAbilities().instabuild && Infusions.energia(gente) < custa) {
             recusa(level, gente, "nocharges");
             return false;

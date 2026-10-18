@@ -538,6 +538,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.client.VillageGuardRenderer.Guard::new);
 
         // o Ars Occulta: a Roca, o Braseiro e o Crisol de Sangue
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.LEONARDS_URN,
+                net.thaumcraft.occulta.client.UrnScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.SPINNING_WHEEL,
                 net.thaumcraft.occulta.client.SpinningWheelScreen::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(

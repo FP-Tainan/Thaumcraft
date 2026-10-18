@@ -11213,7 +11213,7 @@ modo que **não** é imperdoável: lança-se com qualquer infusão, desde que se
    está parada à meia-noite e o céu é **vermelho vivo**; a luz que chega ao labirinto é a do céu noturno a
    atravessar o teto de Força, que tem opacidade zero. Aqui o mundo é sem céu e a mesma penumbra vem da **luz
    de fundo** da dimensão, com a névoa vermelha fazendo o resto. O resultado na tela é o mesmo — um lugar
-   escuro e vermelho de ponta a ponta —, e a parede de Força continua a deixar passar a luz, como no
+   escuro e vermelho de ponta a ponta —, e a parede de Força continua deixando passar a luz, como no
    original.
 
 4. **A alma do baú põe-se à mão.** Um pedaço em geração não faz a alma de um bloco pelo feitio dele; quem a
@@ -12207,3 +12207,72 @@ da fraqueza, que só abre perto do fim; as quatro coisas que ele faz a quem esco
 sai; o cozimento que pega fogo ao pé dele; os cinco feitiços e os pesos deles; e **o caldeirão que o
 chama**. E o `OccultaLeonardClientTest`, com ele de frente, de lado e de costas — e a barra de chefe na
 primeira foto, que é como se sabe que ela existe.
+
+## A Urna do Leonard e os quatro símbolos que bebem dela (2026-10-09)
+
+É a última peça do Leonard, e são **duas** que não servem uma sem a outra: a urna é uma bolsa que não faz
+nada, e os símbolos são quatro desenhos que, sem ela, só tocam um tambor.
+
+### A urna
+
+Uma **bolsa de cozimentos atirados**, e só eles cabem lá dentro. São **quatro tamanhos**, de uma casa a
+quatro, e a de uma casa é a única que não se faz: é a que o **Leonard** larga. As outras fazem-se
+**juntando duas** na bancada — uma urna qualquer mais uma pequena dá a do tamanho seguinte.
+
+As casas formam um **losango** na tela, e é a única tela do mod cujo número de casas **não é fixo**: elas
+desenham-se uma a uma por cima do desenho da urna, de modo que com uma casa há um quadradinho ao meio e
+com quatro há o losango inteiro.
+
+### Os quatro símbolos, e os nomes deles
+
+São os ids **43 a 46**, e cada um atira o frasco que estiver na casa dele — da urna que estiver em
+**qualquer casa da mochila**, não da mão. Anda-se com ela cheia e lança-se o desenho com a vara.
+
+E os nomes dizem qual casa é qual, que é a coisa mais bem pensada desta peça: são **quatro pontos**.
+
+| símbolo | nome | casa |
+|---|---|---|
+| 43 | **Caelum**, o céu | a de cima |
+| 44 | **Baratrum**, o abismo | a de baixo |
+| 45 | **Ortus**, o nascente | a da direita |
+| 46 | **Occasus**, o poente | a da esquerda |
+
+A urna aberta **é** esse losango, e quem souber latim nunca mais precisa de olhar para a tela para saber
+qual desenho faz o quê.
+
+São também os **mais curtos** do mod — quatro traços cada — e os únicos **sem desenho de grau um**: o
+conjunto que o original dá a cada um é de **grau dois**, e não há outro.
+
+### O custo, que é o único que não está escrito no símbolo
+
+Todos os outros trinta cobram o mesmo a toda a gente. Estes quatro cobram pelo **cozimento que está na
+casa**: o espaço que ele gasta no caldeirão, **dobrado**, e nunca menos de **quatro**. Sem urna, ou com a
+casa vazia, **cinco**.
+
+A **Adoração** desconta — e aqui há um engano do original que fica como está: o desconto só é aplicado
+quando a Adoração é de **grau zero**, e aí o preço é metade a mais em vez do dobro. Quem a tiver de grau
+**um ou mais** não paga aumento nenhum, e sai mais barato do que quem a tem fraca. O `if` está escrito
+assim.
+
+Para isto o `Symbol` ganhou um `custo(ServerPlayer, int grau)` que por omissão devolve o `custo(grau)` de
+sempre. Quem o chama é a Vara Mística.
+
+### Desvios declarados
+
+1. **O frasco sai da urna.** O original **lê** o frasco e atira uma cópia: a urna fica cheia para sempre,
+   e um cozimento de Dano de grau quatro passa a ser um feitiço infinito pago só com cargas de infusão.
+   Aqui o frasco sai. A dica do próprio item diz «ponha **um** cozimento na urna», no singular, que é a
+   linguagem de quem gasta.
+
+2. **Juntar duas perde o que estava dentro.** É o que o original faz — lá a urna é um item com metadata e
+   a receita não copia nada —, e é também o que faz sentido: é uma urna nova feita de duas.
+
+3. **O tamanho mora num componente, e o desenho sai dele.** O original usa o metadata do item para as duas
+   coisas. Aqui há um `thaumcraft:urn_size` e o desenho escolhe-se com um `minecraft:select` **por
+   componente** — um só lugar para a verdade, em vez de um número de modelo a manter em dia.
+
+**Guardas:** o `OccultaUrnGameTest`, com seis — os quatro tamanhos; o que cabe dentro (e o cozimento de
+beber, que não cabe); a receita de juntar, com as quatro respostas certas e as três erradas; os quatro
+símbolos com os nomes e o desenho de grau dois; **o custo**, que é o que a fatia é, nas três contas dele;
+e o frasco que sai da urna ao lançar. E o `OccultaUrnClientTest`, com os quatro desenhos do item lado a
+lado e as telas de uma casa e de quatro — que é a única maneira de ver o losango.

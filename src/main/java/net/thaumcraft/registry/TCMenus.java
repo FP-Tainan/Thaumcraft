@@ -44,6 +44,16 @@ public final class TCMenus {
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("distillery"),
                     new MenuType<>(net.thaumcraft.occulta.DistilleryMenu::new, FeatureFlags.VANILLA_SET));
 
+    /**
+     * A <b>Urna do Leonard</b>, do Ars Occulta — a única tela do mod cujo número de casas não é fixo, e
+     * por isso o tamanho dela viaja com a abertura.
+     */
+    public static final MenuType<net.thaumcraft.occulta.leonard.UrnMenu> LEONARDS_URN =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("leonards_urn"),
+                    new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(
+                            net.thaumcraft.occulta.leonard.UrnMenu::new,
+                            net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
+
     /** O Óculus do Ars Arcana, onde se gastam os pontos de perícia. */
     public static final MenuType<net.thaumcraft.arcana.OcculusMenu> OCCULUS =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("occulus"),
