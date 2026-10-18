@@ -187,7 +187,7 @@ public class OccultaSpectralStoneGameTest {
             helper.fail("e o Rito de Prender também");
             return;
         }
-        if (prender.inner().ritual() != 28) helper.fail("num anel de vinte e oito");
+        if (prender.middle().ritual() != 28) helper.fail("no anel do meio, de vinte e oito");
         if (!(prender.rite() instanceof Rites.BindSpectral)) helper.fail("e é o que prende espectros");
         helper.succeed();
     }

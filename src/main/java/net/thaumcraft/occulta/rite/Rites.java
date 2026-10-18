@@ -2744,7 +2744,7 @@ public final class Rites {
                         new Sacrifice.Items(Items.BLAZE_ROD, net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
                                 Items.COAL),
                         new Sacrifice.Power(1000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 16));
+                new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE);
 
         RiteRegistry.register("tc.rite.fertility", new Fertility(50, 15),
                 new Sacrifice.Both(
@@ -2773,7 +2773,7 @@ public final class Rites {
                         net.thaumcraft.occulta.OccultaItems.EXHALE_OF_THE_HORNED_ONE,
                         net.thaumcraft.occulta.OccultaItems.BREW_OF_INK,
                         Items.POISONOUS_POTATO, Items.FERMENTED_SPIDER_EYE, Items.DIAMOND),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(16, 0, 0),
+                new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // as versões maiores e as portáteis: o mesmo rito com outra escala e outro preço
@@ -2823,7 +2823,7 @@ public final class Rites {
                 new Sacrifice.Both(
                         new Sacrifice.Items(Items.OBSIDIAN, Items.GLOWSTONE_DUST),
                         new Sacrifice.Power(1000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.barrierportable",
@@ -2855,14 +2855,14 @@ public final class Rites {
                                 net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
                                 net.thaumcraft.occulta.OccultaItems.QUICKLIME),
                         new Sacrifice.Power(2000.0f, 20)),
-                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // e o maior estrago que o ofício faz
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.volcano", new Volcano(8, 8),
                 new Sacrifice.Items(Items.STONE, Items.MAGMA_CREAM, Items.GOLDEN_SWORD,
                         net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(16, 0, 0),
+                new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // os ritos do tempo e da terra
@@ -2878,7 +2878,7 @@ public final class Rites {
                         new Sacrifice.Items(Items.BLAZE_ROD, net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
                                 Items.COAL),
                         new Sacrifice.Power(1000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(16, 0, 0),
+                new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.raiseearth", new RaiseEarth(4, 8),
@@ -2901,7 +2901,7 @@ public final class Rites {
                                 Items.GOLDEN_PICKAXE, net.thaumcraft.occulta.OccultaItems.ARTHANA,
                                 Items.GUNPOWDER),
                         new Sacrifice.Power(5000.0f, 20)),
-                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                new RiteRegistry.Ring(0, 16, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // o Rito de Necromancia, que faz a Pedra Necrótica — e é dele que o Braseiro nasce
@@ -2931,7 +2931,7 @@ public final class Rites {
                         new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BROOM,
                                 net.thaumcraft.occulta.OccultaItems.FLYING_OINTMENT),
                         new Sacrifice.Power(3000.0f, 20)),
-                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
 
         /*
@@ -2945,7 +2945,7 @@ public final class Rites {
                         net.thaumcraft.occulta.OccultaItems.REDSTONE_SOUP,
                         net.thaumcraft.occulta.OccultaItems.REEK_OF_MISFORTUNE,
                         Items.SPIDER_EYE, Items.MAGMA_CREAM, Items.ROTTEN_FLESH, Items.DIAMOND),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // ---------------------------------------------------------- o prado, e as bonecas corrompidas
@@ -2962,7 +2962,7 @@ public final class Rites {
                         net.thaumcraft.occulta.OccultaItems.WOOD.get("hawthorn_sapling"),
                         Items.OAK_SAPLING, Items.SPRUCE_SAPLING, Items.BIRCH_SAPLING,
                         Items.JUNGLE_SAPLING),
-                new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
@@ -2978,7 +2978,7 @@ public final class Rites {
                                 Items.BLAZE_POWDER,
                                 net.thaumcraft.occulta.OccultaItems.SPECTRAL_DUST),
                         new Sacrifice.Power(7000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         // ---------------------------------------------------------- os que empurram, puxam e repintam
@@ -3013,7 +3013,7 @@ public final class Rites {
                 new Sacrifice.Items(Items.ENDER_PEARL, Items.IRON_INGOT, Items.BLAZE_POWDER,
                         net.thaumcraft.occulta.OccultaItems.DIAMOND_VAPOUR,
                         net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
-                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(40, 0, 0), RiteRegistry.Ring.NONE,
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 40, 0),
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
@@ -3041,7 +3041,7 @@ public final class Rites {
                                 Items.SPIDER_EYE, Items.GUNPOWDER,
                                 net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
                         new Sacrifice.Power(2000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.curseinsanity",
@@ -3052,7 +3052,7 @@ public final class Rites {
                                 Items.POISONOUS_POTATO, Items.SUGAR,
                                 net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
                         new Sacrifice.Power(2000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cursenightmare",
@@ -3063,7 +3063,7 @@ public final class Rites {
                                 net.thaumcraft.occulta.OccultaItems.MELLIFLUOUS_HUNGER,
                                 net.thaumcraft.occulta.OccultaItems.TORMENTED_TWINE, Items.DIAMOND),
                         new Sacrifice.Power(10000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cursesinking",
@@ -3074,7 +3074,7 @@ public final class Rites {
                                 Items.INK_SAC, Items.NETHER_WART,
                                 net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
                         new Sacrifice.Power(2000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.removecurse",
@@ -3147,7 +3147,7 @@ public final class Rites {
                                 Items.GHAST_TEAR, net.thaumcraft.occulta.OccultaItems.ARTHANA,
                                 Items.SPIDER_EYE),
                         new Sacrifice.Power(2000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(16, 0, 0),
+                new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
@@ -3167,7 +3167,7 @@ public final class Rites {
                                 Items.ENDER_PEARL,
                                 net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE),
                         new Sacrifice.Power(5000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
@@ -3183,7 +3183,7 @@ public final class Rites {
                                         Items.ENDER_PEARL),
                                 new Sacrifice.Living(net.minecraft.world.entity.EntityTypes.VILLAGER)),
                         new Sacrifice.Power(4000.0f, 20)),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), new RiteRegistry.Ring(0, 0, 40),
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
@@ -3204,7 +3204,7 @@ public final class Rites {
                                 Items.BEEF, Items.COD, Items.BROWN_MUSHROOM, Items.CARROT,
                                 Items.WHEAT_SEEDS),
                         new Sacrifice.Power(6000.0f, 20)),
-                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(40, 0, 0), RiteRegistry.Ring.NONE,
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 40, 0),
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
@@ -3219,7 +3219,7 @@ public final class Rites {
                         net.thaumcraft.occulta.OccultaItems.TOE_OF_FROG,
                         Items.WATER_BUCKET,
                         net.thaumcraft.occulta.OccultaItems.BELLADONNA_FLOWER),
-                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
@@ -3303,7 +3303,7 @@ public final class Rites {
                                     net.thaumcraft.occulta.OccultaItems.NECROTIC_STONE,
                                     net.thaumcraft.occulta.OccultaItems.BOLINE),
                             new Sacrifice.Power(6000.0f, 20)),
-                    new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
+                    RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0),
                     RiteRegistry.Ring.NONE);
         }
 
@@ -3341,7 +3341,7 @@ public final class Rites {
                                 net.thaumcraft.occulta.OccultaItems.SPECTRAL_DUST,
                                 net.thaumcraft.occulta.OccultaItems.BOLINE),
                         new Sacrifice.Power(5000.0f, 20)),
-                new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE);
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE);
 
         /*
          * O <b>Rito da Infusão do Mundo</b>, que partilha com o da Luz o mesmo anel — dezesseis e
@@ -3387,7 +3387,7 @@ public final class Rites {
                         new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.QUARTZ_SPHERE,
                                 Items.GOLD_INGOT, net.thaumcraft.occulta.OccultaItems.HAPPENSTANCE_OIL),
                         new Sacrifice.Power(2000.0f, 20)),
-                new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
 
         // o Rito de Infusão, que prende um demônio num espelho — e é de onde todo espelho vem

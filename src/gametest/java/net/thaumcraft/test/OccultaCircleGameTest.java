@@ -98,7 +98,7 @@ public class OccultaCircleGameTest {
     /**
      * O rito de cozer: o círculo dele bate, e o passo que ele faz coze o que está no chão.
      *
-     * <p>O poder do altar é outra prova: aqui o que se prova é o rito — que ele case com o anel de fora
+     * <p>O poder do altar é outra prova: aqui o que se prova é o rito — que ele case com o anel de dentro
      * infernal e com o que se ofereceu, e que o passo dele asse a carne.
      */
     @GameTest
@@ -106,7 +106,7 @@ public class OccultaCircleGameTest {
         ServerLevel level = helper.getLevel();
         BlockPos meio = helper.absolutePos(new BlockPos(9, 3, 9));
         level.setBlockAndUpdate(meio, OccultaBlocks.CIRCLE_HEART.defaultBlockState());
-        draw(level, meio, 'c', OccultaBlocks.INFERNAL_GLYPH);
+        draw(level, meio, 'a', OccultaBlocks.INFERNAL_GLYPH);
 
         drop(level, meio, new ItemStack(Items.BLAZE_ROD));
         drop(level, meio, new ItemStack(OccultaItems.WOOD_ASH));
@@ -116,7 +116,7 @@ public class OccultaCircleGameTest {
         var achados = RiteRegistry.find(level, meio, RitualCircles.read(level, meio),
                 net.thaumcraft.occulta.rite.Sacrifice.onTheGround(level, meio));
         if (achados.isEmpty()) {
-            helper.fail("com o anel de fora infernal e o que se ofereceu, o rito de cozer devia bater");
+            helper.fail("com o anel de dentro infernal e o que se ofereceu, o rito de cozer devia bater");
             return;
         }
 

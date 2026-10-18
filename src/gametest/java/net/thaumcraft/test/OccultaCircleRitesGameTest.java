@@ -174,4 +174,40 @@ public class OccultaCircleRitesGameTest {
         }
         helper.succeed();
     }
+
+    /**
+     * <b>Um rito não pode pedir mais glifos do que o anel tem.</b>
+     *
+     * <p>Cada anel tem um número fixo: <b>dezesseis</b> o de dentro, <b>vinte e oito</b> o do meio,
+     * <b>quarenta</b> o de fora. Um rito que peça quarenta no anel do meio pede o impossível — e um rito
+     * que pede o impossível está na lista, aparece no livro, e <b>nunca acontece</b>. Houve dois assim
+     * neste porte.
+     *
+     * <p>E a conta é por giz: o original pede sempre um anel <b>inteiro de um giz só</b>, de modo que a
+     * soma dos três números de cada anel tem de dar <b>zero</b> ou o tamanho dele, e nunca um valor pelo
+     * meio.
+     */
+    @GameTest(maxTicks = 20)
+    public void noRiteAsksForMoreGlyphsThanTheRingHas(GameTestHelper helper) {
+        int[] cabem = {net.thaumcraft.occulta.RitualCircles.INNER,
+                net.thaumcraft.occulta.RitualCircles.MIDDLE,
+                net.thaumcraft.occulta.RitualCircles.OUTER};
+        String[] nomes = {"de dentro", "do meio", "de fora"};
+
+        for (var rito : RiteRegistry.all()) {
+            RiteRegistry.Ring[] anéis = {rito.inner(), rito.middle(), rito.outer()};
+            for (int i = 0; i < 3; i++) {
+                int pede = anéis[i].ritual() + anéis[i].otherwhere() + anéis[i].infernal();
+                if (pede > cabem[i]) {
+                    helper.fail(rito.key() + " pede " + pede + " glifos no anel " + nomes[i]
+                            + ", que só tem " + cabem[i]);
+                }
+                if (pede != 0 && pede != cabem[i]) {
+                    helper.fail(rito.key() + " pede " + pede + " glifos no anel " + nomes[i]
+                            + ", e o original pede sempre o anel inteiro");
+                }
+            }
+        }
+        helper.succeed();
+    }
 }

@@ -12543,3 +12543,52 @@ ir.
 **Guardas:** o `OccultaGoddessGameTest`, com três — o tudo-ou-nada pelos dois lados (com maldição caem as
 cinco e as cinco poções; sem maldição não cai nada, nem o veneno), e os dois blocos de altura. E o
 `OccultaGoddessClientTest`, com três fotos: ela de frente, de lado e na mão.
+
+## Os anéis dos ritos, postos no lugar (2026-10-18)
+
+Vinte e quatro dos cinquenta e nove ritos do porte pediam o **anel errado**, o **giz errado**, ou os
+dois. Alguns pediam coisas que **não existem** — e esses não se conseguiam fazer de maneira nenhuma.
+
+### A regra do original, decifrada
+
+O original escreve o que um rito pede como `new Circle(a, b, c)`, e os três números são **quantos glifos
+de cada giz**: ritual, do Alhures, infernal. O que não está escrito em lado nenhum é o resto da regra:
+
+> a **soma** dos três diz **qual é o anel**, porque cada anel tem um número fixo de glifos — **dezesseis**
+> o de dentro, **vinte e oito** o do meio, **quarenta** o de fora.
+
+Assim `0,28,0` não é «vinte e oito glifos do Alhures em qualquer anel»: é «**o anel do meio, todo** em
+giz do Alhures». E `16,0,0` é «o anel de dentro, todo em giz de Ritual».
+
+Sabendo isso, cada `Circle` do original tem um e um só lugar, e a leitura passa a ser mecânica.
+
+### O que estava errado
+
+Três enganos, repetidos:
+
+1. **O giz.** Dezesseis ritos pediam <b>giz de Ritual</b> onde o original pede <b>Infernal</b> ou
+   <b>Alhures</b>. As cinco maldições, o Diabrete, a Bruxa, o Vulcão, o Cozimento — todos eles são
+   **infernais** no original, e aqui eram comuns. É a diferença entre um rito que qualquer um faz e um
+   que pede o giz que só sai do Nether.
+
+2. **O anel.** Nove ritos pediam o anel de <b>fora</b> onde o original pede o do <b>meio</b>, ou o do
+   meio onde ele pede o de dentro. Pedir vinte e oito glifos no anel de fora é pedir **vinte e oito dos
+   quarenta** — um anel pela metade, que o original nunca pede.
+
+3. **E dois pediam o impossível.** O `teleportironore` pedia **quarenta** glifos no anel do **meio**, que
+   tem vinte e oito; o `callbeasts`, o mesmo. Nenhum dos dois podia ser feito — e foi assim desde que
+   entraram.
+
+### O caso que resume
+
+O **Chamar a Tempestade de Bichos** (`callbeasts`): o original pede o anel de fora inteiro em **giz do
+Alhures** — quarenta glifos do giz mais caro do ramo. O porte pedia quarenta glifos de giz comum no anel
+do meio, que não cabem lá. O rito existia, estava na lista, e **nunca aconteceu**.
+
+E **duas provas antigas provavam o engano**: a do rito de cozer riscava o anel de fora em giz
+infernal, e a da Pedra Espectral pedia o anel de dentro onde agora está o do meio. Elas passavam porque
+estavam de acordo com o erro.
+
+**Guardas:** o `OccultaCircleRitesGameTest` ganha a conta que faltava — para cada rito da lista, o anel
+que ele pede tem de **caber** no anel que ele pede (dezesseis, vinte e oito ou quarenta). Um rito que
+pede mais glifos do que o anel tem é um rito que ninguém faz, e agora a prova diz isso em voz alta.
