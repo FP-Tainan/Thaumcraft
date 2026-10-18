@@ -12592,3 +12592,35 @@ estavam de acordo com o erro.
 **Guardas:** o `OccultaCircleRitesGameTest` ganha a conta que faltava — para cada rito da lista, o anel
 que ele pede tem de **caber** no anel que ele pede (dezesseis, vinte e oito ou quarenta). Um rito que
 pede mais glifos do que o anel tem é um rito que ninguém faz, e agora a prova diz isso em voz alta.
+
+## Os ícones das quarenta e seis poções do ofício (2026-10-18)
+
+Até aqui, **nenhuma** das poções do Ars Occulta tinha desenho, e no jogo de hoje isso não é «nenhum
+desenho»: é o **quadriculado roxo** do que falta. Quarenta e seis efeitos, quarenta e seis quadrados
+roxos na barra do inventário.
+
+### No original eles não tinham ícone — e isso lá não se via
+
+O `PotionBase` do Witchery chama `new Potion(id, debuff, color)` e **nunca chama `setIconIndex`**. Em
+2014 um índice por pôr é `-1`, e a tela simplesmente **não desenha ícone nenhum** — fica o retângulo
+colorido com o nome ao lado, e ninguém nota. O jogo de hoje procura
+`textures/mob_effect/<nome>.png` para cada efeito, e não achando põe o quadriculado.
+
+Quer dizer: copiar o original à letra aqui seria **pior** do que o original. O que o original mostrava era
+nada; o que o porte mostrava era um erro.
+
+### O que eles são agora
+
+Um **frasco**, o mesmo para os quarenta e seis, cheio da <b>cor que cada efeito já declarava</b> — a mesma
+cor que pinta a barra e o pó dele. Em cima, três pixels de vidro escuro tirados da própria cor, e dentro,
+um brilho claro no ombro esquerdo.
+
+E, no canto, um **sinal de três pixels** que diz de que lado o efeito está: **dourado** para o que faz
+bem, **vermelho escuro** para o que faz mal, **cinza** para o que não é nem uma coisa nem outra. São as
+três categorias que o próprio efeito declara, e não uma lista escrita à mão.
+
+Nada disto é invenção: a cor é a do mod, a categoria é a do mod, e o frasco é a única coisa desenhada —
+uma vez, e repetida quarenta e seis vezes.
+
+**Declarado:** o original não tem estes desenhos, e não tem nenhum outro. Eles existem porque, sem eles,
+o lugar deles fica roxo.

@@ -393,6 +393,7 @@
       "net.thaumcraft.test.client.OccultaDeathClientTest",
       "net.thaumcraft.test.client.OccultaMonkeyClientTest",
       "net.thaumcraft.test.client.OccultaGoddessClientTest",
+      "net.thaumcraft.test.client.OccultaPotionIconsClientTest",
       "net.thaumcraft.test.client.OccultaWickerManClientTest",
       "net.thaumcraft.test.client.OccultaStockadeClientTest",
       "net.thaumcraft.test.client.OccultaLeechChestClientTest",
