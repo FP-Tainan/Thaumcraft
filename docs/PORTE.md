@@ -13226,3 +13226,42 @@ tempo dela acaba.
 
 E o `OccultaDarkMarkClientTest`, com quatro fotos: a Marca de longe, que é como ela se quer ver; de perto,
 com a cara acompanhando quem olha; de noite; e a porta trocada ao lado de uma que ele não tocou.
+
+## O guisado e o Reflexo (2026-10-30)
+
+Duas coisas pequenas que estavam a um passo, e que não têm nada a ver uma com a outra a não ser isso.
+
+### O Guisado de Carne
+
+A comida do ofício, e a receita diz o que ele é: **alho**, um naco de carne qualquer, batata, cenoura, um
+cogumelo castanho e a tigela. Seis carnes servem — vaca, galinha, porco, bacalhau, salmão e carneiro —, e
+por isso há **seis receitas**: o que a horta e o curral derem.
+
+Cru ele quase não alimenta: **um** de fome, e saciedade nenhuma que conte. Cozido alimenta **doze**, que é
+mais do que qualquer comida do jogo dá numa colherada — um guisado enche a barra inteira e ainda sobra. A
+diferença entre os dois é o forno, e é a maior diferença que um forno faz em qualquer receita do mod.
+
+Comido, ele devolve a tigela, como os do jogo.
+
+**Declarado:** o original tem um **carneiro cru próprio** entre as seis carnes, porque em 2014 o jogo não
+tinha carneiro. Hoje tem, e é o do jogo que entra na receita.
+
+### O rito que chama o Reflexo
+
+O **Reflexo** é o que o Espelho Negro devolve quando alguém se olha nele por tempo demais. Este rito é a
+**única maneira de chamar um sem espelho nenhum**.
+
+O que se oferece é o próprio **Espelho da Bruxa**, mais o Orvalho do Fim, pó de blaze e a Esfera de Quartzo
+— e **cinco mil** de poder, que é das contas mais caras do mod.
+
+E o anel é o **de fora, inteiro em giz infernal**. Não há meio-termo: ou se tem quarenta glifos do inferno
+desenhados, ou não se chama um Reflexo.
+
+Com ele os ritos passam de setenta e nove para **oitenta** dos noventa e seis do original. Dos dezesseis que
+faltam, nenhum é um rito que falte: são seis nomes, e cada um espera uma peça de conteúdo que ainda não
+existe no porte.
+
+**Guardas:** o `OccultaStewGameTest`, com dois — que o cru alimenta um e o cozido doze, e que os dois
+devolvem a tigela; e que o rito do Reflexo está no livro com o anel de fora todo infernal e nenhum dos
+outros dois. E o `OccultaStewClientTest`, com uma foto: os dois guisados ao lado da sopa de cogumelos e do
+ensopado de coelho do jogo, que são as tigelas com que eles se comparam.

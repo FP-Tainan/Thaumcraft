@@ -1112,6 +1112,33 @@ public final class OccultaItems {
         return register(name, properties -> new ChalkItem(glyph, properties.durability(128)));
     }
 
+    // ------------------------------------------------------------------ o que se come
+
+    /**
+     * O <b>Guisado de Carne</b>, cru e cozido.
+     *
+     * <p>Cru ele quase não alimenta — <b>meio naco</b> de fome e nada de saciedade. Cozido alimenta
+     * <b>doze</b>, que é mais do que qualquer comida do jogo dá numa colherada: um guisado enche a barra
+     * inteira e ainda sobra.
+     *
+     * <p>É a comida do ofício, e a receita diz o que ele é: <b>alho</b>, um naco de carne qualquer, batata,
+     * cenoura, um cogumelo castanho e a tigela. Seis carnes servem, e por isso há seis receitas — o que a
+     * horta der.
+     *
+     * <p>Comido, ele <b>devolve a tigela</b>, como os do jogo.
+     */
+    public static final Item STEW_RAW = guisado("stew_raw", 1, 0.1f);
+
+    public static final Item STEW = guisado("stew", 12, 1.0f);
+
+    /** Um guisado: alimenta, devolve a tigela, e não se empilha com nada que não seja igual. */
+    private static Item guisado(String name, int fome, float saciedade) {
+        return register(name, properties -> new Item(properties
+                .food(new net.minecraft.world.food.FoodProperties.Builder()
+                        .nutrition(fome).saturationModifier(saciedade).build())
+                .usingConvertsTo(net.minecraft.world.item.Items.BOWL)));
+    }
+
     // ------------------------------------------------------------------ os dois que não são poção
 
     /**

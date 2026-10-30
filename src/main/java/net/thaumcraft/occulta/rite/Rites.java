@@ -3652,7 +3652,28 @@ public final class Rites {
                 RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
-        /*
+        /*
+         * E o <b>Reflexo</b>: o que o Espelho Negro devolve quando alguém se olha nele por tempo demais.
+         *
+         * <p>Ele é a <b>única maneira de chamar um</b> sem espelho nenhum: o que se oferece é o próprio
+         * <b>Espelho da Bruxa</b>, mais o Orvalho do Fim, pó de blaze e a Esfera de Quartzo — e cinco mil de
+         * poder, que é das contas mais caras do mod.
+         *
+         * <p>O anel é o de fora, <b>inteiro em giz infernal</b>. Não há meio-termo: ou se tem quarenta
+         * glifos do inferno desenhados, ou não se chama um Reflexo.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.summonreflection",
+                new SummonCreature(() -> net.thaumcraft.occulta.OccultaEntities.REFLECTION, 0),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.WITCH_MIRROR,
+                                net.thaumcraft.occulta.OccultaItems.ENDER_DEW,
+                                Items.BLAZE_POWDER,
+                                net.thaumcraft.occulta.OccultaItems.QUARTZ_SPHERE),
+                        new Sacrifice.Power(5000.0f, 20)),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 40),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
          * E o <b>Wither caro</b>: o mesmo bicho sem pedir um aldeão, pagando-o com duas Pedras
          * Sintonizadas e um diamante. É a saída de quem não tem aldeia à mão.
          */
