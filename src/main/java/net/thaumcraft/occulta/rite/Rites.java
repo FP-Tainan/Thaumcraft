@@ -1697,6 +1697,162 @@ public final class Rites {
         }
     }
 
+
+    /**
+     * As <b>sete matas</b> que o rito de florestação sabe fazer: as quatro do jogo e as três do ofício.
+     *
+     * <p>No original são sete inscrições iguais em que só muda o <b>metadado da muda</b>. Aqui o metadado
+     * já não existe — cada muda é o seu bloco —, e por isso elas cabem numa lista.
+     *
+     * @param nome    como ela se chama no idioma
+     * @param muda    o bloco que se planta
+     * @param semente o item que se oferece, que é a mesma muda
+     */
+    public record Floresta(String nome, java.util.function.Supplier<Block> muda,
+                           net.minecraft.world.item.Item semente) {
+    }
+
+    /**
+     * As sete, pela ordem do original: as do jogo primeiro, as do ofício depois.
+     *
+     * <p>É um <b>método</b> e não uma lista guardada porque as três mudas do ofício moram num mapa do
+     * {@code OccultaItems}, e um campo estático deste arquivo podia ser lido antes de esse mapa estar
+     * cheio.
+     */
+    public static List<Floresta> florestas() {
+        return List.of(
+                new Floresta("oak", () -> Blocks.OAK_SAPLING, Items.OAK_SAPLING),
+                new Floresta("spruce", () -> Blocks.SPRUCE_SAPLING, Items.SPRUCE_SAPLING),
+                new Floresta("birch", () -> Blocks.BIRCH_SAPLING, Items.BIRCH_SAPLING),
+                new Floresta("jungle", () -> Blocks.JUNGLE_SAPLING, Items.JUNGLE_SAPLING),
+                new Floresta("rowan", () -> net.thaumcraft.occulta.OccultaBlocks.ROWAN_SAPLING,
+                        net.thaumcraft.occulta.OccultaItems.WOOD.get("rowan_sapling")),
+                new Floresta("alder", () -> net.thaumcraft.occulta.OccultaBlocks.ALDER_SAPLING,
+                        net.thaumcraft.occulta.OccultaItems.WOOD.get("alder_sapling")),
+                new Floresta("hawthorn", () -> net.thaumcraft.occulta.OccultaBlocks.HAWTHORN_SAPLING,
+                        net.thaumcraft.occulta.OccultaItems.WOOD.get("hawthorn_sapling")));
+    }
+
+    /**
+     * <b>Fazer uma floresta</b>: o {@code RiteForestation} do Witchery.
+     *
+     * <p>De segundo em segundo, por um minuto, ele <b>sorteia um ponto</b> dentro do raio, procura ali o
+     * chão, planta uma <b>muda</b> e a <b>aduba até ela virar árvore</b>. É assim que uma clareira vira
+     * mata enquanto quem o fez está a ver.
+     *
+     * <h2>O sorteio que desiste</h2>
+     *
+     * <p>O ponto é sorteado num <b>quadrado</b> e só vale se cair <b>dentro do círculo</b>. Caindo fora,
+     * o original <b>sorteia uma segunda vez</b> — e caindo fora outra vez, <b>desiste dessa batida</b>.
+     * Não há terceira tentativa. É por isso que a mata sai mais cerrada no meio do que na borda.
+     *
+     * <h2>E o chão pode estar acima ou abaixo</h2>
+     *
+     * <p>Ele olha primeiro o nível do círculo menos um. Não servindo, sobe e desce <b>ao mesmo tempo</b>,
+     * uma casa de cada vez, até <b>oito</b> — e fica com a primeira que for chão sólido com lugar vazio
+     * por cima. Por isso ele planta numa encosta e não só na planície.
+     *
+     * <h2>O coven alarga e alonga</h2>
+     *
+     * <p>Cada pessoa no coven soma <b>dois</b> ao raio e <b>cinco segundos</b> ao tempo. Um coven cheio
+     * faz uma mata do dobro do tamanho.
+     *
+     * @param radius   o raio, antes do coven
+     * @param height   quanto ele sobe e desce à procura de chão
+     * @param duration quantas batidas de um segundo ele dura, antes do coven
+     * @param muda     a muda que ele planta
+     */
+    public record Forestation(int radius, int height, int duration,
+                              java.util.function.Supplier<Block> muda) implements Rite {
+        /** Quanto cada pessoa do coven soma ao raio e ao tempo. */
+        public static final int COVEN_RAIO = 2;
+        public static final int COVEN_TEMPO = 5;
+
+        /** Quantas vezes ele aduba a mesma muda antes de desistir dela. */
+        public static final int ADUBA = 10;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+                if (rito.advance() >= this.duration + coven * COVEN_TEMPO) {
+                    return RiteStep.Result.COMPLETED;
+                }
+
+                int raio = this.radius + coven * COVEN_RAIO;
+                int cabe = (raio + 1) * (raio + 1);
+                var sorte = level.getRandom();
+
+                /* Duas tentativas e mais nenhuma: é o sorteio do original, letra por letra. */
+                int x = onde.getX() - raio + sorte.nextInt(raio * 2);
+                int z = onde.getZ() - raio + sorte.nextInt(raio * 2);
+                if (longe(x, z, onde, cabe)) {
+                    x = onde.getX() - raio + sorte.nextInt(raio * 2);
+                    z = onde.getZ() - raio + sorte.nextInt(raio * 2);
+                    if (longe(x, z, onde, cabe)) return RiteStep.Result.UPKEEP;
+                }
+
+                int chão = acha(level, x, onde.getY() - 1, z, this.height);
+                if (chão == Integer.MIN_VALUE) return RiteStep.Result.UPKEEP;
+
+                planta(level, new BlockPos(x, chão + 1, z), this.muda.get());
+                return RiteStep.Result.UPKEEP;
+            });
+        }
+
+        private static boolean longe(int x, int z, BlockPos onde, int cabe) {
+            int dx = x - onde.getX();
+            int dz = z - onde.getZ();
+            return dx * dx + dz * dz > cabe;
+        }
+
+        /**
+         * Onde está o chão nesta coluna: o nível de partida, ou a primeira casa sólida com lugar vazio
+         * por cima, subindo e descendo ao mesmo tempo.
+         *
+         * @return o Y do chão, ou {@link Integer#MIN_VALUE} se não houver nenhum
+         */
+        private static int acha(ServerLevel level, int x, int y, int z, int alto) {
+            if (sólido(level, x, y, z) && level.isEmptyBlock(new BlockPos(x, y + 1, z))) return y;
+            for (int h = 1; h < alto; h++) {
+                if (sólido(level, x, y + h, z) && vazio(level, x, y + h + 1, z)) return y + h;
+                if (sólido(level, x, y - h, z) && vazio(level, x, y - h + 1, z)) return y - h;
+            }
+            return Integer.MIN_VALUE;
+        }
+
+        private static boolean sólido(ServerLevel level, int x, int y, int z) {
+            return level.getBlockState(new BlockPos(x, y, z)).isSolid();
+        }
+
+        /** <b>Ar ou coisa que se substitua</b> — e nunca líquido, que é o que o original exclui. */
+        private static boolean vazio(ServerLevel level, int x, int y, int z) {
+            var feitio = level.getBlockState(new BlockPos(x, y, z));
+            if (feitio.isAir()) return true;
+            return !feitio.liquid() && feitio.canBeReplaced();
+        }
+
+        /** Põe a muda e <b>aduba-a até ela crescer</b>, dez vezes no máximo. */
+        private static void planta(ServerLevel level, BlockPos casa, Block muda) {
+            var acima = level.getBlockState(casa);
+            if (!acima.isAir() && acima.isSolid()) return;
+
+            var nova = muda.defaultBlockState();
+            if (!nova.canSurvive(level, casa)) return;
+            level.setBlock(casa, nova, Block.UPDATE_ALL);
+            level.levelEvent(2005, casa, 0);
+
+            for (int i = 0; i < ADUBA; i++) {
+                var feitio = level.getBlockState(casa);
+                if (!(feitio.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock planta)) {
+                    break;
+                }
+                if (!planta.isValidBonemealTarget(level, casa, feitio)) break;
+                planta.performBonemeal(level, level.getRandom(), casa, feitio);
+            }
+        }
+    }
+
     /** A que distância o Rito de Prender Espíritos apanha bichos: os cinco blocos do original. */
     public static final int FETICHE_A = 5;
 
@@ -3520,6 +3676,27 @@ public final class Rites {
                 new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0),
                 RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+
+        /*
+         * ============================================================ as sete florestações
+         *
+         * O mesmo rito sete vezes, e só a <b>muda</b> muda: as quatro do jogo e as três do ofício. O que
+         * se oferece é sempre o mesmo — uma muda do feitio que se quer, um Feixe de Vime, um Cozimento
+         * do Brotar e um Galho de Ent —, e o anel do meio inteiro.
+         */
+        for (var qual : florestas()) {
+            RiteRegistry.register(new RiteRegistry.Entry("tc.rite.forestation." + qual.nome(),
+                    new Forestation(20, 8, 60, qual.muda()),
+                    new Sacrifice.Both(
+                            new Sacrifice.Items(qual.semente(),
+                                    net.thaumcraft.occulta.OccultaItems.WICKER_BUNDLE,
+                                    net.thaumcraft.occulta.OccultaItems.BREW_OF_SPROUTING,
+                                    net.thaumcraft.occulta.OccultaItems.ENT_BRANCH),
+                            new Sacrifice.Power(4000.0f, 20)),
+                    RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
+                    java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+        }
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.teleportironore",
                 new TransposeOres(8, 30, List.of(Blocks.IRON_ORE, Blocks.GOLD_ORE)),

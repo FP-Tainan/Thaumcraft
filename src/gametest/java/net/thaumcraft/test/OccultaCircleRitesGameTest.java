@@ -252,4 +252,71 @@ public class OccultaCircleRitesGameTest {
         net.thaumcraft.occulta.infusion.Infusions.apaga(quem);
         helper.succeed();
     }
+
+    /**
+     * <b>A florestação planta e faz crescer</b>, e as sete estão na lista.
+     *
+     * <p>A prova põe um chão de terra à volta e deixa o rito correr até acabar: no fim tem de haver
+     * <b>tronco</b> onde antes havia ar. É a conta mais honesta que há para ele — não se mede onde cada
+     * árvore caiu, porque o lugar é sorteado; mede-se que caiu alguma.
+     */
+    @GameTest(maxTicks = 400)
+    public void theForestationRitePlantsAndGrows(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos meio = helper.absolutePos(new BlockPos(8, 2, 8));
+
+        if (Rites.florestas().size() != 7) {
+            helper.fail("as sete florestas estão na lista, e são " + Rites.florestas().size());
+        }
+        for (var qual : Rites.florestas()) {
+            if (RiteRegistry.get("tc.rite.forestation." + qual.nome()) == null) {
+                helper.fail("a florestação de " + qual.nome() + " está na lista dos ritos");
+            }
+        }
+
+        // um chão de terra, que é onde uma muda pega
+        for (int x = -6; x <= 6; x++) {
+            for (int z = -6; z <= 6; z++) {
+                BlockPos chão = meio.offset(x, -1, z);
+                level.setBlockAndUpdate(chão, Blocks.DIRT.defaultBlockState());
+                for (int y = 0; y < 12; y++) {
+                    level.setBlockAndUpdate(chão.above(y + 1), Blocks.AIR.defaultBlockState());
+                }
+            }
+        }
+
+        /*
+         * Raio pequeno e tempo curto, para caber na arena e na prova: o que se prova é o que ele faz, e
+         * não quanto. E dá-se-lhe muitas batidas, porque o sorteio desiste de metade delas.
+         */
+        var rito = new Rites.Forestation(5, 8, 120, () -> Blocks.OAK_SAPLING);
+        var passo = rito.steps(0).getFirst();
+        var activo = new net.thaumcraft.occulta.rite.ActiveRite(
+                "tc.rite.forestation.oak", rito, java.util.List.of(), null, 0);
+        for (int i = 1; i <= 120; i++) {
+            if (passo.run(level, meio, i * 20L, activo) == RiteStep.Result.COMPLETED) break;
+        }
+
+        boolean nasceu = false;
+        for (int x = -6; x <= 6 && !nasceu; x++) {
+            for (int z = -6; z <= 6 && !nasceu; z++) {
+                for (int y = 0; y < 12; y++) {
+                    if (level.getBlockState(meio.offset(x, y, z)).is(Blocks.OAK_LOG)) {
+                        nasceu = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (!nasceu) helper.fail("e ao fim de duas centenas de batidas há carvalho no chão");
+
+        for (int x = -6; x <= 6; x++) {
+            for (int z = -6; z <= 6; z++) {
+                for (int y = 0; y < 12; y++) {
+                    level.setBlockAndUpdate(meio.offset(x, y, z), Blocks.AIR.defaultBlockState());
+                }
+            }
+        }
+        helper.succeed();
+    }
 }

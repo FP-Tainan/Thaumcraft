@@ -12830,3 +12830,42 @@ anotada aqui porque é neste que ela se vê primeiro.
 
 **Guarda:** a conta entra no `OccultaCircleRitesGameTest` — sem altar que pague, o rito morre; sem custo,
 ele sustenta-se e não dá nada a quem não se infundiu; e com infusão, enche até o teto e não passa.
+
+## As sete florestações (2026-10-30)
+
+O mesmo rito sete vezes, e só a **muda** muda: as quatro do jogo e as três do ofício. De segundo em
+segundo, por um minuto, ele **sorteia um ponto** dentro do raio, procura ali o chão, planta uma muda e a
+**aduba até ela virar árvore**. É assim que uma clareira vira mata enquanto quem o fez está a ver.
+
+### O sorteio que desiste
+
+Esta é a parte que se porta errado sem querer. O ponto é sorteado num **quadrado** e só vale se cair
+**dentro do círculo**. Caindo fora, o original **sorteia uma segunda vez** — e caindo fora outra vez,
+**desiste dessa batida**. Não há terceira.
+
+Quer dizer: cerca de um quinto das batidas não planta nada, e as que plantam caem mais vezes perto do
+meio do que da borda. É por isso que a mata do original sai **mais cerrada no meio** — e um porte que
+sorteasse até acertar daria uma mata lisa, que não é a dele.
+
+### E o chão pode estar acima ou abaixo
+
+Ele olha primeiro o nível do círculo menos um. Não servindo, **sobe e desce ao mesmo tempo**, uma casa de
+cada vez, até oito — e fica com a primeira que for chão sólido com lugar vazio por cima. Por isso ele
+planta numa encosta, e não só na planície.
+
+### O coven alarga e alonga
+
+Cada pessoa no coven soma **dois** ao raio e **cinco segundos** ao tempo. Um coven cheio faz uma mata do
+dobro do tamanho e que demora o dobro a parar.
+
+### Sete inscrições que cabem numa lista
+
+No original são sete blocos de código iguais em que só muda o **metadado da muda**. O metadado já não
+existe — cada muda é o seu bloco —, e por isso aqui elas cabem numa lista de sete linhas e um laço.
+
+**Declarado:** o original aceita, de bónus, uma **Pedra de Caminho presa** entre o que se oferece, e não
+faz nada com ela neste rito — é cópia de outro. Fica de fora.
+
+**Guarda:** a conta entra no `OccultaCircleRitesGameTest` — as sete estão na lista dos ritos, e o rito
+posto a correr num chão de terra **deixa tronco onde havia ar**. Não se mede onde cada árvore caiu,
+porque o lugar é sorteado; mede-se que caiu alguma.
