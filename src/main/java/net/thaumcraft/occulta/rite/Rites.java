@@ -1542,6 +1542,105 @@ public final class Rites {
         }
     }
 
+
+    // ================================================================= os três dos familiares
+
+    /** A que distância os dois ritos de familiar olham à volta: os sete blocos do original. */
+    public static final int FAMILIAR_A = 7;
+
+    /**
+     * <b>Prender um bicho domado a quem o domou</b>: o {@code RiteBindFamiliar} do Witchery.
+     *
+     * <p>Num cubo de <b>sete</b> blocos à volta — e um acima — ele procura bichos <b>domados que possam
+     * ser familiar</b>, e prende cada um ao <b>dono dele, se o dono também estiver dentro do cubo</b>.
+     *
+     * <p><b>Um dono por rito.</b> Aparecendo dois gatos da mesma pessoa, só o primeiro pega: a lista de
+     * quem já foi servido é do original, e é o que impede alguém de levar três familiares de uma vez.
+     *
+     * <p>Não prendendo nenhum, o rito <b>devolve o que se ofereceu</b>.
+     */
+    public record BindFamiliar(int raio) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                var caixa = new AABB(
+                        onde.getX() - this.raio, onde.getY(), onde.getZ() - this.raio,
+                        onde.getX() + this.raio, onde.getY() + 1, onde.getZ() + this.raio);
+                var servidos = new java.util.HashSet<java.util.UUID>();
+                boolean prendeu = false;
+
+                for (var bicho : level.getEntitiesOfClass(
+                        net.minecraft.world.entity.TamableAnimal.class, caixa)) {
+                    if (!net.thaumcraft.occulta.familiar.Familiars.podeVirar(bicho)) continue;
+                    if (!perto(bicho, onde, this.raio)) continue;
+                    if (!(bicho.getOwner() instanceof Player dono)) continue;
+                    if (!perto(dono, onde, this.raio) || !servidos.add(dono.getUUID())) continue;
+                    if (!net.thaumcraft.occulta.familiar.Familiars.vincula(dono, bicho)) continue;
+                    prendeu = true;
+                }
+                if (!prendeu) return RiteStep.Result.ABORTED_REFUND;
+
+                level.sendParticles(ParticleTypes.HEART, onde.getX() + 0.5, onde.getY() + 1.0,
+                        onde.getZ() + 0.5, 32, 1.5, 1.5, 1.5, 0.0);
+                level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1.0f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    /**
+     * <b>Chamar o familiar de quem está no círculo</b>: o {@code RiteCallFamiliar}.
+     *
+     * <p>Para cada pessoa no cubo de sete: <b>estando o bicho no mundo</b>, ele é trazido para junto
+     * dela, onde quer que estivesse; <b>não estando</b>, nasce um no círculo com o nome que tinha.
+     *
+     * <p>É o jeito de recuperar um familiar perdido — e repare que ele <b>vai ter com a pessoa</b>, e não
+     * ao círculo: o original teleporta o bicho para as coordenadas de quem o chamou.
+     *
+     * <p>Ninguém com familiar à volta, o rito <b>devolve</b>.
+     */
+    public record CallFamiliar(int raio) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                var caixa = new AABB(
+                        onde.getX() - this.raio, onde.getY(), onde.getZ() - this.raio,
+                        onde.getX() + this.raio, onde.getY() + 1, onde.getZ() + this.raio);
+                boolean veio = false;
+
+                for (Player gente : level.getEntitiesOfClass(Player.class, caixa)) {
+                    var bicho = net.thaumcraft.occulta.familiar.Familiars.acha(level, gente);
+                    if (bicho != null) {
+                        bicho.teleportTo(level, gente.getX(), gente.getY(), gente.getZ(),
+                                java.util.Set.of(), bicho.getYRot(), bicho.getXRot(), true);
+                        veio = true;
+                        continue;
+                    }
+                    if (net.thaumcraft.occulta.familiar.Familiars.chama(level, gente,
+                            onde.getX() + 0.5, onde.getY() + 0.001, onde.getZ() + 0.5) != null) {
+                        veio = true;
+                    }
+                }
+                if (!veio) return RiteStep.Result.ABORTED_REFUND;
+
+                level.sendParticles(net.minecraft.core.particles.SpellParticleOption.create(
+                                ParticleTypes.INSTANT_EFFECT, 1.0f, 1.0f, 1.0f, 1.0f),
+                        onde.getX() + 0.5, onde.getY() + 1.0, onde.getZ() + 0.5, 16, 1.0, 2.0, 1.0, 0.0);
+                level.playSound(null, onde, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1.0f);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    /** Se este está dentro do cubo do rito, medido do coração do círculo. */
+    private static boolean perto(net.minecraft.world.entity.Entity quem, BlockPos onde, int raio) {
+        return quem.distanceToSqr(onde.getX(), onde.getY(), onde.getZ()) <= (double) raio * raio;
+    }
+
     /** A que distância o Rito de Prender Espíritos apanha bichos: os cinco blocos do original. */
     public static final int FETICHE_A = 5;
 
@@ -3297,6 +3396,34 @@ public final class Rites {
                         new Sacrifice.Power(3000.0f, 20)),
                 RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 28, 0), RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+
+        /*
+         * ============================================================ os dois dos familiares
+         *
+         * O de <b>prender</b> é o rito mais caro do ramo depois do Inferno na Terra: oito mil de poder, e
+         * o anel do meio inteiro. O de <b>chamar</b> custa mil, e é o que recupera um familiar perdido.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.bindfamiliar",
+                new BindFamiliar(FAMILIAR_A),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TEAR_OF_THE_GODDESS,
+                                net.thaumcraft.occulta.OccultaItems.ODOUR_OF_PURITY,
+                                net.thaumcraft.occulta.OccultaItems.WHIFF_OF_MAGIC, Items.DIAMOND,
+                                net.thaumcraft.occulta.OccultaItems.INFERNAL_BLOOD),
+                        new Sacrifice.Power(8000.0f, 20)),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.callfamiliar",
+                new CallFamiliar(FAMILIAR_A),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREATH_OF_THE_GODDESS,
+                                net.thaumcraft.occulta.OccultaItems.HINT_OF_REBIRTH,
+                                net.thaumcraft.occulta.OccultaItems.WHIFF_OF_MAGIC),
+                        new Sacrifice.Power(1000.0f, 20)),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.teleportironore",
                 new TransposeOres(8, 30, List.of(Blocks.IRON_ORE, Blocks.GOLD_ORE)),

@@ -12751,3 +12751,45 @@ Com ela, as cinco maldições do ofício têm os dois lados: pôr e tirar.
 
 **Guarda:** a conta entra no `OccultaCurseGameTest` — as cinco pedem trovoada, e as que curam não pedem
 hora nenhuma.
+
+## Os dois ritos de familiar (2026-10-30)
+
+O vínculo com um familiar existia há muito; o que faltava era o **círculo** poder mexer nele. Entram os
+dois ritos que o original dá para isso.
+
+### Prender
+
+Num cubo de **sete** blocos à volta do círculo — e um acima — ele procura bichos **domados que possam ser
+familiar**, e prende cada um ao **dono dele, se o dono também estiver dentro do cubo**.
+
+E há uma regra que se perde se não se olhar bem: **um dono por rito**. Aparecendo dois gatos da mesma
+pessoa, só o primeiro pega — o original guarda uma lista de quem já foi servido, e é ela que impede
+alguém de levar três familiares de uma vez.
+
+Não prendendo nenhum, o rito **devolve o que se ofereceu**. É o rito mais caro do ramo depois do Inferno
+na Terra: **oito mil** de poder.
+
+### Chamar
+
+Para cada pessoa no mesmo cubo: **estando o bicho no mundo**, ele é trazido **para junto dela**, onde
+quer que estivesse; **não estando**, nasce um no círculo com o **nome que tinha**.
+
+Repare para onde ele vai: o original teleporta o bicho para as coordenadas **de quem o chamou**, e não
+para o meio do círculo. Quem fizer o rito e se afastar três passos vê o gato aparecer onde está, e não
+onde o desenho está.
+
+### O campo que estava à espera
+
+O `FamiliarData` do porte já guardava um `aoLado` desde a fatia dos familiares, e **nada o lia**. Ele é o
+`FamiliarSummoned` do original: a marca de que o bicho está no mundo. É por ela que o rito de chamar sabe
+se há alguém para trazer ou se é preciso fazer nascer outro — e agora ela tem quem a leia.
+
+### Fica de fora, declarado
+
+O terceiro rito da lista, o de **fazer aparecer um familiar** (`summonfamiliar`), não entra aqui. Ele não
+chama o familiar de ninguém: ele faz nascer o **bicho de familiar** do original, um gato próprio que
+**procura minério** e tem uma meta de IA só para isso. É um bicho, não é um rito — e vai na fatia dele.
+
+**Guardas:** o `OccultaFamiliarRitesGameTest`, com dois — o prender pelos três lados (sem bicho devolve,
+por domar não serve, e quem já tem familiar não leva outro), e o chamar pelos dois (o bicho que vem ter
+com a pessoa, e o que nasce com o nome que tinha).

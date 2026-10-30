@@ -3,6 +3,7 @@ package net.thaumcraft.occulta.familiar;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -107,6 +108,58 @@ public final class Familiars {
                 Optional.of(bicho.getUUID()), nome, true));
         return true;
     }
+
+
+    /**
+     * <b>Faz nascer o familiar de alguém que não está no mundo</b>: o {@code Familiar.summonFamiliar}.
+     *
+     * <p>O vínculo mora em quem o tem, e o bicho vive à parte. Morrendo o bicho — ou ficando num pedaço
+     * de mundo que ninguém carrega —, o vínculo continua de pé e o familiar fica <b>por chamar</b>. É
+     * esse o pano que o {@code aoLado} guarda, e é esta a porta por onde ele volta.
+     *
+     * <p>Ele volta com o <b>nome que tinha</b> e domado por quem o chamou. <b>Já estando no mundo</b>,
+     * isto não faz nada — o original pergunta pela mesma marca antes de criar seja o que for.
+     *
+     * @return o bicho que nasceu, ou nada
+     */
+    public static @Nullable TamableAnimal chama(ServerLevel level, Player gente,
+                                                double x, double y, double z) {
+        FamiliarData dado = FamiliarData.of(gente);
+        if (dado.kind().isEmpty() || dado.aoLado()) return null;
+
+        EntityType<? extends TamableAnimal> qual = switch (dado.kind().get()) {
+            case CAT -> net.minecraft.world.entity.EntityTypes.CAT;
+            case TOAD -> net.thaumcraft.occulta.OccultaEntities.TOAD;
+            case OWL -> net.thaumcraft.occulta.OccultaEntities.OWL;
+        };
+        TamableAnimal bicho = qual.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        if (bicho == null) return null;
+
+        bicho.snapTo(x, y, z, 0.0f, 0.0f);
+        bicho.tame(gente);
+        bicho.setPersistenceRequired();
+        if (!dado.nome().isEmpty()) bicho.setCustomName(Component.literal(dado.nome()));
+        level.addFreshEntity(bicho);
+
+        FamiliarData.set(gente, new FamiliarData(dado.kind(), java.util.Optional.of(bicho.getUUID()),
+                dado.nome(), true));
+
+        level.sendParticles(net.minecraft.core.particles.SpellParticleOption.create(
+                        net.minecraft.core.particles.ParticleTypes.INSTANT_EFFECT, 1.0f, 1.0f, 1.0f, 1.0f),
+                x, y + 0.5, z, 16, 1.0, 1.0, 1.0, 0.0);
+        level.playSound(null, bicho.blockPosition(),
+                net.minecraft.sounds.SoundEvents.ENDERMAN_TELEPORT,
+                net.minecraft.sounds.SoundSource.NEUTRAL, 1.0f, 1.0f);
+        return bicho;
+    }
+
+    /** <b>Diz que o familiar já não está no mundo</b>, para que o rito o possa chamar de volta. */
+    public static void foiEmbora(Player gente) {
+        FamiliarData dado = FamiliarData.of(gente);
+        if (dado.kind().isEmpty() || !dado.aoLado()) return;
+        FamiliarData.set(gente, new FamiliarData(dado.kind(), java.util.Optional.empty(),
+                dado.nome(), false));
+    }
 
     /** E desfaz: o bicho fica no mundo, solto. */
     public static void desfaz(Player gente) {
