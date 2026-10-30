@@ -157,6 +157,7 @@
       "net.thaumcraft.test.OccultaAreaMarkerGameTest",
       "net.thaumcraft.test.OccultaWaystoneRitesGameTest",
       "net.thaumcraft.test.OccultaFamiliarRitesGameTest",
+      "net.thaumcraft.test.OccultaPitGroundGameTest",
       "net.thaumcraft.test.OccultaInfusionGameTest",
       "net.thaumcraft.test.OccultaOverworldInfusionGameTest",
       "net.thaumcraft.test.OccultaWickerManGameTest",

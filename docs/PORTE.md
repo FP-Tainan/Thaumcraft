@@ -12869,3 +12869,41 @@ faz nada com ela neste rito — é cópia de outro. Fica de fora.
 **Guarda:** a conta entra no `OccultaCircleRitesGameTest` — as sete estão na lista dos ritos, e o rito
 posto a correr num chão de terra **deixa tronco onde havia ar**. Não se mede onde cada árvore caiu,
 porque o lugar é sorteado; mede-se que caiu alguma.
+
+## O chão falso (2026-10-30)
+
+Dois blocos que **parecem terra** — ou grama — e **não são chão nenhum**: quem pisa neles passa através.
+Servem para uma coisa só, e servem bem: tapar um buraco.
+
+### O material inventado, e o que ele vira hoje
+
+Em 2014 isto é um **material feito à mão**, declarado dentro do próprio bloco: um material que responde
+**sim** a «você bloqueia o movimento?» e **não** a «você é sólido?». É a única maneira que a 1.7.10 dá de
+desenhar um bloco cheio que não segura ninguém.
+
+O jogo de hoje já separa as duas perguntas: a forma de **desenho** e a de **choque** são coisas
+diferentes. Por isso aqui ele é um bloco cheio para se ver e **vazio para esbarrar** — a mesma ideia,
+escrita onde ela agora cabe.
+
+E há um terceiro lado que o original lhe dá e se perde se não se olhar: **a luz passa por ele**. Um chão
+falso não faz sombra. É por aí que se desconfia dele, se se souber olhar.
+
+### De onde eles saem
+
+Do **caldeirão**, como no original: a **Linha Atormentada** sobre **verruga do Nether, terra e um
+dente-de-leão** dá quatro casas de chão de grama; sobre **raiz de mandrágora e terra**, quatro de chão de
+terra.
+
+**Declarado, e já estava:** o original cobra **quatro mil de poder de altar** por estas duas receitas, e
+nenhuma receita de caldeirão deste porte cobra poder. É a mesma declaração que já estava escrita no
+`OccultaRituals`.
+
+### A cor da relva
+
+O chão falso de grama é pintado com a **mesma fonte de tinta** que o bloco de grama do jogo usa, e o item
+leva a tinta no arquivo dele, como o do jogo. Sem isso ele sai cinzento e denuncia-se à distância — que é
+o contrário do que ele existe para fazer.
+
+**Guardas:** o `OccultaPitGroundGameTest`, com dois — dois porcos largados de três casas acima, um sobre
+chão falso e outro sobre terra de verdade, e a diferença entre onde eles param; e as duas receitas de
+caldeirão, que saem quatro de cada vez.

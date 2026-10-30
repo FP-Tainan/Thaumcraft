@@ -12,6 +12,15 @@ public class ThaumcraftClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        /*
+         * O <b>chão falso de grama</b> é pintado como a relva do lugar, com a mesma fonte de tinta que o
+         * bloco de grama do jogo usa. Sem isto ele sai cinzento e denuncia-se à distância. A tinta do
+         * item mora no arquivo dele, como no jogo.
+         */
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(net.minecraft.client.color.block.BlockTintSources.grassBlock()),
+                net.thaumcraft.occulta.OccultaBlocks.PIT_GRASS);
+
         // o thaumômetro é peça de três dimensões, como no original: entra na lista do jogo junto do baú
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("scanner"), ScannerRenderer.Unbaked.CODEC);
 

@@ -82,6 +82,17 @@ public final class OccultaRituals {
                 OccultaEntities.LEONARD);
 
         // o caldeirão também cozinha carne, que é receita sem ingrediente nenhum
+        /*
+         * O <b>chão falso</b>: a Linha Atormentada sobre terra e uma flor dá <b>quatro</b> casas de chão
+         * de grama; sobre terra e raiz de mandrágora dá quatro de chão de terra.
+         */
+        ritual(OccultaItems.TORMENTED_TWINE,
+                List.of(Items.NETHER_WART, Items.DIRT, Items.DANDELION),
+                () -> new ItemStack(OccultaItems.PIT_GRASS, 4));
+        ritual(OccultaItems.TORMENTED_TWINE,
+                List.of(OccultaItems.MANDRAKE_ROOT, Items.DIRT),
+                () -> new ItemStack(OccultaItems.PIT_DIRT, 4));
+
         ritual(Items.PORKCHOP, List.of(), () -> new ItemStack(Items.COOKED_PORKCHOP));
         ritual(Items.CHICKEN, List.of(), () -> new ItemStack(Items.COOKED_CHICKEN));
         ritual(Items.BEEF, List.of(), () -> new ItemStack(Items.COOKED_BEEF));

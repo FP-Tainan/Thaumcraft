@@ -787,6 +787,21 @@ public final class OccultaBlocks {
                             net.thaumcraft.occulta.rite.AreaMarkerBlockEntity::new,
                             java.util.Set.of(WOLF_MARKER, MANDRAKE_MARKER)));
 
+    /**
+     * O <b>chão falso de terra</b>: parece terra e deixa cair quem pisa nele.
+     *
+     * <p>Parte com a facilidade da terra que imita, e <b>a luz passa por ele</b> — é por aí que se
+     * desconfia dele, se se souber olhar.
+     */
+    public static final Block PIT_DIRT = register("pit_dirt", properties ->
+            new net.thaumcraft.occulta.PitBlock(properties.mapColor(MapColor.DIRT)
+                    .strength(0.5f).sound(SoundType.GRAVEL).noOcclusion().lightLevel(feitio -> 0)));
+
+    /** E o <b>de grama</b>, que é o mesmo com a cara da relva. */
+    public static final Block PIT_GRASS = register("pit_grass", properties ->
+            new net.thaumcraft.occulta.PitBlock(properties.mapColor(MapColor.GRASS)
+                    .strength(0.6f).sound(SoundType.GRASS).noOcclusion().lightLevel(feitio -> 0)));
+
     /** O Braseiro, em que o que arde vale para quem está em volta. */
     public static final Block BRAZIER = register("brazier", properties ->
             new net.thaumcraft.occulta.brazier.BrazierBlock(properties.mapColor(MapColor.METAL)

@@ -793,6 +793,13 @@ public final class OccultaItems {
     public static final Item MANDRAKE_MARKER = register("mandrake_marker", properties ->
             new BlockItem(OccultaBlocks.MANDRAKE_MARKER, properties.useBlockDescriptionPrefix()));
 
+    /** O <b>chão falso</b>, em item: o de terra e o de grama. */
+    public static final Item PIT_DIRT = register("pit_dirt", properties ->
+            new BlockItem(OccultaBlocks.PIT_DIRT, properties.useBlockDescriptionPrefix()));
+
+    public static final Item PIT_GRASS = register("pit_grass", properties ->
+            new BlockItem(OccultaBlocks.PIT_GRASS, properties.useBlockDescriptionPrefix()));
+
     /** O Braseiro, em item. */
     public static final Item BRAZIER = register("brazier", properties ->
             new BlockItem(OccultaBlocks.BRAZIER, properties.useBlockDescriptionPrefix()));
