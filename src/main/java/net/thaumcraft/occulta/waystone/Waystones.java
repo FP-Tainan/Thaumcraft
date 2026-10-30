@@ -290,6 +290,16 @@ public final class Waystones {
         return põe(level, ondeEle, dono.getX(), dono.getY(), dono.getZ(), quem);
     }
 
+    /**
+     * <b>Puxa este bicho para dentro do círculo</b>, com o fumo dos dois lados.
+     *
+     * <p>É o avesso do {@link #leva}: lá a pedra diz para onde ir, aqui o círculo diz de onde vir.
+     */
+    public static boolean puxa(ServerLevel level, BlockPos meio, Entity quem) {
+        if (!(quem.level() instanceof ServerLevel onde)) return false;
+        return põe(onde, level, meio.getX() + 0.5, meio.getY() + 0.1, meio.getZ() + 0.5, quem);
+    }
+
     /** O portal dos dois lados: o fumo antes e depois, como no original. */
     private static boolean põe(ServerLevel daqui, ServerLevel para, double x, double y, double z,
                                Entity quem) {

@@ -1336,6 +1336,212 @@ public final class Rites {
         }
     }
 
+
+    // ================================================================= as Pedras de Caminho
+
+    /**
+     * Fazer aparecer uma coisa <b>presa ao lugar do círculo</b>: o {@code Binding.LOCATION} do original.
+     *
+     * <p>É o que faz uma <b>Pedra de Caminho</b>: ela sai do círculo já sabendo voltar para ele. O lugar
+     * que ela guarda é o do <b>coração do círculo</b>, e a dimensão é a de onde o rito se fez.
+     */
+    public record SummonLocationBoundItem(java.util.function.Supplier<ItemStack> what) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+                ItemStack oquê = this.what.get();
+                oquê.set(net.thaumcraft.occulta.OccultaComponents.WAYSTONE,
+                        new net.thaumcraft.occulta.waystone.Waystones.Lugar(level.dimension(), onde));
+                larga(level, onde, oquê);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    /**
+     * Fazer aparecer uma coisa <b>com o lugar de outra</b>: o {@code Binding.COPY_LOCATION}.
+     *
+     * <p>É a <b>cópia</b> de uma Pedra de Caminho: o rito procura, entre o que se ofereceu, a primeira
+     * pilha que já saiba um lugar, e dá esse mesmo lugar à que sai. Não achando nenhuma, a que sai é
+     * lisa — e isso é o original, que não desiste nem devolve.
+     */
+    public record SummonCopyBoundItem(java.util.function.Supplier<ItemStack> what) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+                ItemStack oquê = this.what.get();
+                if (rito != null) {
+                    for (var oferecido : rito.offered()) {
+                        var lugar = net.thaumcraft.occulta.waystone.Waystones.lugar(oferecido.stack());
+                        if (lugar == null) continue;
+                        oquê.set(net.thaumcraft.occulta.OccultaComponents.WAYSTONE, lugar);
+                        break;
+                    }
+                }
+                larga(level, onde, oquê);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
+    /**
+     * Fazer aparecer uma coisa <b>presa a quem estiver no círculo</b>: o {@code Binding.ENTITY}.
+     *
+     * <p>É a <b>Pedra Sangrada</b>, a que aponta para um lugar que anda. E a escolha de quem ela prende
+     * é <b>mais torta do que parece</b>: o original procura <b>gente</b> num cubo de quatro blocos e,
+     * achando, procura <b>qualquer bicho vivo</b> no mesmo cubo — e fica com o <b>bicho</b>. A pessoa é
+     * só a <b>condição de entrada</b>; quem acaba preso é o último bicho da lista.
+     *
+     * <p>Quer dizer: entrar no círculo com um porco ao lado dá uma pedra presa ao porco. Está assim.
+     *
+     * <p>Não havendo ninguém, o rito <b>desiste e devolve</b>.
+     */
+    public record SummonEntityBoundItem(java.util.function.Supplier<ItemStack> what) implements Rite {
+        /** O cubo em que ele procura: quatro para os lados, um para cima. */
+        public static final double PERTO = 4.0;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+
+                var caixa = new AABB(
+                        onde.getX() - PERTO, onde.getY(), onde.getZ() - PERTO,
+                        onde.getX() + PERTO, onde.getY() + 1, onde.getZ() + PERTO);
+
+                LivingEntity alvo = null;
+                for (var quem : level.getEntitiesOfClass(Player.class, caixa)) {
+                    if (perto(quem, onde)) alvo = quem;
+                }
+                if (alvo == null) return RiteStep.Result.ABORTED_REFUND;
+                for (var bicho : level.getEntitiesOfClass(Mob.class, caixa)) {
+                    if (perto(bicho, onde)) alvo = bicho;
+                }
+
+                ItemStack oquê = this.what.get();
+                net.thaumcraft.occulta.TaglockItem.bind(oquê, alvo);
+                larga(level, onde, oquê);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+
+        private static boolean perto(net.minecraft.world.entity.Entity quem, BlockPos onde) {
+            return quem.distanceToSqr(onde.getX(), onde.getY(), onde.getZ()) <= PERTO * PERTO;
+        }
+    }
+
+    /** O que os três fazem no fim: largam a coisa um bloco acima do círculo, com o pó e o chiado. */
+    private static void larga(ServerLevel level, BlockPos onde, ItemStack oquê) {
+        Block.popResource(level, onde.above(), oquê);
+        level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
+                onde.getZ() + 0.5, 48, 0.5, 1.0, 0.5, 0.1);
+        level.playSound(null, onde, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0f, 0.8f);
+    }
+
+    // ================================================================= os dois que levam gente
+
+    /**
+     * <b>Levar quem está no círculo até onde a pedra aponta</b>: o {@code RiteTeleportToWaystone} do
+     * Witchery.
+     *
+     * <p>De segundo em segundo ele procura, entre o que se ofereceu, uma <b>Pedra de Caminho presa</b> —
+     * a um lugar ou a alguém — e manda para lá <b>tudo o que estiver dentro do raio</b>. Não é só quem o
+     * fez: é o gato, é a vaca, é o item no chão. O círculo leva o que tiver dentro.
+     *
+     * <p>E quem estiver <b>inibido do Alhures</b> fica — é a única coisa que segura alguém aqui.
+     *
+     * @param raio a que distância ele apanha: os três blocos do original
+     */
+    public record TeleportToWaystone(int raio) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+                if (rito == null) return RiteStep.Result.ABORTED_REFUND;
+
+                ItemStack pedra = ItemStack.EMPTY;
+                for (var oferecido : rito.offered()) {
+                    if (!net.thaumcraft.occulta.waystone.Waystones.presa(oferecido.stack())) continue;
+                    pedra = oferecido.stack();
+                    break;
+                }
+                if (pedra.isEmpty()) return RiteStep.Result.ABORTED_REFUND;
+
+                var caixa = new AABB(
+                        onde.getX() - this.raio, onde.getY() - this.raio, onde.getZ() - this.raio,
+                        onde.getX() + this.raio, onde.getY() + this.raio, onde.getZ() + this.raio);
+                boolean foi = false;
+                for (var bicho : level.getEntities((net.minecraft.world.entity.Entity) null, caixa,
+                        b -> true)) {
+                    if (bicho.distanceToSqr(onde.getX(), onde.getY(), onde.getZ())
+                            >= (double) this.raio * this.raio) {
+                        continue;
+                    }
+                    if (net.thaumcraft.occulta.OccultaEffects.inibido(bicho, 1)) continue;
+                    if (net.thaumcraft.occulta.waystone.Waystones.leva(level, pedra, bicho)) foi = true;
+                }
+                return foi ? RiteStep.Result.COMPLETED : RiteStep.Result.ABORTED_REFUND;
+            });
+        }
+    }
+
+    /**
+     * <b>Puxar alguém de onde quer que esteja para dentro do círculo</b>: o {@code RiteTeleportEntity}.
+     *
+     * <p>É o avesso do outro, e é o rito mais hostil do ramo: quem tem o <b>frasco de alguém</b> traz
+     * essa pessoa para o meio do círculo, do outro lado do mundo, sem lhe perguntar nada.
+     *
+     * <p>E ele tem <b>três portas fechadas</b>, nesta ordem:
+     *
+     * <ol>
+     *   <li>as <b>roupas de caçador</b> inteiras, que protegem de magia negra;</li>
+     *   <li>um <b>marcador de área</b> perto de quem se quer puxar;</li>
+     *   <li>uma <b>boneca de vodu</b> guardando essa pessoa.</li>
+     * </ol>
+     *
+     * <p>As duas primeiras dizem a mesma coisa a quem o fez — «a magia negra foi abafada» —, e a terceira
+     * diz que o vodu respondeu. Em qualquer dos casos o rito <b>devolve o que se ofereceu</b>.
+     *
+     * @param raio o raio que o original guarda e não usa neste rito
+     */
+    public record TeleportEntity(int raio) implements Rite {
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % 20L != 0L) return RiteStep.Result.STARTING;
+                if (rito == null) return RiteStep.Result.ABORTED_REFUND;
+
+                LivingEntity alvo = null;
+                for (var oferecido : rito.offered()) {
+                    if (!oferecido.stack().is(net.thaumcraft.occulta.OccultaItems.TAGLOCK)) continue;
+                    alvo = net.thaumcraft.occulta.Voodoo.bound(level, oferecido.stack());
+                    if (alvo != null) break;
+                }
+                if (alvo == null) return RiteStep.Result.ABORTED_REFUND;
+
+                Player quemFaz = rito.starter(level);
+                boolean abafado = net.thaumcraft.occulta.hunter.HunterClothes.protegeDeMaldição(alvo)
+                        || net.thaumcraft.occulta.rite.AreaMarkers.protege(alvo,
+                        net.thaumcraft.occulta.rite.AreaMarkers.Kind.TELEPORT);
+                if (abafado || net.thaumcraft.occulta.Voodoo.guarded(level, alvo)
+                        || net.thaumcraft.occulta.OccultaEffects.inibido(alvo, 3)) {
+                    if (quemFaz != null) {
+                        quemFaz.sendSystemMessage(net.minecraft.network.chat.Component.translatable(abafado
+                                        ? "tc.rite.blackmagicdampening"
+                                        : "tc.rite.voodooprotectionactivated")
+                                .withStyle(net.minecraft.ChatFormatting.RED));
+                    }
+                    return RiteStep.Result.ABORTED_REFUND;
+                }
+
+                net.thaumcraft.occulta.waystone.Waystones.puxa(level, onde, alvo);
+                return RiteStep.Result.COMPLETED;
+            });
+        }
+    }
+
     /** A que distância o Rito de Prender Espíritos apanha bichos: os cinco blocos do original. */
     public static final int FETICHE_A = 5;
 
@@ -3008,6 +3214,90 @@ public final class Rites {
          * O dos minérios que sobem: oito blocos de lado, trinta camadas, ferro — e ouro também, se o coven
          * estiver cheio. Num anel de quarenta glifos no meio.
          */
+
+        /*
+         * ============================================================ as Pedras de Caminho
+         *
+         * Cinco ritos que fazem pedra e dois que a usam. Os cinco pedem o <b>anel de dentro em giz de
+         * Ritual</b>, que é o mais barato do ramo — e é de propósito: a Pedra de Caminho é a primeira
+         * coisa que o círculo dá a quem acabou de o riscar.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.bindwaystone",
+                new SummonLocationBoundItem(
+                        () -> new ItemStack(net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.WAYSTONE,
+                                net.thaumcraft.occulta.OccultaItems.ENDER_DEW, Items.GLOWSTONE_DUST),
+                        new Sacrifice.Power(500.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /* A mesma, de bolso: sem poder de altar, e a Pedra Sintonizada no lugar dele. */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.bindwaystoneportable",
+                new SummonLocationBoundItem(
+                        () -> new ItemStack(net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE)),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.WAYSTONE,
+                        net.thaumcraft.occulta.OccultaItems.ENDER_DEW,
+                        net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /* E a <b>cópia</b>: oferecida uma pedra presa, saem duas com o mesmo lugar. */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.bindwaystonecopy",
+                new SummonCopyBoundItem(
+                        () -> new ItemStack(net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE, 2)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE,
+                                net.thaumcraft.occulta.OccultaItems.WAYSTONE,
+                                net.thaumcraft.occulta.OccultaItems.ENDER_DEW, Items.REDSTONE),
+                        new Sacrifice.Power(500.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.bindwaystonecopyportable",
+                new SummonCopyBoundItem(
+                        () -> new ItemStack(net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE, 2)),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE,
+                        net.thaumcraft.occulta.OccultaItems.WAYSTONE,
+                        net.thaumcraft.occulta.OccultaItems.ENDER_DEW,
+                        net.thaumcraft.occulta.OccultaItems.QUICKLIME,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /* E a <b>Pedra Sangrada</b>, que aponta para um lugar que anda. */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.bindwaystonetoplayer",
+                new SummonEntityBoundItem(
+                        () -> new ItemStack(net.thaumcraft.occulta.OccultaItems.BLOODED_WAYSTONE)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.WAYSTONE,
+                                net.thaumcraft.occulta.OccultaItems.ENDER_DEW, Items.MILK_BUCKET,
+                                Items.SNOWBALL),
+                        new Sacrifice.Power(500.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * E os dois que levam gente, os dois em <b>giz do Alhures</b>: o que manda quem está no círculo
+         * para onde a pedra aponta, e o que <b>traz alguém de onde quer que esteja</b>.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.teleporttowaystone",
+                new TeleportToWaystone(3),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE),
+                new RiteRegistry.Ring(0, 16, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.teleportentity",
+                new TeleportEntity(3),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.WAYSTONE,
+                                net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.ENDER_DEW, Items.STONE_AXE),
+                        new Sacrifice.Power(3000.0f, 20)),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 28, 0), RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.teleportironore",
                 new TransposeOres(8, 30, List.of(Blocks.IRON_ORE, Blocks.GOLD_ORE)),
                 new Sacrifice.Items(Items.ENDER_PEARL, Items.IRON_INGOT, Items.BLAZE_POWDER,

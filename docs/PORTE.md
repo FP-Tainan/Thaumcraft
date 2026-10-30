@@ -12669,3 +12669,57 @@ E **continuam sem receita**, como no original: são blocos de criativo.
 **Guardas:** o `OccultaAreaMarkerGameTest`, com três — cada um abafa o seu e só o seu; o matador perde a
 proteção e a vítima não; e o cilindro de trinta e dois com altura infinita. E o
 `OccultaAreaMarkerClientTest`, com três fotos.
+
+## As sete Pedras de Caminho do círculo (2026-10-30)
+
+Cinco ritos que **fazem** uma Pedra de Caminho e dois que a **usam**. Os cinco pedem o anel de dentro em
+giz de Ritual, que é o mais barato do ramo — e é de propósito: a Pedra de Caminho é a primeira coisa que
+o círculo dá a quem acabou de o riscar.
+
+### As três maneiras de prender uma pedra
+
+O original tem um rito só — o `RiteSummonItem` — e cinco maneiras de prender o que ele larga. Três delas
+são destas pedras:
+
+1. **Ao lugar.** A pedra sai do círculo já sabendo voltar para ele: o lugar que ela guarda é o do
+   **coração** do círculo, e a dimensão é a de onde o rito se fez.
+2. **Por cópia.** O rito procura, entre o que se ofereceu, a primeira pilha que já saiba um lugar, e dá
+   esse mesmo lugar à que sai. Não achando nenhuma, a que sai é **lisa** — e o original não desiste nem
+   devolve por isso.
+3. **A alguém.** É a **Pedra Sangrada**, a que aponta para um lugar que anda.
+
+### E a terceira é torta
+
+A escolha de quem a Pedra Sangrada prende é **mais torta do que parece**. O original procura **gente**
+num cubo de quatro blocos à volta e, **achando**, procura **qualquer bicho vivo** no mesmo cubo — e fica
+com o **bicho**.
+
+Quer dizer: a pessoa é só a **condição de entrada**; quem acaba preso é o último bicho da lista. Entrar
+no círculo com um porco ao lado dá uma pedra presa ao porco, e não a quem fez o rito. Está assim aqui, e
+a prova mede isso de propósito.
+
+### Os dois que levam gente
+
+Os dois pedem **giz do Alhures**, e são o avesso um do outro:
+
+- **Ir à Pedra**: de segundo em segundo, acha entre o que se ofereceu uma pedra presa e manda **tudo o
+  que estiver dentro de três blocos** para onde ela aponta. Não é só quem o fez: é o gato, é a vaca, é o
+  item no chão. O círculo leva o que tiver dentro. Quem estiver **inibido do Alhures** fica.
+
+- **Trazer Alguém**: o rito mais hostil do ramo. Quem tem o **frasco de alguém** traz essa pessoa para o
+  meio do círculo, do outro lado do mundo, sem lhe perguntar nada. E tem **três portas fechadas**, nesta
+  ordem: as **roupas de caçador** inteiras, um **marcador de área** perto de quem se quer puxar, e uma
+  **boneca de vodu** guardando essa pessoa. As duas primeiras dizem «a magia negra foi abafada»; a
+  terceira diz que o vodu respondeu. Em qualquer dos casos o rito **devolve o que se ofereceu**.
+
+É este o rito que a **estátua de mandrágora** existia para abafar — até aqui ela guardava contra uma
+coisa que não existia.
+
+**Guardas:** o `OccultaWaystoneRitesGameTest`, com cinco — a pedra presa ao próprio círculo; a cópia que
+tira o lugar do que se ofereceu; a Pedra Sangrada que prende o **bicho** e não a pessoa; o rito que leva
+o porco junto; e o marcador da mandrágora a abafar o rito de trazer alguém, com o do lobo ao lado, que
+**não** o abafa — porque cada marcador vale para o seu.
+
+E uma nota de prova que se paga: o rito procura gente com uma **varredura da caixa**, e o jogador de
+mentira do `makeMockPlayer` **não entra na lista do nível**. Quem o quiser provar precisa de um jogador
+que esteja mesmo lá.
