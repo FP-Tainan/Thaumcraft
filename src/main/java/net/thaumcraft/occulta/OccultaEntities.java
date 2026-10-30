@@ -150,6 +150,19 @@ public final class OccultaEntities {
                                     net.thaumcraft.occulta.familiar.ToadEntity::attributes))
                     .sized(0.8f, 0.8f).eyeHeight(0.6f).clientTrackingRange(8));
 
+    /**
+     * A <b>Marca Negra</b>: a caveira de quatro blocos que o Morsmordre deixa no céu.
+     *
+     * <p>Ela é do tamanho de dois blocos para esbarrar, e o dobro disso para se ver — o desenho é ampliado
+     * ao dobro, como no original.
+     */
+    public static final EntityType<net.thaumcraft.occulta.symbol.DarkMarkEntity> DARK_MARK =
+            register("dark_mark", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.symbol.DarkMarkEntity::new, MobCategory.MISC,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.symbol.DarkMarkEntity::attributes))
+                    .sized(2.0f, 2.0f).eyeHeight(1.0f).fireImmune().clientTrackingRange(16));
+
     /** E a <b>Coruja</b>: a da vassoura, que ainda não tem vassoura. */
     public static final EntityType<net.thaumcraft.occulta.familiar.OwlEntity> OWL =
             register("owl", FabricEntityType.Builder.createMob(
@@ -557,6 +570,8 @@ public final class OccultaEntities {
                 .register(TOAD, net.thaumcraft.occulta.familiar.ToadEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(OWL, net.thaumcraft.occulta.familiar.OwlEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(DARK_MARK, net.thaumcraft.occulta.symbol.DarkMarkEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(SPECTRE, net.thaumcraft.occulta.ghost.SpectreEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry

@@ -154,6 +154,13 @@ public final class Symbols {
                 "1,1,1,3,3,2,2,2,2", "1,1,1,1,3,2,2", "1,1,1,1,3,3,2,2,2,2");
 
         /*
+         * <b>Morsmordre</b>: a quarta das que não são imperdoáveis, e a que não fere ninguém. Deixa uma
+         * <b>Marca Negra</b> no céu e vai-se embora.
+         */
+        põe(new Morsmordre(41), "0,0,3,2,2", "0,0,3,3,2,2,2,2", "0,0,0,3,2,2",
+                "0,0,0,3,3,2,2,2,2", "0,0,0,0,3,2,2", "0,0,0,0,3,3,2,2,2,2");
+
+        /*
          * <b>Cave Inimicum</b> e <b>Defodio</b>: os dois que mexem em bloco e não em bicho. Um endurece
          * o que é mole, o outro cava o que é duro — e os dois num <b>quadrado da face</b> que cresce com
          * o grau.
@@ -192,6 +199,12 @@ public final class Symbols {
          * dois traços e meio — e o único que não tem grau nenhum acima do primeiro.
          */
         põe(new Alohomora(3), "2,0,2,2,1", "2,0,2,2,2,1", "2,0,0,2,2,1,1", "2,0,0,2,2,2,1,1");
+
+        /*
+         * <b>Colloportus</b>: o avesso do Alohomora. Ele não fecha a porta — troca-a por uma <b>Porta de
+         * Sorveira</b>, que só abre a quem o ofício deixa.
+         */
+        põe(new Colloportus(6), "3,3,1,1,2", "3,3,1,1,1,2", "3,3,3,1,1,2,2", "3,3,3,1,1,2,1,2");
 
         /*
          * <b>Confundus</b>: confunde. Dez segundos de náusea em quem a bola acertar, ou em tudo o que
@@ -640,6 +653,83 @@ public final class Symbols {
             if (!(feitio.getBlock() instanceof net.minecraft.world.level.block.DoorBlock porta)) return;
             porta.setOpen(quem, level, feitio, ali,
                     !feitio.getValue(net.minecraft.world.level.block.DoorBlock.OPEN));
+        }
+    }
+
+    /**
+     * <b>Colloportus</b>: o avesso do Alohomora, e muito mais que isso.
+     *
+     * <p>Ele não <b>fecha</b> a porta: ele <b>troca-a</b> por uma <b>Porta de Sorveira</b>, que é a porta
+     * que só abre a quem o ofício deixa. Uma porta de madeira comum atingida por ele deixa de ser uma porta
+     * de madeira comum — e quem a pôs ali não é avisado.
+     *
+     * <p>Acertando a metade de cima, quem troca é a de baixo: é uma porta só, e o original sabe disso.
+     *
+     * <p>A porta nova fica virada para <b>quem lançou o feitiço</b>. Ela é a cor do Alohomora, e é de
+     * propósito: trancar e destrancar são o mesmo ofício.
+     *
+     * <p><b>Declarado:</b> o original deixa o jogo escolher a dobradiça pelo que há ao lado, como quando se
+     * põe uma porta à mão. Aqui ela fica na dobradiça de partida, que é a esquerda.
+     */
+    private static final class Colloportus extends ProjectileSymbol {
+        Colloportus(int id) {
+            super(id, "colloportus");
+            this.cor(0x513666).tamanho(1.0f);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            if (quem == null || !(onde instanceof BlockHitResult bateu)) return;
+            BlockPos ali = bateu.getBlockPos();
+            var feitio = level.getBlockState(ali);
+            if (!(feitio.getBlock() instanceof net.minecraft.world.level.block.DoorBlock)) return;
+
+            BlockPos pé = feitio.getValue(net.minecraft.world.level.block.DoorBlock.HALF)
+                    == net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER
+                    ? ali.below() : ali;
+            level.removeBlock(pé, false);
+            level.removeBlock(pé.above(), false);
+
+            var sorveira = net.thaumcraft.occulta.OccultaBlocks.ROWAN_DOOR.defaultBlockState()
+                    .setValue(net.minecraft.world.level.block.DoorBlock.FACING,
+                            net.minecraft.core.Direction.fromYRot(quem.getYRot()))
+                    .setValue(net.minecraft.world.level.block.DoorBlock.HALF,
+                            net.minecraft.world.level.block.state.properties.DoubleBlockHalf.LOWER);
+            level.setBlock(pé, sorveira, net.minecraft.world.level.block.Block.UPDATE_ALL);
+            level.setBlock(pé.above(), sorveira.setValue(
+                            net.minecraft.world.level.block.DoorBlock.HALF,
+                            net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER),
+                    net.minecraft.world.level.block.Block.UPDATE_ALL);
+        }
+    }
+
+    /**
+     * <b>Morsmordre</b>: a <b>Marca Negra</b> no céu.
+     *
+     * <p>Ela não fere ninguém. Fica no ar, fumegando e rindo, empurrando para longe tudo o que anda num
+     * raio de dez casas, e some ao fim de cinco minutos. É o único feitiço do mod que não serve para nada
+     * a não ser ser <b>visto de longe</b> — e é exatamente isso que ele é: quem o lança não está atacando,
+     * está dizendo onde esteve.
+     *
+     * <p>A bola dele é <b>preta</b> e <b>três vezes maior</b> que as outras, e vive <b>oito batidas</b> —
+     * de modo que ela não vai longe: a marca nasce perto de quem a lançou.
+     *
+     * <p>Como o Carnosa Diem e o Ignianima, é maldição e <b>não é imperdoável</b>: destranca-se com um gole
+     * do <b>Cozimento de Alma do Medo</b>.
+     */
+    private static final class Morsmordre extends ProjectileSymbol {
+        /** Quanto ela custa, e quantas batidas a bola vive. */
+        public static final int CUSTA = 20;
+        public static final int VIVE = 8;
+
+        Morsmordre(int id) {
+            super(id, "morsmordre", CUSTA, true, false, 0, "morsmordre");
+            this.cor(0x000000).tamanho(3.0f).vive(VIVE);
+        }
+
+        @Override
+        public void aoBater(ServerLevel level, @Nullable LivingEntity quem, HitResult onde, int grau) {
+            net.thaumcraft.occulta.symbol.DarkMarkEntity.põe(level, onde.getLocation());
         }
     }
 

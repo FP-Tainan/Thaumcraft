@@ -158,6 +158,7 @@
       "net.thaumcraft.test.OccultaWaystoneRitesGameTest",
       "net.thaumcraft.test.OccultaFamiliarRitesGameTest",
       "net.thaumcraft.test.OccultaBrewLiquidGameTest",
+      "net.thaumcraft.test.OccultaDarkMarkGameTest",
       "net.thaumcraft.test.OccultaDiseaseGameTest",
       "net.thaumcraft.test.OccultaFuelBrewGameTest",
       "net.thaumcraft.test.OccultaWitchPlantsGameTest",
@@ -410,7 +411,8 @@
       "net.thaumcraft.test.client.OccultaBrewLiquidClientTest",
       "net.thaumcraft.test.client.OccultaWitchPlantsClientTest",
       "net.thaumcraft.test.client.OccultaDiseaseClientTest",
-      "net.thaumcraft.test.client.OccultaFuelBrewClientTest"
+      "net.thaumcraft.test.client.OccultaFuelBrewClientTest",
+      "net.thaumcraft.test.client.OccultaDarkMarkClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

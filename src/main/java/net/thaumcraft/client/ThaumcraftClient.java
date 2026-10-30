@@ -143,6 +143,13 @@ public class ThaumcraftClient implements ClientModInitializer {
                         net.minecraft.client.color.block.BlockColors.LILY_PAD_IN_WORLD)),
                 net.thaumcraft.occulta.OccultaBlocks.WITCH_LILY_PAD);
 
+        net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry.registerModelLayer(
+                net.thaumcraft.occulta.client.DarkMarkRenderer.LAYER,
+                net.thaumcraft.occulta.client.DarkMarkRenderer::criaCamada);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.DARK_MARK,
+                net.thaumcraft.occulta.client.DarkMarkRenderer.Marca::new);
+
         // e a Rocha também, que é o que o original faz com ela
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.ROCK,

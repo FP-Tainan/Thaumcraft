@@ -28,9 +28,9 @@ public class OccultaSymbolGameTest {
     /** A tabela de desenhos é a do original, traço por traço. */
     @GameTest
     public void theStrokeTableIsTheOriginals(GameTestHelper helper) {
-        // vinte e nove dos trinta e um do original: faltam o Colloportus e o Morsmordre
-        if (Symbols.quantos() != 29) {
-            helper.fail("são vinte e nove símbolos; há " + Symbols.quantos());
+        // os trinta e um do original, agora todos
+        if (Symbols.quantos() != 31) {
+            helper.fail("são trinta e um símbolos; há " + Symbols.quantos());
         }
 
         // Accio: esquerda, cima, direita, direita, baixo — e de grau um

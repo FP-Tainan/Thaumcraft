@@ -13155,3 +13155,74 @@ enche a caldeira do jogo de uma vez, e custa um gole de cada vez.
 E o `OccultaFuelBrewClientTest`, com duas fotos: os seis frascos no inventário — os quatro graus lado a
 lado, que são o mesmo frasco com o caldo cada vez mais fundo, e os dois de água, um cheio e um quase gasto
 para a barra de goles se ver — e a caldeira do jogo cheia ao lado de uma vazia.
+
+## Os dois símbolos que faltavam (2026-10-30)
+
+Dos trinta e um feitiços do original, o porte tinha vinte e nove. Faltavam o **Colloportus** e o
+**Morsmordre**, e com eles a **Marca Negra**.
+
+### Colloportus: o avesso do Alohomora, e muito mais
+
+Ele não **fecha** a porta. Ele **troca-a** por uma **Porta de Sorveira** — a porta que só abre a quem o
+ofício deixa. Uma porta de carvalho atingida por ele deixa de ser uma porta de carvalho, e **quem a pôs ali
+não é avisado**.
+
+Acertando a metade de cima, quem troca é a de baixo: é uma porta só, e o original sabe disso. A porta nova
+fica virada para quem lançou o feitiço.
+
+Ele tem a **cor do Alohomora**, e é de propósito: trancar e destrancar são o mesmo ofício.
+
+**Declarado:** o original deixa o jogo escolher a dobradiça pelo que há ao lado, como quando se põe uma porta
+à mão. Aqui ela fica na dobradiça de partida, que é a esquerda.
+
+### Morsmordre: a marca no céu
+
+Ele não fere ninguém. Deixa uma **caveira de quatro blocos de altura** parada no ar — fumegando, rindo de
+vez em quando, empurrando para longe tudo o que anda num raio de dez casas — e some ao fim de **cinco
+minutos**.
+
+É o único feitiço do mod que **não serve para nada a não ser ser visto de longe**, e é exatamente isso que
+ele é: quem o lança não está atacando ninguém, está **dizendo onde esteve**.
+
+A bola dele é **preta** e **três vezes maior** que as outras, e vive **oito batidas** — de modo que ela não
+vai longe, e a marca nasce perto de quem a lançou. Isso também é de propósito: um feitiço que grita não
+precisa de alcance.
+
+Como o Carnosa Diem e o Ignianima, é **maldição** e **não é imperdoável**: destranca-se com um gole do
+**Cozimento de Alma do Medo**, que o porte já tinha e que já apontava para um feitiço que não existia.
+
+### A Marca Negra
+
+Duas caixas e mais nada: a caveira, de dezesseis por doze por dezesseis, e a mandíbula por baixo, de dez por
+quatro por doze. Tudo **dobrado de tamanho** ao desenhar e erguido uma casa, que é o que lhe dá os quatro
+blocos com que ela se vê de longe. A cara **acompanha quem olha para ela**, a dezesseis casas.
+
+Ela não se mata, não cai, não se empurra e não larga nada.
+
+**Mudança declarada:** o original faz a conta do empurrão **só no lado do cliente**, onde ela quase não se vê
+— o bicho é empurrado na tela de quem olha e volta ao lugar na batida seguinte. Aqui ela é feita no
+servidor, que é onde ela vale. É o que o código do original diz querer fazer, e não o que ele consegue.
+
+**E uma curiosidade do original que fica anotada:** ele registra um som próprio dela, `mob/darkmark/idle`, e
+**nunca o toca** — o que ela ri é a risada do Senhor do Tormento. O som já estava portado e continua sem
+dono, como lá.
+
+### A fumaça
+
+Cinco por batida, na caixa dela: um bloco e quatro décimos para cada lado e duas casas de altura. É o que a
+faz parecer que está **queimando sem fogo**, e é metade do que ela é — sem a fumaça ela é só uma caveira
+preta parada.
+
+### E a conta que estava guardada
+
+Uma prova antiga afirmava que havia **vinte e nove** símbolos, com um comentário dizendo quais faltavam. Ela
+guardava a falta, e por isso caiu quando a falta acabou. Agora afirma **trinta e um**, que é o número do
+original.
+
+**Guardas:** o `OccultaDarkMarkGameTest`, com três — que os dois estão no livro e que o Morsmordre é
+maldição sem ser imperdoável, com a chave certa; que o Colloportus troca as duas metades da porta mesmo
+sendo acertado na de cima; e que a Marca não cai, não se mata, empurra o que anda perto e some quando o
+tempo dela acaba.
+
+E o `OccultaDarkMarkClientTest`, com quatro fotos: a Marca de longe, que é como ela se quer ver; de perto,
+com a cara acompanhando quem olha; de noite; e a porta trocada ao lado de uma que ele não tocou.
