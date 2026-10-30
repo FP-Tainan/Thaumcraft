@@ -93,9 +93,9 @@ public final class BrewRegistry {
         // não convivem na mesma panela, e é por isso que cada um apaga todos (inclusive outro igual).
         List<Item> jeitos = List.of(Items.GUNPOWDER, OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.BAT_WOOL,
                 OccultaItems.WORMWOOD_SPRIG, Items.ZOMBIE_HEAD);
-        for (Item qual : List.of(Items.GUNPOWDER, OccultaItems.WATER_ARTICHOKE_GLOBE, OccultaItems.BAT_WOOL,
-                Items.ZOMBIE_HEAD)) {
+        for (Item qual : jeitos) {
             BrewDispersal jeito = qual == OccultaItems.BAT_WOOL ? new BrewDispersal.Gas()
+                    : qual == OccultaItems.WORMWOOD_SPRIG ? new BrewDispersal.Liquid()
                     : qual == Items.ZOMBIE_HEAD ? new BrewDispersal.Triggered()
                     : new BrewDispersal.Instant();
             BrewAction ação = new BrewActions.Dispersal(qual, 0, jeito);
@@ -104,7 +104,7 @@ public final class BrewRegistry {
         }
 
         // ------------------------------------------------------------ o alcance e a duração do que se espalha
-        // o alcance alarga o estouro; a duração é para o gás e o líquido, que ainda não chegaram
+        // o alcance alarga o estouro; a duração é quanto o gás e a poça demoram a sumir
         register(BrewActions.Modifier.impact(OccultaItems.WOOD_ASH, new BrewName.Tweak(0, 0, false, 1, 0), 50,
                 espalha -> {
                     if (espalha.extent < 1) espalha.extent++;

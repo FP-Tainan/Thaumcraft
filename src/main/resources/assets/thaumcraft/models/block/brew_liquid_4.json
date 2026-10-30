@@ -1,0 +1,50 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "still": "thaumcraft:block/brew_liquid_still",
+    "flow": "thaumcraft:block/brew_liquid_flow",
+    "particle": "thaumcraft:block/brew_liquid_still"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        6,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#still",
+          "tintindex": 0,
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#still",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#flow",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#flow",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#flow",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#flow",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

@@ -30,6 +30,16 @@ public class BrewFluidBlockEntity extends BlockEntity {
     private int expansion = 4;
     private int runTicks;
 
+    /**
+     * As batidas que a nascente já deu, que é o {@code updateCount} do original — e que, como lá, <b>não se
+     * guarda</b>: uma poça relida do disco começa a contar outra vez.
+     */
+    private int updateCount;
+
+    /** E o <b>nome</b> de quem atirou o frasco, que é o que o original guarda: o nome, não o bicho. */
+    @org.jetbrains.annotations.Nullable
+    private String thrower;
+
     public BrewFluidBlockEntity(BlockPos pos, BlockState state) {
         super(OccultaBlocks.BREW_GAS_ENTITY, pos, state);
     }
@@ -40,6 +50,7 @@ public class BrewFluidBlockEntity extends BlockEntity {
         this.color = Brew.color(cozimento);
         this.duration = espalha.lifetime >= 0 ? 5 + espalha.lifetime * espalha.lifetime * 5 : 100;
         this.expansion = Math.min(4 + espalha.extent, 10);
+        this.thrower = espalha.thrower == null ? null : espalha.thrower.getName().getString();
         this.setChanged();
     }
 
@@ -49,6 +60,7 @@ public class BrewFluidBlockEntity extends BlockEntity {
         this.color = outra.color;
         this.duration = outra.duration;
         this.expansion = outra.expansion;
+        this.thrower = outra.thrower;
         this.setChanged();
     }
 
@@ -72,6 +84,22 @@ public class BrewFluidBlockEntity extends BlockEntity {
         return ++this.runTicks;
     }
 
+    /** O {@code ++fluid.updateCount} do escorrimento. */
+    public int tickUpdate() {
+        return ++this.updateCount;
+    }
+
+    /**
+     * Quem fez o cozimento, se ainda estiver por aqui: o {@code EntityUtil.playerOrFake} do original, que
+     * procura pelo <b>nome</b>. Guardar o nome e não o bicho é dele, e tem uma consequência que vale dizer —
+     * uma poça esquecida num canto <b>deixa de ter dono</b> quando quem a fez sai do mundo.
+     */
+    @org.jetbrains.annotations.Nullable
+    public net.minecraft.world.entity.player.Player quemFez(net.minecraft.server.level.ServerLevel level) {
+        if (this.thrower == null || this.thrower.isEmpty()) return null;
+        return level.getServer().getPlayerList().getPlayerByName(this.thrower);
+    }
+
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
@@ -86,6 +114,7 @@ public class BrewFluidBlockEntity extends BlockEntity {
         this.duration = input.getIntOr("Duration", 100);
         this.expansion = input.getIntOr("Expansion", 4);
         this.runTicks = input.getIntOr("Run", 0);
+        this.thrower = input.getString("Thrower").orElse(null);
     }
 
     @Override
@@ -100,6 +129,7 @@ public class BrewFluidBlockEntity extends BlockEntity {
         output.putInt("Duration", this.duration);
         output.putInt("Expansion", this.expansion);
         output.putInt("Run", this.runTicks);
+        if (this.thrower != null) output.putString("Thrower", this.thrower);
     }
 
     @Override

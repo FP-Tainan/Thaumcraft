@@ -12907,3 +12907,86 @@ o contrário do que ele existe para fazer.
 **Guardas:** o `OccultaPitGroundGameTest`, com dois — dois porcos largados de três casas acima, um sobre
 chão falso e outro sobre terra de verdade, e a diferença entre onde eles param; e as duas receitas de
 caldeirão, que saem quatro de cada vez.
+
+## A poça de cozimento (2026-10-30)
+
+O quarto e último jeito de um cozimento se espalhar. A **losna** faz um frasco que não estoura e não abre:
+ele **escorre**. Onde bateu fica uma poça que procura o buraco mais perto, desce por ele, e no chão plano se
+abre **em cruz** — nos quatro lados ao mesmo tempo, porque nenhum deles leva mais perto de um buraco que os
+outros.
+
+Com ela os quatro jeitos estão fechados: de uma vez, em nuvem, em poça e de gatilho.
+
+### As seis casas, e as oito do desenho
+
+Uma poça inteira vale **seis** casas de altura, e a nascente é a única que as tem todas. Cada passo para o
+lado tira uma, e por isso ela **nunca vai mais longe que cinco casas** da nascente: na sexta não sobra altura
+para dar.
+
+E ao desenhar o original divide por **oito**, não por seis. Não é descuido do porte — é dele, e o efeito é
+que a poça **nunca enche o bloco**: a mais cheia chega a catorze pixels de altura, a mais fina a quatro. Os
+seis desenhos do porte são exatamente esses seis degraus.
+
+### Lá ela é um fluido do Forge, aqui não
+
+No original ela é um `IFluidBlock` registrado como fluido, e do fluido tira quatro números: a densidade (mil,
+e sendo positiva manda a poça **descer**), a temperatura, a luz (nenhuma) e o compasso — a viscosidade
+dividida por duzentos, que dá **uma batida a cada cinco**. O fluido dela é declarado sem nenhum ajuste, ou
+seja com os padrões do Forge, e é de lá que estes números saem.
+
+Aqui não há fluido nenhum registrado: é um bloco com um nível de zero a cinco, e os quatro números estão
+escritos à mão com os valores que o Forge lhe dava.
+
+**Declarado:** o original também **empurra** quem está dentro dela, no sentido do escorrimento, pelo gancho
+de fluido do Forge (`velocityToAddToEntity`). Esse gancho não tem par no jogo de hoje sem registrar um fluido
+de verdade, e um empurrão mal medido atira gente pelo mapa. A poça vive poucos segundos e o empurrão dela é
+quase nada: ficou de fora, e está dito.
+
+**Declarado:** a chuva de gotas que o rito de círculo faz cair — cem casas de altura, em gotas espalhadas
+pelo raio do rito — é uma peça à parte (`EntityDroplet`) e não é desta fatia. A nuvem tem a mesma dívida pelo
+lado dela, que é a bola que ela abre no rito.
+
+**Declarado:** o original decide entre dois fluidos dele comparando densidades. Aqui só existe uma poça, e
+por isso a escada de densidades tem um degrau só.
+
+### Uma correção, e está dita
+
+O original guarda as contas do escorrimento — os custos dos quatro lados e quais deles empatam no menor — em
+dois vetores **do próprio bloco**. Um bloco é um só no jogo todo, e duas poças correndo ao mesmo tempo
+escrevem uma na conta da outra. Aqui as contas são locais de cada batida. É correção, não aparência.
+
+### E o original não para quando seca
+
+Quando uma casa se mede pelas vizinhas e descobre que não devia existir, ela some — e o original **segue
+adiante na mesma batida**, tentando escorrer com a poça que já não está lá. Fica como está: é o que ele faz,
+e o que sai disso é visível (a casa que secou ainda consegue pingar uma para baixo).
+
+### Quem fez o cozimento
+
+A peça que a nuvem e a poça partilham passou a guardar **o nome de quem atirou o frasco**, que é o que o
+original guarda — o nome, não o bicho. Com isso tanto a poça como a **nuvem** passam a saber de quem são, e a
+nuvem deixa de ter a dívida que estava declarada na fatia dela.
+
+Isto tem uma consequência que vem do original e vale dizer: uma poça esquecida num canto **deixa de ter
+dono** quando quem a fez sai do mundo, porque o nome deixa de achar alguém.
+
+### E a nuvem estava invisível
+
+A primeira foto da poça saiu vazia. Pondo a poça, a nuvem, água e pedra lado a lado para ver quem aparecia,
+veio a resposta: **a nuvem também não aparecia**, e nunca tinha aparecido. Ela está no mod desde a fatia dela
+e nenhuma foto a tinha apanhado de frente.
+
+A cor que um cozimento dá é de **três canais**, como em 2014 — `0x33A3B3` e coisas assim. A tinta de um bloco
+no jogo de hoje é de **quatro**, e o canal que falta vale zero. Um bloco de vidro pintado com alfa zero não
+fica transparente: fica **nada**. As duas estavam sendo desenhadas e apagadas na mesma passada.
+
+A cor sai agora sempre opaca, e com isso **a nuvem apareceu** junto com a poça. É o tipo de defeito que só
+uma foto acha, e foi uma foto que o achou.
+
+**Guardas:** o `OccultaBrewLiquidGameTest`, com dois — que é a losna, e só ela, que manda o cozimento
+escorrer; e uma poça posta num chão de pedra largo, que se abre nos quatro lados gastando uma casa de altura
+por passo, leva o cozimento da nascente consigo, não tem com que esbarrar, e por fim **seca sozinha** até não
+sobrar casa nenhuma.
+
+E o `OccultaBrewLiquidClientTest`, com três fotos: os seis degraus vistos de rente ao chão, o losango visto
+de doze casas acima, e a poça de noite — sem luz nenhuma, como no original.

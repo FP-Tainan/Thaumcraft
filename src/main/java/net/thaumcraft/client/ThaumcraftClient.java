@@ -107,12 +107,19 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.TREEFYD,
                 net.thaumcraft.occulta.client.CreatureRenderers.Treefyd::new);
-        // a nuvem de cozimento é pintada da cor do que se cozeu: o colorMultiplier do original
+        /*
+         * A nuvem e a poça são pintadas da cor do que se cozeu: o {@code colorMultiplier} do original.
+         *
+         * A cor que o cozimento dá é de <b>três</b> canais, como em 2014. Hoje a tinta de um bloco é de
+         * quatro, e um alfa a zero não pinta nada — pinta <b>nada</b> mesmo, o bloco some. Por isso ela sai
+         * daqui sempre opaca.
+         */
         net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
                 java.util.List.of(new net.minecraft.client.color.block.BlockTintSource() {
                     @Override
                     public int color(net.minecraft.world.level.block.state.BlockState state) {
-                        return net.thaumcraft.occulta.brew.BrewFluidBlockEntity.WitchesCauldronColor.PLAIN;
+                        return net.minecraft.util.ARGB.opaque(
+                                net.thaumcraft.occulta.brew.BrewFluidBlockEntity.WitchesCauldronColor.PLAIN);
                     }
 
                     @Override
@@ -121,9 +128,10 @@ public class ThaumcraftClient implements ClientModInitializer {
                                             net.minecraft.core.BlockPos pos) {
                         return level.getBlockEntity(pos) instanceof
                                 net.thaumcraft.occulta.brew.BrewFluidBlockEntity nuvem
-                                ? nuvem.color() : this.color(state);
+                                ? net.minecraft.util.ARGB.opaque(nuvem.color()) : this.color(state);
                     }
-                }), net.thaumcraft.occulta.OccultaBlocks.BREW_GAS);
+                }), net.thaumcraft.occulta.OccultaBlocks.BREW_GAS,
+                net.thaumcraft.occulta.OccultaBlocks.BREW_LIQUID);
 
         // e a Rocha também, que é o que o original faz com ela
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(

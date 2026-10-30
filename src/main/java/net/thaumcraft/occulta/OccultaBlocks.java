@@ -636,10 +636,21 @@ public final class OccultaBlocks {
                     .replaceable().noLootTable().strength(100.0f).noOcclusion()
                     .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
 
+    /**
+     * E a poça que um frasco de losna deixa: escorre, mingua e seca. Ela é <b>dura de quebrar</b> como a
+     * nuvem, porque no original nenhuma das duas se quebra — somem sozinhas e mais nada.
+     */
+    public static final Block BREW_LIQUID = register("brew_liquid", properties ->
+            new net.thaumcraft.occulta.brew.BrewLiquidBlock(properties.mapColor(MapColor.WATER)
+                    .replaceable().noLootTable().strength(100.0f).noOcclusion()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+
+    /** A nuvem e a poça carregam a mesma coisa, e por isso partilham a peça que a guarda. */
     public static final net.minecraft.world.level.block.entity.BlockEntityType<net.thaumcraft.occulta.brew.BrewFluidBlockEntity> BREW_GAS_ENTITY =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("brew_gas"),
                     new net.minecraft.world.level.block.entity.BlockEntityType<>(
-                            net.thaumcraft.occulta.brew.BrewFluidBlockEntity::new, java.util.Set.of(BREW_GAS)));
+                            net.thaumcraft.occulta.brew.BrewFluidBlockEntity::new,
+                            java.util.Set.of(BREW_GAS, BREW_LIQUID)));
 
     // ------------------------------------------------------------------ o que é de sonho
 

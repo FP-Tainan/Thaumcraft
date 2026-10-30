@@ -17,8 +17,9 @@ import java.util.List;
 /**
  * O jeito de um cozimento se espalhar: o {@code Dispersal} do Witchery.
  *
- * <p>O original tem quatro — de uma vez, gás, líquido e gatilho. Esta fatia traz o primeiro, que é o do frasco
- * que arrebenta; os outros três ficam declarados para as fatias seguintes.
+ * <p>São quatro, e estão os quatro: <b>de uma vez</b>, que é o frasco que arrebenta; <b>em nuvem</b>, que é
+ * o frasco que abre; <b>em poça</b>, que é o frasco que escorre; e <b>de gatilho</b>, que é o frasco que
+ * espera.
  */
 public interface BrewDispersal {
     /** O que acontece onde o frasco bateu. */
@@ -121,6 +122,32 @@ public interface BrewDispersal {
         @Override
         public String nameKey() {
             return "tc.brew.dispersal.triggered";
+        }
+    }
+
+    /**
+     * <b>Em poça</b>: o {@code DispersalLiquid}.
+     *
+     * <p>Onde o frasco bateu fica uma {@linkplain BrewLiquidBlock poça} que <b>escorre</b> — desce pelo
+     * primeiro buraco que achar e no chão plano se abre em cruz, gastando altura a cada passo.
+     *
+     * <p><b>Declarado:</b> o original, posto como rito de círculo em vez de frasco, faz <b>chover</b> o
+     * cozimento de cem casas de altura, em gotas espalhadas pelo raio do rito. Essa chuva é uma peça à parte
+     * — e a nuvem tem a mesma dívida pelo lado dela, que é a bola que ela abre no rito.
+     */
+    class Liquid implements BrewDispersal {
+        @Override
+        public void onImpact(ServerLevel level, List<Item> dentro, HitResult onde, BrewImpact espalha) {
+            net.minecraft.core.BlockPos lugar = BrewLiquidBlock.where(onde);
+            if (!BrewLiquidBlock.fits(level, lugar)) return;
+            level.setBlockAndUpdate(lugar,
+                    net.thaumcraft.occulta.OccultaBlocks.BREW_LIQUID.defaultBlockState());
+            if (level.getBlockEntity(lugar) instanceof BrewFluidBlockEntity poça) poça.start(dentro, espalha);
+        }
+
+        @Override
+        public String nameKey() {
+            return "tc.brew.dispersal.liquid";
         }
     }
 

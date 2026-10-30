@@ -7,10 +7,10 @@ import org.jetbrains.annotations.Nullable;
  * Como um cozimento se espalha quando o frasco arrebenta: o {@code ModifiersImpact} do Witchery.
  *
  * <p>São duas contas e quem atirou. O <b>alcance</b> ({@code extent}) alarga o que o frasco apanha; a
- * <b>duração</b> ({@code lifetime}) é para o gás e o líquido, que ficam no chão depois — e ainda não chegaram.
+ * <b>duração</b> ({@code lifetime}) é para o gás e a poça, que ficam no chão depois.
  *
  * <p>Quem manda no jeito de espalhar é o último ingrediente de espalhamento que caiu no caldeirão: a pólvora
- * espalha de uma vez, e é a única desta fatia.
+ * espalha de uma vez, a lã de morcego faz nuvem, a losna faz poça e a cabeça de zumbi arma o gatilho.
  */
 public class BrewImpact {
     public int extent;
