@@ -210,4 +210,46 @@ public class OccultaCircleRitesGameTest {
         }
         helper.succeed();
     }
+
+    /**
+     * <b>O rito de recarregar enche a carga de quem se infundiu</b> — e não dá nada a quem não tem
+     * infusão nenhuma, porque o teto de quem nunca se infundiu é zero.
+     */
+    @GameTest(maxTicks = 40)
+    public void theRechargeRiteFillsOnlyThoseWhoHaveAnInfusion(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos meio = helper.absolutePos(new BlockPos(2, 2, 2));
+
+        var quem = helper.makeMockServerPlayerInLevel();
+        quem.snapTo(new Vec3(meio.getX() + 0.5, meio.getY(), meio.getZ() + 0.5));
+
+        /* Sem altar, o rito morre logo — é o que o faz ser um rito que se deixa ligado. */
+        var semAltar = new Rites.InfusionRecharge(10, 4, 40.0f);
+        if (semAltar.steps(0).getFirst().run(level, meio, 20L, null) != RiteStep.Result.ABORTED) {
+            helper.fail("sem altar que pague, ele morre");
+        }
+
+        /* Sem custo, ele corre — e não dá nada a quem não se infundiu. */
+        var grátis = new Rites.InfusionRecharge(10, 4, 0.0f);
+        var passo = grátis.steps(0).getFirst();
+        if (passo.run(level, meio, 20L, null) != RiteStep.Result.UPKEEP) {
+            helper.fail("sem custo, ele sustenta-se");
+        }
+        if (net.thaumcraft.occulta.infusion.Infusions.energia(quem) != 0) {
+            helper.fail("e quem não tem infusão continua a zero");
+        }
+
+        // e com infusão, ele enche de dez em dez sem passar do teto
+        net.thaumcraft.occulta.infusion.Infusions.infunde(quem,
+                net.thaumcraft.occulta.infusion.Infusions.daquele(1), 100);
+        net.thaumcraft.occulta.infusion.Infusions.põeEnergia(quem, 95);
+        passo.run(level, meio, 20L, null);
+        if (net.thaumcraft.occulta.infusion.Infusions.energia(quem) != 100) {
+            helper.fail("ele enche até o teto e não passa, e deu "
+                    + net.thaumcraft.occulta.infusion.Infusions.energia(quem));
+        }
+
+        net.thaumcraft.occulta.infusion.Infusions.apaga(quem);
+        helper.succeed();
+    }
 }

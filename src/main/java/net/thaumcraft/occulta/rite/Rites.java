@@ -1641,6 +1641,62 @@ public final class Rites {
         return quem.distanceToSqr(onde.getX(), onde.getY(), onde.getZ()) <= (double) raio * raio;
     }
 
+
+    /**
+     * <b>Recarregar quem se infundiu</b>: o {@code RiteInfusionRecharge} do Witchery.
+     *
+     * <p>É a resposta ao que este ramo tem de mais duro: a carga de uma infusão <b>não volta sozinha</b>.
+     * Gastou-se, gastou-se. Este rito é a única maneira de a encher sem se infundir outra vez.
+     *
+     * <p>De segundo em segundo, ele <b>come poder do altar</b> e dá <b>dez de carga</b> a cada pessoa a
+     * quatro blocos do círculo, sem passar do teto dela. Acabando o poder, o rito morre — e por isso ele
+     * é um rito que se deixa ligado e não um que se faz.
+     *
+     * <p>E ele <b>não dá nada a quem não tem infusão nenhuma</b>: o teto de quem nunca se infundiu é
+     * zero, e encher até zero é não encher.
+     *
+     * @param cargas quanta carga ele dá por segundo
+     * @param raio   a que distância ele apanha quem está lá
+     * @param upkeep quanto poder ele come por batida
+     */
+    public record InfusionRecharge(int cargas, int raio, float upkeep) implements Rite {
+        /** De quantas em quantas batidas ele dá: uma vez por segundo. */
+        public static final int EVERY = 20;
+
+        @Override
+        public List<RiteStep> steps(int coven) {
+            return List.of((level, onde, ticks, rito) -> {
+                if (ticks % EVERY != 0L) return RiteStep.Result.STARTING;
+
+                if (this.upkeep > 0.0f) {
+                    var altar = net.thaumcraft.occulta.PowerSources.closest(level, onde);
+                    if (altar == null || !altar.consume(this.upkeep)) return RiteStep.Result.ABORTED;
+                }
+
+                var caixa = new AABB(
+                        onde.getX() - this.raio, onde.getY(), onde.getZ() - this.raio,
+                        onde.getX() + this.raio, onde.getY() + 1, onde.getZ() + this.raio);
+                for (Player gente : level.getEntitiesOfClass(Player.class, caixa)) {
+                    if (!(gente instanceof net.minecraft.server.level.ServerPlayer quem)) continue;
+                    if (quem.distanceToSqr(onde.getX(), onde.getY(), onde.getZ())
+                            >= (double) this.raio * this.raio) {
+                        continue;
+                    }
+                    int tem = net.thaumcraft.occulta.infusion.Infusions.energia(quem);
+                    int teto = net.thaumcraft.occulta.infusion.Infusions.teto(quem);
+                    if (tem >= teto) continue;
+                    net.thaumcraft.occulta.infusion.Infusions.enche(quem, this.cargas);
+                    level.sendParticles(net.minecraft.core.particles.SpellParticleOption.create(
+                                    ParticleTypes.INSTANT_EFFECT, 1.0f, 1.0f, 1.0f, 1.0f),
+                            quem.getX(), quem.getY() + 1.0, quem.getZ(), 8, 0.5, 1.0, 0.5, 0.0);
+                    level.playSound(null, quem.blockPosition(),
+                            SoundEvents.NOTE_BLOCK_PLING.value(), SoundSource.BLOCKS, 0.5f, 1.4f);
+                }
+                return RiteStep.Result.UPKEEP;
+            });
+        }
+    }
+
     /** A que distância o Rito de Prender Espíritos apanha bichos: os cinco blocos do original. */
     public static final int FETICHE_A = 5;
 
@@ -3423,6 +3479,46 @@ public final class Rites {
                                 net.thaumcraft.occulta.OccultaItems.WHIFF_OF_MAGIC),
                         new Sacrifice.Power(1000.0f, 20)),
                 RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+
+        /*
+         * ============================================================ os três que faltavam da lista
+         *
+         * Dois são <b>de bolso</b> — a mesma coisa que já existia, com a Pedra Sintonizada a pagar o que
+         * o altar pagava — e o terceiro é o que <b>recarrega</b> quem se infundiu.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.bindcircleportable",
+                new BindCircle(),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.CIRCLE_TALISMAN,
+                        Items.GLOWSTONE_DUST,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * E o <b>Wither caro</b>: o mesmo bicho sem pedir um aldeão, pagando-o com duas Pedras
+         * Sintonizadas e um diamante. É a saída de quem não tem aldeia à mão.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.summonwitherexpensive",
+                new SummonCreature(() -> net.minecraft.world.entity.EntityTypes.WITHER, 0),
+                new Sacrifice.Items(Items.WITHER_SKELETON_SKULL, Items.DIAMOND, Items.ENDER_PEARL,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), new RiteRegistry.Ring(0, 0, 40),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * E o que <b>enche a carga de quem se infundiu</b>, que é a única maneira de a encher sem se
+         * infundir outra vez. Quatro mil para o acender, quarenta por segundo para o manter.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.infusionrecharge",
+                new InfusionRecharge(10, 4, 40.0f),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.POTION),
+                        new Sacrifice.Power(4000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.teleportironore",

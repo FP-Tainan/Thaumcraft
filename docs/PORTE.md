@@ -12793,3 +12793,40 @@ chama o familiar de ninguém: ele faz nascer o **bicho de familiar** do original
 **Guardas:** o `OccultaFamiliarRitesGameTest`, com dois — o prender pelos três lados (sem bicho devolve,
 por domar não serve, e quem já tem familiar não leva outro), e o chamar pelos dois (o bicho que vem ter
 com a pessoa, e o que nasce com o nome que tinha).
+
+## Os três ritos pequenos que faltavam (2026-10-30)
+
+Dois são **de bolso** — a mesma coisa que já existia, com a Pedra Sintonizada a pagar o que o altar
+pagava — e o terceiro é o que **recarrega** quem se infundiu.
+
+### De bolso
+
+O original dá quase sempre duas versões de um rito: a que pede **poder de altar** e a que pede uma
+**Pedra Sintonizada carregada** no lugar dele. É o que deixa fazer o rito longe de casa, e é por isso que
+a Pedra Sintonizada é cara.
+
+Faltavam duas dessas: o **Prender o Círculo de bolso** e o **Chamar o Wither caro** — este último é o
+mesmo bicho **sem pedir um aldeão**, pago com duas Pedras Sintonizadas e um diamante. É a saída de quem
+não tem aldeia à mão.
+
+### Recarregar
+
+E o terceiro é a resposta ao que este ramo tem de mais duro: a carga de uma infusão **não volta sozinha**.
+Gastou-se, gastou-se. Este rito é a única maneira de a encher sem se infundir outra vez.
+
+De segundo em segundo ele **come quarenta de poder** e dá **dez de carga** a cada pessoa a quatro blocos
+do círculo, sem passar do teto dela. Acabando o poder, o rito morre — e por isso ele é um rito que se
+**deixa ligado**, e não um que se faz.
+
+E ele **não dá nada a quem não tem infusão nenhuma**: o teto de quem nunca se infundiu é zero, e encher
+até zero é não encher.
+
+### Desvio declarado
+
+O original pede, para este rito, uma **Poção de Regeneração** — a poção certa, pelo metadado dela. A
+lista de sacrifício deste porte compara **por item** e não pelo que o item leva dentro, de modo que aqui
+ele pede **uma poção**, qualquer uma. É uma limitação do sistema de sacrifício e não deste rito; está
+anotada aqui porque é neste que ela se vê primeiro.
+
+**Guarda:** a conta entra no `OccultaCircleRitesGameTest` — sem altar que pague, o rito morre; sem custo,
+ele sustenta-se e não dá nada a quem não se infundiu; e com infusão, enche até o teto e não passa.
