@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/fuel_brew_iii",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -36596
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      }
+    ]
+  }
+}

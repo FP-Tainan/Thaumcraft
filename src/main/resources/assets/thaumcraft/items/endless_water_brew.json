@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/endless_water_brew",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -16776961
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      }
+    ]
+  }
+}

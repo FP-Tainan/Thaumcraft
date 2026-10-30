@@ -1112,6 +1112,50 @@ public final class OccultaItems {
         return register(name, properties -> new ChalkItem(glyph, properties.durability(128)));
     }
 
+    // ------------------------------------------------------------------ os dois que não são poção
+
+    /**
+     * O <b>Cozimento de Combustão</b>, nos quatro graus do original.
+     *
+     * <p>Não se bebe e não se atira: <b>queima-se</b>. Cada grau vale mais que o anterior na fornalha, e o
+     * mais forte vale <b>cinquenta mil</b> batidas — mais de seis vezes um balde de lava.
+     *
+     * <p><b>Mudança declarada:</b> em 2014 os quatro graus são um item só com quatro metadados. Hoje não há
+     * metadado, e por isso são quatro itens. O que se vê é o mesmo: quatro frascos da mesma forma, cada um
+     * de um laranja mais fundo que o anterior.
+     */
+    public static final Item FUEL_BREW = frascoQueimável("fuel_brew");
+
+    public static final Item FUEL_BREW_II = frascoQueimável("fuel_brew_ii");
+
+    public static final Item FUEL_BREW_III = frascoQueimável("fuel_brew_iii");
+
+    public static final Item FUEL_BREW_IV = frascoQueimável("fuel_brew_iv");
+
+    /** Quanto cada grau queima, na conta do original. */
+    public static final java.util.List<Integer> FUEL_BREW_TICKS = java.util.List.of(2400, 5000, 10000, 50000);
+
+    /** E os quatro frascos, na mesma ordem. */
+    public static java.util.List<Item> fuelBrews() {
+        return java.util.List.of(FUEL_BREW, FUEL_BREW_II, FUEL_BREW_III, FUEL_BREW_IV);
+    }
+
+    /**
+     * O <b>Cozimento de Água sem Fim</b>: um frasco que dá água e não se esvazia, até se esvaziar.
+     *
+     * <p>Quantos goles ele traz depende de como foi feito: cem na receita mais rica, cinco na mais pobre.
+     */
+    public static final Item ENDLESS_WATER_BREW = register("endless_water_brew", properties ->
+            new net.thaumcraft.occulta.brew.EndlessWaterBrewItem(properties.stacksTo(1)
+                    .durability(net.thaumcraft.occulta.brew.EndlessWaterBrewItem.GOLES)
+                    .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
+
+    /** Um frasco que só serve para arder, e que brilha como o original o faz brilhar. */
+    private static Item frascoQueimável(String name) {
+        return register(name, properties -> new Item(properties.stacksTo(64)
+                .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
+    }
+
     /** Um frasco do Caldeirão de Pote: atira-se, e vai até dezesseis por casa como as poções do jogo. */
     private static Item brew(String name, net.thaumcraft.occulta.kettle.KettleBrews.Kind kind) {
         return register(name, properties ->

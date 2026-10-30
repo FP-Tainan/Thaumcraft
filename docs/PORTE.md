@@ -13105,3 +13105,53 @@ ele que tira os maus efeitos de uma vez —, e quando vier é esse pedaço que e
 que quem pisa nela adoece enquanto um esqueleto passa por cima sem sentir. E o `OccultaDiseaseClientTest`,
 com três fotos: a poça ao lado de uma de água, para se ver que não se parecem; e ela caindo, que é o que ela
 faz de diferente de toda água do jogo.
+
+## Os dois cozimentos que não são poção (2026-10-30)
+
+Nem tudo o que sai do caldeirão se bebe. Dois destes não fazem efeito em ninguém: um **arde** e o outro
+**dá água**.
+
+### O Cozimento de Combustão
+
+Quatro frascos de laranja cada vez mais fundo, que se põem na fornalha como carvão. O primeiro vale duas mil
+e quatrocentas batidas — um pouco mais que um bloco de carvão —, e o quarto vale **cinquenta mil**, que é
+mais de seis vezes um balde de lava. É a resposta do ofício a quem tem fornalhas a mais e combustível a
+menos.
+
+**Mudança declarada:** em 2014 os quatro graus são um item só com quatro metadados. Hoje não há metadado, e
+por isso são **quatro itens**. O que se vê é o mesmo, porque o original também não lhes dá quatro desenhos —
+dá um desenho e quatro cores, e é pela cor do caldo que se sabe qual se tem na mão.
+
+### O Cozimento de Água sem Fim
+
+Um frasco que dá água e não se esvazia — até se esvaziar. Cada gole é uma casa de água posta no mundo ou um
+caldeirão enchido, e quando os goles acabam o frasco quebra.
+
+Ele serve a quatro coisas, nesta ordem: enche o **caldeirão do ofício**, enche o **pote**, enche a
+**caldeira do jogo** até acima de uma vez só — e, não havendo nenhum dos três, **põe uma casa de água** na
+face em que se clicou. É o que faz de uma bruxa alguém que não precisa de rio.
+
+### As oito receitas, e por que a ordem importa
+
+Os dois saem do caldeirão com **quatro receitas cada**, e o que se oferece a mais não muda o que sai: muda
+**quanto** sai.
+
+A Água sem Fim vem de um **bloco de neve**. Só com verruga do Nether, o frasco vem com **cinco** goles; com
+pó de luminita, vinte; com uma vara de blaze, cinquenta; e com uma Pedra Sintonizada carregada, os **cem**.
+A Combustão vem de **carvão vegetal** e sobe do mesmo jeito, trocando a verruga pela raiz de mandrágora.
+
+As receitas são registradas da **mais rica para a mais pobre**, e tem de ser: o caldeirão fica com a
+**primeira** que couber no que está dentro dele. Ao contrário, quem oferecesse tudo receberia o frasco mais
+pobre — porque a receita pobre também cabe.
+
+**Declarado, e já estava:** o original cobra três mil de poder de altar pela Água sem Fim, e nenhuma receita
+de caldeirão deste porte cobra poder. É a mesma declaração que já estava escrita no `OccultaRituals`.
+
+**Guardas:** o `OccultaFuelBrewGameTest`, com três — que os quatro graus ardem com os tempos do original e
+cada um mais que o anterior, com o quarto a passar o balde de lava; que o caldeirão dá o melhor a quem
+oferece tudo e o pior a quem oferece o mínimo, nos dois cozimentos; e que um gole põe água onde não havia,
+enche a caldeira do jogo de uma vez, e custa um gole de cada vez.
+
+E o `OccultaFuelBrewClientTest`, com duas fotos: os seis frascos no inventário — os quatro graus lado a
+lado, que são o mesmo frasco com o caldo cada vez mais fundo, e os dois de água, um cheio e um quase gasto
+para a barra de goles se ver — e a caldeira do jogo cheia ao lado de uma vazia.

@@ -34,6 +34,16 @@ public class Thaumcraft implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        /*
+         * Os quatro graus do <b>Cozimento de Combustão</b> ardem na fornalha, cada um com o seu tempo: o
+         * {@code IFuelHandler} do original, que aqui é o gancho do Fabric.
+         */
+        net.fabricmc.fabric.api.registry.FuelValueEvents.BUILD.register((builder, contexto) -> {
+            var quais = net.thaumcraft.occulta.OccultaItems.fuelBrews();
+            for (int i = 0; i < quais.size(); i++) {
+                builder.add(quais.get(i), net.thaumcraft.occulta.OccultaItems.FUEL_BREW_TICKS.get(i));
+            }
+        });
         Aspects.init();
         Knowledges.init();
         net.thaumcraft.registry.TCFluids.init();

@@ -93,10 +93,39 @@ public final class OccultaRituals {
                 List.of(OccultaItems.MANDRAKE_ROOT, Items.DIRT),
                 () -> new ItemStack(OccultaItems.PIT_DIRT, 4));
 
+        /*
+         * Os <b>dois cozimentos que não são poção</b>, com quatro receitas cada: o que se oferece a mais
+         * não muda o que sai, muda <b>quanto</b> sai. Elas vão da mais rica para a mais pobre, e tem de ser
+         * nesta ordem — o caldeirão fica com a <b>primeira</b> que couber no que está dentro dele.
+         */
+        ritual(Items.SNOW_BLOCK, List.of(Items.NETHER_WART, Items.GLOWSTONE_DUST, Items.BLAZE_ROD,
+                        OccultaItems.ATTUNED_STONE_CHARGED), () -> águaSemFim(0));
+        ritual(Items.SNOW_BLOCK, List.of(Items.NETHER_WART, Items.GLOWSTONE_DUST, Items.BLAZE_ROD),
+                () -> águaSemFim(50));
+        ritual(Items.SNOW_BLOCK, List.of(Items.NETHER_WART, Items.GLOWSTONE_DUST), () -> águaSemFim(80));
+        ritual(Items.SNOW_BLOCK, List.of(Items.NETHER_WART), () -> águaSemFim(95));
+
+        ritual(Items.CHARCOAL, List.of(OccultaItems.MANDRAKE_ROOT, Items.GLOWSTONE_DUST, Items.BLAZE_ROD,
+                        OccultaItems.ATTUNED_STONE_CHARGED),
+                () -> new ItemStack(OccultaItems.FUEL_BREW_IV));
+        ritual(Items.CHARCOAL, List.of(OccultaItems.MANDRAKE_ROOT, Items.GLOWSTONE_DUST, Items.BLAZE_ROD),
+                () -> new ItemStack(OccultaItems.FUEL_BREW_III));
+        ritual(Items.CHARCOAL, List.of(OccultaItems.MANDRAKE_ROOT, Items.GLOWSTONE_DUST),
+                () -> new ItemStack(OccultaItems.FUEL_BREW_II));
+        ritual(Items.CHARCOAL, List.of(OccultaItems.MANDRAKE_ROOT),
+                () -> new ItemStack(OccultaItems.FUEL_BREW));
+
         ritual(Items.PORKCHOP, List.of(), () -> new ItemStack(Items.COOKED_PORKCHOP));
         ritual(Items.CHICKEN, List.of(), () -> new ItemStack(Items.COOKED_CHICKEN));
         ritual(Items.BEEF, List.of(), () -> new ItemStack(Items.COOKED_BEEF));
         ritual(Items.MUTTON, List.of(), () -> new ItemStack(Items.COOKED_MUTTON));
+    }
+
+    /** Um frasco de Água sem Fim já gasto do quanto a receita não deu. */
+    private static ItemStack águaSemFim(int gasto) {
+        ItemStack frasco = new ItemStack(OccultaItems.ENDLESS_WATER_BREW);
+        if (gasto > 0) frasco.set(net.minecraft.core.component.DataComponents.DAMAGE, gasto);
+        return frasco;
     }
 
     private static void ritual(Item key, List<Item> ingredients, java.util.function.Supplier<ItemStack> result) {
