@@ -44,7 +44,7 @@ public class OccultaWitchPlantsGameTest {
     @GameTest(maxTicks = 20, padding = 8)
     public void thewebGrowsIntoABall(GameTestHelper helper) {
         var level = helper.getLevel();
-        BlockPos meio = helper.absolutePos(new BlockPos(3, 6, 3));
+        BlockPos meio = helper.absolutePos(new BlockPos(4, 5, 4));
 
         // no ar puro, a teia nasce uma casa acima do estouro e nada a atrapalha
         limpa(helper, meio, 3);
@@ -71,7 +71,7 @@ public class OccultaWitchPlantsGameTest {
     @GameTest(maxTicks = 60, padding = 8)
     public void theCactusGrowsAColumnAndFallsWithoutAFoot(GameTestHelper helper) {
         var level = helper.getLevel();
-        BlockPos chão = helper.absolutePos(new BlockPos(3, 2, 8));
+        BlockPos chão = helper.absolutePos(new BlockPos(4, 2, 4));
         limpa(helper, chão.above(3), 3);
         level.setBlockAndUpdate(chão, Blocks.STONE.defaultBlockState());
 
@@ -107,7 +107,7 @@ public class OccultaWitchPlantsGameTest {
     @GameTest(maxTicks = 20, padding = 8)
     public void theVineRunsTheWallAndOnlyTheWall(GameTestHelper helper) {
         var level = helper.getLevel();
-        BlockPos pé = helper.absolutePos(new BlockPos(8, 2, 3));
+        BlockPos pé = helper.absolutePos(new BlockPos(4, 2, 4));
         limpa(helper, pé.above(3), 4);
         for (int i = 0; i < 5; i++) {
             level.setBlockAndUpdate(pé.above(i), Blocks.STONE.defaultBlockState());
@@ -143,7 +143,7 @@ public class OccultaWitchPlantsGameTest {
     @GameTest(maxTicks = 180, padding = 10)
     public void theLilyPadSpreadsItselfAcrossTheWater(GameTestHelper helper) {
         var level = helper.getLevel();
-        BlockPos meio = helper.absolutePos(new BlockPos(8, 3, 8));
+        BlockPos meio = helper.absolutePos(new BlockPos(5, 3, 5));
         for (int dx = -4; dx <= 4; dx++) {
             for (int dz = -4; dz <= 4; dz++) {
                 level.setBlockAndUpdate(meio.offset(dx, -1, dz), Blocks.STONE.defaultBlockState());

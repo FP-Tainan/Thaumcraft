@@ -729,9 +729,9 @@ public final class OccultaEffects {
      *
      * <p>O leite não a tira, e é a poção mais cruel do mod: ela não mata, ela <b>espalha</b>.
      *
-     * <p><b>Fica de fora, declarado:</b> o bloco de doença do original (o {@code Witchery.Blocks.DISEASE}) não
-     * está portado, e por isso o que fica no chão é uma <b>teia</b> — o que há no jogo de hoje que mais se
-     * parece com o que ele faz: prende quem passa. Quando o bloco vier, é esta linha que muda.
+     * <p>O que fica no chão é a {@linkplain net.thaumcraft.occulta.DiseaseBlock poça de doença}, que cai até
+     * achar chão, seca sozinha e contagia quem pisar nela. É por ela que a doença deixa de ser de uma pessoa
+     * e passa a ser de um lugar.
      */
     public static final Holder<MobEffect> DISEASED = register("diseased",
             new MobEffect(MobEffectCategory.HARMFUL, 0x6B8E3A) {
@@ -742,7 +742,7 @@ public final class OccultaEffects {
                     if (!level.getBlockState(onde).isAir()) return true;
                     if (!level.getBlockState(onde.below()).isSolidRender()) return true;
                     level.setBlockAndUpdate(onde,
-                            net.minecraft.world.level.block.Blocks.COBWEB.defaultBlockState());
+                            net.thaumcraft.occulta.OccultaBlocks.DISEASE.defaultBlockState());
                     return true;
                 }
 

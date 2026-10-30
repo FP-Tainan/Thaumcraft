@@ -13067,3 +13067,41 @@ nenúfar com três para gastar faz mais que ele mesmo.
 E o `OccultaWitchPlantsClientTest`, com três fotos: os quatro pares lado a lado — a do jogo à esquerda e a de
 bruxa à direita, e os pares saem **indistinguíveis**, que é o ponto —, os dois nenúfares recém-postos, e o
 poço um minuto depois, com o do jogo onde estava e o de bruxa virado tapete.
+
+## A poça de doença (2026-10-30)
+
+O **último bloco** que faltava do Ars Occulta, e o que fecha a poção mais cruel do mod.
+
+Quem está **doente** vai largando poças por onde passa: de dois em dois segundos, uma vez em três, nasce uma
+onde a pessoa pisa. E cada poça contagia quem pisar nela. É assim que uma doença deixa de ser de uma pessoa e
+passa a ser **de um lugar** — uma casa, um curral, uma aldeia. A poção não mata; ela **espalha**.
+
+Até aqui o porte largava uma **teia** no chão, declarado, porque o bloco não existia. Agora larga a poça.
+
+### Uma casa de altura, e é tudo
+
+No original ela é um fluido do Forge com **uma casa de altura só**. Uma casa é tudo o que ela tem para dar, e
+por isso não sobra nada para espalhar: ela **cai até achar chão** e fica. Não se abre para os lados, nunca.
+
+E ela **seca**: a cada quinze batidas — a viscosidade dela dividida por duzentos — há uma chance em dez de
+sumir. É a única coisa que a tira do mapa, porque ela não se quebra: cem de dureza, como a nuvem e a poça de
+cozimento.
+
+### Quem não apanha
+
+**Morto-vivo, coisa do inferno, lobisomem em bicho, chefe e golem** passam por ela sem sentir. Não há o que
+adoecer em quem já não está vivo, e o resto é forte demais.
+
+**Mudança declarada, a mesma dos símbolos:** o original pergunta `instanceof IBossDisplayData` para saber o
+que é chefe, que é a interface da barra de chefe de 2014. Hoje são os dois chefes do jogo e os do próprio mod.
+
+### O que fica a dever
+
+O original tem uma segunda maneira de tirar as poças do mapa: o **Leite Purificado**, no terceiro grau, limpa
+todas num cubo de dezenove casas à volta de quem bebeu. Esse cozimento inteiro ainda não está no porte — é
+ele que tira os maus efeitos de uma vez —, e quando vier é esse pedaço que entra com ele. Está dito.
+
+**Guardas:** o `OccultaDiseaseGameTest`, com dois — que ela cai até achar chão e não se abre para os lados, e
+que quem pisa nela adoece enquanto um esqueleto passa por cima sem sentir. E o `OccultaDiseaseClientTest`,
+com três fotos: a poça ao lado de uma de água, para se ver que não se parecem; e ela caindo, que é o que ela
+faz de diferente de toda água do jogo.

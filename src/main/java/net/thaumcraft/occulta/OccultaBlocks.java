@@ -645,6 +645,16 @@ public final class OccultaBlocks {
                     .replaceable().noLootTable().strength(100.0f).noOcclusion()
                     .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
 
+    /**
+     * A <b>poça de doença</b>: o rasto que quem está doente vai deixando pelo chão, e que contagia quem
+     * pisar nela. Ela é <b>dura de quebrar</b> como as outras duas poças do ofício, porque no original
+     * nenhuma delas se quebra — some sozinha e mais nada.
+     */
+    public static final Block DISEASE = register("disease", properties ->
+            new net.thaumcraft.occulta.DiseaseBlock(properties.mapColor(MapColor.COLOR_BROWN)
+                    .replaceable().noLootTable().strength(100.0f).noOcclusion()
+                    .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
+
     // ------------------------------------------------------------------ as quatro plantas do ofício
 
     /**

@@ -1,0 +1,49 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "still": "thaumcraft:block/disease_still",
+    "flow": "thaumcraft:block/disease_flow",
+    "particle": "thaumcraft:block/disease_still"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#still",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#still",
+          "cullface": "up"
+        },
+        "north": {
+          "texture": "#flow",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#flow",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#flow",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#flow",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}
