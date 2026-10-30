@@ -211,8 +211,10 @@ public final class BrewRegistry {
                 new BrewName.Text("tc.brew.reflectprojectiles", "tc.brew.attractprojectiles"), 250,
                 net.thaumcraft.occulta.OccultaEffects.REFLECT_PROJECTILES, secs(90),
                 net.thaumcraft.occulta.OccultaEffects.ATTRACT_PROJECTILES, secs(45), COMUM));
-        register(new BrewActions.Potion(Items.CACTUS, new BrewName.Text("tc.brew.thorns"), 150,
-                net.thaumcraft.occulta.OccultaEffects.SPIKED, secs(90), COMUM));
+        // os espinhos põem poção em gente e cato no chão, e as duas metades são do mesmo ingrediente
+        register(new BrewWorldActions.Thorns(Items.CACTUS, 150, COMUM));
+        register(new BrewWorldActions.Webs(OccultaItems.WITCH_WEB, 200, COMUM));
+        register(new BrewWorldActions.Vines(Items.VINE, 150, COMUM));
         for (Item mato : List.of(Items.SHORT_GRASS, Items.DEAD_BUSH)) {
             register(new BrewActions.Potion(mato, new BrewName.Text("tc.brew.volatility"), 1000,
                     net.thaumcraft.occulta.OccultaEffects.VOLATILITY, secs(180), GRAVE));

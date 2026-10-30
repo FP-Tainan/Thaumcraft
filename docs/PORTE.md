@@ -12990,3 +12990,80 @@ sobrar casa nenhuma.
 
 E o `OccultaBrewLiquidClientTest`, com três fotos: os seis degraus vistos de rente ao chão, o losango visto
 de doze casas acima, e a poça de noite — sem luz nenhuma, como no original.
+
+## As quatro plantas do ofício (2026-10-30)
+
+Quatro blocos que **são as plantas do jogo pela cara** e outra coisa por dentro: a **teia**, o **cato**, o
+**cipó** e o **nenúfar** de bruxa. No original os quatro usam as **texturas do jogo**, e é de propósito —
+uma teia de bruxa tem de parecer uma teia. Quem vê a diferença é quem tenta rasgá-la.
+
+Até aqui o porte usava os blocos do jogo no lugar deles, declarado. Agora não usa mais.
+
+### O que cada uma tem de diferente
+
+**A teia** é **oito vezes mais dura de rasgar** que a do jogo, e **não larga nada** — nem linha, nem a si
+mesma. Quem cai numa não sai dela com nada nas mãos a não ser o tempo que perdeu.
+
+**O cato** não larga nada, não cresce sozinho e **aceita qualquer chão**: não precisa de areia, não se
+importa com o que está ao lado dele e não morre por ter vizinhos. Cresce numa calçada, dentro de casa, no
+meio de uma ponte. Isso é o que ele é — uma **armadilha que se planta**, não uma planta que se cultiva.
+
+**O cipó** não se alastra: fica onde foi posto. E tem uma diferença que se sente com os pés — **esbarra-se
+nele**. O cipó do jogo não tem caixa de choque nenhuma; este tem duas casas de dezesseis coladas à parede, e
+dá para ficar de pé em cima delas. Uma parede coberta de cipó de bruxa é uma parede **mais grossa**.
+
+**O nenúfar se alastra sozinho**, e é o mais vistoso dos quatro. A força do cozimento diz quantas vezes ele
+ainda vai se alastrar: a cada segundo ele escolhe uma casa em volta e, havendo água, põe outro nenúfar nela.
+O novo nasce com uma vez a menos que o pai, e por isso a coisa tem fim.
+
+Dois detalhes do original que valem guardar. O pai só **gasta** uma das vezes dele com a chance de um sobre
+o que lhe resta — com três pela frente gasta uma em cada três, com uma só gasta sempre; na prática ele
+aguenta mais do que a conta diria, e o tapete sai mais largo de uma nascente só. E as **doze direções** do
+sorteio não são iguais: as quinas contam duas vezes e os lados uma, e é daí que vem o feitio redondo do
+tapete.
+
+### «Se deixa empurrar» não é «é sólido»
+
+O original não pergunta se um bloco é sólido — pergunta se ele se **deixa empurrar**. Ar, água, lava, fogo,
+neve rasa, cipó e mato se deixam; pedra, madeira e vidro não. É uma pergunta diferente da do choque, e é por
+isso que estas plantas crescem dentro da água e engolem o capim sem pedir licença. E é por isso que um cato
+fica de pé em cima de outro: um cato não se deixa empurrar.
+
+### Os três cozimentos, e a metade que faltava
+
+As plantas saem de três cozimentos, e os três estavam incompletos ou ausentes.
+
+**As Teias** não existiam no porte. Onde o frasco bateu nasce uma teia — uma casa sem força, a cruz de sete
+no primeiro grau, e a bola de dezenove no segundo: tudo o que toca o meio por face ou por aresta, e nada
+pelas quinas. Em quem leva o frasco no corpo ela nasce **aos pés**.
+
+**Os Cipós** não existiam no porte. Acertando uma **parede**, o cozimento corre-a de cima a baixo. Acertando
+o chão ou o teto não faz nada — é o único dos três que exige a face certa. E as duas metades não são iguais:
+**para baixo**, sem força, ele só desce enquanto houver parede ao lado; **com força** ele continua descendo
+no vazio, pendurado, e **cai da beira do penhasco**. **Para cima** ele sempre precisa de parede, mas
+**atravessa folhas** — é assim que ele sobe por dentro da copa de uma árvore. Em gente ele não faz cipó
+nenhum: enrola quem levou.
+
+**Os Espinhos** estavam **pela metade**. O porte já tinha a metade que espeta por dentro e não tinha a que
+planta: no lugar, o cozimento faz crescer uma coluna de cato — três casas, mais uma por grau —, e acertando
+um cato que já está lá ele **sobe até o topo da coluna** e cresce dali. É por isso que acertar duas vezes no
+mesmo lugar faz uma coluna mais alta, e não duas colunas lado a lado. Agora tem as duas metades, que é o que
+o original sempre fez com um único ingrediente.
+
+E a **Nenufarização**, que o porte já tinha, punha o nenúfar do jogo. Agora põe o de bruxa, com a força do
+cozimento dentro: com força nenhuma ele fica onde está — e aí sim parece o do jogo —, com força ele vira
+tapete.
+
+### Uma guarda que o original não tem
+
+A queda à procura de chão tem fundo. No original ela não tem: ela conta com a pedra do fundo do mundo para
+parar, e num mundo sem fundo ela nunca pararia.
+
+**Guardas:** o `OccultaWitchPlantsGameTest`, com cinco — que cada planta vem do ingrediente dela; que a teia
+é uma, sete ou dezenove conforme o grau; que o cato sobe três casas e que, tirando-lhe o pé, a coluna inteira
+vem abaixo; que o cipó corre a parede inteira, se agarra ao lado certo e **só** pega em parede; e que o
+nenúfar com três para gastar faz mais que ele mesmo.
+
+E o `OccultaWitchPlantsClientTest`, com três fotos: os quatro pares lado a lado — a do jogo à esquerda e a de
+bruxa à direita, e os pares saem **indistinguíveis**, que é o ponto —, os dois nenúfares recém-postos, e o
+poço um minuto depois, com o do jogo onde estava e o de bruxa virado tapete.

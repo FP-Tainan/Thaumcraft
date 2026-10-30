@@ -71,6 +71,107 @@ public final class BrewWorldActions {
         /** O {@code doApplyToEntity}: a maioria destes não faz nada em quem passa. */
         protected void onEntity(ServerLevel level, LivingEntity quem, BrewModifiers temperos) {
         }
+
+        /**
+         * E os poucos que <b>também põem poção</b> em quem passa — os espinhos e os cipós — põem-na por aqui.
+         *
+         * <p>A máscara de gás continua valendo: o que é ruim não pega em quem a traz.
+         */
+        protected static void poção(LivingEntity quem, BrewModifiers temperos,
+                                    net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> qual,
+                                    int duração) {
+            if (temperos.protectedFromBadEffects && qual.value().getCategory()
+                    == net.minecraft.world.effect.MobEffectCategory.HARMFUL) {
+                return;
+            }
+            BrewActions.Potion.apply(quem, temperos, qual, duração, BrewModifiers.STRENGTH_CEILING);
+        }
+    }
+
+    // ------------------------------------------------------------------ as três plantas
+
+    /**
+     * As <b>Teias</b>: o {@code BrewActionEffect} das teias do original.
+     *
+     * <p>Onde o frasco bateu nasce uma {@linkplain net.thaumcraft.occulta.brew.WitchWebBlock teia de bruxa} —
+     * uma casa sem força, a cruz de sete no primeiro grau, e a bola de dezenove no segundo. Em quem leva o
+     * frasco no corpo ela nasce <b>aos pés</b>, e quem leva não sai dali depressa.
+     */
+    public static class Webs extends WorldEffect {
+        public Webs(Item key, int power, int weight) {
+            super(key, new BrewName.Text("tc.brew.webs"), power, weight);
+        }
+
+        @Override
+        protected void onBlock(ServerLevel level, BlockPos onde, Direction lado, int raio,
+                               BrewModifiers temperos) {
+            net.thaumcraft.occulta.brew.WitchPlants.teia(level, onde, lado, temperos.getStrength());
+        }
+
+        @Override
+        protected void onEntity(ServerLevel level, LivingEntity quem, BrewModifiers temperos) {
+            net.thaumcraft.occulta.brew.WitchPlants.teia(level, quem.blockPosition(), null,
+                    temperos.getStrength());
+        }
+    }
+
+    /**
+     * Os <b>Cipós</b>: o {@code BrewActionEffect} dos cipós do original.
+     *
+     * <p>Acertando uma <b>parede</b>, o cozimento corre-a de cima a baixo de
+     * {@linkplain net.thaumcraft.occulta.brew.WitchVineBlock cipó de bruxa}. Acertando o chão ou o teto, não
+     * faz nada — é o único destes três que exige a face certa.
+     *
+     * <p>Acertando <b>gente</b>, não faz cipó nenhum: enrola quem levou, que é o outro jeito de prender
+     * alguém a um lugar.
+     */
+    public static class Vines extends WorldEffect {
+        /** Quanto a enrolada dura: noventa segundos, como no original. */
+        public static final int QUANTO = 90 * 20;
+
+        public Vines(Item key, int power, int weight) {
+            super(key, new BrewName.Text("tc.brew.vines").lasting(QUANTO), power, weight);
+        }
+
+        @Override
+        protected void onBlock(ServerLevel level, BlockPos onde, Direction lado, int raio,
+                               BrewModifiers temperos) {
+            net.thaumcraft.occulta.brew.WitchPlants.cipó(level, onde, lado, temperos.getStrength());
+        }
+
+        @Override
+        protected void onEntity(ServerLevel level, LivingEntity quem, BrewModifiers temperos) {
+            poção(quem, temperos, net.thaumcraft.occulta.OccultaEffects.WRAPPED_IN_VINE, QUANTO);
+        }
+    }
+
+    /**
+     * Os <b>Espinhos</b>: o {@code BrewActionEffect} dos espinhos do original.
+     *
+     * <p>No lugar, ele faz crescer uma coluna de {@linkplain net.thaumcraft.occulta.brew.WitchCactusBlock
+     * cato de bruxa} — três casas, mais uma por grau. Em gente, ele <b>espeta por dentro</b>.
+     *
+     * <p><b>Estava pela metade:</b> o porte já tinha a metade que espeta, e não tinha a que planta. Agora
+     * tem as duas, que é o que o original sempre fez com um único ingrediente.
+     */
+    public static class Thorns extends WorldEffect {
+        /** Quanto o espetado dura: noventa segundos. */
+        public static final int QUANTO = 90 * 20;
+
+        public Thorns(Item key, int power, int weight) {
+            super(key, new BrewName.Text("tc.brew.thorns").lasting(QUANTO), power, weight);
+        }
+
+        @Override
+        protected void onBlock(ServerLevel level, BlockPos onde, Direction lado, int raio,
+                               BrewModifiers temperos) {
+            net.thaumcraft.occulta.brew.WitchPlants.cato(level, onde, lado, temperos.getStrength());
+        }
+
+        @Override
+        protected void onEntity(ServerLevel level, LivingEntity quem, BrewModifiers temperos) {
+            poção(quem, temperos, net.thaumcraft.occulta.OccultaEffects.SPIKED, QUANTO);
+        }
     }
 
     // ------------------------------------------------------------------ a derrubada
@@ -170,7 +271,15 @@ public final class BrewWorldActions {
                 lugar = lugar.above();
             }
             if (!level.getBlockState(lugar).is(Blocks.WATER) || !level.isEmptyBlock(lugar.above())) return;
-            level.setBlockAndUpdate(lugar.above(), Blocks.LILY_PAD.defaultBlockState());
+            /*
+             * O que nasce é o <b>nenúfar de bruxa</b>, e ele leva a força do cozimento consigo: é ela que diz
+             * quantas vezes ele ainda vai se alastrar pela água. Com força nenhuma ele fica onde está, e é
+             * por isso que o cozimento mais simples parece o nenúfar do jogo e o forte vira um tapete.
+             */
+            level.setBlockAndUpdate(lugar.above(),
+                    net.thaumcraft.occulta.OccultaBlocks.WITCH_LILY_PAD.defaultBlockState()
+                            .setValue(net.thaumcraft.occulta.brew.WitchLilyPadBlock.GROWTH,
+                                    temperos.getStrength() & 3));
         }
 
         @Override

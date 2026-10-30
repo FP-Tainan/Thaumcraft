@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "minecraft:block/vine"
+    },
+    "facing=east": {
+      "model": "minecraft:block/vine",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "minecraft:block/vine",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minecraft:block/vine",
+      "y": 270
+    }
+  }
+}

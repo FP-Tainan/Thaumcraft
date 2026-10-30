@@ -645,6 +645,35 @@ public final class OccultaBlocks {
                     .replaceable().noLootTable().strength(100.0f).noOcclusion()
                     .pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY)));
 
+    // ------------------------------------------------------------------ as quatro plantas do ofício
+
+    /**
+     * A <b>teia de bruxa</b>: a teia do jogo oito vezes mais dura, e que não larga nada. Sai do cozimento de
+     * teias.
+     */
+    public static final Block WITCH_WEB = register("witch_web", properties ->
+            new net.thaumcraft.occulta.brew.WitchWebBlock(properties.mapColor(MapColor.WOOL)
+                    .noCollision().noOcclusion().strength(8.0f).sound(SoundType.WOOL).noLootTable()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** O <b>cato de bruxa</b>, que cresce em qualquer chão e não larga nada. Sai do cozimento de espinhos. */
+    public static final Block WITCH_CACTUS = register("witch_cactus", properties ->
+            new net.thaumcraft.occulta.brew.WitchCactusBlock(properties.mapColor(MapColor.PLANT)
+                    .strength(0.4f).sound(SoundType.WOOL).noOcclusion().noLootTable()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** O <b>cipó de bruxa</b>, em que se sobe e em que se esbarra. Sai do cozimento de cipós. */
+    public static final Block WITCH_VINE = register("witch_vine", properties ->
+            new net.thaumcraft.occulta.brew.WitchVineBlock(properties.mapColor(MapColor.PLANT)
+                    .strength(0.2f).sound(SoundType.GRASS).noOcclusion().noLootTable()
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** O <b>nenúfar de bruxa</b>, que se alastra sozinho pela água. Sai do cozimento de nenufarização. */
+    public static final Block WITCH_LILY_PAD = register("witch_lily_pad", properties ->
+            new net.thaumcraft.occulta.brew.WitchLilyPadBlock(properties.mapColor(MapColor.PLANT)
+                    .instabreak().sound(SoundType.GRASS).noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)));
+
     /** A nuvem e a poça carregam a mesma coisa, e por isso partilham a peça que a guarda. */
     public static final net.minecraft.world.level.block.entity.BlockEntityType<net.thaumcraft.occulta.brew.BrewFluidBlockEntity> BREW_GAS_ENTITY =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("brew_gas"),

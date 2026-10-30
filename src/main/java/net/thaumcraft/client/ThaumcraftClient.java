@@ -133,6 +133,16 @@ public class ThaumcraftClient implements ClientModInitializer {
                 }), net.thaumcraft.occulta.OccultaBlocks.BREW_GAS,
                 net.thaumcraft.occulta.OccultaBlocks.BREW_LIQUID);
 
+        // o cipó de bruxa é pintado como a folhagem do lugar, e o nenúfar como o do jogo
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(net.minecraft.client.color.block.BlockTintSources.foliage()),
+                net.thaumcraft.occulta.OccultaBlocks.WITCH_VINE);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry.register(
+                java.util.List.of(net.minecraft.client.color.block.BlockTintSources.constant(
+                        net.minecraft.client.color.block.BlockColors.LILY_PAD_DEFAULT,
+                        net.minecraft.client.color.block.BlockColors.LILY_PAD_IN_WORLD)),
+                net.thaumcraft.occulta.OccultaBlocks.WITCH_LILY_PAD);
+
         // e a Rocha também, que é o que o original faz com ela
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.ROCK,
