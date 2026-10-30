@@ -12723,3 +12723,31 @@ o porco junto; e o marcador da mandrágora a abafar o rito de trazer alguém, co
 E uma nota de prova que se paga: o rito procura gente com uma **varredura da caixa**, e o jogador de
 mentira do `makeMockPlayer` **não entra na lista do nível**. Quem o quiser provar precisa de um jogador
 que esteja mesmo lá.
+
+## As maldições dirigidas pedem trovoada (2026-10-30)
+
+As quatro maldições que se mandam a alguém pelo círculo — a **Má Sorte**, a **Loucura**, o **Pesadelo
+Acordado** e o **Afundar** — não se faziam a qualquer hora no original: elas pedem **trovoada**.
+
+O porte não pedia nada. Fazia-se qualquer uma ao meio-dia de um dia limpo.
+
+### De onde vem a conta
+
+O original guarda os pedidos de hora num conjunto de **traços**, e o `RiteRegistry` dele lê cinco:
+`ONLY_AT_NIGHT`, `ONLY_AT_DAY`, `ONLY_IN_RAIN`, `ONLY_IN_STROM` e `ONLY_OVERWORLD`. As cinco maldições
+dirigidas trazem `ONLY_IN_STROM`, e o teste dele é **`isThundering`** — não é chuva, é **trovoada**.
+
+Medido contra a lista inteira do original, era a única coisa que faltava: o dia do Eclipse, a noite das
+sete e o Além-Mundo do Inferno na Terra já estavam todos certos. Faltavam as cinco tempestades.
+
+### E a quinta maldição, que não estava cá
+
+A **Fervura** tinha o rito de **curar** e não tinha o de **pôr**. Entra agora, com o que o original lhe
+pede: um **frasco cheio**, a **Exalação do Cornífero**, **Sangue Infernal**, uma **vara de blaze** e um
+**Cozimento do Grotesco**, dois mil de poder — e, como as irmãs, **trovoada** e o anel do meio inteiro em
+**giz infernal**.
+
+Com ela, as cinco maldições do ofício têm os dois lados: pôr e tirar.
+
+**Guarda:** a conta entra no `OccultaCurseGameTest` — as cinco pedem trovoada, e as que curam não pedem
+hora nenhuma.

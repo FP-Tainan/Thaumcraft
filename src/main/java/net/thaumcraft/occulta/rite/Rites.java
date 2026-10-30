@@ -3321,8 +3321,9 @@ public final class Rites {
 
         // ---------------------------------------------------------- as maldições
         // Todas pedem um VÍNCULO: é por ele que elas atravessam o mundo e pegam em quem não está lá.
-        // Pôr pede o Bafo do Cornudo e um anel de vinte e oito glifos NO DE FORA; tirar pede o Sopro da
-        // Deusa e um anel de dezesseis NO DE DENTRO. Dois mil de poder, menos o Pesadelo, que pede dez mil.
+        // Pôr pede a Exalação do Cornífero e o anel DO MEIO inteiro em giz infernal; tirar pede o Sopro da
+        // Deusa e o anel DE DENTRO em giz de Ritual. Dois mil de poder, menos o Pesadelo, que pede dez
+        // mil. E as cinco de pôr só se fazem com TROVOADA.
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cursecreature",
                 new CurseCreature(true, net.thaumcraft.occulta.curse.Curse.CURSED, 1),
                 new Sacrifice.Both(
@@ -3332,7 +3333,7 @@ public final class Rites {
                                 net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
                         new Sacrifice.Power(2000.0f, 20)),
                 RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
-                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+                java.util.EnumSet.of(RiteRegistry.When.THUNDER)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.curseinsanity",
                 new CurseCreature(true, net.thaumcraft.occulta.curse.Curse.INSANITY, 1),
@@ -3343,7 +3344,7 @@ public final class Rites {
                                 net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
                         new Sacrifice.Power(2000.0f, 20)),
                 RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
-                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+                java.util.EnumSet.of(RiteRegistry.When.THUNDER)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cursenightmare",
                 new CurseCreature(true, net.thaumcraft.occulta.curse.Curse.WAKING_NIGHTMARE, 1),
@@ -3354,7 +3355,7 @@ public final class Rites {
                                 net.thaumcraft.occulta.OccultaItems.TORMENTED_TWINE, Items.DIAMOND),
                         new Sacrifice.Power(10000.0f, 20)),
                 RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
-                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+                java.util.EnumSet.of(RiteRegistry.When.THUNDER)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cursesinking",
                 new CurseCreature(true, net.thaumcraft.occulta.curse.Curse.SINKING, 1),
@@ -3365,7 +3366,7 @@ public final class Rites {
                                 net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
                         new Sacrifice.Power(2000.0f, 20)),
                 RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
-                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+                java.util.EnumSet.of(RiteRegistry.When.THUNDER)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.removecurse",
                 new CurseCreature(false, net.thaumcraft.occulta.curse.Curse.CURSED, 1),
@@ -3411,6 +3412,22 @@ public final class Rites {
                         new Sacrifice.Power(2000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+
+        /*
+         * E a quinta: a <b>Fervura</b>, que o porte tinha de curar e não tinha de pôr. Como as outras
+         * quatro, ela pede <b>trovoada</b> e o anel do meio inteiro em giz infernal.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.curseoverheating",
+                new CurseCreature(true, net.thaumcraft.occulta.curse.Curse.OVERHEATING, 1),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.TAGLOCK,
+                                net.thaumcraft.occulta.OccultaItems.EXHALE_OF_THE_HORNED_ONE,
+                                net.thaumcraft.occulta.OccultaItems.INFERNAL_BLOOD, Items.BLAZE_ROD,
+                                net.thaumcraft.occulta.OccultaItems.BREW_GROTESQUE),
+                        new Sacrifice.Power(2000.0f, 20)),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 28), RiteRegistry.Ring.NONE,
+                java.util.EnumSet.of(RiteRegistry.When.THUNDER)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cureoverheating",
                 new CurseCreature(false, net.thaumcraft.occulta.curse.Curse.OVERHEATING, 1),

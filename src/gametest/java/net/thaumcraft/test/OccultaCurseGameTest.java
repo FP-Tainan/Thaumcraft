@@ -218,4 +218,34 @@ public class OccultaCurseGameTest {
                                     Rites.CurseCreature rito) {
         rito.tiraParaProva(level, alvo, 0);
     }
+
+    /**
+     * <b>As cinco maldições dirigidas pedem trovoada</b>, e as que curam não pedem hora nenhuma.
+     *
+     * <p>É o {@code ONLY_IN_STROM} do original, cujo teste é o <b>trovão</b> e não a chuva. Sem ele,
+     * qualquer uma delas se faz ao meio-dia de um dia limpo — e foi assim neste porte até aqui.
+     */
+    @GameTest(maxTicks = 20)
+    public void theFiveDirectedCursesAskForAStorm(GameTestHelper helper) {
+        String[] cinco = {"tc.rite.cursecreature", "tc.rite.curseinsanity", "tc.rite.cursenightmare",
+                "tc.rite.cursesinking", "tc.rite.curseoverheating"};
+        for (String qual : cinco) {
+            var rito = RiteRegistry.get(qual);
+            if (rito == null) {
+                helper.fail(qual + " está na lista");
+                continue;
+            }
+            if (!rito.when().contains(RiteRegistry.When.THUNDER)) {
+                helper.fail(qual + " pede trovoada");
+            }
+        }
+
+        for (String qual : new String[]{"tc.rite.removecurse", "tc.rite.cureoverheating"}) {
+            var rito = RiteRegistry.get(qual);
+            if (rito != null && !rito.when().isEmpty()) {
+                helper.fail(qual + " faz-se a qualquer hora");
+            }
+        }
+        helper.succeed();
+    }
 }
