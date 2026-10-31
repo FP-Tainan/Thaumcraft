@@ -13372,8 +13372,8 @@ Do **Caldeirão de Bruxa**: Mutandis Extremis com **verruga do Nether** e um **g
 três receitas do mesmo grupo do original e o porte só tinha uma delas (a Gota de Sorte); entrou também a
 terceira, que é o **Fim se duplicando** — pedra, raiz de mandrágora e pedra do Fim dão duas pedras do Fim.
 
-A ordem na lista importa: a Gota de Sorte vem primeiro porque pede mais coisas, e o caldeirão fica com a
-primeira receita que couber no que está dentro dele.
+A **ordem** das três é a do original, e é parte da receita: o caldeirão fica com a **primeira** que couber
+no que está dentro dele, de modo que num caldeirão que tenha o que as três pedem sai o **Fim**.
 
 **Declarado:** a Rosa de Sangue pede o rótulo `#minecraft:small_flowers`, que é o que junta as nove flores
 que em 2014 eram um bloco só — mas que inclui também o **dente-de-leão**, que lá era outro bloco e ficava

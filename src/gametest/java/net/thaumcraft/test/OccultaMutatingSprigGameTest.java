@@ -338,12 +338,23 @@ public class OccultaMutatingSprigGameTest {
             helper.fail("o caldeirão devia dar o galho");
             return;
         }
-        // e a Gota de Sorte, que pede mais coisas, continua ganhando quando elas lá estão
+        // e as outras duas do grupo continuam saindo, cada uma do que lhe pedem
         ItemStack gota = OccultaRituals.result(OccultaItems.MUTANDIS_EXTREMIS,
                 List.of(OccultaItems.MANDRAKE_ROOT, Items.NETHER_WART, OccultaItems.TEAR_OF_THE_GODDESS,
                         OccultaItems.REFINED_EVIL));
         if (!gota.is(OccultaItems.DROP_OF_LUCK)) {
-            helper.fail("e a receita mais rica continua ganhando da mais pobre");
+            helper.fail("a Gota de Sorte continua saindo do que lhe pedem");
+            return;
+        }
+        /*
+         * E a ordem delas é a do original: num caldeirão que tenha o que as três pedem, sai o <b>Fim</b>,
+         * porque é a primeira que o original escreve. É a ordem que decide, e não quem pede mais.
+         */
+        ItemStack tudo = OccultaRituals.result(OccultaItems.MUTANDIS_EXTREMIS,
+                List.of(OccultaItems.MANDRAKE_ROOT, Items.STONE, Items.END_STONE,
+                        Items.NETHER_WART, OccultaItems.ENT_BRANCH));
+        if (!tudo.is(Items.END_STONE)) {
+            helper.fail("com tudo dentro sai o Fim, que é a primeira das três: saiu " + tudo);
         }
         helper.succeed();
     }

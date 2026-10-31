@@ -55,22 +55,20 @@ public final class OccultaRituals {
         ritual(OccultaItems.MUTANDIS, List.of(Items.NETHER_WART),
                 () -> new ItemStack(OccultaItems.MUTANDIS_EXTREMIS));
 
-        // a Gota de Sorte, que o Mutandis Extremis dispara
+        /*
+         * <b>As três do Mutandis Extremis</b>, e elas vão <b>na ordem em que o original as escreve</b>.
+         *
+         * <p>O caldeirão fica com a <b>primeira</b> receita que couber no que está dentro dele, de modo
+         * que a ordem é parte da receita: num caldeirão que tenha o que as três pedem, sai o Fim. Trocá-la
+         * seria escrever outro jogo.
+         */
+        ritual(OccultaItems.MUTANDIS_EXTREMIS, List.of(OccultaItems.MANDRAKE_ROOT, Items.STONE,
+                Items.END_STONE), () -> new ItemStack(Items.END_STONE, 2));
+        ritual(OccultaItems.MUTANDIS_EXTREMIS, List.of(Items.NETHER_WART, OccultaItems.ENT_BRANCH),
+                () -> new ItemStack(OccultaItems.MUTATING_SPRIG));
         ritual(OccultaItems.MUTANDIS_EXTREMIS, List.of(OccultaItems.MANDRAKE_ROOT, Items.NETHER_WART,
                 OccultaItems.TEAR_OF_THE_GODDESS, OccultaItems.REFINED_EVIL),
                 () -> new ItemStack(OccultaItems.DROP_OF_LUCK));
-
-        /*
-         * E a <b>Vara Mutante</b>, do mesmo Mutandis Extremis: verruga do Nether e um galho de Ent. Ela vem
-         * depois da Gota de Sorte porque a Gota pede mais coisas, e o caldeirão fica com a primeira receita
-         * que couber no que está dentro dele.
-         */
-        ritual(OccultaItems.MUTANDIS_EXTREMIS, List.of(Items.NETHER_WART, OccultaItems.ENT_BRANCH),
-                () -> new ItemStack(OccultaItems.MUTATING_SPRIG));
-
-        // e a terceira do mesmo grupo, que é o Fim se duplicando
-        ritual(OccultaItems.MUTANDIS_EXTREMIS, List.of(OccultaItems.MANDRAKE_ROOT, Items.STONE,
-                Items.END_STONE), () -> new ItemStack(Items.END_STONE, 2));
 
         // os três gizes que saem do caldeirão: o de ritual é a chave dos três
         ritual(OccultaItems.RITUAL_CHALK, List.of(Items.NETHER_WART, OccultaItems.TEAR_OF_THE_GODDESS,
