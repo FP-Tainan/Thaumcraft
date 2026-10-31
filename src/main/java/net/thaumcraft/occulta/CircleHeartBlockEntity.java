@@ -69,13 +69,28 @@ public class CircleHeartBlockEntity extends BlockEntity {
             return;
         }
 
-        // O tamanho do coven de quem começou. Até a fatia da Bruxa do Coven isto era um zero escrito na mão,
-        // porque não havia quem respondesse: o Rite.steps(int coven) estava aqui à espera desde que os
-        // círculos entraram, e todo rito que cresce com bruxas em volta corria no mínimo. Agora há.
-        int coven = quem == null ? 0 : net.thaumcraft.occulta.coven.Coven.tamanho(quem);
+        /*
+         * <b>O coven só conta com a Pedra do Vidente na mão.</b>
+         *
+         * <p>É o original, e é o que dá à pedra a razão de existir: ter seis bruxas no bolso não faz nada
+         * por um círculo. Quem acende segurando a pedra <b>chama-as</b> — e são elas, chegando uma por
+         * segundo às seis casas à volta, que fazem o rito crescer.
+         *
+         * <p>Até esta fatia o coven contava sempre, que era mais generoso do que o original e tirava à
+         * pedra o trabalho dela.
+         */
+        boolean comAPedra = quem != null
+                && quem.getMainHandItem().is(net.thaumcraft.occulta.OccultaItems.SEER_STONE);
+        int coven = comAPedra ? net.thaumcraft.occulta.coven.Coven.tamanho(quem) : 0;
+        List<net.thaumcraft.occulta.rite.RiteStep> chegadas = comAPedra
+                ? net.thaumcraft.occulta.coven.CovenSummon.chegadas(coven)
+                : List.of();
 
         for (RiteRegistry.Entry rito : achados) {
-            this.running.add(new ActiveRite(rito.key(), rito.rite(), rito.steps(coven),
+            List<net.thaumcraft.occulta.rite.RiteStep> passos =
+                    new java.util.ArrayList<>(chegadas);
+            passos.addAll(rito.steps(coven));
+            this.running.add(new ActiveRite(rito.key(), rito.rite(), passos,
                     quem == null ? null : quem.getUUID(), coven));
         }
         level.playSound(null, this.worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0f, 1.2f);

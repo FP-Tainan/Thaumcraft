@@ -121,12 +121,13 @@ public class OccultaCovenGameTest {
             helper.fail("trazidos os trinta ossos, ela entra no coven; o coven tem "
                     + Coven.tamanho(quem));
         }
-        if (!Coven.tem(quem, bruxa.getUUID())) helper.fail("e quem entrou foi ela");
+        if (!Coven.temNome(quem, bruxa.comoSeChama())) helper.fail("e quem entrou foi ela");
         if (quem.getMainHandItem().getCount() != 0) {
             helper.fail("e ela fica com os ossos, sobraram " + quem.getMainHandItem().getCount());
         }
+        // e ela <b>sai do mundo</b>: o que fica dela é o retrato na lista de quem a recrutou
+        if (bruxa.isAlive()) helper.fail("entrando no coven, ela some");
 
-        bruxa.discard();
         sapo.discard();
         helper.succeed();
     }
@@ -154,17 +155,22 @@ public class OccultaCovenGameTest {
         helper.succeed();
     }
 
+    /** Um retrato de bruxa com aquele nome, que é o que entra na lista. */
+    private static Coven.Membro retrato(String nome) {
+        return new Coven.Membro(java.util.UUID.randomUUID(), nome, 0, -1);
+    }
+
     /** O teto do original: seis, e nem uma a mais. */
     @GameTest(maxTicks = 20)
     public void sixIsTheCeiling(GameTestHelper helper) {
         var quem = helper.makeMockPlayer(GameType.SURVIVAL);
         for (int i = 0; i < Coven.MAX; i++) {
-            if (!Coven.junta(quem, java.util.UUID.randomUUID())) {
+            if (!Coven.junta(quem, retrato("Bruxa " + i))) {
                 helper.fail("as seis primeiras entram, a " + (i + 1) + " não entrou");
             }
         }
         if (!Coven.cheio(quem)) helper.fail("com seis o coven está cheio");
-        if (Coven.junta(quem, java.util.UUID.randomUUID())) helper.fail("a sétima não entra");
+        if (Coven.junta(quem, retrato("Sétima"))) helper.fail("a sétima não entra");
         if (Coven.tamanho(quem) != Coven.MAX) {
             helper.fail("o coven tem seis, tem " + Coven.tamanho(quem));
         }
@@ -175,9 +181,14 @@ public class OccultaCovenGameTest {
     @GameTest(maxTicks = 20)
     public void theSameWitchDoesNotJoinTwice(GameTestHelper helper) {
         var quem = helper.makeMockPlayer(GameType.SURVIVAL);
-        var quala = java.util.UUID.randomUUID();
+        var quala = retrato("Agnes");
         if (!Coven.junta(quem, quala)) helper.fail("a primeira vez entra");
         if (Coven.junta(quem, quala)) helper.fail("a segunda vez não");
+        /*
+         * E nem com outro número: a bruxa chamada outra vez é um bicho novo, e o que diz que é a mesma é
+         * <b>chamar-se igual</b>. Perguntar pelo número deixaria-a entrar duas vezes.
+         */
+        if (Coven.junta(quem, retrato("agnes"))) helper.fail("nem com outro número, se o nome é o mesmo");
         if (Coven.tamanho(quem) != 1) helper.fail("e o coven continua com uma");
         helper.succeed();
     }

@@ -13385,3 +13385,72 @@ que as mandrágoras com um creeper e uma mandrágora viva viram mentedrágoras, 
 viram; que o Apanha-Bicho de lepisma vira lêndea e o vazio não vira nada; que cada toque gasta um; e que o
 caldeirão o dá sem tirar a Gota de Sorte do caminho. E o `OccultaMutatingSprigClientTest`, com três fotos:
 a figura montada, o que fica dela depois do toque, e o galho novo ao lado do quase gasto.
+
+## A Pedra do Vidente, e o coven que não comparecia (2026-10-31)
+
+Uma pedra que faz duas coisas, e as duas são sobre o **coven**.
+
+**Agachado**, ela **lê** quem estiver a três casas — ou quem a segura, não havendo ninguém. E o que ela lê
+é a ficha oculta de uma bruxa: quanto tempo consegue andar fora do corpo, que familiar tem, de que tamanho
+é o coven, que símbolos sabe desenhar e que maldições carrega. É a única coisa do mod que **vê outra
+pessoa por dentro**.
+
+**Segurada**, ela **chama o coven**: uma bruxa por segundo, pela ordem em que entraram, até um minuto.
+
+### A terceira coisa, que é a que importa
+
+**Com ela na mão, um círculo aceso conta o coven.** Sem ela, o coven existe e **não comparece** — e todo
+rito que cresce com bruxas em volta corre no mínimo.
+
+Isto estava errado no porte, e errado do lado generoso: o `CircleHeartBlockEntity` passava
+`Coven.tamanho(quem)` sempre. No original a linha é
+`int covenSize = summonCoven ? EntityCovenWitch.getCovenSize(player) : 0`, e o `summonCoven` é «está com a
+Pedra do Vidente na mão». Ter seis bruxas no bolso não fazia nada por um círculo: era preciso **chamá-las**.
+
+E chamá-las no círculo não é um efeito à parte — são **passos de rito** postos à frente dos do rito, um por
+bruxa, nas **seis casas** do original (quatro diagonais a duas, duas no eixo a três). Por isso um rito feito
+com a pedra na mão demora mais: ele espera as bruxas chegarem.
+
+### E a bruxa que sai do mundo
+
+Para que a pedra tenha o que chamar, a bruxa recrutada tem de **não estar lá**. No original ela some num
+rodopio no instante em que entra no coven: o que fica dela é um **retrato** na lista de quem a recrutou —
+três coisas, o **nome**, a **cara** e o **pedido** —, e é desse retrato que ela se refaz em qualquer lugar.
+É assim que um coven recrutado numa aldeia aparece num círculo a mil blocos dali.
+
+O porte deixava-a de pé onde estava, com `setPersistenceRequired`. Agora ela some, e a lista guarda o
+retrato.
+
+**E a identidade dela passa a ser o nome**, como no original. A bruxa chamada outra vez é um bicho novo com
+outro número; o que diz que é a mesma é chamar-se igual. É por isso que o original guarda o nome e procura
+por ele — e é por isso que **morrer sai do coven** funciona: o `onDeath` procura o nome na lista de quem a
+tinha e apaga-o. Isso também não estava portado: um coven nunca encolhia.
+
+**A lista velha ainda se lê.** Até aqui ela era só de números, e um mundo salvo de antes tem a lista velha.
+O codec aceita as duas formas; um número solto vira um retrato sem nome, que **conta** para o tamanho do
+coven mas não se consegue chamar — que é exatamente o que ele já fazia.
+
+### Onde elas aparecem
+
+Havendo um **Caldeirão de Bruxa** a nove blocos, elas vão para lá — num anel entre uma e três casas dele, e
+nunca em cima. É um detalhe pequeno do original e diz muito: um coven chamado procura o caldeirão, porque é
+ali que elas trabalham. Não havendo caldeirão, aparecem à volta de quem as chamou.
+
+E **não ficam**: um minuto e somem, sem morrer. Um coven é uma visita.
+
+### De onde ela vem
+
+Do **rito**: esfera de quartzo, obsidiana e Óleo do Acaso, com dois mil de poder, **de noite**, no anel de
+dentro todo em giz de ritual. Com ele os ritos passam de oitenta para **oitenta e um** dos noventa e seis.
+
+**Declarado:** o original diz também a **perícia de engarrafar** de quem é lido. Essa perícia não existe
+neste porte — está declarada como buraco no Caldeirão de Bruxa desde a fatia dele —, e a linha dela fica de
+fora até ela existir.
+
+**Guardas:** o `OccultaSeerStoneGameTest`, com seis — que a pedra existe e que o rito dela é de noite com o
+anel de dentro; que o coven só conta com ela na mão, e que há uma chegada por bruxa até as seis casas que
+há; que chamar refaz a bruxa a partir do retrato, com o nome certo, dono e prazo, e que chamá-la duas vezes
+não faz duas; que morrer sai do coven, e que o que a identifica é o nome e não o número; que acabado o
+prazo ela some **sem morrer** e continua no coven; e que a leitura de quem não tem nada não rebenta. E o
+`OccultaSeerStoneClientTest`, com duas fotos: as cinco bruxas chegando, cada uma com uma cara, e a leitura
+em azul no bate-papo.

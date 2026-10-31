@@ -1178,6 +1178,17 @@ public final class OccultaItems {
                     .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
 
     /**
+     * A <b>Pedra do Vidente</b>: a pedra que lê gente e chama o coven.
+     *
+     * <p>Agachado, ela lê quem estiver a três casas — manifestação, familiar, coven, símbolos sabidos e
+     * maldições. Segurada, chama o coven, uma bruxa por segundo. E com ela na mão um círculo aceso
+     * <b>conta</b> o coven, que sem ela não comparece.
+     */
+    public static final Item SEER_STONE = register("seer_stone", properties ->
+            new net.thaumcraft.occulta.SeerStoneItem(
+                    net.thaumcraft.occulta.SeerStoneItem.feitio(properties)));
+
+    /**
      * O <b>Galho Mutante</b>: um galho com botões que faz a natureza errar.
      *
      * <p>Toca-se com ele num bloco e, se o que estiver à volta formar um dos quinze desenhos, aquilo vira

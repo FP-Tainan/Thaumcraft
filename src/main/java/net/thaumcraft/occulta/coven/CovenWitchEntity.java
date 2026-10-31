@@ -61,6 +61,15 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
     private static final EntityDataAccessor<Integer> CARA =
             SynchedEntityData.defineId(CovenWitchEntity.class, EntityDataSerializers.INT);
 
+    /**
+     * De quem ela é, depois de entrar no coven — e quanto tempo lhe resta desta vinda.
+     *
+     * <p>Uma bruxa recrutada <b>sai do mundo</b>: o que fica dela é o retrato na lista de quem a recrutou.
+     * A que está aqui com dono é uma bruxa <b>chamada</b>, e uma visita tem hora para acabar.
+     */
+    private @org.jetbrains.annotations.Nullable java.util.UUID dono;
+    private int prazo;
+
     /** De quem ela está à espera, e o que pediu. */
     private @org.jetbrains.annotations.Nullable java.util.UUID pedidoA;
     private int qualPedido = -1;
@@ -201,9 +210,24 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
             return InteractionResult.SUCCESS;
         }
 
-        if (Coven.junta(quem, this.getUUID())) {
+        if (Coven.junta(quem, this.retrato())) {
             diz(quem, "joinedcoven");
-            this.setPersistenceRequired();
+            /*
+             * <b>E ela sai do mundo.</b> No original a bruxa que entra num coven <b>some</b> num rodopio:
+             * o que fica dela é o retrato na lista de quem a recrutou, e ela só volta a existir quando a
+             * chamarem com a Pedra do Vidente. É isto que faz da pedra uma coisa necessária, e não um
+             * enfeite — sem ela um coven é uma lista que ninguém vê.
+             */
+            this.põeDono(quem.getUUID());
+            if (this.level() instanceof net.minecraft.server.level.ServerLevel mundo) {
+                mundo.sendParticles(net.minecraft.core.particles.ParticleTypes.PORTAL,
+                        this.getX(), this.getY() + 1.0, this.getZ(), 16, 1.0, 2.0, 1.0, 0.0);
+                mundo.playSound(null, this.blockPosition(), SoundEvents.ENDERMAN_TELEPORT,
+                        net.minecraft.sounds.SoundSource.NEUTRAL, 1.0f, 1.0f);
+            }
+            this.esquece();
+            this.discard();
+            return InteractionResult.SUCCESS;
         } else {
             // o "tricked" do original: ela se sente enganada e vira
             diz(quem, "tricked");
@@ -295,6 +319,76 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
         }
     }
 
+    // ------------------------------------------------------------------ o dono, o prazo e o retrato
+
+    /** De quem ela é, ou nada se ela ainda não entrou em coven nenhum. */
+    public @org.jetbrains.annotations.Nullable java.util.UUID dono() {
+        return this.dono;
+    }
+
+    public void põeDono(java.util.UUID quem) {
+        this.dono = quem;
+    }
+
+    /** Quanto lhe resta desta vinda, em batidas; zero quer dizer <b>sem hora para acabar</b>. */
+    public int prazo() {
+        return this.prazo;
+    }
+
+    public void põePrazo(int batidas) {
+        this.prazo = batidas;
+    }
+
+    /** O nome dela, ou vazio se ninguém falou com ela ainda. */
+    public String comoSeChama() {
+        return this.hasCustomName() ? this.getCustomName().getString() : "";
+    }
+
+    /** O retrato dela, que é o que vai para a lista de quem a recrutou. */
+    public Coven.Membro retrato() {
+        return new Coven.Membro(this.getUUID(), this.comoSeChama(), this.cara(), this.qualPedido);
+    }
+
+    /** E o caminho de volta: veste-se o retrato numa bruxa nova para a refazer onde se quiser. */
+    public void vesteRetrato(Coven.Membro membro) {
+        this.setCustomName(Component.literal(membro.nome()));
+        this.entityData.set(CARA, membro.cara());
+        this.qualPedido = membro.pedido();
+    }
+
+    /**
+     * <b>A visita acaba.</b>
+     *
+     * <p>Uma bruxa chamada vive o prazo que lhe deram e some — sem morrer, porque ela não morreu: voltou
+     * para a lista. Morrer é outra coisa, e aí ela <b>sai do coven</b>.
+     */
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.level().isClientSide() || this.prazo <= 0) return;
+        if (--this.prazo > 0) return;
+        if (this.level() instanceof net.minecraft.server.level.ServerLevel mundo) {
+            mundo.sendParticles(net.minecraft.core.particles.ParticleTypes.PORTAL,
+                    this.getX(), this.getY() + 1.0, this.getZ(), 16, 1.0, 2.0, 1.0, 0.0);
+        }
+        this.discard();
+    }
+
+    /**
+     * <b>Morrer sai do coven.</b>
+     *
+     * <p>No original é o {@code onDeath} dela que procura o nome na lista de quem a tinha e o apaga. Um
+     * coven é de quem está vivo — e perder uma bruxa é perder o que ela valia nos ritos.
+     */
+    @Override
+    public void die(net.minecraft.world.damagesource.DamageSource porquê) {
+        if (!this.level().isClientSide() && this.dono != null) {
+            Player dele = this.level().getPlayerByUUID(this.dono);
+            if (dele != null) Coven.sai(dele, this.comoSeChama());
+        }
+        super.die(porquê);
+    }
+
     // ------------------------------------------------------------------ guardar
 
     @Override
@@ -306,6 +400,8 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
         saída.putBoolean("Aceitou", this.aceitou);
         saída.putBoolean("Virada", this.virada);
         if (this.pedidoA != null) saída.store("PedidoA", net.minecraft.core.UUIDUtil.CODEC, this.pedidoA);
+        saída.putInt("Prazo", this.prazo);
+        if (this.dono != null) saída.store("Dono", net.minecraft.core.UUIDUtil.CODEC, this.dono);
     }
 
     @Override
@@ -317,6 +413,8 @@ public class CovenWitchEntity extends PathfinderMob implements RangedAttackMob {
         this.aceitou = entrada.getBooleanOr("Aceitou", false);
         this.virada = entrada.getBooleanOr("Virada", false);
         this.pedidoA = entrada.read("PedidoA", net.minecraft.core.UUIDUtil.CODEC).orElse(null);
+        this.prazo = entrada.getIntOr("Prazo", 0);
+        this.dono = entrada.read("Dono", net.minecraft.core.UUIDUtil.CODEC).orElse(null);
     }
 
     @Override

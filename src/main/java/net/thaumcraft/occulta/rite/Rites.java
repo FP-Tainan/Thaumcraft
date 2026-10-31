@@ -3421,6 +3421,20 @@ public final class Rites {
                 new RiteRegistry.Ring(0, 16, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
+        /*
+         * A <b>Pedra do Vidente</b>, que é o que destranca o coven. Esfera de quartzo, obsidiana e Óleo do
+         * Acaso, <b>de noite</b> — e o anel de dentro, todo em giz de ritual.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.infusionseerstone",
+                new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.SEER_STONE)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.QUARTZ_SPHERE,
+                                Items.OBSIDIAN,
+                                net.thaumcraft.occulta.OccultaItems.HAPPENSTANCE_OIL),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
+
         // o Rito de Necromancia, que faz a Pedra Necrótica — e é dele que o Braseiro nasce
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.necrostone",
                 new SummonItem(() -> new ItemStack(net.thaumcraft.occulta.OccultaItems.NECROTIC_STONE)),
