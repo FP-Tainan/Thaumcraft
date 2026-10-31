@@ -14,7 +14,7 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.phys.Vec3;
-import net.thaumcraft.occulta.MutandisItem;
+import net.thaumcraft.occulta.Mutations;
 import net.thaumcraft.occulta.OccultaBlocks;
 import net.thaumcraft.occulta.OccultaComponents;
 import net.thaumcraft.occulta.OccultaEntities;
@@ -264,7 +264,7 @@ public class OccultaMonkeyGameTest {
 
     /**
      * <b>A mutação que o faz</b>: teia, água por baixo, quatro vagens de cacau maduras, dois Apanha-Ervas
-     * com Mutandis Extremis, um com a Pedra Sintonizada carregada, um com um dente-de-leão — <b>e uma
+     * com Mutandis Extremis, um com a Pedra Sintonizada carregada, uma com uma papoula — <b>e uma
      * coruja e um lobo</b>, que é a única receita do mod que gasta duas vidas.
      */
     @GameTest(maxTicks = 80)
@@ -285,7 +285,7 @@ public class OccultaMonkeyGameTest {
         BlockPos[] quinas = {onde.offset(1, 0, 1), onde.offset(1, 0, -1),
                 onde.offset(-1, 0, 1), onde.offset(-1, 0, -1)};
         net.minecraft.world.item.Item[] boca = {OccultaItems.MUTANDIS_EXTREMIS,
-                OccultaItems.MUTANDIS_EXTREMIS, OccultaItems.ATTUNED_STONE_CHARGED, Items.DANDELION};
+                OccultaItems.MUTANDIS_EXTREMIS, OccultaItems.ATTUNED_STONE_CHARGED, Items.POPPY};
         for (int i = 0; i < quinas.length; i++) {
             level.setBlockAndUpdate(quinas[i], OccultaBlocks.GRASSPER.defaultBlockState());
             if (level.getBlockEntity(quinas[i])
@@ -295,25 +295,25 @@ public class OccultaMonkeyGameTest {
         }
 
         /* A guarda de sempre: uma peça que caiu calada faria a prova mentir sobre a receita. */
-        if (MutandisItem.quantosCacaus(level, onde) != MutandisItem.CACAUS) {
+        if (Mutations.quantosCacaus(level, onde) != Mutations.CACAUS) {
             helper.fail("as quatro vagens ficam de pé");
         }
-        if (MutandisItem.quantosSeguram(level, onde, OccultaItems.MUTANDIS_EXTREMIS) != 2) {
+        if (Mutations.quantosSeguram(level, onde, OccultaItems.MUTANDIS_EXTREMIS) != 2) {
             helper.fail("e os dois Apanha-Ervas de Extremis também");
         }
 
-        if (MutandisItem.éTeiaDeMacaco(level, onde)) helper.fail("sem bicho nenhum não é nada");
+        if (Mutations.éTeiaDeMacaco(level, onde)) helper.fail("sem bicho nenhum não é nada");
         var coruja = helper.spawn(OccultaEntities.OWL, aqui);
-        if (MutandisItem.éTeiaDeMacaco(level, onde)) helper.fail("só com a coruja também não");
+        if (Mutations.éTeiaDeMacaco(level, onde)) helper.fail("só com a coruja também não");
         var lobo = helper.spawn(EntityTypes.WOLF, aqui);
-        if (!MutandisItem.éTeiaDeMacaco(level, onde)) helper.fail("com as duas, é");
+        if (!Mutations.éTeiaDeMacaco(level, onde)) helper.fail("com as duas, é");
 
-        // e tirar o dente-de-leão desfaz tudo, que é o que diz que ele conta
+        // e tirar a papoula desfaz tudo, que é o que diz que ela conta
         if (level.getBlockEntity(quinas[3])
                 instanceof net.thaumcraft.occulta.GrassperBlockEntity planta) {
             planta.tira();
         }
-        if (MutandisItem.éTeiaDeMacaco(level, onde)) helper.fail("sem o dente-de-leão não é");
+        if (Mutations.éTeiaDeMacaco(level, onde)) helper.fail("sem a papoula não é");
 
         coruja.discard();
         lobo.discard();

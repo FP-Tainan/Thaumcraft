@@ -223,7 +223,7 @@ public class OccultaBramblesGameTest {
         ServerLevel level = helper.getLevel();
         BlockPos cana = helper.absolutePos(new BlockPos(3, 2, 5));
 
-        if (net.thaumcraft.occulta.MutandisItem.éCanaDeSarça(level, cana)) {
+        if (net.thaumcraft.occulta.Mutations.éCanaDeSarça(level, cana)) {
             helper.fail("sem o musgo à volta, não é cana de sarça");
         }
 
@@ -232,7 +232,7 @@ public class OccultaBramblesGameTest {
         }
         level.setBlockAndUpdate(cana, Blocks.SUGAR_CANE.defaultBlockState());
         quinas(helper, cana, Items.ENDER_PEARL, Items.ENDER_PEARL);
-        if (net.thaumcraft.occulta.MutandisItem.éCanaDeSarça(level, cana)) {
+        if (net.thaumcraft.occulta.Mutations.éCanaDeSarça(level, cana)) {
             helper.fail("sem o musgo à volta, ainda não é");
         }
 
@@ -240,10 +240,10 @@ public class OccultaBramblesGameTest {
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(cana.relative(lado), OccultaBlocks.SPANISH_MOSS.defaultBlockState());
         }
-        if (!net.thaumcraft.occulta.MutandisItem.éCanaDeSarça(level, cana)) {
+        if (!net.thaumcraft.occulta.Mutations.éCanaDeSarça(level, cana)) {
             helper.fail("com musgo, água e quatro pérolas do fim nas quinas, é");
         }
-        if (net.thaumcraft.occulta.MutandisItem.éCatoDeSarça(level, cana)) {
+        if (net.thaumcraft.occulta.Mutations.éCatoDeSarça(level, cana)) {
             helper.fail("e uma cana não é um cato");
         }
         limpa(helper, cana);
@@ -267,10 +267,10 @@ public class OccultaBramblesGameTest {
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(cato.relative(lado), OccultaBlocks.SPANISH_MOSS.defaultBlockState());
         }
-        if (!net.thaumcraft.occulta.MutandisItem.éCatoDeSarça(level, cato)) {
+        if (!net.thaumcraft.occulta.Mutations.éCatoDeSarça(level, cato)) {
             helper.fail("um cato cercado de musgo, com dois ossos e dois pós nas quinas, é a Selvagem");
         }
-        if (net.thaumcraft.occulta.MutandisItem.éCanaDeSarça(level, cato)) {
+        if (net.thaumcraft.occulta.Mutations.éCanaDeSarça(level, cato)) {
             helper.fail("e um cato não é uma cana");
         }
         limpa(helper, cato);

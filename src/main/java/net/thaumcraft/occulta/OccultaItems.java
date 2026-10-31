@@ -1178,6 +1178,16 @@ public final class OccultaItems {
                     .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
 
     /**
+     * O <b>Galho Mutante</b>: um galho com botões que faz a natureza errar.
+     *
+     * <p>Toca-se com ele num bloco e, se o que estiver à volta formar um dos quinze desenhos, aquilo vira
+     * outra coisa. É daqui que sai quase tudo o que o ofício tem de vivo, e ele só aguenta quinze toques.
+     */
+    public static final Item MUTATING_SPRIG = register("mutating_sprig", properties ->
+            new net.thaumcraft.occulta.MutatingSprigItem(
+                    net.thaumcraft.occulta.MutatingSprigItem.feitio(properties)));
+
+    /**
      * A <b>Bolsa de Cozimentos</b>: oito casas, e nenhuma delas se escolhe com o rato.
      *
      * <p>Segura-se, mexe-se a cabeça para um dos oito rumos e larga-se: o frasco daquele rumo é o que

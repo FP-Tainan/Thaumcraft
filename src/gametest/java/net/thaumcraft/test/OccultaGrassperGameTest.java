@@ -14,7 +14,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.thaumcraft.occulta.GrassperBlock;
 import net.thaumcraft.occulta.GrassperBlockEntity;
-import net.thaumcraft.occulta.MutandisItem;
+import net.thaumcraft.occulta.Mutations;
 import net.thaumcraft.occulta.OccultaBlocks;
 
 /**
@@ -127,18 +127,18 @@ public class OccultaGrassperGameTest {
 
         level.setBlockAndUpdate(baú.below(), Blocks.WATER.defaultBlockState());
         level.setBlockAndUpdate(baú, Blocks.CHEST.defaultBlockState());
-        if (MutandisItem.éBaúDeApanhaErva(level, baú)) helper.fail("sem a grama à volta, não é");
+        if (Mutations.éBaúDeApanhaErva(level, baú)) helper.fail("sem a grama à volta, não é");
 
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(baú.relative(lado), Blocks.SHORT_GRASS.defaultBlockState());
         }
-        if (!MutandisItem.éBaúDeApanhaErva(level, baú)) helper.fail("com a grama e a água, é");
+        if (!Mutations.éBaúDeApanhaErva(level, baú)) helper.fail("com a grama e a água, é");
 
         // e um baú com alguma coisa dentro não serve: o que lá estiver não se perde por um descuido
         if (level.getBlockEntity(baú)
                 instanceof net.minecraft.world.level.block.entity.ChestBlockEntity caixa) {
             caixa.setItem(0, new ItemStack(Items.DIAMOND));
-            if (MutandisItem.éBaúDeApanhaErva(level, baú)) helper.fail("um baú com coisa dentro não serve");
+            if (Mutations.éBaúDeApanhaErva(level, baú)) helper.fail("um baú com coisa dentro não serve");
             caixa.setItem(0, ItemStack.EMPTY);
         }
 

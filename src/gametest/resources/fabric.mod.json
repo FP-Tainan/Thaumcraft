@@ -163,6 +163,7 @@
       "net.thaumcraft.test.OccultaDiseaseGameTest",
       "net.thaumcraft.test.OccultaFuelBrewGameTest",
       "net.thaumcraft.test.OccultaBrewBagGameTest",
+      "net.thaumcraft.test.OccultaMutatingSprigGameTest",
       "net.thaumcraft.test.OccultaWitchPlantsGameTest",
       "net.thaumcraft.test.OccultaPitGroundGameTest",
       "net.thaumcraft.test.OccultaInfusionGameTest",
@@ -416,6 +417,7 @@
       "net.thaumcraft.test.client.OccultaFuelBrewClientTest",
       "net.thaumcraft.test.client.OccultaDarkMarkClientTest",
       "net.thaumcraft.test.client.OccultaBrewBagClientTest",
+      "net.thaumcraft.test.client.OccultaMutatingSprigClientTest",
       "net.thaumcraft.test.client.OccultaStewClientTest"
     ],
     "main": [

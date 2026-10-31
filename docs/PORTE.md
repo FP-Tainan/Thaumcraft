@@ -13316,3 +13316,72 @@ ainda não é traço nenhum; que cada traço cai na sua casa, e que as duas tabe
 da outra; que largar a bolsa gasta um frasco da casa escolhida e deixa as outras em paz; e a receita, oito
 couros curtidos à volta de um fio de ouro. E o `OccultaBrewBagClientTest`, com quatro fotos: a roda, o que
 se vê depois do gesto, a bolsa aberta e as oito cores.
+
+## O Galho Mutante (2026-10-30)
+
+Um galho com botões que **faz a natureza errar**. Toca-se com ele num bloco e, se o que estiver à volta
+formar um dos **quinze desenhos**, aquilo vira outra coisa.
+
+É daqui que sai quase tudo o que o ofício tem de vivo. O Apanha-Bicho, o Apanha-Erva, a Coruja, o Sapo, a
+Lêndea Parasita, a Mentedrágora, o Macaco de Asas, a Rosa de Sangue, a Losna e as duas sarças **não nascem
+no mundo e não saem de bancada nenhuma**: saem daqui. Ele aguenta **quinze toques**, e como cada toque pede
+uma figura construída no chão, quinze é mais do que parece.
+
+O nome é o do original lido à letra: *sprig* é um **galho**, não uma vara.
+
+### A dívida que esta fatia paga
+
+As mutações **já estavam no porte** — mas penduradas no **Mutandis Extremis**, porque o galho não existia.
+Estava declarado em três lugares do código («o Galho Mutante continua sendo o buraco»), e era um empréstimo
+que distorcia as duas coisas: o Mutandis virava um pó que faz tudo, e o galho, quando viesse, não teria
+nada para fazer.
+
+Agora elas moram num lugar só, a classe `Mutations`, e quem as chama é o galho. Ao Mutandis ficou o que o
+`useMutandis` do original lhe dá: a **troca sorteada** de plantas, a **grama** que vira micélio e a
+**terra** que vira barro — e essas duas, nele, são **moeda ao ar**, metade das vezes. No galho são sempre.
+Essa diferença é do original e é o que separa um pó de um instrumento.
+
+### As três que faltavam
+
+Comparando as quinze do original uma a uma com o que o porte tinha, **três nunca tinham sido portadas**:
+
+1. **A Losna.** Trigo maduro cercado de quatro **Algodões Sonhadores**, com água nas quatro quinas de
+   baixo. É a única mutação que não pede Apanha-Erva nenhum nem gasta bicho nenhum, e é por isso que é a
+   primeira que se faz: a losna não nasce no mundo, ou sai daqui ou não se tem.
+2. **A Mentedrágora.** Uma teia sobre água, quatro **mandrágoras maduras** à volta, dois Apanha-Ervas com
+   Mutandis Extremis, um com a Pedra Sintonizada carregada e um com a **Vontade Focada** — e **duas
+   vidas**: um creeper e uma mandrágora viva. A conta tem sentido: para fazer uma planta que anda e
+   explode, dá-se uma planta que anda e uma coisa que explode.
+3. **A Lêndea Parasita.** Um Apanha-Bicho **com uma lepisma dentro**, duas trepadeiras ao lado, água numa
+   das casas de baixo, dois Apanha-Ervas com **Mutandis comum** — a única receita do mod que pede o comum —,
+   um com a Pedra Sintonizada e um com uma Língua de Cão. É também a única que não troca o que está à
+   volta: o que muda é o próprio Apanha-Bicho.
+
+### E dois enganos que a comparação achou
+
+- **A Arca de Sanguessugas nascia em quatro.** O baú armadilhado dava **quatro** arcas, uma em cada lado. O
+  original limpa os quatro lados e põe **uma** no meio. Era a diferença entre uma receita e uma máquina de
+  arcas.
+- **O Macaco pedia um dente-de-leão.** O original pede o bloco das **flores vermelhas** de 2014
+  (`field_150328_O`), que é a papoula e as suas oito irmãs; o dente-de-leão era outro bloco e ficava de
+  fora. Agora pede a **papoula**.
+
+### De onde ele vem
+
+Do **Caldeirão de Bruxa**: Mutandis Extremis com **verruga do Nether** e um **galho de Ent**. Era uma das
+três receitas do mesmo grupo do original e o porte só tinha uma delas (a Gota de Sorte); entrou também a
+terceira, que é o **Fim se duplicando** — pedra, raiz de mandrágora e pedra do Fim dão duas pedras do Fim.
+
+A ordem na lista importa: a Gota de Sorte vem primeiro porque pede mais coisas, e o caldeirão fica com a
+primeira receita que couber no que está dentro dele.
+
+**Declarado:** a Rosa de Sangue pede o rótulo `#minecraft:small_flowers`, que é o que junta as nove flores
+que em 2014 eram um bloco só — mas que inclui também o **dente-de-leão**, que lá era outro bloco e ficava
+de fora.
+
+**Guardas:** o `OccultaMutatingSprigGameTest`, com seis — que as mutações são do galho e não do Mutandis;
+que o baú armadilhado dá **uma** arca e no lugar dele; que o trigo maduro vira losna e o trigo verde não;
+que as mandrágoras com um creeper e uma mandrágora viva viram mentedrágoras, e que sem os dois bichos não
+viram; que o Apanha-Bicho de lepisma vira lêndea e o vazio não vira nada; que cada toque gasta um; e que o
+caldeirão o dá sem tirar a Gota de Sorte do caminho. E o `OccultaMutatingSprigClientTest`, com três fotos:
+a figura montada, o que fica dela depois do toque, e o galho novo ao lado do quase gasto.

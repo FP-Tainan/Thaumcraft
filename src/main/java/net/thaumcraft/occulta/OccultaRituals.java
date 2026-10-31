@@ -60,6 +60,18 @@ public final class OccultaRituals {
                 OccultaItems.TEAR_OF_THE_GODDESS, OccultaItems.REFINED_EVIL),
                 () -> new ItemStack(OccultaItems.DROP_OF_LUCK));
 
+        /*
+         * E a <b>Vara Mutante</b>, do mesmo Mutandis Extremis: verruga do Nether e um galho de Ent. Ela vem
+         * depois da Gota de Sorte porque a Gota pede mais coisas, e o caldeirão fica com a primeira receita
+         * que couber no que está dentro dele.
+         */
+        ritual(OccultaItems.MUTANDIS_EXTREMIS, List.of(Items.NETHER_WART, OccultaItems.ENT_BRANCH),
+                () -> new ItemStack(OccultaItems.MUTATING_SPRIG));
+
+        // e a terceira do mesmo grupo, que é o Fim se duplicando
+        ritual(OccultaItems.MUTANDIS_EXTREMIS, List.of(OccultaItems.MANDRAKE_ROOT, Items.STONE,
+                Items.END_STONE), () -> new ItemStack(Items.END_STONE, 2));
+
         // os três gizes que saem do caldeirão: o de ritual é a chave dos três
         ritual(OccultaItems.RITUAL_CHALK, List.of(Items.NETHER_WART, OccultaItems.TEAR_OF_THE_GODDESS,
                 Items.ENDER_PEARL), () -> new ItemStack(OccultaItems.OTHERWHERE_CHALK));

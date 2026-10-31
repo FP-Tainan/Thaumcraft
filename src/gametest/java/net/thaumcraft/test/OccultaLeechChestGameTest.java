@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.thaumcraft.occulta.LeechChestBlockEntity;
-import net.thaumcraft.occulta.MutandisItem;
+import net.thaumcraft.occulta.Mutations;
 import net.thaumcraft.occulta.OccultaBlocks;
 
 /**
@@ -113,7 +113,7 @@ public class OccultaLeechChestGameTest {
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(baú.relative(lado), Blocks.VINE.defaultBlockState());
         }
-        if (MutandisItem.éBaúArmadilhado(level, baú)) {
+        if (Mutations.éBaúArmadilhado(level, baú)) {
             helper.fail("um baú comum não serve: o original pede o armadilhado");
         }
 
@@ -121,7 +121,7 @@ public class OccultaLeechChestGameTest {
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(baú.relative(lado), Blocks.VINE.defaultBlockState());
         }
-        if (!MutandisItem.éBaúArmadilhado(level, baú)) helper.fail("e o armadilhado serve");
+        if (!Mutations.éBaúArmadilhado(level, baú)) helper.fail("e o armadilhado serve");
 
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(baú.relative(lado), Blocks.AIR.defaultBlockState());
@@ -150,7 +150,7 @@ public class OccultaLeechChestGameTest {
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(onde.relative(lado), Blocks.POPPY.defaultBlockState());
         }
-        if (MutandisItem.éBaúDeRosas(level, onde)) {
+        if (Mutations.éArcaDeRosas(level, onde)) {
             helper.fail("o baú comum já não dá rosas: o elo do meio voltou");
         }
 
@@ -158,14 +158,14 @@ public class OccultaLeechChestGameTest {
         for (Direction lado : Direction.Plane.HORIZONTAL) {
             level.setBlockAndUpdate(onde.relative(lado), Blocks.POPPY.defaultBlockState());
         }
-        if (!MutandisItem.éBaúDeRosas(level, onde)) {
+        if (!Mutations.éArcaDeRosas(level, onde)) {
             helper.fail("e o Baú de Sanguessugas dá");
         }
 
         // e um baú com coisa dentro não serve
         if (level.getBlockEntity(onde) instanceof LeechChestBlockEntity caixa) {
             caixa.setItem(0, new ItemStack(Items.DIAMOND));
-            if (MutandisItem.éBaúDeRosas(level, onde)) helper.fail("nem um baú com coisa dentro");
+            if (Mutations.éArcaDeRosas(level, onde)) helper.fail("nem um baú com coisa dentro");
             caixa.setItem(0, ItemStack.EMPTY);
         }
 

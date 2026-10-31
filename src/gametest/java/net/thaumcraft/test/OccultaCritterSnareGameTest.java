@@ -9,7 +9,7 @@ import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.thaumcraft.occulta.CritterSnareBlock;
-import net.thaumcraft.occulta.MutandisItem;
+import net.thaumcraft.occulta.Mutations;
 import net.thaumcraft.occulta.OccultaBlocks;
 import net.thaumcraft.occulta.OccultaItems;
 
@@ -40,7 +40,7 @@ public class OccultaCritterSnareGameTest {
         if (CritterSnareBlock.Caught.values().length != 5) {
             helper.fail("são quatro bichos e o vazio");
         }
-        if (MutandisItem.APANHA_BICHOS != 2 || MutandisItem.APANHA_ERVAS != 3) {
+        if (Mutations.APANHA_BICHOS != 2 || Mutations.APANHA_ERVAS != 3) {
             helper.fail("e as receitas de bicho pedem dois Apanha-Bichos e três Apanha-Ervas");
         }
         helper.succeed();
@@ -126,7 +126,7 @@ public class OccultaCritterSnareGameTest {
         level.setBlockAndUpdate(onde.below(), Blocks.WATER.defaultBlockState());
         level.setBlockAndUpdate(onde, Blocks.COBWEB.defaultBlockState());
 
-        if (MutandisItem.éTeiaDeApanhaBicho(level, onde)) helper.fail("uma teia sozinha não serve");
+        if (Mutations.éTeiaDeApanhaBicho(level, onde)) helper.fail("uma teia sozinha não serve");
 
         // as mudas querem terra por baixo, e a teia quer água: o chão muda só debaixo dela
         for (Direction lado : Direction.Plane.HORIZONTAL) {
@@ -139,12 +139,12 @@ public class OccultaCritterSnareGameTest {
                 helper.fail("as quatro mudas ficam de pé");
             }
         }
-        if (MutandisItem.éTeiaDeApanhaBicho(level, onde)) {
+        if (Mutations.éTeiaDeApanhaBicho(level, onde)) {
             helper.fail("as quatro mudas sem o zumbi não bastam");
         }
 
         var zumbi = helper.spawn(EntityTypes.ZOMBIE, aqui);
-        if (!MutandisItem.éTeiaDeApanhaBicho(level, onde)) {
+        if (!Mutations.éTeiaDeApanhaBicho(level, onde)) {
             helper.fail("e com o zumbi ao lado bastam");
         }
 
@@ -194,23 +194,23 @@ public class OccultaCritterSnareGameTest {
          * qualquer coisa que não seja ar. Montar a receita no ar faz os oito caírem sem dizer nada, e a
          * prova falharia a dizer que a receita não serve quando o que não servia era a arena.
          */
-        if (MutandisItem.quantosLados(level, onde, CritterSnareBlock.Caught.BAT) != 4) {
+        if (Mutations.quantosLados(level, onde, CritterSnareBlock.Caught.BAT) != 4) {
             helper.fail("os quatro Apanha-Bichos ficam de pé");
         }
-        if (MutandisItem.quantosSeguram(level, onde, OccultaItems.MUTANDIS_EXTREMIS) != 3) {
+        if (Mutations.quantosSeguram(level, onde, OccultaItems.MUTANDIS_EXTREMIS) != 3) {
             helper.fail("e os três Apanha-Ervas de Mutandis Extremis também");
         }
 
-        if (MutandisItem.éTeiaDeCoruja(level, onde)) helper.fail("sem o lobo não é nada");
+        if (Mutations.éTeiaDeCoruja(level, onde)) helper.fail("sem o lobo não é nada");
         var lobo = helper.spawn(EntityTypes.WOLF, aqui);
-        if (!MutandisItem.éTeiaDeCoruja(level, onde)) helper.fail("com o lobo ao lado é");
+        if (!Mutations.éTeiaDeCoruja(level, onde)) helper.fail("com o lobo ao lado é");
 
         // e tirar a pedra sintonizada desfaz a receita
         if (level.getBlockEntity(quinas[0])
                 instanceof net.thaumcraft.occulta.GrassperBlockEntity planta) {
             planta.tira();
         }
-        if (MutandisItem.éTeiaDeCoruja(level, onde)) helper.fail("sem a pedra sintonizada não é");
+        if (Mutations.éTeiaDeCoruja(level, onde)) helper.fail("sem a pedra sintonizada não é");
 
         lobo.discard();
         for (Direction lado : Direction.Plane.HORIZONTAL) {
