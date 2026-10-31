@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumcraft:item/brew_bag",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -11719915
+      }
+    ]
+  }
+}

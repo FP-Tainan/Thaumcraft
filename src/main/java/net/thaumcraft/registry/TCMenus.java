@@ -54,6 +54,11 @@ public final class TCMenus {
                             net.thaumcraft.occulta.leonard.UrnMenu::new,
                             net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
 
+    /** A <b>Bolsa de Cozimentos</b> do Ars Occulta: oito casas numa fila, na ordem da roda. */
+    public static final MenuType<net.thaumcraft.occulta.brew.BrewBagMenu> BREW_BAG =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("brew_bag"),
+                    new MenuType<>(net.thaumcraft.occulta.brew.BrewBagMenu::new, FeatureFlags.VANILLA_SET));
+
     /** O Óculus do Ars Arcana, onde se gastam os pontos de perícia. */
     public static final MenuType<net.thaumcraft.arcana.OcculusMenu> OCCULUS =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("occulus"),

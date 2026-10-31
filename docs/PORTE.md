@@ -13265,3 +13265,54 @@ existe no porte.
 devolvem a tigela; e que o rito do Reflexo está no livro com o anel de fora todo infernal e nenhum dos
 outros dois. E o `OccultaStewClientTest`, com uma foto: os dois guisados ao lado da sopa de cogumelos e do
 ensopado de coelho do jogo, que são as tigelas com que eles se comparam.
+
+## A Bolsa de Cozimentos (2026-10-30)
+
+Oito casas, e nenhuma delas se escolhe com o rato.
+
+Segura-se o botão e **mexe-se a cabeça** para um dos oito rumos — cima, cima-direita, direita, e assim à
+roda do relógio. O frasco daquele rumo é o que sai quando se larga. É a mesma mão da **Vara Mística**, e é
+de propósito: o original deu à bolsa a interface dos símbolos, para que quem já sabe desenhar já saiba
+atirar.
+
+Por isso ela tem **duas caras**. De pé, é uma **roda** desenhada no meio da tela, da cor da bolsa, com os
+oito frascos à volta e o nome de cada um ao lado — e no instante em que o gesto pega, os outros sete somem
+e fica só o que vai sair. **Agachado**, ela abre como uma arca de oito casas, para se arrumar o que está
+dentro.
+
+### Os oito rumos, e por que são oito
+
+O que torna isto jogável é que os rumos **não se medem todos igual**. Uma diagonal pede **três graus e
+meio** em cada eixo; um rumo reto pede **sete**. E as diagonais perguntam-se **primeiro**: invertida a
+ordem, um giro de dez graus para cima e dez para a direita passaria dos sete nos dois eixos e o primeiro
+teste a responder ganharia — as quatro diagonais nunca sairiam, e a bolsa teria quatro casas.
+
+A conta vive no próprio item (`BrewBagItem.qualTraço`) e não em quem a chama, porque é a conta da bolsa e
+não o desenho dela — e porque assim a prova de servidor a pode medir sem tocar no lado de cá.
+
+### Só cozimento de atirar entra
+
+O frasco do Caldeirão de Bruxa que leva **pólvora**, e os frascos do Caldeirão de Pote, que são todos de
+atirar. Um cozimento de beber não cabe: a bolsa não é mochila. E a recusa vale também para o empurrão do
+turno, que é onde o original a escreve.
+
+### A cor
+
+Ela nasce **cor de cacau** e tinge-se como uma armadura de couro. O original escreve uma receita por tinta,
+dezesseis delas; aqui basta a receita de tingir do jogo (`minecraft:crafting_dye`), que já junta as
+dezesseis e ainda as mistura, o que o original também fazia.
+
+**Desvio minúsculo, declarado:** o original divide cada canal da cor por **256** e não por 255 ao pintar a
+roda — um engano dele —, de modo que o anel sai meio por cento mais escuro do que a bolsa. Aqui ele sai na
+cor certa.
+
+**Declarado:** a bolsa só trabalha na **mão direita**. O original não conhece a mão esquerda, e a bolsa
+aberta escreve-se de volta na casa escolhida da barra; aberta da outra mão, ela escreveria por cima do que
+estivesse na direita.
+
+**Guardas:** o `OccultaBrewBagGameTest`, com seis — que são oito casas e não nove; que só cozimento de
+atirar entra; que os oito rumos saem com a ordem das perguntas do original, e que quatro graus num eixo só
+ainda não é traço nenhum; que cada traço cai na sua casa, e que as duas tabelas do original são uma a volta
+da outra; que largar a bolsa gasta um frasco da casa escolhida e deixa as outras em paz; e a receita, oito
+couros curtidos à volta de um fio de ouro. E o `OccultaBrewBagClientTest`, com quatro fotos: a roda, o que
+se vê depois do gesto, a bolsa aberta e as oito cores.

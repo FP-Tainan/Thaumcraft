@@ -1177,6 +1177,16 @@ public final class OccultaItems {
                     .durability(net.thaumcraft.occulta.brew.EndlessWaterBrewItem.GOLES)
                     .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
 
+    /**
+     * A <b>Bolsa de Cozimentos</b>: oito casas, e nenhuma delas se escolhe com o rato.
+     *
+     * <p>Segura-se, mexe-se a cabeça para um dos oito rumos e larga-se: o frasco daquele rumo é o que
+     * sai. Agachado, ela abre para se arrumar o que está dentro.
+     */
+    public static final Item BREW_BAG = register("brew_bag", properties ->
+            new net.thaumcraft.occulta.brew.BrewBagItem(
+                    net.thaumcraft.occulta.brew.BrewBagItem.feitio(properties)));
+
     /** Um frasco que só serve para arder, e que brilha como o original o faz brilhar. */
     private static Item frascoQueimável(String name) {
         return register(name, properties -> new Item(properties.stacksTo(64)

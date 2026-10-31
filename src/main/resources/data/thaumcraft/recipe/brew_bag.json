@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "lll",
+    "lsl",
+    "lll"
+  ],
+  "key": {
+    "l": "thaumcraft:impregnated_leather",
+    "s": "thaumcraft:golden_thread"
+  },
+  "result": {
+    "id": "thaumcraft:brew_bag",
+    "count": 1
+  }
+}

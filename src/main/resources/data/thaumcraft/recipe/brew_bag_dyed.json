@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_dye",
+  "dye": "#minecraft:dyes",
+  "group": "dyed_brew_bag",
+  "result": {
+    "id": "thaumcraft:brew_bag"
+  },
+  "target": "thaumcraft:brew_bag"
+}

@@ -327,6 +327,8 @@ public class ThaumcraftClient implements ClientModInitializer {
 
         // a Vara Mística, que lê os traços do lado de cá, e a bola que ela atira
         net.thaumcraft.occulta.client.StrokeReader.init();
+        net.thaumcraft.occulta.client.BrewBagReader.init();
+        net.thaumcraft.occulta.client.BrewBagHud.init();
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.SPELL_EFFECT,
                 net.thaumcraft.occulta.client.SpellEffectRenderer::new);
@@ -606,6 +608,8 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.client.VillageGuardRenderer.Guard::new);
 
         // o Ars Occulta: a Roca, o Braseiro e o Crisol de Sangue
+        net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.BREW_BAG,
+                net.thaumcraft.occulta.client.BrewBagScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.LEONARDS_URN,
                 net.thaumcraft.occulta.client.UrnScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.SPINNING_WHEEL,
