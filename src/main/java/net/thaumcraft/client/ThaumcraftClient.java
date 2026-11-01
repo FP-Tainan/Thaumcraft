@@ -432,6 +432,14 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.DECOY,
                 net.thaumcraft.occulta.client.DecoyRenderer::new);
+        /*
+         * E a gota de cozimento, que se desenha como o frasco que ela é — pequena, e da cor do caldo,
+         * que vem do componente de tinta da pilha que ela leva.
+         */
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.BREW_DROPLET,
+                contexto -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(
+                        contexto, 0.5f, false));
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.SPECTRAL_FAMILIAR,
                 net.thaumcraft.occulta.client.SpectralFamiliarRenderer::new);

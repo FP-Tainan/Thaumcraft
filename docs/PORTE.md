@@ -12946,9 +12946,9 @@ de fluido do Forge (`velocityToAddToEntity`). Esse gancho não tem par no jogo d
 de verdade, e um empurrão mal medido atira gente pelo mapa. A poça vive poucos segundos e o empurrão dela é
 quase nada: ficou de fora, e está dito.
 
-**Declarado:** a chuva de gotas que o rito de círculo faz cair — cem casas de altura, em gotas espalhadas
+~~**Declarado:** a chuva de gotas que o rito de círculo faz cair — cem casas de altura, em gotas espalhadas
 pelo raio do rito — é uma peça à parte (`EntityDroplet`) e não é desta fatia. A nuvem tem a mesma dívida pelo
-lado dela, que é a bola que ela abre no rito.
+lado dela~~ — *resolvido na fatia dos cozimentos de círculo de giz: a chuva e o anel de nuvem vieram os dois*.
 
 **Declarado:** o original decide entre dois fluidos dele comparando densidades. Aqui só existe uma poça, e
 por isso a escada de densidades tem um degrau só.
@@ -14225,3 +14225,97 @@ enche o tanque; que sem perícia o caldeirão inteiro dá um frasco; que só se 
 e que cada teto de aprendizagem para onde deve; que o ponto entra mesmo e que um cozimento de quatro graus
 leva até aos sessenta e um de oito até aos cem; que a árvore tem os degraus certos; e que o diamante desce
 dois.
+
+## Os cozimentos de círculo de giz (2026-11-01)
+
+A última peça grande do Ars Occulta, e a que mais muda o que ele é.
+
+Até aqui o caldeirão fazia **frascos**. Com esta fatia ele passa a ser um **lançador**: cheio, a ferver,
+com um círculo de giz à volta e um coven, ele atira o cozimento ao longe — por cima de uma área, ou em
+cima de **uma pessoa marcada**, onde quer que ela esteja no mapa.
+
+É assim que se amaldiçoa alguém à distância no Witchery. Não há projétil, não há alcance de arma e não há
+aviso: há um caldeirão numa cave, um círculo de giz, um coven, e uma marca com o nome de quem vai
+adoecer.
+
+### Dois gatilhos, e nenhum deles é um ingrediente
+
+Postos numa panela **cheia e com efeitos**, dois itens deixam de ser ingredientes e passam a ser gatilhos:
+
+- a **Língua de Cão** — duzentos e cinquenta de poder — espalha o cozimento à volta do caldeirão, e só
+  serve com cozimento **que se atire**: um cozimento de beber não tem como chover;
+- a **Marca** — mil de poder — atira-o em **quem ela nomeia**, e serve com qualquer um.
+
+E o caldeirão **toma balanço**: conta vinte olhadas — duzentas batidas — antes de lançar a primeira vez. É
+o que dá tempo a quem o acendeu de sair do círculo.
+
+### O giz paga, e o giz infernal arrisca
+
+Este é o desenho mais bonito do original, e ele nunca o explica.
+
+O rito custa **uma vez e quatro décimos** do poder que o cozimento pediria — e cada anel de giz à volta do
+caldeirão **desconta**: dois décimos por anel de ritual, **trinta e sete centésimos** por anel infernal.
+Com os dois anéis de ritual ele custa exatamente uma vez; com os dois infernais, menos de um terço.
+
+Mas o giz infernal **cobra de outra maneira**: cada anel dele soma um ponto de **risco**, e quem não
+tiver anel de ritual nenhum já começa com um. O risco é a chance de o caldeirão **se virar contra quem
+está por perto** — metade das vezes não dá nada, do resto quase tudo é lentidão, uma em dez é **loucura**,
+e uma em cinquenta são **raios**.
+
+Quer dizer: o caminho barato é o perigoso. Quem quiser um rito seguro paga-o em poder.
+
+### O coven dá o alcance
+
+Contam-se as **bruxas de coven com dono** a seis blocos, e os **jogadores com coven** que estejam ali —
+menos o primeiro, que é quem faz. E o alcance sai disso: sozinho são trinta e dois blocos, com três são
+duzentos e cinquenta e seis, e com **seis** não há limite nenhum.
+
+É a razão de haver covens no mod. Sem eles o caldeirão só alcança a própria cave.
+
+### Os três jeitos de espalhar, com o braço comprido
+
+Os mesmos quatro jeitos têm duas vidas. Atirado de um frasco, o estouro apanha três blocos; posto num rito
+de círculo, o mesmo jeito apanha uma aldeia. Não é o cozimento que muda — é o braço.
+
+- **de uma vez**: cai em cima do alvo, com três blocos de raio mais o alcance, e acaba na primeira batida.
+  É este que amaldiçoa a pessoa marcada;
+- **em nuvem**: é um **anel que cresce** — uma batida, um bloco de raio a mais, até oito, mais oito por
+  grau de alcance. Em cada coluna do anel procura-se chão e o que estiver ali apanha o cozimento; o
+  **lugar** em si só o apanha uma vez em cem, que é o original a dizer «isto é um gás e não uma
+  inundação»;
+- **em poça**: ele **chove**.
+
+### A chuva, que era dívida desde a poça
+
+Cem casas acima do alvo começam a cair **gotas** do cozimento, dezenas por batida, espalhadas por um raio
+de dezesseis blocos mais oito por grau. Cada gota é um frasco pequeno: onde bate, aplica o cozimento
+àquele lugar ou àquele bicho, e some.
+
+Era a dívida mais antiga do ramo — declarada na fatia da poça de cozimento, e outra vez na da nuvem — e é
+a imagem mais bonita do ofício inteiro.
+
+**Pequena mudança declarada:** o original escreve a física da gota à mão — gravidade de três centésimos,
+arrasto de noventa e nove por cento, e um rodopio enquanto cai. Aqui ela é um projétil atirado do jogo, e
+a gravidade de um projétil atirado é **a mesma**: três centésimos.
+
+### E o que fica de fora
+
+**Declarado:** o **Leonard** a deixar o rito atravessar mundos. No original, com seis bruxas **e** o
+Leonard por perto, o cozimento alcança outra dimensão; aqui o alvo tem de estar no mesmo mundo. O Leonard
+existe no porte, mas a viagem entre mundos pelo caldeirão não.
+
+**Declarado:** as `targetLocations` múltiplas do original, que guardam uma lista de alvos e só usam o
+primeiro — nem o próprio original usa o resto.
+
+**Declarado:** a proteção contra maldições (as roupas de caçador e os marcadores de área) **não** trava
+este rito. No original ela trava-o; aqui o rito atira na mesma e é o efeito que se vê travado onde já
+está. A diferença aparece num caso só — alguém protegido vê a nuvem chegar e não lhe acontece nada, em vez
+de ela não chegar.
+
+**Guardas:** o `OccultaBrewRitualGameTest`, com seis — que os dois gatilhos estão na tabela com os números
+do original e que nenhum deles é um efeito; que a Língua de Cão recusa cozimento de beber e que nenhum dos
+dois entra em panela que não esteja cheia; que **o giz paga e o infernal arrisca**, nos três casos; que o
+alcance sai do coven e que com seis não há limite; que o rito de poça **faz chover** de cem casas e acaba
+às dez batidas; que o de uma vez cai em cima do alvo e acaba logo; e que o de nuvem cresce até oito. E o
+`OccultaBrewRainClientTest`, com duas fotos — a chuva de longe, espalhada, e uma gota de perto, que é um
+frasco verde de rolha castanha a cair.

@@ -39,6 +39,42 @@ public final class BrewShapes {
         }
     }
 
+    /**
+     * O {@code processHollowCircle}: só a <b>borda</b> do círculo, num andar só.
+     *
+     * <p>É o que o rito de nuvem usa, e por isso ele é um <b>anel que cresce</b> e não um disco: cada
+     * batida risca uma circunferência de mais um bloco de raio, e o meio fica por tocar.
+     *
+     * <p>Os oito pontos por volta são os oito oitavos da circunferência de Bresenham, e é por isso que
+     * alguns caem duas vezes nas pontas — o original tem o mesmo, e quem passa ali apanha duas vezes.
+     */
+    public static void hollowCircle(BlockPos meio, int raio, Consumer<BlockPos> oQueFazer) {
+        if (raio <= 1) {
+            oQueFazer.accept(meio);
+            return;
+        }
+        int x = raio - 1;
+        int z = 0;
+        int erro = 1 - x;
+        while (x >= z) {
+            oQueFazer.accept(meio.offset(x, 0, z));
+            oQueFazer.accept(meio.offset(z, 0, x));
+            oQueFazer.accept(meio.offset(-x, 0, z));
+            oQueFazer.accept(meio.offset(-z, 0, x));
+            oQueFazer.accept(meio.offset(-x, 0, -z));
+            oQueFazer.accept(meio.offset(-z, 0, -x));
+            oQueFazer.accept(meio.offset(x, 0, -z));
+            oQueFazer.accept(meio.offset(z, 0, -x));
+            z++;
+            if (erro < 0) {
+                erro += 2 * z + 1;
+            } else {
+                x--;
+                erro += 2 * (z - x + 1);
+            }
+        }
+    }
+
     private static void line(BlockPos meio, int de, int até, int dz, Consumer<BlockPos> oQueFazer) {
         for (int dx = de; dx <= até; dx++) {
             oQueFazer.accept(meio.offset(dx, 0, dz));

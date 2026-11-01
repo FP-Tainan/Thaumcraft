@@ -88,6 +88,16 @@ public final class BrewRegistry {
         register(new BrewActions.Modifier(Items.NETHER_STAR, new BrewName.Tweak(0, 0, false, 0, 0, true), 150,
                 espaço -> espaço.openIf(4, 10), temperos -> temperos.powerCeilingDisabled = true, 0));
 
+        /*
+         * ------------------------------------------------------------ e os dois que fazem do caldeirão
+         * um <b>rito</b>.
+         *
+         * <p>A Língua de Cão espalha à volta do caldeirão e pede cozimento de atirar; a Marca atira-o em
+         * quem ela nomeia, e custa quatro vezes mais. Nenhum dos dois é um efeito: são gatilhos.
+         */
+        register(new BrewActions.Ritual(OccultaItems.DOG_TONGUE, 250, true));
+        register(new BrewActions.Ritual(OccultaItems.TAGLOCK, 1000, false));
+
         // ------------------------------------------------------------ o jeito de se espalhar
         // A pólvora e o globo de alcachofra fazem o cozimento se atirar. Um espalhamento desfaz o outro: dois
         // não convivem na mesma panela, e é por isso que cada um apaga todos (inclusive outro igual).

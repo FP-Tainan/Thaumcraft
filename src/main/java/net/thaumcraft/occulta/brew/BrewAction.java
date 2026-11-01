@@ -122,6 +122,16 @@ public abstract class BrewAction {
         return false;
     }
 
+    /**
+     * Se este ingrediente faz do caldeirão um <b>rito</b>: o {@code triggersRitual} do original.
+     *
+     * <p>São dois, e nenhum deles é um efeito: a <b>Língua de Cão</b> e a <b>Marca</b>. Postos numa panela
+     * cheia e com efeitos, o caldeirão deixa de ser uma panela e passa a ser um lançador.
+     */
+    public boolean triggersRitual() {
+        return false;
+    }
+
     /** O {@code augmentEffectLevels}: abre ou gasta espaço, e diz se coube. */
     public abstract boolean augmentCapacity(BrewCapacity espaço);
 

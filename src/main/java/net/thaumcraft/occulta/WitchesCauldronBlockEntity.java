@@ -67,6 +67,22 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
      */
     private @org.jetbrains.annotations.Nullable net.minecraft.resources.ResourceKey<
             net.minecraft.world.level.biome.Biome> bioma;
+
+    /**
+     * E a <b>Marca</b> que caiu dentro, se caiu alguma: o alvo do rito de cozimento.
+     *
+     * <p>É o mesmo arranjo do bioma, e pela mesma razão: a lista do que está na panela guarda coisas, e
+     * uma marca é uma coisa que traz um <b>nome</b> dentro.
+     */
+    private @org.jetbrains.annotations.Nullable TaglockItem.Taglock marcado;
+
+    /**
+     * Quantas batidas o <b>rito de cozimento</b> já leva, ou zero.
+     *
+     * <p>Ele conta de dez em dez batidas do mundo, e só começa a fazer alguma coisa depois de vinte
+     * contagens — que são as duzentas batidas do original a aquecer o caldeirão antes de ele lançar.
+     */
+    private int ritoDeCozimento;
     private boolean powered;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
@@ -103,6 +119,21 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
 
     public List<Item> inside() {
         return List.copyOf(this.inside);
+    }
+
+    /** A Marca que caiu dentro, se caiu alguma. */
+    public @org.jetbrains.annotations.Nullable TaglockItem.Taglock marcado() {
+        return this.marcado;
+    }
+
+    /** Quantas batidas o rito de cozimento já leva. */
+    public int ritoDeCozimento() {
+        return this.ritoDeCozimento;
+    }
+
+    /** Se o que está na panela faz dela um rito. */
+    public boolean éRito() {
+        return net.thaumcraft.occulta.brew.Brew.ritual(this.inside) != null;
     }
 
     /** E o bioma da Nota de Bioma que caiu dentro, se caiu alguma. */
@@ -182,6 +213,8 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         this.result = ItemStack.EMPTY;
         this.chamando = null;
         this.bioma = null;
+        this.marcado = null;
+        this.ritoDeCozimento = 0;
         this.changed();
     }
 
@@ -220,8 +253,71 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         if (item instanceof net.thaumcraft.occulta.biome.BiomeNoteItem) {
             this.bioma = net.thaumcraft.occulta.biome.BiomeNoteItem.bioma(caiu);
         }
+        // e a Marca traz o nome de quem o rito vai apanhar
+        if (item instanceof TaglockItem) this.marcado = TaglockItem.bound(caiu);
         this.changed();
         return true;
+    }
+
+    /**
+     * Uma batida do <b>rito de cozimento</b>: o laço do {@code updateEntity} do original.
+     *
+     * <p>Ele só corre com o caldeirão a <b>ferver</b>, com <b>altar</b>, <b>cheio</b>, e com um gatilho de
+     * rito lá dentro. E não começa logo: conta <b>vinte</b> olhadas — duzentas batidas — antes de lançar
+     * a primeira vez. É o caldeirão a tomar balanço, e é o que dá tempo a quem o acendeu de sair do
+     * círculo.
+     */
+    private static void rito(ServerLevel level, BlockPos pos, WitchesCauldronBlockEntity caldeirão) {
+        if (!caldeirão.isBoiling() || !caldeirão.isPowered() || !caldeirão.isFull()
+                || !caldeirão.éRito()) {
+            if (caldeirão.ritoDeCozimento > 0) {
+                caldeirão.ritoDeCozimento = 0;
+                caldeirão.changed();
+            }
+            return;
+        }
+
+        caldeirão.ritoDeCozimento++;
+        if (caldeirão.ritoDeCozimento <= net.thaumcraft.occulta.brew.BrewRitual.ESPERA) {
+            net.thaumcraft.occulta.brew.BrewRitual.fumo(level, pos);
+            return;
+        }
+
+        var gatilho = net.thaumcraft.occulta.brew.Brew.ritual(caldeirão.inside);
+        int poder = gatilho == null ? 0 : gatilho.power();
+        net.minecraft.world.phys.Vec3 alvo = caldeirão.alvoDoRito(level, pos);
+        int pulsos = caldeirão.ritoDeCozimento - net.thaumcraft.occulta.brew.BrewRitual.ESPERA;
+
+        var deu = net.thaumcraft.occulta.brew.BrewRitual.corre(level, pos, alvo,
+                caldeirão.inside, pulsos, poder);
+        switch (deu) {
+            case ANDANDO -> net.thaumcraft.occulta.brew.BrewRitual.fumo(level, pos);
+            case PRONTO -> {
+                level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
+                caldeirão.empty();
+            }
+            default -> {
+                net.thaumcraft.occulta.brew.BrewRitual.falhou(level, pos);
+                caldeirão.ritoDeCozimento = 0;
+                caldeirão.changed();
+            }
+        }
+    }
+
+    /**
+     * Onde o rito cai: <b>em cima de quem a Marca nomeia</b>, ou à volta do próprio caldeirão.
+     *
+     * <p>Sem marca o alvo é a casa de cima do caldeirão, que é a Língua de Cão a espalhar o cozimento por
+     * onde está. Com marca, é a pessoa — e se ela não estiver neste mundo, não há alvo nenhum e o rito
+     * falha.
+     */
+    public @org.jetbrains.annotations.Nullable net.minecraft.world.phys.Vec3 alvoDoRito(
+            ServerLevel level, BlockPos pos) {
+        if (this.marcado == null) return net.minecraft.world.phys.Vec3.atCenterOf(pos.above());
+        var quem = level.getPlayerByUUID(this.marcado.owner());
+        if (quem != null) return quem.position();
+        var bicho = level.getEntity(this.marcado.owner());
+        return bicho == null ? null : bicho.position();
     }
 
     /**
@@ -305,6 +401,12 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
             if (antes != caldeirão.powered) caldeirão.changed();
         }
 
+        // e o rito de cozimento, que é o caldeirão a lançar em vez de a cozinhar
+        if (level instanceof ServerLevel server
+                && level.getGameTime() % net.thaumcraft.occulta.brew.BrewRitual.DE_QUANTO == 8) {
+            rito(server, pos, caldeirão);
+        }
+
         if (caldeirão.ritual <= 0) return;
         caldeirão.ritual--;
         if (caldeirão.ritual > 0) return;
@@ -371,6 +473,8 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         this.result = input.read("Result", ItemStack.CODEC).orElse(ItemStack.EMPTY);
         this.bioma = input.read("Biome", net.minecraft.resources.ResourceKey.codec(
                 net.minecraft.core.registries.Registries.BIOME)).orElse(null);
+        this.marcado = input.read("Marcado", TaglockItem.Taglock.CODEC).orElse(null);
+        this.ritoDeCozimento = input.getIntOr("RitoDeCozimento", 0);
     }
 
     @Override
@@ -387,6 +491,8 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
             output.store("Biome", net.minecraft.resources.ResourceKey.codec(
                     net.minecraft.core.registries.Registries.BIOME), this.bioma);
         }
+        if (this.marcado != null) output.store("Marcado", TaglockItem.Taglock.CODEC, this.marcado);
+        output.putInt("RitoDeCozimento", this.ritoDeCozimento);
     }
 
     /** O que o caldeirão manda ao cliente, para as bolhas saírem na cor certa. */

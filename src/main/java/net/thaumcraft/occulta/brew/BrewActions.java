@@ -483,6 +483,51 @@ public final class BrewActions {
     }
 
     /**
+     * O que faz do caldeirão um <b>rito</b>: o {@code BrewActionRitual} do original.
+     *
+     * <p>Não é um efeito e não gasta espaço — é um <b>gatilho</b>. Posto numa panela cheia e com efeitos,
+     * o caldeirão deixa de fazer frascos e passa a atirar o cozimento ao longe, de dez em dez batidas,
+     * até o jeito de espalhar dizer que acabou.
+     *
+     * <p>São dois. A <b>Língua de Cão</b> espalha à volta do próprio caldeirão, e só serve com cozimento
+     * que se atire — um cozimento de beber não tem como chover. A <b>Marca</b> atira-o em quem ela
+     * nomeia, e essa serve com qualquer um.
+     */
+    public static class Ritual extends BrewAction {
+        /** Se ele exige que o cozimento seja de atirar: o {@code aoeOnly} do original. */
+        private final boolean sóAtirado;
+
+        public Ritual(Item key, int power, boolean sóAtirado) {
+            super(key, null, power);
+            this.sóAtirado = sóAtirado;
+        }
+
+        public boolean sóAtirado() {
+            return this.sóAtirado;
+        }
+
+        @Override
+        public boolean triggersRitual() {
+            return true;
+        }
+
+        @Override
+        public boolean canAdd(java.util.List<BrewAction> dentro, boolean cheio, boolean temEfeitos) {
+            if (!cheio || !temEfeitos) return false;
+            if (!this.sóAtirado) return true;
+            for (BrewAction ação : dentro) {
+                if (ação.createsSplash()) return true;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean augmentCapacity(BrewCapacity espaço) {
+            return true;
+        }
+    }
+
+    /**
      * O ingrediente que diz <b>como</b> o cozimento se espalha: o {@code BrewActionDispersal}.
      *
      * <p>Ele não gasta espaço nenhum e não tempera nada — só manda no jeito. Põe um pedaço na frente do nome

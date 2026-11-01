@@ -304,6 +304,18 @@ public final class OccultaEntities {
                             net.thaumcraft.occulta.DupGrenadeEntity::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
+    /**
+     * Uma <b>gota de cozimento</b> a cair do céu: a chuva do rito de poça.
+     *
+     * <p>Um quarto de bloco, e vive o que leva a cair cem casas. Elas nascem às dezenas por batida, e por
+     * isso vão com o passo de rede mais largo que há.
+     */
+    public static final EntityType<net.thaumcraft.occulta.brew.BrewDropletEntity> BREW_DROPLET =
+            register("brew_droplet", net.minecraft.world.entity.EntityType.Builder
+                    .<net.thaumcraft.occulta.brew.BrewDropletEntity>of(
+                            net.thaumcraft.occulta.brew.BrewDropletEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(20));
+
     /** E o <b>Sósia</b> que ela larga: a Seguidora do tipo cinco do original. */
     public static final EntityType<net.thaumcraft.occulta.DecoyEntity> DECOY =
             register("decoy", net.minecraft.world.entity.EntityType.Builder

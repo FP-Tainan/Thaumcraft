@@ -55,6 +55,14 @@ public class BrewModifiers {
     @org.jetbrains.annotations.Nullable
     public net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome> bioma;
 
+    /**
+     * Quantas bruxas acompanham, num <b>rito de caldeirão</b>: o {@code covenSize} do original.
+     *
+     * <p>Fica <b>zero</b> em tudo o que não seja um rito, que é quase tudo — um frasco atirado não tem
+     * coven nenhum.
+     */
+    public int coven;
+
     /** O espaço do caldeirão, que os efeitos vão gastando enquanto se aplicam. */
     private final BrewCapacity espaço = new BrewCapacity();
 

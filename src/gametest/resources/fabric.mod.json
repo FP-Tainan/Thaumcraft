@@ -242,7 +242,8 @@
       "net.thaumcraft.test.OccultaInfusedBrewGameTest",
       "net.thaumcraft.test.OccultaSpectralFamiliarGameTest",
       "net.thaumcraft.test.OccultaRiteSizesGameTest",
-      "net.thaumcraft.test.OccultaBottlingGameTest"
+      "net.thaumcraft.test.OccultaBottlingGameTest",
+      "net.thaumcraft.test.OccultaBrewRitualGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -438,7 +439,8 @@
       "net.thaumcraft.test.client.OccultaBiomeBookClientTest",
       "net.thaumcraft.test.client.OccultaFairestClientTest",
       "net.thaumcraft.test.client.OccultaInfusedBrewClientTest",
-      "net.thaumcraft.test.client.OccultaSpectralFamiliarClientTest"
+      "net.thaumcraft.test.client.OccultaSpectralFamiliarClientTest",
+      "net.thaumcraft.test.client.OccultaBrewRainClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

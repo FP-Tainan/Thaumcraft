@@ -85,6 +85,19 @@ public final class Brew {
         return cor & 0xFFFFFF;
     }
 
+    /**
+     * O gatilho de rito deste caldeirão, se houver algum.
+     *
+     * <p>Vale o <b>último</b> que lá estiver, que é o que o original faz ao ler a ação de cima da pilha.
+     */
+    public static @org.jetbrains.annotations.Nullable BrewAction ritual(List<Item> dentro) {
+        BrewAction achado = null;
+        for (BrewAction ação : actions(dentro)) {
+            if (ação.triggersRitual()) achado = ação;
+        }
+        return achado;
+    }
+
     /** Se este cozimento se atira em vez de se beber. */
     public static boolean splash(List<Item> dentro) {
         for (BrewAction ação : actions(dentro)) {
