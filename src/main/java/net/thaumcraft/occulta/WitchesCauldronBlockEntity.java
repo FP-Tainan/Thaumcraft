@@ -231,16 +231,13 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
      * caldeirão esteja <b>cheio</b> — o original tira uma garrafa por caldeirão a quem ainda não sabe engarrafar,
      * e é aí que este porte está.
      *
-     * <p><b>E quem tem sapo tira um frasco a mais.</b> É o {@code hasActiveBrewMasteryFamiliar} do original, e é
-     * a maestria que o sapo dá. Esteve escrito aqui como buraco enquanto os familiares não existiam.
+     * <p>E ele <b>não esvazia</b>: cada frasco <b>drena</b> uma parte dos três mil, e quanto se drena sai
+     * da {@linkplain net.thaumcraft.occulta.brew.Bottling perícia de engarrafar} de quem o tira. Quem
+     * nunca engarrafou leva os três mil de uma vez e fica com um frasco; quem já engarrafou muito, e
+     * tiver o chapéu, o manto, o sapo e a Perícia de Cozimento a correr, tira <b>trinta</b> do mesmo
+     * caldeirão.
      *
-     * <p><b>E as roupas de bruxa dão frascos a mais.</b> Ali não é chance, é contagem: o chapéu vale um,
-     * o manto vale um, e o <b>chapéu da Baba vale dois</b> — e cada nível de equipamento é um frasco a
-     * mais, até três.
-     *
-     * <p><b>Do original fica de fora, declarado:</b> o rendimento maior de quem tem <b>prática de
-     * engarrafar</b>, que é uma perícia que este porte ainda não tem. No original ela multiplica o que
-     * as roupas dão; aqui elas somam sozinhas.
+     * <p>É a diferença mais calada que o ofício tem, e a maior.
      *
      * @param quem quem está engarrafando, ou nulo quando não é ninguém (uma prova, um funil)
      */
@@ -254,9 +251,20 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         }
         ItemStack frasco = net.thaumcraft.occulta.brew.BrewItem.of(OccultaItems.BREW, this.inside);
         if (this.bioma != null) frasco.set(OccultaComponents.BIOME, this.bioma);
-        if (net.thaumcraft.occulta.familiar.Familiars.temMaestriaDeCozimento(quem)) frasco.grow(1);
-        frasco.grow(net.thaumcraft.occulta.clothes.WitchClothes.gearLevel(quem));
-        this.empty();
+
+        /*
+         * E aprende-se a engarrafar engarrafando — mas só com cozimento à altura, e o que se aprende só
+         * se vê no <b>caldeirão seguinte</b>: o dreno deste já foi medido antes de a perícia subir.
+         */
+        int dreno = net.thaumcraft.occulta.brew.Bottling.dreno(quem, this.inside);
+        if (quem != null) {
+            net.thaumcraft.occulta.brew.Bottling.aprende(quem,
+                    net.thaumcraft.occulta.brew.Brew.capacity(this.inside));
+        }
+
+        this.water -= dreno;
+        if (this.water <= 0) this.empty();
+        else this.changed();
         return frasco;
     }
 

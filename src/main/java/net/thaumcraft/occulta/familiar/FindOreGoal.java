@@ -28,7 +28,7 @@ import java.util.EnumSet;
  *
  * <p>A meta só começa com <b>uma chance em dez</b> por olhada, e só com o dono a menos de dez blocos. A
  * busca varre um quadrado de oito por oito à volta dele, subindo do fundo do mundo até à fundura do
- * pedido — e pára no <b>primeiro</b> bloco que servir, que é por isso que ele acha o mais fundo e não o
+ * pedido — e para no <b>primeiro</b> bloco que servir, que é por isso que ele acha o mais fundo e não o
  * mais perto.
  *
  * <p>Depois tem <b>dois relógios</b>: um teto de paciência entre vinte e sessenta segundos, e uma conta de
@@ -144,7 +144,7 @@ public class FindOreGoal extends Goal {
     }
 
     /**
-     * A busca: do fundo do mundo para cima, e pára no primeiro que servir.
+     * A busca: do fundo do mundo para cima, e para no primeiro que servir.
      *
      * <p>Guarda o lugar em {@link #achado}, e devolve se achou.
      */

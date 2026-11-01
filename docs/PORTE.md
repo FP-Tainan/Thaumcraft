@@ -14159,3 +14159,69 @@ O porte pedia «uma poção». Uma de **dano** servia para recarregar uma infus�
 
 Agora há um pedido `Sacrifice.Brewed`, que olha o componente de conteúdo do frasco — e o livro passa a
 desenhar a poção certa em vez de um frasco de água.
+
+## A perícia de engarrafar (2026-11-01)
+
+A coisa mais calada do ofício inteiro, e a que mais muda o jogo de quem o pratica.
+
+Um caldeirão tem **três mil** de caldo. Quem nunca engarrafou tira dele **um frasco** — os três mil de uma
+vez. Quem já engarrafou muito, e tiver o chapéu, o manto, o sapo e a Perícia de Cozimento a correr, tira
+**trinta** do mesmo caldeirão.
+
+Trinta vezes mais. E o jogo nunca o diz: não há barra, não há número, não há página de livro. A única coisa
+que anuncia a perícia é uma frase, **três vezes** na vida de uma personagem — aos trinta, aos sessenta e aos
+noventa:
+
+> Você se sente mais hábil no cozimento; talvez se desperdice menos caldo daqui em diante.
+
+### Como se aprende
+
+Um ponto por frasco, até cem — mas **só com cozimento à altura**. Abaixo de trinta basta um cozimento que
+gaste mais do que um grau; dos trinta aos sessenta pede-se **quatro**; dos sessenta aos noventa, **seis**; e
+daí até cem, **oito**, que é o teto do que um caldeirão aguenta.
+
+Quem só fizer cozimentos simples empaca nos trinta e nunca entende por quê. Quem quiser os cem tem de fazer
+cozimentos de oito graus — e para isso precisa de diamante, de Estrela do Nether, de tudo o que abre espaço.
+A perícia é a maneira de o Witchery obrigar quem joga a **experimentar**.
+
+### E a árvore de rendimento
+
+O degrau sai de uma árvore de nove ramos sobre quatro números: a **perícia** por degraus de trinta, o
+**equipamento** (o chapéu vale um, o da Baba dois, cada manto um), o grau da **Perícia de Cozimento** a
+correr, e o **sapo**.
+
+E ela não é linear. Até à perícia trinta nada mais conta; dos trinta aos sessenta o equipamento vale um
+degrau e nada mais; só **a partir dos sessenta** é que o equipamento e a poção começam a valer de verdade,
+e é lá que estão os sete ramos de cima. O original escreve-os à mão, um a um, e cada ramo é a diferença
+entre dois frascos e quinze.
+
+### O que isto muda no caldeirão
+
+O caldeirão **deixa de se esvaziar de uma vez**. Cada frasco **drena** a sua parte dos três mil, e enquanto
+houver caldo há frasco. Os frascos a mais que o sapo e as roupas davam desaparecem como soma e voltam como
+o que sempre foram no original: parte da conta do dreno.
+
+**E ninguém que já jogava acorda com o caldeirão diferente**: com perícia zero o dreno é três mil, um
+frasco, que é exatamente o que o porte fazia antes desta fatia.
+
+### E a penalidade de rendimento, que estava escrita e sem leitor
+
+O `yieldBonus` e o `yieldPenalty` estavam no `BrewAction` desde a fatia da tabela de cozimentos, e **nada
+os lia**. São isto: o diamante abre espaço no caldeirão e cobra **dois degraus** de rendimento por isso, e
+é a única coisa da tabela que cobra.
+
+A conta do original é esquisita de propósito — `penalidade - min(bónus, penalidade)` —, e quer dizer «o
+bónus só serve para apagar a penalidade, nunca para passar dela».
+
+### Uma guarda do original que não se alcança
+
+**Declarado:** o `canIncreasePlayerSkill` recusa também quando o **gasto passa do teto**, isto é, quando o
+cozimento não coube. Neste porte isso não se consegue alcançar: o `consume` recusa o efeito que não cabe em
+vez de o deixar passar, e o gasto nunca ultrapassa o teto. A guarda fica, que é do original e não custa
+nada.
+
+**Guardas:** o `OccultaBottlingGameTest`, com seis — que os dez degraus são os do original e que cada um
+enche o tanque; que sem perícia o caldeirão inteiro dá um frasco; que só se aprende com cozimento à altura
+e que cada teto de aprendizagem para onde deve; que o ponto entra mesmo e que um cozimento de quatro graus
+leva até aos sessenta e um de oito até aos cem; que a árvore tem os degraus certos; e que o diamante desce
+dois.
