@@ -134,7 +134,22 @@ public final class Brew {
     public static boolean impact(net.minecraft.server.level.ServerLevel level, List<Item> dentro,
                                  net.minecraft.world.phys.HitResult onde,
                                  net.minecraft.world.entity.LivingEntity quemAtirou) {
+        return impact(level, dentro, onde, quemAtirou, null);
+    }
+
+    /**
+     * E o mesmo, com o <b>bioma</b> que o frasco traz escrito.
+     *
+     * <p>Só um efeito o usa — as Estações que Mudam —, e ele viaja à parte da lista de ingredientes porque a
+     * lista guarda coisas e não frascos.
+     */
+    public static boolean impact(net.minecraft.server.level.ServerLevel level, List<Item> dentro,
+                                 net.minecraft.world.phys.HitResult onde,
+                                 net.minecraft.world.entity.LivingEntity quemAtirou,
+                                 @org.jetbrains.annotations.Nullable net.minecraft.resources.ResourceKey<
+                                         net.minecraft.world.level.biome.Biome> bioma) {
         BrewImpact espalha = impact(dentro, quemAtirou);
+        espalha.bioma = bioma;
         BrewDispersal jeito = espalha.dispersal();
         if (jeito == null) return false;
         jeito.onImpact(level, dentro, onde, espalha);

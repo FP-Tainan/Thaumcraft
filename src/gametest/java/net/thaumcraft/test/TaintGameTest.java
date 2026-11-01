@@ -140,8 +140,15 @@ public class TaintGameTest {
         helper.succeed();
     }
 
-    /** A gosma cai inteira até o chão e se reparte com os lados. */
-    @GameTest(maxTicks = 300)
+    /**
+     * A gosma cai inteira até o chão e se reparte com os lados.
+     *
+     * <p>O teto é <b>largo de propósito</b>: a gosma só anda de trinta em trinta batidas, e quatro casas de
+     * queda mais o espalhar são cinco ou seis passos dela — cento e oitenta batidas no melhor caso. O
+     * caminho que ela escolhe sai do sorteio da posição, e uma arena que calhe noutro lugar pode levar o
+     * dobro. Com trezentos ela falhava quando a lista de provas crescia e as arenas andavam.
+     */
+    @GameTest(maxTicks = 700)
     public void gooFallsAndSpreads(GameTestHelper helper) {
         BlockPos floor = new BlockPos(3, 1, 3);
         for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++) helper.setBlock(floor.offset(dx, 0, dz), Blocks.STONE);

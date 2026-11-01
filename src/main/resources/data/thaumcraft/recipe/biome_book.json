@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " c ",
+    "a#b",
+    " d "
+  ],
+  "key": {
+    "#": "minecraft:book",
+    "a": "minecraft:black_dye",
+    "b": "minecraft:feather",
+    "c": "minecraft:oak_sapling",
+    "d": "minecraft:stone"
+  },
+  "result": {
+    "id": "thaumcraft:biome_book",
+    "count": 1
+  }
+}

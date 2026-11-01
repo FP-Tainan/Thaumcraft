@@ -13599,8 +13599,9 @@ par neste porte.
 **Declarado:** o **Coração de Ouro** (`ingredient|165`) não está portado. Onde ele aparecia — no tempero de
 Atração de Bichos — fica o texto sem o desenho.
 
-**Declarado:** o efeito **Estações que Mudam** aponta para a Nota de Bioma, que também não está portada
-(ela é a outra metade do rito `climatechange`). O capítulo fica, e a casa da coisa fica vazia.
+**Declarado:** o efeito **Estações que Mudam** aponta para a Nota de Bioma, que naquele dia ainda não
+estava portada: o capítulo ficou, e a casa da coisa ficou vazia. _(Corrigido na fatia do Livro de Biomas —
+a nota existe, e o desenho dela voltou ao capítulo.)_
 
 ### E a armadilha da tradução
 
@@ -13664,10 +13665,12 @@ arredondar um canto.
 ### E o que fica de fora
 
 O efeito de cozimento **Estações que Mudam** — o irmão deste rito, que troca o bioma pelo que estiver
-escrito numa **Nota de Bioma** — **não está portado**, e com ele ficam de fora o **Livro de Biomas** (o
-escolhedor que escreve a nota) e a própria nota. São três peças de uma mesma ideia, e a diferença entre
-elas e o rito é que o rito escolhe o clima **por um foco no chão** e elas escolhem o bioma **exato** por
-um papel. O rito não depende delas — e é ele que faz a coisa acontecer.
+escrito numa **Nota de Bioma** — não estava portado no dia em que o rito ficou pronto, e com ele ficavam de
+fora o **Livro de Biomas** (o escolhedor que escreve a nota) e a própria nota. São três peças de uma mesma
+ideia, e a diferença entre elas e o rito é que o rito escolhe o clima **por um foco no chão** e elas
+escolhem o bioma **exato** por um papel. O rito não depende delas — e é ele que faz a coisa acontecer.
+
+_(As três chegaram na fatia seguinte: a seção do Livro de Biomas, abaixo.)_
 
 Com este rito os ritos passam de oitenta e dois para **oitenta e três** dos noventa e seis.
 
@@ -13676,3 +13679,139 @@ fora; que os **treze climas** existem e que nenhum deles está vazio (um rótulo
 e não mudar nada); que o chão nomeia o clima e que a glowstone escolhe qual bioma dele, com o segundo a
 sair de duas pedras; que o raio sai do coven; e que a mudança **acontece mesmo** — o bioma do chão antes e
 depois, que é a única parte que não se mede por dentro.
+## O Livro de Biomas e a Nota de Bioma (2026-11-01)
+
+As duas peças que faltavam à **Mudança de Clima** — e que a seção dela declarava de fora. O rito escolhe o
+clima **por um foco no chão** e sorteia um bioma daquele clima; estas duas escolhem o bioma **exato**, a
+dedo, e passam-no ao caldeirão num papel.
+
+### O livro que se usa em vez de se ler
+
+O **Livro de Biomas (Edição Ampliada)** é o único livro do mod que não se lê: **escolhe-se** nele. Uma folha
+por bioma, com o nome em cima e quatro linhas do que se sabe dele abaixo; a conta de folhas no alto; e,
+encostados na beira direita, **quinze marcadores** que saltam de seção em seção. A folha em que ele fica
+**fica** — é dela que sai a nota.
+
+E a nota sai dele com uma **folha de papel** na bancada. É o único jeito de fazer uma, de propósito: o bioma
+que se quer tem de se **achar no livro** primeiro. O livro **volta** da bancada inteiro e com a mesma folha,
+que é o `getContainerItem` do original.
+
+### O dicionário da Forge não existe mais
+
+O livro do original lista **catorze seções**, uma por tipo do `BiomeDictionary` da Forge — praia, floresta,
+colina, mesa, montanha, pradaria, areia, neve, pântano, terra devastada, rio, mar, assombrado e mágico.
+Aquele dicionário era uma lista que cada mod ia enchendo à mão, e não há nada igual hoje.
+
+**Desvio declarado.** As catorze seções ficam, com os nomes e a ordem do original, e cada uma ganhou um
+rótulo:
+
+- **sete** delas têm rótulo do próprio jogo, com o mesmo sentido: `is_beach`, `is_forest`, `is_hill`,
+  `is_badlands`, `is_mountain`, `is_river` e `is_ocean`. É a tradução certa de 2014 para hoje.
+- **seis** reaproveitam os climas da Mudança de Clima. Isso é mais do que poupar arquivos: faz o **livro e o
+  rito falarem a mesma língua** — a seção de neve do livro é exatamente o clima de gelo do rito, e quem
+  aprende um aprende o outro.
+- e a **assombrada**, que não tinha par, ganhou rótulo próprio: o bosque escuro, o jardim pálido e o fundo
+  escuro, que são os três lugares de arrepiar que hoje existem.
+
+**E há uma décima quinta seção que o original não tinha.** Em 2014 os biomas eram uma lista fechada no
+código; hoje são **dados**, e um pacote acrescenta quantos quiser. Um livro que só mostrasse os das catorze
+seções **esconderia** esses — e esconderia também os do próprio jogo que não caem em nenhuma. A seção do
+**resto** traz todos os biomas do mundo de cima que as outras não nomearam, e com ela nenhum bioma fica
+invisível. O que fica de fora dela, de propósito, é o **inferno e o fim**: o livro do original só falava do
+mundo de cima.
+
+### A folha guarda o bioma, e não o número dela
+
+**Desvio declarado.** No original a folha aberta é um **número**, guardado no dano do item, porque a lista de
+biomas era fechada e o número valia sempre o mesmo. Hoje um pacote acrescenta um bioma e todas as folhas
+depois dele andam — e uma nota feita antes passaria a nomear outro lugar. Guarda-se o **bioma**, que é o que
+a nota quer dizer, e a folha conta-se dele.
+
+### E o que se sabe de um bioma encolheu
+
+O original mostra cinco coisas: o nome, a **chuva** (um número de zero a um), a **temperatura** (outro
+número, com «(úmido)» atrás quando a chuva passava de 0,85), se **neva** e se cai **raio**.
+
+**Desvio declarado:** o número da chuva **não existe mais**. Em 2014 cada bioma trazia um `rainfall` aberto
+a quem perguntasse; hoje o jogo guarda só um «chove ou não chove», e o resto está trancado. A linha da chuva
+passa a ser um **sim ou não**, e com ela cai o «(úmido)», que saía do número.
+
+**E o que neva e o que troveja saem do lugar onde se lê.** O original tinha dois interruptores no bioma; hoje
+quem decide é a **altura** — o mesmo bioma neva no alto da serra e chove na praia dele. O livro responde
+**onde quem o lê está**, que é a resposta honesta e a mais útil: é a altura em que essa pessoa vai cozinhar.
+
+### A receita do livro, que era de duas
+
+No original o livro vem em dois passos: primeiro um **Livro de Biomas** simples — um dos oito manuais de
+pesquisa do Witchery —, e depois esse livro com quatro pedras em cruz vira a Edição Ampliada. Os oito
+manuais de pesquisa **não estão portados** (a pesquisa deste porte é a do Thaumcraft), e por isso os dois
+passos viram um: a **forma e os ingredientes do primeiro** — livro, tinta preta, pena, muda de carvalho e
+pedra —, dando direto a Ampliada, que é o único livro de biomas que este porte tem.
+
+**Guardas:** o `OccultaBiomeBookGameTest`, com cinco — que as catorze seções estão lá, na ordem do original,
+e que **nenhuma é vazia** (um rótulo vazio deixaria um marcador morto); que **nenhum bioma do mundo de cima
+fica sem folha**, e que o inferno e o fim não entram; que há um marcador por seção, cada um na primeira folha
+dela; que a nota se chama pelo bioma e que uma nota em branco tem nome próprio; e que o papel copia a folha e
+o livro volta com ela. E o `OccultaBiomeBookClientTest`, com duas fotos — a primeira folha, com a seta de
+voltar apagada, e uma do meio do livro, onde as duas setas acendem e o marcador aceso é outro: são quinze
+marcadores encostados na beira direita, que é o lugar mais apertado de qualquer folha deste porte.
+
+### E dois acertos na folha dos outros livros
+
+Fazer esta folha obrigou a reler a do livro de marcação, e com ela saíram **dois defeitos** que estavam lá
+desde o Livro do Vampiro e que só se viam quando se sabia o que procurar:
+
+**A letra ia com sombra.** O `drawString` de 2014 não punha sombra nenhuma; o de hoje põe se ninguém disser
+o contrário, e a folha nunca lhe disse. A sombra engrossa cada letra e come o pouco contraste que tinta
+castanha sobre pergaminho tem — uma página de livro passava a parecer um painel. Agora vai sem sombra, nos
+dois livros.
+
+**E o título não quebrava a linha.** No original um `[h1 ]` é `§3§o` — **azul-escuro e itálico** —, e depois
+dele a linha **acaba**, com uma linha e meia de altura (`adjustLineHeight`). O porte desenhava-o preto e
+negrito e deixava o parágrafo seguinte colar-se a ele: lia-se «Cauldron: RecipeA witch's cauldron...», e
+ninguém reparou porque a sombra já embaralhava tudo. Está nos dois agora: a cor certa, o itálico, e a quebra.
+
+Nenhum dos dois é desvio: são o original, que estava mal lido.
+
+## As Estações que Mudam (2026-11-01)
+
+O efeito de cozimento de **oitavo grau** que fecha a ideia: ele **troca o bioma** do lugar onde o frasco
+bateu, pelo que estiver escrito na Nota de Bioma. A pradaria passa a ser selva, e daí em diante chove nela
+como chove na selva.
+
+O que ele apanha é pouco — **um bloco à volta**, mais um por grau de força. É o irmão de pouco alcance da
+Mudança de Clima, que faz o mesmo em dezenas de blocos mas escolhe o bioma por um foco no chão.
+
+### O único efeito que lê um ingrediente por dentro
+
+E é por isso que ele deu trabalho. A lista do que está no caldeirão guarda **coisas**, não frascos: um item,
+e não o que ele traz escrito. Todos os outros cento e tantos efeitos do ofício se bastam com a identidade do
+ingrediente; **este não**. O bioma teve de ganhar um caminho só dele:
+
+1. o **caldeirão** lembra-se do bioma da nota que caiu dentro (e, como qualquer coisa repetida na panela,
+   vale a última);
+2. o **frasco** leva-o num componente, escrito ao engarrafar;
+3. o **estouro** passa-o aos temperos, pelo mesmo lugar por onde viaja quem atirou.
+
+Um elo partido nesse caminho **não rebenta nada**: o frasco estoura calado e o chão fica como estava. É o
+tipo de buraco que só uma prova apanha, e é o que a prova desta fatia anda de uma ponta à outra.
+
+### E ele só estoura
+
+É o `setOnlyInstant` do original, e não é um detalhe: um efeito que muda o mundo não pode ficar no ar em
+nuvem nem no chão em poça — ou acontece quando o frasco bate, ou não acontece. A nota **anula** a pólvora, a
+lã de morcego e a losna sem as tirar da panela.
+
+### E o que fica de fora
+
+**Declarado:** a metade **ritual** dele, que apanhava dezesseis blocos por grau em vez de um. Os cozimentos
+de círculo de giz não estão portados — nenhum deles —, e quem quer mudar um bioma em grande tem o rito, que é
+a mesma coisa feita do jeito certo.
+
+**E a área é um quadrado e não um círculo**, pela mesma razão do rito: quem enche biomas hoje é o caminho do
+`/fillbiome`, e ele enche uma caixa.
+
+**Guardas:** o `OccultaShiftingSeasonsGameTest`, com cinco — que a Nota de Bioma é um efeito da tabela e pede
+cinco mil de poder; que com a lã de morcego na panela o frasco **ainda estoura**; que o raio sai da força; que
+o frasco carrega o bioma e o nome dele diz o que ele é; e que o chão **muda mesmo** com a nota e **não muda,
+calado**, sem ela.

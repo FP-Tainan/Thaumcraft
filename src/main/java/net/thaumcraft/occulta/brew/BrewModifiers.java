@@ -46,6 +46,15 @@ public class BrewModifiers {
     @org.jetbrains.annotations.Nullable
     public net.minecraft.world.entity.player.Player quemFez;
 
+    /**
+     * E em que bioma o cozimento quer transformar o lugar: o que estava escrito na Nota de Bioma.
+     *
+     * <p>Vem do {@link BrewImpact} e serve a um efeito só, as Estações que Mudam. Fica <b>nulo</b> em tudo
+     * o que não seja um frasco que acabou de estourar, e sem ele esse efeito não faz nada.
+     */
+    @org.jetbrains.annotations.Nullable
+    public net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome> bioma;
+
     /** O espaço do caldeirão, que os efeitos vão gastando enquanto se aplicam. */
     private final BrewCapacity espaço = new BrewCapacity();
 

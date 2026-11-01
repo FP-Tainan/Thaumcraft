@@ -234,7 +234,9 @@
       "net.thaumcraft.test.OccultaWerewolfLadderGameTest",
       "net.thaumcraft.test.OccultaWerewolfPowersGameTest",
       "net.thaumcraft.test.OccultaVampirePlayerGameTest",
-      "net.thaumcraft.test.OccultaLilithGameTest"
+      "net.thaumcraft.test.OccultaLilithGameTest",
+      "net.thaumcraft.test.OccultaBiomeBookGameTest",
+      "net.thaumcraft.test.OccultaShiftingSeasonsGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -426,7 +428,8 @@
       "net.thaumcraft.test.client.OccultaSeerStoneClientTest",
       "net.thaumcraft.test.client.OccultaDuplicationClientTest",
       "net.thaumcraft.test.client.OccultaCauldronBookClientTest",
-      "net.thaumcraft.test.client.OccultaStewClientTest"
+      "net.thaumcraft.test.client.OccultaStewClientTest",
+      "net.thaumcraft.test.client.OccultaBiomeBookClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

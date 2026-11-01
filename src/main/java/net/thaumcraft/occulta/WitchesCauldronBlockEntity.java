@@ -57,6 +57,16 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
     private final List<Item> inside = new ArrayList<>();
     private ItemStack result = ItemStack.EMPTY;
     private @org.jetbrains.annotations.Nullable net.minecraft.world.entity.EntityType<?> chamando;
+
+    /**
+     * E o <b>bioma</b> da última Nota de Bioma que caiu dentro.
+     *
+     * <p>A lista do que está na panela guarda <b>coisas</b> — não guarda o que uma delas tem escrito dentro.
+     * A nota é o único ingrediente do ofício que carrega mais do que a própria identidade, e por isso o que
+     * ela diz fica guardado aqui ao lado, e sai daqui para o frasco.
+     */
+    private @org.jetbrains.annotations.Nullable net.minecraft.resources.ResourceKey<
+            net.minecraft.world.level.biome.Biome> bioma;
     private boolean powered;
 
     public WitchesCauldronBlockEntity(BlockPos pos, BlockState state) {
@@ -93,6 +103,12 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
 
     public List<Item> inside() {
         return List.copyOf(this.inside);
+    }
+
+    /** E o bioma da Nota de Bioma que caiu dentro, se caiu alguma. */
+    public @org.jetbrains.annotations.Nullable net.minecraft.resources.ResourceKey<
+            net.minecraft.world.level.biome.Biome> bioma() {
+        return this.bioma;
     }
 
     /**
@@ -165,6 +181,7 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         this.inside.clear();
         this.result = ItemStack.EMPTY;
         this.chamando = null;
+        this.bioma = null;
         this.changed();
     }
 
@@ -195,6 +212,14 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         List<Item> depois = net.thaumcraft.occulta.brew.Brew.add(this.inside, item);
         this.inside.clear();
         this.inside.addAll(depois);
+        /*
+         * E se o que caiu foi uma <b>Nota de Bioma</b>, o que ela tem escrito fica guardado: é a única coisa
+         * do ofício cujo conteúdo o caldeirão precisa de lembrar. Duas notas, e vale a última — como vale a
+         * última de qualquer coisa que se repita na panela.
+         */
+        if (item instanceof net.thaumcraft.occulta.biome.BiomeNoteItem) {
+            this.bioma = net.thaumcraft.occulta.biome.BiomeNoteItem.bioma(caiu);
+        }
         this.changed();
         return true;
     }
@@ -228,6 +253,7 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
             if (altar == null || !altar.consume(poder)) return ItemStack.EMPTY;
         }
         ItemStack frasco = net.thaumcraft.occulta.brew.BrewItem.of(OccultaItems.BREW, this.inside);
+        if (this.bioma != null) frasco.set(OccultaComponents.BIOME, this.bioma);
         if (net.thaumcraft.occulta.familiar.Familiars.temMaestriaDeCozimento(quem)) frasco.grow(1);
         frasco.grow(net.thaumcraft.occulta.clothes.WitchClothes.gearLevel(quem));
         this.empty();
@@ -335,6 +361,8 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
             if (item != null) this.inside.add(item);
         }
         this.result = input.read("Result", ItemStack.CODEC).orElse(ItemStack.EMPTY);
+        this.bioma = input.read("Biome", net.minecraft.resources.ResourceKey.codec(
+                net.minecraft.core.registries.Registries.BIOME)).orElse(null);
     }
 
     @Override
@@ -347,6 +375,10 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
         for (Item item : this.inside) nomes.add(BuiltInRegistries.ITEM.getKey(item).toString());
         output.store("Inside", com.mojang.serialization.Codec.STRING.listOf(), nomes);
         if (!this.result.isEmpty()) output.store("Result", ItemStack.CODEC, this.result);
+        if (this.bioma != null) {
+            output.store("Biome", net.minecraft.resources.ResourceKey.codec(
+                    net.minecraft.core.registries.Registries.BIOME), this.bioma);
+        }
     }
 
     /** O que o caldeirão manda ao cliente, para as bolhas saírem na cor certa. */

@@ -66,12 +66,24 @@ public class MarkupBookScreen extends Screen {
     /** A cor da tinta, que é a de tinta velha e não preta. */
     public static final int TINTA = 0xFF3A2E1F;
 
+    /**
+     * E a letra vai <b>sem sombra</b>.
+     *
+     * <p>O {@code drawString} de 2014 não punha sombra nenhuma, e o de hoje põe se ninguém disser o
+     * contrário. Uma folha de livro com letra sombreada parece um painel e não uma página: a sombra
+     * engrossa cada letra e come o pouco contraste que tinta castanha sobre pergaminho tem.
+     */
+    public static final boolean SEM_SOMBRA = false;
+
     /** A cor de um atalho, e a dele debaixo do rato: o azul e o vermelho do original. */
     public static final int ELO = 0xFF0000FF;
     public static final int ELO_NO_RATO = 0xFFFF0000;
 
     /** O quadrado de uma coisa desenhada no texto: os dezoito do original. */
     public static final int COISA = 18;
+
+    /** E o que a linha de um título mede: uma linha e meia, como no {@code adjustLineHeight} do original. */
+    public static final float TÍTULO_ALTO = 1.5f;
 
     /** As três setas: voltar ao princípio, voltar uma, e seguir. */
     public static final int SETA_LARGURA = 18;
@@ -208,7 +220,15 @@ public class MarkupBookScreen extends Screen {
             } else if (marca.startsWith("url")) {
                 this.elo(marca, estilo);
             } else if (marca.startsWith("h1 ")) {
-                this.escreve(marca.substring(3), estilo.withBold(true).withColor(ChatFormatting.BLACK));
+                /*
+                 * O título: <b>azul-escuro e itálico</b> — o {@code §3§o} do original —, e <b>a linha
+                 * acaba nele</b>, com uma linha e meia de altura. Sem essa quebra o parágrafo seguinte
+                 * começa colado ao título, e lê-se «Cauldron: RecipeA witch's cauldron...».
+                 */
+                this.escreve(marca.substring(3),
+                        estilo.withItalic(true).withColor(ChatFormatting.DARK_AQUA));
+                this.altoDaLinha = (int) Math.ceil(this.altoDaLinha * TÍTULO_ALTO);
+                this.novaLinha();
             } else if (marca.startsWith("i ")) {
                 this.escreve(marca.substring(2), estilo.withItalic(true));
             } else if (marca.startsWith("darkred ")) {
@@ -418,10 +438,10 @@ public class MarkupBookScreen extends Screen {
             }
             if (peça.atalho() != null) {
                 graphics.text(this.font, peça.linha(), peça.x(), peça.y(),
-                        this.noRato(peça, x, y, encolhe, rato, ratoY) ? ELO_NO_RATO : ELO);
+                        this.noRato(peça, x, y, encolhe, rato, ratoY) ? ELO_NO_RATO : ELO, SEM_SOMBRA);
                 continue;
             }
-            graphics.text(this.font, peça.linha(), peça.x(), peça.y(), TINTA);
+            graphics.text(this.font, peça.linha(), peça.x(), peça.y(), TINTA, SEM_SOMBRA);
         }
         pose.popMatrix();
 
@@ -443,12 +463,12 @@ public class MarkupBookScreen extends Screen {
     /** As três setas, e a da frente apagada quando o livro não chega lá. */
     private void setas(GuiGraphicsExtractor graphics, int x, int y) {
         if (this.pilha.size() > 1) {
-            graphics.text(this.font, Component.literal("<"), x + 34, y + 16, TINTA);
+            graphics.text(this.font, Component.literal("<"), x + 34, y + 16, TINTA, SEM_SOMBRA);
         }
         if (!this.seguinte.isEmpty()) {
             boolean pode = this.páginas >= this.seguintePede;
             graphics.text(this.font, Component.literal(">"), x + 150, y + 16,
-                    pode ? TINTA : 0xFFB0A89A);
+                    pode ? TINTA : 0xFFB0A89A, SEM_SOMBRA);
         }
     }
 

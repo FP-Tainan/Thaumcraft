@@ -19,6 +19,25 @@ public class BrewImpact {
     @Nullable
     private BrewDispersal dispersal;
 
+    /**
+     * Se este cozimento <b>só</b> se espalha de uma vez: o {@code onlyInstant} do original.
+     *
+     * <p>Um efeito que muda o mundo não pode ficar no chão em poça nem no ar em nuvem — ou acontece no
+     * estouro, ou não acontece. O ingrediente que o diz é a Nota de Bioma, e é por isso que ela anula a
+     * pólvora, a lã de morcego e a losna sem as tirar da panela.
+     */
+    private boolean onlyInstant;
+
+    /**
+     * E em que bioma este cozimento quer transformar o lugar: o metadado da Nota de Bioma que caiu na
+     * panela.
+     *
+     * <p>Ele viaja aqui e não na lista de ingredientes porque a lista guarda <b>coisas</b> e não frascos: o
+     * que a nota tem escrito dentro não caberia nela. É o mesmo lugar onde viaja quem atirou.
+     */
+    @Nullable
+    public net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome> bioma;
+
     @Nullable
     public final LivingEntity thrower;
 
@@ -30,8 +49,16 @@ public class BrewImpact {
         this.dispersal = dispersal;
     }
 
+    /** O {@code setOnlyInstant}. */
+    public void setOnlyInstant() {
+        this.onlyInstant = true;
+    }
+
+    /**
+     * O {@code getDispersal}: quem pediu só o estouro leva o estouro, seja o que for que esteja escolhido.
+     */
     @Nullable
     public BrewDispersal dispersal() {
-        return this.dispersal;
+        return this.onlyInstant ? new BrewDispersal.Instant() : this.dispersal;
     }
 }

@@ -61,12 +61,14 @@ public interface BrewDispersal {
                 double parte = cheio ? 1.0 : 1.0 - Math.sqrt(distância) / raio;
                 BrewModifiers temperos = new BrewModifiers(parte, 0.5 * parte);
                 temperos.quemFez = quemAtirou(espalha);
+                temperos.bioma = espalha.bioma;
                 Brew.apply(level, quem, dentro, temperos);
             }
 
             if (onde instanceof BlockHitResult bateu) {
                 BrewModifiers temperos = new BrewModifiers();
                 temperos.quemFez = quemAtirou(espalha);
+                temperos.bioma = espalha.bioma;
                 Brew.applyToBlock(level, dentro, bateu.getBlockPos(), bateu.getDirection(),
                         Mth.ceil(raio), temperos);
             }

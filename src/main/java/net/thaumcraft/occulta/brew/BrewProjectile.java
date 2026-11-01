@@ -45,7 +45,8 @@ public class BrewProjectile extends AbstractThrownPotion {
     @Override
     protected void onHitAsPotion(ServerLevel level, ItemStack frasco, HitResult onde) {
         LivingEntity quemAtirou = this.getOwner() instanceof LivingEntity vivo ? vivo : null;
-        boolean espalhou = Brew.impact(level, BrewItem.contents(frasco), onde, quemAtirou);
+        boolean espalhou = Brew.impact(level, BrewItem.contents(frasco), onde, quemAtirou,
+                frasco.get(net.thaumcraft.occulta.OccultaComponents.BIOME));
         level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.SPLASH_POTION_BREAK,
                 SoundSource.NEUTRAL, 1.0f, level.getRandom().nextFloat() * 0.1f + 0.9f);
         if (!espalhou) return;

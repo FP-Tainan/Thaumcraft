@@ -446,6 +446,18 @@ public class ThaumcraftClient implements ClientModInitializer {
             return net.minecraft.world.InteractionResult.SUCCESS;
         });
 
+        // e o Livro de Biomas, que não se lê: escolhe-se nele, e a folha escolhida volta ao servidor
+        net.fabricmc.fabric.api.event.player.UseItemCallback.EVENT.register((quem, level, mão) -> {
+            net.minecraft.world.item.ItemStack livro = quem.getItemInHand(mão);
+            if (!level.isClientSide()
+                    || !(livro.getItem() instanceof net.thaumcraft.occulta.biome.BiomeBookItem)) {
+                return net.minecraft.world.InteractionResult.PASS;
+            }
+            net.minecraft.client.Minecraft.getInstance().setScreenAndShow(
+                    new net.thaumcraft.occulta.client.BiomeBookScreen(livro));
+            return net.minecraft.world.InteractionResult.SUCCESS;
+        });
+
         // e os Cozimentos das Bruxas, que é o manual do ofício e abre pelo mesmo caminho
         net.fabricmc.fabric.api.event.player.UseItemCallback.EVENT.register((quem, level, mão) -> {
             if (!level.isClientSide()

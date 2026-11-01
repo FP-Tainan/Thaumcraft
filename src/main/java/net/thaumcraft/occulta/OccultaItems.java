@@ -1188,6 +1188,25 @@ public final class OccultaItems {
                     net.thaumcraft.occulta.CauldronBookItem.feitio(properties)));
 
     /**
+     * O <b>Livro de Biomas</b>: o escolhedor do ofício.
+     *
+     * <p>Todos os biomas do mundo de cima, um por folha, com o que se sabe de cada um — e marcadores na
+     * beira para saltar de seção em seção. A folha em que ele fica é de onde sai a Nota de Bioma.
+     */
+    public static final Item BIOME_BOOK = register("biome_book", properties ->
+            new net.thaumcraft.occulta.biome.BiomeBookItem(
+                    net.thaumcraft.occulta.biome.BiomeBookItem.feitio(properties)));
+
+    /**
+     * A <b>Nota de Bioma</b>: um papel com o nome de um bioma escrito.
+     *
+     * <p>Ela não faz nada na mão de ninguém — é um recado, e quem o lê é o caldeirão. É ela que diz ao
+     * cozimento das Estações que Mudam em que bioma transformar o lugar onde o frasco bater.
+     */
+    public static final Item BIOME_NOTE = register("biome_note", properties ->
+            new net.thaumcraft.occulta.biome.BiomeNoteItem(properties));
+
+    /**
      * O <b>Cajado de Duplicação</b>: ele copia um pedaço do mundo e o cola noutro lugar.
      *
      * <p>Foi com ele que o autor do original desenhou as casas da aldeia. Bate-se numa quina, bate-se na

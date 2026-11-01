@@ -67,6 +67,7 @@ public class Thaumcraft implements ModInitializer {
         net.thaumcraft.occulta.leonard.UrnJoiningRecipe.init();
         net.thaumcraft.occulta.louse.BeltPotionRecipe.init();
         net.thaumcraft.occulta.spirit.DreamWeaveRecipe.init();
+        net.thaumcraft.crafting.BiomeNoteRecipe.init();
         net.thaumcraft.crafting.MutationRecipe.init();
         net.thaumcraft.crafting.TagSmeltingRecipe.init();
         net.thaumcraft.crafting.MetalIngotRecipe.init();

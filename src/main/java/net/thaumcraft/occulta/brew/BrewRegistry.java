@@ -303,6 +303,12 @@ public final class BrewRegistry {
         register(new BrewWorldActions.Planting(Items.WHEAT_SEEDS, 0, LEVE));
         register(new BrewWorldActions.Blight(Items.POISONOUS_POTATO, 2000, GRAVE));
         register(new BrewWorldActions.Raising(Items.BONE, 2000, GRAVE));
+        /*
+         * E as <b>Estações que Mudam</b>, que é o efeito mais estranho da tabela: ele não faz nada a
+         * ninguém, não deixa nada no chão, e troca o <b>bioma</b> do lugar onde o frasco bateu. O que ele
+         * gasta é o espaço do oitavo grau, que é o último.
+         */
+        register(new BrewWorldActions.BiomeChange(OccultaItems.BIOME_NOTE, 5000, 8));
 
         // ------------------------------------------------------------ os efeitos que são poções do jogo
         register(new BrewActions.Potion(Items.SPIDER_EYE, new BrewName.Text("tc.brew.poison"), 0,

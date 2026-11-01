@@ -223,6 +223,23 @@ public final class OccultaComponents {
             builder -> builder.persistent(com.mojang.serialization.Codec.INT)
                     .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.VAR_INT));
 
+    /**
+     * Qual bioma está escrito numa <b>Nota de Bioma</b>, e em que folha um <b>Livro de Biomas</b> está
+     * aberto: o {@code CurrentPage} do {@code ItemBook} do original.
+     *
+     * <p><b>Desvio declarado:</b> lá era o <b>número da folha</b>, porque a lista de biomas era fechada no
+     * código e o número valia sempre o mesmo. Hoje os biomas são <b>dados</b> — um pacote acrescenta um, e
+     * todas as folhas depois dele andam. Guarda-se então o <b>bioma</b>, que é o que a nota quer dizer, e a
+     * folha conta-se dele.
+     */
+    public static final DataComponentType<net.minecraft.resources.ResourceKey<
+            net.minecraft.world.level.biome.Biome>> BIOME = register("biome",
+            builder -> builder
+                    .persistent(net.minecraft.resources.ResourceKey.codec(
+                            net.minecraft.core.registries.Registries.BIOME))
+                    .networkSynchronized(net.minecraft.resources.ResourceKey.streamCodec(
+                            net.minecraft.core.registries.Registries.BIOME)));
+
     private OccultaComponents() {
     }
 

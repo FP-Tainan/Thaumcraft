@@ -480,6 +480,75 @@ public final class BrewWorldActions {
         }
     }
 
+    // ------------------------------------------------------------------ as estações que mudam
+
+    /**
+     * As <b>Estações que Mudam</b>: o {@code BrewActionBiomeChange} do Witchery.
+     *
+     * <p>É o cozimento mais estranho do ofício, e o mais caro: ele não faz nada a ninguém, não deixa nada no
+     * chão e não se vê acontecer — ele <b>troca o bioma</b> do lugar onde o frasco bateu. A pradaria passa a
+     * ser selva, e daí em diante chove nela como chove na selva.
+     *
+     * <p>Em que bioma, diz a {@linkplain net.thaumcraft.occulta.biome.BiomeNoteItem Nota de Bioma} que caiu
+     * na panela — e é por isso que este é o único efeito do mod que <b>precisa de ler um ingrediente por
+     * dentro</b>. Sem nota não há bioma, e sem bioma ele não faz nada.
+     *
+     * <p>O que ele apanha é pequeno: <b>um bloco à volta</b>, mais um por grau de força. É o irmão de pouco
+     * alcance da {@linkplain net.thaumcraft.occulta.rite.ClimateChange Mudança de Clima}, que faz o mesmo em
+     * dezenas de blocos mas escolhe o bioma por um foco no chão em vez de o escolher a dedo.
+     *
+     * <p><b>E ele só estoura.</b> É o {@code setOnlyInstant} do original: um efeito que muda o mundo não pode
+     * ficar no ar em nuvem nem no chão em poça — ou acontece quando o frasco bate, ou não acontece. A nota
+     * anula a pólvora, a lã de morcego e a losna sem as tirar da panela.
+     *
+     * <p><b>Do original fica de fora, declarado:</b> a metade <b>ritual</b> dele, que apanhava dezesseis
+     * blocos por grau em vez de um. Os cozimentos de círculo de giz não estão portados — nenhum deles —, e
+     * quem quer mudar um bioma em grande tem o rito, que é a mesma coisa feita do jeito certo.
+     *
+     * <p><b>E a área é um quadrado e não um círculo</b>, pela mesma razão do rito: quem enche biomas hoje é o
+     * caminho do {@code /fillbiome}, e ele enche uma caixa.
+     */
+    public static class BiomeChange extends WorldEffect {
+        /** O que ele apanha sem força nenhuma, e quanto cresce por grau. */
+        public static final int PERTO = 1;
+
+        public BiomeChange(Item key, int power, int weight) {
+            super(key, new BrewName.Text("tc.brew.seasons"), power, weight);
+        }
+
+        /** O raio que ele apanha: um, mais um por grau. */
+        public static int raio(int força) {
+            return PERTO + força;
+        }
+
+        /** O {@code prepareSplashPotion}: ele só estoura. */
+        @Override
+        public void prepareImpact(BrewImpact espalha) {
+            espalha.setOnlyInstant();
+        }
+
+        @Override
+        protected void onBlock(ServerLevel level, BlockPos onde, Direction lado, int raio,
+                               BrewModifiers temperos) {
+            if (temperos.bioma == null) return;
+            var qual = level.registryAccess()
+                    .lookupOrThrow(net.minecraft.core.registries.Registries.BIOME)
+                    .get(temperos.bioma).orElse(null);
+            if (qual == null) return;
+            net.thaumcraft.occulta.rite.ClimateChange.muda(level, onde, raio(temperos.getStrength()), qual);
+        }
+
+        /**
+         * E em quem passa, <b>nada</b>: o {@code doApplyToEntity} do original está vazio.
+         *
+         * <p>Quem leva este frasco em cheio não apanha nada — mas o chão debaixo dele muda, porque o estouro
+         * também bate no lugar.
+         */
+        @Override
+        protected void onEntity(ServerLevel level, LivingEntity quem, BrewModifiers temperos) {
+        }
+    }
+
     // ------------------------------------------------------------------ a casca de gelo
 
     /**
