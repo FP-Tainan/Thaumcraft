@@ -360,7 +360,18 @@ public class OccultaBrewGameTest {
     @GameTest
     public void theBottleFliesFromTheHand(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        var quem = helper.makeMockServerPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        /*
+         * O jogador de mentira nasce em <b>(0, 0, 0)</b> — e as arenas das provas ficam a milhões de blocos
+         * dali, num mundo que não tem o zero carregado. O frasco saía mesmo da mão dele, mas nascia num
+         * pedaço de mundo que ninguém estava a ver, e a caixa que o procura não achava nada. Esta prova
+         * passava ou falhava conforme o sítio que lhe calhasse na lista.
+         *
+         * <p>Por isso ele é <b>posto na arena</b> antes de atirar. É o mesmo cuidado de qualquer prova que
+         * procure coisas numa caixa: elas têm de acontecer onde a arena está.
+         */
+        var quem = helper.makeMockServerPlayerInLevel();
+        var naArena = helper.absoluteVec(new net.minecraft.world.phys.Vec3(2.5, 2.0, 2.5));
+        quem.snapTo(naArena.x, naArena.y, naArena.z, 0.0f, 0.0f);
         ItemStack frasco = BrewItem.of(OccultaItems.BREW,
                 List.of(Items.NETHER_WART, Items.SPIDER_EYE, Items.GUNPOWDER));
         quem.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, frasco);
@@ -613,8 +624,13 @@ public class OccultaBrewGameTest {
         });
     }
 
-    /** As armas envenenadas envenenam quem se acerta, e não quem as bebe. */
-    @GameTest
+    /**
+     * As armas envenenadas envenenam quem se acerta, e não quem as bebe.
+     *
+     * <p>O golpe só se dá <b>depois de os dois assentarem</b>: dois bichos acabados de nascer ainda estão
+     * no ar, e um golpe dado no ar não acerta em ninguém.
+     */
+    @GameTest(maxTicks = 60)
     public void poisonWeaponsPoisonTheOther(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         var quemBate = helper.spawn(EntityTypes.ZOMBIE, new BlockPos(2, 2, 2));
@@ -625,11 +641,16 @@ public class OccultaBrewGameTest {
         }
         if (quemBate.hasEffect(MobEffects.POISON)) helper.fail("mas não envenena quem bebeu");
 
-        quemBate.doHurtTarget(level, quemLeva);
-        if (!quemLeva.hasEffect(MobEffects.POISON)) helper.fail("e quem apanha o golpe é que se envenena");
-        quemBate.discard();
-        quemLeva.discard();
-        helper.succeed();
+        helper.runAfterDelay(20, () -> {
+            quemBate.doHurtTarget(level, quemLeva);
+            if (!quemLeva.hasEffect(MobEffects.POISON)) {
+                helper.fail("e quem apanha o golpe é que se envenena");
+                return;
+            }
+            quemBate.discard();
+            quemLeva.discard();
+            helper.succeed();
+        });
     }
 
     /** A volatilidade estoura quem apanha. */

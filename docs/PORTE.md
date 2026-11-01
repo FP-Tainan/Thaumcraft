@@ -3563,8 +3563,9 @@ no `ALLOW_CHAT_MESSAGE` do Fabric, que é o lugar de hoje para o que o original 
 
 **Desvios declarados.** (1) O Reflexo **não lança os feitiços da Vara Mística**, que é fatia à parte, nem toma a
 forma de lobisomem — briga de perto ou de arco. (2) A pele dele é a de reserva do próprio Witchery, e não a pele
-de quem entrou baixada do servidor de peles. (3) A **mais bela** nunca é uma Seguidora nascida na hora, por a
-Seguidora não estar portada: é sempre alguém que joga. (4) Os outros dois caminhos do clique — vestir a pele de
+de quem entrou baixada do servidor de peles. (3) ~~A **mais bela** nunca é uma Seguidora nascida na hora, por a
+Seguidora não estar portada~~ — *resolvido: a fatia da Mais Bela de Todas trouxe-a, e o espelho fá-la nascer
+uma vez em cem*. (4) Os outros dois caminhos do clique — vestir a pele de
 outrem com um Frasco de Vínculo, e a Granada Duplicadora com a Esfera de Quartzo — pedem a Dobra e a Esfera, que
 não existem aqui. (5) O **Rito de Convocação**, que chama o Reflexo para fora do espelho, pede a Esfera de
 Quartzo e fica para quando ela chegar. (6) ~~O Rito de Infusão pede uma Lágrima da Deusa no lugar do Cozimento de
@@ -13846,3 +13847,102 @@ deles, e este entra na mesma conta.
 original; que ele alcança o próprio grau e não mais, e não toca no que é bom; que deixa o que o leite não
 tira e tira a Doença do segundo grau para cima; e que do terceiro para cima **seca as poças**, curando a
 pessoa na mesma.
+
+## A Mais Bela de Todas (2026-11-01)
+
+A seção do Espelho da Bruxa declarava, no desvio 3: «a **mais bela** nunca é uma Seguidora nascida na hora,
+por a Seguidora não estar portada». A Seguidora está portada desde a fatia de Elle. Fica paga.
+
+É a coisa mais estranha que o Witchery faz, e vale a pena dizê-la por inteiro: pergunta-se ao espelho quem é
+o mais belo; ele responde que és tu; mas **uma vez em cem** ele responde outra coisa — que há alguém mais
+belo, e que essa pessoa **anda por aí**. E anda mesmo. O espelho **faz nascer** uma estranha a cinquenta
+blocos dali, com nome de conto de fadas, e diz para que lado ela está.
+
+O espelho não mente. O preço de lhe perguntar é que o mundo passa a ter alguém mais belo do que tu.
+
+### A Seguidora é duas coisas
+
+O `EntityFollower` do original não é só Elle: o **tipo** dele decide tudo. No zero é Elle — à prova de fogo,
+à procura de um lago de lava, e que ao fim da conta vira Lilith. De **um a quatro** é a Mais Bela: arde como
+gente, não procura nada, anda por ali, e dela cai o **Coração de Ouro** uma vez em dez.
+
+Um tipo lido ao contrário dava uma Elle incombustível a passear num campo, ou uma estranha a virar Lilith —
+e é isso que a prova desta fatia tranca.
+
+**Pequena mudança declarada:** o `setFollowerType` do original **acrescenta a meta de vaguear** à lista de
+metas no momento em que o tipo muda. Aqui as metas estão todas postas desde o princípio e é o tipo que
+decide o resto: dá no mesmo, e não se mexe na lista de metas de um bicho já vivo, que é coisa que não se faz.
+
+### O nome é a coisa toda
+
+Ela nasce com nome, e são **trezentas e oitenta e duas palavras** guardadas à mão no original: cento e seis
+nomes de homem, cento e vinte de mulher, cento e cinquenta e seis sobrenomes. O quarto tipo é o homem; os
+outros três, mulher.
+
+Repare nos sobrenomes: Appleseed, Goldhair, Rapunzel, Gooseberry, Winkie, Grimm. Nenhum é um sobrenome a
+sério — são todos de rima infantil ou de irmão Grimm. A Mais Bela não é uma pessoa: é uma **personagem de
+conto** que apareceu no mundo porque alguém perguntou a um espelho. Uma estranha a cinquenta blocos não
+assusta ninguém; **a Rose Appleseed** que o espelho diz ser mais bela do que tu é outra história.
+
+### Onde ela nasce
+
+Vinte e cinco tentativas, a **cinquenta a noventa e nove** blocos do espelho em x e em z, com o sinal
+sorteado; de vinte acima do espelho descendo até vinte abaixo, no primeiro bloco firme com duas casas de ar.
+Não achando chão em vinte e cinco tentativas ela **não nasce**, e quem perguntou é o mais belo — o mundo tem
+a última palavra.
+
+Depois disso o espelho **lembra-se dela**: na pergunta seguinte procura-a viva numa caixa de cem blocos, e
+achando-a repete que há outra mais bela. Só depois de ela morrer é que a pergunta volta a ter outra resposta.
+E há uma espera de **dois minutos** entre nascimentos, para que perguntar cem vezes seguidas não encha o
+mapa de estranhas.
+
+### O Coração de Ouro, e os bichos atrás de quem o bebeu
+
+Dela cai o **Coração de Ouro**, uma vez em dez, e não cai de mais nada no mod. É um comércio esquisito: o
+espelho diz que há alguém mais belo, a pessoa vai procurá-la, e o que traz de volta é um coração.
+
+Na panela ele é a **Atração de Bichos** — e invertido, a repulsa. Todo bicho a **dezesseis blocos por grau**
+vem ter com quem bebeu; invertido, foge para dez blocos dali, teleportando-se se não achar caminho. É o
+cozimento mais barulhento do mod: um frasco de grau alto num campo traz um rebanho inteiro atrás de quem o
+bebeu.
+
+E ele **doma**. Um bicho domesticável sem dono passa a ser de quem bebeu, de graça; invertido, um bicho
+domado de **outra pessoa** deixa de ser dela. É a única coisa no mod que doma sem se dar nada ao bicho, e é
+por isso que o coração custa quinhentos de poder e o quarto grau.
+
+**Quem pode ser familiar escapa** — o gato, o sapo e a coruja. É o `couldBeFamiliar` do original, e a razão
+é clara: um frasco não há de roubar o familiar de ninguém.
+
+**Dois pedaços do original que não vieram, declarados:** a conta do `maxCreatures`, que o original calcula e
+**nunca usa** (não há limite de bichos lá, e não há aqui); e a cor de pelagem sorteada ao domar uma
+**jaguatirica**, que em 2014 era o que virava gato — hoje o gato já nasce gato, e de qualquer modo é um dos
+que escapam. E o `62` de onde o invertido começa a procurar ar é hoje a altura do mar do próprio mundo.
+
+**Guardas:** o `OccultaFairestGameTest`, com seis — que a Seguidora é dois feitios e que só Elle não arde;
+que o nome sai das listas certas e que a do quarto tipo não se mistura com a das outras; que o coração cai
+dela em cem mortes e **nunca** de Elle; que ele está na panela com os números do original; que ele doma o
+lobo e **não** o gato; e que os bichos vêm, ou se vão, conforme a inversão.
+
+### E três provas velhas que estavam a mentir
+
+As dez provas novas das últimas fatias empurraram as arenas, e com elas caíram três provas antigas que
+estavam frágeis há muito e ninguém tinha visto. Nenhuma delas acusava um defeito do mod: todas as três
+perguntavam a coisa certa no momento errado.
+
+**O frasco que sai da mão** procurava o projétil numa caixa à volta do jogador de mentira — e o jogador de
+mentira nasce em **(0, 0, 0)**, a milhões de blocos da arena, num pedaço de mundo que não está carregado.
+O frasco saía mesmo, mas nascia onde ninguém estava a ver. Agora o jogador é **posto na arena** antes de
+atirar.
+
+**As armas envenenadas** mandavam o zumbi bater no porco na **batida zero**, com os dois recém-nascidos e
+ainda no ar. Um golpe dado no ar não acerta em ninguém. Espera-se agora que assentem.
+
+**O chão falso** media a altura do porco numa **batida marcada**, a oitenta. Numa corrida com muitas
+arenas ao mesmo tempo o pedaço de mundo do porco pode ainda nem estar a correr, e o porco não caiu porque
+não teve batidas. Agora a prova **espera** em vez de marcar hora.
+
+E a **Pedra Espectral** perguntava «sobrou um espectro?» quando o rito fixa o feitio no **primeiro que
+acha** — e essa ordem sai da ordem em que o mundo guarda os bichos, que muda com o pedaço de mundo em que
+a arena calhou. A pergunta passa a ser a **regra**: de um feitio só, e todos os que couberem.
+
+**E a gosma maculada** ganhou teto largo na fatia anterior, pela mesma razão.

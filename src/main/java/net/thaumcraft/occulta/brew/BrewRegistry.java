@@ -270,6 +270,14 @@ public final class BrewRegistry {
                 net.thaumcraft.occulta.OccultaEffects.KEEP_EFFECTS_ON_DEATH, mins(6), 8));
 
         /*
+         * <b>Atração de Bichos</b>, e invertida a repulsa: o Coração de Ouro, que cai da Mais Bela de
+         * Todas. Dezesseis blocos por grau de bichos a virem ter com quem bebeu — e ele doma o que não
+         * tiver dono, de graça, que é o que faz dele um efeito de quarto grau.
+         */
+        register(new BrewActions.AnimalAttraction(OccultaItems.HEART_OF_GOLD,
+                new BrewName.Text("tc.brew.animalattraction", "tc.brew.animalrepulsion"), 500, GRAVE));
+
+        /*
          * <b>Tirar os Maus Efeitos</b>: o outro que não põe poção nenhuma — este <b>tira</b>. A força dele
          * não é quanto ele dá, é até que grau ele alcança; e do segundo grau para cima é a única coisa no
          * mod que tira a <b>Doença</b>, com as poças dela a partir do terceiro.

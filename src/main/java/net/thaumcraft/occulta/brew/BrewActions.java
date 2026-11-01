@@ -263,6 +263,139 @@ public final class BrewActions {
     }
 
     /**
+     * <b>Atração de Bichos</b>, e invertida a <b>repulsa</b>: o {@code BrewActionEffect} do Coração de Ouro.
+     *
+     * <p>Todo bicho a <b>dezesseis blocos</b> por grau vem ter com quem bebeu — e, invertido, foge dele para
+     * dez blocos de distância, teleportando-se se não achar caminho. É o cozimento mais barulhento do mod:
+     * um frasco de grau alto num campo traz um rebanho inteiro atrás de quem o bebeu.
+     *
+     * <p>E ele <b>doma</b>. Um bicho domesticável que ainda não tenha dono passa a ser de quem bebeu, de
+     * graça; invertido, um bicho domado de <b>outra pessoa</b> deixa de ser dela. É a única coisa no mod que
+     * doma sem se dar nada ao bicho, e é por isso que o coração custa quinhentos de poder e o quarto grau.
+     *
+     * <p><b>Quem pode ser familiar escapa</b> — o gato, o sapo e a coruja. É o {@code couldBeFamiliar} do
+     * original, e a razão é clara: um frasco não há de roubar o familiar de ninguém.
+     *
+     * <p><b>Dois pedaços do original que não vieram, e são declarados:</b> a conta do {@code maxCreatures},
+     * que o original calcula e <b>nunca usa</b> — não há limite de bichos lá, e não há aqui; e a cor de
+     * pelagem que ele sorteava ao domar uma <b>jaguatirica</b>, que em 2014 era o que virava gato. Hoje o
+     * gato já nasce gato, e de qualquer modo ele é um dos que escapam.
+     */
+    public static class AnimalAttraction extends BrewAction {
+        /** O alcance por grau, e a que distância o invertido atira os bichos. */
+        public static final int POR_GRAU = 16;
+        public static final int PARA_LONGE = 6;
+
+        /** E a vida com que um bicho domado fica, que é o {@code setHealth(20)} do original. */
+        public static final float DOMADO = 20.0f;
+
+        private final int weight;
+
+        public AnimalAttraction(Item key, BrewName.Part namePart, int power, int weight) {
+            super(key, namePart, power);
+            this.weight = weight;
+        }
+
+        @Override
+        public boolean isEffect() {
+            return true;
+        }
+
+        @Override
+        public boolean augmentCapacity(BrewCapacity espaço) {
+            return espaço.consume(this.weight);
+        }
+
+        /** O raio: dezesseis por grau, a partir de um. */
+        public static double raio(int força) {
+            return (força + 1) * (double) POR_GRAU;
+        }
+
+        @Override
+        public void applyToEntity(Level level, LivingEntity quem, BrewModifiers temperos) {
+            if (temperos.disableEntityTarget) return;
+            if (!(level instanceof net.minecraft.server.level.ServerLevel server)) {
+                temperos.reset();
+                return;
+            }
+            boolean invertido = temperos.inverted;
+            double raio = raio(temperos.getStrength());
+            var caixa = quem.getBoundingBox().inflate(raio);
+
+            for (LivingEntity outro : server.getEntitiesOfClass(LivingEntity.class, caixa)) {
+                if (outro == quem || outro.distanceToSqr(quem) >= raio * raio) continue;
+                if (outro instanceof net.minecraft.world.entity.TamableAnimal bicho) {
+                    // quem pode ser familiar escapa: um frasco não rouba o familiar de ninguém
+                    if (net.thaumcraft.occulta.familiar.Familiars.deQueFeitio(bicho) != null) continue;
+                    if (!invertido) {
+                        doma(bicho, quem);
+                    } else if (bicho.isTame() && !quem.getUUID().equals(deQuemÉ(bicho))) {
+                        desdoma(bicho);
+                    }
+                }
+                if (outro instanceof net.minecraft.world.entity.animal.Animal bicho) {
+                    if (invertido) foge(server, bicho, quem);
+                    else vem(bicho, quem);
+                }
+            }
+            temperos.reset();
+        }
+
+        /** De quem aquele bicho é, se é de alguém. */
+        private static @org.jetbrains.annotations.Nullable java.util.UUID deQuemÉ(
+                net.minecraft.world.entity.TamableAnimal bicho) {
+            var dono = bicho.getOwnerReference();
+            return dono == null ? null : dono.getUUID();
+        }
+
+        /** O {@code setTamed} do original: dono novo, caminho limpo, alvo limpo e vida cheia. */
+        private static void doma(net.minecraft.world.entity.TamableAnimal bicho, LivingEntity dono) {
+            if (bicho.isTame()) return;
+            bicho.setTame(true, true);
+            bicho.setOwner(dono);
+            bicho.getNavigation().stop();
+            bicho.setTarget(null);
+            bicho.setHealth(DOMADO);
+        }
+
+        /** E o contrário: ele deixa de ser de quem era. */
+        private static void desdoma(net.minecraft.world.entity.TamableAnimal bicho) {
+            bicho.setTame(false, true);
+            bicho.setOwnerReference(null);
+            bicho.getNavigation().stop();
+            bicho.setTarget(null);
+        }
+
+        /** Vem ter com quem bebeu. */
+        private static void vem(net.minecraft.world.entity.animal.Animal bicho, LivingEntity quem) {
+            bicho.getNavigation().moveTo(quem.getX(), quem.getY(), quem.getZ(), 1.0);
+        }
+
+        /**
+         * E foge: para seis a onze blocos dali, no primeiro lugar com ar por cima — e, não achando
+         * caminho, <b>por cima</b>, que é o {@code setPositionAndUpdate} do original.
+         */
+        private static void foge(net.minecraft.server.level.ServerLevel level,
+                                 net.minecraft.world.entity.animal.Animal bicho, LivingEntity quem) {
+            var sorte = level.getRandom();
+            int x = net.minecraft.util.Mth.floor(quem.getX())
+                    + (sorte.nextBoolean() ? 1 : -1) * (PARA_LONGE + sorte.nextInt(PARA_LONGE));
+            int z = net.minecraft.util.Mth.floor(quem.getZ())
+                    + (sorte.nextBoolean() ? 1 : -1) * (PARA_LONGE + sorte.nextInt(PARA_LONGE));
+            /*
+             * O original parte do <b>sessenta e dois</b>, que era a altura do mar de 2014, e sobe até achar
+             * ar. Hoje a altura do mar é do mundo e não um número escrito à mão.
+             */
+            int y = level.getSeaLevel();
+            while (y < level.getMaxY() && !level.isEmptyBlock(new net.minecraft.core.BlockPos(x, y + 1, z))) {
+                y++;
+            }
+            if (bicho.getNavigation().moveTo(x, y, z, 1.0)) return;
+            bicho.snapTo(0.5 + x, y, 0.5 + z, bicho.getYRot(), bicho.getXRot());
+        }
+    }
+
+    /**
      * <b>Tirar os Maus Efeitos</b>: o {@code BrewActionEffect} do Leite Purificado.
      *
      * <p>É o contrário de tudo o mais que sai do caldeirão: ele não põe nada em ninguém — <b>tira</b>. E o

@@ -41,8 +41,37 @@ import java.util.UUID;
  * fazer um lago para ela. O mod nunca o diz; ela é que mostra, voando sempre para o mesmo lado.
  *
  * <p>Ela <b>não arde</b>, e tinha de não arder: a casa dela é um lago de lava.
+ *
+ * <h2>E os outros quatro tipos: a Mais Bela de Todas</h2>
+ *
+ * <p>O {@code EntityFollower} do original não é só Elle. Com o <b>tipo</b> de um a quatro ele é uma coisa
+ * inteiramente outra: a <b>Mais Bela de Todas</b>, a estranha que o Espelho da Bruxa faz nascer a cinquenta
+ * blocos dali quando alguém lhe pergunta quem é o mais belo e a resposta não é «você».
+ *
+ * <p>Ela não procura lava, não vira Lilith e <b>arde</b> como qualquer gente. O que ela faz é <b>andar por
+ * ali</b>, com um nome de conto de fadas, até alguém a achar — e quem a achar e a matar leva o
+ * {@linkplain net.thaumcraft.occulta.OccultaItems#HEART_OF_GOLD Coração de Ouro} uma vez em dez.
+ *
+ * <p>É a coisa mais estranha que o Witchery faz, e é de propósito: o espelho não mente, e o preço de
+ * perguntar é que o mundo passa a ter alguém mais belo do que você andando por ele.
  */
 public class FollowerEntity extends Monster {
+    /** Os tipos: o zero é Elle, de um a quatro é a Mais Bela. */
+    public static final int ELLE = 0;
+    public static final int BELAS = 4;
+
+    /** E o quarto deles é <b>homem</b> — é o único, e é o que manda na lista de nomes. */
+    public static final int O_HOMEM = 4;
+
+    /** Quantas vezes em dez a Mais Bela larga o Coração de Ouro. */
+    public static final float CORAÇÃO = 0.1f;
+
+    /**
+     * Qual deles é este: vai sincronizado porque é a <b>pele</b> que depende dele.
+     */
+    private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> TIPO =
+            net.minecraft.network.syncher.SynchedEntityData.defineId(FollowerEntity.class,
+                    net.minecraft.network.syncher.EntityDataSerializers.INT);
     /** De quanto em quanto ela procura, e a quantas casas. */
     public static final int PROCURA_DE = 10;
     public static final int TENTATIVAS = 10;
@@ -82,6 +111,34 @@ public class FollowerEntity extends Monster {
     }
 
     @Override
+    protected void defineSynchedData(
+            net.minecraft.network.syncher.SynchedEntityData.Builder construtor) {
+        super.defineSynchedData(construtor);
+        construtor.define(TIPO, ELLE);
+    }
+
+    /** Qual deles ela é. */
+    public int tipo() {
+        return this.getEntityData().get(TIPO);
+    }
+
+    /** Se ela é uma das quatro Mais Belas, e não Elle. */
+    public boolean éAMaisBela() {
+        return this.tipo() != ELLE;
+    }
+
+    /**
+     * E faz-se dela uma: o {@code setFollowerType} do original.
+     *
+     * <p>Lá isto também <b>acrescenta a meta de vaguear</b> à lista; aqui as metas já estão todas postas
+     * desde o princípio e é o tipo que decide o resto — que dá no mesmo e não mexe na lista de metas de um
+     * bicho já vivo, que é coisa que não se faz.
+     */
+    public void tipo(int qual) {
+        this.getEntityData().set(TIPO, qual);
+    }
+
+    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new net.minecraft.world.entity.ai.goal.FloatGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0));
@@ -106,9 +163,10 @@ public class FollowerEntity extends Monster {
         return this.casa;
     }
 
+    /** <b>Só Elle não arde.</b> A Mais Bela é gente, e arde como gente. */
     @Override
     public boolean fireImmune() {
-        return true;
+        return !this.éAMaisBela();
     }
 
     @Override
@@ -119,6 +177,8 @@ public class FollowerEntity extends Monster {
     @Override
     protected void customServerAiStep(ServerLevel level) {
         super.customServerAiStep(level);
+        // a Mais Bela não procura lava, não tem casa e não vira ninguém: ela anda por ali
+        if (this.éAMaisBela()) return;
         if (this.tickCount % PROCURA_DE != 1) return;
 
         if (this.casa == null) {
@@ -253,10 +313,27 @@ public class FollowerEntity extends Monster {
 
     // ------------------------------------------------------------------ e o resto
 
+    /**
+     * <b>E dela cai o Coração de Ouro</b>, uma vez em dez: o {@code dropFewItems} do original.
+     *
+     * <p>É a única fonte dele no mod, e é um comércio esquisito: o espelho diz que há alguém mais belo, a
+     * pessoa vai procurá-la, e o que traz de volta é um coração.
+     */
+    @Override
+    protected void dropCustomDeathLoot(ServerLevel level, net.minecraft.world.damagesource.DamageSource
+            porquê, boolean matouAlguém) {
+        super.dropCustomDeathLoot(level, porquê, matouAlguém);
+        if (!this.éAMaisBela()) return;
+        if (this.getRandom().nextFloat() >= CORAÇÃO) return;
+        this.spawnAtLocation(level, new net.minecraft.world.item.ItemStack(
+                net.thaumcraft.occulta.OccultaItems.HEART_OF_GOLD));
+    }
+
     @Override
     public Component getName() {
         return this.hasCustomName() ? super.getName()
-                : Component.translatable("entity.thaumcraft.follower");
+                : Component.translatable(this.éAMaisBela()
+                        ? "entity.thaumcraft.follower.fairest" : "entity.thaumcraft.follower");
     }
 
     @Override
@@ -265,6 +342,7 @@ public class FollowerEntity extends Monster {
         if (this.casa != null) dados.store("Casa", BlockPos.CODEC, this.casa);
         if (this.dono != null) dados.store("Dono", net.minecraft.core.UUIDUtil.CODEC, this.dono);
         dados.putInt("Conta", this.conta);
+        dados.putInt("Tipo", this.tipo());
     }
 
     @Override
@@ -273,5 +351,6 @@ public class FollowerEntity extends Monster {
         this.casa = dados.read("Casa", BlockPos.CODEC).orElse(null);
         this.dono = dados.read("Dono", net.minecraft.core.UUIDUtil.CODEC).orElse(null);
         this.conta = dados.getIntOr("Conta", 0);
+        this.tipo(dados.getIntOr("Tipo", ELLE));
     }
 }

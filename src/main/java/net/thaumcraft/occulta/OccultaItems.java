@@ -1188,6 +1188,14 @@ public final class OccultaItems {
                     net.thaumcraft.occulta.CauldronBookItem.feitio(properties)));
 
     /**
+     * O <b>Coração de Ouro</b>: o que cai da Mais Bela de Todas.
+     *
+     * <p>Uma vez em dez, e não cai de mais nada. Na panela ele é a <b>Atração de Bichos</b> — e invertido, a
+     * repulsa: o frasco que faz todo bicho à volta vir ter com quem o bebeu, ou fugir dele.
+     */
+    public static final Item HEART_OF_GOLD = register("heart_of_gold", Item::new);
+
+    /**
      * O <b>Livro de Biomas</b>: o escolhedor do ofício.
      *
      * <p>Todos os biomas do mundo de cima, um por folha, com o que se sabe de cada um — e marcadores na

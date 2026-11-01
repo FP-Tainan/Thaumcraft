@@ -64,26 +64,33 @@ public class OccultaSpectralStoneGameTest {
     /**
      * <b>O rito pega em três do mesmo feitio, e só.</b>
      *
-     * <p>Postos quatro espectros e uma banshee à volta, ele leva <b>três espectros</b> — o feitio fixa-se
-     * no primeiro que ele acha — e deixa os outros em paz.
+     * <p>Postos quatro espectros e duas banshees à volta, ele leva <b>de um feitio só</b>: ou os três
+     * espectros, ou as duas banshees — e o outro feitio fica inteiro.
+     *
+     * <p><b>Qual</b> dos dois ele escolhe é coisa que não se pode prever, e a prova não a pergunta. O
+     * feitio fixa-se no <b>primeiro que ele acha</b>, e essa ordem sai da ordem em que o mundo guarda os
+     * bichos — que muda com o pedaço de mundo em que a arena calhou. Esta prova perguntava «sobrou um
+     * espectro?» e falhava de vez em quando por causa disso, sem que nada estivesse mal. O que ela
+     * pergunta agora é a <b>regra</b>: de um feitio só, e todos os que couberem.
      */
     /*
-     * E ela pede <b>folga à volta da arena</b>: o rito varre cinco blocos em cada rumo, e sem folga
-     * esses cinco chegam à arena do lado e ele leva fantasmas da prova de outro.
+     * E ela pede <b>folga à volta da arena</b>: o rito varre cinco blocos em cada rumo, e os fantasmas da
+     * prova do lado <b>andam</b>. Um deles que entre na roda fixa o feitio e a prova não leva ninguém.
      */
-    @GameTest(padding = 8)
+    @GameTest(padding = 24)
     public void theRiteTakesThreeOfOneKind(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos meio = helper.absolutePos(new BlockPos(3, 2, 3));
 
         /*
          * O mundo das provas é um só, e a arena do lado tem fantasmas dela. Por isso esta prova só conta
-         * os <b>cinco que ela mesma pôs</b>, e no fim varre só esses.
+         * os <b>seis que ela mesma pôs</b>, e no fim varre só esses.
          */
         var nossos = new java.util.ArrayList<SummonedUndeadEntity>();
         for (int n = 0; n < 4; n++) {
             nossos.add(põe(level, OccultaEntities.SPECTRE, meio.offset(n - 1, 0, 1)));
         }
+        nossos.add(põe(level, OccultaEntities.BANSHEE, meio.offset(0, 0, -1)));
         nossos.add(põe(level, OccultaEntities.BANSHEE, meio.offset(1, 0, -1)));
 
         var rito = new Rites.BindSpectral(Rites.ESPECTROS_A);
@@ -101,8 +108,26 @@ public class OccultaSpectralStoneGameTest {
             if (cada instanceof net.thaumcraft.occulta.ghost.BansheeEntity) banshees++;
         }
         for (var cada : nossos) if (cada != null) cada.discard();
-        if (espectros != 1) helper.fail("ele leva três dos quatro espectros, e sobrou " + espectros);
-        if (banshees != 1) helper.fail("e deixa a banshee em paz, e sobraram " + banshees);
+
+        int espectrosIdos = 4 - espectros;
+        int bansheesIdas = 2 - banshees;
+        if (espectrosIdos > 0 && bansheesIdas > 0) {
+            helper.fail("ele leva de um feitio só, e levou " + espectrosIdos + " espectros e "
+                    + bansheesIdas + " banshees");
+            return;
+        }
+        if (espectrosIdos == 0 && bansheesIdas == 0) {
+            helper.fail("ele devia ter levado alguém");
+            return;
+        }
+        if (espectrosIdos > 0 && espectrosIdos != 3) {
+            helper.fail("dos quatro espectros ele leva três, e levou " + espectrosIdos);
+            return;
+        }
+        if (bansheesIdas > 0 && bansheesIdas != 2) {
+            helper.fail("e das duas banshees leva as duas, e levou " + bansheesIdas);
+            return;
+        }
         helper.succeed();
     }
 

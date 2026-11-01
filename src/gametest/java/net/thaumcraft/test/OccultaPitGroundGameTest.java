@@ -18,7 +18,7 @@ public class OccultaPitGroundGameTest {
      * <b>Nada esbarra nele.</b> Um porco posto em cima de uma casa de chão falso <b>cai através dela</b>,
      * e posto em cima de terra de verdade fica onde está.
      */
-    @GameTest(maxTicks = 120)
+    @GameTest(maxTicks = 300)
     public void nothingStandsOnTheFakeGround(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos falso = helper.absolutePos(new BlockPos(2, 2, 2));
@@ -41,14 +41,20 @@ public class OccultaPitGroundGameTest {
         var fica = helper.spawn(EntityTypes.PIG, new BlockPos(4, 5, 2));
 
         /*
-         * <b>Oitenta batidas, e a conta é de altura e não de {@code onGround}.</b>
+         * <b>A conta é de altura, e espera-se por ela em vez de a marcar no relógio.</b>
          *
-         * <p>Esta prova falhava de vez em quando, e sempre na corrida rápida: com a máquina carregada o
-         * porco ainda estava caindo aos quarenta, e o {@code onGround} de um bicho que acabou de pousar
-         * pisca. O que não pisca é <b>onde ele está</b> — e é isso que a prova mede agora.
+         * <p>Esta prova falhava de vez em quando, e sempre na corrida rápida. Primeiro media o
+         * {@code onGround}, que pisca em quem acabou de pousar; passou a medir <b>onde o porco está</b>,
+         * que não pisca. E continuava a falhar, por outra razão: perguntava a uma <b>batida marcada</b>,
+         * a oitenta, e numa corrida com muitas arenas ao mesmo tempo o pedaço de mundo do porco pode
+         * ainda nem estar a correr — o porco não caiu porque <b>não teve batidas</b>, e não porque o chão
+         * o segurou.
+         *
+         * <p>Agora ela <b>espera</b>: pergunta a cada batida até o porco ter pousado, e só desiste ao fim
+         * do teto da prova. É a diferença entre perguntar «já?» e dizer «agora».
          */
         double topo = helper.absolutePos(new BlockPos(4, 3, 2)).getY();
-        helper.runAfterDelay(80, () -> {
+        helper.succeedWhen(() -> {
             if (fica.getY() - cai.getY() < 0.9) {
                 helper.fail("quem pisa no chão falso cai através dele, e os dois ficaram a "
                         + (fica.getY() - cai.getY()));
@@ -62,7 +68,6 @@ public class OccultaPitGroundGameTest {
             fica.discard();
             level.setBlockAndUpdate(falso, Blocks.AIR.defaultBlockState());
             level.setBlockAndUpdate(certo, Blocks.AIR.defaultBlockState());
-            helper.succeed();
         });
     }
 

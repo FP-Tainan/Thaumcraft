@@ -237,7 +237,8 @@
       "net.thaumcraft.test.OccultaLilithGameTest",
       "net.thaumcraft.test.OccultaBiomeBookGameTest",
       "net.thaumcraft.test.OccultaShiftingSeasonsGameTest",
-      "net.thaumcraft.test.OccultaCureBrewGameTest"
+      "net.thaumcraft.test.OccultaCureBrewGameTest",
+      "net.thaumcraft.test.OccultaFairestGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",
@@ -430,7 +431,8 @@
       "net.thaumcraft.test.client.OccultaDuplicationClientTest",
       "net.thaumcraft.test.client.OccultaCauldronBookClientTest",
       "net.thaumcraft.test.client.OccultaStewClientTest",
-      "net.thaumcraft.test.client.OccultaBiomeBookClientTest"
+      "net.thaumcraft.test.client.OccultaBiomeBookClientTest",
+      "net.thaumcraft.test.client.OccultaFairestClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

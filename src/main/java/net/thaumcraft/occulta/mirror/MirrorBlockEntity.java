@@ -56,6 +56,10 @@ public class MirrorBlockEntity extends BlockEntity {
     private long cooldown;
     private @Nullable UUID favorite;
     private String favoriteName = "";
+
+    /** E a <b>Mais Bela</b> que ele fez nascer, se fez: quem ela é, e há quanto tempo. */
+    private @Nullable UUID fairest;
+    private long lastFairestSpawn = Long.MIN_VALUE;
     private final Set<String> seen = new LinkedHashSet<>();
 
     public MirrorBlockEntity(BlockPos pos, BlockState state) {
@@ -255,8 +259,33 @@ public class MirrorBlockEntity extends BlockEntity {
         this.setChanged();
     }
 
-    /** Quem é a mais bela: quem joga, ou aquela outra pessoa que o espelho guardou. */
+    /** <b>Quantas vezes em cem</b> o espelho faz nascer uma Mais Bela, e de quanto em quanto tempo. */
+    public static final double CHANCE_DA_MAIS_BELA = 0.01;
+    public static final int ESPERA_DA_MAIS_BELA = 2400;
+
+    /** A que distância dele ela nasce, e em quantas tentativas ele procura chão. */
+    public static final int LONGE = 50;
+    public static final int TENTATIVAS = 25;
+    public static final int ACIMA = 20;
+    public static final int ABAIXO = 20;
+
+    /** E a caixa em que ele a procura depois: cem para os lados, e o céu e o chão do original. */
+    public static final double PROCURA_XZ = 100.0;
+    public static final double PROCURA_ACIMA = 32.0;
+    public static final double PROCURA_ABAIXO = 100.0;
+
+    /**
+     * Quem é a mais bela: quem joga, aquela outra pessoa que o espelho guardou — ou <b>a estranha</b>.
+     *
+     * <p>É aqui que o espelho faz a coisa mais estranha do mod. Não havendo outra pessoa a quem ele já
+     * tenha dito que sim, uma vez em cem ele <b>faz nascer alguém</b> a cinquenta blocos dali, com nome de
+     * conto de fadas, e diz a quem perguntou que essa é mais bela. O espelho não mente: o preço de
+     * perguntar é que o mundo passa a ter alguém mais belo do que você andando por ele.
+     */
     private void sayTheFairest(ServerLevel level, Player quem) {
+        if (this.aMaisBelaAindaAnda(level, quem)) return;
+
+        this.fairest = null;
         if (this.favorite != null && !this.isFavorite(quem)) {
             quem.sendSystemMessage(Component.translatable("tc.mirror.another")
                     .withStyle(ChatFormatting.AQUA));
@@ -264,9 +293,98 @@ public class MirrorBlockEntity extends BlockEntity {
             if (outro != null) this.sayBearing(quem, outro);
             return;
         }
+        if (this.fazUmaMaisBela(level, quem)) return;
+
         this.favorite = quem.getUUID();
         this.favoriteName = quem.getGameProfile().name();
         quem.sendSystemMessage(Component.translatable("tc.mirror.you").withStyle(ChatFormatting.AQUA));
+    }
+
+    /** Se a que ele fez nascer ainda anda por perto e viva, é ela outra vez. */
+    private boolean aMaisBelaAindaAnda(ServerLevel level, Player quem) {
+        if (this.fairest == null) return false;
+        var caixa = new net.minecraft.world.phys.AABB(
+                this.worldPosition.getX() - PROCURA_XZ, this.worldPosition.getY() - PROCURA_ABAIXO,
+                this.worldPosition.getZ() - PROCURA_XZ, this.worldPosition.getX() + PROCURA_XZ,
+                this.worldPosition.getY() + PROCURA_ACIMA, this.worldPosition.getZ() + PROCURA_XZ);
+        for (var ela : level.getEntitiesOfClass(
+                net.thaumcraft.occulta.vampire.FollowerEntity.class, caixa)) {
+            if (!ela.getUUID().equals(this.fairest) || !ela.isAlive()) continue;
+            this.sayNotFairest(quem, ela);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Faz nascer uma, se a sorte deixar — e se achar chão para ela.
+     *
+     * <p>Não achando chão em vinte e cinco tentativas, a estranha <b>não nasce</b> e quem perguntou é o
+     * mais belo. É o original: o mundo tem a última palavra.
+     */
+    private boolean fazUmaMaisBela(ServerLevel level, Player quem) {
+        if (level.getGameTime() <= this.lastFairestSpawn + ESPERA_DA_MAIS_BELA) return false;
+        if (level.getRandom().nextDouble() >= CHANCE_DA_MAIS_BELA) return false;
+        return nasce(level, this.worldPosition, quem, ela -> {
+            this.fairest = ela.getUUID();
+            this.lastFairestSpawn = level.getGameTime();
+            this.sayNotFairest(quem, ela);
+        });
+    }
+
+    /**
+     * O nascimento em si, à parte da sorte — para que a prova possa pedi-lo sem esperar cem perguntas.
+     *
+     * @return falso se o mundo não lhe deu chão
+     */
+    public static boolean nasce(ServerLevel level, BlockPos espelho, Player quem,
+                                java.util.function.Consumer<net.thaumcraft.occulta.vampire.FollowerEntity>
+                                        depois) {
+        BlockPos onde = ondeElaCabe(level, espelho);
+        if (onde == null) return false;
+
+        int tipo = 1 + level.getRandom().nextInt(net.thaumcraft.occulta.vampire.FollowerEntity.BELAS);
+        var ela = net.thaumcraft.occulta.OccultaEntities.FOLLOWER.create(level,
+                net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        if (ela == null) return false;
+        ela.tipo(tipo);
+        ela.setCustomName(Component.literal(net.thaumcraft.occulta.vampire.FollowerNames
+                .sorteia(tipo, level.getRandom())));
+        ela.setPersistenceRequired();
+        ela.snapTo(0.5 + onde.getX(), 1.01 + onde.getY(), 0.5 + onde.getZ(), 0.0f, 0.0f);
+        level.addFreshEntity(ela);
+        depois.accept(ela);
+        return true;
+    }
+
+    /**
+     * Onde ela cabe: a cinquenta a noventa e nove blocos dali, no primeiro bloco firme com duas casas de
+     * ar por cima — procurando de cima para baixo, vinte acima do espelho até vinte abaixo.
+     */
+    public static @Nullable BlockPos ondeElaCabe(ServerLevel level, BlockPos espelho) {
+        var sorte = level.getRandom();
+        for (int n = 0; n < TENTATIVAS; n++) {
+            int x = espelho.getX() + (sorte.nextBoolean() ? 1 : -1) * (LONGE + sorte.nextInt(LONGE));
+            int z = espelho.getZ() + (sorte.nextBoolean() ? 1 : -1) * (LONGE + sorte.nextInt(LONGE));
+            int alto = Math.min(espelho.getY() + ACIMA, level.getMaxY() - 2);
+            int baixo = Math.max(espelho.getY() - ABAIXO, level.getMinY() + 1);
+            for (int y = alto; y >= baixo; y--) {
+                BlockPos chão = new BlockPos(x, y, z);
+                if (!level.getBlockState(chão).isSolidRender()) continue;
+                if (!level.isEmptyBlock(chão.above()) || !level.isEmptyBlock(chão.above(2))) continue;
+                return chão;
+            }
+        }
+        return null;
+    }
+
+    /** «Há outra mais bela do que tu» — e para que lado ela está. */
+    private void sayNotFairest(Player quem, net.thaumcraft.occulta.vampire.FollowerEntity ela) {
+        quem.sendSystemMessage(Component.translatable(
+                        ela.tipo() == net.thaumcraft.occulta.vampire.FollowerEntity.O_HOMEM
+                                ? "tc.mirror.anotherm" : "tc.mirror.anotherf")
+                .withStyle(ChatFormatting.AQUA));
+        this.sayBearing(quem, ela);
     }
 
     /** Para que lado a mais bela está: os oito rumos do original. */
@@ -314,6 +432,8 @@ public class MirrorBlockEntity extends BlockEntity {
         this.hollow = input.getBooleanOr("hollow", false);
         this.favorite = input.read("favorite", net.minecraft.core.UUIDUtil.CODEC).orElse(null);
         this.favoriteName = input.getStringOr("favorite_name", "");
+        this.fairest = input.read("fairest", net.minecraft.core.UUIDUtil.CODEC).orElse(null);
+        this.lastFairestSpawn = input.getLongOr("fairest_at", Long.MIN_VALUE);
         this.seen.clear();
         this.seen.addAll(input.read("seen",
                 com.mojang.serialization.Codec.STRING.listOf()).orElse(List.of()));
@@ -327,6 +447,8 @@ public class MirrorBlockEntity extends BlockEntity {
         output.putBoolean("hollow", this.hollow);
         if (this.favorite != null) output.store("favorite", net.minecraft.core.UUIDUtil.CODEC, this.favorite);
         output.putString("favorite_name", this.favoriteName);
+        if (this.fairest != null) output.store("fairest", net.minecraft.core.UUIDUtil.CODEC, this.fairest);
+        output.putLong("fairest_at", this.lastFairestSpawn);
         output.store("seen", com.mojang.serialization.Codec.STRING.listOf(), List.copyOf(this.seen));
     }
 
