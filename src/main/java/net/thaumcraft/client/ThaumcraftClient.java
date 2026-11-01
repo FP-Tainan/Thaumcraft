@@ -425,6 +425,14 @@ public class ThaumcraftClient implements ClientModInitializer {
                 net.thaumcraft.occulta.OccultaEntities.SUN_GRENADE,
                 contexto -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(contexto));
 
+        // a de Duplicação, igual — e o Sósia que ela larga, com a pele de quem a atirou
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.DUP_GRENADE,
+                contexto -> new net.minecraft.client.renderer.entity.ThrownItemRenderer<>(contexto));
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.DECOY,
+                net.thaumcraft.occulta.client.DecoyRenderer::new);
+
         /*
          * E o Livro do Vampiro, que abre a folha do lado de cá: o teto do grau já subiu no servidor, e o que
          * falta é a leitura. É o mesmo caminho do Thaumonomicon, e pela mesma razão.

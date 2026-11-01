@@ -162,6 +162,44 @@ public class MirrorBlock extends BaseEntityBlock {
         MirrorTravel.step(server, pos, state, quem);
     }
 
+    /**
+     * <b>Com uma Esfera de Quartzo na mão, o espelho faz uma Granada de Duplicação.</b>
+     *
+     * <p>Ele carimba a granada com a cara de quem está olhando — e é o único que pode fazê-lo, porque é o
+     * único que está olhando para a pessoa. Custa <b>dois mil</b> de poder do altar mais perto.
+     */
+    @Override
+    protected InteractionResult useItemOn(net.minecraft.world.item.ItemStack naMão, BlockState state,
+                                          Level level, BlockPos pos, Player quem,
+                                          net.minecraft.world.InteractionHand mão, BlockHitResult hit) {
+        if (!naMão.is(net.thaumcraft.occulta.OccultaItems.QUARTZ_SPHERE)) {
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
+        }
+        if (this.sealed) return InteractionResult.SUCCESS;
+        if (!(level instanceof ServerLevel server)) return InteractionResult.SUCCESS;
+
+        if (!net.thaumcraft.occulta.PowerSources.consume(server, pos, CUSTO_DA_GRANADA)) {
+            server.playSound(null, pos, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_SNARE.value(),
+                    net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
+            return InteractionResult.SUCCESS;
+        }
+
+        naMão.shrink(1);
+        net.minecraft.world.item.ItemStack granada =
+                net.thaumcraft.occulta.DupGrenadeItem.de(quem);
+        if (!quem.getInventory().add(granada)) {
+            net.minecraft.world.level.block.Block.popResource(server, pos.above(), granada);
+        }
+        server.sendParticles(net.minecraft.core.particles.ParticleTypes.SMOKE,
+                quem.getX(), quem.getY() + 1.0, quem.getZ(), 16, 0.5, 2.0, 0.5, 0.0);
+        server.playSound(null, pos, net.minecraft.sounds.SoundEvents.EXPERIENCE_ORB_PICKUP,
+                net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
+        return InteractionResult.SUCCESS;
+    }
+
+    /** O que a granada custa ao altar: os dois mil do original. */
+    public static final float CUSTO_DA_GRANADA = 2000.0f;
+
     /** O clique: é ele que chama a cara do espelho, como no original. */
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player quem,

@@ -112,6 +112,36 @@ public final class OccultaComponents {
             builder -> builder.persistent(net.minecraft.core.UUIDUtil.CODEC)
                     .networkSynchronized(net.minecraft.core.UUIDUtil.STREAM_CODEC));
 
+    /** A quina que o <b>Cajado de Duplicação</b> marcou: o {@code Marker} do original. */
+    public static final DataComponentType<net.minecraft.core.BlockPos> STAFF_MARK =
+            register("staff_mark", builder -> builder
+                    .persistent(net.minecraft.core.BlockPos.CODEC)
+                    .networkSynchronized(net.minecraft.core.BlockPos.STREAM_CODEC));
+
+    /** E o que ele guardou: o {@code SavedSchematic}, com as medidas e os blocos. */
+    public static final DataComponentType<net.thaumcraft.occulta.DuplicationStaffItem.Molde> STAFF_MOULD =
+            register("staff_mould", builder -> builder
+                    .persistent(net.thaumcraft.occulta.DuplicationStaffItem.Molde.CODEC));
+
+    /** Em que volta ele está: o {@code Rotation}, de zero a três. */
+    public static final DataComponentType<Integer> STAFF_TURN =
+            register("staff_turn", builder -> builder
+                    .persistent(com.mojang.serialization.Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    /**
+     * <b>De quem é a cara</b> desta Granada de Duplicação: o {@code Owner} do {@code ItemSunGrenade}.
+     *
+     * <p>O original guarda só o <b>nome</b> e procura a pessoa por ele na hora do estouro. Aqui vão os dois:
+     * o <b>número</b>, que é a identidade de verdade e não muda, e o <b>nome</b>, que é o que se lê na dica
+     * — e que tem de estar guardado, porque a dica se lê do lado de cá, onde não se pergunta ao servidor
+     * quem é o dono de um número.
+     */
+    public static final DataComponentType<net.thaumcraft.occulta.DupGrenadeItem.Carimbo> GRENADE_STAMP =
+            register("grenade_stamp", builder -> builder
+                    .persistent(net.thaumcraft.occulta.DupGrenadeItem.Carimbo.CODEC)
+                    .networkSynchronized(net.thaumcraft.occulta.DupGrenadeItem.Carimbo.STREAM_CODEC));
+
     /** Que porta esta chave abre: o mundo e as três contas do {@code doorX}/{@code doorY}/{@code doorZ}. */
     public static final DataComponentType<net.minecraft.core.GlobalPos> DOOR_KEY = register("door_key",
             builder -> builder.persistent(net.minecraft.core.GlobalPos.CODEC)

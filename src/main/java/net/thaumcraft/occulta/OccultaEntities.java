@@ -283,6 +283,20 @@ public final class OccultaEntities {
      *
      * <p>Ela não é bicho — voa como uma bola de neve, para onde bate, e fica ali um minuto a alumiar.
      */
+    /** A <b>Granada de Duplicação</b> em voo, que é a irmã simples da Solar. */
+    public static final EntityType<net.thaumcraft.occulta.DupGrenadeEntity> DUP_GRENADE =
+            register("dup_grenade", net.minecraft.world.entity.EntityType.Builder
+                    .<net.thaumcraft.occulta.DupGrenadeEntity>of(
+                            net.thaumcraft.occulta.DupGrenadeEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
+
+    /** E o <b>Sósia</b> que ela larga: a Seguidora do tipo cinco do original. */
+    public static final EntityType<net.thaumcraft.occulta.DecoyEntity> DECOY =
+            register("decoy", net.minecraft.world.entity.EntityType.Builder
+                    .<net.thaumcraft.occulta.DecoyEntity>of(
+                            net.thaumcraft.occulta.DecoyEntity::new, MobCategory.MISC)
+                    .sized(0.6f, 1.8f).clientTrackingRange(8));
+
     public static final EntityType<net.thaumcraft.occulta.vampire.SunGrenadeEntity> SUN_GRENADE =
             register("sun_grenade", net.minecraft.world.entity.EntityType.Builder
                     .<net.thaumcraft.occulta.vampire.SunGrenadeEntity>of(
@@ -566,6 +580,8 @@ public final class OccultaEntities {
                 .register(VILLAGE_GUARD, net.thaumcraft.occulta.village.VillageGuardEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(COVEN_WITCH, net.thaumcraft.occulta.coven.CovenWitchEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(DECOY, net.thaumcraft.occulta.DecoyEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(TOAD, net.thaumcraft.occulta.familiar.ToadEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry

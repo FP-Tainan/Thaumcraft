@@ -13454,3 +13454,55 @@ não faz duas; que morrer sai do coven, e que o que a identifica é o nome e nã
 prazo ela some **sem morrer** e continua no coven; e que a leitura de quem não tem nada não rebenta. E o
 `OccultaSeerStoneClientTest`, com duas fotos: as cinco bruxas chegando, cada uma com uma cara, e a leitura
 em azul no bate-papo.
+
+## O Cajado, a Granada de Duplicação e o Sósia (2026-11-01)
+
+Três coisas que andam juntas, e só duas delas são para quem joga.
+
+### O Cajado de Duplicação
+
+Ele copia um pedaço do mundo e o cola noutro lugar. Foi com ele que o autor do original desenhou as casas
+da aldeia, e por isso ele é o que é: uma ferramenta de quem constrói.
+
+Bate-se num bloco e fica o **marco**; bate-se noutro e o que estiver **entre os dois** — sem contar as duas
+pontas — fica guardado. Daí em diante cada batida **cola** o que foi guardado, uma casa acima do que se
+bateu, e **gira noventa graus** para a vez seguinte. Agachado, cola sem girar e zera o giro; agachado no
+ar, esquece tudo.
+
+A caixa ser **aberta nas duas pontas** é do original, e é o que a torna cômoda: marcam-se as duas quinas de
+fora de uma construção e copia-se o que está dentro delas.
+
+**Desvio declarado — o giro.** O original arruma à mão o metadata de **escadas**, **troncos** e **portas**,
+com três tabelas de quatro números cada, e **erra todo o resto**: em 2014 não havia como perguntar a um
+bloco qual é a cara dele girada. Hoje há — `BlockState.rotate` —, e é com ele que se gira. É mais fiel à
+intenção do que copiar as três tabelas seria à letra, e funciona para todos os blocos em vez de três.
+
+**Desvio declarado — o arquivo de molde.** O original escreve também dois arquivos de texto com **código
+Java** que reconstrói o que foi copiado; era assim que as peças da aldeia iam parar no código dele. Esse
+código é da 1.7.10 e não compila contra este porte. Essa metade fica de fora.
+
+### A Granada de Duplicação, e o Sósia
+
+Uma Esfera de Quartzo **carimbada com a cara de alguém**. Atirada, ela larga um **Sósia** dessa pessoa onde
+bate — com o nome dela, a cara dela e a **armadura** dela — e o sósia faz uma coisa só: de dois em dois
+segundos **rouba a atenção** de todo bicho hostil a dezesseis casas que estivesse perseguindo o dono. Dez
+segundos depois ele some.
+
+É a única coisa do ofício que serve para **fugir**. E é bem pensada: o que engana um bicho não é a cara, é
+a armadura — por isso ela é copiada.
+
+**Ela não se fabrica em bancada nenhuma.** Faz-se no **Espelho da Bruxa**: com uma Esfera de Quartzo na mão,
+clicando no espelho, por **dois mil** de poder de altar. O espelho é o único que pode fazê-la, porque é o
+único que está olhando para você — e é essa a piada do original.
+
+**E a pele é de verdade.** O Reflexo do espelho ficou com uma pele de reserva, declarado na fatia dele,
+porque baixar a pele de alguém de um servidor de fora é coisa que este porte não faz. Aqui não é preciso: a
+pessoa copiada **está no mundo**, e a pele dela já está carregada do lado de cá. Não havendo ninguém com
+aquele número por perto, fica a pele que o jogo dá a um desconhecido — que é a resposta certa.
+
+**Guardas:** o `OccultaDuplicationGameTest`, com cinco — que marcar, guardar e colar funciona e que a caixa
+é aberta nas pontas (oito blocos de uma caixa de quatro); que o giro vira **o bloco e o lugar dele** juntos,
+que é onde o original erraria; que agachado no ar o cajado esquece; que a granada sai carimbada com o número
+e o nome; e que o sósia rouba a atenção de quem estava atrás do dono, deixa em paz quem não estava, e some
+no fim do prazo. E o `OccultaDuplicationClientTest`, com duas fotos: o jogador de armadura ao lado da cópia
+dele, e o cajado com a granada no inventário.

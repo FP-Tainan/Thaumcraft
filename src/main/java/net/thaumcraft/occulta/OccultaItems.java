@@ -1178,6 +1178,26 @@ public final class OccultaItems {
                     .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
 
     /**
+     * O <b>Cajado de Duplicação</b>: ele copia um pedaço do mundo e o cola noutro lugar.
+     *
+     * <p>Foi com ele que o autor do original desenhou as casas da aldeia. Bate-se numa quina, bate-se na
+     * outra, e daí em diante cada batida cola o que ficou entre elas, girando noventa graus de cada vez.
+     */
+    public static final Item DUP_STAFF = register("dup_staff", properties ->
+            new net.thaumcraft.occulta.DuplicationStaffItem(
+                    net.thaumcraft.occulta.DuplicationStaffItem.feitio(properties)));
+
+    /**
+     * A <b>Granada de Duplicação</b>: uma Esfera de Quartzo carimbada com a cara de alguém.
+     *
+     * <p>Atirada, ela larga um sósia dessa pessoa onde bate — e o sósia rouba a atenção de tudo o que
+     * estivesse atrás dela. Faz-se no Espelho da Bruxa, com dois mil de poder.
+     */
+    public static final Item DUP_GRENADE = register("dup_grenade", properties ->
+            new net.thaumcraft.occulta.DupGrenadeItem(
+                    net.thaumcraft.occulta.DupGrenadeItem.feitio(properties)));
+
+    /**
      * A <b>Pedra do Vidente</b>: a pedra que lê gente e chama o coven.
      *
      * <p>Agachado, ela lê quem estiver a três casas — manifestação, familiar, coven, símbolos sabidos e
