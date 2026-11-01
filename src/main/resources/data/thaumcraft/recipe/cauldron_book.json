@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " c ",
+    "a#b"
+  ],
+  "key": {
+    "#": "minecraft:book",
+    "a": "minecraft:black_dye",
+    "b": "minecraft:feather",
+    "c": "minecraft:dirt"
+  },
+  "result": {
+    "id": "thaumcraft:cauldron_book",
+    "count": 1
+  }
+}

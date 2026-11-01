@@ -1178,6 +1178,16 @@ public final class OccultaItems {
                     .component(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)));
 
     /**
+     * Os <b>Cozimentos das Bruxas</b>: o manual do ofício.
+     *
+     * <p>O único livro do mod que explica em vez de insinuar — índice, capítulos, receitas desenhadas com
+     * as coisas em cima da bancada, e atalhos de um capítulo para o outro. Nasce inteiro.
+     */
+    public static final Item CAULDRON_BOOK = register("cauldron_book", properties ->
+            new net.thaumcraft.occulta.CauldronBookItem(
+                    net.thaumcraft.occulta.CauldronBookItem.feitio(properties)));
+
+    /**
      * O <b>Cajado de Duplicação</b>: ele copia um pedaço do mundo e o cola noutro lugar.
      *
      * <p>Foi com ele que o autor do original desenhou as casas da aldeia. Bate-se numa quina, bate-se na

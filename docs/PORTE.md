@@ -13560,3 +13560,62 @@ nome; e que morrer esquece a morte anterior.
 **Sem foto**, e de propósito: o rito não desenha nada que já não esteja retratado — o círculo, as faíscas
 e um esqueleto do jogo. A única coisa nova é o nome por cima do esqueleto, e isso a prova de servidor
 mede melhor do que uma foto.
+
+## Os Cozimentos das Bruxas (2026-11-01)
+
+O **manual** do ofício, e o único livro do mod que explica em vez de insinuar. O Livro do Vampiro é um
+testemunho em reticências; este é o contrário: índice, atalhos de um capítulo para o outro, receitas
+desenhadas com as coisas em cima da bancada.
+
+Ele cobre o caldeirão inteiro — cozer, ritual e fabrico — e depois as cinco contas de um cozimento:
+**espaço**, **poder**, **duração**, **temperos** e **dispersão**, com os cento e tal efeitos listados por
+grau. São **196 capítulos**. Quem ler isto sabe cozinhar; quem não ler, adivinha.
+
+Ao contrário do Livro do Vampiro, ele **não chega rasgado**: nasce com as sete páginas. O que se sabe não
+está trancado atrás de achar folhas, está trancado atrás de ler.
+
+### A folha teve de aprender a escrever em linha
+
+A folha de marcação do porte existia desde o Livro do Vampiro, e conhecia **cinco** marcas. Este livro usa
+nove, e três delas são de outra natureza:
+
+- **`[stack=coisa rótulo]`** — uma coisa desenhada **no meio do texto**, com o nome dela ao lado;
+- **`[url Capítulo]`** e **`[url=capítulo Rótulo]`** — um atalho clicável, sublinhado, azul e vermelho
+  debaixo do rato;
+- **`[template=nome 0=... stack|1=...]`** — um **molde**: outra marcação, guardada noutra chave, com
+  buracos numerados. É o molde que desenha uma bancada de três por três a partir de nove nomes.
+
+As duas primeiras obrigaram a reescrever o desenho da folha. Ela montava **linha a linha**; agora monta com
+um **cursor** que anda da esquerda para a direita e desce quando não cabe, como o original. Sem isso uma
+receita de bancada seriam nove linhas em vez de três, e um atalho seria um parágrafo em vez de uma palavra.
+
+### Duzentas referências de 2014, traduzidas uma a uma
+
+O livro é de quando um item era um número com um metadado atrás: `witchery:ingredient|22` é a Raiz de
+Mandrágora, `wool|11` é lã azul, `dye|15` é farinha de osso. São **duzentas e tal** dessas referências, e
+cada uma teve de virar um item de hoje. Quarenta e oito dos quarenta e nove ingredientes do Witchery têm
+par neste porte.
+
+**Declarado:** o **Coração de Ouro** (`ingredient|165`) não está portado. Onde ele aparecia — no tempero de
+Atração de Bichos — fica o texto sem o desenho.
+
+**Declarado:** o efeito **Estações que Mudam** aponta para a Nota de Bioma, que também não está portada
+(ela é a outra metade do rito `climatechange`). O capítulo fica, e a casa da coisa fica vazia.
+
+### E a armadilha da tradução
+
+No original, `[url Brewing]` aponta para o capítulo **«brewing»** porque o alvo é o próprio rótulo em letra
+pequena e sem espaços. Traduzido para `[url Cozer]`, ele passaria a apontar para «cozer» — que não existe —
+e abriria uma **folha em branco**, sem erro nenhum.
+
+Por isso todos os quarenta e nove atalhos soltos do original foram escritos com o **alvo em claro** antes
+de se traduzir uma palavra. É a espécie de coisa que não se vê em nenhuma foto e que uma prova apanha de
+uma vez.
+
+**Guardas:** o `OccultaCauldronBookGameTest`, com quatro — que o livro existe nos dois idiomas com os
+mesmos capítulos; que **todo** atalho, seta e molde, nas duas línguas, nomeia um capítulo que existe; que
+**toda** coisa desenhada nele nomeia um item que existe (são mais de duzentas, e é esta que paga a
+tradução dos metadados de 2014); e a receita. E o `OccultaCauldronBookClientTest`, com quatro fotos,
+escolhidas pelo que cada uma põe à prova na folha: o índice (uma coluna de atalhos), a receita do
+caldeirão (uma bancada desenhada com coisas), os temperos de cor (coisa-e-texto em linha) e um capítulo de
+texto corrido.

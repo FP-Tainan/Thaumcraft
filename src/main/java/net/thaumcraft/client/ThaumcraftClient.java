@@ -446,6 +446,16 @@ public class ThaumcraftClient implements ClientModInitializer {
             return net.minecraft.world.InteractionResult.SUCCESS;
         });
 
+        // e os Cozimentos das Bruxas, que é o manual do ofício e abre pelo mesmo caminho
+        net.fabricmc.fabric.api.event.player.UseItemCallback.EVENT.register((quem, level, mão) -> {
+            if (!level.isClientSide()
+                    || !quem.getItemInHand(mão).is(net.thaumcraft.occulta.OccultaItems.CAULDRON_BOOK)) {
+                return net.minecraft.world.InteractionResult.PASS;
+            }
+            net.thaumcraft.occulta.client.CauldronBookHook.abre();
+            return net.minecraft.world.InteractionResult.SUCCESS;
+        });
+
         // e o painel de comando de um vampiro: a barra de sangue e a tecla do poder
         net.thaumcraft.occulta.client.VampireClient.init();
 
