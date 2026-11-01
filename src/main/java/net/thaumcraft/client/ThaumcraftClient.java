@@ -432,6 +432,9 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 net.thaumcraft.occulta.OccultaEntities.DECOY,
                 net.thaumcraft.occulta.client.DecoyRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                net.thaumcraft.occulta.OccultaEntities.SPECTRAL_FAMILIAR,
+                net.thaumcraft.occulta.client.SpectralFamiliarRenderer::new);
 
         /*
          * E o Livro do Vampiro, que abre a folha do lado de cá: o teto do grau já subiu no servidor, e o que

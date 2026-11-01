@@ -172,6 +172,20 @@ public final class OccultaEntities {
                     .sized(0.6f, 0.8f).eyeHeight(0.6f).clientTrackingRange(8));
 
     /**
+     * O <b>Familiar Espectral</b>: o porco azul que acha minério.
+     *
+     * <p>Oitenta por oitenta, que são os números do {@code setSize} do original — um porco quadrado, mais
+     * baixo e mais largo do que o do jogo.
+     */
+    public static final EntityType<net.thaumcraft.occulta.familiar.SpectralFamiliarEntity>
+            SPECTRAL_FAMILIAR = register("spectral_familiar", FabricEntityType.Builder.createMob(
+                            net.thaumcraft.occulta.familiar.SpectralFamiliarEntity::new,
+                            MobCategory.CREATURE,
+                            mob -> mob.defaultAttributes(
+                                    net.thaumcraft.occulta.familiar.SpectralFamiliarEntity::attributes))
+                    .sized(0.8f, 0.8f).eyeHeight(0.6f).clientTrackingRange(8));
+
+    /**
      * O <b>Macaco de Asas</b>: o táxi do ramo.
      *
      * <p>Sessenta por oitenta, que são os números do original — e são os de um bicho que cabe no colo de
@@ -586,6 +600,9 @@ public final class OccultaEntities {
                 .register(TOAD, net.thaumcraft.occulta.familiar.ToadEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(OWL, net.thaumcraft.occulta.familiar.OwlEntity.attributes());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+                .register(SPECTRAL_FAMILIAR,
+                        net.thaumcraft.occulta.familiar.SpectralFamiliarEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
                 .register(DARK_MARK, net.thaumcraft.occulta.symbol.DarkMarkEntity.attributes());
         net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry

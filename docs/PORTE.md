@@ -12788,8 +12788,10 @@ se há alguém para trazer ou se é preciso fazer nascer outro — e agora ela t
 ### Fica de fora, declarado
 
 O terceiro rito da lista, o de **fazer aparecer um familiar** (`summonfamiliar`), não entra aqui. Ele não
-chama o familiar de ninguém: ele faz nascer o **bicho de familiar** do original, um gato próprio que
-**procura minério** e tem uma meta de IA só para isso. É um bicho, não é um rito — e vai na fatia dele.
+chama o familiar de ninguém: ele faz nascer o **bicho de familiar** do original, que **procura minério** e
+tem uma meta de IA só para isso. É um bicho, não é um rito — e vai na fatia dele.
+
+_(Veio na fatia do Familiar Espectral, e não era um gato: era um porco.)_
 
 **Guardas:** o `OccultaFamiliarRitesGameTest`, com dois — o prender pelos três lados (sem bicho devolve,
 por domar não serve, e quem já tem familiar não leva outro), e o chamar pelos dois (o bicho que vem ter
@@ -14019,3 +14021,67 @@ que a base dá Definhamento IV e não infunde nada; que beber um apaga o outro e
 horas; que o da Cova faz de quem o bebeu um morto-vivo e o de Voar não; que matar cura por feitio do morto,
 com o aldeão a dar mais do que o bicho; que a pedra escraviza **só** com o cozimento e **só** de dez em dez
 segundos; e que o relógio o apaga.
+
+## O Familiar Espectral (2026-11-01)
+
+O último rito que pedia conteúdo novo. Com ele os ritos passam de oitenta e cinco para **oitenta e seis**
+dos noventa e seis — e **não há mais nenhum** à espera de uma peça que falte.
+
+É um **porco azul translúcido que acha minério**, e vale contar o que ele é por dentro. No original a
+classe estende o **ocelote**: senta-se como gato, doma-se como gato, segue como gato. E por fora é um
+**porco** — o modelo, a pele e os grunhidos do porco do jogo. Quando acha alguma coisa, diz as coordenadas
+ao dono **grunhindo**:
+
+> OINC! 142, 11, -308.
+
+Nada disto é engano de quem o escreveu. O bicho é uma piada feita com cuidado, e é das coisas mais queridas
+do mod.
+
+### Como se usa
+
+Dá-se-lhe na mão **o que sai do minério** — um diamante, uma esmeralda, uma barra de ouro ou de ferro,
+redstone, lápis-lazúli ou carvão — e ele vai procurar **o minério daquilo**, num poço de oito por oito à
+volta de si. Achando, anda até lá, **senta-se em cima** e grunhe. Mão vazia manda-o sentar.
+
+Ele não cava, não aponta e não desenha nada no mundo. É por isso que ele é um porco: um ponteiro mágico
+seria um item; **um bicho que vai sentar-se em cima do diamante** é uma personagem.
+
+### E ele gasta-se
+
+Cada pedido é uma chance de ele se ir embora num rodopio de portal: nenhuma à primeira, três em cinco à
+segunda, e daí a subir — 0,75, 0,85, 0,95 — até à quinta, que é sempre a última. Quem lhe pedir cinco
+coisas fica sem ele, e tem de refazer o rito.
+
+### O azul e o magenta
+
+Ele é desenhado **translúcido** e **tingido**: azul parado, magenta quando está à procura. É a única coisa
+no mod que diz a quem joga que o pedido pegou — não há mensagem, não há partícula, não há ícone. Muda de
+cor.
+
+### Três desvios declarados
+
+**Cada pedido tem dois minérios e não um.** Em 2014 a ardósia não existia; hoje metade do minério do mundo
+é dela, e um familiar que só conhecesse o de pedra seria inútil abaixo do zero.
+
+**A fundura conta-se do fundo do mundo.** O original varre de `y=1` até à fundura do pedido — catorze para
+o diamante, sessenta e quatro para o ferro. Em 2014 o mundo começava no zero; hoje começa em menos sessenta
+e quatro, e a mesma busca sobe **do fundo** até à fundura acima dele. A tabela lê-se agora como «as N
+camadas do fundo».
+
+**E a pele do porco mudou de nome.** Em 2014 havia uma, `pig.png`; hoje há três — temperada, de frio e de
+calor. A deste é a temperada, que é a cor-de-rosa de sempre. _(Pedir a velha dava o quadriculado preto e
+roxo de textura perdida — e tingido de azul **ainda parecia de propósito**. Só a comparação lado a lado com
+um porco do jogo o acusou.)_
+
+### E o rito aprendeu a domar
+
+O `RiteSummonCreature` do original leva um segundo parâmetro, `bindToPlayer`, e **só este rito o usa**. O
+porte não o tinha: o `SummonCreature` ganhou-o agora. Sem ele o familiar nasce selvagem — e um familiar
+selvagem não segue ninguém, não se senta e não procura nada.
+
+**Guardas:** o `OccultaSpectralFamiliarGameTest`, com seis — que o rito está no livro com o anel de dentro;
+que são sete pedidos, cada um com dois minérios e uma fundura; que um diamante o manda procurar e um torrão
+o manda sentar; que a **busca acha** o minério por baixo, de pedra e de ardósia, e **não** acha o de outro;
+que ele se gasta ao quinto pedido; e que dele cai Pó Espectral. E o `OccultaSpectralFamiliarClientTest`,
+com uma foto: os dois estados lado a lado com um porco do jogo, que é a única maneira de ver que as cores
+estão certas.

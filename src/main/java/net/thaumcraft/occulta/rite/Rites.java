@@ -2948,8 +2948,13 @@ public final class Rites {
      * @param tipo  quem vem
      * @param coven quantas bruxas ele pede, porque alguns só se fazem em grupo
      */
-    public record SummonCreature(java.util.function.Supplier<EntityType<? extends Mob>> tipo, int coven)
-            implements Rite {
+    public record SummonCreature(java.util.function.Supplier<EntityType<? extends Mob>> tipo, int coven,
+                                 boolean doma) implements Rite {
+        /** O feitio de sempre: o que é chamado não é de ninguém. */
+        public SummonCreature(java.util.function.Supplier<EntityType<? extends Mob>> tipo, int coven) {
+            this(tipo, coven, false);
+        }
+
         /** O desenho do teto: 1 conta um, 2 conta cem. */
         private static final int[][] TETO = {
                 {0, 0, 1, 1, 1, 0, 0},
@@ -3009,6 +3014,18 @@ public final class Rites {
                  */
                 if (quem instanceof net.thaumcraft.occulta.demon.DemonEntity demônio) {
                     demônio.marcaComoChamado();
+                }
+                /*
+                 * E há um que nasce <b>de quem o chamou</b>: é o {@code bindToPlayer} do original, e só o
+                 * Familiar Espectral o usa. Sem isso ele nasce selvagem — e um familiar selvagem não
+                 * segue ninguém, não se senta e não procura nada.
+                 */
+                if (this.doma && quem instanceof net.minecraft.world.entity.TamableAnimal domado) {
+                    net.minecraft.world.entity.player.Player dono = rito.starter(level);
+                    if (dono != null) {
+                        domado.tame(dono);
+                        domado.setPersistenceRequired();
+                    }
                 }
                 level.addFreshEntity(quem);
 
@@ -3480,6 +3497,23 @@ public final class Rites {
                         new Sacrifice.Power(1000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
+
+        /*
+         * O <b>Rito de Chamar um Familiar</b>, que é o que traz o porco azul.
+         *
+         * <p>Uma Gota de Sorte, um lombo de porco cru, uma barra de ouro e a Arthana; dois mil de poder e
+         * o anel de dentro. O lombo cru no chão é o original a dizer o que vem aí.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.summonfamiliar",
+                new SummonCreature(() -> net.thaumcraft.occulta.OccultaEntities.SPECTRAL_FAMILIAR, 0,
+                        true),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.DROP_OF_LUCK,
+                                Items.PORKCHOP, Items.GOLD_INGOT,
+                                net.thaumcraft.occulta.OccultaItems.ARTHANA),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
          * Os <b>dois Ritos de Infusão</b>, que fazem de uma Base de Cozimento Infundido um dos dois
