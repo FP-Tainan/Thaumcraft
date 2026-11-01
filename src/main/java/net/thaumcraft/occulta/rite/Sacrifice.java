@@ -165,6 +165,61 @@ public sealed interface Sacrifice {
         }
     }
 
+    /**
+     * Uma coisa <b>que não é obrigatória</b>: o {@code SacrificeOptionalItem} do Witchery.
+     *
+     * <p>Ela não impede o rito de começar nem de acabar. Estando lá, é <b>tomada</b> — e, sendo uma
+     * <b>Pedra de Caminho presa</b>, ela muda o <b>alvo</b> do rito: o que ele fosse fazer à volta do
+     * círculo passa a fazer onde a pedra aponta.
+     *
+     * <p>Duas receitas a usam, e as duas são de obra: <b>erguer a terra</b> e o <b>vulcão</b>. Com a
+     * pedra no chão, levanta-se uma coluna — ou abre-se um vulcão — a quilómetros dali.
+     */
+    record Optional(Item wanted) implements Sacrifice {
+        @Override
+        public boolean matches(ServerLevel level, BlockPos meio, List<ItemEntity> noChão) {
+            return true;
+        }
+
+        @Override
+        public void steps(List<RiteStep> fila) {
+            fila.add(new TakeOptional(this.wanted));
+        }
+
+        @Override
+        public List<ItemStack> shown() {
+            return List.of(new ItemStack(this.wanted));
+        }
+    }
+
+    /** E o passo que a toma, se ela estiver lá. */
+    record TakeOptional(Item wanted) implements RiteStep {
+        @Override
+        public Result run(ServerLevel level, BlockPos onde, long ticks, ActiveRite rito) {
+            for (ItemEntity largado : onTheGround(level, onde)) {
+                if (!largado.getItem().is(this.wanted)) continue;
+
+                /*
+                 * E se o que estiver lá for uma Pedra de Caminho presa, o rito muda de sítio. Uma pedra
+                 * de outro mundo não serve: o rito faz o que faz <b>aqui</b>.
+                 */
+                var lugar = net.thaumcraft.occulta.waystone.Waystones.lugar(largado.getItem());
+                if (lugar != null && lugar.mundo().equals(level.dimension())) {
+                    rito.setTarget(lugar.onde());
+                }
+
+                ItemStack tirado = largado.getItem().copyWithCount(1);
+                rito.offer(tirado, largado.blockPosition());
+                largado.getItem().shrink(1);
+                if (largado.getItem().isEmpty()) largado.discard();
+                level.sendParticles(net.minecraft.core.particles.ParticleTypes.WITCH,
+                        largado.getX(), largado.getY() + 0.5, largado.getZ(), 8, 0.2, 0.2, 0.2, 0.0);
+                break;
+            }
+            return Result.COMPLETED;
+        }
+    }
+
     /** Nada: há ritos que só pedem o círculo. */
     record None() implements Sacrifice {
         @Override

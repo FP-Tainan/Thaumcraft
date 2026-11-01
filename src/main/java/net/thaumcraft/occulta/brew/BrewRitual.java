@@ -205,15 +205,23 @@ public final class BrewRitual {
     /**
      * Uma batida do rito: gasta o poder, espalha o cozimento e tira a sorte da má sorte.
      *
-     * @param alvo   onde o cozimento cai — o próprio caldeirão, ou quem a marca nomeia
+     * <p>Há <b>dois caminhos</b>, e são diferentes na raiz. Com uma <b>Marca</b>, o cozimento vai direito
+     * <b>à pessoa</b> — uma vez só, e o jeito de espalhar não entra na conta: o original chama
+     * {@code applyRitualToEntity} e acabou. Sem marca, ele cai no lugar pelo <b>jeito de espalhar</b>, que
+     * é o que faz a chuva e o anel de nuvem.
+     *
+     * @param quem   a pessoa que a Marca nomeia, ou nada
+     * @param alvo   onde o cozimento cai, quando não há pessoa
      * @param pulsos quantas batidas o rito já leva
      */
-    public static Estado corre(ServerLevel level, BlockPos caldeirão, @Nullable Vec3 alvo,
+    public static Estado corre(ServerLevel level, BlockPos caldeirão,
+                               @Nullable LivingEntity quem, @Nullable Vec3 alvo,
                                List<Item> dentro, int pulsos, int poder) {
-        if (alvo == null) return Estado.SEM_ALVO;
+        Vec3 onde = quem != null ? quem.position() : alvo;
+        if (onde == null) return Estado.SEM_ALVO;
 
         int coven = coven(level, caldeirão);
-        if (!alcança(caldeirão, alvo, coven)) return Estado.LONGE;
+        if (!alcança(caldeirão, onde, coven)) return Estado.LONGE;
 
         var anéis = RitualCircles.read(level, caldeirão);
         int gasto = (int) Math.floor(poder * escala(anéis));
@@ -222,13 +230,41 @@ public final class BrewRitual {
             if (altar == null || !altar.consume(gasto)) return Estado.ANDANDO;
         }
 
-        BrewImpact espalha = Brew.impact(dentro, null);
-        BrewDispersal jeito = espalha.dispersal();
-        Estado deu = jeito == null ? Estado.PRONTO
-                : jeito.noRito(level, BlockPos.containing(alvo), dentro, coven, pulsos, espalha);
+        Estado deu;
+        if (quem != null) {
+            if (!guardado(level, quem)) {
+                Brew.apply(level, quem, dentro, temperos(coven));
+                level.sendParticles(net.minecraft.core.particles.ParticleTypes.WITCH,
+                        quem.getX(), quem.getY() + 1.0, quem.getZ(), 24, 0.5, 0.5, 0.5, 0.02);
+            }
+            deu = Estado.PRONTO;
+        } else {
+            BrewImpact espalha = Brew.impact(dentro, null);
+            BrewDispersal jeito = espalha.dispersal();
+            deu = jeito == null ? Estado.PRONTO
+                    : jeito.noRito(level, BlockPos.containing(onde), dentro, coven, pulsos, espalha);
+        }
 
         máSorte(level, caldeirão, risco(anéis), poder);
         return deu;
+    }
+
+    /**
+     * Se esta pessoa está <b>guardada</b> deste rito: as três guardas do original.
+     *
+     * <p>As <b>roupas de caçador</b>, um <b>marcador de área</b> contra maldições, e a <b>boneca de
+     * proteção de vodu</b> — e esta última <b>gasta-se</b> ao guardar, como em todo o resto do mod.
+     *
+     * <p>Guardada, o rito corre na mesma e <b>acaba</b>: gasta-se o caldeirão e não acontece nada. É o
+     * original, e é o que faz valer a pena vestir as roupas.
+     */
+    public static boolean guardado(ServerLevel level, LivingEntity quem) {
+        if (net.thaumcraft.occulta.hunter.HunterClothes.protegeDeMaldição(quem)) return true;
+        if (net.thaumcraft.occulta.rite.AreaMarkers.protege(quem,
+                net.thaumcraft.occulta.rite.AreaMarkers.Kind.CURSE)) {
+            return true;
+        }
+        return net.thaumcraft.occulta.Voodoo.guarded(level, quem);
     }
 
     /** Os temperos de um rito: o coven entra como força, e não há quem atirou. */

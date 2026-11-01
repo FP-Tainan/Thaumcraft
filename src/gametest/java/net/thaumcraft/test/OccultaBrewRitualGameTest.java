@@ -247,6 +247,41 @@ public class OccultaBrewRitualGameTest {
         helper.succeed();
     }
 
+    /**
+     * <b>E quem está guardado não apanha nada.</b>
+     *
+     * <p>São três guardas, e o rito corre na mesma: gasta-se o caldeirão e não acontece nada a ninguém.
+     * É o original, e é o que faz valer a pena vestir as roupas de caçador.
+     */
+    @GameTest(maxTicks = 40)
+    public void theWardedTakeNothing(GameTestHelper helper) {
+        piso(helper);
+        ServerLevel level = helper.getLevel();
+        var porco = helper.spawn(EntityTypes.PIG, new BlockPos(4, 2, 4));
+        if (BrewRitual.guardado(level, porco)) {
+            helper.fail("um porco qualquer não está guardado de nada");
+            return;
+        }
+
+        /*
+         * E um marcador de lobo guarda-o: é a mesma guarda que trava o rito da maldição dirigida, e o
+         * original manda-a valer também para o caldeirão.
+         */
+        net.thaumcraft.occulta.rite.AreaMarkers.esqueceTudo();
+        var marcador = new net.thaumcraft.occulta.rite.AreaMarkers.Marcador(level.dimension(),
+                helper.absolutePos(new BlockPos(4, 2, 4)),
+                net.thaumcraft.occulta.rite.AreaMarkers.Kind.CURSE, java.util.Set.of());
+        net.thaumcraft.occulta.rite.AreaMarkers.register(marcador);
+        boolean guardado = BrewRitual.guardado(level, porco);
+        net.thaumcraft.occulta.rite.AreaMarkers.esqueceTudo();
+        porco.discard();
+        if (!guardado) {
+            helper.fail("com um marcador de lobo perto, ele está guardado");
+            return;
+        }
+        helper.succeed();
+    }
+
     /** E o rito de nuvem é um <b>anel que cresce</b>, até oito blocos. */
     @GameTest(maxTicks = 20)
     public void theGasRiteGrows(GameTestHelper helper) {

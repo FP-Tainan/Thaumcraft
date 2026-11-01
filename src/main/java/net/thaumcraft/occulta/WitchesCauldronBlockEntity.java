@@ -285,10 +285,19 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
 
         var gatilho = net.thaumcraft.occulta.brew.Brew.ritual(caldeirão.inside);
         int poder = gatilho == null ? 0 : gatilho.power();
-        net.minecraft.world.phys.Vec3 alvo = caldeirão.alvoDoRito(level, pos);
+        var marcado = caldeirão.quemAMarcaNomeia(level);
+        net.minecraft.world.phys.Vec3 aqui = net.minecraft.world.phys.Vec3.atCenterOf(pos.above());
         int pulsos = caldeirão.ritoDeCozimento - net.thaumcraft.occulta.brew.BrewRitual.ESPERA;
 
-        var deu = net.thaumcraft.occulta.brew.BrewRitual.corre(level, pos, alvo,
+        // com Marca na panela, o alvo é a pessoa — e se ela não estiver no mundo, não há rito
+        if (caldeirão.marcado != null && marcado == null) {
+            net.thaumcraft.occulta.brew.BrewRitual.falhou(level, pos);
+            caldeirão.ritoDeCozimento = 0;
+            caldeirão.changed();
+            return;
+        }
+
+        var deu = net.thaumcraft.occulta.brew.BrewRitual.corre(level, pos, marcado, aqui,
                 caldeirão.inside, pulsos, poder);
         switch (deu) {
             case ANDANDO -> net.thaumcraft.occulta.brew.BrewRitual.fumo(level, pos);
@@ -305,19 +314,18 @@ public class WitchesCauldronBlockEntity extends BlockEntity {
     }
 
     /**
-     * Onde o rito cai: <b>em cima de quem a Marca nomeia</b>, ou à volta do próprio caldeirão.
+     * <b>Quem a Marca nomeia</b>, se ela estiver no mundo.
      *
-     * <p>Sem marca o alvo é a casa de cima do caldeirão, que é a Língua de Cão a espalhar o cozimento por
-     * onde está. Com marca, é a pessoa — e se ela não estiver neste mundo, não há alvo nenhum e o rito
-     * falha.
+     * <p>Sem marca não há pessoa nenhuma, e o rito cai à volta do próprio caldeirão — que é a Língua de
+     * Cão a espalhar o cozimento por onde está.
      */
-    public @org.jetbrains.annotations.Nullable net.minecraft.world.phys.Vec3 alvoDoRito(
-            ServerLevel level, BlockPos pos) {
-        if (this.marcado == null) return net.minecraft.world.phys.Vec3.atCenterOf(pos.above());
-        var quem = level.getPlayerByUUID(this.marcado.owner());
-        if (quem != null) return quem.position();
-        var bicho = level.getEntity(this.marcado.owner());
-        return bicho == null ? null : bicho.position();
+    public @org.jetbrains.annotations.Nullable net.minecraft.world.entity.LivingEntity quemAMarcaNomeia(
+            ServerLevel level) {
+        if (this.marcado == null) return null;
+        var gente = level.getPlayerByUUID(this.marcado.owner());
+        if (gente != null) return gente;
+        return level.getEntity(this.marcado.owner())
+                instanceof net.minecraft.world.entity.LivingEntity vivo ? vivo : null;
     }
 
     /**

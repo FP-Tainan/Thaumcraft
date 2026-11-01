@@ -271,6 +271,55 @@ public class OccultaRiteSizesGameTest {
         return null;
     }
 
+    /**
+     * <b>E as duas obras aceitam uma Pedra de Caminho que não é obrigatória.</b>
+     *
+     * <p>É o {@code SacrificeOptionalItem} do original: uma coisa que o rito toma se estiver lá e
+     * dispensa se não estiver. Estando lá, ela <b>muda o sítio da obra</b> — levanta-se uma coluna, ou
+     * abre-se um vulcão, onde a pedra aponta e não à volta do círculo.
+     */
+    @GameTest(maxTicks = 40)
+    public void theTwoEarthworksTakeAnOptionalWaystone(GameTestHelper helper) {
+        var erguer = todas("tc.rite.raiseearth").getFirst();
+        var vulcão = todas("tc.rite.volcano").stream()
+                .filter(qual -> coisas(qual.sacrifice()).contains(Items.COBBLESTONE))
+                .findFirst().orElse(null);
+        if (vulcão == null) {
+            helper.fail("a receita de pedregulho do vulcão devia estar lá");
+            return;
+        }
+        if (!opcional(erguer.sacrifice()) || !opcional(vulcão.sacrifice())) {
+            helper.fail("as duas pedem a Pedra de Caminho sem a exigir");
+            return;
+        }
+
+        // e o pedido dela diz que sim com o chão limpo, que é o que «sem a exigir» quer dizer
+        var level = helper.getLevel();
+        net.minecraft.core.BlockPos meio = helper.absolutePos(new net.minecraft.core.BlockPos(2, 2, 2));
+        var pede = new Sacrifice.Optional(OccultaItems.BOUND_WAYSTONE);
+        if (!pede.matches(level, meio, List.of())) {
+            helper.fail("e sem ela no chão o pedido dela diz que sim na mesma");
+            return;
+        }
+        if (pede.shown().isEmpty()) {
+            helper.fail("e o livro desenha-a, para quem a quiser usar saber que ela serve");
+            return;
+        }
+        helper.succeed();
+    }
+
+    private static boolean opcional(Sacrifice qual) {
+        if (qual instanceof Sacrifice.Optional pede) {
+            return pede.wanted() == OccultaItems.BOUND_WAYSTONE;
+        }
+        if (qual instanceof Sacrifice.Both ambos) {
+            for (Sacrifice cada : ambos.all()) {
+                if (opcional(cada)) return true;
+            }
+        }
+        return false;
+    }
+
     /** E os três bonecos de fetiche continuam a ser três. */
     @GameTest(maxTicks = 20)
     public void thereAreThreeFetishes(GameTestHelper helper) {

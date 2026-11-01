@@ -14319,3 +14319,46 @@ alcance sai do coven e que com seis não há limite; que o rito de poça **faz c
 às dez batidas; que o de uma vez cai em cima do alvo e acaba logo; e que o de nuvem cresce até oito. E o
 `OccultaBrewRainClientTest`, com duas fotos — a chuva de longe, espalhada, e uma gota de perto, que é um
 frasco verde de rolha castanha a cair.
+
+## As duas últimas dívidas dos ritos (2026-11-01)
+
+Com os cozimentos de círculo de giz o Ars Occulta ficou estruturalmente completo. Sobravam duas dívidas
+declaradas, as duas pequenas, e as duas ficam pagas aqui.
+
+### A coisa que não é obrigatória
+
+O `SacrificeOptionalItem` do original: uma coisa que o rito **toma se estiver lá** e dispensa se não
+estiver. Duas receitas a usam, e as duas são de obra — **erguer a terra** e o **vulcão** —, as duas com uma
+**Pedra de Caminho presa**.
+
+E ela não é um enfeite: estando lá, **muda o sítio da obra**. Levanta-se uma coluna, ou abre-se um vulcão,
+onde a pedra aponta — a quilómetros do círculo. Uma pedra de outro mundo não serve: o rito faz o que faz
+aqui.
+
+O `ActiveRite` já tinha um alvo guardado e ninguém o lia. Agora lê-se.
+
+### E quem está guardado não apanha o rito
+
+O rito de caldeirão com uma Marca dentro atira o cozimento em cima da pessoa que ela nomeia. O original
+pergunta, antes de o aplicar, por **três guardas** — as **roupas de caçador**, um **marcador de área**
+contra maldições, e a **boneca de proteção de vodu**, que se gasta ao guardar.
+
+A seção dos cozimentos de círculo de giz declarou isto de fora há uma fatia; fica resolvido na seguinte. E
+repare no que acontece quando a guarda pega: o rito **corre na mesma e acaba**. Gasta-se o caldeirão, gasta-
+se o altar, e não acontece nada a ninguém. É o original, e é o que faz valer a pena vestir as roupas.
+
+### E com isto o Ars Occulta fecha
+
+Os ritos estão em **93 dos 96** — e os três que faltam são contagem e não conteúdo: o original escreve
+alguns nomes mais do que uma vez, e o porte conta-os uma.
+
+O que fica declarado, e não vai mudar:
+
+- o **Leonard** a deixar um rito de caldeirão atravessar mundos, que pediria viagem entre dimensões pelo
+  caldeirão;
+- as `targetLocations` múltiplas do original, de que nem ele usa mais do que a primeira;
+- os **oito manuais de pesquisa** do Witchery — a pesquisa deste porte é a do Thaumcraft, e dois sistemas
+  de pesquisa no mesmo mod seriam dois jogos.
+
+**Guardas:** uma prova nova em cada lado — que as duas obras pedem a Pedra sem a exigir e que o pedido dela
+diz que sim com o chão limpo; e que um marcador de lobo guarda quem está perto dele do rito de caldeirão.

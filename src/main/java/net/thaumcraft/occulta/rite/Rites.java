@@ -309,6 +309,8 @@ public final class Rites {
             return List.of((level, onde, ticks, rito) -> {
                 if (ticks % EVERY != 0L) return RiteStep.Result.STARTING;
 
+                // e o mesmo aqui: com a pedra no chão, o vulcão abre-se onde ela aponta
+                onde = rito.target() == null ? onde : rito.target();
                 int fase = rito.advance();
                 if (fase == 1 && !lavaBelow(level, onde)) {
                     var quem = rito.starter(level);
@@ -834,6 +836,8 @@ public final class Rites {
             return List.of((level, onde, ticks, rito) -> {
                 if (ticks % 5L != 0L) return RiteStep.Result.STARTING;
 
+                // com uma Pedra de Caminho presa no chão, a coluna levanta-se onde ela aponta
+                onde = rito.target() == null ? onde : rito.target();
                 int fase = rito.advance();
                 if (fase == 1) {
                     level.sendParticles(ParticleTypes.PORTAL, onde.getX() + 0.5, onde.getY() + 1.0,
@@ -3408,6 +3412,7 @@ public final class Rites {
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.volcano", new Volcano(8, 8),
                 new Sacrifice.Both(
                         new Sacrifice.Items(Items.COBBLESTONE, Items.MAGMA_CREAM, Items.GOLDEN_SWORD),
+                        new Sacrifice.Optional(net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE),
                         new Sacrifice.Power(2000.0f, 20)),
                 new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
@@ -3451,8 +3456,11 @@ public final class Rites {
          * dentro é um rito que não se consegue fazer.
          */
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.raiseearth", new RaiseEarth(4, 8),
-                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_SPROUTING,
-                        Items.CACTUS, Items.GUNPOWDER),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_SPROUTING,
+                                Items.CACTUS, Items.GUNPOWDER),
+                        new Sacrifice.Optional(
+                                net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE)),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
