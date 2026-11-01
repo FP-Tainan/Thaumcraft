@@ -45,6 +45,7 @@ public final class Occulta {
         net.thaumcraft.occulta.symbol.Spells.init();
         net.thaumcraft.occulta.symbol.SpellNetwork.init();
         net.thaumcraft.occulta.brew.BrewBagChoice.init();
+        net.thaumcraft.occulta.rite.PriorIncarnation.init();
         net.thaumcraft.occulta.door.KeyringRecipe.init();
         net.thaumcraft.occulta.waystone.Waystones.init();
         net.thaumcraft.occulta.rite.AreaMarkers.init();

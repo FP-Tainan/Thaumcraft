@@ -13506,3 +13506,57 @@ que é onde o original erraria; que agachado no ar o cajado esquece; que a grana
 e o nome; e que o sósia rouba a atenção de quem estava atrás do dono, deixa em paz quem não estava, e some
 no fim do prazo. E o `OccultaDuplicationClientTest`, com duas fotos: o jogador de armadura ao lado da cópia
 dele, e o cajado com a granada no inventário.
+
+## A Encarnação Anterior (2026-11-01)
+
+O rito que devolve o que se perdeu. Não o que caiu no chão — esse se vai buscar —, mas o que **sumiu**: as
+coisas que ficaram largadas onde se morreu até o mundo as apagar.
+
+**O rito é a parte pequena.** O que ele pede são três ganchos que acontecem muito antes dele:
+
+1. **Ao morrer**, tudo o que cai fica **carimbado** com o número de quem morreu, e o lugar da morte fica
+   guardado — apagando a lista da morte anterior, para que ninguém junte o espólio de dez mortes num rito
+   só;
+2. **ao sumir de velho** — e só de velho, não ao arder nem ao cair no vazio —, a coisa carimbada entra numa
+   **lista** que quem morreu carrega;
+3. **ao ser apanhada**, o carimbo sai: o que se recuperou com as mãos não se recupera outra vez.
+
+Só então o rito tem o que devolver, e **só a dezesseis blocos de onde se morreu**. Quem morrer no Nether
+não recupera nada num círculo de casa.
+
+E ele deixa um **esqueleto com o seu nome** de pé no círculo. O original não explica; não precisa.
+
+**Ele é o único rito do mod que não cobra poder.** O preço dele são as cinco coisas — Pedra Necrótica,
+Língua de Cão, um osso, Pó Espectral e a Pedra Sintonizada carregada —, e a Pedra Necrótica já é um rito
+inteiro. O anel é o de dentro, **todo em giz infernal**: não há meio-termo em pedir de volta o que a morte
+levou.
+
+Com ele os ritos passam de oitenta e um para **oitenta e dois** dos noventa e seis.
+
+### Onde os ganchos moram
+
+O jogo de hoje não tem um aviso de «este item expirou» nem um de «este jogador está largando o que tinha».
+São dois mixins:
+
+- no **jogador**, dois ganchos no `dropEquipment` dizem quando a morte está largando coisas, e um terceiro
+  carimba cada coisa largada enquanto isso dura. Fora da morte, largar uma coisa não carimba nada;
+- no **item largado**, a batida pergunta se ele sumiu **de velho** — é a idade que separa sumir de arder —
+  e o toque do jogador tira o carimbo.
+
+**Declarado:** o original guarda só as três contas do lugar da morte e as compara; aqui guarda-se também o
+**mundo**. Lá, morrer no Nether e fazer o rito nas mesmas contas do Mundo devolveria tudo.
+
+**Declarado:** o original tem um ajuste de arquivo (`allowDeathItemRecoveryRite`) e desliga-se sozinho se
+houver um mod de baú-da-morte instalado. Este porte não tem arquivo de ajustes e não procura outros mods; o
+que ficou foi a outra tranca do original, que é a que importa: com o **`keepInventory` ligado** o rito
+desiste e devolve o que se ofereceu, porque num mundo em que não se perde nada ele não tem o que fazer.
+
+**Guardas:** o `OccultaPriorIncarnationGameTest`, com quatro — que o rito está no livro com o anel infernal
+e sem cobrar poder; que uma coisa carimbada que **some de velha** entra na lista (envelhecida à força e
+deixada ao jogo apagar, que é o caminho de verdade) e que apanhá-la tira o carimbo; que o rito devolve
+morrendo perto e **não** devolve morrendo longe, deixando a lista para depois, e que fica o esqueleto com o
+nome; e que morrer esquece a morte anterior.
+
+**Sem foto**, e de propósito: o rito não desenha nada que já não esteja retratado — o círculo, as faíscas
+e um esqueleto do jogo. A única coisa nova é o nome por cima do esqueleto, e isso a prova de servidor
+mede melhor do que uma foto.

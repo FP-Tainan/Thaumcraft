@@ -166,6 +166,7 @@
       "net.thaumcraft.test.OccultaMutatingSprigGameTest",
       "net.thaumcraft.test.OccultaSeerStoneGameTest",
       "net.thaumcraft.test.OccultaDuplicationGameTest",
+      "net.thaumcraft.test.OccultaPriorIncarnationGameTest",
       "net.thaumcraft.test.OccultaWitchPlantsGameTest",
       "net.thaumcraft.test.OccultaPitGroundGameTest",
       "net.thaumcraft.test.OccultaInfusionGameTest",

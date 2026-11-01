@@ -40,6 +40,8 @@
     "MobEnslavedTargetMixin",
     "LivingEntityNoDropsMixin",
     "ItemEntityWaystoneMixin",
+    "ItemEntityPriorIncarnationMixin",
+    "PlayerDeathDropsMixin",
     "LivingEntityHunterArmorMixin",
     "LivingEntityOccultaHurtMixin",
     "BlockDropsFortuneMixin",

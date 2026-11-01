@@ -18,7 +18,7 @@ public class OccultaPitGroundGameTest {
      * <b>Nada esbarra nele.</b> Um porco posto em cima de uma casa de chão falso <b>cai através dela</b>,
      * e posto em cima de terra de verdade fica onde está.
      */
-    @GameTest(maxTicks = 60)
+    @GameTest(maxTicks = 120)
     public void nothingStandsOnTheFakeGround(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos falso = helper.absolutePos(new BlockPos(2, 2, 2));
@@ -40,12 +40,23 @@ public class OccultaPitGroundGameTest {
         var cai = helper.spawn(EntityTypes.PIG, new BlockPos(2, 5, 2));
         var fica = helper.spawn(EntityTypes.PIG, new BlockPos(4, 5, 2));
 
-        helper.runAfterDelay(40, () -> {
+        /*
+         * <b>Oitenta batidas, e a conta é de altura e não de {@code onGround}.</b>
+         *
+         * <p>Esta prova falhava de vez em quando, e sempre na corrida rápida: com a máquina carregada o
+         * porco ainda estava caindo aos quarenta, e o {@code onGround} de um bicho que acabou de pousar
+         * pisca. O que não pisca é <b>onde ele está</b> — e é isso que a prova mede agora.
+         */
+        double topo = helper.absolutePos(new BlockPos(4, 3, 2)).getY();
+        helper.runAfterDelay(80, () -> {
             if (fica.getY() - cai.getY() < 0.9) {
                 helper.fail("quem pisa no chão falso cai através dele, e os dois ficaram a "
                         + (fica.getY() - cai.getY()));
             }
-            if (!fica.onGround()) helper.fail("e quem pisa na terra fica em cima dela");
+            if (fica.getY() < topo - 0.05) {
+                helper.fail("e quem pisa na terra fica em cima dela, e está a " + fica.getY()
+                        + " com a terra a " + topo);
+            }
 
             cai.discard();
             fica.discard();

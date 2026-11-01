@@ -3422,6 +3422,23 @@ public final class Rites {
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
+         * A <b>Encarnação Anterior</b>, que devolve o que sumiu de onde se morreu.
+         *
+         * <p>É o único rito do mod que <b>não cobra poder</b> — o preço dele são as cinco coisas, e a
+         * Pedra Necrótica entre elas já é um rito inteiro. E o anel é o de dentro, todo em <b>giz
+         * infernal</b>: não há meio-termo em pedir de volta o que a morte levou.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.priorincarnation",
+                new PriorIncarnation.Rito(),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.NECROTIC_STONE,
+                        net.thaumcraft.occulta.OccultaItems.DOG_TONGUE,
+                        Items.BONE,
+                        net.thaumcraft.occulta.OccultaItems.SPECTRAL_DUST,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
          * A <b>Pedra do Vidente</b>, que é o que destranca o coven. Esfera de quartzo, obsidiana e Óleo do
          * Acaso, <b>de noite</b> — e o anel de dentro, todo em giz de ritual.
          */

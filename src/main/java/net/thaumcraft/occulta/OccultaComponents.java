@@ -112,6 +112,16 @@ public final class OccultaComponents {
             builder -> builder.persistent(net.minecraft.core.UUIDUtil.CODEC)
                     .networkSynchronized(net.minecraft.core.UUIDUtil.STREAM_CODEC));
 
+    /**
+     * <b>De quem era isto</b>, quando caiu de um morto: o {@code WITCPriIncUsr} do original.
+     *
+     * <p>Fica na coisa largada e sai dela quando alguém a apanha. É por ele que a <b>Encarnação Anterior</b>
+     * sabe de quem era o que sumiu — e por isso ele <b>não viaja</b> para o lado de cá: é contabilidade do
+     * servidor, e nada o desenha.
+     */
+    public static final DataComponentType<java.util.UUID> LOST_BY = register("lost_by",
+            builder -> builder.persistent(net.minecraft.core.UUIDUtil.CODEC));
+
     /** A quina que o <b>Cajado de Duplicação</b> marcou: o {@code Marker} do original. */
     public static final DataComponentType<net.minecraft.core.BlockPos> STAFF_MARK =
             register("staff_mark", builder -> builder
