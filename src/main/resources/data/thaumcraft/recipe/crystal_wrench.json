@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "I I",
+    "AVD",
+    " I "
+  ],
+  "key": {
+    "I": "#c:ingots/iron",
+    "A": "thaumcraft:cerublossom",
+    "D": "thaumcraft:desert_nova",
+    "V": "thaumcraft:vinteum_dust"
+  },
+  "result": {
+    "id": "thaumcraft:crystal_wrench",
+    "count": 1
+  }
+}

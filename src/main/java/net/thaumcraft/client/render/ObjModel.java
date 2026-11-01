@@ -52,11 +52,12 @@ public final class ObjModel {
                     case "f" -> {
                         int corners = p.length - 1;
                         int[] order = corners == 3 ? new int[]{1, 2, 3, 3} : new int[]{1, 2, 3, 4};
+                        float[] face = faceNormal(v, p, order);
                         for (int c : order) {
                             String[] idx = p[c].split("/");
                             float[] pos = v.get(Integer.parseInt(idx[0]) - 1);
                             float[] uv = idx.length > 1 && !idx[1].isEmpty() ? vt.get(Integer.parseInt(idx[1]) - 1) : new float[]{0, 0};
-                            float[] n = idx.length > 2 ? vn.get(Integer.parseInt(idx[2]) - 1) : new float[]{0, 1, 0};
+                            float[] n = idx.length > 2 ? vn.get(Integer.parseInt(idx[2]) - 1) : face;
                             for (float f : new float[]{pos[0], pos[1], pos[2], uv[0], uv[1], n[0], n[1], n[2]}) {
                                 all.add(f);
                                 if (current != null) current.add(f);
@@ -74,6 +75,25 @@ public final class ObjModel {
         out.put("", toArray(all));
         groups.forEach((name, list) -> out.put(name, toArray(list)));
         return out;
+    }
+
+    /**
+     * A normal da face, para um arquivo que não traz normais.
+     *
+     * <p>É o que o {@code WavefrontObject} do Forge fazia: sem {@code vn}, a normal de cada canto é a do
+     * plano do triângulo. Metade dos modelos do Ars Magica 2 vem assim, e sem isto todos eles ficariam
+     * iluminados como se fossem chão.
+     */
+    private static float[] faceNormal(List<float[]> v, String[] p, int[] order) {
+        float[] a = v.get(Integer.parseInt(p[order[0]].split("/")[0]) - 1);
+        float[] b = v.get(Integer.parseInt(p[order[1]].split("/")[0]) - 1);
+        float[] c = v.get(Integer.parseInt(p[order[2]].split("/")[0]) - 1);
+        float ux = b[0] - a[0], uy = b[1] - a[1], uz = b[2] - a[2];
+        float wx = c[0] - a[0], wy = c[1] - a[1], wz = c[2] - a[2];
+        float nx = uy * wz - uz * wy, ny = uz * wx - ux * wz, nz = ux * wy - uy * wx;
+        float comprimento = (float) Math.sqrt(nx * nx + ny * ny + nz * nz);
+        if (comprimento == 0.0f) return new float[]{0, 1, 0};
+        return new float[]{nx / comprimento, ny / comprimento, nz / comprimento};
     }
 
     private static float[] toArray(List<Float> list) {

@@ -69,6 +69,12 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> ARCANA_ORES_NETHER_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("arcana_ores_nether"));
 
+    /** As flores do Ars Arcana: a Cerublossom e a Nova do Deserto, em moitas de oito. */
+    public static final Feature<NoneFeatureConfiguration> ARCANA_FLOWERS = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("arcana_flowers"), new net.thaumcraft.world.ArcanaFlowersFeature(NoneFeatureConfiguration.CODEC));
+    public static final ResourceKey<PlacedFeature> ARCANA_FLOWERS_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("arcana_flowers"));
+
     /** As ruínas do mundo de cima: túmulos, anéis eldritch, pedras do topo e totens de obsidiana. */
     public static final Feature<NoneFeatureConfiguration> RUINS = Registry.register(BuiltInRegistries.FEATURE,
             Thaumcraft.id("ruins"), new net.thaumcraft.world.RuinsFeature(NoneFeatureConfiguration.CODEC));
@@ -151,6 +157,11 @@ public final class TCFeatures {
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInTheNether(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES,
                 ARCANA_ORES_NETHER_PLACED);
+        // e as flores dele, no passo das flores
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION,
+                ARCANA_FLOWERS_PLACED);
         // um nó a cada trinta e seis pedaços de mundo, que é a raridade do original
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),

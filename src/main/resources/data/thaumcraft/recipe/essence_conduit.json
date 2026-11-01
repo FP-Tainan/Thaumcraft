@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    " S ",
+    "SSS"
+  ],
+  "key": {
+    "S": "minecraft:stone",
+    "C": "thaumcraft:chimerite"
+  },
+  "result": {
+    "id": "thaumcraft:essence_conduit",
+    "count": 1
+  }
+}

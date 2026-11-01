@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "thaumcraft:block/obelisk" },
+    "facing=south": { "model": "thaumcraft:block/obelisk" },
+    "facing=east": { "model": "thaumcraft:block/obelisk" },
+    "facing=west": { "model": "thaumcraft:block/obelisk" }
+  }
+}

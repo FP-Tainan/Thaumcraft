@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "VSV",
+    "SCS",
+    "VSV"
+  ],
+  "key": {
+    "V": "thaumcraft:vinteum_dust",
+    "S": "minecraft:stone",
+    "C": "minecraft:chiseled_stone_bricks"
+  },
+  "result": {
+    "id": "thaumcraft:obelisk",
+    "count": 1
+  }
+}

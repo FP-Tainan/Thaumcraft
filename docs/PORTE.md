@@ -14444,3 +14444,106 @@ que os minérios pedem picareta de ferro; que cada minério cai o que tem de cai
 mínimo e o máximo vistos em duzentas quebras; que o Toque Suave leva o minério inteiro e a Fortuna III dá
 exatamente três a mais; que os blocos de guardar caem a si mesmos; e que os nove materiais empilham e têm
 nome. E o `ArcanaMaterialsClientTest`, com duas fotos — a parede dos dez blocos e a barra dos nove itens.
+
+## A outra metade do Ars Magica 2 — Fatia 2: a rede de Etherium (2026-11-01)
+
+A energia do Ars Magica 2 chama-se **Etherium**, e a rede dela não se parece com nenhuma outra deste
+pacote. Não há cano, não há fio, e <b>encostar não liga</b>.
+
+**Dois nós ligam-se porque alguém foi lá com a Chave de Cristal** e disse <i>daqui</i> e depois <i>para
+ali</i>. O que fica guardado é um **caminho** — a fila de posições por onde a energia há de passar —, e a
+rede refá-lo a pé, de nó em nó, cada vez que precisa. Um nó só enxerga **dez casas**; pondo condutos de
+dez em dez, a energia atravessa o que for preciso, até **cem casas** entre as duas pontas.
+
+**E quem pede é quem puxa.** De **vinte em vinte batidas** cada máquina percorre os caminhos que tem e
+tira das fontes o que couber nela. A fonte não empurra para lado nenhum — fica cheia à espera. É por isso
+que a chave se usa sempre **da fonte para a máquina**, e não ao contrário.
+
+**Os três Etheriums.** A energia tem tinta: **Luz**, **Neutro** e **Trevas**, com os números 1, 2 e 4 do
+original, que eram bandeiras de bit. Uma fonte só dá o tipo que é dela e uma máquina só bebe do tipo que
+usa. **Desvio declarado:** o original deixa qualquer mod registrar um quarto tipo, e **nada no Ars Magica
+2 chama esse método** — aqui os três são um enumerado.
+
+**Onde isto se guarda.** O original pendura os nós no NBT do **pedaço de mundo** e esquece-os quando o
+pedaço descarrega. Aqui vão num `SavedData` do nível, que é o lugar que o jogo de hoje dá a este tipo de
+coisa e o único que o Fabric oferece. A conferência de caminho já pergunta se o pedaço está carregado
+antes de olhar, de modo que não se vê diferença. **Um desvio que vem com ele:** o original chama
+`getChunkFromBlockCoords`, que **carrega** o pedaço para o conferir; aqui um caminho que passa por pedaço
+descarregado apenas não serve desta vez — não morre e não deixa marca. Uma rede não arranca pedaços de
+mundo do disco de vinte em vinte batidas.
+
+**O Elo Partido** é a marca que fica onde um caminho se rompeu: um bloco sem corpo, que não se vê e que
+qualquer coisa posta por cima apaga. Serve a uma coisa boa — ter onde olhar quando a máquina parou e
+ninguém sabe porquê. Quem o **vê** são os Óculos Magitécnicos, que ainda não entraram; até lá é invisível
+para toda a gente, que é o que o original mostra a quem não os tem.
+
+**O caminho faz-se com um A\* que não é um A\*.** O palpite do original (`h`) não olha para a chegada: ele
+é a distância **do nó atual ao próximo**, igual ao custo. Ou seja, é um Dijkstra com o peso de cada salto
+a dobrar — dá o mesmo caminho e não poupa trabalho nenhum. Como as redes têm poucas dezenas de nós, nunca
+se nota. Fica tal e qual.
+
+**Um achado: o campo que ninguém lê.** O `TileEntityAMPower` tem um `canRequestPower` com dois métodos
+para o ligar e desligar — e o método `canRequestPower()` devolve `true` **sem olhar para ele**. Resultado:
+a Bateria de Mana, que chama esses métodos conforme a redstone, **pede sempre**, com ou sem corrente. O
+campo não veio para cá; a conduta é a mesma.
+
+### O que entrou com ela
+
+**O Obelisco**, a primeira fonte: queima **Pó de Vinteum** — duzentas batidas por punhado — e dá
+**cinco** de Neutro por batida. Guarda 5000, não pede nada a ninguém, e tem uma casa só, que só aceita o
+que arde.
+
+**E o que está em volta dele conta.** Um anel de nove quadrados de **Giz de Mago** multiplica por
+**1,25**; quatro pilares de tijolo de pedra nos cantos, de dois blocos, com o tijolo **cinzelado** por
+cima, multiplicam por **1,35**. Juntos dão **8,4375** por batida em vez de cinco. Quem trabalhar a duas
+casas de um obelisco a arder, estando ele com um décimo do teto, ganha a **Regeneração de Mana** por dez
+minutos.
+
+**A Regeneração de Mana** é a primeira das cinco bênçãos que só a maquinaria dá — e que estavam
+declaradas fora de escopo. Ela corta o tempo de encher para **um décimo**. **O grau não faz diferença
+nenhuma, e é assim no original:** a conta é `tempo × (1 − max(0,9; 0,25 × (grau + 1)))`, e aquele `max`
+nunca deixa o segundo número passar do primeiro. Era para ser um `min`. Fica como está.
+
+**O Conduto de Essência** é o degrau: guarda **um** de cada tipo, pede **um** de cada vez, passa os três e
+não dá nenhum. A redstone fecha-o. **A Bateria de Mana** é o depósito: **250 000** de teto, puxa **mil** de
+cada vez, e **escolhe um tipo e fica com ele** — uma bateria que apanhou uma gota de Trevas por engano
+deixa de encher com o Neutro do Obelisco.
+
+**O Giz de Mago** é o risco no chão com que se desenham as figuras do ramo — dois centésimos de altura,
+**dezesseis desenhos** sorteados, cinquenta riscos por giz. É dele que vem o anel do Obelisco, e serão as
+quatro formas dos Rituais de Obelisco.
+
+**E duas flores**, porque a Chave de Cristal as pede: a **Cerublossom**, que acende um pouco, e a **Nova
+do Deserto**, que só nasce na areia e abre um anel de luz de três casas de raio. Nascem como no
+`AM2FlowerGen` — moitas de oito, a qualquer altura entre zero e 128, que é por isso que aparecem em
+cavernas e encostas e não em canteiros. **Desvio declarado:** o anel da Nova é feito, no original, de
+partículas próprias do Ars Magica 2; aqui é desenhado com a faísca do jogo, no mesmo passo e no mesmo
+raio. **E a conta dos pontos do anel fica errada de propósito:** o original passa o ângulo **em graus** ao
+seno e ao cosseno, que esperam radianos, e por isso o anel dele sai torto. Sai torto aqui também.
+
+### Os desenhos
+
+**Metade desta maquinaria desenha-se com malhas `.obj`**, que é como o Ars Magica 2 desenhava o que não
+cabia numa caixa. O porte já tinha um leitor destes arquivos — o `ObjModel`, escrito para o Thaumcraft —,
+e ele ganhou uma coisa: **a normal da face**. Os modelos do Thaumcraft trazem todos a sua; **metade dos do
+Ars Magica 2 não traz nenhuma**, e sem isto sairiam todos iluminados como se fossem chão. O
+`WavefrontObject` do Forge calculava-a, e agora este também.
+
+**O Obelisco** tem três peles — apagada, acesa e de alta potência — e, estando aceso, as **runas por
+cima**: a mesma malha outra vez com outra figura, que escorrega devagar (uma volta em 32 segundos na
+horizontal e em 28 na vertical, de modo que o desenho nunca se repete) e que pisca ao ritmo de um seno de
+um segundo. O original faz isso mexendo na **matriz de textura** do OpenGL, que já não existe; aqui o
+deslocamento soma-se a cada canto.
+
+**O cristal do Conduto** gira devagar — cinco milésimos de grau por quadro, que dá menos de um terço de
+grau por segundo —, cada conduto no seu ritmo, sorteado quando nasce. E é **ciano e sem sombra**: a conta
+da cor do original, com o défice a zero, dá exatamente `(0; 1; 1)`, e ele desliga a iluminação antes de o
+desenhar. **O cristal gira num eixo só**: o modelo guarda três giros e aplica-os a uma caixa que ele nunca
+desenha; ao cristal de verdade aplica um, em volta do eixo vertical.
+
+**Guardas:** o `ArcanaPowerGameTest`, com dez — os três tipos e os números deles; que um nó entra na rede
+ao ser posto e sai ao ser tirado; o que o Obelisco queima e o que não queima; que ele se enche de Neutro
+sozinho; que a Bateria ligada bebe dele e fica com o tipo; que um Conduto passa a energia adiante; que a
+chave recusa ligar um nó a si mesmo e recusa uma fonte que não dá o tipo; que cortar apaga todos os
+caminhos; que o giz e os pilares multiplicam o que devem; e que tirar o conduto do meio deixa um Elo
+Partido no lugar. E o `ArcanaPowerClientTest`, com seis fotos.

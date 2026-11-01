@@ -24,10 +24,22 @@ public final class ObjMesh {
 
     public static void draw(float[] mesh, PoseStack.Pose matrix, VertexConsumer consumer,
                             int light, int overlay, int colour) {
+        draw(mesh, matrix, consumer, light, overlay, colour, 0.0f, 0.0f);
+    }
+
+    /**
+     * A mesma malha com a textura <b>corrida</b>.
+     *
+     * <p>É o que o Ars Magica 2 faz com as runas do Obelisco: ele mexe na matriz de textura do OpenGL para
+     * a figura escorregar devagar por cima do modelo. Hoje não há matriz de textura, e o mesmo se consegue
+     * somando o deslocamento a cada canto.
+     */
+    public static void draw(float[] mesh, PoseStack.Pose matrix, VertexConsumer consumer,
+                            int light, int overlay, int colour, float u, float v) {
         for (int at = 0; at < mesh.length; at += STRIDE) {
             consumer.addVertex(matrix, mesh[at], mesh[at + 1], mesh[at + 2])
                     .setColor(colour)
-                    .setUv(mesh[at + 3], mesh[at + 4])
+                    .setUv(mesh[at + 3] + u, mesh[at + 4] + v)
                     .setOverlay(overlay)
                     .setLight(light)
                     .setNormal(matrix, mesh[at + 5], mesh[at + 6], mesh[at + 7]);

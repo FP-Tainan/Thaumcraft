@@ -23,6 +23,7 @@
       "net.thaumcraft.test.ArcanaMaterialsGameTest",
       "net.thaumcraft.test.ArcanaNecromancyGameTest",
       "net.thaumcraft.test.ArcanaOcculusGameTest",
+      "net.thaumcraft.test.ArcanaPowerGameTest",
       "net.thaumcraft.test.ArcanaProjectileGameTest",
       "net.thaumcraft.test.ArcanaPushGameTest",
       "net.thaumcraft.test.ArcanaSecretsGameTest",
@@ -443,7 +444,8 @@
       "net.thaumcraft.test.client.OccultaInfusedBrewClientTest",
       "net.thaumcraft.test.client.OccultaSpectralFamiliarClientTest",
       "net.thaumcraft.test.client.OccultaBrewRainClientTest",
-      "net.thaumcraft.test.client.ArcanaMaterialsClientTest"
+      "net.thaumcraft.test.client.ArcanaMaterialsClientTest",
+      "net.thaumcraft.test.client.ArcanaPowerClientTest"
     ],
     "main": [
       "net.thaumcraft.test.addon.TestAddon"

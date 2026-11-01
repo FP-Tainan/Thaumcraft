@@ -805,6 +805,16 @@ public class ThaumcraftClient implements ClientModInitializer {
         net.minecraft.client.gui.screens.MenuScreens.register(
                 net.thaumcraft.registry.TCMenus.INSCRIPTION_TABLE,
                 net.thaumcraft.arcana.client.InscriptionScreen::new);
+        net.minecraft.client.gui.screens.MenuScreens.register(
+                net.thaumcraft.registry.TCMenus.OBELISK,
+                net.thaumcraft.arcana.client.ObeliskScreen::new);
+        // a maquinaria do Ars Arcana: o Obelisco e o conduto desenham-se à mão, que os modelos deles não são caixas
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.arcana.ArcanaBlocks.OBELISK_ENTITY,
+                net.thaumcraft.client.render.ObeliskRenderer::new);
+        net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
+                net.thaumcraft.arcana.ArcanaBlocks.ESSENCE_CONDUIT_ENTITY,
+                net.thaumcraft.client.render.EssenceConduitRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(net.thaumcraft.registry.TCMenus.DISTILLERY,
                 net.thaumcraft.occulta.client.DistilleryScreen::new);
         net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry.register(
@@ -1279,6 +1289,8 @@ net.minecraft.client.renderer.special.SpecialModelRenderers.ID_MAPPER.put(
                 net.thaumcraft.registry.TCBlockEntities.NODE, net.thaumcraft.client.render.NodeRenderer::new);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("wand"), net.thaumcraft.client.render.WandRenderer.Unbaked.CODEC);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("alembic"), net.thaumcraft.client.render.AlembicItemRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("obelisk"), net.thaumcraft.client.render.ObeliskItemRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("essence_conduit"), net.thaumcraft.client.render.EssenceConduitItemRenderer.Unbaked.CODEC);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("statue_of_worship"),
                 net.thaumcraft.occulta.client.StatueOfWorshipItemRenderer.Unbaked.CODEC);
         SpecialModelRenderers.ID_MAPPER.put(Thaumcraft.id("tube_valve"), net.thaumcraft.client.render.TubeValveItemRenderer.Unbaked.CODEC);

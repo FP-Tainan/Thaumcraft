@@ -35,6 +35,29 @@ public final class ArcanaComponents {
             builder -> builder.persistent(Appropriated.CODEC)
                     .networkSynchronized(Appropriated.STREAM_CODEC));
 
+    /**
+     * O lugar que a <b>Chave de Cristal</b> guardou: a fonte do par que ela está a fazer.
+     *
+     * <p>No original são três números no NBT, debaixo da chave {@code PAIRLOC}.
+     */
+    public static final DataComponentType<net.minecraft.core.BlockPos> WRENCH_PAIR = register("wrench_pair",
+            builder -> builder.persistent(net.minecraft.core.BlockPos.CODEC)
+                    .networkSynchronized(net.minecraft.core.BlockPos.STREAM_CODEC));
+
+    /**
+     * Se a chave <b>guarda</b> o lugar depois de ligar, para ligar a mesma fonte a muitas máquinas.
+     *
+     * <p>É o {@code KEEPBINDING}, que se liga guardando o lugar agachado.
+     */
+    public static final DataComponentType<net.minecraft.util.Unit> WRENCH_KEEP = register("wrench_keep",
+            builder -> builder.persistent(net.minecraft.util.Unit.CODEC)
+                    .networkSynchronized(net.minecraft.network.codec.StreamCodec.unit(net.minecraft.util.Unit.INSTANCE)));
+
+    /** Se a chave está no modo de <b>desligar</b> em vez de ligar: o {@code WRENCHMODE}. */
+    public static final DataComponentType<net.minecraft.util.Unit> WRENCH_CUT = register("wrench_cut",
+            builder -> builder.persistent(net.minecraft.util.Unit.CODEC)
+                    .networkSynchronized(net.minecraft.network.codec.StreamCodec.unit(net.minecraft.util.Unit.INSTANCE)));
+
     private ArcanaComponents() {
     }
 

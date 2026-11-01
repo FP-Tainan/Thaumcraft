@@ -116,6 +116,22 @@ public final class ArcanaEffects {
             new MobEffect(MobEffectCategory.BENEFICIAL, 0xD7BFFF) {
             });
 
+    /**
+     * <b>Regeneração de Mana</b>: a mana volta <b>dez vezes</b> mais depressa.
+     *
+     * <p>É a primeira das cinco bênçãos que só a maquinaria do Ars Magica 2 dá — e a que o <b>Obelisco</b>
+     * dá a quem fica ao pé dele a trabalhar, dez minutos de cada vez.
+     *
+     * <p><b>O grau não faz diferença nenhuma, e é assim no original.</b> A conta lá é
+     * {@code tempo × (1 − max(0,9; 0,25 × (grau + 1)))}: aquele {@code max} nunca deixa o segundo número
+     * passar do primeiro, de modo que o tempo fica sempre em <b>um décimo</b>, com grau zero ou com grau
+     * cinco. Era para ser um {@code min}. Fica como está — e quem der por isso vê o Obelisco dar o
+     * mesmo que o Prisma Celeste.
+     */
+    public static final Holder<MobEffect> MANA_REGEN = register("mana_regen",
+            new MobEffect(MobEffectCategory.BENEFICIAL, 0x4DB3E8) {
+            });
+
     /** <b>Enredado</b>: não se mexe. Nem para cima, nem para o lado. */
     public static final Holder<MobEffect> ENTANGLED = register("entangled",
             new MobEffect(MobEffectCategory.HARMFUL, 0x4E8C3A) {

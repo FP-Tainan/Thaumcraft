@@ -53,6 +53,7 @@ public final class Arcana {
         Modifiers.init();
         ArcanaItems.init();
         ArcanaDrops.init();
+        net.thaumcraft.arcana.machine.ObeliskFuel.init();
         ManaClock.init();
 
         // a aba do ramo no livro: sem ela o ramo existia e ninguém dava por ele

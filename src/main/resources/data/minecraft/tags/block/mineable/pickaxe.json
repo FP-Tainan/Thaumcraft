@@ -67,6 +67,9 @@
     "thaumcraft:moonstone_ore",
     "thaumcraft:moonstone_block",
     "thaumcraft:sunstone_ore",
-    "thaumcraft:sunstone_block"
+    "thaumcraft:sunstone_block",
+    "thaumcraft:essence_conduit",
+    "thaumcraft:mana_battery",
+    "thaumcraft:obelisk"
   ]
 }

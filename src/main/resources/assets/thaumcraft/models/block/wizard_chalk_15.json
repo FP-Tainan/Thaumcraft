@@ -1,0 +1,6 @@
+{
+  "parent": "thaumcraft:block/wizard_chalk_base",
+  "textures": {
+    "all": "thaumcraft:block/wizard_chalk/15"
+  }
+}

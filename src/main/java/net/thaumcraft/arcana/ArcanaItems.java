@@ -61,6 +61,20 @@ public final class ArcanaItems {
             new net.minecraft.world.item.BlockItem(ArcanaBlocks.OCCULUS, properties));
 
     /**
+     * A <b>Chave de Cristal</b>: a única maneira de desenhar a rede de Etherium.
+     *
+     * <p>Toca-se na fonte e depois na máquina. Não empilha, porque leva um lugar guardado dentro.
+     */
+    public static final Item CRYSTAL_WRENCH = register("crystal_wrench", properties ->
+            new net.thaumcraft.arcana.machine.CrystalWrenchItem(properties.stacksTo(1)));
+
+    /** O <b>Giz de Mago</b>: cinquenta riscos, e cada um deles sorteado entre dezesseis. */
+    public static final Item WIZARD_CHALK = register("wizard_chalk", properties ->
+            new net.thaumcraft.arcana.machine.ChalkItem(properties
+                    .stacksTo(1)
+                    .durability(net.thaumcraft.arcana.machine.ChalkItem.USES)));
+
+    /**
      * Os <b>nove materiais</b> do ramo: o {@code ItemOre} da 1.4.0.009, que eram nove metadados de um item
      * só, na ordem em que ele os numera.
      *
@@ -90,6 +104,17 @@ public final class ArcanaItems {
             MATERIALS.put(qual, register(qual, Item::new));
         }
         PURIFIED_VINTEUM = MATERIALS.get("purified_vinteum");
+
+        register("cerublossom", properties -> new net.minecraft.world.item.BlockItem(
+                ArcanaBlocks.CERUBLOSSOM, properties.useBlockDescriptionPrefix()));
+        register("desert_nova", properties -> new net.minecraft.world.item.BlockItem(
+                ArcanaBlocks.DESERT_NOVA, properties.useBlockDescriptionPrefix()));
+        register("essence_conduit", properties -> new net.minecraft.world.item.BlockItem(
+                ArcanaBlocks.ESSENCE_CONDUIT, properties.useBlockDescriptionPrefix()));
+        register("mana_battery", properties -> new net.minecraft.world.item.BlockItem(
+                ArcanaBlocks.MANA_BATTERY, properties.useBlockDescriptionPrefix()));
+        register("obelisk", properties -> new net.minecraft.world.item.BlockItem(
+                ArcanaBlocks.OBELISK, properties.useBlockDescriptionPrefix()));
 
         for (var entrada : ArcanaBlocks.ORES.entrySet()) {
             register(entrada.getKey() + "_ore", properties -> new net.minecraft.world.item.BlockItem(

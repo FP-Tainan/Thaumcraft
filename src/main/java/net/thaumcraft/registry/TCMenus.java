@@ -119,6 +119,12 @@ public final class TCMenus {
             new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(net.thaumcraft.inventory.ArcaneSpaMenu::new,
                     net.minecraft.core.BlockPos.STREAM_CODEC));
 
+    /** A casa do combustível do Obelisco. */
+    public static final MenuType<net.thaumcraft.arcana.machine.ObeliskMenu> OBELISK =
+            Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("obelisk"),
+                    new MenuType<>(net.thaumcraft.arcana.machine.ObeliskMenu::new,
+                            FeatureFlags.VANILLA_SET));
+
     public static final MenuType<net.thaumcraft.inventory.AlchemicalFurnaceMenu> ALCHEMICAL_FURNACE =
             Registry.register(BuiltInRegistries.MENU, Thaumcraft.id("alchemical_furnace"),
                     new MenuType<>(net.thaumcraft.inventory.AlchemicalFurnaceMenu::new,

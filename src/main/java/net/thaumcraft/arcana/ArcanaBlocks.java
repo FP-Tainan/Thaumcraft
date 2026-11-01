@@ -70,6 +70,95 @@ public final class ArcanaBlocks {
                     .lightLevel(estado -> 7)));
 
     /**
+     * O <b>Giz de Mago</b>: o risco no chão com que se desenham as figuras do ramo.
+     *
+     * <p>Não tem corpo, não se empurra, parte-se num toque e não deixa nada.
+     */
+    public static final Block WIZARD_CHALK = register("wizard_chalk", properties ->
+            new net.thaumcraft.arcana.machine.WizardChalkBlock(properties
+                    .mapColor(MapColor.NONE)
+                    .noCollision()
+                    .noOcclusion()
+                    .instabreak()
+                    .pushReaction(PushReaction.DESTROY)
+                    .sound(SoundType.STONE)));
+
+    /**
+     * A <b>Cerublossom</b>: a florzinha azul que acende um pouco.
+     *
+     * <p>Nasce onde uma flor do jogo nasce, e é um dos dois ingredientes raros da Chave de Cristal.
+     */
+    public static final Block CERUBLOSSOM = register("cerublossom", properties ->
+            new net.thaumcraft.arcana.machine.ArcanaFlowerBlock(properties
+                    .mapColor(MapColor.COLOR_LIGHT_BLUE)
+                    .noCollision()
+                    .noOcclusion()
+                    .instabreak()
+                    .pushReaction(PushReaction.DESTROY)
+                    .sound(SoundType.GRASS)
+                    .lightLevel(estado -> 5)));
+
+    /** A <b>Nova do Deserto</b>: a flor da areia, que abre um anel de luz à sua volta. */
+    public static final Block DESERT_NOVA = register("desert_nova", properties ->
+            new net.thaumcraft.arcana.machine.DesertNovaBlock(properties
+                    .mapColor(MapColor.TERRACOTTA_ORANGE)
+                    .noCollision()
+                    .noOcclusion()
+                    .instabreak()
+                    .pushReaction(PushReaction.DESTROY)
+                    .sound(SoundType.GRASS)));
+
+    /** O <b>Elo Partido</b>: a marca que a rede deixa onde um caminho se rompeu. Não se vê e não se parte. */
+    public static final Block BROKEN_POWER_LINK = register("broken_power_link", properties ->
+            new net.thaumcraft.arcana.machine.BrokenPowerLinkBlock(properties
+                    .mapColor(MapColor.NONE)
+                    .noCollision()
+                    .noOcclusion()
+                    .noLootTable()
+                    .strength(-1.0f, 3600000.0f)
+                    .pushReaction(PushReaction.DESTROY)));
+
+    /** O <b>Conduto de Essência</b>: o degrau que leva a rede mais dez casas adiante. */
+    public static final Block ESSENCE_CONDUIT = register("essence_conduit", properties ->
+            new net.thaumcraft.arcana.machine.EssenceConduitBlock(properties
+                    .mapColor(MapColor.COLOR_LIGHT_BLUE)
+                    .strength(3.0f)
+                    .sound(SoundType.WOOL)
+                    .noOcclusion()));
+
+    public static final BlockEntityType<net.thaumcraft.arcana.machine.EssenceConduitBlockEntity> ESSENCE_CONDUIT_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("essence_conduit"),
+                    new BlockEntityType<>(net.thaumcraft.arcana.machine.EssenceConduitBlockEntity::new, Set.of(ESSENCE_CONDUIT)));
+
+    /** A <b>Bateria de Mana</b>: o depósito da rede, e o único. */
+    public static final Block MANA_BATTERY = register("mana_battery", properties ->
+            new net.thaumcraft.arcana.machine.ManaBatteryBlock(properties
+                    .mapColor(MapColor.METAL)
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.METAL)));
+
+    public static final BlockEntityType<net.thaumcraft.arcana.machine.ManaBatteryBlockEntity> MANA_BATTERY_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("mana_battery"),
+                    new BlockEntityType<>(net.thaumcraft.arcana.machine.ManaBatteryBlockEntity::new, Set.of(MANA_BATTERY)));
+
+    /**
+     * O <b>Obelisco</b>: a primeira fonte de Etherium, que queima pó de vinteum e dá Neutro.
+     *
+     * <p>Dois blocos de altura num lugar só, e acende — luz <b>onze</b>, que é o 0,73 do original.
+     */
+    public static final Block OBELISK = register("obelisk", properties ->
+            new net.thaumcraft.arcana.machine.ObeliskBlock(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.STONE)
+                    .noOcclusion()
+                    .lightLevel(estado -> 11)));
+
+    public static final BlockEntityType<net.thaumcraft.arcana.machine.ObeliskBlockEntity> OBELISK_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("obelisk"),
+                    new BlockEntityType<>(net.thaumcraft.arcana.machine.ObeliskBlockEntity::new, Set.of(OBELISK)));
+
+    /**
      * Os <b>cinco minérios</b> do ramo: o {@code BlockAMOre} da 1.4.0.009, que eram cinco metadados de um
      * bloco só.
      *

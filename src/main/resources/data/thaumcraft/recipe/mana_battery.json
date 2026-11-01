@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IVI",
+    "VAV",
+    "IVI"
+  ],
+  "key": {
+    "I": "thaumcraft:chimerite",
+    "V": "thaumcraft:vinteum_dust",
+    "A": "thaumcraft:arcane_ash"
+  },
+  "result": {
+    "id": "thaumcraft:mana_battery",
+    "count": 1
+  }
+}

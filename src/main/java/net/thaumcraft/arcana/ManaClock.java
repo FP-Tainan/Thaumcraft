@@ -37,6 +37,21 @@ public final class ManaClock {
         return (int) Math.round(BASE_FULL_REGEN * (0.75 - 0.25 * ((double) nível / Mana.MAX_LEVEL)));
     }
 
+    /**
+     * O quanto a <b>Regeneração de Mana</b> corta do tempo de encher: nove décimos dele.
+     *
+     * <p>A conta do original é {@code 1 − max(0,9; 0,25 × (grau + 1))}, e aquele {@code max} faz com que o
+     * corte seja sempre este, seja qual for o grau. Ver o {@link ArcanaEffects#MANA_REGEN}.
+     */
+    public static final float MANA_REGEN_CUT = 0.9f;
+
+    /** Quantas batidas leva a encher, contando a bênção se a pessoa a tiver. */
+    public static int regenTicks(ServerPlayer quem, int level) {
+        int quanto = ticksForFullRegen(level);
+        if (quem.hasEffect(ArcanaEffects.MANA_REGEN)) quanto = (int) (quanto * (1.0f - MANA_REGEN_CUT));
+        return Math.max(1, quanto);
+    }
+
     /** A parte do desgaste que se perde por batida e por nível: o {@code 0,01} do original. */
     public static final float BURNOUT_DROP = 0.01f;
 
@@ -67,7 +82,7 @@ public final class ManaClock {
 
         Mana agora = era;
         if (era.mana() < era.maxMana()) {
-            float sobe = era.maxMana() / ticksForFullRegen(era.level()) * EVERY;
+            float sobe = era.maxMana() / (float) regenTicks(quem, era.level()) * EVERY;
             agora = agora.withMana(agora.mana() + sobe);
         }
         if (era.burnout() > 0.0f) {
