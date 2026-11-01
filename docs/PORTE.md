@@ -13619,3 +13619,60 @@ tradução dos metadados de 2014); e a receita. E o `OccultaCauldronBookClientTe
 escolhidas pelo que cada uma põe à prova na folha: o índice (uma coluna de atalhos), a receita do
 caldeirão (uma bancada desenhada com coisas), os temperos de cor (coisa-e-texto em linha) e um capítulo de
 texto corrido.
+
+## A Mudança de Clima (2026-11-01)
+
+O maior rito do ofício, e o único que **muda o mundo e não o que está nele**: ele troca o bioma de tudo à
+volta do círculo. Uma pradaria vira selva; um deserto vira geleira.
+
+Ele é caro de propósito. Pede o **anel de fora inteiro** — quarenta glifos —, sete coisas, e um **coven de
+quatro** bruxas. E o raio do que muda sai de quantas bruxas vieram: **dezesseis blocos por bruxa acima de
+três**. Com quatro mudam-se dezesseis blocos à volta; com sete, sessenta e quatro.
+
+### O foco diz em que bioma
+
+O rito não tem alvo escrito em lado nenhum: ele **olha o chão**. Uma coisa largada a oito blocos do
+círculo diz que clima se quer, e são **treze** — uma muda de carvalho pede floresta, uma de selva pede
+selva, obsidiana pede montanha, pedra pede colina, uma bola de gosma pede pântano, um balde de água pede
+mar, um cato pede deserto, a **Agulha de Gelo** pede gelo, netherrack pede terra devastada, areia pede
+praia, um cogumelo vermelho pede ilha de cogumelos e um crânio pede o mágico. Sem nenhuma delas no chão,
+o rito desiste.
+
+E a **poeira de glowstone** que estiver junto escolhe **qual** dos biomas daquele clima: uma pedra, o
+primeiro; duas, o segundo. Sem ela, sorteia-se entre os três primeiros. É o que separa «quero floresta» de
+«quero floresta de bétulas».
+
+Dois dos climas mexem também no tempo: o deserto limpa o céu, o gelo faz chover.
+
+**Nada disso está escrito em parte nenhuma do jogo.** O rito é um vocabulário de treze coisas que quem
+joga descobre uma a uma — e é por isso que ele está no livro.
+
+### Dois desvios declarados
+
+**Os climas são rótulos escritos à mão.** O original pergunta ao dicionário de biomas da Forge, que hoje
+não existe; e os rótulos do jogo cobrem menos de metade dos treze — há `is_forest` e `is_jungle`, não há
+`is_swamp` nem `is_desert`. Os treze vão escritos em
+`data/thaumcraft/tags/worldgen/biome/climate_*.json`, e quem jogar pode mexer neles. O «mágico», que na
+Forge era o rótulo dos biomas de outros mods, ficou com os três biomas estranhos de hoje: o bosque de
+cerejeiras, o jardim pálido e as cavernas luxuriantes.
+
+**A área é um quadrado e não um círculo.** O original escreve os biomas à mão, pedaço a pedaço, e manda os
+pedaços de volta para o lado de cá. Hoje quem faz isso é o próprio jogo, pelo caminho do `/fillbiome` — e
+esse caminho enche uma **caixa**. Usar o caminho do jogo é mais são do que refazer as tripas dele para
+arredondar um canto.
+
+### E o que fica de fora
+
+O efeito de cozimento **Estações que Mudam** — o irmão deste rito, que troca o bioma pelo que estiver
+escrito numa **Nota de Bioma** — **não está portado**, e com ele ficam de fora o **Livro de Biomas** (o
+escolhedor que escreve a nota) e a própria nota. São três peças de uma mesma ideia, e a diferença entre
+elas e o rito é que o rito escolhe o clima **por um foco no chão** e elas escolhem o bioma **exato** por
+um papel. O rito não depende delas — e é ele que faz a coisa acontecer.
+
+Com este rito os ritos passam de oitenta e dois para **oitenta e três** dos noventa e seis.
+
+**Guardas:** o `OccultaClimateChangeGameTest`, com cinco — que o rito está no livro e pede só o anel de
+fora; que os **treze climas** existem e que nenhum deles está vazio (um rótulo vazio faria o rito acender
+e não mudar nada); que o chão nomeia o clima e que a glowstone escolhe qual bioma dele, com o segundo a
+sair de duas pedras; que o raio sai do coven; e que a mudança **acontece mesmo** — o bioma do chão antes e
+depois, que é a única parte que não se mede por dentro.

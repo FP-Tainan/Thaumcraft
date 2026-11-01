@@ -168,6 +168,7 @@
       "net.thaumcraft.test.OccultaDuplicationGameTest",
       "net.thaumcraft.test.OccultaPriorIncarnationGameTest",
       "net.thaumcraft.test.OccultaCauldronBookGameTest",
+      "net.thaumcraft.test.OccultaClimateChangeGameTest",
       "net.thaumcraft.test.OccultaWitchPlantsGameTest",
       "net.thaumcraft.test.OccultaPitGroundGameTest",
       "net.thaumcraft.test.OccultaInfusionGameTest",

@@ -3422,6 +3422,24 @@ public final class Rites {
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         /*
+         * A <b>Mudança de Clima</b>, que é o maior rito do ofício: ela troca o bioma de tudo à volta.
+         *
+         * <p>Anel de fora inteiro, sete coisas e um <b>coven de quatro</b> — e o raio do que muda sai de
+         * quantas bruxas vieram. É o único rito que muda o mundo e não o que está nele.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.climatechange",
+                new ClimateChange.Rito(),
+                new Sacrifice.Items(Items.SPIDER_EYE,
+                        net.thaumcraft.occulta.OccultaItems.TOE_OF_FROG,
+                        net.thaumcraft.occulta.OccultaItems.BAT_WOOL,
+                        net.thaumcraft.occulta.OccultaItems.DOG_TONGUE,
+                        net.thaumcraft.occulta.OccultaItems.OWLETS_WING,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(40, 0, 0),
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
          * A <b>Encarnação Anterior</b>, que devolve o que sumiu de onde se morreu.
          *
          * <p>É o único rito do mod que <b>não cobra poder</b> — o preço dele são as cinco coisas, e a
