@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "thaumcraft:vinteum_ore",
+    "thaumcraft:chimerite_ore",
+    "thaumcraft:blue_topaz_ore",
+    "thaumcraft:moonstone_ore",
+    "thaumcraft:sunstone_ore",
+    "thaumcraft:vinteum_block",
+    "thaumcraft:chimerite_block",
+    "thaumcraft:blue_topaz_block",
+    "thaumcraft:moonstone_block",
+    "thaumcraft:sunstone_block"
+  ]
+}

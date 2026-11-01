@@ -52,6 +52,7 @@ public final class Arcana {
         Essences.init();
         Modifiers.init();
         ArcanaItems.init();
+        ArcanaDrops.init();
         ManaClock.init();
 
         // a aba do ramo no livro: sem ela o ramo existia e ninguém dava por ele

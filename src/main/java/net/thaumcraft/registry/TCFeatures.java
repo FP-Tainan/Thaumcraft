@@ -57,6 +57,18 @@ public final class TCFeatures {
     public static final ResourceKey<PlacedFeature> THAUM_ORES_PLACED =
             ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("thaum_ores"));
 
+    /** Os minérios do Ars Arcana: vinteum, quimerita e topázio na pedra, pedra-do-sol na lava. */
+    public static final Feature<NoneFeatureConfiguration> ARCANA_ORES = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("arcana_ores"), new net.thaumcraft.world.ArcanaOresFeature(NoneFeatureConfiguration.CODEC));
+    public static final ResourceKey<PlacedFeature> ARCANA_ORES_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("arcana_ores"));
+
+    /** E a passagem do Nether, que no original é uma linha só: a mesma da pedra-do-sol. */
+    public static final Feature<NoneFeatureConfiguration> ARCANA_ORES_NETHER = Registry.register(BuiltInRegistries.FEATURE,
+            Thaumcraft.id("arcana_ores_nether"), new net.thaumcraft.world.ArcanaOresFeature.Nether(NoneFeatureConfiguration.CODEC));
+    public static final ResourceKey<PlacedFeature> ARCANA_ORES_NETHER_PLACED =
+            ResourceKey.create(Registries.PLACED_FEATURE, Thaumcraft.id("arcana_ores_nether"));
+
     /** As ruínas do mundo de cima: túmulos, anéis eldritch, pedras do topo e totens de obsidiana. */
     public static final Feature<NoneFeatureConfiguration> RUINS = Registry.register(BuiltInRegistries.FEATURE,
             Thaumcraft.id("ruins"), new net.thaumcraft.world.RuinsFeature(NoneFeatureConfiguration.CODEC));
@@ -130,6 +142,15 @@ public final class TCFeatures {
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES,
                 THAUM_ORES_PLACED);
+        // e os do Ars Arcana, com as duas passagens do AM2WorldDecorator
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES,
+                ARCANA_ORES_PLACED);
+        net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
+                net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInTheNether(),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES,
+                ARCANA_ORES_NETHER_PLACED);
         // um nó a cada trinta e seis pedaços de mundo, que é a raridade do original
         net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(
                 net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),

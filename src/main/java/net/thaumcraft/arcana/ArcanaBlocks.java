@@ -13,6 +13,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.thaumcraft.Thaumcraft;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -66,6 +68,42 @@ public final class ArcanaBlocks {
                     .strength(3.0f)
                     .sound(SoundType.STONE)
                     .lightLevel(estado -> 7)));
+
+    /**
+     * Os <b>cinco minérios</b> do ramo: o {@code BlockAMOre} da 1.4.0.009, que eram cinco metadados de um
+     * bloco só.
+     *
+     * <p>Dureza <b>3</b>, resistência <b>3</b>, picareta de <b>ferro</b> — o {@code getHarvestLevel} do
+     * original devolve 2 para todos, sem olhar para o metadado.
+     *
+     * <p><b>Nenhum deles dá experiência.</b> O {@code BlockOre} de 2014 só dava a quem estivesse na lista
+     * dele — carvão, diamante, lápis, esmeralda, quartzo —, e um minério de outro mod não estava. Quem
+     * quebra um destes vê o que o original mostrava: nada de bolinhas verdes.
+     */
+    public static final Map<String, Block> ORES = new LinkedHashMap<>();
+
+    /**
+     * Os <b>cinco blocos de guardar</b>, que no original eram os metadados 5 a 9 do mesmo bloco.
+     *
+     * <p>Nove pedras fazem um bloco e um bloco desfaz-se em nove, como todo bloco de guardar do jogo.
+     */
+    public static final Map<String, Block> MATERIAL_BLOCKS = new LinkedHashMap<>();
+
+    static {
+        // a ordem é a dos metadados do original: vinteum, quimerita, topázio azul, pedra-da-lua, pedra-do-sol
+        for (String qual : new String[]{"vinteum", "chimerite", "blue_topaz", "moonstone", "sunstone"}) {
+            ORES.put(qual, register(qual + "_ore", properties -> new Block(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0f, 3.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE))));
+            MATERIAL_BLOCKS.put(qual, register(qual + "_block", properties -> new Block(properties
+                    .mapColor(MapColor.STONE)
+                    .strength(3.0f, 3.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE))));
+        }
+    }
 
     private ArcanaBlocks() {
     }

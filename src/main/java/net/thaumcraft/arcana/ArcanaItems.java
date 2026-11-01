@@ -61,6 +61,47 @@ public final class ArcanaItems {
             new net.minecraft.world.item.BlockItem(ArcanaBlocks.OCCULUS, properties));
 
     /**
+     * Os <b>nove materiais</b> do ramo: o {@code ItemOre} da 1.4.0.009, que eram nove metadados de um item
+     * só, na ordem em que ele os numera.
+     *
+     * <p>Quatro saem do chão — a <b>quimerita</b>, o <b>topázio azul</b>, a <b>pedra-da-lua</b> e a
+     * <b>pedra-do-sol</b>. Dois saem do forno — o <b>pó de vinteum</b>, que é o minério fundido, e a
+     * <b>cinza arcana</b>, duas de cada <b>composto arcano</b>, que por sua vez se fabrica. A <b>gordura
+     * animal</b> cai de porco. E o <b>vinteum purificado</b>, veja-se o {@link #PURIFIED_VINTEUM}.
+     */
+    public static final java.util.Map<String, Item> MATERIALS = new java.util.LinkedHashMap<>();
+
+    /**
+     * O <b>Vinteum Purificado</b>, e o buraco que ele tem no original.
+     *
+     * <p>Ele é ingrediente de quatro coisas — o embutido de ouro, os óculos magitécnicos, a Poção de Mana
+     * Lendária e o Catalisador de Vínculo — e <b>nada no 1.4.0.009 o produz</b>: não há receita, não há
+     * fundição, não há queda, não há baú. Quem joga o Ars Magica 2 daquela versão só o tem em criativo ou
+     * vindo de outro mod.
+     *
+     * <p>Fica como está. Inventar-lhe uma receita seria escrever um mod em vez de portar um, e o lugar de
+     * dizer isto é aqui e no {@code PORTE.md} — não numa receita que o original não tem.
+     */
+    public static Item PURIFIED_VINTEUM;
+
+    private static void registerMaterials() {
+        for (String qual : new String[]{"vinteum_dust", "arcane_compound", "arcane_ash", "purified_vinteum",
+                "chimerite", "blue_topaz", "sunstone", "moonstone", "animal_fat"}) {
+            MATERIALS.put(qual, register(qual, Item::new));
+        }
+        PURIFIED_VINTEUM = MATERIALS.get("purified_vinteum");
+
+        for (var entrada : ArcanaBlocks.ORES.entrySet()) {
+            register(entrada.getKey() + "_ore", properties -> new net.minecraft.world.item.BlockItem(
+                    entrada.getValue(), properties.useBlockDescriptionPrefix()));
+        }
+        for (var entrada : ArcanaBlocks.MATERIAL_BLOCKS.entrySet()) {
+            register(entrada.getKey() + "_block", properties -> new net.minecraft.world.item.BlockItem(
+                    entrada.getValue(), properties.useBlockDescriptionPrefix()));
+        }
+    }
+
+    /**
      * As <b>ferramentas vinculadas</b>: um feitiço que virou ferramenta.
      *
      * <p>Elas não se fabricam — quem as faz é a Forma do Vínculo, e quem as desfaz é a mana acabar. Não
@@ -143,6 +184,7 @@ public final class ArcanaItems {
     public static void init() {
         registerBound();
         registerParts();
+        registerMaterials();
 
         CreativeModeTab tab = CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
                 .title(Component.translatable("itemGroup.thaumcraft.arcana"))

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BRN",
+    "G G",
+    "NRB"
+  ],
+  "key": {
+    "B": "minecraft:stone",
+    "R": "minecraft:redstone",
+    "N": "minecraft:netherrack",
+    "G": "minecraft:glowstone_dust"
+  },
+  "result": {
+    "id": "thaumcraft:arcane_compound",
+    "count": 1
+  }
+}

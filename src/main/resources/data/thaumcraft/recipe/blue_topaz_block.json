@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": "thaumcraft:blue_topaz"
+  },
+  "result": {
+    "id": "thaumcraft:blue_topaz_block",
+    "count": 1
+  }
+}

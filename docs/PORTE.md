@@ -14383,3 +14383,64 @@ aglomerados de cristal — não nomeiam o modelo na chave `model`, que neles é 
 
 **Guardas:** o `AssetsGameTest`, com dois — que toda coisa do mod tem definição, modelo e textura; e que
 todo bloco tem estado.
+
+## A outra metade do Ars Magica 2 — Fatia 1: os materiais (2026-11-01)
+
+Até aqui este porte trouxe **o sistema de feitiços** do Ars Magica 2, e a maquinaria ficou declarada fora
+de escopo. **Deixa de estar**: a decisão mudou, e o que vem agora é o resto do mod — a rede de Etherium, o
+Obelisco, as máquinas, os Flickers, o Altar de Criação, os Rituais de Obelisco e os Talentos.
+
+E tudo isso se faz de coisas que o porte não tinha. Por isso a primeira fatia é a matéria-prima.
+
+**Os cinco minérios e os cinco blocos de guardar** eram, no original, dez metadados de um bloco só — o
+`BlockAMOre`. Aqui são dez blocos, que é como o jogo de hoje os quer. Dureza **3**, resistência **3** e
+picareta de **ferro** para todos: o `getHarvestLevel` do original devolve 2 sem sequer olhar para qual é o
+metadado.
+
+**Nenhum deles dá experiência**, e isto é fiel e não esquecimento. O `BlockOre` de 2014 só dava
+experiência a quem estivesse na lista escrita dentro dele — carvão, diamante, lápis, esmeralda, quartzo —
+e um minério de outro mod não estava nessa lista. Quem quebra um destes vê exatamente o que via em 2014:
+nada de bolinhas verdes.
+
+**As quedas são as do `getDrops`**, cada uma com a sua conta: o vinteum cai a si mesmo (e é por isso que
+tem receita de fundição), a quimerita e o topázio azul caem **1 a 4**, a pedra-da-lua **1 a 2** e a
+pedra-do-sol **2 a 4**.
+
+**E a Fortuna soma, não multiplica.** A conta do original é `nextInt(4) + 1 + fortune`: o grau do encanto
+entra como uma **parcela**, uma pedra por grau. Nenhuma das três fórmulas do `apply_bonus` do jogo faz
+isso — a `ore_drops` multiplica, a `uniform_bonus_count` sorteia de zero até o grau, a `binomial` joga
+moedas —, e a `enchanted_count_increase` nem serve para blocos: ela lê o **atacante**, não a ferramenta.
+Por isso entrou uma função de tabela de queda própria, a `thaumcraft:flat_fortune`, que é a conta do
+original e mais nada. A diferença vê-se: com Fortuna III um minério do jogo pode render o quádruplo, e um
+destes rende sempre três a mais. É menos, e é de propósito.
+
+**A geração é a do `AM2WorldDecorator`**, com os números dele: vinteum 6 tentativas de veios de 4 entre as
+alturas 10 e 45; quimerita e topázio 8 tentativas de veios de 6 entre 10 e 80; pedra-do-sol 20 tentativas
+de veios de 3 **na lava**, entre 5 e 120 — e esta passagem o original faz **duas vezes**, uma no Nether e
+outra no mundo de cima.
+
+**Duas coisas que as alturas de 2014 fazem no mundo de hoje**, e que ficam como estão. A primeira: aquele
+mundo começava no zero, e abaixo disso é ardósia, onde o original nunca chegou — estes minérios ficam
+todos acima da ardósia. A segunda: a passagem da pedra-do-sol no mundo de cima pede lava entre as alturas
+5 e 120, e a lava de hoje mora quase toda abaixo do zero. Ela quase nunca pega — e é essa, no fim, a
+raridade que o original tinha: a pedra-do-sol é uma pedra do Nether que de vez em quando aparece numa poça
+de lava deste lado.
+
+**A pedra-da-lua não nasce no chão.** O original não a gera em lado nenhum: ela cai do céu, atraída pelo
+Atrator de Pedra-da-Lua, que é um Flicker e vem na fatia dos Flickers. Até lá o minério dela existe, tem
+desenho e tem queda, e não há como encontrá-lo cavando — como no original.
+
+**A Banha de Porco** cai de porco, **três em dez**, e não precisa de ter sido gente a matar: o
+`onLivingDrops` do original olha só para o bicho e para o dado. Um porco que se afoga deixa banha na água.
+
+**Um achado, que fica escrito porque não se inventa o que o original não tem.** O **Vinteum Purificado** é
+ingrediente de quatro coisas — o embutido de ouro, os óculos magitécnicos, a Poção de Mana Lendária e o
+Catalisador de Vínculo — e **nada no 1.4.0.009 o produz**: não há receita, não há fundição, não há queda,
+não há baú. (O `addItemStackToChestGen` existe na classe dos itens e **nunca é chamado**.) Ele fica como
+está, obtenível só em criativo, e o lugar de dizer isto é aqui — não numa receita que o original não tem.
+
+**Guardas:** o `ArcanaMaterialsGameTest`, com seis — que os nove materiais e os dez blocos se registraram;
+que os minérios pedem picareta de ferro; que cada minério cai o que tem de cair, na conta dele, com o
+mínimo e o máximo vistos em duzentas quebras; que o Toque Suave leva o minério inteiro e a Fortuna III dá
+exatamente três a mais; que os blocos de guardar caem a si mesmos; e que os nove materiais empilham e têm
+nome. E o `ArcanaMaterialsClientTest`, com duas fotos — a parede dos dez blocos e a barra dos nove itens.

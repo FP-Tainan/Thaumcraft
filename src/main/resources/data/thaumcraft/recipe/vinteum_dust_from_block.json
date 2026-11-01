@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:vinteum_block"
+  ],
+  "result": {
+    "id": "thaumcraft:vinteum_dust",
+    "count": 9
+  }
+}

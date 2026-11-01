@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:moonstone_block"
+  ],
+  "result": {
+    "id": "thaumcraft:moonstone",
+    "count": 9
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": "thaumcraft:chimerite"
+  },
+  "result": {
+    "id": "thaumcraft:chimerite_block",
+    "count": 1
+  }
+}

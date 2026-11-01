@@ -88,6 +88,7 @@ public class Thaumcraft implements ModInitializer {
         net.thaumcraft.arcana.Arcana.init();
         net.thaumcraft.event.RunicShield.init();
         net.thaumcraft.event.Hover.init();
+        net.thaumcraft.loot.FlatFortuneFunction.init();
         net.thaumcraft.loot.ChestLoot.init();
         net.thaumcraft.event.AspectOrbs.init();
         // a morte líquida: o que a criatura dissolvida deixa, e o tanque do spa aberto aos canos (menos por cima)

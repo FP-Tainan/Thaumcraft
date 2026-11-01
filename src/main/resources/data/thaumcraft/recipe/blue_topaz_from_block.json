@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumcraft:blue_topaz_block"
+  ],
+  "result": {
+    "id": "thaumcraft:blue_topaz",
+    "count": 9
+  }
+}
