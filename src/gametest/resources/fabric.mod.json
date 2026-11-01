@@ -243,7 +243,8 @@
       "net.thaumcraft.test.OccultaSpectralFamiliarGameTest",
       "net.thaumcraft.test.OccultaRiteSizesGameTest",
       "net.thaumcraft.test.OccultaBottlingGameTest",
-      "net.thaumcraft.test.OccultaBrewRitualGameTest"
+      "net.thaumcraft.test.OccultaBrewRitualGameTest",
+      "net.thaumcraft.test.AssetsGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",

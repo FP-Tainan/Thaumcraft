@@ -14362,3 +14362,24 @@ O que fica declarado, e não vai mudar:
 
 **Guardas:** uma prova nova em cada lado — que as duas obras pedem a Pedra sem a exigir e que o pedido dela
 diz que sim com o chão limpo; e que um marcador de lobo guarda quem está perto dele do rito de caldeirão.
+
+## O guarda dos desenhos (2026-11-01)
+
+Com o mod fechado, uma prova que não existia e devia: **toda coisa deste porte tem desenho**.
+
+Um item sem desenho não rebenta nada. Ele aparece na mão como o quadriculado preto e roxo de textura
+perdida, e nenhuma prova de servidor dá por isso — o item existe, tem nome, faz o que tem de fazer. Só se
+vê abrindo o jogo e olhando. E este porte tem mais de **novecentos** itens: olhar para novecentos ícones à
+mão não é um plano, e olhá-los **uma vez** não chega, porque basta uma fatia renomear um arquivo.
+
+O guarda anda o caminho que o jogo anda — do item para a **definição**, da definição para o **modelo**, do
+modelo para as **texturas**, seguindo os pais — e diz o primeiro degrau que falta. E faz o mesmo pelos
+blocos, que precisam de um estado de bloco.
+
+**Ele aprendeu uma coisa ao nascer:** os itens de desenhista próprio — o Tauminômetro e os sete
+aglomerados de cristal — não nomeiam o modelo na chave `model`, que neles é o **desenhista**, mas na chave
+`base`. O guarda apanhou-os aos sessenta e cinco na primeira corrida, e é por isso que se sabe que ele não
+é decoração: ele acha mesmo.
+
+**Guardas:** o `AssetsGameTest`, com dois — que toda coisa do mod tem definição, modelo e textura; e que
+todo bloco tem estado.
