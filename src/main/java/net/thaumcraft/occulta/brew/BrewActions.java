@@ -263,6 +263,93 @@ public final class BrewActions {
     }
 
     /**
+     * <b>Tirar os Maus Efeitos</b>: o {@code BrewActionEffect} do Leite Purificado.
+     *
+     * <p>É o contrário de tudo o mais que sai do caldeirão: ele não põe nada em ninguém — <b>tira</b>. E o
+     * que ele tira depende da <b>força</b>, que aqui não é quanto ele dá mas <b>até que grau ele alcança</b>:
+     * um efeito de grau maior do que a força dele fica onde está.
+     *
+     * <p>E há o que ele <b>não</b> tira: os que o leite não tira, que são os que o ofício põe em alguém de
+     * propósito. Com uma exceção, e é a razão de este cozimento existir — a <b>Doença</b>. Do segundo grau
+     * para cima ele tira-a, que é a única coisa no mod que a tira; e do <b>terceiro</b> para cima limpa
+     * também as <b>poças</b> que a espalham, num cubo de dezenove casas à volta de quem bebeu. Sem isso,
+     * curar alguém da doença era curá-lo até ele dar o passo seguinte.
+     *
+     * <p><b>Do original fica de fora, declarado:</b> a metade <b>ritual</b> dele — que tira até o
+     * incurável e, falhando, <b>agrava</b> o que tirou —, porque os cozimentos de círculo de giz não estão
+     * portados.
+     */
+    public static class Cure extends BrewAction {
+        /** De que grau para cima ele alcança a Doença, e de qual limpa as poças dela. */
+        public static final int CURA_A_DOENÇA = 2;
+        public static final int LIMPA_AS_POÇAS = 3;
+
+        /** E o cubo que ele limpa: nove para cada lado, que são dezenove casas de lado. */
+        public static final int RAIO_DAS_POÇAS = 9;
+
+        private final int weight;
+
+        public Cure(Item key, BrewName.Text namePart, int power, int weight) {
+            super(key, namePart, power);
+            this.weight = weight;
+        }
+
+        @Override
+        public boolean isEffect() {
+            return true;
+        }
+
+        @Override
+        public boolean augmentCapacity(BrewCapacity espaço) {
+            return espaço.consume(this.weight);
+        }
+
+        @Override
+        public void applyToEntity(Level level, LivingEntity quem, BrewModifiers temperos) {
+            if (temperos.disableEntityTarget) return;
+            if (!(level instanceof net.minecraft.server.level.ServerLevel server)) {
+                temperos.reset();
+                return;
+            }
+            int força = temperos.getStrength();
+            java.util.List<net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>> tirar =
+                    new java.util.ArrayList<>();
+            boolean doença = false;
+
+            for (var efeito : quem.getActiveEffects()) {
+                var qual = efeito.getEffect();
+                if (qual.value().getCategory()
+                        != net.minecraft.world.effect.MobEffectCategory.HARMFUL) {
+                    continue;
+                }
+                if (!net.thaumcraft.occulta.OccultaEffects.incurable(qual)
+                        && efeito.getAmplifier() <= força) {
+                    tirar.add(qual);
+                }
+                if (qual == net.thaumcraft.occulta.OccultaEffects.DISEASED && força >= CURA_A_DOENÇA) {
+                    tirar.add(qual);
+                    doença = true;
+                }
+            }
+            for (var qual : tirar) quem.removeEffect(qual);
+            if (doença && força >= LIMPA_AS_POÇAS) limpaAsPoças(server, quem.blockPosition());
+            temperos.reset();
+        }
+
+        /** O cubo de dezenove: toda poça de doença dentro dele some. */
+        public static void limpaAsPoças(net.minecraft.server.level.ServerLevel level,
+                                        net.minecraft.core.BlockPos meio) {
+            for (net.minecraft.core.BlockPos onde : net.minecraft.core.BlockPos.betweenClosed(
+                    meio.offset(-RAIO_DAS_POÇAS, -RAIO_DAS_POÇAS, -RAIO_DAS_POÇAS),
+                    meio.offset(RAIO_DAS_POÇAS, RAIO_DAS_POÇAS, RAIO_DAS_POÇAS))) {
+                if (level.getBlockState(onde).is(net.thaumcraft.occulta.OccultaBlocks.DISEASE)) {
+                    level.removeBlock(onde, false);
+                }
+            }
+        }
+    }
+
+    /**
      * O ingrediente que diz <b>como</b> o cozimento se espalha: o {@code BrewActionDispersal}.
      *
      * <p>Ele não gasta espaço nenhum e não tempera nada — só manda no jeito. Põe um pedaço na frente do nome

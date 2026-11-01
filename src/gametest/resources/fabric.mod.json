@@ -236,7 +236,8 @@
       "net.thaumcraft.test.OccultaVampirePlayerGameTest",
       "net.thaumcraft.test.OccultaLilithGameTest",
       "net.thaumcraft.test.OccultaBiomeBookGameTest",
-      "net.thaumcraft.test.OccultaShiftingSeasonsGameTest"
+      "net.thaumcraft.test.OccultaShiftingSeasonsGameTest",
+      "net.thaumcraft.test.OccultaCureBrewGameTest"
     ],
     "fabric-client-gametest": [
       "net.thaumcraft.test.client.MortuorumClientTest",

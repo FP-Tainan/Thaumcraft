@@ -13098,8 +13098,9 @@ que é chefe, que é a interface da barra de chefe de 2014. Hoje são os dois ch
 ### O que fica a dever
 
 O original tem uma segunda maneira de tirar as poças do mapa: o **Leite Purificado**, no terceiro grau, limpa
-todas num cubo de dezenove casas à volta de quem bebeu. Esse cozimento inteiro ainda não está no porte — é
-ele que tira os maus efeitos de uma vez —, e quando vier é esse pedaço que entra com ele. Está dito.
+todas num cubo de dezenove casas à volta de quem bebeu. Esse cozimento inteiro ainda não estava no porte — é
+ele que tira os maus efeitos de uma vez —, e quando viesse era esse pedaço que entrava com ele.
+_(Resolvido: veio na fatia «Tirar os Maus Efeitos», e trouxe o pedaço.)_
 
 **Guardas:** o `OccultaDiseaseGameTest`, com dois — que ela cai até achar chão e não se abre para os lados, e
 que quem pisa nela adoece enquanto um esqueleto passa por cima sem sentir. E o `OccultaDiseaseClientTest`,
@@ -13815,3 +13816,33 @@ a mesma coisa feita do jeito certo.
 cinco mil de poder; que com a lã de morcego na panela o frasco **ainda estoura**; que o raio sai da força; que
 o frasco carrega o bioma e o nome dele diz o que ele é; e que o chão **muda mesmo** com a nota e **não muda,
 calado**, sem ela.
+
+## Tirar os Maus Efeitos (2026-11-01)
+
+O cozimento que faltava, e é o **contrário de tudo o mais que sai do caldeirão**: ele não põe nada em
+ninguém — **tira**. Um Leite Purificado na panela, duzentos de poder, segundo grau.
+
+A **força** dele não é quanto ele dá: é **até que grau ele alcança**. Um veneno de grau I sai com força um;
+um definhamento de grau III fica onde está até a força chegar a três. E o que é bom não se toca.
+
+### A razão de ele existir é a Doença
+
+Ele não tira o que o leite não tira — a lista do `setIncurable`, que é quase toda do que o ofício põe em
+alguém de propósito. Com **uma exceção**, e é por ela que este cozimento vale a panela: a **Doença**.
+
+Do **segundo grau** para cima ele tira-a, e é a única coisa no mod que a tira. Do **terceiro** para cima
+limpa também as **poças** que a espalham, num cubo de dezenove casas à volta de quem bebeu. Essa segunda
+metade não é um extra: sem ela, curar alguém da doença era curá-lo até ele dar o passo seguinte. A seção da
+Poça de Doença ficava a dever exatamente isto, e fica paga.
+
+### E o que fica de fora
+
+**Declarado:** a metade **ritual** dele. No original, lançado de um círculo de giz, ele tira **até o
+incurável** — e, falhando, **agrava** o que tirou: um efeito que não saiu volta um grau acima, com três em
+quatro de chance quando passa muito da força. Os cozimentos de círculo de giz não estão portados, nenhum
+deles, e este entra na mesma conta.
+
+**Guardas:** o `OccultaCureBrewGameTest`, com quatro — que o leite está na panela com os números do
+original; que ele alcança o próprio grau e não mais, e não toca no que é bom; que deixa o que o leite não
+tira e tira a Doença do segundo grau para cima; e que do terceiro para cima **seca as poças**, curando a
+pessoa na mesma.

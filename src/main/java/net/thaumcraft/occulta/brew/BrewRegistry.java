@@ -270,6 +270,14 @@ public final class BrewRegistry {
                 net.thaumcraft.occulta.OccultaEffects.KEEP_EFFECTS_ON_DEATH, mins(6), 8));
 
         /*
+         * <b>Tirar os Maus Efeitos</b>: o outro que não põe poção nenhuma — este <b>tira</b>. A força dele
+         * não é quanto ele dá, é até que grau ele alcança; e do segundo grau para cima é a única coisa no
+         * mod que tira a <b>Doença</b>, com as poças dela a partir do terceiro.
+         */
+        register(new BrewActions.Cure(OccultaItems.PURIFIED_MILK,
+                new BrewName.Text("tc.brew.removedebuffs"), 200, COMUM));
+
+        /*
          * <b>Ferir Demônios</b>: o único cozimento do original que faz <b>dano</b> e não põe poção nenhuma.
          * Um bloco de gelo na panela, e o frasco tira <b>vinte</b> do que for do inferno e <b>seis</b> do
          * resto — e, contra o <b>Leonard</b>, abre a porta da fraqueza dele, que salta os tetos do chefe.
