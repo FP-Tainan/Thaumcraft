@@ -3569,8 +3569,9 @@ uma vez em cem*. (4) Os outros dois caminhos do clique — vestir a pele de
 outrem com um Frasco de Vínculo, e a Granada Duplicadora com a Esfera de Quartzo — pedem a Dobra e a Esfera, que
 não existem aqui. (5) O **Rito de Convocação**, que chama o Reflexo para fora do espelho, pede a Esfera de
 Quartzo e fica para quando ela chegar. (6) ~~O Rito de Infusão pede uma Lágrima da Deusa no lugar do Cozimento de
-Lágrimas Ocas~~ — *resolvido: a fatia do Espírito Fluente trouxe o cozimento, e o rito voltou a pedi-lo* — e ele
-não pede o demônio vivo em sacrifício, que continua fora. (7) O mundo do espelho é sempre da altura inteira: o ajuste de encolher do original
+Lágrimas Ocas~~ — *resolvido: a fatia do Espírito Fluente trouxe o cozimento, e o rito voltou a pedi-lo* — e ~~ele
+não pede o demônio vivo em sacrifício~~ — *resolvido na fatia dos dois tamanhos: pede-o desde que o
+demônio existe*. (7) O mundo do espelho é sempre da altura inteira: o ajuste de encolher do original
 morava no arquivo de ajustes, que este mod não tem. (8) A cantiga vale **nas duas línguas**, a do original e a
 de cá, porque o servidor não sabe em que língua está quem escreveu.
 
@@ -14085,3 +14086,61 @@ o manda sentar; que a **busca acha** o minério por baixo, de pedra e de ardósi
 que ele se gasta ao quinto pedido; e que dele cai Pó Espectral. E o `OccultaSpectralFamiliarClientTest`,
 com uma foto: os dois estados lado a lado com um porco do jogo, que é a única maneira de ver que as cores
 estão certas.
+
+## Os ritos que vêm em dois tamanhos (2026-11-01)
+
+Com o Familiar Espectral acabaram os ritos que **faltavam por falta de conteúdo**. Sobrava outra coisa, e
+só uma contagem a mostrou: **sete nomes do original têm mais do que uma receita**, e o porte tinha
+registrado só a primeira de cinco deles.
+
+Não é repetição. É a **escada** do ofício:
+
+- **Erguer a Terra** levanta **quatro** casas com pólvora no anel de dentro, **seis** com redstone no do
+  meio, **nove** com poeira de glowstone no de fora;
+- o **Vulcão** faz-se com pedra e a Pedra Sintonizada carregada, **ou** com pedregulho e dois mil de
+  altar — quem tem pedra não precisa de altar, e quem tem altar não precisa de pedra;
+- **Cozer** custa mil de altar e queima oito por cento, **ou** não custa altar nenhum e queima o dobro;
+- a **Pedra Sangrada** faz-se com quinhentos de altar, **ou** sem altar nenhum com a Agulha de Gelo e a
+  Pedra Sintonizada carregada;
+- e **ir ter com a pedra** leva à pedra de um **lugar** ou à de uma **pessoa**.
+
+Nada disto está escrito em parte nenhuma do jogo, e um porte que registre só a primeira receita de cada
+nome **não acusa nada**: os ritos que lá estão funcionam. O que se perde é metade do caminho.
+
+### E três coisas que a contagem achou pelo caminho
+
+**O cozer estava registrado duas vezes.** Duas fatias diferentes portaram o mesmo `RiteCookItem`, com dois
+nomes (`tc.rite.cook` e `tc.rite.cookfood`), as mesmas coisas no chão e o mesmo anel. Ficou o
+`cookfood`, que é o mais fiel — o que sai dele fica **parado no meio do círculo**, como no original, em vez
+de saltar para os lados. O outro nome saiu do livro, e o lugar dele é agora a **segunda** receita.
+
+**A Pedra Sangrada pedia um balde de leite** onde o original pede uma **bola de gosma**. O
+`field_151123_aH` do código de 2014 parece o do balde e não é — é o `slime_ball`. Foi a tabela de
+mapeamentos que o disse; a memória não.
+
+**E o Espelho da Bruxa não pedia o demônio vivo.** Estava declarado de fora na seção dele, por o demônio
+não existir no porte na altura; existe desde a fatia dele. Sem o sacrifício o nome do rito era uma
+mentira: ele chama-se **prender um demônio num espelho**.
+
+### O guarda dos anéis fez o trabalho dele
+
+As duas receitas novas de Erguer a Terra entraram com o anel errado: o original escreve `Circle(28,0,0)` e
+`Circle(40,0,0)`, e a tentação é pôr os dois no anel **de dentro**. Mas no original o **tamanho diz qual é
+o anel** — dezesseis é o de dentro, vinte e oito o do meio, quarenta o de fora —, e um anel de vinte e oito
+no lugar do de dentro é um rito que **não se consegue fazer**: o de dentro só tem dezesseis casas.
+
+A prova `noRiteAsksForMoreGlyphsThanTheRingHas`, escrita na fatia da auditoria dos anéis, apanhou as duas
+na primeira corrida da suíte. Foi exatamente para isto que ela existe.
+
+### E o que fica de fora
+
+**Declarado:** o `SacrificeOptionalItem` do original — uma coisa que o rito **consome se estiver lá** e
+dispensa se não estiver. Duas receitas a usam (a primeira de Erguer a Terra e a segunda do Vulcão, as duas
+com uma Pedra de Caminho, para prender o resultado a um lugar). O porte não tem essa espécie de
+sacrifício, e as duas receitas entram sem ela.
+
+**Guardas:** o `OccultaRiteSizesGameTest`, com seis — que erguer a terra vem em três alturas, cada uma com
+o seu anel **no lugar dele** e a sua coisa queimada; que o vulcão vem em dois e que um paga com pedra e o
+outro com altar; que cozer vem em dois e que o nome repetido **saiu**; que as duas pedras de caminho vêm em
+dois e que a de gente pede uma bola de gosma; que o espelho pede um demônio vivo; e que os bonecos de
+fetiche continuam a ser três.

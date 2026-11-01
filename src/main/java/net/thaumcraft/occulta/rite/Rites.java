@@ -170,7 +170,15 @@ public final class Rites {
      *
      * <p>O que estiver no chão dentro do círculo e for comida que a fornalha coze sai cozido — e uma parte
      * queima, virando carvão. Sem comida nenhuma no chão, o rito desiste.
+     *
+     * <p><b>Este é o mesmo rito que o {@link CookFood}</b>, escrito duas vezes em fatias diferentes — e
+     * registrado duas vezes, com dois nomes e os mesmos ingredientes. Ficou o {@code CookFood}, que é o
+     * mais fiel: o que sai dele fica <b>parado no meio do círculo</b>, como no original, em vez de saltar
+     * para os lados. Este fica só porque uma prova antiga o usa diretamente.
+     *
+     * @deprecated usar o {@link CookFood}
      */
+    @Deprecated
     public record Cook(float radius, double burnChance) implements Rite {
         @Override
         public List<RiteStep> steps(int coven) {
@@ -3273,13 +3281,6 @@ public final class Rites {
                         new Sacrifice.Power(3000.0f, 20)),
                 RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(0, 0, 40));
 
-        RiteRegistry.register("tc.rite.cook", new Cook(5.0f, 0.08),
-                new Sacrifice.Both(
-                        new Sacrifice.Items(Items.BLAZE_ROD, net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
-                                Items.COAL),
-                        new Sacrifice.Power(1000.0f, 20)),
-                new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE);
-
         RiteRegistry.register("tc.rite.fertility", new Fertility(50, 15),
                 new Sacrifice.Both(
                         new Sacrifice.Items(Items.BONE_MEAL,
@@ -3399,6 +3400,18 @@ public final class Rites {
                 new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
+        /*
+         * E o <b>segundo vulcão</b>, que troca a pedra por <b>pedregulho</b> e a Pedra Sintonizada
+         * carregada por dois mil de altar. O mesmo estrago, pago de outra maneira: quem tem altar não
+         * precisa de pedra, e quem tem pedra não precisa de altar.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.volcano", new Volcano(8, 8),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(Items.COBBLESTONE, Items.MAGMA_CREAM, Items.GOLDEN_SWORD),
+                        new Sacrifice.Power(2000.0f, 20)),
+                new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
         // os ritos do tempo e da terra
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.storm", new Storm(0, 3, 8),
                 new Sacrifice.Both(
@@ -3415,10 +3428,44 @@ public final class Rites {
                 new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
+        /*
+         * E o <b>segundo cozer</b>, que é o de quem já tem Pedra Sintonizada carregada: não custa altar
+         * nenhum, e em troca <b>queima o dobro</b> — dezesseis por cento em vez de oito. É o original a
+         * cobrar de outra maneira.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.cookfood", new CookFood(5.0, 0.16),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED,
+                        Items.BLAZE_ROD, net.thaumcraft.occulta.OccultaItems.WOOD_ASH,
+                        Items.BLAZE_POWDER),
+                new RiteRegistry.Ring(0, 0, 16), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * <b>Erguer a Terra</b>, em três tamanhos. O que muda não é só a altura da coluna: é o <b>anel</b>
+         * e a <b>coisa que se queima</b>. Pólvora num anel de dezesseis levanta quatro; redstone num de
+         * vinte e oito levanta seis; poeira de glowstone num de quarenta levanta nove.
+         *
+         * <p>É a escada do ofício escrita em ingredientes, e o original nunca a explica. E repare onde
+         * cada anel fica: no original o <b>tamanho diz qual é</b> — dezesseis é o de dentro, vinte e oito
+         * o do meio, quarenta o de fora —, e não há onde escolher. Um anel de vinte e oito no lugar do de
+         * dentro é um rito que não se consegue fazer.
+         */
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.raiseearth", new RaiseEarth(4, 8),
                 new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_SPROUTING,
                         Items.CACTUS, Items.GUNPOWDER),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.raiseearth", new RaiseEarth(6, 8),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_SPROUTING,
+                        Items.CACTUS, Items.REDSTONE),
+                RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.raiseearth", new RaiseEarth(9, 8),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_SPROUTING,
+                        Items.CACTUS, Items.GLOWSTONE_DUST),
+                RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE, new RiteRegistry.Ring(40, 0, 0),
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.partearth", new PartEarth(60, 1, 10),
@@ -3702,9 +3749,24 @@ public final class Rites {
                         () -> new ItemStack(net.thaumcraft.occulta.OccultaItems.BLOODED_WAYSTONE)),
                 new Sacrifice.Both(
                         new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.WAYSTONE,
-                                net.thaumcraft.occulta.OccultaItems.ENDER_DEW, Items.MILK_BUCKET,
+                                net.thaumcraft.occulta.OccultaItems.ENDER_DEW, Items.SLIME_BALL,
                                 Items.SNOWBALL),
                         new Sacrifice.Power(500.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
+         * E a <b>mesma pedra sem altar</b>: a Agulha de Gelo e a Pedra Sintonizada carregada no lugar dos
+         * quinhentos de poder. Os dois caminhos saem na mesma coisa, e é a única pedra que se faz sem
+         * altar nenhum.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.bindwaystonetoplayer",
+                new SummonEntityBoundItem(
+                        () -> new ItemStack(net.thaumcraft.occulta.OccultaItems.BLOODED_WAYSTONE)),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.WAYSTONE,
+                        net.thaumcraft.occulta.OccultaItems.ENDER_DEW, Items.SLIME_BALL,
+                        net.thaumcraft.occulta.OccultaItems.ICY_NEEDLE,
+                        net.thaumcraft.occulta.OccultaItems.ATTUNED_STONE_CHARGED),
                 new RiteRegistry.Ring(16, 0, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
@@ -3715,6 +3777,13 @@ public final class Rites {
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.teleporttowaystone",
                 new TeleportToWaystone(3),
                 new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BOUND_WAYSTONE),
+                new RiteRegistry.Ring(0, 16, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
+                java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /* E o mesmo com a <b>Pedra Sangrada</b>, que leva a quem ela aponta e não a onde. */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.teleporttowaystone",
+                new TeleportToWaystone(3),
+                new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BLOODED_WAYSTONE),
                 new RiteRegistry.Ring(0, 16, 0), RiteRegistry.Ring.NONE, RiteRegistry.Ring.NONE,
                 java.util.EnumSet.noneOf(RiteRegistry.When.class)));
 
@@ -4243,7 +4312,14 @@ public final class Rites {
                 new Sacrifice.Both(
                         new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.BREW_OF_HOLLOW_TEARS,
                                 Items.GOLD_INGOT, Items.GLASS_PANE),
-                        new Sacrifice.Power(2000.0f, 20)),
+                        new Sacrifice.Power(2000.0f, 20),
+                        /*
+                         * E o <b>demônio vivo</b>, que é o que fica preso lá dentro. Estava declarado de
+                         * fora porque o demônio não existia; existe desde a fatia dele, e sem este
+                         * sacrifício o nome do rito é uma mentira: ele chama-se <b>prender um demônio num
+                         * espelho</b>.
+                         */
+                        new Sacrifice.Living(net.thaumcraft.occulta.OccultaEntities.DEMON)),
                 RiteRegistry.Ring.NONE, new RiteRegistry.Ring(28, 0, 0), RiteRegistry.Ring.NONE);
     }
 

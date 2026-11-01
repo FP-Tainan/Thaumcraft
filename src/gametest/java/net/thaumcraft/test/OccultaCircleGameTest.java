@@ -121,7 +121,7 @@ public class OccultaCircleGameTest {
         }
 
         // e o passo dele coze o que está no chão, de vinte em vinte batidas
-        var passo = new net.thaumcraft.occulta.rite.Rites.Cook(5.0f, 0.0).steps(0).getFirst();
+        var passo = new net.thaumcraft.occulta.rite.Rites.CookFood(5.0, 0.0).steps(0).getFirst();
         var rito = new net.thaumcraft.occulta.rite.ActiveRite(achados.getFirst().key(), achados.getFirst().rite(), List.of(passo),
                 null, 0);
         if (passo.run(level, meio, 20L, rito) != net.thaumcraft.occulta.rite.RiteStep.Result.COMPLETED) {
@@ -174,10 +174,10 @@ public class OccultaCircleGameTest {
     /** E a tabela dos ritos tem o que a primeira leva trouxe. */
     @GameTest
     public void theRiteTableHasTheFirstThree(GameTestHelper helper) {
-        for (String qual : List.of("tc.rite.cook", "tc.rite.fertility", "tc.rite.eclipse")) {
+        for (String qual : List.of("tc.rite.cookfood", "tc.rite.fertility", "tc.rite.eclipse")) {
             if (RiteRegistry.get(qual) == null) helper.fail("falta o rito " + qual);
         }
-        var cozer = RiteRegistry.get("tc.rite.cook");
+        var cozer = RiteRegistry.get("tc.rite.cookfood");
         if (cozer.sacrifice().shown().size() != 3) {
             helper.fail("o de cozer pede três coisas; pede " + cozer.sacrifice().shown().size());
         }
