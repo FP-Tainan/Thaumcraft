@@ -62,6 +62,64 @@ public sealed interface Sacrifice {
         }
     }
 
+    /**
+     * Uma <b>poção certa</b> no chão: o pedido que olha <b>dentro</b> do frasco.
+     *
+     * <p>Todos os outros pedidos do ofício se bastam com o <b>item</b>, porque em 2014 cada coisa era um
+     * item e um número. A poção não: ela é o mesmo item para todas as quarenta, e o que a distingue está
+     * guardado dentro dela.
+     *
+     * <p>Um só rito a pede — o de <b>recarregar a infusão</b>, que no original quer uma Poção de
+     * Regeneração e mais quatro mil de altar. O porte pedia «uma poção», qualquer uma, e uma de dano
+     * servia. Não serve: o rito chama-se recarregar.
+     */
+    record Brewed(net.minecraft.core.Holder<net.minecraft.world.item.alchemy.Potion> wanted)
+            implements Sacrifice {
+        /** Se esta pilha é a poção pedida. */
+        public boolean é(ItemStack coisa) {
+            var dentro = coisa.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS);
+            return dentro != null && dentro.potion().filter(this.wanted::equals).isPresent();
+        }
+
+        @Override
+        public boolean matches(ServerLevel level, BlockPos meio, List<ItemEntity> noChão) {
+            return noChão.stream().anyMatch(largado -> this.é(largado.getItem()));
+        }
+
+        @Override
+        public void steps(List<RiteStep> fila) {
+            fila.add(new TakeBrewed(this.wanted));
+        }
+
+        @Override
+        public List<ItemStack> shown() {
+            return List.of(net.minecraft.world.item.alchemy.PotionContents.createItemStack(
+                    net.minecraft.world.item.Items.POTION, this.wanted));
+        }
+    }
+
+    /** E o passo que a toma. */
+    record TakeBrewed(net.minecraft.core.Holder<net.minecraft.world.item.alchemy.Potion> wanted)
+            implements RiteStep {
+        @Override
+        public Result run(ServerLevel level, BlockPos onde, long ticks, ActiveRite rito) {
+            var pede = new Brewed(this.wanted);
+            for (ItemEntity largado : onTheGround(level, onde)) {
+                if (!pede.é(largado.getItem())) continue;
+                ItemStack tirado = largado.getItem().copyWithCount(1);
+                rito.offer(tirado, largado.blockPosition());
+                largado.getItem().shrink(1);
+                if (largado.getItem().isEmpty()) largado.discard();
+                level.sendParticles(net.minecraft.core.particles.ParticleTypes.WITCH,
+                        largado.getX(), largado.getY() + 0.5, largado.getZ(), 8, 0.2, 0.2, 0.2, 0.0);
+                level.playSound(null, onde, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS,
+                        1.0f, 1.0f);
+                return Result.COMPLETED;
+            }
+            return Result.ABORTED_REFUND;
+        }
+    }
+
     /** O poder do altar: o {@code SacrificePower}. */
     record Power(float amount, int everyTicks) implements Sacrifice {
         @Override

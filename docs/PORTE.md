@@ -14144,3 +14144,18 @@ o seu anel **no lugar dele** e a sua coisa queimada; que o vulcão vem em dois e
 outro com altar; que cozer vem em dois e que o nome repetido **saiu**; que as duas pedras de caminho vêm em
 dois e que a de gente pede uma bola de gosma; que o espelho pede um demônio vivo; e que os bonecos de
 fetiche continuam a ser três.
+
+### E o pedido que olha dentro do frasco (2026-11-01)
+
+Fica paga, na mesma conta, outra dívida declarada: **a lista de sacrifício comparava por item e não pelo
+que o item leva dentro**.
+
+Um só rito do ofício precisa disso — o de **recarregar a infusão**, que no original pede uma **Poção de
+Regeneração** e quatro mil de altar. Todos os outros pedidos se bastam com o item, porque em 2014 cada
+coisa era um item e um número; a poção não, que é o mesmo item para todas as quarenta e guarda o que é
+dentro de si.
+
+O porte pedia «uma poção». Uma de **dano** servia para recarregar uma infusão, e nada acusava.
+
+Agora há um pedido `Sacrifice.Brewed`, que olha o componente de conteúdo do frasco — e o livro passa a
+desenhar a poção certa em vez de um frasco de água.

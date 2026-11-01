@@ -3878,9 +3878,10 @@ public final class Rites {
          * infundir outra vez. Quatro mil para o acender, quarenta por segundo para o manter.
          */
         RiteRegistry.register(new RiteRegistry.Entry("tc.rite.infusionrecharge",
-                new InfusionRecharge(10, 4, 40.0f),
-                new Sacrifice.Both(
-                        new Sacrifice.Items(Items.POTION),
+                new InfusionRecharge(10, 4, 40.0f),
+                new Sacrifice.Both(
+                        // uma Poção de <b>Regeneração</b>, e não uma poção qualquer: o rito recarrega
+                        new Sacrifice.Brewed(net.minecraft.world.item.alchemy.Potions.REGENERATION),
                         new Sacrifice.Power(4000.0f, 20)),
                 new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0),
                 RiteRegistry.Ring.NONE,

@@ -221,6 +221,56 @@ public class OccultaRiteSizesGameTest {
         return false;
     }
 
+    /**
+     * <b>E o rito de recarregar pede uma Poção de Regeneração</b>, e não uma poção qualquer.
+     *
+     * <p>É o único pedido de todo o ofício que olha <b>dentro</b> do frasco: em 2014 cada coisa era um
+     * item e um número, e a poção é o mesmo item para todas as quarenta. O porte pedia «uma poção», e uma
+     * de dano servia para recarregar uma infusão.
+     */
+    @GameTest(maxTicks = 20)
+    public void rechargingAsksForRegeneration(GameTestHelper helper) {
+        var rito = RiteRegistry.get("tc.rite.infusionrecharge");
+        if (rito == null) {
+            helper.fail("o rito de recarregar devia estar no livro");
+            return;
+        }
+        Sacrifice.Brewed pede = pedido(rito.sacrifice());
+        if (pede == null) {
+            helper.fail("ele pede uma poção certa, e não um item qualquer");
+            return;
+        }
+        var regeneração = net.minecraft.world.item.alchemy.PotionContents.createItemStack(
+                Items.POTION, net.minecraft.world.item.alchemy.Potions.REGENERATION);
+        var dano = net.minecraft.world.item.alchemy.PotionContents.createItemStack(
+                Items.POTION, net.minecraft.world.item.alchemy.Potions.HARMING);
+        if (!pede.é(regeneração)) {
+            helper.fail("a de Regeneração serve");
+            return;
+        }
+        if (pede.é(dano) || pede.é(new net.minecraft.world.item.ItemStack(Items.POTION))) {
+            helper.fail("e a de dano, ou um frasco de água, não servem");
+            return;
+        }
+        // e o livro desenha a poção certa, e não um frasco vazio
+        if (rito.sacrifice().shown().stream().noneMatch(pede::é)) {
+            helper.fail("e o livro desenha a poção que ele pede");
+            return;
+        }
+        helper.succeed();
+    }
+
+    private static Sacrifice.Brewed pedido(Sacrifice qual) {
+        if (qual instanceof Sacrifice.Brewed pede) return pede;
+        if (qual instanceof Sacrifice.Both ambos) {
+            for (Sacrifice cada : ambos.all()) {
+                Sacrifice.Brewed achou = pedido(cada);
+                if (achou != null) return achou;
+            }
+        }
+        return null;
+    }
+
     /** E os três bonecos de fetiche continuam a ser três. */
     @GameTest(maxTicks = 20)
     public void thereAreThreeFetishes(GameTestHelper helper) {
