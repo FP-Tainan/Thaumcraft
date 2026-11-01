@@ -120,7 +120,7 @@ public class DiseaseBlock extends Block {
      * dois chefes do jogo e os do próprio mod.
      */
     public static boolean imune(LivingEntity vivo) {
-        if (vivo.getType().builtInRegistryHolder().is(EntityTypeTags.UNDEAD)) return true;
+        if (net.thaumcraft.occulta.Undead.é(vivo)) return true;
         if (net.thaumcraft.occulta.torment.Demonic.é(vivo)) return true;
         if (net.thaumcraft.occulta.wolf.Werewolf.emBicho(vivo)) return true;
         if (vivo instanceof net.minecraft.world.entity.animal.golem.AbstractGolem) return true;

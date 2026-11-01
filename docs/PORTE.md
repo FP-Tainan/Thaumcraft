@@ -13946,3 +13946,76 @@ acha** — e essa ordem sai da ordem em que o mundo guarda os bichos, que muda c
 a arena calhou. A pergunta passa a ser a **regra**: de um feitio só, e todos os que couberem.
 
 **E a gosma maculada** ganhou teto largo na fatia anterior, pela mesma razão.
+
+## Os Cozimentos Infundidos (2026-11-01)
+
+Dois cozimentos que **não são poções**, e a peça que faltava para os fazer. Com eles os ritos passam de
+oitenta e três para **oitenta e cinco** dos noventa e seis — e dos três que ainda pediam conteúdo novo
+sobra **um**.
+
+Um cozimento comum é uma poção: dura minutos, vê-se na lista de efeitos, e o leite tira-o. Um **infundido**
+é outra coisa — uma **condição** que dura **duas horas** de jogo, não aparece em lista nenhuma, e não se
+tira de maneira nenhuma a não ser esperando. E não sai do caldeirão: sai de um **rito**, com um bicho vivo
+em sacrifício.
+
+### A Base, que não se bebe
+
+A **Base de Cozimento Infundido** é o frasco que se põe no círculo. Por si não vale nada, e o original diz
+isso do jeito mais claro que há: bebida, dá **Definhamento IV** por dez segundos. Não é castigo nem piada —
+é a maneira de 2014 de escrever «isto é um ingrediente». Quem a bebe aprende de uma vez.
+
+### O de Voar
+
+Não faz nada por si: faz a **vassoura andar mais depressa**, e é só isso. Um décimo a mais no empurrão —
+metade do que a maestria da coruja dá —, e os dois **somam**.
+
+O original pergunta pelo cozimento de **cem em cem batidas** e não uma vez ao montar, e tem razão: ele dura
+duas horas e pode acabar com a pessoa em cima da vassoura. A maestria da coruja, essa é lida uma vez, que é
+o que o original faz — ela não muda a meio do voo.
+
+### O da Cova
+
+O mais estranho do mod inteiro, e três coisas ao mesmo tempo:
+
+**Conta-se como morto-vivo.** A Caveira Sedutora não chama quem o bebeu, a poça de doença não o adoece, o
+virote do caçador fere-o a dobrar, e o Caçador de Bruxas ataca-o. Duas horas a ser uma coisa morta não são
+um adorno. Este porte espalhava a pergunta «é morto-vivo?» por seis lugares, cada um a ler o rótulo à mão;
+agora há um `Undead.é` e os seis passam por ele.
+
+**Matar cura.** Um bicho dá oito de comida e um décimo da vida inteira; um aldeão, a barriga cheia e quase
+metade; **outra pessoa**, a barriga cheia e três quintos. A conta é da vida **inteira** e não de pontos.
+Repare em quem dá mais: o cozimento não diz em palavra nenhuma o que quer de quem o bebeu, diz-o nesta
+tabela.
+
+**E a Pedra Necrótica passa a escravizar com o olhar.** Com o cozimento na barriga e a pedra na mão,
+aponta-se a um morto-vivo a até quinze blocos e ele passa a ser de quem olhou — de dez em dez segundos. É o
+único caminho do mod em que escravizar não custa nada a não ser ter bebido o cozimento, e é por isso que o
+cozimento sai de um rito com um **zumbi vivo** em sacrifício.
+
+### Os dois ritos
+
+O mesmo feitio nos dois: a base no chão com três coisas, um bicho vivo, três mil de poder de altar, e dois
+anéis — o de dentro de dezesseis glifos e o do meio de vinte e oito, os dois de giz de ritual.
+
+E os bichos dizem o que sai. O de Voar leva uma **coruja**, com uma vassoura, uma pena e a Arthana; o da
+Cova leva um **zumbi**, com um osso, a Teia do Ofício e a Pedra Necrótica. Não há dúvida nenhuma sobre o que
+se está a fazer em qualquer dos dois.
+
+### Duas mudanças declaradas
+
+**A condição não atravessa a morte.** No original ela vive no `PlayerPersisted`, que atravessa. Aqui não: um
+cozimento que faz de alguém um morto-vivo e lhe dá de comer matando **devia** acabar quando ele morre. O
+original guarda-o por descuido do lugar onde o pôs, e não por escolha.
+
+**E o «conta como morto-vivo» não cobre o vampiro.** No original a mesma pergunta é verdadeira para quem
+for vampiro; este porte tem vampiros, e a conta deles corre por outro caminho. Só o cozimento entra aqui.
+
+**E fica de fora, declarado:** a outra metade do `useNecroStone` — a que, **sem** o cozimento, manda os
+escravos que já se tem atacarem o que se aponta. Essa pede a lista de escravos de quem joga, e este porte
+guarda o vínculo do lado do **escravo** e não do dono.
+
+**Guardas:** o `OccultaInfusedBrewGameTest`, com sete — que os dois ritos estão no livro com os dois anéis;
+que a base dá Definhamento IV e não infunde nada; que beber um apaga o outro e que o relógio é de duas
+horas; que o da Cova faz de quem o bebeu um morto-vivo e o de Voar não; que matar cura por feitio do morto,
+com o aldeão a dar mais do que o bicho; que a pedra escraviza **só** com o cozimento e **só** de dez em dez
+segundos; e que o relógio o apaga.

@@ -60,6 +60,14 @@ public class BroomEntity extends Entity {
     public static final double CORUJA_EMPURRÃO = 0.2;
     public static final double CORUJA_TETO = 0.3;
 
+    /**
+     * E o que o <b>Cozimento de Voar</b> soma, que é metade do que a coruja dá e <b>soma com ela</b>.
+     *
+     * <p>No original são dois números somados na mesma conta — quem tem os dois anda com meio a mais do
+     * que o empurrão do costume. O cozimento não mexe no teto, só no empurrão: é o que o original faz.
+     */
+    public static final double VOAR_EMPURRÃO = net.thaumcraft.occulta.infusion.InfusedBrews.VOAR_EMPURRÃO;
+
     /** Quanto dano aguenta antes de se desfazer. */
     public static final float AGUENTA = 40.0f;
 
@@ -75,6 +83,15 @@ public class BroomEntity extends Entity {
 
     /** Se quem a monta tem a maestria da vassoura. Lido ao montar, como no original. */
     private boolean temCoruja;
+
+    /**
+     * E se quem a monta bebeu o <b>Cozimento de Voar</b>.
+     *
+     * <p>O original pergunta de <b>cem em cem batidas</b> e não uma vez ao montar, e é de propósito: o
+     * cozimento dura duas horas e pode acabar com a pessoa em cima da vassoura. A maestria da coruja, não
+     * — essa é de quem tem familiar, e não muda a meio do voo.
+     */
+    private boolean temVoar;
 
     public BroomEntity(EntityType<? extends BroomEntity> tipo, Level level) {
         super(tipo, level);
@@ -101,6 +118,11 @@ public class BroomEntity extends Entity {
     /** Se quem a monta trouxe a maestria da coruja. Para as provas, e para quem desenhar. */
     public boolean temCoruja() {
         return this.temCoruja;
+    }
+
+    /** E se trouxe o Cozimento de Voar. */
+    public boolean temVoar() {
+        return this.temVoar;
     }
 
     /** A cor das cerdas: a tinta que lhe passaram, ou nada. */
@@ -163,6 +185,8 @@ public class BroomEntity extends Entity {
 
         // é aqui que se pergunta pela coruja, uma vez só, como no original
         this.temCoruja = Familiars.temMaestriaDeVassoura(quem);
+        this.temVoar = net.thaumcraft.occulta.infusion.InfusedBrews.tem(quem,
+                net.thaumcraft.occulta.infusion.InfusedBrews.VOAR);
         quem.startRiding(this);
         return InteractionResult.SUCCESS;
     }
@@ -186,9 +210,15 @@ public class BroomEntity extends Entity {
         double antes = Math.sqrt(anda.x * anda.x + anda.z * anda.z);
 
         if (this.getFirstPassenger() instanceof LivingEntity quem) {
+            // o cozimento acaba sozinho ao fim de duas horas, e pode acabar a meio do voo
+            if (this.tickCount % 100 == 0 && quem instanceof net.minecraft.world.entity.player.Player gente) {
+                this.temVoar = net.thaumcraft.occulta.infusion.InfusedBrews.tem(gente,
+                        net.thaumcraft.occulta.infusion.InfusedBrews.VOAR);
+            }
             this.levaQuemMonta(quem);
         } else {
             this.temCoruja = false;
+            this.temVoar = false;
             this.caiSozinha();
         }
 
@@ -233,7 +263,8 @@ public class BroomEntity extends Entity {
         Vec3 anda = this.getDeltaMovement();
 
         if (frente > 0.0f) {
-            double soma = this.empurrão * (0.1 + (this.temCoruja ? CORUJA_EMPURRÃO : 0.0));
+            double soma = this.empurrão * (0.1 + (this.temCoruja ? CORUJA_EMPURRÃO : 0.0)
+                    + (this.temVoar ? VOAR_EMPURRÃO : 0.0));
             double dx = -Math.sin(quem.getYRot() * Mth.DEG_TO_RAD);
             double dz = Math.cos(quem.getYRot() * Mth.DEG_TO_RAD);
 

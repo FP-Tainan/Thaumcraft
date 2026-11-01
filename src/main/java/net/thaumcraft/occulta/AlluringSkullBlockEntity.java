@@ -87,7 +87,7 @@ public class AlluringSkullBlockEntity extends BlockEntity {
      * encanto do Golpe Sagrado também usa — e que quem jogar pode mexer.
      */
     private static boolean éMorto(PathfinderMob bicho) {
-        return bicho.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD);
+        return net.thaumcraft.occulta.Undead.é(bicho);
     }
 
     @Override

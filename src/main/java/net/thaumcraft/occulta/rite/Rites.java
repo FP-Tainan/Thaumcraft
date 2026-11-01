@@ -3482,6 +3482,42 @@ public final class Rites {
                 java.util.EnumSet.of(RiteRegistry.When.NIGHT)));
 
         /*
+         * Os <b>dois Ritos de Infusão</b>, que fazem de uma Base de Cozimento Infundido um dos dois
+         * cozimentos que duram duas horas.
+         *
+         * <p>Os dois pedem o mesmo feitio: a base no chão com três coisas, um <b>bicho vivo</b> em
+         * sacrifício, três mil de poder de altar, e dois anéis — o de dentro de dezesseis glifos e o do
+         * meio de vinte e oito, os dois de giz de ritual.
+         *
+         * <p>E os dois bichos dizem o que sai. O <b>de Voar</b> leva uma <b>coruja</b>, com uma vassoura,
+         * uma pena e a Arthana; o <b>da Cova</b> leva um <b>zumbi</b>, com um osso, a Teia do Ofício e a
+         * Pedra Necrótica. Não há dúvida nenhuma sobre o que se está a fazer em qualquer dos dois.
+         */
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.infusebrewsoaring",
+                new SummonItem(() -> new ItemStack(
+                        net.thaumcraft.occulta.OccultaItems.BREW_OF_SOARING)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.INFUSION_BASE,
+                                net.thaumcraft.occulta.OccultaItems.BROOM, Items.FEATHER,
+                                net.thaumcraft.occulta.OccultaItems.ARTHANA),
+                        new Sacrifice.Living(net.thaumcraft.occulta.OccultaEntities.OWL),
+                        new Sacrifice.Power(3000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        RiteRegistry.register(new RiteRegistry.Entry("tc.rite.infusebrewgrave",
+                new SummonItem(() -> new ItemStack(
+                        net.thaumcraft.occulta.OccultaItems.BREW_OF_THE_GRAVE)),
+                new Sacrifice.Both(
+                        new Sacrifice.Items(net.thaumcraft.occulta.OccultaItems.INFUSION_BASE,
+                                Items.BONE, net.thaumcraft.occulta.OccultaItems.WITCH_WEB,
+                                net.thaumcraft.occulta.OccultaItems.NECROTIC_STONE),
+                        new Sacrifice.Living(net.minecraft.world.entity.EntityTypes.ZOMBIE),
+                        new Sacrifice.Power(3000.0f, 20)),
+                new RiteRegistry.Ring(16, 0, 0), new RiteRegistry.Ring(28, 0, 0),
+                RiteRegistry.Ring.NONE, java.util.EnumSet.noneOf(RiteRegistry.When.class)));
+
+        /*
          * O Rito da Infusão do Céu, que é de onde vem a vassoura que voa.
          *
          * <p>No original ele faz duas coisas: dá a Vassoura Encantada <b>e</b> infunde quem o faz com a

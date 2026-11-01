@@ -1000,7 +1000,8 @@ public final class OccultaItems {
 
     /** E a Pedra Necrótica, que o Rito de Necromancia faz e que o Braseiro pede. */
     public static final Item NECROTIC_STONE = register("necrotic_stone", properties ->
-            new Item(properties.rarity(net.minecraft.world.item.Rarity.RARE)));
+            new net.thaumcraft.occulta.infusion.NecroticStoneItem(
+                    properties.rarity(net.minecraft.world.item.Rarity.RARE)));
 
     /** Os dois baldes, que é como os líquidos se carregam de um lado para o outro. */
     public static final Item BUCKET_FLOWING_SPIRIT = register("bucket_flowing_spirit", properties ->
@@ -1186,6 +1187,38 @@ public final class OccultaItems {
     public static final Item CAULDRON_BOOK = register("cauldron_book", properties ->
             new net.thaumcraft.occulta.CauldronBookItem(
                     net.thaumcraft.occulta.CauldronBookItem.feitio(properties)));
+
+    /**
+     * A <b>Base de Cozimento Infundido</b>: o que se põe no círculo para que o rito a infunda.
+     *
+     * <p>Por si não é nada — bebida, dá <b>Definhamento IV</b> por dez segundos, que é o original a dizer
+     * «isto não se bebe». O que ela é está no que o rito faz dela.
+     */
+    public static final Item INFUSION_BASE = register("infusion_base", properties ->
+            new net.thaumcraft.occulta.infusion.InfusionBaseItem(
+                    net.thaumcraft.occulta.infusion.InfusionBaseItem.feitio(properties)));
+
+    /**
+     * O <b>Cozimento de Voar</b>: duas horas de vassoura mais depressa.
+     *
+     * <p>Não faz mais nada, e não precisa: a vassoura é o jeito de andar do ofício, e isto é o pé no
+     * acelerador dela.
+     */
+    public static final Item BREW_OF_SOARING = register("brew_of_soaring", properties ->
+            new net.thaumcraft.occulta.infusion.InfusedBrewItem(
+                    net.thaumcraft.occulta.infusion.InfusedBrewItem.feitio(properties),
+                    net.thaumcraft.occulta.infusion.InfusedBrews.VOAR));
+
+    /**
+     * O <b>Cozimento da Cova</b>: duas horas de se ser morto-vivo.
+     *
+     * <p>Quem o bebeu conta como morto-vivo, <b>cura-se matando</b>, e com a Pedra Necrótica na mão
+     * escraviza com o olhar o morto-vivo que vir. É o mais estranho do mod.
+     */
+    public static final Item BREW_OF_THE_GRAVE = register("brew_of_the_grave", properties ->
+            new net.thaumcraft.occulta.infusion.InfusedBrewItem(
+                    net.thaumcraft.occulta.infusion.InfusedBrewItem.feitio(properties),
+                    net.thaumcraft.occulta.infusion.InfusedBrews.COVA));
 
     /**
      * O <b>Coração de Ouro</b>: o que cai da Mais Bela de Todas.

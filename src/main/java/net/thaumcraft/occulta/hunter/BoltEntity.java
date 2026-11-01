@@ -196,7 +196,7 @@ public class BoltEntity extends AbstractArrow {
      */
     private static boolean impuro(net.minecraft.world.entity.Entity quem) {
         if (!(quem instanceof LivingEntity vivo)) return false;
-        if (vivo.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) return true;
+        if (net.thaumcraft.occulta.Undead.é(vivo)) return true;
         return net.thaumcraft.occulta.torment.Demonic.é(vivo);
     }
 

@@ -149,7 +149,7 @@ public class WitchHunterEntity extends PathfinderMob implements RangedAttackMob 
      */
     public boolean éCaça(@Nullable LivingEntity quem) {
         if (quem == null) return false;
-        if (quem.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) return true;
+        if (net.thaumcraft.occulta.Undead.é(quem)) return true;
         if (quem instanceof Witch) return true;
         if (quem instanceof net.thaumcraft.occulta.coven.CovenWitchEntity) return true;
         // ao caçador basta que a pessoa <b>seja</b> lobisomem, esteja de bicho ou não
@@ -240,7 +240,7 @@ public class WitchHunterEntity extends PathfinderMob implements RangedAttackMob 
         int tipo = BoltEntity.ESTACA;
         if (net.thaumcraft.occulta.wolf.Lycanthropy.é(alvo)) {
             tipo = BoltEntity.PRATA;
-        } else if (alvo.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
+        } else if (net.thaumcraft.occulta.Undead.é(alvo)) {
             tipo = BoltEntity.SAGRADO;
         } else if (this.getRandom().nextInt(CHANCE_DO_ANULADOR) == 0) {
             tipo = BoltEntity.DRENAGEM_FORTE;
