@@ -43,6 +43,10 @@ public final class ArcanaDamage {
     public static final ResourceKey<DamageType> DROWN =
             ResourceKey.create(Registries.DAMAGE_TYPE, Thaumcraft.id("aa_drown"));
 
+    /** O {@code am2.darkNexus}: a vida que o Aurem Negro suga. */
+    public static final ResourceKey<DamageType> DARK_NEXUS =
+            ResourceKey.create(Registries.DAMAGE_TYPE, Thaumcraft.id("aa_dark_nexus"));
+
     private ArcanaDamage() {
     }
 
@@ -73,5 +77,9 @@ public final class ArcanaDamage {
 
     public static DamageSource drown(Level level, LivingEntity quem) {
         return de(level, DROWN, quem);
+    }
+
+    public static DamageSource darkNexus(Level level, LivingEntity quem) {
+        return de(level, DARK_NEXUS, quem);
     }
 }

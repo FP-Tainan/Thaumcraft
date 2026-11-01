@@ -158,6 +158,33 @@ public final class ArcanaBlocks {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("obelisk"),
                     new BlockEntityType<>(net.thaumcraft.arcana.machine.ObeliskBlockEntity::new, Set.of(OBELISK)));
 
+    /** O <b>Aurem Negro</b>: a fonte que come vida e dá Trevas. Sem corpo — atravessa-se. */
+    public static final Block BLACK_AUREM = register("black_aurem", properties ->
+            new net.thaumcraft.arcana.machine.BlackAuremBlock(properties
+                    .mapColor(MapColor.COLOR_BLACK)
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.STONE)
+                    .noOcclusion()
+                    .noCollision()
+                    .lightLevel(estado -> 11)));
+
+    public static final BlockEntityType<net.thaumcraft.arcana.machine.BlackAuremBlockEntity> BLACK_AUREM_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("black_aurem"),
+                    new BlockEntityType<>(net.thaumcraft.arcana.machine.BlackAuremBlockEntity::new, Set.of(BLACK_AUREM)));
+
+    /** O <b>Prisma Celeste</b>: a fonte que bebe do céu e dá Luz. */
+    public static final Block CELESTIAL_PRISM = register("celestial_prism", properties ->
+            new net.thaumcraft.arcana.machine.CelestialPrismBlock(properties
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(2.0f, 2.0f)
+                    .sound(SoundType.STONE)
+                    .noOcclusion()
+                    .lightLevel(estado -> 11)));
+
+    public static final BlockEntityType<net.thaumcraft.arcana.machine.CelestialPrismBlockEntity> CELESTIAL_PRISM_ENTITY =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumcraft.id("celestial_prism"),
+                    new BlockEntityType<>(net.thaumcraft.arcana.machine.CelestialPrismBlockEntity::new, Set.of(CELESTIAL_PRISM)));
+
     /**
      * Os <b>cinco minérios</b> do ramo: o {@code BlockAMOre} da 1.4.0.009, que eram cinco metadados de um
      * bloco só.

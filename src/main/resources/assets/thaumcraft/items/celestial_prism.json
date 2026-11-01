@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/celestial_prism",
+    "model": {
+      "type": "thaumcraft:celestial_prism"
+    }
+  }
+}

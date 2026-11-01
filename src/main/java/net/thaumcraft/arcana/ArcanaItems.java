@@ -109,6 +109,10 @@ public final class ArcanaItems {
                 ArcanaBlocks.CERUBLOSSOM, properties.useBlockDescriptionPrefix()));
         register("desert_nova", properties -> new net.minecraft.world.item.BlockItem(
                 ArcanaBlocks.DESERT_NOVA, properties.useBlockDescriptionPrefix()));
+        register("black_aurem", properties -> new net.minecraft.world.item.BlockItem(
+                ArcanaBlocks.BLACK_AUREM, properties.useBlockDescriptionPrefix()));
+        register("celestial_prism", properties -> new net.minecraft.world.item.BlockItem(
+                ArcanaBlocks.CELESTIAL_PRISM, properties.useBlockDescriptionPrefix()));
         register("essence_conduit", properties -> new net.minecraft.world.item.BlockItem(
                 ArcanaBlocks.ESSENCE_CONDUIT, properties.useBlockDescriptionPrefix()));
         register("mana_battery", properties -> new net.minecraft.world.item.BlockItem(

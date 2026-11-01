@@ -14547,3 +14547,60 @@ sozinho; que a Bateria ligada bebe dele e fica com o tipo; que um Conduto passa 
 chave recusa ligar um nó a si mesmo e recusa uma fonte que não dá o tipo; que cortar apaga todos os
 caminhos; que o giz e os pilares multiplicam o que devem; e que tirar o conduto do meio deixa um Elo
 Partido no lugar. E o `ArcanaPowerClientTest`, com seis fotos.
+
+## A outra metade do Ars Magica 2 — Fatia 3: as outras duas fontes (2026-11-01)
+
+O Obelisco queima. As outras duas não queimam nada: uma **come vida** e a outra **bebe do céu**.
+
+**As três têm o mesmo esqueleto**, e no original isso está escrito com herança: o Aurem Negro e o Prisma
+Celeste <i>são</i> `TileEntityObelisk`. Aqui o que é comum saiu para um pai próprio — nunca pedem energia
+a ninguém, olham para o que têm em volta de cem em cem batidas, e abençoam com a Regeneração de Mana quem
+estiver a duas casas, tendo elas um décimo do teto. O que muda de fonte para fonte é de que são os
+pilares e o que os topos valem.
+
+**O Aurem Negro** é a mais forte: **dez mil** de teto. Ele puxa para si todo bicho vivo a **dez casas**,
+levanta-o do chão e, quando o tem bem por cima — a menos de 1,3 do centro e a mais de dois de altura —,
+mói-o: quatro de dano por batida, num tipo de dano próprio, o **Nexo Escuro**.
+
+**E o que uma morte lhe rende é uma conta curiosa:** `ceil(vida máxima × idade em segundos % 5000) ×
+multiplicador`. Um bicho acabado de nascer não vale quase nada; um que andou meia hora pelo mundo vale um
+obelisco inteiro. Aquele resto por cinco mil é o teto de uma morte só — e é também o que faz um bicho
+muito velho poder valer pouco outra vez, quando a conta dá a volta. É o original, tal e qual.
+
+**Quem ele não puxa:** gente, chefes, invulneráveis, quem foi invocado por alguém, e os bichos que o
+próprio Ars Magica 2 põe no mundo como ferramenta. Destes, só o **Darkling** existia na lista que importa
+e ainda não entrou neste porte; a lista de quem ele ignora é agora uma **etiqueta de tipo de bicho**, e
+cresce sozinha conforme os bichos do ramo forem entrando.
+
+**E ele não puxa quem está atrás de uma parede**: há um tiro de linha do topo dele até os olhos do bicho,
+e com bloco pelo caminho o bicho fica onde está. É o que permite cercar um Aurem.
+
+**Ele não tem corpo** — atravessa-se, e é de propósito: o que ele faz é puxar o que está à volta para
+dentro de si, e um bicho que esbarrasse nele nunca lá chegaria.
+
+**O Prisma Celeste** é a mais fraca e a mais sossegada: **2500** de teto, **um quarto** por batida, e
+nunca precisa de ninguém. Os quatro topos que ele aceita são vidro (1,1), ouro (1,4), diamante (2,0) e
+**pedra-da-lua** (**3,0**) — e a pedra-da-lua **inverte-lhe o relógio**: com ela o prisma carrega de
+noite e fica parado de dia. É a troca que o original oferece, e é por isso que o topo mais forte é também
+o mais incômodo. A noite dele é das 12 500 às 23 500 batidas.
+
+**Nenhuma das duas se fabrica.** O Aurem Negro nasce de um **Ritual de Obelisco** — um feitiço de Dano de
+Fogo lançado sobre a figura da corrupção, com um Foco de Criatura e uma pedra-do-sol no chão —, e os
+rituais são a fatia que vem a seguir. O Prisma Celeste não tem receita no original e não ganha nenhuma
+aqui. Até lá as duas existem no criativo, que é o que o original dá a quem ainda não fez o ritual.
+
+**Mais um campo que ninguém lê.** O `TileEntityBlackAurem` guarda um `rotation` que cresce 0,15 por
+batida — e o desenhista dele não o usa: o giro do redemoinho sai do contador de batidas de **quem olha**.
+Por isso dois Aurens lado a lado giram em sincronia perfeita, como se fossem a mesma coisa desenhada duas
+vezes. O campo não veio; a conduta é a mesma.
+
+**Os desenhos.** O Prisma é o `celestial_prism.obj` ao dobro do tamanho, sem sombra e sem costas — o
+original desliga a iluminação e o recorte de faces antes de o desenhar, e é isso que o faz parecer
+cristal. O Aurem **não tem modelo**: é uma figura chapada virada para quem olha, do dobro do tamanho, que
+roda sobre si mesma a um grau por batida.
+
+**Guardas:** o `ArcanaSourcesGameTest`, com cinco — que cada fonte dá o seu tipo e só o seu, e que
+nenhuma pede nem passa adiante; que o Prisma é de dia e passa a ser de noite com os topos de
+pedra-da-lua, multiplicando por três e por 3,75 com o giz; que os três topos do Aurem valem 1,1, 1,5 e
+2,0; que o Aurem apanha um porco e o puxa; e que uma parede o trava. E o `ArcanaSourcesClientTest`, com
+duas fotos.

@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumcraft:block/black_aurem",
+    "model": {
+      "type": "thaumcraft:black_aurem"
+    }
+  }
+}

@@ -45,33 +45,17 @@ import net.thaumcraft.arcana.power.PoweredBlockEntity;
  * <p>E quem trabalhar ao pé de um obelisco a arder, estando ele com <b>um décimo</b> do teto, ganha a
  * <b>Regeneração de Mana</b> por dez minutos.
  */
-public class ObeliskBlockEntity extends PoweredBlockEntity implements Container, MenuProvider {
+public class ObeliskBlockEntity extends EssenceGeneratorBlockEntity implements Container, MenuProvider {
     /** Quanto ele guarda: <b>5000</b>. */
     public static final int CAPACITY = 5000;
     /** Quanto ele faz por batida, sem nada em volta: <b>cinco</b>. */
     public static final float POWER_BASE = 5.0f;
-    /** O que o anel de giz multiplica. */
-    public static final float CHALK_BONUS = 1.25f;
     /** O que os pilares com topo cinzelado multiplicam. */
     public static final float CHISELED_CAPS = 1.35f;
-    /** De quantas em quantas batidas ele olha para o que tem em volta: <b>cem</b>. */
-    public static final int SURROUNDING_CHECK = 100;
-    /** Quanto do teto ele precisa de ter para abençoar quem está perto: <b>um décimo</b>. */
-    public static final float BLESSING_THRESHOLD = 0.1f;
-    /** E por quanto tempo: <b>600 batidas</b>, meio minuto... dez minutos no relógio do Ars Magica. */
-    public static final int BLESSING_TICKS = 600;
-    /** A que distância ele abençoa. */
-    public static final int BLESSING_RANGE = 2;
     /** Acima de quantas batidas de queima restantes o desenho dele muda para o de alta potência. */
     public static final int HIGH_POWER = 200;
     /** O teto a partir do qual ele deixa de acender combustível novo: três quartos. */
     public static final float CHARGE_CEILING = 0.75f;
-
-    /** Os grupos da figura: os pilares e os topos cinzelados, cada um com o seu número de exclusão. */
-    private static final int MUTEX_PILLARS = 2;
-    private static final int MUTEX_CAPS = 4;
-    /** A máscara com que o original pergunta por todos de uma vez. */
-    private static final int ALL_MUTEXES = 7;
 
     private static final Multiblock FIGURA = new Multiblock("obelisk_structure");
     private static final Multiblock.Group PILARES = FIGURA.createGroup("pillars", MUTEX_PILLARS);
@@ -95,9 +79,10 @@ public class ObeliskBlockEntity extends PoweredBlockEntity implements Container,
         }
     }
 
+    /** O único topo que o Obelisco conhece: o tijolo cinzelado, que vale 1,35. */
+    private static final java.util.Map<Multiblock.Group, Float> TOPOS_VALEM = caps(TOPOS, CHISELED_CAPS);
+
     private final NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
-    private int surroundingCheckTicks;
-    private float powerMultiplier = 1.0f;
     public int burnTimeRemaining;
     public int maxBurnTime = 1;
 
@@ -120,28 +105,42 @@ public class ObeliskBlockEntity extends PoweredBlockEntity implements Container,
         return this.burnTimeRemaining > HIGH_POWER && !this.items.getFirst().isEmpty();
     }
 
-    public float powerMultiplier() {
-        return this.powerMultiplier;
+    @Override
+    protected Multiblock figura() {
+        return FIGURA;
     }
 
-    /** O {@code checkNearbyBlockState}: olha para o giz e para os pilares e refaz o multiplicador. */
-    public void checkNearbyBlockState() {
-        var montados = FIGURA.matchedGroups(ALL_MUTEXES, this.level, this.getBlockPos());
-        this.powerMultiplier = montados.contains(GIZ) ? CHALK_BONUS : 1.0f;
-        if (montados.contains(PILARES) && montados.contains(TOPOS)) this.powerMultiplier *= CHISELED_CAPS;
+    @Override
+    protected Multiblock.Group pilares() {
+        return PILARES;
+    }
+
+    @Override
+    protected Multiblock.Group giz() {
+        return GIZ;
+    }
+
+    @Override
+    protected java.util.Map<Multiblock.Group, Float> topos() {
+        return TOPOS_VALEM;
+    }
+
+    @Override
+    protected PowerType type() {
+        return PowerType.NEUTRAL;
+    }
+
+    /** O Obelisco abençoa com grau dois. */
+    @Override
+    protected int blessingAmplifier() {
+        return 2;
     }
 
     @Override
     public void serverTick(ServerLevel level) {
         this.surroundingCheckTicks++;
         if (this.isActive()) {
-            if (this.surroundingCheckTicks % SURROUNDING_CHECK == 0) {
-                this.checkNearbyBlockState();
-                this.surroundingCheckTicks = 1;
-                if (PowerNodes.of(level).checkPower(this.getBlockPos(), this.capacity * BLESSING_THRESHOLD)) {
-                    this.bless(level);
-                }
-            }
+            if (this.surroundingCheckTicks % SURROUNDING_CHECK == 0) this.surroundings(level);
 
             float tem = PowerNodes.of(level).getPower(this.getBlockPos(), PowerType.NEUTRAL);
             float faria = ObeliskFuel.burnTime(this.items.getFirst()) * (POWER_BASE * this.powerMultiplier);
@@ -172,53 +171,12 @@ public class ObeliskBlockEntity extends PoweredBlockEntity implements Container,
         super.serverTick(level);
     }
 
-    /** A Regeneração de Mana a quem estiver a duas casas, e só a quem ainda não a tiver. */
-    private void bless(ServerLevel level) {
-        BlockPos onde = this.getBlockPos();
-        AABB roda = new AABB(onde.getX() - BLESSING_RANGE, onde.getY(), onde.getZ() - BLESSING_RANGE,
-                onde.getX() + BLESSING_RANGE + 1, onde.getY() + 3, onde.getZ() + BLESSING_RANGE + 1);
-        for (Player quem : level.getEntitiesOfClass(Player.class, roda)) {
-            if (quem.hasEffect(ArcanaEffects.MANA_REGEN)) continue;
-            quem.addEffect(new MobEffectInstance(ArcanaEffects.MANA_REGEN, BLESSING_TICKS, 2));
-        }
-    }
-
     private void sync(ServerLevel level) {
         this.setChanged();
         level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
     }
 
     // ---------------------------------------------------------------- o que ele é na rede
-
-    @Override
-    public int chargeRate() {
-        return 0;
-    }
-
-    @Override
-    public boolean canProvidePower(PowerType type) {
-        return type == PowerType.NEUTRAL;
-    }
-
-    @Override
-    public PowerType[] validPowerTypes() {
-        return new PowerType[]{PowerType.NEUTRAL};
-    }
-
-    @Override
-    public boolean canRequestPower() {
-        return false;
-    }
-
-    @Override
-    public boolean canRelayPower(PowerType type) {
-        return false;
-    }
-
-    @Override
-    public boolean isSource() {
-        return true;
-    }
 
     // ---------------------------------------------------------------- a casa do combustível
 
